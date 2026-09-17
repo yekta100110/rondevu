@@ -2,7 +2,7 @@ import { WEBAPP_URL, IS_CALCOM } from "./constants";
 
 export const getCalcomUrl = () => {
   if (IS_CALCOM) {
-    return new URL(WEBAPP_URL).hostname.endsWith("cal.eu") ? "https://cal.eu" : "https://cal.com";
+    return "https://rondevu.com.tr";
   }
   return WEBAPP_URL;
 };

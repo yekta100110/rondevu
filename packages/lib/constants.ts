@@ -34,12 +34,12 @@ export const WEBAPP_URL_FOR_OAUTH = IS_PRODUCTION || IS_DEV ? WEBAPP_URL : "http
 
 /** @deprecated use `WEBAPP_URL` */
 export const BASE_URL = WEBAPP_URL;
-export const WEBSITE_URL = ensureProtocol(process.env.NEXT_PUBLIC_WEBSITE_URL) || "https://cal.com";
-export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME || "Cal.diy";
-export const SUPPORT_MAIL_ADDRESS = process.env.NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS || "help@cal.com";
-export const COMPANY_NAME = process.env.NEXT_PUBLIC_COMPANY_NAME || "Cal.com, Inc.";
-export const SENDER_ID = process.env.NEXT_PUBLIC_SENDER_ID || "Cal";
-export const SENDER_NAME = process.env.NEXT_PUBLIC_SENDGRID_SENDER_NAME || "Cal.diy";
+export const WEBSITE_URL = ensureProtocol(process.env.NEXT_PUBLIC_WEBSITE_URL) || "https://rondevu.com.tr";
+export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME || "rOndevu";
+export const SUPPORT_MAIL_ADDRESS = process.env.NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS || "destek@rondevu.com.tr";
+export const COMPANY_NAME = process.env.NEXT_PUBLIC_COMPANY_NAME || "rOndevu";
+export const SENDER_ID = process.env.NEXT_PUBLIC_SENDER_ID || "rOndevu";
+export const SENDER_NAME = process.env.NEXT_PUBLIC_SENDGRID_SENDER_NAME || "rOndevu";
 export const EMAIL_FROM_NAME = process.env.EMAIL_FROM_NAME || APP_NAME;
 
 // This is the URL from which all Cal Links and their assets are served.
@@ -53,7 +53,7 @@ export const CAL_URL = new URL(WEBAPP_URL).hostname.endsWith(".vercel.app")
 
 export const IS_CALCOM =
   WEBAPP_URL &&
-  (new URL(WEBAPP_URL).hostname.endsWith("cal.com") ||
+  (new URL(WEBAPP_URL).hostname.endsWith("rondevu.com.tr") ||
     new URL(WEBAPP_URL).hostname.endsWith("cal.dev") ||
     new URL(WEBAPP_URL).hostname.endsWith("cal.qa") ||
     new URL(WEBAPP_URL).hostname.endsWith("cal-staging.com") ||
@@ -98,9 +98,9 @@ export const PUBLIC_QUICK_AVAILABILITY_ROLLOUT =
 
 /** @deprecated use `WEBAPP_URL` */
 export const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_WEBAPP_URL || `https://${process.env.VERCEL_URL}`;
-export const LOGO = "/calcom-logo-white-word.svg";
-export const LOGO_DARK = "/cal-logo-word-black.svg";
-export const LOGO_ICON = "/cal-com-icon-white.svg";
+export const LOGO = "/rondevu-logo-white.svg";
+export const LOGO_DARK = "/rondevu-logo-dark.svg";
+export const LOGO_ICON = "/rondevu-icon-white.svg";
 export const AVATAR_FALLBACK = "/avatar.svg";
 export const FAVICON_16 = "/favicon-16x16.png";
 export const FAVICON_32 = "/favicon-32x32.png";
@@ -108,12 +108,12 @@ export const APPLE_TOUCH_ICON = "/apple-touch-icon.png";
 export const MSTILE_ICON = "/mstile-150x150.png";
 export const ANDROID_CHROME_ICON_192 = "/android-chrome-192x192.png";
 export const ANDROID_CHROME_ICON_256 = "/android-chrome-256x256.png";
-export const ROADMAP = "https://cal.com/roadmap";
-export const DESKTOP_APP_LINK = "https://cal.com/download";
+export const ROADMAP = "https://rondevu.com.tr/roadmap";
+export const DESKTOP_APP_LINK = "https://rondevu.com.tr/download";
 export const JOIN_COMMUNITY = "https://github.com/calcom/cal.diy/discussions";
-export const POWERED_BY_URL = "https://go.cal.com/booking";
-export const DOCS_URL = "https://cal.com/docs";
-export const DEVELOPER_DOCS = "https://developer.cal.com";
+export const POWERED_BY_URL = "https://rondevu.com.tr";
+export const DOCS_URL = "https://rondevu.com.tr/docs";
+export const DEVELOPER_DOCS = "https://rondevu.com.tr/developer";
 export const SEO_IMG_DEFAULT = `${CAL_URL}/og-image.png`;
 // The Dynamic OG Image is passed through Next's Image API to further optimize it.
 // This results in a 80% smaller image 🤯. It is however important that for the query
@@ -186,10 +186,10 @@ export const ORG_SELF_SERVE_ENABLED = process.env.NEXT_PUBLIC_ORG_SELF_SERVE_ENA
 export const ORG_MINIMUM_PUBLISHED_TEAMS_SELF_SERVE = 0;
 export const ORG_MINIMUM_PUBLISHED_TEAMS_SELF_SERVE_HELPER_DIALOGUE = 1;
 
-export const CALCOM_PRIVATE_API_ROUTE = process.env.CALCOM_PRIVATE_API_ROUTE || "https://goblin.cal.com";
+export const CALCOM_PRIVATE_API_ROUTE = process.env.CALCOM_PRIVATE_API_ROUTE || "https://rondevu.com.tr/api";
 export const WEBSITE_PRIVACY_POLICY_URL =
-  process.env.NEXT_PUBLIC_WEBSITE_PRIVACY_POLICY_URL || "https://cal.com/privacy";
-export const WEBSITE_TERMS_URL = process.env.NEXT_PUBLIC_WEBSITE_TERMS_URL || "https://cal.com/terms";
+  process.env.NEXT_PUBLIC_WEBSITE_PRIVACY_POLICY_URL || "https://rondevu.com.tr/gizlilik";
+export const WEBSITE_TERMS_URL = process.env.NEXT_PUBLIC_WEBSITE_TERMS_URL || "https://rondevu.com.tr/kullanim-kosullari";
 export const LINGO_DOT_DEV_API_KEY = process.env.LINGO_DOT_DEV_API_KEY;
 
 /**
@@ -198,21 +198,13 @@ export const LINGO_DOT_DEV_API_KEY = process.env.LINGO_DOT_DEV_API_KEY;
  */
 export const ROLLING_WINDOW_PERIOD_MAX_DAYS_TO_CHECK = 30 + 31;
 
-export const TRANSCRIPTION_STARTED_ICON = IS_PRODUCTION
-  ? `${WEBAPP_URL}/sparkles-red.svg`
-  : `https://app.cal.com/sparkles-red.svg`;
+export const TRANSCRIPTION_STARTED_ICON = `${WEBAPP_URL}/sparkles-red.svg`;
 
-export const TRANSCRIPTION_STOPPED_ICON = IS_PRODUCTION
-  ? `${WEBAPP_URL}/sparkles.svg`
-  : `https://app.cal.com/sparkles.svg`;
+export const TRANSCRIPTION_STOPPED_ICON = `${WEBAPP_URL}/sparkles.svg`;
 
-export const RECORDING_DEFAULT_ICON = IS_PRODUCTION
-  ? `${WEBAPP_URL}/start-recording.svg`
-  : `https://app.cal.com/start-recording.svg`;
+export const RECORDING_DEFAULT_ICON = `${WEBAPP_URL}/start-recording.svg`;
 
-export const RECORDING_IN_PROGRESS_ICON = IS_PRODUCTION
-  ? `${WEBAPP_URL}/stop-recording.svg`
-  : `https://app.cal.com/stop-recording.svg`;
+export const RECORDING_IN_PROGRESS_ICON = `${WEBAPP_URL}/stop-recording.svg`;
 
 export const SCOPE_USERINFO_PROFILE = "https://www.googleapis.com/auth/userinfo.profile";
 export const SCOPE_USERINFO_EMAIL = "https://www.googleapis.com/auth/userinfo.email";

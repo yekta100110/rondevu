@@ -34,8 +34,8 @@ services:
     ports:
       - "${REDIS_PORT:-6379}:6379"
 
-  calcom:
-    image: calcom.docker.scarf.sh/calcom/cal.diy
+  rondevu:
+    image: rondevu/rondevu:latest
     build:
       context: .
       dockerfile: Dockerfile
@@ -65,8 +65,8 @@ services:
     depends_on:
       - database
 
-  calcom-api:
-    container_name: calcom-api
+  rondevu-api:
+    container_name: rondevu-api
     build:
       context: .
       dockerfile: apps/api/v2/Dockerfile
@@ -119,7 +119,7 @@ services:
 
   # Optional use of Prisma Studio. In production, comment out or remove the section below to prevent unwanted access to your database.
   studio:
-    image: calcom.docker.scarf.sh/calcom/cal.diy
+    image: rondevu/rondevu:latest
     restart: always
     networks:
       - stack

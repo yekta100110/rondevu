@@ -117,7 +117,7 @@ export const SelectedCalendarsSettingsPlatformWrapper = ({
                           shouldHighlight
                           slug={connectedCalendar.integration.slug}
                           title={connectedCalendar.integration.name}
-                          logo={`https://app.cal.com${connectedCalendar.integration.logo}`}
+                          logo={connectedCalendar.integration.logo}
                           description={
                             connectedCalendar.primary?.email ?? connectedCalendar.integration.description
                           }

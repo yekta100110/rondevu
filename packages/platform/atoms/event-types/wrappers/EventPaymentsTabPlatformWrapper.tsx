@@ -49,7 +49,7 @@ const StripeAppCard = ({ eventType }: { eventType: EventTypeSetupProps["eventTyp
   const { data: stripeData, isLoading } = useAtomsEventTypeById("stripe", eventType.teamId);
   const transformedAppData = {
     ...stripeData?.app,
-    logo: `https://app.cal.com${stripeData?.app.logo}`,
+    logo: stripeData?.app.logo,
   };
 
   if (isLoading || !stripeData) return null;

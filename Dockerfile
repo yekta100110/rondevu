@@ -1,6 +1,6 @@
 FROM --platform=$BUILDPLATFORM node:20 AS builder
 
-WORKDIR /calcom
+WORKDIR /rondevu
 
 ## If we want to read any ENV variable from .env file, we need to first accept and pass it as an argument to the Dockerfile
 ARG NEXT_PUBLIC_LICENSE_CONSENT
@@ -53,18 +53,18 @@ RUN rm -rf node_modules/.cache .yarn/cache apps/web/.next/cache
 
 FROM node:20 AS builder-two
 
-WORKDIR /calcom
+WORKDIR /rondevu
 ARG NEXT_PUBLIC_WEBAPP_URL=http://localhost:3000
 
 ENV NODE_ENV=production
 
 COPY package.json .yarnrc.yml turbo.json i18n.json ./
 COPY .yarn ./.yarn
-COPY --from=builder /calcom/yarn.lock ./yarn.lock
-COPY --from=builder /calcom/node_modules ./node_modules
-COPY --from=builder /calcom/packages ./packages
-COPY --from=builder /calcom/apps/web ./apps/web
-COPY --from=builder /calcom/packages/prisma/schema.prisma ./prisma/schema.prisma
+COPY --from=builder /rondevu/yarn.lock ./yarn.lock
+COPY --from=builder /rondevu/node_modules ./node_modules
+COPY --from=builder /rondevu/packages ./packages
+COPY --from=builder /rondevu/apps/web ./apps/web
+COPY --from=builder /rondevu/packages/prisma/schema.prisma ./prisma/schema.prisma
 COPY scripts scripts
 RUN chmod +x scripts/*
 
@@ -77,11 +77,11 @@ RUN scripts/replace-placeholder.sh http://NEXT_PUBLIC_WEBAPP_URL_PLACEHOLDER ${N
 
 FROM node:20 AS runner
 
-WORKDIR /calcom
+WORKDIR /rondevu
 
 RUN apt-get update && apt-get install -y --no-install-recommends netcat-openbsd wget && rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder-two /calcom ./
+COPY --from=builder-two /rondevu ./
 ARG NEXT_PUBLIC_WEBAPP_URL=http://localhost:3000
 ENV NEXT_PUBLIC_WEBAPP_URL=$NEXT_PUBLIC_WEBAPP_URL \
   BUILT_NEXT_PUBLIC_WEBAPP_URL=$NEXT_PUBLIC_WEBAPP_URL
@@ -92,4 +92,4 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=30s --retries=5 \
   CMD wget --spider http://localhost:3000 || exit 1
 
-CMD ["/calcom/scripts/start.sh"]
+CMD ["/rondevu/scripts/start.sh"]
