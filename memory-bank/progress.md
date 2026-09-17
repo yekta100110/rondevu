@@ -30,3 +30,4 @@
 3. Build config adjusted to suppress errors
 4. Initial analysis completed (today)
 5. Full user-facing rebranding and asset regeneration (SVGs, favicons, app icons, emails) completed
+6. Fixed dark mode logo inversion on mobile/desktop, scaled up logo vector rendering, and replaced Cal.diy on login page with rOndevu (pushed to main)
