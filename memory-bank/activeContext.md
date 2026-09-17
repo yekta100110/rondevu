@@ -11,7 +11,15 @@
 3. **Login View Title Fix** — Replaced hardcoded `Cal.diy` in `apps/web/modules/auth/login-view.tsx` with `{APP_NAME}` (`rOndevu`).
 4. **Additional Branding Cleanup** — Updated `refer/page.tsx`, `service-worker.js`, `verify-email-view.tsx`, `Embed.tsx`, and `oauth-provider.e2e.ts`.
 5. **Favicon & Icon Exact Geometric Centering** — Recalculated bounding boxes for the "rOn" glyphs across all favicons, app icons (`android-chrome`, `apple-touch-icon`, `mstile`, `favicon-16/32/ico`, and SVG icons). Fixed the ~63.6px vertical baseline gap offset by translating the text path so that top margin equals bottom margin and left margin equals right margin with dead-center alignment.
-6. **Git Pushed** — Pushed clean commit to `origin/main`.
+6. **Default Language Set to Turkish (`tr`) & Translation Enhancement** —
+   - Configured `i18n.json` (`source: "tr"`) and `packages/i18n/next-i18next.config.js` (`defaultLocale: "tr"`, fallback: `["tr", "en"]`).
+   - Updated `getLocale.ts`, `getLocaleFromRequest.ts`, and `apps/web/app/layout.tsx` so all visitors and new users automatically start in Turkish by default, while preserving explicit cookie or token preferences.
+   - Updated `UserRepository.ts` so newly created users have `locale: "tr"` in Postgres and their default schedule is created in Turkish ("Çalışma saatleri").
+   - Updated `schema.prisma` default attendee locale to `"tr"`.
+   - Added all 41 missing keys to `packages/i18n/locales/tr/common.json` (0 missing keys remaining out of 4,731).
+   - Cleaned up 50+ legacy `Cal.diy` / `Cal.com` references in Turkish translations to `rOndevu`.
+   - Refined home page, event-types dashboard, login, and navigation translations.
+7. **Git Pushed** — Pushed clean commits to `origin/main`.
 
 ## What Was NOT Changed (by design)
 - `@calcom/*` package namespace — internal implementation detail, changing would break 1000s of imports

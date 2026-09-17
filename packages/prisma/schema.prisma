@@ -829,7 +829,7 @@ model Attendee {
   name        String
   timeZone    String
   phoneNumber String?
-  locale      String?      @default("en")
+  locale      String?      @default("tr")
   booking     Booking?     @relation(fields: [bookingId], references: [id], onDelete: Cascade)
   bookingId   Int?
   bookingSeat BookingSeat?

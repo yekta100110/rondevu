@@ -37,25 +37,20 @@ export const getLocale = async (
     return tokenLocale;
   }
 
-  const acceptLanguage =
-    req.headers instanceof Headers ? req.headers.get("accept-language") : req.headers["accept-language"];
+  // Check if user has explicitly set a locale cookie
+  let cookieLocale: string | undefined;
+  if ("cookies" in req && req.cookies) {
+    if (typeof (req.cookies as any).get === "function") {
+      cookieLocale = (req.cookies as any).get("NEXT_LOCALE")?.value || (req.cookies as any).get("locale")?.value;
+    } else if (typeof req.cookies === "object") {
+      cookieLocale = (req.cookies as Record<string, string>)["NEXT_LOCALE"] || (req.cookies as Record<string, string>)["locale"];
+    }
+  }
 
-  const languages = acceptLanguage ? parse(acceptLanguage) : [];
+  if (cookieLocale && i18n.locales.includes(cookieLocale)) {
+    return cookieLocale;
+  }
 
-  const code: string = languages[0]?.code ?? "";
-  const region: string = languages[0]?.region ?? "";
-
-  // the code should consist of 2 or 3 lowercase letters
-  // the regex underneath is more permissive
-  const testedCode = /^[a-zA-Z]+$/.test(code) ? code : "en";
-
-  // the code should consist of either 2 uppercase letters or 3 digits
-  // the regex underneath is more permissive
-  const testedRegion = /^[a-zA-Z0-9]+$/.test(region) ? region : "";
-
-  const requestedLocale = `${testedCode}${testedRegion !== "" ? "-" : ""}${testedRegion}`;
-
-  // use fallback to closest supported locale.
-  // for instance, es-419 will be transformed to es
-  return lookup(i18n.locales, requestedLocale) ?? requestedLocale;
+  // Default to Turkish for all new and unauthenticated users
+  return i18n.defaultLocale || "tr";
 };

@@ -912,13 +912,15 @@ export class UserRepository {
       organizationId,
       locked,
     });
-    const t = await getTranslation("en", "common");
+    const userLocale = rest.locale ?? "tr";
+    const t = await getTranslation(userLocale, "common");
     const availability = getAvailabilityFromSchedule(DEFAULT_SCHEDULE);
 
     const user = await this.prismaClient.user.create({
       data: {
         username,
         email: email,
+        locale: userLocale,
         ...(hashedPassword && {
           password: { create: { hash: hashedPassword } },
         }),

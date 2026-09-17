@@ -1,7 +1,7 @@
 {
   "version": 1.2,
   "locale": {
-    "source": "en",
+    "source": "tr",
     "targets": [
       "ar",
       "az",
@@ -12,6 +12,7 @@
       "da",
       "de",
       "el",
+      "en",
       "es",
       "es-419",
       "eu",
@@ -35,7 +36,6 @@
       "sk-SK",
       "sr",
       "sv",
-      "tr",
       "uk",
       "vi",
       "zh-CN",

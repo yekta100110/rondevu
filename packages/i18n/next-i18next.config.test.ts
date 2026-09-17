@@ -8,13 +8,14 @@ const config = require("./next-i18next.config");
 describe("@calcom/i18n/next-i18next.config", () => {
   it("exports i18n with defaultLocale and locales", () => {
     expect(config.i18n).toBeDefined();
-    expect(config.i18n.defaultLocale).toBe("en");
+    expect(config.i18n.defaultLocale).toBe("tr");
     expect(Array.isArray(config.i18n.locales)).toBe(true);
+    expect(config.i18n.locales).toContain("tr");
     expect(config.i18n.locales).toContain("en");
   });
 
   it("includes all target locales from i18n.json plus the source locale", () => {
-    const expectedLocales = [...i18nJson.locale.targets, i18nJson.locale.source];
+    const expectedLocales = Array.from(new Set([...i18nJson.locale.targets, i18nJson.locale.source]));
     for (const locale of expectedLocales) {
       expect(config.i18n.locales).toContain(locale);
     }
@@ -29,7 +30,7 @@ describe("@calcom/i18n/next-i18next.config", () => {
 
   it("has fallbackLng configured", () => {
     expect(config.fallbackLng).toBeDefined();
-    expect(config.fallbackLng.default).toEqual(["en"]);
+    expect(config.fallbackLng.default).toEqual(["tr", "en"]);
     expect(config.fallbackLng.zh).toEqual(["zh-CN"]);
   });
 

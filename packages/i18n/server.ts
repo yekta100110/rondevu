@@ -28,7 +28,7 @@ export function mergeWithEnglishFallback(localeTranslations: Record<string, stri
  */
 export async function loadTranslations(_locale: string, _ns: string) {
   let locale = _locale === "zh" ? "zh-CN" : _locale;
-  locale = i18n.locales.includes(locale) ? locale : "en";
+  locale = i18n.locales.includes(locale) ? locale : (i18n.defaultLocale || "tr");
   const ns = SUPPORTED_NAMESPACES.includes(_ns) ? _ns : "common";
   const cacheKey = `${locale}-${ns}`;
 

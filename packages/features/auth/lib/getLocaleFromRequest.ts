@@ -12,11 +12,12 @@ export async function getLocaleFromRequest(
 ): Promise<string> {
   const session = await getServerSession({ req });
   if (session?.user?.locale) return session.user.locale;
-  let preferredLocale: string | null | undefined;
-  if (req.headers["accept-language"]) {
-    preferredLocale = parser.pick(i18n.locales, req.headers["accept-language"], {
-      loose: true,
-    }) as Maybe<string>;
+
+  // Check if explicit locale is set in cookies
+  const cookieLocale = req.cookies?.["NEXT_LOCALE"] || req.cookies?.["locale"];
+  if (cookieLocale && i18n.locales.includes(cookieLocale)) {
+    return cookieLocale;
   }
-  return preferredLocale ?? i18n.defaultLocale;
+
+  return i18n.defaultLocale || "tr";
 }
