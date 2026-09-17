@@ -98,8 +98,8 @@ export const PUBLIC_QUICK_AVAILABILITY_ROLLOUT =
 
 /** @deprecated use `WEBAPP_URL` */
 export const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_WEBAPP_URL || `https://${process.env.VERCEL_URL}`;
-export const LOGO = "/rondevu-logo-white.svg";
-export const LOGO_DARK = "/rondevu-logo-dark.svg";
+export const LOGO = "/rondevu-logo-dark.svg";
+export const LOGO_DARK = "/rondevu-logo-white.svg";
 export const LOGO_ICON = "/rondevu-icon-white.svg";
 export const AVATAR_FALLBACK = "/avatar.svg";
 export const FAVICON_16 = "/favicon-16x16.png";

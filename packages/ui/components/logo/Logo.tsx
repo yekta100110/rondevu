@@ -20,7 +20,7 @@ export function Logo({
           <img className="mx-auto w-9 dark:invert" alt="rOndevu" title="rOndevu" src={`${src}?type=icon`} />
         ) : (
           <img
-            className={classNames(small ? "h-4 w-auto" : "h-5 w-auto", "dark:invert")}
+            className={classNames(small ? "h-5 w-auto" : "h-6 sm:h-7 w-auto", "dark:invert")}
             alt="rOndevu"
             title="rOndevu"
             src={src}
