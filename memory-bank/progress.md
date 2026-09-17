@@ -31,3 +31,4 @@
 4. Initial analysis completed (today)
 5. Full user-facing rebranding and asset regeneration (SVGs, favicons, app icons, emails) completed
 6. Fixed dark mode logo inversion on mobile/desktop, scaled up logo vector rendering, and replaced Cal.diy on login page with rOndevu (pushed to main)
+7. Centered "rOn" lettering precisely in the middle of all favicons, app icons, and metro tiles (top/bottom margins now mathematically equal)
