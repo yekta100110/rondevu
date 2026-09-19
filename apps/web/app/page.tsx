@@ -5,7 +5,7 @@ import { _generateMetadata } from "app/_utils";
 import { cookies, headers } from "next/headers";
 import { HomeView } from "~/home/home-view";
 
-export const generateMetadata = async () => {
+const generateMetadata = async () => {
   return await _generateMetadata(
     () => `${APP_NAME} - Sade ve Zahmetsiz Randevu Planlama`,
     () => `${APP_NAME} ile randevularınızı ve toplantılarınızı zahmetsizce yönetin.`,
@@ -22,4 +22,5 @@ const HomePage = async () => {
   return <HomeView isLoggedIn={isLoggedIn} />;
 };
 
+export { generateMetadata };
 export default HomePage;
