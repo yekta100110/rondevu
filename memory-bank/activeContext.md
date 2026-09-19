@@ -31,6 +31,10 @@
      - Yearly: 10.000 ₺ / yıl (with 12.000 ₺ struck through, highlighting 2 months free and 2.000 ₺ savings).
    - Added `BackgroundGrid` consistent with the login view, feature highlights, and minimal footer.
    - Fixed login flow default redirect from `/` to `/event-types` so logged-in users go straight to their dashboard.
+10. **Build Error Fix (`module-not-found`)** —
+    - Resolved Next.js production build failure in Docker (`yarn --cwd apps/web workspace @calcom/web run build`).
+    - Cause: `apps/web/modules/home/home-view.tsx` had an invalid deep import `@calcom/ui/components/logo/Logo`.
+    - Fix: Changed import to `@calcom/ui/components/logo` to conform to `packages/ui/package.json` exports map.
 
 ## What Was NOT Changed (by design)
 - `@calcom/*` package namespace — internal implementation detail, changing would break 1000s of imports

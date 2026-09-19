@@ -34,3 +34,4 @@
 7. Centered "rOn" lettering precisely in the middle of all favicons, app icons, and metro tiles (top/bottom margins now mathematically equal)
 8. Set system default language to Turkish (`tr`), automated Turkish start for all users, added all 41 missing keys to `tr/common.json` (0 missing keys remaining), cleaned up legacy brand strings, and refined home page localization
 9. Disabled "Ekibimle birlikte" onboarding plan with "Geliştirme aşamasında" badge; created dedicated minimal homepage at root route with top-right "Giriş Yap" button; added minimal pricing section with 1.000 ₺ monthly and 10.000 ₺ yearly (instead of 12.000 ₺) tiers.
+10. Fixed Docker / Next.js production build `module-not-found` failure by correcting deep import of `@calcom/ui/components/logo/Logo` to `@calcom/ui/components/logo` in `apps/web/modules/home/home-view.tsx`.

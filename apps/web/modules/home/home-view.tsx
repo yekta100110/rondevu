@@ -4,7 +4,7 @@ import { APP_NAME } from "@calcom/lib/constants";
 import classNames from "@calcom/ui/classNames";
 import { Badge } from "@calcom/ui/components/badge";
 import { Button } from "@calcom/ui/components/button";
-import { Logo } from "@calcom/ui/components/logo/Logo";
+import { Logo } from "@calcom/ui/components/logo";
 import { ArrowRight, Calendar, Check, Clock, ShieldCheck, Sparkles, Zap } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
