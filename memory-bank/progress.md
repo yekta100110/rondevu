@@ -18,7 +18,7 @@
 
 ## Current Status
 **Phase**: Rebranding Complete
-**Last Updated**: 2026-09-17
+**Last Updated**: 2026-09-19
 
 ## Known Issues
 - TypeScript build errors ignored (`ignoreBuildErrors: true` in next.config)
@@ -33,3 +33,4 @@
 6. Fixed dark mode logo inversion on mobile/desktop, scaled up logo vector rendering, and replaced Cal.diy on login page with rOndevu (pushed to main)
 7. Centered "rOn" lettering precisely in the middle of all favicons, app icons, and metro tiles (top/bottom margins now mathematically equal)
 8. Set system default language to Turkish (`tr`), automated Turkish start for all users, added all 41 missing keys to `tr/common.json` (0 missing keys remaining), cleaned up legacy brand strings, and refined home page localization
+9. Disabled "Ekibimle birlikte" onboarding plan with "Geliştirme aşamasında" badge; created dedicated minimal homepage at root route with top-right "Giriş Yap" button; added minimal pricing section with 1.000 ₺ monthly and 10.000 ₺ yearly (instead of 12.000 ₺) tiers.

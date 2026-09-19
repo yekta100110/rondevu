@@ -137,7 +137,7 @@ export default function Login({
     [ErrorCode.ThirdPartyIdentityProviderEnabled]: t("account_created_with_identity_provider"),
   };
 
-  let callbackUrl = searchParams?.get("callbackUrl") || "";
+  let callbackUrl = searchParams?.get("callbackUrl") || "/event-types";
 
   if (/"\//.test(callbackUrl)) callbackUrl = callbackUrl.substring(1);
 

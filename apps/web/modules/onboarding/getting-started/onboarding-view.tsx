@@ -68,7 +68,15 @@ export const OnboardingView = ({ userEmail }: OnboardingViewProps) => {
     previousPlanRef.current = selectedPlan;
   }, [selectedPlan]);
 
+  // Reset if team is somehow selected
+  useEffect(() => {
+    if (selectedPlan === "team") {
+      setSelectedPlan("personal");
+    }
+  }, [selectedPlan, setSelectedPlan]);
+
   const handleContinue = () => {
+    if (selectedPlan === "team") return;
     if (selectedPlan) {
       posthog.capture("onboarding_plan_continue_clicked", {
         plan_type: selectedPlan,
@@ -77,8 +85,6 @@ export const OnboardingView = ({ userEmail }: OnboardingViewProps) => {
     startTransition(() => {
       if (selectedPlan === "organization") {
         router.push("/onboarding/organization/details");
-      } else if (selectedPlan === "team") {
-        router.push("/onboarding/teams/details");
       } else if (selectedPlan === "personal") {
         router.push("/onboarding/personal/settings");
       }
@@ -99,6 +105,7 @@ export const OnboardingView = ({ userEmail }: OnboardingViewProps) => {
       description: t("onboarding_plan_personal_description"),
       icon: planIconByType.personal,
       variant: "single" as const,
+      disabled: false,
     },
     {
       id: "team" as PlanType,
@@ -107,6 +114,7 @@ export const OnboardingView = ({ userEmail }: OnboardingViewProps) => {
       description: t("onboarding_plan_team_description"),
       icon: planIconByType.team,
       variant: "team" as const,
+      disabled: true,
     },
     {
       id: "organization" as PlanType,
@@ -115,6 +123,7 @@ export const OnboardingView = ({ userEmail }: OnboardingViewProps) => {
       description: t("onboarding_plan_organization_description"),
       icon: planIconByType.organization,
       variant: "organization" as const,
+      disabled: true,
     },
   ];
 
@@ -165,6 +174,7 @@ export const OnboardingView = ({ userEmail }: OnboardingViewProps) => {
                 value={selectedPlan ?? undefined}
                 onValueChange={(value) => {
                   const planType = value as PlanType;
+                  if (planType === "team") return;
                   setSelectedPlan(planType);
                   posthog.capture("onboarding_plan_selected", {
                     plan_type: planType,
@@ -178,13 +188,18 @@ export const OnboardingView = ({ userEmail }: OnboardingViewProps) => {
                     <RadioAreaGroup.Item
                       key={plan.id}
                       value={plan.id}
+                      disabled={plan.disabled}
                       className={classNames(
                         "relative flex items-center overflow-hidden rounded-[10px] border bg-default transition",
                         isSelected ? "border-emphasis shadow-sm" : "border-subtle",
+                        plan.disabled && "cursor-not-allowed opacity-60 bg-subtle/40 select-none",
                         "pr-12 [&>button]:right-6 [&>button]:left-auto [&>button]:mt-0 [&>button]:transform"
                       )}
                       classNames={{
-                        container: "flex w-full items-center gap-3 p-5 pr-12",
+                        container: classNames(
+                          "flex w-full items-center gap-3 p-5 pr-12",
+                          plan.disabled && "cursor-not-allowed pointer-events-none"
+                        ),
                       }}>
                       <div className="flex w-full flex-col gap-1">
                         <div className="flex flex-wrap items-center gap-1">

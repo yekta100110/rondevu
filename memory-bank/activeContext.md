@@ -20,6 +20,17 @@
    - Cleaned up 50+ legacy `Cal.diy` / `Cal.com` references in Turkish translations to `rOndevu`.
    - Refined home page, event-types dashboard, login, and navigation translations.
 7. **Git Pushed** — Pushed clean commits to `origin/main`.
+8. **Onboarding Plan Update** —
+   - Replaced `$15/kullanıcı/ay` ($15/user/mo) with "Geliştirme aşamasında" ("Under development") in `tr/common.json` and `en/common.json`.
+   - Disabled the "Ekibimle birlikte" (Team) plan in `apps/web/modules/onboarding/getting-started/onboarding-view.tsx` with `disabled: true`, styled as unselectable, reset store fallback, and prevented submission.
+9. **Homepage & Pricing Section Added** —
+   - Replaced `/` automatic redirect to `/auth/login` in `apps/web/app/page.tsx` with a dedicated minimal, modern `HomeView` (`apps/web/modules/home/home-view.tsx`).
+   - Integrated top navigation with rOndevu logo and "Giriş Yap" button linked to `/auth/login` (or "Panele Git" if session exists).
+   - Designed a minimal pricing section adhering to rOndevu design aesthetics:
+     - Monthly: 1.000 ₺ / ay
+     - Yearly: 10.000 ₺ / yıl (with 12.000 ₺ struck through, highlighting 2 months free and 2.000 ₺ savings).
+   - Added `BackgroundGrid` consistent with the login view, feature highlights, and minimal footer.
+   - Fixed login flow default redirect from `/` to `/event-types` so logged-in users go straight to their dashboard.
 
 ## What Was NOT Changed (by design)
 - `@calcom/*` package namespace — internal implementation detail, changing would break 1000s of imports

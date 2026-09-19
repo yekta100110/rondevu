@@ -1,29 +1,25 @@
-import { cookies, headers } from "next/headers";
-import { redirect } from "next/navigation";
-
-import { checkOnboardingRedirect } from "@calcom/features/auth/lib/onboardingUtils";
 import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
-
+import { APP_NAME } from "@calcom/lib/constants";
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
+import { _generateMetadata } from "app/_utils";
+import { cookies, headers } from "next/headers";
+import { HomeView } from "~/home/home-view";
 
-const RedirectPage = async () => {
-  const session = await getServerSession({ req: buildLegacyRequest(await headers(), await cookies()) });
-
-  if (!session?.user?.id) {
-    redirect("/auth/login");
-  }
-
-  // Check if user needs onboarding and redirect before going to event-types
-  const organizationId = session.user.profile?.organizationId ?? null;
-  const onboardingPath = await checkOnboardingRedirect(session.user.id, {
-    checkEmailVerification: true,
-    organizationId,
-  });
-  if (onboardingPath) {
-    redirect(onboardingPath);
-  }
-
-  redirect("/event-types");
+export const generateMetadata = async () => {
+  return await _generateMetadata(
+    () => `${APP_NAME} - Sade ve Zahmetsiz Randevu Planlama`,
+    () => `${APP_NAME} ile randevularınızı ve toplantılarınızı zahmetsizce yönetin.`,
+    true,
+    undefined,
+    "/"
+  );
 };
 
-export default RedirectPage;
+const HomePage = async () => {
+  const session = await getServerSession({ req: buildLegacyRequest(await headers(), await cookies()) });
+  const isLoggedIn = !!session?.user?.id;
+
+  return <HomeView isLoggedIn={isLoggedIn} />;
+};
+
+export default HomePage;
