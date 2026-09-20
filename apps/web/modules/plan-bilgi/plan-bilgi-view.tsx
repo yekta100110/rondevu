@@ -4,7 +4,7 @@ import { APP_NAME } from "@calcom/lib/constants";
 import { Button } from "@calcom/ui/components/button";
 import { Logo } from "@calcom/ui/components/logo";
 import { motion } from "framer-motion";
-import { ArrowLeft, CheckCircle2, Mail, MessageCircle, Phone, Sparkles } from "lucide-react";
+import { ArrowLeft, Check, Mail, MessageCircle, Phone } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
@@ -18,7 +18,9 @@ function BackgroundGrid() {
   const height = rows * size + (rows - 1) * gap;
 
   return (
-    <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
       <svg
         width={width}
         height={height}
@@ -72,11 +74,14 @@ export function PlanBilgiView() {
       {/* Header / Navbar */}
       <header className="relative sticky top-0 z-20 border-subtle/80 border-b bg-default/80 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-85">
+          <Link
+            href="/"
+            aria-label="rOndevu Anasayfa"
+            className="flex items-center gap-2 transition-opacity hover:opacity-85">
             <Logo />
           </Link>
 
-          <div className="flex items-center gap-3">
+          <nav aria-label="Sayfa Menüsü" className="flex items-center gap-3">
             <Button
               href="/"
               color="minimal"
@@ -90,79 +95,78 @@ export function PlanBilgiView() {
               className="rounded-[8px] px-4 py-2 font-medium text-sm shadow-sm">
               Giriş Yap
             </Button>
-          </div>
+          </nav>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="relative z-10 mx-auto max-w-3xl px-4 pt-12 pb-24 sm:px-6 lg:px-8">
+      <main className="relative z-10 mx-auto max-w-2xl px-4 pt-12 pb-24 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 16, scale: 0.98 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className="space-y-8">
-          {/* Card */}
-          <div className="overflow-hidden rounded-2xl border border-subtle bg-default p-7 shadow-sm sm:p-10">
-            {/* Top Badge */}
-            <div className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-subtle bg-cal-muted px-3 py-1 font-medium text-subtle text-xs">
-              <Sparkles className="size-3.5 text-emphasis" />
-              <span>
-                {isYearly ? "Yıllık Avantajlı Plan (9.900 ₺ / yıl)" : "Aylık Esnek Plan (990 ₺ / ay)"}
-              </span>
-            </div>
-
-            <h1 className="font-bold font-cal text-3xl text-emphasis tracking-tight sm:text-4xl">
-              Plan Aktivasyonu ve Danışma
-            </h1>
-
-            <p className="mt-3 text-base text-subtle leading-relaxed">
-              {APP_NAME} üzerinde randevularınızı hemen planlamaya başlamak, hesap aktivasyonunuzu
-              tamamlamak veya aklınıza takılanları sormak için bize dilediğiniz zaman ulaşabilirsiniz.
-            </p>
-
-            {/* Plan Highlights */}
-            <div className="mt-6 rounded-xl border border-subtle/80 bg-cal-muted/50 p-4 sm:p-5">
-              <h2 className="mb-2 font-semibold text-emphasis text-sm">Seçilen Plan Özeti:</h2>
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-subtle">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="size-4 text-emerald-600 dark:text-emerald-400" />
-                  <span>
-                    Ücret:{" "}
-                    <strong className="text-emphasis">
-                      {isYearly ? "9.900 ₺ / yıl (2 ay hediye)" : "990 ₺ / ay"}
-                    </strong>
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="size-4 text-emerald-600 dark:text-emerald-400" />
-                  <span>Sınırsız randevu ve takvim senkronizasyonu</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="size-4 text-emerald-600 dark:text-emerald-400" />
-                  <span>Öncelikli destek ve hızlı kurulum</span>
-                </div>
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}>
+          <article className="rounded-2xl border border-subtle bg-default p-7 sm:p-10 shadow-sm">
+            {/* Header */}
+            <div className="mb-6">
+              <div className="mb-3 inline-flex items-center rounded-full border border-subtle bg-muted/40 px-3 py-0.5 text-xs font-medium text-subtle">
+                <span>{isYearly ? "Yıllık Plan (9.900 ₺ / yıl)" : "Aylık Plan (990 ₺ / ay)"}</span>
               </div>
+              <h1 className="font-bold font-cal text-3xl text-emphasis tracking-tight sm:text-4xl">
+                Hesap Aktivasyonu
+              </h1>
+              <p className="mt-3 text-base text-subtle leading-relaxed">
+                Hesabınızı hemen açıp profil linkinizi teslim edelim. Başlamak veya aklınıza takılanları
+                sormak için doğrudan bize yazabilirsiniz.
+              </p>
             </div>
 
-            {/* Contact Options */}
-            <div className="mt-8 space-y-4">
-              <h2 className="font-semibold text-emphasis text-base">İletişim & Danışma Kanalları</h2>
+            {/* Plan Özeti */}
+            <div className="mb-8 rounded-xl border border-subtle bg-muted/20 p-5">
+              <div className="flex items-baseline justify-between border-subtle border-b pb-3 mb-3">
+                <span className="font-medium text-sm text-emphasis">
+                  {isYearly ? "Yıllık Plan Tercihi" : "Aylık Plan Tercihi"}
+                </span>
+                <span className="font-semibold text-emphasis text-base">
+                  {isYearly ? "9.900 ₺ / yıl" : "990 ₺ / ay"}
+                </span>
+              </div>
+              <ul className="space-y-2 text-xs text-subtle">
+                <li className="flex items-center gap-2">
+                  <Check className="size-3.5 text-subtle shrink-0" />
+                  <span>Google Takvim ve Google Meet tam entegrasyonu</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <Check className="size-3.5 text-subtle shrink-0" />
+                  <span>Özel biyografi linki (rondevu.org/adiniz)</span>
+                </li>
+                {isYearly && (
+                  <li className="flex items-center gap-2">
+                    <Check className="size-3.5 text-subtle shrink-0" />
+                    <span>2 ay ücretsiz kullanım ve öncelikli destek</span>
+                  </li>
+                )}
+              </ul>
+            </div>
+
+            {/* İletişim Kanalları */}
+            <section aria-labelledby="contact-heading" className="space-y-4">
+              <h2 id="contact-heading" className="font-semibold text-emphasis text-sm">
+                Doğrudan İletişim Kanalları
+              </h2>
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                {/* Phone Card */}
-                <div className="flex flex-col justify-between rounded-xl border border-subtle bg-default p-5 transition hover:border-subtle/80">
+                {/* Telefon & WhatsApp */}
+                <div className="flex flex-col justify-between rounded-xl border border-subtle bg-default p-5 transition hover:border-subtle/90">
                   <div>
-                    <div className="mb-3 flex size-10 items-center justify-center rounded-lg bg-cal-muted text-emphasis">
-                      <Phone className="size-5" />
+                    <div className="mb-3 flex size-9 items-center justify-center rounded-lg bg-muted/50 text-emphasis">
+                      <Phone className="size-4" />
                     </div>
                     <div className="font-semibold text-emphasis text-sm">Telefon & WhatsApp</div>
-                    <p className="mt-1 text-xs text-subtle">Hızlı arama veya WhatsApp mesajı</p>
-                    <div className="mt-3 font-mono font-semibold text-base text-emphasis">
-                      0552 119 19 87
-                    </div>
+                    <p className="mt-0.5 text-xs text-subtle">Hızlı arama veya WhatsApp mesajı</p>
+                    <div className="mt-3 font-mono font-medium text-base text-emphasis">0552 119 19 87</div>
                   </div>
 
-                  <div className="mt-4 flex items-center gap-2 pt-2">
+                  <div className="mt-4 flex items-center gap-2 pt-1">
                     <a
                       href="tel:05521191987"
                       className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-[8px] bg-emphasis px-3 py-2 font-medium text-default text-xs transition hover:opacity-90 shadow-sm">
@@ -170,51 +174,70 @@ export function PlanBilgiView() {
                       <span>Ara</span>
                     </a>
                     <a
-                      href="https://wa.me/905521191987?text=Merhaba%2C%20rOndevu%20plan%20aktivasyonu%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum."
+                      href={`https://wa.me/905521191987?text=${encodeURIComponent(
+                        `Merhaba, rOndevu ${isYearly ? "Yıllık Plan" : "Aylık Plan"} hesap aktivasyonu için yazıyorum.`
+                      )}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-[8px] border border-subtle bg-default px-3 py-2 font-medium text-emphasis text-xs transition hover:bg-cal-muted">
-                      <MessageCircle className="size-3.5 text-emerald-600 dark:text-emerald-400" />
+                      className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-[8px] border border-subtle bg-default px-3 py-2 font-medium text-emphasis text-xs transition hover:bg-muted/40">
+                      <MessageCircle className="size-3.5" />
                       <span>WhatsApp</span>
                     </a>
                   </div>
                 </div>
 
-                {/* Email Card */}
-                <div className="flex flex-col justify-between rounded-xl border border-subtle bg-default p-5 transition hover:border-subtle/80">
+                {/* E-posta */}
+                <div className="flex flex-col justify-between rounded-xl border border-subtle bg-default p-5 transition hover:border-subtle/90">
                   <div>
-                    <div className="mb-3 flex size-10 items-center justify-center rounded-lg bg-cal-muted text-emphasis">
-                      <Mail className="size-5" />
+                    <div className="mb-3 flex size-9 items-center justify-center rounded-lg bg-muted/50 text-emphasis">
+                      <Mail className="size-4" />
                     </div>
                     <div className="font-semibold text-emphasis text-sm">E-posta</div>
-                    <p className="mt-1 text-xs text-subtle">Aktivasyon ve faturalandırma talepleri</p>
-                    <div className="mt-3 font-mono font-semibold text-base text-emphasis break-all">
+                    <p className="mt-0.5 text-xs text-subtle">Aktivasyon talebi iletmek için</p>
+                    <div className="mt-3 font-mono font-medium text-base text-emphasis break-all">
                       y_ekta@icloud.com
                     </div>
                   </div>
 
-                  <div className="mt-4 pt-2">
+                  <div className="mt-4 pt-1">
                     <a
-                      href="mailto:y_ekta@icloud.com?subject=rOndevu%20Plan%20Aktivasyonu"
-                      className="inline-flex w-full items-center justify-center gap-1.5 rounded-[8px] border border-subtle bg-default px-3 py-2 font-medium text-emphasis text-xs transition hover:bg-cal-muted">
+                      href={`mailto:y_ekta@icloud.com?subject=${encodeURIComponent(
+                        `rOndevu Hesap Aktivasyonu (${isYearly ? "Yıllık Plan" : "Aylık Plan"})`
+                      )}`}
+                      className="inline-flex w-full items-center justify-center gap-1.5 rounded-[8px] border border-subtle bg-default px-3 py-2 font-medium text-emphasis text-xs transition hover:bg-muted/40">
                       <Mail className="size-3.5" />
                       <span>E-posta Gönder</span>
                     </a>
                   </div>
                 </div>
               </div>
-            </div>
+            </section>
 
-            {/* Return Link */}
-            <div className="mt-10 flex items-center justify-between border-subtle/80 border-t pt-6 text-xs text-subtle">
-              <span>Talepleriniz en kısa sürede değerlendirilip yanıtlanır.</span>
+            {/* Alt Bilgi */}
+            <div className="mt-8 flex items-center justify-between border-subtle/80 border-t pt-5 text-xs text-subtle">
+              <span>Talebiniz hızla yanıtlanır.</span>
               <Link href="/" className="font-medium text-emphasis hover:underline">
                 ← Planlara geri dön
               </Link>
             </div>
-          </div>
+          </article>
         </motion.div>
       </main>
+
+      {/* Footer */}
+      <footer className="relative z-10 border-subtle/80 border-t bg-default/60 py-8">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 text-xs text-subtle sm:px-6 lg:px-8">
+          <div className="flex items-center gap-2">
+            <Logo small />
+            <span>
+              © {new Date().getFullYear()} {APP_NAME}
+            </span>
+          </div>
+          <Link href="/" className="transition hover:text-emphasis">
+            Anasayfa
+          </Link>
+        </div>
+      </footer>
     </div>
   );
 }

@@ -2,10 +2,9 @@
 
 import { APP_NAME } from "@calcom/lib/constants";
 import classNames from "@calcom/ui/classNames";
-import { Badge } from "@calcom/ui/components/badge";
 import { Button } from "@calcom/ui/components/button";
 import { Logo } from "@calcom/ui/components/logo";
-import { ArrowRight, Calendar, Check, Clock, ShieldCheck, Sparkles, Zap } from "lucide-react";
+import { ArrowRight, Calendar, Check, Link2, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -19,7 +18,9 @@ function BackgroundGrid() {
   const height = rows * size + (rows - 1) * gap;
 
   return (
-    <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
       <svg
         width={width}
         height={height}
@@ -34,10 +35,6 @@ function BackgroundGrid() {
           <mask id="homeGridMask">
             <rect width={width} height={height} fill="url(#homeGridFade)" />
           </mask>
-          <filter id="homeGridShadow" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="4" stdDeviation="4" floodColor="rgba(34,42,53,0.04)" />
-            <feDropShadow dx="0" dy="1" stdDeviation="2" floodColor="rgba(19,19,22,0.02)" />
-          </filter>
         </defs>
         <g mask="url(#homeGridMask)">
           {Array.from({ length: rows * cols }).map((_, i) => {
@@ -56,7 +53,6 @@ function BackgroundGrid() {
                 fill="var(--grid-fill)"
                 stroke="var(--grid-stroke)"
                 strokeWidth="1"
-                filter="url(#homeGridShadow)"
               />
             );
           })}
@@ -73,18 +69,40 @@ interface HomeViewProps {
 export function HomeView({ isLoggedIn = false }: HomeViewProps) {
   const [selectedBilling, setSelectedBilling] = useState<"monthly" | "yearly">("yearly");
 
+  const highlights = [
+    {
+      icon: Link2,
+      title: "Biyografi Linkiyle Paylaşım",
+      description:
+        "Randevu linkinizi Instagram veya WhatsApp profilinize koyun. Danışanınız gün ve saat seçerek randevusunu saniyeler içinde alsın.",
+    },
+    {
+      icon: Calendar,
+      title: "Google Takvim ve Meet",
+      description:
+        "Takviminizle eşzamanlı çalışır. Dolu saatleri otomatik kapatır, randevu oluştuğunda toplantı linkini (Google Meet) iki tarafa da anında iletir.",
+    },
+    {
+      icon: ShieldCheck,
+      title: "No-Show ve Kötüye Kullanım Koruması",
+      description:
+        "Randevusuna mazeretsiz gelmeyen veya suistimal eden kişileri tek tıkla engelleyin, takviminizin boşa kilitlenmesini önleyin.",
+    },
+  ];
+
   const monthlyFeatures = [
     "Sınırsız randevu ve etkinlik türü",
-    "Google Takvim ile çift yönlü senkronizasyon",
-    "Web sitesi widget'ı ve özel rezervasyon bağlantısı",
+    "Google Takvim ve Google Meet entegrasyonu",
+    "Özel randevu linki (rondevu.org/adiniz)",
     "Otomatik e-posta bildirimleri",
+    "Katılımcı engelleme (No-Show koruması)",
   ];
 
   const yearlyFeatures = [
     "Aylık plandaki tüm özellikler dahil",
-    "12 ay boyunca kesintisiz kullanım",
-    "2 ay ücretsiz kullanım (1.980 ₺ tasarruf)",
-    "Öncelikli teknik destek ve rehberlik",
+    "12 ay boyunca fiyat artışından etkilenmeme",
+    "2 ay ücretsiz kullanım (1.980 ₺ avantaj)",
+    "Öncelikli doğrudan WhatsApp desteği",
   ];
 
   return (
@@ -94,11 +112,14 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
       {/* Header / Navbar */}
       <header className="relative sticky top-0 z-20 border-subtle/80 border-b bg-default/80 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-85">
+          <Link
+            href="/"
+            aria-label="rOndevu Anasayfa"
+            className="flex items-center gap-2 transition-opacity hover:opacity-85">
             <Logo />
           </Link>
 
-          <div className="flex items-center gap-3">
+          <nav aria-label="Ana Menü" className="flex items-center gap-3">
             <Button
               href="#pricing"
               color="minimal"
@@ -121,26 +142,27 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
                 Giriş Yap
               </Button>
             )}
-          </div>
+          </nav>
         </div>
       </header>
 
       {/* Main Content */}
       <main className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        {/* Hero Section */}
-        <section className="pt-20 pb-16 text-center sm:pt-28 sm:pb-20">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-subtle bg-cal-muted px-3.5 py-1 font-medium text-subtle text-xs shadow-sm">
-            <Sparkles className="size-3.5 text-emphasis" />
-            <span>Kolay Randevu Yönetimi</span>
+        {/* 1. Ekran: Hero Section */}
+        <section aria-labelledby="hero-title" className="pt-20 pb-16 text-center sm:pt-28 sm:pb-24">
+          <div className="mb-6 inline-flex items-center rounded-full border border-subtle bg-muted/40 px-3.5 py-1 text-xs font-medium text-subtle">
+            <span>Bireysel Uzmanlar İçin Randevu Altyapısı</span>
           </div>
 
-          <h1 className="mx-auto max-w-3xl font-bold font-cal text-4xl text-emphasis leading-[1.15] tracking-tight sm:text-5xl md:text-6xl">
-            Randevularınızı zahmetsizce planlayın
+          <h1
+            id="hero-title"
+            className="mx-auto max-w-3xl font-bold font-cal text-4xl text-emphasis leading-[1.14] tracking-tight sm:text-5xl md:text-6xl">
+            Müsait saatlerinizi paylaşın, randevuyu danışanınız alsın.
           </h1>
 
-          <p className="mx-auto mt-5 max-w-2xl font-normal text-base text-subtle leading-relaxed sm:text-lg">
-            Müsaitlik saatlerinizi belirleyin, bağlantınızı paylaşın ve randevularınızı tek bir yerden kolayca
-            yönetin.
+          <p className="mx-auto mt-6 max-w-2xl font-normal text-base text-subtle leading-relaxed sm:text-lg">
+            Takviminizi bağlayın, linkinizi biyografinize ekleyin. Takviminiz danışanınızla otomatik eşleşsin;
+            mesajla saat ayarlama derdi bitsin.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -160,57 +182,49 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
           </div>
         </section>
 
-        {/* Minimal Feature Highlights */}
-        <section className="border-subtle/80 border-t py-12">
+        {/* 1. Ekran: 3 Kart */}
+        <section aria-labelledby="features-title" className="border-subtle/80 border-t py-16 sm:py-20">
+          <h2 id="features-title" className="sr-only">
+            Öne Çıkan Özellikler
+          </h2>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            <div className="rounded-xl border border-subtle bg-default/60 p-6 shadow-sm">
-              <div className="mb-4 flex size-10 items-center justify-center rounded-lg bg-cal-muted text-emphasis">
-                <Clock className="size-5" />
-              </div>
-              <h3 className="mb-1.5 font-semibold text-base text-emphasis">Hızlı Kurulum</h3>
-              <p className="text-sm text-subtle leading-relaxed">
-                Dakikalar içinde müsaitlik aralıklarınızı belirleyin ve kişisel rezervasyon linkinizi oluşturun.
-              </p>
-            </div>
-
-            <div className="rounded-xl border border-subtle bg-default/60 p-6 shadow-sm">
-              <div className="mb-4 flex size-10 items-center justify-center rounded-lg bg-cal-muted text-emphasis">
-                <Calendar className="size-5" />
-              </div>
-              <h3 className="mb-1.5 font-semibold text-base text-emphasis">Tam Senkronizasyon</h3>
-              <p className="text-sm text-subtle leading-relaxed">
-                Takviminizle eşzamanlı çalışır, çakışan randevuları engeller ve planınızı güncel tutar.
-              </p>
-            </div>
-
-            <div className="rounded-xl border border-subtle bg-default/60 p-6 shadow-sm">
-              <div className="mb-4 flex size-10 items-center justify-center rounded-lg bg-cal-muted text-emphasis">
-                <ShieldCheck className="size-5" />
-              </div>
-              <h3 className="mb-1.5 font-semibold text-base text-emphasis">Gizlilik ve Kontrol</h3>
-              <p className="text-sm text-subtle leading-relaxed">
-                Verileriniz tamamen kontrolünüz altındadır. Üçüncü taraf takipçiler veya kısıtlamalar yoktur.
-              </p>
-            </div>
+            {highlights.map((item, idx) => {
+              const IconComponent = item.icon;
+              return (
+                <article
+                  key={idx}
+                  className="rounded-xl border border-subtle bg-default/70 p-6 sm:p-7 shadow-sm transition hover:border-subtle/90">
+                  <div className="mb-4 flex size-10 items-center justify-center rounded-lg bg-muted/60 text-emphasis">
+                    <IconComponent className="size-5" />
+                  </div>
+                  <h3 className="mb-2 font-semibold text-base text-emphasis">{item.title}</h3>
+                  <p className="text-sm text-subtle leading-relaxed">{item.description}</p>
+                </article>
+              );
+            })}
           </div>
         </section>
 
-        {/* Pricing Section */}
-        <section id="pricing" className="border-subtle/80 border-t py-16 sm:py-24">
+        {/* 2. Ekran: Fiyatlandırma Bölümü */}
+        <section
+          id="pricing"
+          aria-labelledby="pricing-title"
+          className="border-subtle/80 border-t py-16 sm:py-24">
           <div className="mx-auto mb-12 max-w-2xl text-center">
-            <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-subtle bg-cal-muted px-3 py-0.5 font-medium text-subtle text-xs">
-              <Zap className="size-3 text-emphasis" />
-              <span>Şeffaf Fiyatlandırma</span>
+            <div className="mb-3 inline-flex items-center rounded-full border border-subtle bg-muted/40 px-3 py-0.5 text-xs font-medium text-subtle">
+              <span>Sabit Fiyat, Komisyonsuz</span>
             </div>
-            <h2 className="font-bold font-cal text-3xl text-emphasis tracking-tight sm:text-4xl">
+            <h2
+              id="pricing-title"
+              className="font-bold font-cal text-3xl text-emphasis tracking-tight sm:text-4xl">
               Planlar ve Fiyatlandırma
             </h2>
             <p className="mt-3 text-sm text-subtle sm:text-base">
-              Gizli masraf veya sürpriz masraf yok. İhtiyacınıza en uygun ödeme periyodunu seçin.
+              Randevu başı komisyon veya gizli ücret yok. Tüm özellikler iki planda da eksiksiz açık.
             </p>
 
             {/* Billing Cycle Toggle */}
-            <div className="mt-6 inline-flex items-center rounded-full border border-subtle bg-cal-muted p-1">
+            <div className="mt-6 inline-flex items-center rounded-full border border-subtle bg-muted/30 p-1">
               <button
                 type="button"
                 onClick={() => setSelectedBilling("monthly")}
@@ -226,13 +240,13 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
                 type="button"
                 onClick={() => setSelectedBilling("yearly")}
                 className={classNames(
-                  "flex items-center gap-1.5 rounded-full px-4 py-1.5 font-medium text-xs transition sm:text-sm",
+                  "flex items-center gap-2 rounded-full px-4 py-1.5 font-medium text-xs transition sm:text-sm",
                   selectedBilling === "yearly"
                     ? "bg-default text-emphasis shadow-sm"
                     : "text-subtle hover:text-emphasis"
                 )}>
                 <span>Yıllık Faturalandırma</span>
-                <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 font-semibold text-[11px] text-emerald-600 dark:text-emerald-400">
+                <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 font-medium text-[11px] text-emerald-600 dark:text-emerald-400">
                   2 Ay Hediye
                 </span>
               </button>
@@ -241,45 +255,36 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
 
           {/* Pricing Cards Grid */}
           <div className="mx-auto grid max-w-4xl grid-cols-1 items-stretch gap-8 lg:grid-cols-2">
-            {/* Monthly Card */}
-            <div
+            {/* Aylık Plan Kartı (990 TL) */}
+            <article
               className={classNames(
-                "relative flex flex-col justify-between rounded-2xl border bg-default p-7 shadow-sm transition sm:p-9",
-                selectedBilling === "monthly"
-                  ? "border-emphasis ring-1 ring-emphasis"
-                  : "border-subtle hover:border-subtle/80"
+                "relative flex flex-col justify-between rounded-2xl border bg-default p-7 sm:p-9 shadow-sm transition",
+                selectedBilling === "monthly" ? "border-emphasis ring-1 ring-emphasis" : "border-subtle"
               )}>
               <div>
                 <div className="mb-2 flex items-center justify-between">
                   <h3 className="font-bold font-cal text-emphasis text-xl">Aylık Plan</h3>
-                  <Badge variant="gray" size="md">
-                    Esnek
-                  </Badge>
+                  <span className="rounded border border-subtle px-2 py-0.5 font-medium text-xs text-subtle">
+                    Taahhütsüz
+                  </span>
                 </div>
                 <p className="mb-6 text-sm text-subtle">
-                  Aylık düzenli kullanım için esnek ve taahhütsüz seçenek.
+                  Taahhütsüz kullanım; dilediğiniz zaman tek tıkla sonlandırın.
                 </p>
 
-                {/* Price Display: 990 TL */}
                 <div className="mb-6 flex items-baseline gap-1.5 border-subtle border-b pb-6">
-                  <span className="font-bold font-cal text-4xl text-emphasis sm:text-5xl">990 ₺</span>
+                  <span className="font-bold font-cal text-4xl sm:text-5xl text-emphasis">990 ₺</span>
                   <span className="font-medium text-sm text-subtle">/ ay</span>
                 </div>
 
-                {/* Features */}
-                <div className="mb-8 space-y-3.5">
-                  <p className="font-semibold text-subtle text-xs uppercase tracking-wider">
-                    Dahil Olan Özellikler:
-                  </p>
-                  <ul className="space-y-3">
-                    {monthlyFeatures.map((feat, idx) => (
-                      <li key={idx} className="flex items-start gap-3 text-emphasis text-sm">
-                        <Check className="mt-0.5 size-4 shrink-0 text-emphasis" />
-                        <span>{feat}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <ul className="mb-8 space-y-3">
+                  {monthlyFeatures.map((feat, idx) => (
+                    <li key={idx} className="flex items-start gap-3 text-emphasis text-sm">
+                      <Check className="mt-0.5 size-4 shrink-0 text-subtle" />
+                      <span>{feat}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
 
               <div>
@@ -289,68 +294,40 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
                   className="w-full justify-center rounded-[10px] py-2.5 font-medium text-sm">
                   Aylık Planla Başla
                 </Button>
-                <p className="mt-2.5 text-center text-subtle text-xs">
-                  İstediğiniz zaman tek tıkla iptal edebilirsiniz.
-                </p>
               </div>
-            </div>
+            </article>
 
-            {/* Yearly Card (Featured) */}
-            <div
+            {/* Yıllık Plan Kartı (9.900 TL) */}
+            <article
               className={classNames(
-                "relative flex flex-col justify-between rounded-2xl border bg-default p-7 shadow-sm transition sm:p-9",
-                selectedBilling === "yearly"
-                  ? "border-emphasis ring-2 ring-emphasis"
-                  : "border-subtle hover:border-subtle/80"
+                "relative flex flex-col justify-between rounded-2xl border bg-default p-7 sm:p-9 shadow-sm transition",
+                selectedBilling === "yearly" ? "border-emphasis ring-1 ring-emphasis" : "border-subtle"
               )}>
-              {/* Highlight Badge */}
-              <div className="absolute -top-3.5 right-6">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-emphasis px-3.5 py-1 font-semibold text-default text-xs shadow">
-                  <Sparkles className="size-3" />
-                  En Avantajlı • 2 Ay Ücretsiz
-                </span>
-              </div>
-
               <div>
                 <div className="mb-2 flex items-center justify-between">
                   <h3 className="font-bold font-cal text-emphasis text-xl">Yıllık Plan</h3>
-                  <Badge variant="green" size="md">
-                    %17 İndirim
-                  </Badge>
+                  <span className="rounded border border-subtle px-2 py-0.5 font-medium text-xs text-subtle">
+                    12 Ay
+                  </span>
                 </div>
-                <p className="mb-4 text-sm text-subtle">
-                  12 ay kesintisiz erişim ve peşin ödemede 2 ay hediye.
-                </p>
+                <p className="mb-6 text-sm text-subtle">12 ay kesintisiz kullanım, 2 ay hediye.</p>
 
-                {/* Price Display: 11.880 TL yerine 9.900 TL */}
-                <div className="mb-6 border-subtle border-b pb-6">
-                  <div className="flex items-baseline gap-2.5">
-                    <span className="font-normal text-subtle text-xl line-through decoration-subtle/70 sm:text-2xl">
-                      11.880 ₺
-                    </span>
-                    <span className="font-bold font-cal text-4xl text-emphasis sm:text-5xl">9.900 ₺</span>
-                    <span className="font-medium text-sm text-subtle">/ yıl</span>
-                  </div>
-
-                  <div className="mt-2.5 inline-flex items-center gap-1.5 rounded-md bg-emerald-500/10 px-2.5 py-1 font-semibold text-emerald-600 text-xs dark:text-emerald-400">
-                    <span>11.880 TL yerine 9.900 TL (Yılda 1.980 ₺ tasarruf)</span>
-                  </div>
+                <div className="mb-6 flex items-baseline gap-2.5 border-subtle border-b pb-6">
+                  <span className="font-normal text-subtle text-xl line-through decoration-subtle/70 sm:text-2xl">
+                    11.880 ₺
+                  </span>
+                  <span className="font-bold font-cal text-4xl sm:text-5xl text-emphasis">9.900 ₺</span>
+                  <span className="font-medium text-sm text-subtle">/ yıl</span>
                 </div>
 
-                {/* Features */}
-                <div className="mb-8 space-y-3.5">
-                  <p className="font-semibold text-subtle text-xs uppercase tracking-wider">
-                    Dahil Olan Özellikler:
-                  </p>
-                  <ul className="space-y-3">
-                    {yearlyFeatures.map((feat, idx) => (
-                      <li key={idx} className="flex items-start gap-3 text-emphasis text-sm">
-                        <Check className="mt-0.5 size-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
-                        <span className={idx === 2 ? "font-semibold" : ""}>{feat}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <ul className="mb-8 space-y-3">
+                  {yearlyFeatures.map((feat, idx) => (
+                    <li key={idx} className="flex items-start gap-3 text-emphasis text-sm">
+                      <Check className="mt-0.5 size-4 shrink-0 text-emphasis" />
+                      <span>{feat}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
 
               <div>
@@ -361,9 +338,8 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
                   Yıllık Avantajla Başla
                   <ArrowRight className="ml-2 size-4" />
                 </Button>
-                <p className="mt-2.5 text-center text-subtle text-xs">Aylık yaklaşık 825 ₺'ye denk gelir.</p>
               </div>
-            </div>
+            </article>
           </div>
         </section>
       </main>
@@ -378,14 +354,14 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
             </span>
           </div>
 
-          <div className="flex items-center gap-6 text-xs">
+          <nav aria-label="Alt Bilgi Menüsü" className="flex items-center gap-6 text-xs">
             <Link href="#pricing" className="transition hover:text-emphasis">
               Fiyatlandırma
             </Link>
             <Link href="/auth/login" className="transition hover:text-emphasis">
               Giriş Yap
             </Link>
-          </div>
+          </nav>
         </div>
       </footer>
     </div>
