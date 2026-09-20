@@ -9,6 +9,7 @@ import { ZAdminLockUserAccountSchema } from "./lockUserAccount.schema";
 import { ZAdminRemoveTwoFactor } from "./removeTwoFactor.schema";
 import { ZAdminPasswordResetSchema } from "./sendPasswordReset.schema";
 import { ZSetSMSLockState } from "./setSMSLockState.schema";
+import { ZSendTestSMSSchema } from "./sendTestSMS.schema";
 import { toggleFeatureFlag } from "./toggleFeatureFlag.procedure";
 import { ZAdminUnassignFeatureFromTeamSchema } from "./unassignFeatureFromTeam.schema";
 import { watchlistRouter } from "./watchlist/_router";
@@ -37,6 +38,14 @@ export const adminRouter = router({
   }),
   getSMSLockStateTeamsUsers: authedAdminProcedure.query(async (opts) => {
     const { default: handler } = await import("./getSMSLockStateTeamsUsers.handler");
+    return handler(opts);
+  }),
+  getSMSConfig: authedAdminProcedure.query(async (opts) => {
+    const { default: handler } = await import("./getSMSConfig.handler");
+    return handler(opts);
+  }),
+  sendTestSMS: authedAdminProcedure.input(ZSendTestSMSSchema).mutation(async (opts) => {
+    const { default: handler } = await import("./sendTestSMS.handler");
     return handler(opts);
   }),
   setSMSLockState: authedAdminProcedure.input(ZSetSMSLockState).mutation(async (opts) => {

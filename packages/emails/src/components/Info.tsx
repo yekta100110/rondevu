@@ -17,10 +17,10 @@ export const Info = (props: {
   const safeLabel = markdownToSafeHTML(props.label.toString());
 
   const StyledHtmlContent = ({ htmlContent }: { htmlContent: string }) => {
-    const css = "color: '#101010'; font-weight: 400; line-height: 24px; margin: 0;";
+    const css = "color: '#f4f4f5'; font-weight: 400; line-height: 24px; margin: 0;";
     return (
       <p
-        className="dark:text-darkgray-600 mt-2 text-sm text-gray-500 [&_a]:text-blue-500 [&_a]:underline [&_a]:hover:text-blue-600"
+        className="mt-2 text-sm text-zinc-300 [&_a]:text-blue-400 [&_a]:underline [&_a]:hover:text-blue-300"
         // eslint-disable-next-line react/no-danger
         // biome-ignore lint/security/noDangerouslySetInnerHtml: Content is sanitized via markdownToSafeHTML
         dangerouslySetInnerHTML={{
@@ -36,12 +36,12 @@ export const Info = (props: {
     <>
       {props.withSpacer && <Spacer />}
       <div>
-        <p style={{ color: "#101010" }}>
+        <p style={{ color: "#a1a1aa", fontSize: "14px", marginBottom: "4px" }}>
           {props.isLabelHTML ? <StyledHtmlContent htmlContent={safeLabel} /> : props.label}
         </p>
         <p
           style={{
-            color: "#101010",
+            color: "#f4f4f5",
             fontWeight: 400,
             lineHeight: "24px",
             whiteSpace: "pre-wrap",

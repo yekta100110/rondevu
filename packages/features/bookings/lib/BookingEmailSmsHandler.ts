@@ -158,17 +158,17 @@ export class BookingEmailSmsHandler {
     const originalBookingMemberEmails: Person[] = [];
 
     for (const user of originalRescheduledBooking.attendees) {
-      const translate = await getTranslation(user.locale ?? "en", "common");
+      const translate = await getTranslation(user.locale ?? "tr", "common");
       originalBookingMemberEmails.push({
         name: user.name,
         email: user.email,
         timeZone: user.timeZone,
         phoneNumber: user.phoneNumber,
-        language: { translate, locale: user.locale ?? "en" },
+        language: { translate, locale: user.locale ?? "tr" },
       });
     }
     if (originalRescheduledBooking.user) {
-      const translate = await getTranslation(originalRescheduledBooking.user.locale ?? "en", "common");
+      const translate = await getTranslation(originalRescheduledBooking.user.locale ?? "tr", "common");
       const originalOrganizer = originalRescheduledBooking.user;
 
       originalBookingMemberEmails.push({
@@ -176,7 +176,7 @@ export class BookingEmailSmsHandler {
         username: originalRescheduledBooking.user.username ?? undefined,
         timeFormat: getTimeFormatStringFromUserTimeFormat(originalRescheduledBooking.user.timeFormat),
         name: originalRescheduledBooking.user.name || "",
-        language: { translate, locale: originalRescheduledBooking.user.locale ?? "en" },
+        language: { translate, locale: originalRescheduledBooking.user.locale ?? "tr" },
       });
 
       if (changedOrganizer) {
@@ -189,7 +189,7 @@ export class BookingEmailSmsHandler {
           email: originalOrganizer.email,
           name: originalOrganizer.name || "",
           timeZone: originalOrganizer.timeZone,
-          language: { translate, locale: originalOrganizer.locale || "en" },
+          language: { translate, locale: originalOrganizer.locale || "tr" },
         };
       }
     }

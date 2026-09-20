@@ -138,6 +138,7 @@ export function getThemeProviderProps({
     storageKey,
     nonce: props.nonce,
     enableColorScheme: false,
+    defaultTheme: "system",
     // Enables theme switching based on system preference if true
     enableSystem: themeSupport !== ThemeSupport.None,
     // next-themes doesn't listen to changes on storageKey. So we need to force a re-render when storageKey changes

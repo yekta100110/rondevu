@@ -74,23 +74,17 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
   const [selectedBilling, setSelectedBilling] = useState<"monthly" | "yearly">("yearly");
 
   const monthlyFeatures = [
-    "Sınırsız Randevu ve Etkinlik Türü",
-    "Google Takvim ile Çift Yönlü Senkronizasyon",
-    "Video Konferans Desteği (Daily.co)",
-    "Kişiselleştirilmiş Randevu Bağlantısı",
-    "Web Sitesine Gömülebilir (Embed) Widget",
-    "Otomatik E-posta Bildirimleri ve Hatırlatıcılar",
-    "Zaman Dilimi (Timezone) Otomatik Tespiti",
+    "Sınırsız randevu ve etkinlik türü",
+    "Google Takvim ile çift yönlü senkronizasyon",
+    "Web sitesi widget'ı ve özel rezervasyon bağlantısı",
+    "Otomatik e-posta bildirimleri",
   ];
 
   const yearlyFeatures = [
     "Aylık plandaki tüm özellikler dahil",
-    "12 Ay boyunca kesintisiz randevu yönetimi",
-    "12.000 ₺ yerine sadece 10.000 ₺ (2 ay hediye)",
-    "Yılda 2.000 ₺ doğrudan tasarruf",
+    "12 ay boyunca kesintisiz kullanım",
+    "2 ay ücretsiz kullanım (1.980 ₺ tasarruf)",
     "Öncelikli teknik destek ve rehberlik",
-    "Gelişmiş analitik ve kullanım raporları",
-    "Tüm yeni özelliklere anında erken erişim",
   ];
 
   return (
@@ -137,16 +131,16 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
         <section className="pt-20 pb-16 text-center sm:pt-28 sm:pb-20">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-subtle bg-cal-muted px-3.5 py-1 font-medium text-subtle text-xs shadow-sm">
             <Sparkles className="size-3.5 text-emphasis" />
-            <span>Modern & Sade Randevu Deneyimi</span>
+            <span>Kolay Randevu Yönetimi</span>
           </div>
 
           <h1 className="mx-auto max-w-3xl font-bold font-cal text-4xl text-emphasis leading-[1.15] tracking-tight sm:text-5xl md:text-6xl">
-            Randevularınızı sade ve zahmetsizce yönetin
+            Randevularınızı zahmetsizce planlayın
           </h1>
 
           <p className="mx-auto mt-5 max-w-2xl font-normal text-base text-subtle leading-relaxed sm:text-lg">
-            {APP_NAME}, randevu oluşturma ve takvim yönetimini karmaşadan arındırır. Müsaitlik saatlerinizi
-            belirleyin, bağlantınızı paylaşın ve müşterilerinizin saniyeler içinde randevu almasını sağlayın.
+            Müsaitlik saatlerinizi belirleyin, bağlantınızı paylaşın ve randevularınızı tek bir yerden kolayca
+            yönetin.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -173,10 +167,9 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
               <div className="mb-4 flex size-10 items-center justify-center rounded-lg bg-cal-muted text-emphasis">
                 <Clock className="size-5" />
               </div>
-              <h3 className="mb-1.5 font-semibold text-base text-emphasis">Hızlı ve Sade Kurulum</h3>
+              <h3 className="mb-1.5 font-semibold text-base text-emphasis">Hızlı Kurulum</h3>
               <p className="text-sm text-subtle leading-relaxed">
-                Dakikalar içinde müsaitlik aralıklarınızı belirleyin ve profesyonel rezervasyon linkinizi
-                oluşturun.
+                Dakikalar içinde müsaitlik aralıklarınızı belirleyin ve kişisel rezervasyon linkinizi oluşturun.
               </p>
             </div>
 
@@ -184,9 +177,9 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
               <div className="mb-4 flex size-10 items-center justify-center rounded-lg bg-cal-muted text-emphasis">
                 <Calendar className="size-5" />
               </div>
-              <h3 className="mb-1.5 font-semibold text-base text-emphasis">Otomatik Senkronizasyon</h3>
+              <h3 className="mb-1.5 font-semibold text-base text-emphasis">Tam Senkronizasyon</h3>
               <p className="text-sm text-subtle leading-relaxed">
-                Takviminizle tam uyumlu çalışır, çakışan randevuları engeller ve tüm planınızı senkron tutar.
+                Takviminizle eşzamanlı çalışır, çakışan randevuları engeller ve planınızı güncel tutar.
               </p>
             </div>
 
@@ -194,10 +187,9 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
               <div className="mb-4 flex size-10 items-center justify-center rounded-lg bg-cal-muted text-emphasis">
                 <ShieldCheck className="size-5" />
               </div>
-              <h3 className="mb-1.5 font-semibold text-base text-emphasis">Gizlilik ve Bağımsızlık</h3>
+              <h3 className="mb-1.5 font-semibold text-base text-emphasis">Gizlilik ve Kontrol</h3>
               <p className="text-sm text-subtle leading-relaxed">
-                Verileriniz tamamen kontrolünüz altındadır. Üçüncü taraf takipçiler veya karmaşık kısıtlamalar
-                yoktur.
+                Verileriniz tamamen kontrolünüz altındadır. Üçüncü taraf takipçiler veya kısıtlamalar yoktur.
               </p>
             </div>
           </div>
@@ -208,13 +200,13 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
           <div className="mx-auto mb-12 max-w-2xl text-center">
             <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-subtle bg-cal-muted px-3 py-0.5 font-medium text-subtle text-xs">
               <Zap className="size-3 text-emphasis" />
-              <span>Şeffaf & Sade</span>
+              <span>Şeffaf Fiyatlandırma</span>
             </div>
             <h2 className="font-bold font-cal text-3xl text-emphasis tracking-tight sm:text-4xl">
-              Fiyatlandırma
+              Planlar ve Fiyatlandırma
             </h2>
             <p className="mt-3 text-sm text-subtle sm:text-base">
-              Gizli ücret veya sürpriz masraf yok. İhtiyacınıza en uygun ödeme periyodunu seçin.
+              Gizli masraf veya sürpriz masraf yok. İhtiyacınıza en uygun ödeme periyodunu seçin.
             </p>
 
             {/* Billing Cycle Toggle */}
@@ -268,9 +260,9 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
                   Aylık düzenli kullanım için esnek ve taahhütsüz seçenek.
                 </p>
 
-                {/* Price Display */}
+                {/* Price Display: 990 TL */}
                 <div className="mb-6 flex items-baseline gap-1.5 border-subtle border-b pb-6">
-                  <span className="font-bold font-cal text-4xl text-emphasis sm:text-5xl">1.000 ₺</span>
+                  <span className="font-bold font-cal text-4xl text-emphasis sm:text-5xl">990 ₺</span>
                   <span className="font-medium text-sm text-subtle">/ ay</span>
                 </div>
 
@@ -292,10 +284,10 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
 
               <div>
                 <Button
-                  href={isLoggedIn ? "/event-types" : "/auth/login"}
+                  href="/plan-bilgi?plan=monthly"
                   color="secondary"
                   className="w-full justify-center rounded-[10px] py-2.5 font-medium text-sm">
-                  {isLoggedIn ? "Panele Git" : "Aylık Planla Başla"}
+                  Aylık Planla Başla
                 </Button>
                 <p className="mt-2.5 text-center text-subtle text-xs">
                   İstediğiniz zaman tek tıkla iptal edebilirsiniz.
@@ -327,21 +319,21 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
                   </Badge>
                 </div>
                 <p className="mb-4 text-sm text-subtle">
-                  12 ay kesintisiz erişim ve yıllık peşin ödemede 2 ay hediye.
+                  12 ay kesintisiz erişim ve peşin ödemede 2 ay hediye.
                 </p>
 
-                {/* Price Display: 12.000 değil 10.000 TL */}
+                {/* Price Display: 11.880 TL yerine 9.900 TL */}
                 <div className="mb-6 border-subtle border-b pb-6">
                   <div className="flex items-baseline gap-2.5">
                     <span className="font-normal text-subtle text-xl line-through decoration-subtle/70 sm:text-2xl">
-                      12.000 ₺
+                      11.880 ₺
                     </span>
-                    <span className="font-bold font-cal text-4xl text-emphasis sm:text-5xl">10.000 ₺</span>
+                    <span className="font-bold font-cal text-4xl text-emphasis sm:text-5xl">9.900 ₺</span>
                     <span className="font-medium text-sm text-subtle">/ yıl</span>
                   </div>
 
                   <div className="mt-2.5 inline-flex items-center gap-1.5 rounded-md bg-emerald-500/10 px-2.5 py-1 font-semibold text-emerald-600 text-xs dark:text-emerald-400">
-                    <span>12.000 TL yerine 10.000 TL (Yılda 2.000 ₺ tasarruf)</span>
+                    <span>11.880 TL yerine 9.900 TL (Yılda 1.980 ₺ tasarruf)</span>
                   </div>
                 </div>
 
@@ -363,13 +355,13 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
 
               <div>
                 <Button
-                  href={isLoggedIn ? "/event-types" : "/auth/login"}
+                  href="/plan-bilgi?plan=yearly"
                   color="primary"
                   className="w-full justify-center rounded-[10px] py-2.5 font-medium text-sm shadow-sm">
-                  {isLoggedIn ? "Panele Git" : "Yıllık Avantajla Başla"}
+                  Yıllık Avantajla Başla
                   <ArrowRight className="ml-2 size-4" />
                 </Button>
-                <p className="mt-2.5 text-center text-subtle text-xs">Aylık yaklaşık 833 ₺'ye denk gelir.</p>
+                <p className="mt-2.5 text-center text-subtle text-xs">Aylık yaklaşık 825 ₺'ye denk gelir.</p>
               </div>
             </div>
           </div>

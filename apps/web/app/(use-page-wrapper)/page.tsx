@@ -7,8 +7,8 @@ import { HomeView } from "~/home/home-view";
 
 const generateMetadata = async () => {
   return await _generateMetadata(
-    () => `${APP_NAME} - Sade ve Zahmetsiz Randevu Planlama`,
-    () => `${APP_NAME} ile randevularınızı ve toplantılarınızı zahmetsizce yönetin.`,
+    () => `${APP_NAME} - Zahmetsiz Randevu Planlama`,
+    () => `${APP_NAME} ile randevularınızı ve takviminizi zahmetsizce yönetin.`,
     true,
     undefined,
     "/"

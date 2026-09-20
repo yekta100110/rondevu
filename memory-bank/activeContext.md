@@ -35,6 +35,29 @@
     - Resolved Next.js production build failure in Docker (`yarn --cwd apps/web workspace @calcom/web run build`).
     - Cause: `apps/web/modules/home/home-view.tsx` had an invalid deep import `@calcom/ui/components/logo/Logo`.
     - Fix: Changed import to `@calcom/ui/components/logo` to conform to `packages/ui/package.json` exports map.
+11. **System Theme Persistence & Initial Dark Mode Support** —
+    - Added synchronous blocking script in `apps/web/app/layout.tsx` to detect system prefers-color-scheme immediately before paint and apply `.dark`.
+    - Configured `defaultTheme: "system"` in `getThemeProviderProps.ts`.
+    - Moved homepage to `apps/web/app/(use-page-wrapper)/page.tsx` so `CalcomThemeProvider` wraps it.
+12. **Homepage Simplification & Pricing Update** —
+    - Updated pricing cards to 990 ₺/month and 9.900 ₺/year (11.880 ₺ struck through, 1.980 ₺ savings).
+    - Reduced verbose lists to 3-4 clean, impactful bullets per plan.
+    - Linked plan buttons to `/plan-bilgi?plan=monthly` and `/plan-bilgi?plan=yearly`.
+13. **Framer-Motion Login Card Animation** —
+    - Implemented smooth stagger entrance animation for card container and inputs in `apps/web/modules/auth/login-view.tsx`.
+14. **Minimalist Plan Information & Contact Page (`/plan-bilgi`)** —
+    - Created `apps/web/app/(use-page-wrapper)/plan-bilgi/page.tsx` and `plan-bilgi-view.tsx` with contact phone `0552 119 19 87` and email `y_ekta@icloud.com`.
+15. **"Randevu" Terminology Update** —
+    - Replaced 22 "toplantı/etkinlik planlandı" translation strings in `packages/i18n/locales/tr/common.json` with "Randevu".
+16. **Email Turkish Default & Dark Mode Overhaul** —
+    - Changed fallback locales in `buildCalEventFromBooking.ts`, `BookingEmailSmsHandler.ts`, `CalendarEventBuilder.ts`, `passwordResetRequest.ts`, `confirm.handler.ts` to `"tr"`.
+    - Redesigned `BaseEmailHtml.tsx`, `V2BaseEmailHtml.tsx`, `EmailHead.tsx`, `Info.tsx`, `WhenInfo.tsx`, `WhoInfo.tsx`, `LocationInfo.tsx`, `ManageLink.tsx`, `CallToAction.tsx`, and `EmailBodyLogo.tsx` with dark theme (`#121214` outer background, `#1c1c1f` cards, `#2e2e34` borders, `#ffffff`/`#f4f4f5` text, `#a1a1aa` subtitles, white SVG logo).
+17. **SMS Altyapısı & Admin Kontrol Menüsü (`/settings/admin/sms`)** —
+    - Created `packages/sms/sms-transport.ts` supporting Twilio, Netgsm, Webhooks, and Simulation fallback.
+    - Integrated dispatch into `packages/sms/sms-manager.ts`.
+    - Added `getSMSConfig` and `sendTestSMS` tRPC endpoints in `viewer/admin`.
+    - Built comprehensive SMS Control Menu in `apps/web/modules/settings/admin/sms-view.tsx` and route `/settings/admin/sms`.
+    - Added "SMS Yönetimi" link to admin settings sidebar.
 
 ## What Was NOT Changed (by design)
 - `@calcom/*` package namespace — internal implementation detail, changing would break 1000s of imports

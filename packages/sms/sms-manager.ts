@@ -4,13 +4,18 @@ import { piiHasher } from "@calcom/lib/server/PiiHasher";
 import { checkSMSRateLimit } from "@calcom/lib/smsLockState";
 import { TimeFormat } from "@calcom/lib/timeFormat";
 import type { CalendarEvent, Person } from "@calcom/types/Calendar";
+import { getSMSConfig, sendSMS } from "./sms-transport";
+
+export { sendSMS, getSMSConfig };
 
 const handleSendingSMS = async ({
   reminderPhone,
   organizerUserId,
+  message,
 }: {
   reminderPhone: string;
   organizerUserId?: number;
+  message?: string;
 }) => {
   await checkSMSRateLimit({
     identifier: organizerUserId
@@ -18,6 +23,10 @@ const handleSendingSMS = async ({
       : `handleSendingSMS:user-${piiHasher.hash(reminderPhone)}`,
     rateLimitingType: "sms",
   });
+
+  if (message) {
+    await sendSMS({ to: reminderPhone, body: message });
+  }
 };
 
 export default abstract class SMSManager {
@@ -57,6 +66,7 @@ export default abstract class SMSManager {
     return handleSendingSMS({
       reminderPhone: attendeePhoneNumber,
       organizerUserId: this.organizerUserId,
+      message: this.getMessage(attendee),
     });
   }
 

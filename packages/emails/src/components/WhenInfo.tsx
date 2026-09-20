@@ -64,7 +64,7 @@ export function WhenInfo(props: {
           <span data-testid="when">
             {recurringEvent?.count ? `${t("starting")} ` : ""}
             {getRecipientStart(`dddd, LL | ${timeFormat}`)} - {getRecipientEnd(timeFormat)}{" "}
-            <span style={{ color: "#4B5563" }}>({timeZone})</span>
+            <span style={{ color: "#a1a1aa" }}>({timeZone})</span>
           </span>
         }
         withSpacer

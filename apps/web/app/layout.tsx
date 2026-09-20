@@ -120,6 +120,30 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             --font-cal: ${calFont.style.fontFamily.replace(/\'/g, "")};
           }
         `}</style>
+        <script
+          nonce={nonce}
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: Fast synchronous theme initialization script to prevent white flash
+          dangerouslySetInnerHTML={{
+            __html: `(function() {
+              try {
+                var stored = localStorage.getItem("app-theme");
+                var isDark = false;
+                if (stored === "dark") {
+                  isDark = true;
+                } else if (stored === "light") {
+                  isDark = false;
+                } else {
+                  isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                }
+                if (isDark) {
+                  document.documentElement.classList.add("dark");
+                } else {
+                  document.documentElement.classList.remove("dark");
+                }
+              } catch (e) {}
+            })();`,
+          }}
+        />
         {process.env.NODE_ENV === "development" && (
           <Script
             src="//unpkg.com/react-grab/dist/index.global.js"

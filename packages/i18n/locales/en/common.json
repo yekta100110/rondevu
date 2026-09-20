@@ -2358,6 +2358,8 @@
   "admin_users_edit_description": "Here you can edit a current user.",
   "admin_orgs_edit_description": "Here you can edit an organization.",
   "admin_oAuth_description": "Add new OAuth clients",
+  "sms_system": "SMS System",
+  "admin_sms_description": "Manage SMS provider status, notification settings, test dispatch, and rate-limited users.",
   "admin_lockedSMS_description": "Lock or unlock SMS sending for users",
   "admin_license_description": "Manage license billing for this deployment",
   "admin_billing": "Billing",

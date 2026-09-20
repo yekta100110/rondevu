@@ -26,7 +26,7 @@ const EmailScheduledBodyHeaderContent = (props: {
             fontWeight: 700,
             lineHeight: "24px",
             textAlign: "center",
-            color: "#111827",
+            color: "#ffffff",
           }}>
           {props.title}
         </div>
@@ -43,7 +43,7 @@ const EmailScheduledBodyHeaderContent = (props: {
               fontWeight: 400,
               lineHeight: "24px",
               textAlign: "center",
-              color: "#4B5563",
+              color: "#a1a1aa",
             }}>
             {props.subtitle}
           </div>

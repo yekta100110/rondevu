@@ -10,8 +10,15 @@ const EmailHead = ({ title = "" }) => {
       />
       <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta name="color-scheme" content="dark" />
+      <meta name="supported-color-schemes" content="dark" />
       <style type="text/css">
         {`
+          :root {
+            color-scheme: dark;
+            supported-color-schemes: dark;
+          }
+
           #outlook a {
             padding: 0;
           }
@@ -19,6 +26,8 @@ const EmailHead = ({ title = "" }) => {
           body {
             margin: 0;
             padding: 0;
+            background-color: #121214 !important;
+            color: #f4f4f5 !important;
             -webkit-text-size-adjust: 100%;
             -ms-text-size-adjust: 100%;
           }

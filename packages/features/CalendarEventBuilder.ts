@@ -36,14 +36,14 @@ const APP_TYPE_TO_NAME_MAP = new Map<string, string>(ALL_APPS.map((app) => [app.
 async function _buildPersonFromUser(
   user: Pick<User, "id" | "name" | "locale" | "username" | "email" | "timeFormat" | "timeZone">
 ) {
-  const translate = await getTranslation(user.locale ?? "en", "common");
+  const translate = await getTranslation(user.locale ?? "tr", "common");
   return {
     id: user.id,
     name: user.name || "Nameless",
     email: user.email,
     username: user.username || undefined,
     timeZone: user.timeZone,
-    language: { translate, locale: user.locale ?? "en" },
+    language: { translate, locale: user.locale ?? "tr" },
     timeFormat: getTimeFormatStringFromUserTimeFormat(user.timeFormat),
   } satisfies Person;
 }
@@ -56,13 +56,13 @@ async function _buildPersonFromAttendee(
     > | null;
   }
 ) {
-  const translate = await getTranslation(attendee.locale ?? "en", "common");
+  const translate = await getTranslation(attendee.locale ?? "tr", "common");
 
   return {
     name: attendee.name ?? "",
     email: attendee.email,
     timeZone: attendee.timeZone,
-    language: { translate, locale: attendee.locale ?? "en" },
+    language: { translate, locale: attendee.locale ?? "tr" },
     phoneNumber: attendee.phoneNumber,
     bookingSeat: attendee.bookingSeat,
   } satisfies Person;

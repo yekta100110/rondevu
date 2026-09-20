@@ -199,7 +199,7 @@ export const confirmHandler = async ({ ctx, input }: ConfirmOptions) => {
   // Cache translations to avoid requesting multiple times.
   const translations = new Map();
   const attendeesListPromises = booking.attendees.map(async (attendee) => {
-    const locale = attendee.locale ?? "en";
+    const locale = attendee.locale ?? "tr";
     let translate = translations.get(locale);
     if (!translate) {
       translate = await getTranslation(locale, "common");
@@ -228,7 +228,7 @@ export const confirmHandler = async ({ ctx, input }: ConfirmOptions) => {
   const bookerUrl = WEBAPP_URL;
 
   const attendeesList = await Promise.all(attendeesListPromises);
-  const tOrganizer = await getTranslation(booking.user?.locale ?? "en", "common");
+  const tOrganizer = await getTranslation(booking.user?.locale ?? "tr", "common");
 
   const evt: CalendarEvent = {
     type: booking?.eventType?.slug as string,
@@ -251,7 +251,7 @@ export const confirmHandler = async ({ ctx, input }: ConfirmOptions) => {
       usernameInOrg: organizerOrganizationProfile?.username || undefined,
       timeZone: booking.user?.timeZone || "Europe/London",
       timeFormat: getTimeFormatStringFromUserTimeFormat(booking.user?.timeFormat),
-      language: { translate: tOrganizer, locale: booking.user?.locale ?? "en" },
+      language: { translate: tOrganizer, locale: booking.user?.locale ?? "tr" },
     },
     attendees: attendeesList,
     location: booking.location ?? "",

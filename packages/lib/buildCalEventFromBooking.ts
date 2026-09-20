@@ -78,14 +78,14 @@ export const buildCalEventFromBooking = async ({
         email: attendee.email,
         timeZone: attendee.timeZone,
         language: {
-          translate: await getTranslation(attendee.locale ?? "en", "common"),
-          locale: attendee.locale ?? "en",
+          translate: await getTranslation(attendee.locale ?? "tr", "common"),
+          locale: attendee.locale ?? "tr",
         },
       };
     })
   );
 
-  const tOrganizer = await getTranslation(organizer.locale ?? "en", "common");
+  const tOrganizer = await getTranslation(organizer.locale ?? "tr", "common");
 
   return {
     title: booking.title || "",
@@ -97,7 +97,7 @@ export const buildCalEventFromBooking = async ({
       email: booking.userPrimaryEmail ?? organizer.email,
       name: organizer.name ?? "Nameless",
       timeZone: organizer.timeZone,
-      language: { translate: tOrganizer, locale: organizer.locale ?? "en" },
+      language: { translate: tOrganizer, locale: organizer.locale ?? "tr" },
     },
     attendees: attendeesList,
     hideOrganizerEmail: booking.eventType?.hideOrganizerEmail,

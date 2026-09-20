@@ -21,6 +21,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { inferSSRProps } from "@lib/types/inferSSRProps";
 import type { getServerSideProps } from "@server/lib/auth/login/getServerSideProps";
 import { Eye, EyeOff } from "lucide-react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
@@ -178,7 +179,11 @@ export default function Login({
     <div className="relative flex min-h-screen items-center justify-center bg-default/80 px-4 py-10">
       <BackgroundGrid />
 
-      <div className="relative z-10 flex w-full max-w-md flex-col items-center">
+      <motion.div
+        initial={{ opacity: 0, y: 16, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        className="relative z-10 flex w-full max-w-md flex-col items-center">
         {/* Main Card */}
         <div className="w-full rounded-xl border border-subtle bg-default p-10 shadow-sm">
           {/* Logo */}
@@ -245,7 +250,11 @@ export default function Login({
               <input defaultValue={csrfToken || undefined} type="hidden" hidden {...register("csrfToken")} />
 
               {!twoFactorRequired && (
-                <div className="space-y-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.08, ease: "easeOut" }}
+                  className="space-y-6">
                   {/* Email Field */}
                   <Field>
                     <FieldLabel>{t("email")}</FieldLabel>
@@ -295,27 +304,36 @@ export default function Login({
                       </p>
                     )}
                   </Field>
-                </div>
+                </motion.div>
               )}
 
               {/* Two Factor */}
               {twoFactorRequired && (
-                <div className="space-y-4">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.25 }}
+                  className="space-y-4">
                   {!twoFactorLostAccess ? <TwoFactor center /> : <BackupCode center />}
-                </div>
+                </motion.div>
               )}
 
               {/* Error Message */}
               {errorMessage && <Alert severity="error" title={errorMessage} className="mt-4" />}
 
               {/* Submit Button */}
-              <Button
-                type="submit"
-                variant="outline"
-                className="mt-8 w-full"
-                disabled={formState.isSubmitting}>
-                {twoFactorRequired ? t("submit") : t("continue")}
-              </Button>
+              <motion.div
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.25, delay: 0.12, ease: "easeOut" }}>
+                <Button
+                  type="submit"
+                  variant="outline"
+                  className="mt-8 w-full"
+                  disabled={formState.isSubmitting}>
+                  {twoFactorRequired ? t("submit") : t("continue")}
+                </Button>
+              </motion.div>
             </form>
 
             {/* Two Factor Footer */}
@@ -381,7 +399,7 @@ export default function Login({
             )}
           </div>
         )}
-      </div>
+      </motion.div>
 
       <AddToHomescreen />
     </div>
