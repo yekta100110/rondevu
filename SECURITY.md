@@ -1,6 +1,6 @@
 # Güvenlik
 
-İletişim: [guvenlik@rondevu.com.tr](mailto:guvenlik@rondevu.com.tr)
+İletişim: [guvenlik@rondevu.org](mailto:guvenlik@rondevu.org)
 
 rOndevu olarak sistemlerimizin güvenliğini en yüksek öncelik olarak değerlendiriyoruz. Ancak sistem güvenliğine ne kadar çaba harcarsak harcayalım, güvenlik açıkları hâlâ mevcut olabilir.
 
@@ -20,7 +20,7 @@ Bir güvenlik açığı keşfederseniz, mümkün olan en kısa sürede adım ata
 
 ## Lütfen aşağıdakileri yapın
 
-- Bulgularınızı [guvenlik@rondevu.com.tr](mailto:guvenlik@rondevu.com.tr) adresine e-posta ile gönderin.
+- Bulgularınızı [guvenlik@rondevu.org](mailto:guvenlik@rondevu.org) adresine e-posta ile gönderin.
 - Altyapımızda veya kontrol panelimizde otomatik tarayıcılar çalıştırmayın. Bunu yapmak istiyorsanız, bizimle iletişime geçin ve sizin için bir sandbox kuralım.
 - Keşfettiğiniz güvenlik açığından veya sorundan yararlanmayın, örneğin güvenlik açığını göstermek için gerekenden fazla veri indirmek veya başkalarının verilerini silmek veya değiştirmek gibi.
 - Sorun çözülene kadar başkalarına açıklamayın.

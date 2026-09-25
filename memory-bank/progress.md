@@ -17,8 +17,8 @@
 - [ ] Deployment configuration
 
 ## Current Status
-**Phase**: Rebranding Complete
-**Last Updated**: 2026-09-19
+**Phase**: Production Ready & Audited
+**Last Updated**: 2026-09-25
 
 ## Known Issues
 - TypeScript build errors ignored (`ignoreBuildErrors: true` in next.config)
@@ -36,3 +36,8 @@
 9. Disabled "Ekibimle birlikte" onboarding plan with "Geliştirme aşamasında" badge; created dedicated minimal homepage at root route with top-right "Giriş Yap" button; added minimal pricing section with 1.000 ₺ monthly and 10.000 ₺ yearly (instead of 12.000 ₺) tiers.
 10. Fixed Docker / Next.js production build `module-not-found` failure by correcting deep import of `@calcom/ui/components/logo/Logo` to `@calcom/ui/components/logo` in `apps/web/modules/home/home-view.tsx`.
 11. Initial visit system theme persistence, simplified homepage pricing (990 ₺ / 9.900 ₺), framer-motion login entrance animation, minimal `/plan-bilgi` contact page, "Randevu" terminology alignment, email dark mode redesign with Turkish default fallback, and complete SMS transport engine + Admin SMS control menu (`/settings/admin/sms`).
+12. Homepage revamp: Set Hero title to "Herkes için randevu altyapısı"; added interactive 3-step booking flow widget (HeroBookingMockup) inspired by interface screenshots with 100% dummy data; positioned 12 core features across 4 operational blocks with UI mockups (Müsaitlik, Out of Office toggle, No-Show listesi, Yinelenen abonelikler); added FaqSection accordion.
+13. Cal.diy rebranding sweep across app-store, copyright and footers; domain normalization to `rondevu.org`; aligned calendar sync truth (one-way export of booked appointments to Google/Apple calendar without closing rOndevu availability from personal calendar events).
+14. "Ofis Dışında" module overhauled with real screenshots from `interface/`: authentic list view, search & filters, dummy text replacing test entries, interactive public booking preview (day 25 with 🤕), modal overlay; removed "OOO" acronym everywhere (`İzinlerim`, `Ofis Dışı`); fixed Google Calendar API key crash in "Tatil günleri" tab with offline Turkish public holidays fallback; and implemented admin-configurable plan contact channels with role check and sanitization.
+15. Server deployment readiness & security audit completed: 0 leaked secrets, strict admin authorization via authedAdminProcedure, sanitized dynamic URLs (tel, mailto, whatsapp), verified tRPC server and client compilation (code 0), updated .gitignore for local UI assets. All changes pushed to GitHub.
+

@@ -372,7 +372,12 @@ export const AppPage = ({
               )}
               •{" "}
               <a target="_blank" rel="noreferrer" href={website}>
-                {t("published_by", { author })}
+                {t("published_by", {
+                  author:
+                    !author || author === "Cal.diy" || author === "Cal.com, Inc." || author === "Cal.com"
+                      ? "rOndevu"
+                      : author,
+                })}
               </a>
             </h2>
             {isTemplate && (

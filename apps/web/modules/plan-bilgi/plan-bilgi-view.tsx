@@ -1,6 +1,7 @@
 "use client";
 
 import { APP_NAME } from "@calcom/lib/constants";
+import { trpc } from "@calcom/trpc/react";
 import { Button } from "@calcom/ui/components/button";
 import { Logo } from "@calcom/ui/components/logo";
 import { motion } from "framer-motion";
@@ -66,6 +67,17 @@ export function PlanBilgiView() {
   const searchParams = useSearchParams();
   const plan = searchParams?.get("plan");
   const isYearly = plan === "yearly";
+
+  const { data: contactConfig } = trpc.publicViewer.getPlanContact.useQuery(undefined, {
+    staleTime: 60000,
+  });
+
+  const phone = contactConfig?.phone || "0552 119 19 87";
+  const email = contactConfig?.email || "destek@rondevu.org";
+  const whatsapp = contactConfig?.whatsapp || "905521191987";
+
+  const cleanPhone = phone.replace(/[^\d+]/g, "");
+  const cleanWhatsapp = whatsapp.replace(/[^\d]/g, "");
 
   return (
     <div className="relative min-h-screen bg-default text-emphasis selection:bg-brand-default selection:text-brand">
@@ -163,18 +175,18 @@ export function PlanBilgiView() {
                     </div>
                     <div className="font-semibold text-emphasis text-sm">Telefon & WhatsApp</div>
                     <p className="mt-0.5 text-xs text-subtle">Hızlı arama veya WhatsApp mesajı</p>
-                    <div className="mt-3 font-mono font-medium text-base text-emphasis">0552 119 19 87</div>
+                    <div className="mt-3 font-mono font-medium text-base text-emphasis">{phone}</div>
                   </div>
 
                   <div className="mt-4 flex items-center gap-2 pt-1">
                     <a
-                      href="tel:05521191987"
+                      href={`tel:${cleanPhone}`}
                       className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-[8px] bg-emphasis px-3 py-2 font-medium text-default text-xs transition hover:opacity-90 shadow-sm">
                       <Phone className="size-3.5" />
                       <span>Ara</span>
                     </a>
                     <a
-                      href={`https://wa.me/905521191987?text=${encodeURIComponent(
+                      href={`https://wa.me/${cleanWhatsapp}?text=${encodeURIComponent(
                         `Merhaba, rOndevu ${isYearly ? "Yıllık Plan" : "Aylık Plan"} hesap aktivasyonu için yazıyorum.`
                       )}`}
                       target="_blank"
@@ -195,13 +207,13 @@ export function PlanBilgiView() {
                     <div className="font-semibold text-emphasis text-sm">E-posta</div>
                     <p className="mt-0.5 text-xs text-subtle">Aktivasyon talebi iletmek için</p>
                     <div className="mt-3 font-mono font-medium text-base text-emphasis break-all">
-                      y_ekta@icloud.com
+                      {email}
                     </div>
                   </div>
 
                   <div className="mt-4 pt-1">
                     <a
-                      href={`mailto:y_ekta@icloud.com?subject=${encodeURIComponent(
+                      href={`mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(
                         `rOndevu Hesap Aktivasyonu (${isYearly ? "Yıllık Plan" : "Aylık Plan"})`
                       )}`}
                       className="inline-flex w-full items-center justify-center gap-1.5 rounded-[8px] border border-subtle bg-default px-3 py-2 font-medium text-emphasis text-xs transition hover:bg-muted/40">

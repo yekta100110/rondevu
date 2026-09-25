@@ -7,7 +7,7 @@
   "url": "https://zapier.com/apps/calcom/integrations",
   "variant": "automation",
   "categories": ["automation"],
-  "publisher": "Cal.diy",
+  "publisher": "rOndevu",
   "email": "help@cal.com",
   "description": "Workflow automation for everyone. Use the Cal.diy Zapier app to automate your workflows when a booking is created, rescheduled, cancelled or when a meeting ends.",
   "isTemplate": false,

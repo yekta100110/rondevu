@@ -12,6 +12,7 @@ import { ZSetSMSLockState } from "./setSMSLockState.schema";
 import { ZSendTestSMSSchema } from "./sendTestSMS.schema";
 import { toggleFeatureFlag } from "./toggleFeatureFlag.procedure";
 import { ZAdminUnassignFeatureFromTeamSchema } from "./unassignFeatureFromTeam.schema";
+import { ZUpdatePlanContactSchema } from "./updatePlanContact.schema";
 import { watchlistRouter } from "./watchlist/_router";
 
 const NAMESPACE = "admin";
@@ -74,6 +75,16 @@ export const adminRouter = router({
     .input(ZAdminUnassignFeatureFromTeamSchema)
     .mutation(async (opts) => {
       const { default: handler } = await import("./unassignFeatureFromTeam.handler");
+      return handler(opts);
+    }),
+  getPlanContact: authedAdminProcedure.query(async (opts) => {
+    const { default: handler } = await import("./getPlanContact.handler");
+    return handler(opts);
+  }),
+  updatePlanContact: authedAdminProcedure
+    .input(ZUpdatePlanContactSchema)
+    .mutation(async (opts) => {
+      const { default: handler } = await import("./updatePlanContact.handler");
       return handler(opts);
     }),
   watchlist: watchlistRouter,

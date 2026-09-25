@@ -7,7 +7,7 @@
   "logo": "icon.svg",
   "variant": "calendar",
   "categories": ["calendar"],
-  "publisher": "Cal.com, Inc.",
+  "publisher": "rOndevu",
   "email": "help@cal.com",
   "description": "Import events from an ICS Feed into [Cal.diy](https://cal.com).",
   "isTemplate": false,

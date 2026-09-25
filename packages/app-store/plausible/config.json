@@ -7,7 +7,7 @@
   "url": "https://cal.com/",
   "variant": "analytics",
   "categories": ["analytics"],
-  "publisher": "Cal.com, Inc.",
+  "publisher": "rOndevu",
   "email": "help@cal.com",
   "extendsFeature": "EventType",
   "appData": {

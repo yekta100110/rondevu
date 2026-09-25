@@ -27,4 +27,8 @@ export const publicViewerRouter = router({
       const { default: handler } = await import("./checkIfUserEmailVerificationRequired.handler");
       return handler(opts);
     }),
+  getPlanContact: publicProcedure.query(async () => {
+    const { default: handler } = await import("./getPlanContact.handler");
+    return handler();
+  }),
 });

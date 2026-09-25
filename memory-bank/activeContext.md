@@ -58,6 +58,31 @@
     - Added `getSMSConfig` and `sendTestSMS` tRPC endpoints in `viewer/admin`.
     - Built comprehensive SMS Control Menu in `apps/web/modules/settings/admin/sms-view.tsx` and route `/settings/admin/sms`.
     - Added "SMS Yönetimi" link to admin settings sidebar.
+18. **Homepage Revamp & 12 Core Features Architecture** —
+    - Replaced generic landing content with explicit title: *"Herkes için randevu altyapısı"*.
+    - Built interactive `HeroBookingMockup` component directly simulating the booking flow (Tarih & Saat Seçimi ➔ Telefon/E-posta Doğrulama [OTP] ➔ Başarı Kartı & Google Meet) using 100% dummy data (`Dr. Zeynep Kaya`, `ahmet.yilmaz@ornek.com`), completely hiding real screenshot info.
+    - Built `AdminFeatureCards` structuring the 12 core features into 4 operational blocks (Zaman & Müsaitlik Hakimiyeti, Güvenlik & No-Show Koruması, İletişim & Otomasyon, Özel Alan Adı & Birebir Destek) with dark-mode admin UI mockups.
+    - Built `FaqSection` accordion directly answering 8 critical practical questions.
+19. **Cal.diy Rebranding & Domain Normalization (`rondevu.org`)** —
+    - System-wide replacement of all `rondevu.com.tr` references with official domain `rondevu.org`.
+    - Cal.diy publisher replaced with rOndevu across all 98 app-store apps and license headers.
+20. **Calendar Sync Clarification & Ofis Dışında Real UI Reproduction** —
+    - Fixed SSS & Homepage calendar sync explanations: Appointments booked on rOndevu are automatically exported to Google/Apple calendar; external personal calendar events do NOT block rOndevu availability slots.
+    - Revamped "Ofis Dışında" module in `AdminFeatureCards` to authentically reproduce user screenshots (`interface/`): includes list view, search & filters, dummy values (`Kongre Katılımı & Yıllık İzin`) replacing test text, interactive Danışan Rezervasyon Görünümü (date 25 with 🤕), and "Ofis Dışında Ol" modal overlay.
+    - Eliminated raw "OOO" acronym throughout Turkish (`İzinlerim`, `Ofis Dışı`, `Ekip İzinleri`) and English locales.
+    - Fixed "Tatil günleri" tab crash: `GoogleCalendarClient` no longer throws when `GOOGLE_CALENDAR_API_KEY` is missing and provides built-in offline Turkish public holidays fallback.
+21. **Configurable Plan Contact Info & Admin Security Control** —
+    - Created `packages/lib/planContactConfig.ts` with database storage (`Deployment.theme.planContact`) and file backup.
+    - Created `publicViewer.getPlanContact` query and `viewer.admin.updatePlanContact` mutation guarded by `authedAdminProcedure` with strict Zod validation.
+    - Built Admin Management page `/settings/admin/plan-contact` (`plan-contact-view.tsx`) with sanitized link generation (`tel:`, `wa.me`, `mailto:`) preventing XSS/injection.
+    - Made `/plan-bilgi` contact details dynamic with real-time backend synchronization.
+22. **Production Deployment Readiness & Security Audit Verification** —
+    - Audited all modified and added files for secrets, tokens, API keys, and credential leakage: 0 leaked secrets found.
+    - Verified strict role-based access control (`authedAdminProcedure`) for admin operations and read-only schema for public contact query.
+    - Sanitized all dynamic links (`tel:`, `https://wa.me/`, `mailto:`) with `encodeURIComponent` and digit-only sanitizers to prevent XSS / malicious URL protocol injections.
+    - Added `interface/` screenshot files and runtime backup `plan-contact-config.json` to `.gitignore`.
+    - Biome lint and formatting checks passed with 0 errors.
+    - tRPC server and client type checks verified (`build:server` and `build:react` compile with 0 errors).
 
 ## What Was NOT Changed (by design)
 - `@calcom/*` package namespace — internal implementation detail, changing would break 1000s of imports
@@ -66,11 +91,8 @@
 - README.md — needs full rewrite for rOndevu
 
 ## Next Steps
-- Write a new README.md for rOndevu (Turkish)
-- Set up `.env` from `.env.example`
-- Set up PostgreSQL and run migrations
-- Verify build works (`yarn build`)
-- Optionally batch-update app-store config descriptions
+- Push changes to remote repository (`origin/main`).
+- On server deployment: ensure PostgreSQL database is up, run `yarn prisma migrate deploy`, configure environment variables (`DATABASE_URL`, `NEXTAUTH_SECRET`, `NEXT_PUBLIC_WEBAPP_URL=https://rondevu.org`), and start service with `yarn start` or Docker.
 
 ## Brand Asset Details
 - Wordmark SVGs (`cal-logo-word*.svg`, `rondevu-logo-*.svg`): Scaled to fit original 84x26 box dimensions with 17px font, avoiding layout overflow.

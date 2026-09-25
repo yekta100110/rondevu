@@ -4,9 +4,12 @@ import { APP_NAME } from "@calcom/lib/constants";
 import classNames from "@calcom/ui/classNames";
 import { Button } from "@calcom/ui/components/button";
 import { Logo } from "@calcom/ui/components/logo";
-import { ArrowRight, Calendar, Check, Link2, ShieldCheck } from "lucide-react";
+import { ArrowRight, Check, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { AdminFeatureCards } from "./components/AdminFeatureCards";
+import { FaqSection } from "./components/FaqSection";
+import { HeroBookingMockup } from "./components/HeroBookingMockup";
 
 function BackgroundGrid() {
   const rows = 12;
@@ -69,40 +72,23 @@ interface HomeViewProps {
 export function HomeView({ isLoggedIn = false }: HomeViewProps) {
   const [selectedBilling, setSelectedBilling] = useState<"monthly" | "yearly">("yearly");
 
-  const highlights = [
-    {
-      icon: Link2,
-      title: "Biyografi Linkiyle Paylaşım",
-      description:
-        "Randevu linkinizi Instagram veya WhatsApp profilinize koyun. Danışanınız gün ve saat seçerek randevusunu saniyeler içinde alsın.",
-    },
-    {
-      icon: Calendar,
-      title: "Google Takvim ve Meet",
-      description:
-        "Takviminizle eşzamanlı çalışır. Dolu saatleri otomatik kapatır, randevu oluştuğunda toplantı linkini (Google Meet) iki tarafa da anında iletir.",
-    },
-    {
-      icon: ShieldCheck,
-      title: "No-Show ve Kötüye Kullanım Koruması",
-      description:
-        "Randevusuna mazeretsiz gelmeyen veya suistimal eden kişileri tek tıkla engelleyin, takviminizin boşa kilitlenmesini önleyin.",
-    },
-  ];
-
   const monthlyFeatures = [
     "Sınırsız randevu ve etkinlik türü",
-    "Google Takvim ve Google Meet entegrasyonu",
-    "Özel randevu linki (rondevu.org/adiniz)",
-    "Otomatik e-posta bildirimleri",
-    "Katılımcı engelleme (No-Show koruması)",
+    "SMS ve E-posta hatırlatıcı bildirimleri",
+    "Google & Apple Takvim çift yönlü eşitleme",
+    "Telefon ve e-posta doğrulama (OTP)",
+    "No-show ('Katılmadı') danışan takibi",
+    "Out of Office (Acil durum toplu iptal & SMS)",
+    "Özel gün & bayram tatili kapatma",
+    "Kendi alan adına bağlama (Custom Domain)",
   ];
 
   const yearlyFeatures = [
-    "Aylık plandaki tüm özellikler dahil",
+    "Aylık plandaki tüm gelişmiş özellikler eksiksiz dahil",
+    "2 ay ücretsiz kullanım (1.980 ₺ tasarruf)",
     "12 ay boyunca fiyat artışından etkilenmeme",
-    "2 ay ücretsiz kullanım (1.980 ₺ avantaj)",
-    "Öncelikli doğrudan WhatsApp desteği",
+    "Öncelikli birebir kurulum ve WhatsApp desteği",
+    "Özel takvim kuralı ve iş akışı yapılandırması",
   ];
 
   return (
@@ -121,11 +107,24 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
 
           <nav aria-label="Ana Menü" className="flex items-center gap-3">
             <Button
+              href="#features"
+              color="minimal"
+              className="hidden rounded-[8px] px-3.5 py-2 font-medium text-sm text-subtle hover:text-emphasis md:inline-flex">
+              Özellikler
+            </Button>
+            <Button
               href="#pricing"
               color="minimal"
               className="hidden rounded-[8px] px-3.5 py-2 font-medium text-sm text-subtle hover:text-emphasis sm:inline-flex">
               Fiyatlandırma
             </Button>
+            <Button
+              href="#faq"
+              color="minimal"
+              className="hidden rounded-[8px] px-3.5 py-2 font-medium text-sm text-subtle hover:text-emphasis sm:inline-flex">
+              SSS
+            </Button>
+
             {isLoggedIn ? (
               <Button
                 href="/event-types"
@@ -148,21 +147,24 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
 
       {/* Main Content */}
       <main className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        {/* 1. Ekran: Hero Section */}
-        <section aria-labelledby="hero-title" className="pt-20 pb-16 text-center sm:pt-28 sm:pb-24">
-          <div className="mb-6 inline-flex items-center rounded-full border border-subtle bg-muted/40 px-3.5 py-1 text-xs font-medium text-subtle">
-            <span>Bireysel Uzmanlar İçin Randevu Altyapısı</span>
+        {/* ========================================================= */}
+        {/* 1. HERO BÖLÜMÜ */}
+        {/* ========================================================= */}
+        <section aria-labelledby="hero-title" className="pt-20 pb-12 text-center sm:pt-24 sm:pb-16">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-subtle bg-muted/40 px-3.5 py-1 text-xs font-medium text-subtle">
+            <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>Modern, Doğrulanmış ve Güvenli Randevu Deneyimi</span>
           </div>
 
           <h1
             id="hero-title"
-            className="mx-auto max-w-3xl font-bold font-cal text-4xl text-emphasis leading-[1.14] tracking-tight sm:text-5xl md:text-6xl">
-            Müsait saatlerinizi paylaşın, randevuyu danışanınız alsın.
+            className="mx-auto max-w-4xl font-bold font-cal text-4xl text-emphasis leading-[1.14] tracking-tight sm:text-5xl md:text-6xl">
+            Herkes için randevu altyapısı
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl font-normal text-base text-subtle leading-relaxed sm:text-lg">
-            Takviminizi bağlayın, linkinizi biyografinize ekleyin. Takviminiz danışanınızla otomatik eşleşsin;
-            mesajla saat ayarlama derdi bitsin.
+            Müsaitlik saatlerinizi belirleyin, kurallarınızı koyun; randevu alma, doğrulama, SMS hatırlatma ve
+            takvim senkronizasyonunu tek merkezden yönetin.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -174,38 +176,27 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
               <ArrowRight className="ml-2 size-4" />
             </Button>
             <Button
-              href="#pricing"
+              href="#features"
               color="secondary"
               className="rounded-[10px] px-5 py-2.5 font-medium text-sm">
-              Fiyatlandırmayı İncele
+              Özellikleri İncele
             </Button>
           </div>
+
+          {/* Canlı Randevu Alma Akışı Simülasyonu (Ekran Görüntüleri İlhamlı Mockup) */}
+          <HeroBookingMockup />
         </section>
 
-        {/* 1. Ekran: 3 Kart */}
-        <section aria-labelledby="features-title" className="border-subtle/80 border-t py-16 sm:py-20">
-          <h2 id="features-title" className="sr-only">
-            Öne Çıkan Özellikler
-          </h2>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {highlights.map((item, idx) => {
-              const IconComponent = item.icon;
-              return (
-                <article
-                  key={idx}
-                  className="rounded-xl border border-subtle bg-default/70 p-6 sm:p-7 shadow-sm transition hover:border-subtle/90">
-                  <div className="mb-4 flex size-10 items-center justify-center rounded-lg bg-muted/60 text-emphasis">
-                    <IconComponent className="size-5" />
-                  </div>
-                  <h3 className="mb-2 font-semibold text-base text-emphasis">{item.title}</h3>
-                  <p className="text-sm text-subtle leading-relaxed">{item.description}</p>
-                </article>
-              );
-            })}
-          </div>
-        </section>
+        {/* ========================================================= */}
+        {/* 2. 12 ÖZELLİĞİ İÇEREN 4 ANA OPERASYONEL BLOK */}
+        {/* ========================================================= */}
+        <div id="features" className="border-subtle/80 border-t pt-8">
+          <AdminFeatureCards />
+        </div>
 
-        {/* 2. Ekran: Fiyatlandırma Bölümü */}
+        {/* ========================================================= */}
+        {/* 3. FİYATLANDIRMA BÖLÜMÜ */}
+        {/* ========================================================= */}
         <section
           id="pricing"
           aria-labelledby="pricing-title"
@@ -220,7 +211,8 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
               Planlar ve Fiyatlandırma
             </h2>
             <p className="mt-3 text-sm text-subtle sm:text-base">
-              Randevu başı komisyon veya gizli ücret yok. Tüm özellikler iki planda da eksiksiz açık.
+              Randevu başı veya danışan başı komisyon yok. Tüm gelişmiş özellikler ve altyapı araçları iki
+              planda da eksiksiz açık.
             </p>
 
             {/* Billing Cycle Toggle */}
@@ -280,7 +272,7 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
                 <ul className="mb-8 space-y-3">
                   {monthlyFeatures.map((feat, idx) => (
                     <li key={idx} className="flex items-start gap-3 text-emphasis text-sm">
-                      <Check className="mt-0.5 size-4 shrink-0 text-subtle" />
+                      <Check className="mt-0.5 size-4 shrink-0 text-emerald-500" />
                       <span>{feat}</span>
                     </li>
                   ))}
@@ -307,10 +299,10 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
                 <div className="mb-2 flex items-center justify-between">
                   <h3 className="font-bold font-cal text-emphasis text-xl">Yıllık Plan</h3>
                   <span className="rounded border border-subtle px-2 py-0.5 font-medium text-xs text-subtle">
-                    12 Ay
+                    12 Ay (2 Ay Hediye)
                   </span>
                 </div>
-                <p className="mb-6 text-sm text-subtle">12 ay kesintisiz kullanım, 2 ay hediye.</p>
+                <p className="mb-6 text-sm text-subtle">12 ay kesintisiz kullanım, 2 ay hediye avantajı.</p>
 
                 <div className="mb-6 flex items-baseline gap-2.5 border-subtle border-b pb-6">
                   <span className="font-normal text-subtle text-xl line-through decoration-subtle/70 sm:text-2xl">
@@ -342,21 +334,32 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
             </article>
           </div>
         </section>
+
+        {/* ========================================================= */}
+        {/* 4. SIKÇA SORULAN SORULAR (FAQ) BÖLÜMÜ */}
+        {/* ========================================================= */}
+        <div id="faq">
+          <FaqSection />
+        </div>
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 mt-12 border-subtle/80 border-t bg-default/60 py-10">
+      <footer className="relative z-10 border-subtle/80 border-t bg-default/60 py-10">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 text-sm text-subtle sm:flex-row sm:px-6 lg:px-8">
           <div className="flex items-center gap-2">
             <Logo small />
-            <span className="text-xs">
-              © {new Date().getFullYear()} {APP_NAME}. Tüm hakları saklıdır.
-            </span>
+            <span className="text-xs">© {new Date().getFullYear()} rOndevu. Tüm hakları saklıdır.</span>
           </div>
 
           <nav aria-label="Alt Bilgi Menüsü" className="flex items-center gap-6 text-xs">
+            <Link href="#features" className="transition hover:text-emphasis">
+              Özellikler
+            </Link>
             <Link href="#pricing" className="transition hover:text-emphasis">
               Fiyatlandırma
+            </Link>
+            <Link href="#faq" className="transition hover:text-emphasis">
+              SSS
             </Link>
             <Link href="/auth/login" className="transition hover:text-emphasis">
               Giriş Yap

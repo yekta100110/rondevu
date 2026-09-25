@@ -6,7 +6,7 @@
   "url": "https://paypal.com",
   "variant": "payment",
   "categories": ["payment"],
-  "publisher": "Cal.diy",
+  "publisher": "rOndevu",
   "email": "support@cal.com",
   "description": "Paypal payment app by [Cal.diy](https://cal.com)",
   "extendsFeature": "EventType",

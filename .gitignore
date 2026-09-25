@@ -117,3 +117,7 @@ agents/devin-knowledge.json
 
 # pagefind
 _pagefind/
+
+# local screenshots / UI analysis
+interface/
+plan-contact-config.json
