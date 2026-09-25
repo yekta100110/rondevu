@@ -1,4 +1,5 @@
 import { APP_NAME } from "@calcom/lib/constants";
+import { getPlanContactConfig } from "@calcom/lib/planContactConfig";
 import { _generateMetadata } from "app/_utils";
 import type { Metadata } from "next";
 import { PlanBilgiView } from "~/plan-bilgi/plan-bilgi-view";
@@ -38,6 +39,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
   };
 };
 
-export default function PlanBilgiPage() {
-  return <PlanBilgiView />;
+export default async function PlanBilgiPage() {
+  const initialContact = await getPlanContactConfig();
+  return <PlanBilgiView initialContact={initialContact} />;
 }

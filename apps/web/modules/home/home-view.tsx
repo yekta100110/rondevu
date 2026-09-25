@@ -66,20 +66,28 @@ function BackgroundGrid() {
   );
 }
 
-interface HomeViewProps {
-  isLoggedIn?: boolean;
+export interface PlanContactData {
+  phone: string;
+  email: string;
+  whatsapp: string;
 }
 
-export function HomeView({ isLoggedIn = false }: HomeViewProps) {
+interface HomeViewProps {
+  isLoggedIn?: boolean;
+  initialContact?: PlanContactData;
+}
+
+export function HomeView({ isLoggedIn = false, initialContact }: HomeViewProps) {
   const [selectedBilling, setSelectedBilling] = useState<"monthly" | "yearly">("yearly");
 
-  const { data: contactConfig } = trpc.publicViewer.getPlanContact.useQuery(undefined, {
-    staleTime: 60000,
+  const { data: contactConfig } = trpc.viewer.public.getPlanContact.useQuery(undefined, {
+    initialData: initialContact,
+    staleTime: 30000,
   });
 
-  const phone = contactConfig?.phone || "0552 119 19 87";
-  const email = contactConfig?.email || "destek@rondevu.org";
-  const whatsapp = contactConfig?.whatsapp || "905521191987";
+  const phone = contactConfig?.phone || initialContact?.phone || "0552 119 19 87";
+  const email = contactConfig?.email || initialContact?.email || "destek@rondevu.org";
+  const whatsapp = contactConfig?.whatsapp || initialContact?.whatsapp || "905521191987";
   const cleanPhone = phone.replace(/[^\d+]/g, "");
   const cleanWhatsapp = whatsapp.replace(/[^\d]/g, "");
 
@@ -202,7 +210,7 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
         {/* 2. 12 ÖZELLİĞİ İÇEREN 4 ANA OPERASYONEL BLOK */}
         {/* ========================================================= */}
         <div id="features" className="border-subtle/80 border-t pt-8">
-          <AdminFeatureCards />
+          <AdminFeatureCards contactConfig={contactConfig} />
         </div>
 
         {/* ========================================================= */}

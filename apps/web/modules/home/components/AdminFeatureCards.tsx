@@ -35,7 +35,17 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
-export function AdminFeatureCards() {
+export interface PlanContactPropsData {
+  phone: string;
+  email: string;
+  whatsapp: string;
+}
+
+interface AdminFeatureCardsProps {
+  contactConfig?: PlanContactPropsData;
+}
+
+export function AdminFeatureCards({ contactConfig: propContactConfig }: AdminFeatureCardsProps = {}) {
   const [activeOoo, setActiveOoo] = useState(false);
   const [isNoShowMarked, setIsNoShowMarked] = useState(false);
   const [isActionMenuOpen, setIsActionMenuOpen] = useState(false);
@@ -45,10 +55,13 @@ export function AdminFeatureCards() {
   const [oooTab, setOooTab] = useState<"mine" | "holidays">("mine");
   const [showPublicPreview, setShowPublicPreview] = useState(true);
 
-  const { data: contactConfig } = trpc.publicViewer.getPlanContact.useQuery(undefined, {
-    staleTime: 60000,
+  const { data: queriedConfig } = trpc.viewer.public.getPlanContact.useQuery(undefined, {
+    enabled: !propContactConfig,
+    initialData: propContactConfig,
+    staleTime: 30000,
   });
 
+  const contactConfig = propContactConfig || queriedConfig;
   const phone = contactConfig?.phone || "0552 119 19 87";
   const email = contactConfig?.email || "destek@rondevu.org";
   const whatsapp = contactConfig?.whatsapp || "905521191987";

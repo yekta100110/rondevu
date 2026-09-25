@@ -63,18 +63,29 @@ function BackgroundGrid() {
   );
 }
 
-export function PlanBilgiView() {
+export interface PlanContactInfo {
+  phone: string;
+  email: string;
+  whatsapp: string;
+}
+
+interface PlanBilgiViewProps {
+  initialContact?: PlanContactInfo;
+}
+
+export function PlanBilgiView({ initialContact }: PlanBilgiViewProps = {}) {
   const searchParams = useSearchParams();
   const plan = searchParams?.get("plan");
   const isYearly = plan === "yearly";
 
-  const { data: contactConfig } = trpc.publicViewer.getPlanContact.useQuery(undefined, {
-    staleTime: 60000,
+  const { data: contactConfig } = trpc.viewer.public.getPlanContact.useQuery(undefined, {
+    initialData: initialContact,
+    staleTime: 30000,
   });
 
-  const phone = contactConfig?.phone || "0552 119 19 87";
-  const email = contactConfig?.email || "destek@rondevu.org";
-  const whatsapp = contactConfig?.whatsapp || "905521191987";
+  const phone = contactConfig?.phone || initialContact?.phone || "0552 119 19 87";
+  const email = contactConfig?.email || initialContact?.email || "destek@rondevu.org";
+  const whatsapp = contactConfig?.whatsapp || initialContact?.whatsapp || "905521191987";
 
   const cleanPhone = phone.replace(/[^\d+]/g, "");
   const cleanWhatsapp = whatsapp.replace(/[^\d]/g, "");

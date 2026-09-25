@@ -111,6 +111,16 @@
     - Updated `BookEventForm.tsx` to display "Telefonu Doğrula" when verifying phone number.
     - Updated `EventAdvancedTab.tsx` so `requiresBookerEmailVerification` toggle title/description dynamically changes to "Telefon (SMS) Doğrulaması" when "Phone" confirmation is active.
     - All 8 SMSManager unit tests passed and lifecycle notifications verified.
+26. **Plan Contact Information Sync & Admin Management Overhaul** —
+    - Fixed tRPC path mismatch: updated client queries from non-existent `trpc.publicViewer` to `trpc.viewer.public.getPlanContact`.
+    - Added global React Query cache invalidation in `plan-contact-view.tsx` on mutation success: invalidates both `utils.viewer.admin.getPlanContact` and `utils.viewer.public.getPlanContact` so any active view or route transition immediately accesses the fresh contact info.
+    - Updated TanStack Query mutation loading property in `plan-contact-view.tsx` to `updateMutation.isPending`.
+    - Added "Varsayılana Sıfırla" (Reset to Defaults) one-click button in admin view with confirmation dialog.
+    - Integrated Server-Side Rendering (SSR) in `apps/web/app/(use-page-wrapper)/page.tsx` and `plan-bilgi/page.tsx`: pre-fetches `getPlanContactConfig()` and passes `initialContact` to `HomeView` and `PlanBilgiView` to eliminate initial default flash and seed React Query's `initialData`.
+    - Synchronized `AdminFeatureCards.tsx` with `HomeView`: passes `contactConfig` prop down so all contact touchpoints on `/` (Consultation Bar, Feature Card 4, and Footer) are 100% unified.
+    - Added Next.js route revalidation in `updatePlanContact.handler.ts` (`revalidatePath("/")`, `revalidatePath("/plan-bilgi")`).
+    - Overhauled `packages/lib/planContactConfig.ts` with named Prisma client import (`import { prisma } from "@calcom/prisma"`), multi-path directory resolution for JSON backups (`apps/web`, root, cwd), resilient `Deployment.theme` parsing, and non-blocking database fallback.
+    - Verified all 5 test scenarios in `test_plan_contact_sync.ts` and confirmed zero TypeScript errors on changed files.
 
 ## What Was NOT Changed (by design)
 - `@calcom/*` package namespace — internal implementation detail, changing would break 1000s of imports

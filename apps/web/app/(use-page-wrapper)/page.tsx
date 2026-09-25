@@ -1,5 +1,6 @@
 import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
 import { APP_NAME } from "@calcom/lib/constants";
+import { getPlanContactConfig } from "@calcom/lib/planContactConfig";
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 import { _generateMetadata } from "app/_utils";
 import type { Metadata } from "next";
@@ -48,8 +49,9 @@ const generateMetadata = async (): Promise<Metadata> => {
 const HomePage = async () => {
   const session = await getServerSession({ req: buildLegacyRequest(await headers(), await cookies()) });
   const isLoggedIn = !!session?.user?.id;
+  const initialContact = await getPlanContactConfig();
 
-  return <HomeView isLoggedIn={isLoggedIn} />;
+  return <HomeView isLoggedIn={isLoggedIn} initialContact={initialContact} />;
 };
 
 export { generateMetadata };

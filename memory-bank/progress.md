@@ -57,4 +57,13 @@
     - Decoupled SMS notifications from SMTP email failures in `email-manager.ts` using `Promise.allSettled` and isolated try/catch for creation, rescheduling, and cancellation.
     - Enhanced SMS templates with resilient Turkish defaults, registered `@calcom/sms` as a workspace package, and dynamically adjusted UI copy on the booking form and event settings.
     - All unit tests and notification flows validated with exit code 0.
+19. Plan Contact Information Synchronization & Admin Usability Fix:
+    - Resolved tRPC path discrepancy (`trpc.publicViewer` -> `trpc.viewer.public.getPlanContact`).
+    - Added global React Query cache invalidation for both admin and public viewer queries upon saving.
+    - Integrated Server-Side Rendering (SSR) in Next.js App Router `page.tsx` and `plan-bilgi/page.tsx`, eliminating layout flash and seeding React Query initialData.
+    - Synchronized `AdminFeatureCards` directly with `HomeView` via props.
+    - Added route cache revalidation (`revalidatePath`) in `updatePlanContact.handler.ts`.
+    - Enhanced `planContactConfig.ts` with named Prisma import, multi-path filesystem resolution for backups, and resilient DB theme parsing.
+    - Added "Varsayılana Sıfırla" one-click button in admin panel with confirmation dialog.
+    - Validated with automated test suite and verified 0 TypeScript errors on changed files.
 

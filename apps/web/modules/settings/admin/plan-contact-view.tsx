@@ -7,12 +7,19 @@ import { showToast } from "@calcom/ui/components/toast";
 import { Mail, MessageCircle, Phone, ShieldCheck } from "lucide-react";
 import { useEffect, useState } from "react";
 
-export default function PlanContactAdminView() {
-  const [phone, setPhone] = useState("0552 119 19 87");
-  const [email, setEmail] = useState("destek@rondevu.org");
-  const [whatsapp, setWhatsapp] = useState("905521191987");
+const DEFAULT_CONFIG = {
+  phone: "0552 119 19 87",
+  email: "destek@rondevu.org",
+  whatsapp: "905521191987",
+};
 
-  const { data: config, isLoading, refetch } = trpc.viewer.admin.getPlanContact.useQuery();
+export default function PlanContactAdminView() {
+  const utils = trpc.useContext();
+  const [phone, setPhone] = useState(DEFAULT_CONFIG.phone);
+  const [email, setEmail] = useState(DEFAULT_CONFIG.email);
+  const [whatsapp, setWhatsapp] = useState(DEFAULT_CONFIG.whatsapp);
+
+  const { data: config, isLoading } = trpc.viewer.admin.getPlanContact.useQuery();
 
   useEffect(() => {
     if (config) {
@@ -23,12 +30,16 @@ export default function PlanContactAdminView() {
   }, [config]);
 
   const updateMutation = trpc.viewer.admin.updatePlanContact.useMutation({
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       showToast("Plan iletişim bilgileri başarıyla güncellendi.", "success");
       setPhone(data.phone);
       setEmail(data.email);
       setWhatsapp(data.whatsapp);
-      refetch();
+      // Invalidate both admin and public queries across the entire app
+      await Promise.all([
+        utils.viewer.admin.getPlanContact.invalidate(),
+        utils.viewer.public.getPlanContact.invalidate(),
+      ]);
     },
     onError: (err) => {
       showToast(`Hata: ${err.message}`, "error");
@@ -44,6 +55,19 @@ export default function PlanContactAdminView() {
     });
   };
 
+  const handleResetToDefault = () => {
+    if (
+      window.confirm(
+        "İletişim bilgilerini varsayılan rOndevu değerlerine sıfırlamak istediğinize emin misiniz?"
+      )
+    ) {
+      setPhone(DEFAULT_CONFIG.phone);
+      setEmail(DEFAULT_CONFIG.email);
+      setWhatsapp(DEFAULT_CONFIG.whatsapp);
+      updateMutation.mutate(DEFAULT_CONFIG);
+    }
+  };
+
   const cleanPhone = phone.replace(/[^\d+]/g, "");
   const cleanWhatsapp = whatsapp.replace(/[^\d]/g, "");
 
@@ -53,8 +77,9 @@ export default function PlanContactAdminView() {
         <div>
           <h3 className="font-semibold text-emphasis text-base">Plan Başvuru & İletişim Kanalları</h3>
           <p className="mt-1 text-xs text-subtle leading-relaxed">
-            /plan-bilgi sayfasında danışanlarınıza ve müşterilerinize sunulan doğrudan arama, WhatsApp ve
-            e-posta aktivasyon bilgilerini buradan yönetebilirsiniz.
+            Ana sayfa (/), danışma barı, özellik kartları ve /plan-bilgi sayfasında danışanlarınıza ve
+            ziyaretçilerinize sunulan doğrudan arama, WhatsApp ve e-posta bilgilerini buradan
+            yönetebilirsiniz. Kaydettiğiniz değişiklikler tüm sitede anında güncellenir.
           </p>
         </div>
 
@@ -111,12 +136,19 @@ export default function PlanContactAdminView() {
             </p>
           </div>
 
-          <div className="pt-2">
+          <div className="flex items-center gap-3 pt-2">
             <Button
               type="submit"
-              loading={updateMutation.isLoading}
-              disabled={isLoading || updateMutation.isLoading}>
+              loading={updateMutation.isPending}
+              disabled={isLoading || updateMutation.isPending}>
               Değişiklikleri Kaydet
+            </Button>
+            <Button
+              type="button"
+              color="secondary"
+              onClick={handleResetToDefault}
+              disabled={isLoading || updateMutation.isPending}>
+              Varsayılana Sıfırla
             </Button>
           </div>
         </form>
@@ -139,7 +171,7 @@ export default function PlanContactAdminView() {
       {/* Canlı Önizleme Kartı */}
       <div className="rounded-xl border border-subtle bg-default p-6 space-y-4">
         <div className="flex items-center justify-between border-b border-subtle pb-3">
-          <h4 className="font-semibold text-emphasis text-sm">/plan-bilgi Önizleme</h4>
+          <h4 className="font-semibold text-emphasis text-sm">Canlı Önizleme (Ana Sayfa & /plan-bilgi)</h4>
           <span className="text-[11px] text-subtle">Kullanıcıların göreceği canlı kartlar</span>
         </div>
 
