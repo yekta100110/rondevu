@@ -1,0 +1,18 @@
+{
+  "name": "@calcom/sms",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./sms-manager.ts",
+  "exports": {
+    ".": "./sms-manager.ts",
+    "./*": "./*"
+  },
+  "dependencies": {
+    "@calcom/dayjs": "workspace:*",
+    "@calcom/lib": "workspace:*",
+    "@calcom/types": "workspace:*"
+  },
+  "devDependencies": {
+    "@calcom/tsconfig": "workspace:*"
+  }
+}

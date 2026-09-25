@@ -434,6 +434,13 @@ export const EventAdvancedTab = ({
     setInterfaceLanguageVisible(watchedInterfaceLanguage !== null && watchedInterfaceLanguage !== undefined);
   }, [watchedInterfaceLanguage]);
   const [redirectUrlVisible, setRedirectUrlVisible] = useState(!!formMethods.getValues("successRedirectUrl"));
+  const watchedBookingFields = formMethods.watch("bookingFields");
+  const isPhoneConfirmation = useMemo(() => {
+    const fields = watchedBookingFields || formMethods.getValues()?.bookingFields || [];
+    const phoneField = fields.find((f) => f.name === "attendeePhoneNumber");
+    const emailField = fields.find((f) => f.name === "email");
+    return Boolean(phoneField && !phoneField.hidden && phoneField.required && emailField?.hidden);
+  }, [watchedBookingFields, formMethods]);
 
   const bookingFields: Prisma.JsonObject = {};
   const selectedThemeIsDark =
@@ -669,7 +676,9 @@ export const EventAdvancedTab = ({
       {!isPlatform && (
         <Controller
           name="requiresCancellationReason"
-          defaultValue={eventType.requiresCancellationReason ?? CancellationReasonRequirement.MANDATORY_HOST_ONLY}
+          defaultValue={
+            eventType.requiresCancellationReason ?? CancellationReasonRequirement.MANDATORY_HOST_ONLY
+          }
           render={({ field: { value, onChange } }) => {
             const cancellationReasonOptions = [
               { value: CancellationReasonRequirement.MANDATORY_BOTH, label: t("mandatory_for_both") },
@@ -846,10 +855,18 @@ export const EventAdvancedTab = ({
               "border-subtle rounded-lg border py-6 px-4 sm:px-6",
               customClassNames?.bookerEmailVerification?.container
             )}
-            title={t("requires_booker_email_verification")}
+            title={
+              isPhoneConfirmation
+                ? "Rezervasyonu yapan kişinin telefon (SMS) doğrulaması gereklidir"
+                : t("requires_booker_email_verification")
+            }
             data-testid="requires-booker-email-verification"
             {...requiresBookerEmailVerificationProps}
-            description={t("description_requires_booker_email_verification")}
+            description={
+              isPhoneConfirmation
+                ? "Kullanıcı randevuyu onaylamadan önce telefonuna iletilen SMS doğrulama kodunu girmek zorundadır."
+                : t("description_requires_booker_email_verification")
+            }
             descriptionClassName={customClassNames?.bookerEmailVerification?.description}
             checked={value}
             onCheckedChange={(e) => onChange(e)}

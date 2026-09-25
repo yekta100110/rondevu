@@ -99,6 +99,18 @@
     - Cause: `packages/features/auth/lib/verifyEmail.ts` was importing `@calcom/sms/sms-manager`, which was not a mapped workspace package in the yarn monorepo.
     - Fix: Updated line 117 to `await import("@calcom/lib/smsTransport")` where `sendSMS` is exported from the official `@calcom/lib` package.
     - Verified: `yarn workspace @calcom/trpc run build` completed successfully (exit code 0).
+25. **SMS Verification & Notification Infrastructure Overhaul** —
+    - Fixed phone-constructed email normalization in `packages/lib/contructEmailFromPhoneNumber.ts` to strictly strip non-digits (`\D/g`), eliminating space-induced format exceptions (`90 552 ...` -> `905521191987@sms.rondevu.org`).
+    - Fixed phone number normalization in `packages/lib/smsTransport.ts` for Twilio and Netgsm, eliminating spaces in `normalizePhoneNumber`.
+    - Fixed `sendEmailVerificationByCode` in `packages/features/auth/lib/verifyEmail.ts`: checks `isSmsCalEmail(email)` first to bypass email watchlist checks, generates TOTP, sends SMS OTP, and triggers verify modal without crashing.
+    - Fixed `RegularBookingService.ts`: validates verification code against `effectiveBookerEmail` (`bookerEmail || contructEmailFromPhoneNumber(bookerPhoneNumber)`), prevents crash on empty booker email, and saves attendee email/phone properly in database.
+    - Fixed `getBookingData.ts` to support both `responses.attendeePhoneNumber` and `responses.phone`.
+    - Fixed `email-manager.ts`: filters out `@sms.rondevu.org` pseudo-emails from SMTP queues, decouples SMS dispatch via `Promise.allSettled` and isolated try/catch so SMTP errors never block SMS notifications.
+    - Fixed `event-scheduled-sms.ts` and `event-rescheduled-sms.ts` with crash-proof Turkish default messages and multi-locale fallback.
+    - Created `packages/sms/package.json` declaring `@calcom/sms` as a monorepo workspace package.
+    - Updated `BookEventForm.tsx` to display "Telefonu Doğrula" when verifying phone number.
+    - Updated `EventAdvancedTab.tsx` so `requiresBookerEmailVerification` toggle title/description dynamically changes to "Telefon (SMS) Doğrulaması" when "Phone" confirmation is active.
+    - All 8 SMSManager unit tests passed and lifecycle notifications verified.
 
 ## What Was NOT Changed (by design)
 - `@calcom/*` package namespace — internal implementation detail, changing would break 1000s of imports

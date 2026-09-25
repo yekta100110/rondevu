@@ -9,6 +9,7 @@
   "dependencies": {
     "@calcom/dayjs": "workspace:*",
     "@calcom/lib": "workspace:*",
+    "@calcom/sms": "workspace:*",
     "rrule": "2.7.1"
   },
   "peerDependencies": {

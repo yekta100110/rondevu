@@ -1,3 +1,4 @@
+import process from "node:process";
 export interface SMSPayload {
   to: string;
   body: string;
@@ -72,7 +73,7 @@ export function getSMSConfig() {
         url: process.env.SMS_WEBHOOK_URL ? "Mevcut / Yapılandırıldı" : undefined,
       },
     },
-    mode: (twilioConfigured || netgsmConfigured || webhookConfigured) ? "production" : "simulation",
+    mode: twilioConfigured || netgsmConfigured || webhookConfigured ? "production" : "simulation",
   };
 }
 
@@ -82,7 +83,6 @@ export function getSMSConfig() {
 function normalizePhoneNumber(phone: string, target: "twilio" | "netgsm" | "general"): string {
   const digits = phone.replace(/\D/g, "");
   if (target === "twilio") {
-    if (phone.startsWith("+")) return phone;
     if (digits.startsWith("90") && digits.length === 12) return `+${digits}`;
     if (digits.startsWith("0") && digits.length === 11) return `+9${digits}`;
     if (digits.length === 10) return `+90${digits}`;
@@ -94,7 +94,7 @@ function normalizePhoneNumber(phone: string, target: "twilio" | "netgsm" | "gene
     if (digits.startsWith("0") && digits.length === 11) return digits.substring(1);
     return digits;
   }
-  return phone;
+  return digits.length > 0 ? `+${digits}` : phone.trim();
 }
 
 export async function sendSMS({ to, body }: SMSPayload): Promise<SMSResponse> {

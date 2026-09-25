@@ -96,9 +96,14 @@ export const sendEmailVerificationByCode = async ({
   isVerifyingEmail,
   hideBranding,
 }: VerifyEmailType) => {
-  if (await checkIfEmailIsBlockedInWatchlistController({ email, organizationId: null, span: sentrySpan })) {
-    log.warn("Email is blocked - not sending verification email", email);
-    return { ok: false, skipped: false };
+  const { default: isSmsCalEmail } = await import("@calcom/lib/isSmsCalEmail");
+  const isSms = isSmsCalEmail(email);
+
+  if (!isSms) {
+    if (await checkIfEmailIsBlockedInWatchlistController({ email, organizationId: null, span: sentrySpan })) {
+      log.warn("Email is blocked - not sending verification email", email);
+      return { ok: false, skipped: false };
+    }
   }
 
   const translation = await getTranslation(language ?? "en", "common");
@@ -109,10 +114,17 @@ export const sendEmailVerificationByCode = async ({
   totp.options = { step: 900 };
   const code = totp.generate(secret);
 
-  const { default: isSmsCalEmail } = await import("@calcom/lib/isSmsCalEmail");
-  if (isSmsCalEmail(email)) {
-    const rawNumber = email.split("@")[0].replace(/[^\d+]/g, "");
-    const targetPhone = rawNumber.startsWith("+") ? rawNumber : `+${rawNumber}`;
+  if (isSms) {
+    const rawDigits = email.split("@")[0].replace(/\D/g, "");
+    let targetPhone = `+${rawDigits}`;
+    if (rawDigits.startsWith("90") && rawDigits.length === 12) {
+      targetPhone = `+${rawDigits}`;
+    } else if (rawDigits.startsWith("0") && rawDigits.length === 11) {
+      targetPhone = `+9${rawDigits}`;
+    } else if (rawDigits.length === 10) {
+      targetPhone = `+90${rawDigits}`;
+    }
+
     try {
       const { sendSMS } = await import("@calcom/lib/smsTransport");
       await sendSMS({

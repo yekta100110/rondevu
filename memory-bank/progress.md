@@ -50,4 +50,11 @@
 17. Docker deployment error fix (`TS2307` module not found `@calcom/sms/sms-manager`):
     - Corrected dynamic import in `packages/features/auth/lib/verifyEmail.ts` to `@calcom/lib/smsTransport`.
     - Verified `yarn workspace @calcom/trpc run build` passes with exit code 0.
+18. End-to-end SMS Verification and Notification Infrastructure:
+    - Fixed phone email construction (`contructEmailFromPhoneNumber`) to strictly strip non-digits, eliminating format crashes in auth and booking flows.
+    - Resolved phone verification OTP delivery by bypassing email watchlist check for SMS-based virtual emails in `sendEmailVerificationByCode`.
+    - Updated `RegularBookingService` to validate verification code against the effective booker email/phone, preventing booking failures on phone-only events.
+    - Decoupled SMS notifications from SMTP email failures in `email-manager.ts` using `Promise.allSettled` and isolated try/catch for creation, rescheduling, and cancellation.
+    - Enhanced SMS templates with resilient Turkish defaults, registered `@calcom/sms` as a workspace package, and dynamically adjusted UI copy on the booking form and event settings.
+    - All unit tests and notification flows validated with exit code 0.
 

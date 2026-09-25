@@ -1,18 +1,17 @@
-import { default as cloneDeep } from "lodash/cloneDeep";
-import type { z } from "zod";
-
 import dayjs from "@calcom/dayjs";
 import type BaseEmail from "@calcom/emails/templates/_base-email";
 import type { EventNameObjectType } from "@calcom/features/eventtypes/lib/eventNaming";
 import { getEventName } from "@calcom/features/eventtypes/lib/eventNaming";
 import { formatCalEvent } from "@calcom/lib/formatCalendarEvent";
+import isSmsCalEmail from "@calcom/lib/isSmsCalEmail";
 import logger from "@calcom/lib/logger";
 import { safeStringify } from "@calcom/lib/safeStringify";
 import { withReporting } from "@calcom/lib/sentryWrapper";
 import { prisma } from "@calcom/prisma";
 import type { EventTypeMetaDataSchema } from "@calcom/prisma/zod-utils";
 import type { CalendarEvent, Person } from "@calcom/types/Calendar";
-
+import { default as cloneDeep } from "lodash/cloneDeep";
+import type { z } from "zod";
 import AwaitingPaymentSMS from "../sms/attendee/awaiting-payment-sms";
 import CancelledSeatSMS from "../sms/attendee/cancelled-seat-sms";
 import EventCancelledSMS from "../sms/attendee/event-cancelled-sms";
@@ -104,27 +103,33 @@ const _sendScheduledEmailsAndSMS = async (
     !shouldSkipAttendeeEmailWithSettings(eventTypeMetadata, organizationSettings, EmailType.CONFIRMATION)
   ) {
     emailsToSend.push(
-      ...formattedCalEvent.attendees.map((attendee) => {
-        return sendEmail(
-          () =>
-            new AttendeeScheduledEmail(
-              {
-                ...formattedCalEvent,
-                ...(formattedCalEvent.hideCalendarNotes && { additionalNotes: undefined }),
-                ...(eventNameObject && {
-                  title: getEventName({ ...eventNameObject, t: attendee.language.translate }),
-                }),
-              },
-              attendee
-            )
-        );
-      })
+      ...formattedCalEvent.attendees
+        .filter((attendee) => attendee.email && !isSmsCalEmail(attendee.email))
+        .map((attendee) => {
+          return sendEmail(
+            () =>
+              new AttendeeScheduledEmail(
+                {
+                  ...formattedCalEvent,
+                  ...(formattedCalEvent.hideCalendarNotes && { additionalNotes: undefined }),
+                  ...(eventNameObject && {
+                    title: getEventName({ ...eventNameObject, t: attendee.language.translate }),
+                  }),
+                },
+                attendee
+              )
+          );
+        })
     );
   }
 
-  await Promise.all(emailsToSend);
-  const successfullyScheduledSms = new EventSuccessfullyScheduledSMS(calEvent);
-  await successfullyScheduledSms.sendSMSToAttendees();
+  await Promise.allSettled(emailsToSend);
+  try {
+    const successfullyScheduledSms = new EventSuccessfullyScheduledSMS(calEvent);
+    await successfullyScheduledSms.sendSMSToAttendees();
+  } catch (smsErr) {
+    logger.error("Failed to send scheduled SMS to attendees", smsErr);
+  }
 };
 
 export const sendScheduledEmailsAndSMS = withReporting(
@@ -302,24 +307,30 @@ const _sendRescheduledEmailsAndSMS = async (
 
   if (!shouldSkipAttendeeEmailWithSettings(eventTypeMetadata, organizationSettings, EmailType.RESCHEDULED)) {
     emailsToSend.push(
-      ...calendarEvent.attendees.map((attendee) => {
-        return sendEmail(
-          () =>
-            new AttendeeRescheduledEmail(
-              {
-                ...calendarEvent,
-                ...(calendarEvent.hideCalendarNotes && { additionalNotes: undefined }),
-              },
-              attendee
-            )
-        );
-      })
+      ...calendarEvent.attendees
+        .filter((attendee) => attendee.email && !isSmsCalEmail(attendee.email))
+        .map((attendee) => {
+          return sendEmail(
+            () =>
+              new AttendeeRescheduledEmail(
+                {
+                  ...calendarEvent,
+                  ...(calendarEvent.hideCalendarNotes && { additionalNotes: undefined }),
+                },
+                attendee
+              )
+          );
+        })
     );
   }
 
-  await Promise.all(emailsToSend);
-  const successfullyReScheduledSms = new EventSuccessfullyReScheduledSMS(calEvent);
-  await successfullyReScheduledSms.sendSMSToAttendees();
+  await Promise.allSettled(emailsToSend);
+  try {
+    const successfullyReScheduledSms = new EventSuccessfullyReScheduledSMS(calEvent);
+    await successfullyReScheduledSms.sendSMSToAttendees();
+  } catch (smsErr) {
+    logger.error("Failed to send rescheduled SMS to attendees", smsErr);
+  }
 };
 export const sendRescheduledEmailsAndSMS = withReporting(
   _sendRescheduledEmailsAndSMS,
@@ -530,33 +541,39 @@ export const sendCancelledEmailsAndSMS = async (
 
   if (!shouldSkipAttendeeEmailWithSettings(eventTypeMetadata, organizationSettings, EmailType.CANCELLATION)) {
     emailsToSend.push(
-      ...calendarEvent.attendees.map((attendee) => {
-        return sendEmail(
-          () =>
-            new AttendeeCancelledEmail(
-              {
-                ...calendarEvent,
-                title: getEventName({
-                  ...eventNameObject,
-                  t: attendee.language.translate,
-                  attendeeName: attendee.name,
-                  host: calendarEvent.organizer.name,
-                  eventType: calendarEvent.title,
-                  eventDuration,
-                  ...(calendarEvent.responses && { bookingFields: calendarEvent.responses }),
-                  ...(calendarEvent.location && { location: calendarEvent.location }),
-                }),
-              },
-              attendee
-            )
-        );
-      })
+      ...calendarEvent.attendees
+        .filter((attendee) => attendee.email && !isSmsCalEmail(attendee.email))
+        .map((attendee) => {
+          return sendEmail(
+            () =>
+              new AttendeeCancelledEmail(
+                {
+                  ...calendarEvent,
+                  title: getEventName({
+                    ...eventNameObject,
+                    t: attendee.language.translate,
+                    attendeeName: attendee.name,
+                    host: calendarEvent.organizer.name,
+                    eventType: calendarEvent.title,
+                    eventDuration,
+                    ...(calendarEvent.responses && { bookingFields: calendarEvent.responses }),
+                    ...(calendarEvent.location && { location: calendarEvent.location }),
+                  }),
+                },
+                attendee
+              )
+          );
+        })
     );
   }
 
-  await Promise.all(emailsToSend);
-  const eventCancelledSms = new EventCancelledSMS(calEvent);
-  await eventCancelledSms.sendSMSToAttendees();
+  await Promise.allSettled(emailsToSend);
+  try {
+    const eventCancelledSms = new EventCancelledSMS(calEvent);
+    await eventCancelledSms.sendSMSToAttendees();
+  } catch (smsErr) {
+    logger.error("Failed to send cancellation SMS to attendees", smsErr);
+  }
 };
 
 export const sendOrganizerRequestReminderEmail = async (

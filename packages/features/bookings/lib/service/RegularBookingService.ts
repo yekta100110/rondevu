@@ -57,6 +57,7 @@ import { groupHostsByGroupId } from "@calcom/lib/bookings/hostGroupUtils";
 import { shouldIgnoreContactOwner } from "@calcom/lib/bookings/routing/utils";
 import { getVideoCallUrlFromCalEvent } from "@calcom/lib/CalEventParser";
 import { DEFAULT_GROUP_ID, ENABLE_ASYNC_TASKER } from "@calcom/lib/constants";
+import { contructEmailFromPhoneNumber } from "@calcom/lib/contructEmailFromPhoneNumber";
 import { ErrorCode } from "@calcom/lib/errorCodes";
 import { ErrorWithCode } from "@calcom/lib/errors";
 import { extractBaseEmail } from "@calcom/lib/extract-base-email";
@@ -577,13 +578,18 @@ async function handler(
 
   const emailsAndSmsHandler = new BookingEmailSmsHandler({ logger: tracingLogger });
 
+  const effectiveBookerEmail =
+    bookerEmail || (bookerPhoneNumber ? contructEmailFromPhoneNumber(bookerPhoneNumber) : "");
+
   try {
-    await checkIfBookerEmailIsBlocked({
-      loggedInUserId: userId,
-      bookerEmail,
-      verificationCode: reqBody.verificationCode,
-      isReschedule: !!rawBookingData.rescheduleUid,
-    });
+    if (bookerEmail) {
+      await checkIfBookerEmailIsBlocked({
+        loggedInUserId: userId,
+        bookerEmail,
+        verificationCode: reqBody.verificationCode,
+        isReschedule: !!rawBookingData.rescheduleUid,
+      });
+    }
   } catch (error) {
     if (error instanceof ErrorWithCode) {
       throw new HttpError({ statusCode: 403, message: error.message });
@@ -598,13 +604,15 @@ async function handler(
     eventType.parent?.team?.parentId ??
     eventType.owner?.profiles?.[0]?.organizationId ??
     null;
-  spamCheckService.startCheck({ email: bookerEmail, organizationId: eventTypeOrganizationId });
+  if (bookerEmail) {
+    spamCheckService.startCheck({ email: bookerEmail, organizationId: eventTypeOrganizationId });
+  }
 
   if (!rawBookingData.rescheduleUid) {
     await checkActiveBookingsLimitForBooker({
       eventTypeId,
       maxActiveBookingsPerBooker: eventType.maxActiveBookingsPerBooker,
-      bookerEmail,
+      bookerEmail: effectiveBookerEmail,
       offerToRescheduleLastBooking: eventType.maxActiveBookingPerBookerOfferReschedule,
     });
   }
@@ -619,7 +627,7 @@ async function handler(
     }
 
     try {
-      await verifyCodeUnAuthenticated(bookerEmail, verificationCode);
+      await verifyCodeUnAuthenticated(effectiveBookerEmail, verificationCode);
     } catch {
       throw new HttpError({
         statusCode: 400,
@@ -1206,7 +1214,7 @@ async function handler(
 
   const invitee: Invitee = [
     {
-      email: bookerEmail,
+      email: effectiveBookerEmail,
       name: fullName,
       phoneNumber: bookerPhoneNumber,
       firstName: (typeof bookerName === "object" && bookerName.firstName) || "",

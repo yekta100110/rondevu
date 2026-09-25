@@ -68,35 +68,16 @@ export default abstract class SMSManager {
   abstract getMessage(attendee: Person): string;
 
   async sendSMSToAttendee(attendee: Person): Promise<unknown> {
-    let targetPhone =
-      attendee.phoneNumber || (this.calEvent as { smsReminderNumber?: string }).smsReminderNumber;
+    const attendeePhoneNumber = attendee.phoneNumber;
+    const isPhoneOnlyBooking = Boolean(attendeePhoneNumber && isSmsCalEmail(attendee.email));
 
-    if (!targetPhone && (this.calEvent as { responses?: Record<string, unknown> }).responses) {
-      const resp =
-        (this.calEvent as { responses?: Record<string, { value?: unknown } | unknown> }).responses || {};
-      const respPhone = resp.attendeePhoneNumber || resp.phone;
-      if (typeof respPhone === "object" && respPhone && "value" in respPhone) {
-        targetPhone = String(respPhone.value);
-      } else if (typeof respPhone === "string") {
-        targetPhone = respPhone;
-      }
-    }
+    if (!attendeePhoneNumber || !isPhoneOnlyBooking) return;
 
-    if (!targetPhone && attendee.email && isSmsCalEmail(attendee.email)) {
-      targetPhone = attendee.email.split("@")[0];
-    }
-
-    if (!targetPhone || typeof targetPhone !== "string") return;
-
-    try {
-      return await handleSendingSMS({
-        reminderPhone: targetPhone,
-        organizerUserId: this.organizerUserId,
-        message: this.getMessage(attendee),
-      });
-    } catch (smsErr) {
-      console.error("[SMSManager] Failed to send SMS to attendee:", smsErr);
-    }
+    return handleSendingSMS({
+      reminderPhone: attendeePhoneNumber,
+      organizerUserId: this.organizerUserId,
+      message: this.getMessage(attendee),
+    });
   }
 
   async sendSMSToAttendees(): Promise<void> {

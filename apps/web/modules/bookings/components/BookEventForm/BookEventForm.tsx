@@ -252,7 +252,11 @@ export const BookEventForm = ({
                 ? isPaidEvent
                   ? t("pay_and_book")
                   : t("confirm")
-                : t("verify_email_button")}
+                : !bookingForm.watch("responses.email") &&
+                    (bookingForm.watch("responses.attendeePhoneNumber") ||
+                      bookingForm.watch("responses.phone"))
+                  ? "Telefonu Doğrula"
+                  : t("verify_email_button")}
           </Button>
         </div>
       </Form>
