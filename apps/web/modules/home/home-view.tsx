@@ -1,10 +1,11 @@
 "use client";
 
 import { APP_NAME } from "@calcom/lib/constants";
+import { trpc } from "@calcom/trpc/react";
 import classNames from "@calcom/ui/classNames";
 import { Button } from "@calcom/ui/components/button";
 import { Logo } from "@calcom/ui/components/logo";
-import { ArrowRight, Check, Sparkles } from "lucide-react";
+import { ArrowRight, Check, Mail, MessageSquare, Phone, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { AdminFeatureCards } from "./components/AdminFeatureCards";
@@ -71,6 +72,16 @@ interface HomeViewProps {
 
 export function HomeView({ isLoggedIn = false }: HomeViewProps) {
   const [selectedBilling, setSelectedBilling] = useState<"monthly" | "yearly">("yearly");
+
+  const { data: contactConfig } = trpc.publicViewer.getPlanContact.useQuery(undefined, {
+    staleTime: 60000,
+  });
+
+  const phone = contactConfig?.phone || "0552 119 19 87";
+  const email = contactConfig?.email || "destek@rondevu.org";
+  const whatsapp = contactConfig?.whatsapp || "905521191987";
+  const cleanPhone = phone.replace(/[^\d+]/g, "");
+  const cleanWhatsapp = whatsapp.replace(/[^\d]/g, "");
 
   const monthlyFeatures = [
     "Sınırsız randevu ve etkinlik türü",
@@ -152,7 +163,7 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
         {/* ========================================================= */}
         <section aria-labelledby="hero-title" className="pt-20 pb-12 text-center sm:pt-24 sm:pb-16">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-subtle bg-muted/40 px-3.5 py-1 text-xs font-medium text-subtle">
-            <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="size-1.5 rounded-full bg-emphasis" />
             <span>Modern, Doğrulanmış ve Güvenli Randevu Deneyimi</span>
           </div>
 
@@ -238,7 +249,7 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
                     : "text-subtle hover:text-emphasis"
                 )}>
                 <span>Yıllık Faturalandırma</span>
-                <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 font-medium text-[11px] text-emerald-600 dark:text-emerald-400">
+                <span className="rounded-full border border-subtle bg-muted/60 px-2 py-0.5 font-medium text-[11px] text-emphasis">
                   2 Ay Hediye
                 </span>
               </button>
@@ -272,7 +283,7 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
                 <ul className="mb-8 space-y-3">
                   {monthlyFeatures.map((feat, idx) => (
                     <li key={idx} className="flex items-start gap-3 text-emphasis text-sm">
-                      <Check className="mt-0.5 size-4 shrink-0 text-emerald-500" />
+                      <Check className="mt-0.5 size-4 shrink-0 text-emphasis" />
                       <span>{feat}</span>
                     </li>
                   ))}
@@ -333,6 +344,44 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
               </div>
             </article>
           </div>
+
+          {/* Plan İletişim & Kurulum Danışma Barı (Admin Paneli ile Senkron) */}
+          <div className="mx-auto mt-10 max-w-4xl rounded-2xl border border-subtle bg-muted/20 p-6 sm:p-7">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
+              <div className="space-y-1">
+                <h3 className="font-semibold text-emphasis text-sm sm:text-base">
+                  Planlar veya Özel Kurulum Hakkında Bilgi Alın
+                </h3>
+                <p className="text-xs text-subtle leading-relaxed">
+                  Sorularınız, kurumsal ihtiyaçlarınız veya sistem yapılandırması için doğrudan bize
+                  ulaşabilirsiniz.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2 shrink-0">
+                <a
+                  href={`tel:${cleanPhone}`}
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-subtle bg-default px-3 py-1.5 text-xs font-medium text-emphasis hover:bg-muted/50 transition shadow-xs">
+                  <Phone className="size-3.5 text-subtle" />
+                  <span>{phone}</span>
+                </a>
+                <a
+                  href={`https://wa.me/${cleanWhatsapp}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-subtle bg-default px-3 py-1.5 text-xs font-medium text-emphasis hover:bg-muted/50 transition shadow-xs">
+                  <MessageSquare className="size-3.5 text-subtle" />
+                  <span>WhatsApp</span>
+                </a>
+                <a
+                  href={`mailto:${email}`}
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-subtle bg-default px-3 py-1.5 text-xs font-medium text-emphasis hover:bg-muted/50 transition shadow-xs">
+                  <Mail className="size-3.5 text-subtle" />
+                  <span>{email}</span>
+                </a>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* ========================================================= */}
@@ -351,7 +400,7 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
             <span className="text-xs">© {new Date().getFullYear()} rOndevu. Tüm hakları saklıdır.</span>
           </div>
 
-          <nav aria-label="Alt Bilgi Menüsü" className="flex items-center gap-6 text-xs">
+          <nav aria-label="Alt Bilgi Menüsü" className="flex flex-wrap items-center gap-6 text-xs">
             <Link href="#features" className="transition hover:text-emphasis">
               Özellikler
             </Link>
@@ -361,6 +410,9 @@ export function HomeView({ isLoggedIn = false }: HomeViewProps) {
             <Link href="#faq" className="transition hover:text-emphasis">
               SSS
             </Link>
+            <a href={`mailto:${email}`} className="transition hover:text-emphasis">
+              İletişim ({email})
+            </a>
             <Link href="/auth/login" className="transition hover:text-emphasis">
               Giriş Yap
             </Link>

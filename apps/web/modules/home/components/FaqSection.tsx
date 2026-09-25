@@ -37,7 +37,7 @@ export function FaqSection() {
     {
       question: "Google Takvim veya Apple Calendar entegrasyonu nasıl çalışıyor?",
       answer:
-        "rOndevu, paneliniz üzerinden oluşturulan veya güncellenen tüm randevuları anlık olarak Google Takvim ve Apple Calendar hesabınıza aktarır. Böylece günlük randevu programınızı telefonunuzun veya bilgisayarınızın takvim uygulamasından zahmetsizce takip edebilirsiniz. Kişisel takvimlerinizdeki özel etkinlikler rOndevu müsaitliklerinizi etkilemez veya kapatmaz; müsaitlik ve mesai planınızı tamamen rOndevu yönetim panelindeki 'Çalışma Saatleri' ve 'Tarih Üzerine Yazmaları / İzinler' bölümünden tam kontrolle belirlersiniz.",
+        "Oluşturulan tüm randevular anlık olarak Google Takvim ve Apple Calendar uygulamanıza aktarılır; görüşmelerinizi doğrudan kendi takviminizden takip edersiniz.",
     },
     {
       question: "Haftalık veya aylık periyodik seanslar (randevu abonelikleri) nasıl çalışır?",
@@ -65,7 +65,7 @@ export function FaqSection() {
       <div className="mx-auto max-w-3xl">
         <div className="text-center mb-12">
           <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-subtle bg-muted/40 px-3 py-1 text-xs font-medium text-subtle">
-            <HelpCircle className="size-3.5 text-emerald-500" />
+            <HelpCircle className="size-3.5 text-emphasis" />
             <span>Merak Edilenler</span>
           </div>
           <h2 id="faq-title" className="font-bold font-cal text-3xl text-emphasis sm:text-4xl tracking-tight">

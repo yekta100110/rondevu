@@ -1,14 +1,13 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRef, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
 import type { EventLocationType } from "@calcom/app-store/locations";
 import { useBookerStore } from "@calcom/features/bookings/Booker/store";
 import getBookingResponsesSchema from "@calcom/features/bookings/lib/getBookingResponsesSchema";
 import type { BookerEvent } from "@calcom/features/bookings/types";
+import { contructEmailFromPhoneNumber } from "@calcom/lib/contructEmailFromPhoneNumber";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
-
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useRef } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { useInitialFormValues } from "./useInitialFormValues";
 
 export interface IUseBookingForm {
@@ -100,6 +99,10 @@ export const useBookingForm = ({
 
   const email = bookingForm.watch("responses.email");
   const name = bookingForm.watch("responses.name");
+  const attendeePhoneNumber = bookingForm.watch("responses.attendeePhoneNumber");
+  const phone = bookingForm.watch("responses.phone");
+  const effectivePhone = (attendeePhoneNumber || phone || "") as string;
+  const effectiveEmail = email || (effectivePhone ? contructEmailFromPhoneNumber(effectivePhone) : "");
 
   const beforeVerifyEmail = () => {
     bookingForm.clearErrors();
@@ -121,7 +124,7 @@ export const useBookingForm = ({
     bookingForm,
     bookerFormErrorRef,
     key,
-    formEmail: email,
+    formEmail: effectiveEmail,
     formName: name,
     beforeVerifyEmail,
     formErrors: errors,

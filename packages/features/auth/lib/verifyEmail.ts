@@ -8,10 +8,10 @@ import {
 import { FeaturesRepository } from "@calcom/features/flags/features.repository";
 import { sentrySpan } from "@calcom/features/watchlist/lib/telemetry";
 import { checkIfEmailIsBlockedInWatchlistController } from "@calcom/features/watchlist/operations/check-if-email-in-watchlist.controller";
+import { getTranslation } from "@calcom/i18n/server";
 import { checkRateLimitAndThrowError } from "@calcom/lib/checkRateLimitAndThrowError";
 import { WEBAPP_URL } from "@calcom/lib/constants";
 import logger from "@calcom/lib/logger";
-import { getTranslation } from "@calcom/i18n/server";
 import { hashEmail } from "@calcom/lib/server/PiiHasher";
 import { prisma } from "@calcom/prisma";
 import { totp } from "otplib";
@@ -108,6 +108,23 @@ export const sendEmailVerificationByCode = async ({
 
   totp.options = { step: 900 };
   const code = totp.generate(secret);
+
+  const { default: isSmsCalEmail } = await import("@calcom/lib/isSmsCalEmail");
+  if (isSmsCalEmail(email)) {
+    const rawNumber = email.split("@")[0].replace(/[^\d+]/g, "");
+    const targetPhone = rawNumber.startsWith("+") ? rawNumber : `+${rawNumber}`;
+    try {
+      const { sendSMS } = await import("@calcom/sms/sms-manager");
+      await sendSMS({
+        to: targetPhone,
+        body: `rOndevu randevu doğrulama kodunuz: ${code}`,
+      });
+      return { ok: true, skipped: false };
+    } catch (smsErr) {
+      log.error("Failed to send verification SMS", smsErr);
+      throw smsErr;
+    }
+  }
 
   await sendEmailVerificationCode({
     language: translation,

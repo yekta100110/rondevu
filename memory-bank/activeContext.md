@@ -83,6 +83,17 @@
     - Added `interface/` screenshot files and runtime backup `plan-contact-config.json` to `.gitignore`.
     - Biome lint and formatting checks passed with 0 errors.
     - tRPC server and client type checks verified (`build:server` and `build:react` compile with 0 errors).
+23. **User Feedback Implementation (Homepage Polish, Exact Mockup Fidelity, SMS Infrastructure Fixes)** —
+    - **Admin Plan İletişim Bilgileri Homepage Sync**: Dynamically synchronized homepage (`/`) with `/settings/admin/plan-contact` via `trpc.publicViewer.getPlanContact`. Added live phone, WhatsApp, and email buttons in Block 4 of `AdminFeatureCards` and in a dedicated consultation bar right below the pricing cards on `home-view.tsx`, plus dynamic contact email in the footer.
+    - **Hero Step 3 Exact Screenshot Fidelity**: Restored Step 3 confirmation card in `HeroBookingMockup.tsx` to match `Screenshot 2026-09-25 at 16-57-09` with top navigation `< Rezervasyonlara dön`, `Host` badge, and 4 authentic square calendar buttons (Google `G`, Microsoft Outlook, Microsoft 365, Apple Calendar `.ics`).
+    - **Monochrome Design Aesthetic Restored**: Toned down loud accent colors across homepage components (`HeroBookingMockup`, `AdminFeatureCards` Blocks 1-4, `home-view`, and `FaqSection`), adopting Cal/rOndevu's minimalist monochromatic tokens (`bg-default`, `border-subtle`, `bg-muted/20`, `text-emphasis`, `text-subtle`).
+    - **Block 2 Layout & Spacing Overhaul**: Expanded container padding to `p-6 sm:p-8 space-y-6`, created a wide, comfortable segmented switcher control for "Randevular & No-Show" vs "Ofis Dışında", and cleanly decoupled the client preview ("Danışan randevu ekranı önizlemesi") into its own spacious, distinct card with clear border divider.
+    - **Phone OTP Verification & Cancellation SMS Fix**:
+      - Implemented SMS OTP dispatch in `sendEmailVerificationByCode` when `isSmsCalEmail(email)` is detected.
+      - Updated `useBookingForm.ts` to construct phone-email fallback so phone-only bookings trigger the Booker verification dialog.
+      - Updated `VerifyCodeDialog.tsx` to show "Telefon Numaranızı Doğrulayın".
+      - Fixed `handleCancelBooking.ts` and `event-cancelled-sms.ts` so organizers cancelling bookings triggers Turkish cancellation SMS to attendee phone numbers.
+    - **FAQ Calendar Answer Simplified**: Updated Question 5 in `FaqSection.tsx` to concisely state that bookings are automatically exported to Google Takvim and Apple Calendar.
 
 ## What Was NOT Changed (by design)
 - `@calcom/*` package namespace — internal implementation detail, changing would break 1000s of imports

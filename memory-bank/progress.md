@@ -40,4 +40,11 @@
 13. Cal.diy rebranding sweep across app-store, copyright and footers; domain normalization to `rondevu.org`; aligned calendar sync truth (one-way export of booked appointments to Google/Apple calendar without closing rOndevu availability from personal calendar events).
 14. "Ofis Dışında" module overhauled with real screenshots from `interface/`: authentic list view, search & filters, dummy text replacing test entries, interactive public booking preview (day 25 with 🤕), modal overlay; removed "OOO" acronym everywhere (`İzinlerim`, `Ofis Dışı`); fixed Google Calendar API key crash in "Tatil günleri" tab with offline Turkish public holidays fallback; and implemented admin-configurable plan contact channels with role check and sanitization.
 15. Server deployment readiness & security audit completed: 0 leaked secrets, strict admin authorization via authedAdminProcedure, sanitized dynamic URLs (tel, mailto, whatsapp), verified tRPC server and client compilation (code 0), updated .gitignore for local UI assets. All changes pushed to GitHub.
+16. User feedback implementation:
+    - Synchronized `/settings/admin/plan-contact` updates live to homepage (`home-view.tsx` and `AdminFeatureCards.tsx` Block 4) with direct phone, WhatsApp, and email buttons.
+    - Restored Hero Step 3 confirmation card to exact fidelity of `Screenshot 2026-09-25 at 16-57-09` with authentic 4 square calendar buttons (Google `G`, Microsoft Outlook, Office 365, Apple Calendar `.ics`) and top navigation link.
+    - Re-established minimalist monochromatic Cal aesthetic across all landing modules by removing loud/rainbow colors.
+    - Overhauled Block 2 layout with wide switcher tabs and cleanly decoupled the client preview ("Danışan randevu ekranı önizlemesi") into its own spacious distinct card.
+    - Implemented phone OTP SMS verification for phone bookings and fixed cancellation SMS dispatch when organizer cancels appointments.
+    - Simplified SSS calendar synchronization explanation to state direct export to Google/Apple calendar.
 

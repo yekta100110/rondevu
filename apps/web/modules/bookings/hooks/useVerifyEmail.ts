@@ -1,11 +1,11 @@
-import { useSession } from "next-auth/react";
-import { useState } from "react";
-
 import { useBookerStore } from "@calcom/features/bookings/Booker/store";
 import { useDebounce } from "@calcom/lib/hooks/useDebounce";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
+import isSmsCalEmail from "@calcom/lib/isSmsCalEmail";
 import { trpc } from "@calcom/trpc/react";
 import { showToast } from "@calcom/ui/components/toast";
+import { useSession } from "next-auth/react";
+import { useState } from "react";
 
 export interface IUseVerifyEmailProps {
   email: string;
@@ -33,10 +33,18 @@ export const useVerifyEmail = ({
   const sendEmailVerificationByCodeMutation = trpc.viewer.auth.sendVerifyEmailCode.useMutation({
     onSuccess: () => {
       setEmailVerificationModalVisible(true);
-      showToast(t("email_sent"), "success");
+      if (email && isSmsCalEmail(email)) {
+        showToast("Doğrulama kodu SMS ile telefonunuza gönderildi", "success");
+      } else {
+        showToast(t("email_sent"), "success");
+      }
     },
     onError: () => {
-      showToast(t("email_not_sent"), "error");
+      if (email && isSmsCalEmail(email)) {
+        showToast("SMS doğrulama kodu gönderilemedi. Lütfen numarayı kontrol edin.", "error");
+      } else {
+        showToast(t("email_not_sent"), "error");
+      }
     },
   });
 
