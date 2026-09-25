@@ -47,4 +47,7 @@
     - Overhauled Block 2 layout with wide switcher tabs and cleanly decoupled the client preview ("Danışan randevu ekranı önizlemesi") into its own spacious distinct card.
     - Implemented phone OTP SMS verification for phone bookings and fixed cancellation SMS dispatch when organizer cancels appointments.
     - Simplified SSS calendar synchronization explanation to state direct export to Google/Apple calendar.
+17. Docker deployment error fix (`TS2307` module not found `@calcom/sms/sms-manager`):
+    - Corrected dynamic import in `packages/features/auth/lib/verifyEmail.ts` to `@calcom/lib/smsTransport`.
+    - Verified `yarn workspace @calcom/trpc run build` passes with exit code 0.
 

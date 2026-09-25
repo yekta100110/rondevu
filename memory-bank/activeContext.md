@@ -94,6 +94,11 @@
       - Updated `VerifyCodeDialog.tsx` to show "Telefon Numaranızı Doğrulayın".
       - Fixed `handleCancelBooking.ts` and `event-cancelled-sms.ts` so organizers cancelling bookings triggers Turkish cancellation SMS to attendee phone numbers.
     - **FAQ Calendar Answer Simplified**: Updated Question 5 in `FaqSection.tsx` to concisely state that bookings are automatically exported to Google Takvim and Apple Calendar.
+24. **Docker Deploy Build Fix (`TS2307: Cannot find module '@calcom/sms/sms-manager'`)** —
+    - Resolved Docker build step `RUN yarn workspace @calcom/trpc run build` failure.
+    - Cause: `packages/features/auth/lib/verifyEmail.ts` was importing `@calcom/sms/sms-manager`, which was not a mapped workspace package in the yarn monorepo.
+    - Fix: Updated line 117 to `await import("@calcom/lib/smsTransport")` where `sendSMS` is exported from the official `@calcom/lib` package.
+    - Verified: `yarn workspace @calcom/trpc run build` completed successfully (exit code 0).
 
 ## What Was NOT Changed (by design)
 - `@calcom/*` package namespace — internal implementation detail, changing would break 1000s of imports

@@ -114,7 +114,7 @@ export const sendEmailVerificationByCode = async ({
     const rawNumber = email.split("@")[0].replace(/[^\d+]/g, "");
     const targetPhone = rawNumber.startsWith("+") ? rawNumber : `+${rawNumber}`;
     try {
-      const { sendSMS } = await import("@calcom/sms/sms-manager");
+      const { sendSMS } = await import("@calcom/lib/smsTransport");
       await sendSMS({
         to: targetPhone,
         body: `rOndevu randevu doğrulama kodunuz: ${code}`,
