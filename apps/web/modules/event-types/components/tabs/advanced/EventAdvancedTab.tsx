@@ -24,6 +24,7 @@ import { generateHashedLink } from "@calcom/lib/generateHashedLink";
 import { checkWCAGContrastColor } from "@calcom/lib/getBrandColours";
 import { extractHostTimezone } from "@calcom/lib/hashedLinksUtils";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
+import { isPhoneConfirmationEvent } from "@calcom/lib/isPhoneConfirmationEvent";
 import type { Prisma } from "@calcom/prisma/client";
 import { CancellationReasonRequirement, SchedulingType } from "@calcom/prisma/enums";
 import type { EditableSchema, fieldSchema } from "@calcom/prisma/zod-utils";
@@ -435,12 +436,12 @@ export const EventAdvancedTab = ({
   }, [watchedInterfaceLanguage]);
   const [redirectUrlVisible, setRedirectUrlVisible] = useState(!!formMethods.getValues("successRedirectUrl"));
   const watchedBookingFields = formMethods.watch("bookingFields");
+  const watchedMetadata = formMethods.watch("metadata");
   const isPhoneConfirmation = useMemo(() => {
     const fields = watchedBookingFields || formMethods.getValues()?.bookingFields || [];
-    const phoneField = fields.find((f) => f.name === "attendeePhoneNumber");
-    const emailField = fields.find((f) => f.name === "email");
-    return Boolean(phoneField && !phoneField.hidden && phoneField.required && emailField?.hidden);
-  }, [watchedBookingFields, formMethods]);
+    const meta = watchedMetadata || formMethods.getValues()?.metadata || {};
+    return isPhoneConfirmationEvent(fields, meta);
+  }, [watchedBookingFields, watchedMetadata, formMethods]);
 
   const bookingFields: Prisma.JsonObject = {};
   const selectedThemeIsDark =

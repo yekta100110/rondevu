@@ -32,6 +32,7 @@ type BookEventFormProps = {
   renderConfirmNotVerifyEmailButtonCond: boolean;
   extraOptions: Record<string, string | string[]>;
   isPlatform?: boolean;
+  isPhoneConfirmation?: boolean;
   isVerificationCodeSending: boolean;
   isTimeslotUnavailable: boolean;
   shouldRenderCaptcha?: boolean;
@@ -55,6 +56,7 @@ export const BookEventForm = ({
   extraOptions,
   isVerificationCodeSending,
   isPlatform = false,
+  isPhoneConfirmation = false,
   isTimeslotUnavailable,
   shouldRenderCaptcha,
   confirmButtonDisabled,
@@ -252,9 +254,10 @@ export const BookEventForm = ({
                 ? isPaidEvent
                   ? t("pay_and_book")
                   : t("confirm")
-                : !bookingForm.watch("responses.email") &&
-                    (bookingForm.watch("responses.attendeePhoneNumber") ||
-                      bookingForm.watch("responses.phone"))
+                : isPhoneConfirmation ||
+                    (!bookingForm.watch("responses.email") &&
+                      (bookingForm.watch("responses.attendeePhoneNumber") ||
+                        bookingForm.watch("responses.phone")))
                   ? "Telefonu Doğrula"
                   : t("verify_email_button")}
           </Button>

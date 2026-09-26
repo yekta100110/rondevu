@@ -83,5 +83,18 @@
     - Declared `@calcom/sms` workspace dependency in `packages/features/package.json` and updated `yarn.lock`.
     - Verified locally with `yarn workspace @calcom/trpc run build` (build:server and build:react compile with 0 errors).
     - Verified SMSManager test suite (8 tests passed) and Biome formatting.
+23. Frontend Phone Verification Gate Fix, Legal Pages (/privacy & /tos) and Dynamic SEO Sitemap:
+    - Fixed Booker frontend to detect phone confirmation mode (`isPhoneConfirmationEvent`), switch action button to "Telefonu Doğrula", dispatch `sendPhoneVerification` via Twilio Verify, open 6-digit `VerifyCodeDialog`, and store `verificationCode` in `BookerStore` before sending booking mutation.
+    - Created `/privacy` and `/tos` legal pages with Dark/Light mode support, detailing Data Processor/Controller roles, Twilio and Cloudflare subprocessors, SaaS disclaimers, liability limitations, and anti-spam terms.
+    - Created dynamic `app/sitemap.ts` (`/sitemap.xml`) and `app/robots.ts` (`/robots.txt`).
+    - Verified with Biome check (0 errors), tRPC build (code 0), and Vitest unit tests (5/5 passed).
+24. Resolution of 6 Defect Report Gaps (SMS OTP Flow, Legal Pages, and SEO Sitemap):
+    - **Defect 1 (State Race Condition)**: Passed `overrideVerificationCode` directly through `useHandleBookEvent` and `BookerWebWrapper.tsx` on verification success, avoiding asynchronous closure lag.
+    - **Defect 2 (E.164 Phone Normalization)**: Implemented universal `normalizePhoneNumber.ts` handling all Turkish and international formats, enforced E.164 regex validation in `phoneVerification.ts`, and sanitized phone numbers in booking mappers and services (5 tests passing).
+    - **Defect 3 (Phone Confirmation Detection Logic)**: Enhanced `isPhoneConfirmationEvent` to check `metadata.confirmationOption === "phone"`, etc., correctly enforcing the phone OTP gate even when organizers collect both email and phone as visible/required fields. Fixed `RegularBookingService.ts` to verify phone OTP against attendee phone number (10 tests passing).
+    - **Defect 4 (Dynamic Legal Contact Info)**: Removed all hardcoded personal contact info from `privacy-view.tsx` and `tos-view.tsx`. Connected SSR `getPlanContactConfig()` and dynamic `trpc.viewer.public.getPlanContact` query.
+    - **Defect 5 (Duplicate Sitemap Aliases)**: Removed `/gizlilik-politikasi` and `/kullanim-kosullari` from `sitemap.ts`, exposing strictly canonical URLs to search crawlers.
+    - **Defect 6 (OTP Resend & Modal Dismissal)**: Upgraded `VerifyCodeDialog.tsx` with a 60-second cooldown timer, resend button, and complete state cleanup on dismissal, keeping booking form buttons active and responsive without a page reload.
+    - **Validation**: 15 Vitest unit tests passed, `@calcom/trpc` built cleanly (code 0), and Biome check verified.
 
 

@@ -1,15 +1,21 @@
-import { v4 as uuidv4 } from "uuid";
-
 import dayjs from "@calcom/dayjs";
 import { isBookingDryRun } from "@calcom/features/bookings/Booker/utils/isBookingDryRun";
 import { getRoutedTeamMemberIdsFromSearchParams } from "@calcom/lib/bookings/getRoutedTeamMemberIdsFromSearchParams";
+import { contructEmailFromPhoneNumber } from "@calcom/lib/contructEmailFromPhoneNumber";
+import { isPhoneConfirmationEvent } from "@calcom/lib/isPhoneConfirmationEvent";
+import isSmsCalEmail from "@calcom/lib/isSmsCalEmail";
+import { normalizePhoneNumber } from "@calcom/lib/normalizePhoneNumber";
 import { parseRecurringDates } from "@calcom/lib/parse-dates";
+import { v4 as uuidv4 } from "uuid";
 import type { BookerEvent, BookingCreateBody, RecurringBookingCreateBody } from "../../../types";
 import type { Tracking } from "../../handleNewBooking/types";
 
 export type BookingOptions = {
   values: Record<string, unknown>;
-  event: Pick<BookerEvent, "id" | "length" | "slug" | "schedulingType" | "recurringEvent">;
+  event: Pick<
+    BookerEvent,
+    "id" | "length" | "slug" | "schedulingType" | "recurringEvent" | "bookingFields" | "metadata"
+  >;
   date: string;
   // @NOTE: duration is not validated in this function
   duration: number | undefined | null;
@@ -61,8 +67,30 @@ export const mapBookingToMutationInput = ({
   const _isDryRun = isDryRunProp !== undefined ? isDryRunProp : isBookingDryRun(searchParams);
   const dub_id = searchParams?.get("dub_id");
 
+  const isPhoneOnly = isPhoneConfirmationEvent(
+    event.bookingFields,
+    (event.metadata ?? null) as Record<string, unknown> | null
+  );
+  const responses = (values.responses ? { ...(values.responses as Record<string, unknown>) } : {}) as Record<
+    string,
+    unknown
+  >;
+  const rawPhone = (responses.attendeePhoneNumber || responses.phone) as string | undefined;
+  if (rawPhone) {
+    const normalizedPhone = normalizePhoneNumber(rawPhone, "twilio");
+    if (responses.attendeePhoneNumber) responses.attendeePhoneNumber = normalizedPhone;
+    if (responses.phone) responses.phone = normalizedPhone;
+  }
+  const phone = (responses.attendeePhoneNumber || responses.phone) as string | undefined;
+  if (isPhoneOnly && phone && (!responses.email || !isSmsCalEmail(responses.email as string))) {
+    if (!responses.email) {
+      responses.email = contructEmailFromPhoneNumber(phone);
+    }
+  }
+
   return {
     ...values,
+    responses,
     user: username,
     start: dayjs(date).format(),
     end: dayjs(date)

@@ -1,5 +1,6 @@
+import { useContext } from "react";
 import { useIsPlatform } from "@calcom/atoms/hooks/useIsPlatform";
-import { useBookerStoreContext } from "@calcom/features/bookings/Booker/BookerStoreProvider";
+import { BookerStoreContext, useBookerStoreContext } from "@calcom/features/bookings/Booker/BookerStoreProvider";
 import { useBookerTime } from "@calcom/features/bookings/Booker/hooks/useBookerTime";
 import type { UseBookingFormReturnType } from "@calcom/features/bookings/Booker/hooks/useBookingForm";
 import { mapBookingToMutationInput, mapRecurringBookingToMutationInput } from "@calcom/features/bookings/lib";
@@ -63,8 +64,9 @@ export const useHandleBookEvent = ({
     showToast(errorMessage, "error");
   };
   const searchParams = useSearchParams();
+  const bookerStoreApi = useContext(BookerStoreContext);
 
-  const handleBookEvent = (inputTimeSlot?: string) => {
+  const handleBookEvent = (inputTimeSlot?: string, overrideVerificationCode?: string) => {
     const values = bookingForm.getValues();
     const timeslot = inputTimeSlot ?? storeTimeSlot;
     const callbacks = inputTimeSlot && !isPlatform ? { onError: handleError } : undefined;
@@ -88,7 +90,10 @@ export const useHandleBookEvent = ({
           ? duration
           : event.data.length;
 
-      const bookingInput = {
+        const effectiveVerificationCode =
+          overrideVerificationCode ?? bookerStoreApi?.getState().verificationCode ?? verificationCode ?? undefined;
+
+        const bookingInput = {
         values,
         duration: validDuration,
         event: event.data,
@@ -107,7 +112,7 @@ export const useHandleBookEvent = ({
         crmRecordId,
         orgSlug: orgSlug ? orgSlug : undefined,
         isDryRunProp: isBookingDryRun,
-        verificationCode: verificationCode || undefined,
+        verificationCode: effectiveVerificationCode,
         rrHostSubsetIds,
       };
 

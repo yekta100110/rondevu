@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import process from "node:process";
-import { normalizePhoneNumber, sendSMS } from "@calcom/lib/smsTransport";
+import { normalizePhoneNumber } from "@calcom/lib/normalizePhoneNumber";
+import { sendSMS } from "@calcom/lib/smsTransport";
 import { totpRawCheck } from "@calcom/lib/totp";
 import { totp } from "otplib";
 
@@ -22,6 +23,13 @@ export function isTwilioVerifyConfigured(): boolean {
  */
 export async function sendPhoneVerification(phoneNumber: string): Promise<PhoneVerificationResult> {
   const normalizedPhone = normalizePhoneNumber(phoneNumber, "twilio");
+
+  if (!normalizedPhone || !/^\+[1-9]\d{6,14}$/.test(normalizedPhone)) {
+    return {
+      success: false,
+      error: "Geçerli bir telefon numarası giriniz (örn: +90 5XX XXX XX XX).",
+    };
+  }
 
   if (isTwilioVerifyConfigured()) {
     const accountSid = (process.env.TWILIO_SID || process.env.TWILIO_ACCOUNT_SID) as string;
@@ -95,6 +103,13 @@ export async function checkPhoneVerification(
   code: string
 ): Promise<PhoneVerificationResult> {
   const normalizedPhone = normalizePhoneNumber(phoneNumber, "twilio");
+
+  if (!normalizedPhone || !/^\+[1-9]\d{6,14}$/.test(normalizedPhone)) {
+    return {
+      success: false,
+      error: "Geçerli bir telefon numarası giriniz (örn: +90 5XX XXX XX XX).",
+    };
+  }
 
   if (isTwilioVerifyConfigured()) {
     const accountSid = (process.env.TWILIO_SID || process.env.TWILIO_ACCOUNT_SID) as string;

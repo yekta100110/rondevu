@@ -12,6 +12,7 @@ export interface IUseVerifyEmailProps {
   onVerifyEmail?: () => void;
   name?: string | { firstName: string; lastname?: string };
   requiresBookerEmailVerification?: boolean;
+  isPhoneConfirmation?: boolean;
   eventTypeId?: number;
 }
 export type UseVerifyEmailReturnType = ReturnType<typeof useVerifyEmail>;
@@ -19,6 +20,7 @@ export const useVerifyEmail = ({
   email,
   name,
   requiresBookerEmailVerification,
+  isPhoneConfirmation,
   onVerifyEmail,
   eventTypeId,
 }: IUseVerifyEmailProps) => {
@@ -72,13 +74,16 @@ export const useVerifyEmail = ({
 
   const isVerificationCodeSending = sendEmailVerificationByCodeMutation.isPending;
 
-  const isSms = Boolean(email && isSmsCalEmail(email));
+  const isSms = Boolean((email && isSmsCalEmail(email)) || isPhoneConfirmation);
   const isVerificationRequired = Boolean(
-    requiresBookerEmailVerification || isEmailVerificationRequired || isSms
+    isPhoneConfirmation || requiresBookerEmailVerification || isEmailVerificationRequired || isSms
   );
 
-  const renderConfirmNotVerifyEmailButtonCond =
-    isRescheduling || !isVerificationRequired || Boolean(email && verifiedEmail && verifiedEmail === email);
+  const isVerified = Boolean(email && verifiedEmail && verifiedEmail === email);
+
+  const renderConfirmNotVerifyEmailButtonCond = isPhoneConfirmation
+    ? isVerified
+    : Boolean(isRescheduling || !isVerificationRequired || isVerified);
 
   return {
     handleVerifyEmail,
@@ -87,5 +92,6 @@ export const useVerifyEmail = ({
     setVerifiedEmail,
     renderConfirmNotVerifyEmailButtonCond: Boolean(renderConfirmNotVerifyEmailButtonCond),
     isVerificationCodeSending,
+    isPhoneConfirmation: Boolean(isPhoneConfirmation),
   };
 };

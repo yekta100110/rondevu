@@ -173,6 +173,12 @@ export const FormBuilder = function FormBuilder({
           {showPhoneAndEmailToggle && (
             <ToggleGroup
               value={(() => {
+                const currentMetadata = fieldsForm.watch("metadata" as keyof RhfForm) as
+                  | Record<string, unknown>
+                  | undefined;
+                if (currentMetadata?.confirmationOption === "phone") return "phone";
+                if (currentMetadata?.confirmationOption === "email") return "email";
+
                 const phoneField = fields.find((field) => field.name === "attendeePhoneNumber");
                 const emailField = fields.find((field) => field.name === "email");
 
@@ -198,6 +204,9 @@ export const FormBuilder = function FormBuilder({
                 const phoneFieldIndex = fields.findIndex((field) => field.name === "attendeePhoneNumber");
                 const emailFieldIndex = fields.findIndex((field) => field.name === "email");
                 if (value === "email") {
+                  fieldsForm.setValue("metadata.confirmationOption" as keyof RhfForm, "email" as never, {
+                    shouldDirty: true,
+                  });
                   update(emailFieldIndex, {
                     ...fields[emailFieldIndex],
                     hidden: false,
@@ -209,6 +218,9 @@ export const FormBuilder = function FormBuilder({
                     required: false,
                   });
                 } else if (value === "phone") {
+                  fieldsForm.setValue("metadata.confirmationOption" as keyof RhfForm, "phone" as never, {
+                    shouldDirty: true,
+                  });
                   update(emailFieldIndex, {
                     ...fields[emailFieldIndex],
                     hidden: true,

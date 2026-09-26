@@ -157,6 +157,53 @@
     - Added `"@calcom/sms": "workspace:*"` to `dependencies` in `packages/features/package.json` and updated `yarn.lock`.
     - Verified locally with `yarn workspace @calcom/trpc run build` (both `build:server` and `build:react` compile cleanly with exit code 0).
     - Verified with `yarn vitest run packages/sms/test/sms-manager.test.ts` (all 8 tests pass) and Biome check (0 errors).
+30. **Frontend Phone OTP Gate Fix, Legal Pages (/privacy & /tos) and Dynamic SEO Sitemap** —
+    - **Phone OTP Verification Gate Interception**:
+      - Created `packages/lib/isPhoneConfirmationEvent.ts` to identify when an event has phone confirmation active (`attendeePhoneNumber` required and `email` hidden/optional). Added unit tests in `packages/lib/isPhoneConfirmationEvent.test.ts` (all 5 passed).
+      - In `useInitialFormValues.ts`: Prevented session email from prefilling `responses.email` when `isPhoneConfirmationEvent` is true.
+      - In `useBookingForm.ts`: Prioritized `contructEmailFromPhoneNumber(effectivePhone)` when phone confirmation is active and returned `isPhoneConfirmation`.
+      - In `useVerifyEmail.ts`: Strictly set `renderConfirmNotVerifyEmailButtonCond` to `isVerified` (`Boolean(email && verifiedEmail && verifiedEmail === email)`) for phone events, ensuring the button remains in verification mode ("Telefonu Doğrula") and clicking dispatches Twilio Verify OTP without bypassing.
+      - In `useVerifyCode.ts`: Passed the submitted `code` into `onSuccess(data, code)`.
+      - In `BookerWebWrapper.tsx`: Recorded `verificationCode` into `BookerStore` on verification success, enabling `handleBookEvent()` to include it in the booking payload.
+      - In `booking-to-mutation-input-mapper.tsx`: Ensured `responses.email` is mapped to the synthesized phone email for phone-only events.
+    - **Legal Pages (/privacy and /tos)**:
+      - Created `apps/web/modules/legal/privacy-view.tsx` and `apps/web/app/(use-page-wrapper)/privacy/page.tsx` with Dark/Light mode support, clear Data Processor (attendees) vs Data Controller (host accounts) role distinction, Twilio & Cloudflare disclosures, and KVKK/GDPR rights.
+      - Created `apps/web/modules/legal/tos-view.tsx` and `apps/web/app/(use-page-wrapper)/tos/page.tsx` with SaaS tool disclaimers, liability limits (no-shows, telecom carrier SMS delays), and strict acceptable use / anti-spam policy with immediate suspension rights.
+      - Created alias routes for `/gizlilik-politikasi`, `/gizlilik`, and `/kullanim-kosullari`.
+      - Updated `packages/lib/constants.ts` to point `WEBSITE_PRIVACY_POLICY_URL` to `https://rondevu.org/privacy` and `WEBSITE_TERMS_URL` to `https://rondevu.org/tos`.
+      - Updated homepage footer navigation with links to `/privacy` and `/tos`.
+    - **Dynamic Sitemap and Robots.txt**:
+      - Created `apps/web/app/sitemap.ts` generating `/sitemap.xml` for `/`, `/plan-bilgi`, `/privacy`, `/tos`, `/gizlilik-politikasi`, `/kullanim-kosullari`.
+      - Created `apps/web/app/robots.ts` generating `/robots.txt` allowing public routes, disallowing private paths (`/api/`, `/booking/`, `/settings/`, `/event-types/`), and linking the sitemap.
+    - **Verification**: Biome formatting & lint check clean (0 errors), `@calcom/trpc` build passing (0 errors), Vitest tests passing (5/5).
+31. **Resolution of 6 Critical Gaps in SMS OTP Booking Flow, Legal Pages, and SEO Sitemap** —
+    - **Defect 1: State Race Condition on Booking Dispatch Resolved**:
+      - Updated `packages/platform/atoms/hooks/bookings/useHandleBookEvent.ts` to support `overrideVerificationCode?: string` and read synchronously from `bookerStoreApi?.getState().verificationCode`.
+      - Updated `apps/web/modules/bookings/components/BookerWebWrapper.tsx` inside `useVerifyCode.onSuccess` to pass `bookings.handleBookEvent(undefined, code)` directly, eliminating asynchronous state lag and closure entrapment.
+    - **Defect 2: E.164 Phone Normalization Pipeline**:
+      - Created client-safe `packages/lib/normalizePhoneNumber.ts` handling leading plus, `00`, Turkish mobile formats (`05...`, `5...`, `90...`), and formatting artifacts (spaces, dashes, parentheses).
+      - Re-exported from `packages/lib/smsTransport.ts` and updated `packages/lib/contructEmailFromPhoneNumber.ts`.
+      - Enforced strict E.164 regex check (`/^\+[1-9]\d{6,14}$/`) in `packages/features/auth/lib/phoneVerification.ts` for both `sendPhoneVerification` and `checkPhoneVerification`.
+      - Sanitized `responses.attendeePhoneNumber` and `responses.phone` in `packages/features/bookings/lib/client/booking-event-form/booking-to-mutation-input-mapper.tsx`.
+      - Created `packages/lib/normalizePhoneNumber.test.ts` (all 5 tests passed).
+    - **Defect 3: Enhanced Phone Confirmation Detection Logic**:
+      - Upgraded `packages/lib/isPhoneConfirmationEvent.ts` to inspect both `bookingFields` and event `metadata`.
+      - Evaluates to `true` when `metadata.confirmationOption === "phone"`, `metadata.verificationOption === "phone"`, `metadata.requiresPhoneVerification === true`, or `phoneField.verify === true`, even when the organizer collects both email and phone as visible/required fields.
+      - Updated callers: `useBookingForm.ts`, `useInitialFormValues.ts`, `booking-to-mutation-input-mapper.tsx`, `EventAdvancedTab.tsx`, and `FormBuilder.tsx` (persisting toggle state in `metadata.confirmationOption`).
+      - Updated `RegularBookingService.ts`: when phone confirmation is active, enforces phone OTP gate (`phone_verification_required`) and checks OTP against phone number via `checkPhoneVerification` even if an email is provided.
+      - Expanded unit tests in `packages/lib/isPhoneConfirmationEvent.test.ts` (all 10 tests passed).
+    - **Defect 4: Dynamic Legal Contact Information**:
+      - Removed all hardcoded personal contact info (`y_ekta@icloud.com` and `0552 119 19 87`) from `apps/web/modules/legal/privacy-view.tsx` and `tos-view.tsx`.
+      - Added SSR data fetching via `getPlanContactConfig()` in `apps/web/app/(use-page-wrapper)/privacy/page.tsx` and `tos/page.tsx`.
+      - Integrated `trpc.viewer.public.getPlanContact` query in both views to dynamically render admin-configured contact details with environment variable fallbacks (`process.env.NEXT_PUBLIC_SUPPORT_EMAIL` / `NEXT_PUBLIC_SUPPORT_PHONE`).
+      - Cleaned default fallbacks in `packages/lib/planContactConfig.ts`.
+    - **Defect 5: Canonical Clean SEO Sitemap**:
+      - Removed duplicate non-canonical aliases (`/gizlilik-politikasi`, `/kullanim-kosullari`) from `apps/web/app/sitemap.ts`, exposing only primary canonical paths (`/`, `/plan-bilgi`, `/privacy`, `/tos`).
+    - **Defect 6: OTP Resend Mechanism and Modal Dismissal Handling**:
+      - Upgraded `apps/web/modules/bookings/components/VerifyCodeDialog.tsx` with a 60-second cooldown timer (`resendCooldown`), an active "Tekrar Kod Gönder" resend action, and Turkish UI copy.
+      - Implemented thorough dismissal cleanup (`onOpenChange` and `DialogClose`) resetting input `value`, `hasVerified`, `isPending`, `resetErrors()`, and firing `onDismiss?.()`.
+      - Connected `onResendCode={handleVerifyEmail}` and `onDismiss` in `apps/web/modules/bookings/components/Booker.tsx`, ensuring the booking form button remains responsive without requiring a page refresh.
+    - **Verification**: All 15 Vitest tests passed, `@calcom/trpc` built cleanly with code 0, Biome checks clean.
 
 ## What Was NOT Changed (by design)
 - `@calcom/*` package namespace — internal implementation detail, changing would break 1000s of imports

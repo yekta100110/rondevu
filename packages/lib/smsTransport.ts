@@ -3,28 +3,9 @@ import type { ISmsProvider, SMSPayload, SMSResponse } from "./sms/types";
 
 export * from "./sms/types";
 
-/**
- * Normalizes phone numbers to standard format according to target provider
- */
-export function normalizePhoneNumber(
-  phone: string,
-  target: "twilio" | "netgsm" | "general" = "general"
-): string {
-  const digits = phone.replace(/\D/g, "");
-  if (target === "twilio") {
-    if (digits.startsWith("90") && digits.length === 12) return `+${digits}`;
-    if (digits.startsWith("0") && digits.length === 11) return `+9${digits}`;
-    if (digits.length === 10) return `+90${digits}`;
-    return `+${digits}`;
-  }
-  if (target === "netgsm") {
-    // Netgsm expects 10 digits without leading 0 (e.g., 5521191987) or 12 digits (905521191987)
-    if (digits.startsWith("90") && digits.length === 12) return digits.substring(2);
-    if (digits.startsWith("0") && digits.length === 11) return digits.substring(1);
-    return digits;
-  }
-  return digits.length > 0 ? `+${digits}` : phone.trim();
-}
+import { normalizePhoneNumber } from "./normalizePhoneNumber";
+
+export { normalizePhoneNumber };
 
 /**
  * Twilio Programmable Messaging Provider

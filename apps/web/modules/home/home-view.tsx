@@ -441,6 +441,12 @@ export function HomeView({ isLoggedIn = false, initialContact }: HomeViewProps) 
             <Link href="#faq" className="transition hover:text-emphasis">
               SSS
             </Link>
+            <Link href="/privacy" className="transition hover:text-emphasis">
+              Gizlilik Politikası
+            </Link>
+            <Link href="/tos" className="transition hover:text-emphasis">
+              Kullanım Koşulları
+            </Link>
             <a href={`mailto:${email}`} className="transition hover:text-emphasis">
               İletişim ({email})
             </a>

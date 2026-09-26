@@ -4,6 +4,7 @@ import getBookingResponsesSchema from "@calcom/features/bookings/lib/getBookingR
 import type { BookerEvent } from "@calcom/features/bookings/types";
 import { contructEmailFromPhoneNumber } from "@calcom/lib/contructEmailFromPhoneNumber";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
+import { isPhoneConfirmationEvent } from "@calcom/lib/isPhoneConfirmationEvent";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
@@ -97,12 +98,20 @@ export const useBookingForm = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key]);
 
+  const isPhoneConfirmation = isPhoneConfirmationEvent(
+    event?.bookingFields,
+    (event?.metadata ?? null) as Record<string, unknown> | null
+  );
   const email = bookingForm.watch("responses.email");
   const name = bookingForm.watch("responses.name");
   const attendeePhoneNumber = bookingForm.watch("responses.attendeePhoneNumber");
   const phone = bookingForm.watch("responses.phone");
   const effectivePhone = (attendeePhoneNumber || phone || "") as string;
-  const effectiveEmail = email || (effectivePhone ? contructEmailFromPhoneNumber(effectivePhone) : "");
+  const effectiveEmail = isPhoneConfirmation
+    ? effectivePhone
+      ? contructEmailFromPhoneNumber(effectivePhone)
+      : ""
+    : email || (effectivePhone ? contructEmailFromPhoneNumber(effectivePhone) : "");
 
   const beforeVerifyEmail = () => {
     bookingForm.clearErrors();
@@ -129,5 +138,6 @@ export const useBookingForm = ({
     beforeVerifyEmail,
     formErrors: errors,
     errors,
+    isPhoneConfirmation,
   };
 };

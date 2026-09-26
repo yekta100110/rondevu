@@ -165,6 +165,7 @@ const BookerComponent = ({
     handleVerifyEmail,
     renderConfirmNotVerifyEmailButtonCond,
     isVerificationCodeSending,
+    isPhoneConfirmation,
   } = verifyEmail;
 
   const { overlayBusyDates, isOverlayCalendarEnabled, connectedCalendars, onToggleCalendar } = calendars;
@@ -288,6 +289,7 @@ const BookerComponent = ({
           backButton: customClassNames?.confirmStep?.backButton,
         }}
         isPlatform={isPlatform}
+        isPhoneConfirmation={isPhoneConfirmation}
       />
     );
   }, [
@@ -309,6 +311,7 @@ const BookerComponent = ({
     isPlatform,
     shouldRenderCaptcha,
     isVerificationCodeSending,
+    isPhoneConfirmation,
     unavailableTimeSlots,
   ]);
 
@@ -577,6 +580,12 @@ const BookerComponent = ({
             resetErrors={verifyCode.resetErrors}
             isPending={verifyCode.isPending}
             setIsPending={verifyCode.setIsPending}
+            onResendCode={handleVerifyEmail}
+            onDismiss={() => {
+              setEmailVerificationModalVisible(false);
+              verifyCode.resetErrors();
+              verifyCode.setIsPending(false);
+            }}
           />
         ) : (
           <></>

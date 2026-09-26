@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import type { z } from "zod";
-
 import { useBookerStore } from "@calcom/features/bookings/Booker/store";
 import type getBookingResponsesSchema from "@calcom/features/bookings/lib/getBookingResponsesSchema";
 import { getBookingResponsesPartialSchema } from "@calcom/features/bookings/lib/getBookingResponsesSchema";
 import type { BookerEvent } from "@calcom/features/bookings/types";
+import { isPhoneConfirmationEvent } from "@calcom/lib/isPhoneConfirmationEvent";
+import { useEffect, useState } from "react";
+import type { z } from "zod";
 
 export type useInitialFormValuesReturnType = ReturnType<typeof useInitialFormValues>;
 
@@ -154,10 +154,16 @@ export function useInitialFormValues({
           };
         }, {});
 
+        const isPhoneConfirmation = isPhoneConfirmationEvent(
+          eventType.bookingFields,
+          (eventType.metadata ?? null) as Record<string, unknown> | null
+        );
+        const emailField = eventType.bookingFields.find((f) => f.name === "email");
+        const isPhoneOnlyWithoutEmail = Boolean(isPhoneConfirmation && (!emailField || emailField.hidden));
         defaults.responses = {
           ...responses,
           name: defaultUserValues.name,
-          email: defaultUserValues.email ?? "",
+          email: isPhoneOnlyWithoutEmail ? "" : (defaultUserValues.email ?? ""),
         };
 
         setInitialValuesState({

@@ -21,9 +21,9 @@ export const ZPlanContactConfigSchema = z.object({
 export type PlanContactConfig = z.infer<typeof ZPlanContactConfigSchema>;
 
 export const DEFAULT_PLAN_CONTACT_CONFIG: PlanContactConfig = {
-  phone: "0552 119 19 87",
-  email: "destek@rondevu.org",
-  whatsapp: "905521191987",
+  phone: process.env.NEXT_PUBLIC_SUPPORT_PHONE || "0850 000 00 00",
+  email: process.env.NEXT_PUBLIC_SUPPORT_EMAIL || "destek@rondevu.org",
+  whatsapp: process.env.NEXT_PUBLIC_SUPPORT_WHATSAPP || "908500000000",
 };
 
 /**

@@ -87,6 +87,7 @@ const BookerWebWrapperComponent = (props: BookerWebWrapperAtomProps): JSX.Elemen
   });
 
   const [dayCount] = useBookerStoreContext((state) => [state.dayCount, state.setDayCount], shallow);
+  const setVerificationCode = useBookerStoreContext((state) => state.setVerificationCode);
 
   const { data: session } = useSession();
   const routerQuery = useRouterQuery();
@@ -124,7 +125,9 @@ const BookerWebWrapperComponent = (props: BookerWebWrapperAtomProps): JSX.Elemen
   const verifyEmail = useVerifyEmail({
     email: bookerForm.formEmail,
     name: bookerForm.formName,
-    requiresBookerEmailVerification: event?.data?.requiresBookerEmailVerification,
+    requiresBookerEmailVerification:
+      bookerForm.isPhoneConfirmation || event?.data?.requiresBookerEmailVerification,
+    isPhoneConfirmation: bookerForm.isPhoneConfirmation,
     onVerifyEmail: bookerForm.beforeVerifyEmail,
     eventTypeId: event?.data?.id,
   });
@@ -166,12 +169,15 @@ const BookerWebWrapperComponent = (props: BookerWebWrapperAtomProps): JSX.Elemen
   });
 
   const verifyCode = useVerifyCode({
-    onSuccess: () => {
+    onSuccess: (_data, code) => {
       if (!bookerForm.formEmail) return;
 
+      if (code) {
+        setVerificationCode(code);
+      }
       verifyEmail.setVerifiedEmail(bookerForm.formEmail);
       verifyEmail.setEmailVerificationModalVisible(false);
-      bookings.handleBookEvent();
+      bookings.handleBookEvent(undefined, code);
     },
   });
 

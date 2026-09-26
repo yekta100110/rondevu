@@ -188,8 +188,8 @@ export const ORG_MINIMUM_PUBLISHED_TEAMS_SELF_SERVE_HELPER_DIALOGUE = 1;
 
 export const CALCOM_PRIVATE_API_ROUTE = process.env.CALCOM_PRIVATE_API_ROUTE || "https://rondevu.org/api";
 export const WEBSITE_PRIVACY_POLICY_URL =
-  process.env.NEXT_PUBLIC_WEBSITE_PRIVACY_POLICY_URL || "https://rondevu.org/gizlilik";
-export const WEBSITE_TERMS_URL = process.env.NEXT_PUBLIC_WEBSITE_TERMS_URL || "https://rondevu.org/kullanim-kosullari";
+  process.env.NEXT_PUBLIC_WEBSITE_PRIVACY_POLICY_URL || "https://rondevu.org/privacy";
+export const WEBSITE_TERMS_URL = process.env.NEXT_PUBLIC_WEBSITE_TERMS_URL || "https://rondevu.org/tos";
 export const LINGO_DOT_DEV_API_KEY = process.env.LINGO_DOT_DEV_API_KEY;
 
 /**

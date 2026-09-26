@@ -63,6 +63,7 @@ import { ErrorCode } from "@calcom/lib/errorCodes";
 import { ErrorWithCode } from "@calcom/lib/errors";
 import { extractBaseEmail } from "@calcom/lib/extract-base-email";
 import { HttpError } from "@calcom/lib/http-error";
+import { isPhoneConfirmationEvent } from "@calcom/lib/isPhoneConfirmationEvent";
 import isSmsCalEmail from "@calcom/lib/isSmsCalEmail";
 import { criticalLogger } from "@calcom/lib/logger.server";
 import { getPiiFreeCalendarEvent, getPiiFreeEventType } from "@calcom/lib/piiFreeData";
@@ -620,30 +621,17 @@ async function handler(
     });
   }
 
-  const isPhoneOnlyEvent = Boolean(
-    eventType.bookingFields &&
-      Array.isArray(eventType.bookingFields) &&
-      eventType.bookingFields.some(
-        (f) =>
-          typeof f === "object" &&
-          f &&
-          (f as { name?: string; hidden?: boolean; required?: boolean }).name === "attendeePhoneNumber" &&
-          !(f as { name?: string; hidden?: boolean; required?: boolean }).hidden &&
-          (f as { name?: string; hidden?: boolean; required?: boolean }).required
-      ) &&
-      eventType.bookingFields.some(
-        (f) =>
-          typeof f === "object" &&
-          f &&
-          (f as { name?: string; hidden?: boolean }).name === "email" &&
-          (f as { name?: string; hidden?: boolean }).hidden
-      )
+  const isPhoneConfirmation = isPhoneConfirmationEvent(
+    eventType.bookingFields as any,
+    eventType.metadata as any
   );
 
-  const isPhoneBooking = Boolean(bookerPhoneNumber && (!bookerEmail || isSmsCalEmail(effectiveBookerEmail)));
+  const isPhoneBooking = Boolean(
+    isPhoneConfirmation || (bookerPhoneNumber && (!bookerEmail || isSmsCalEmail(effectiveBookerEmail)))
+  );
 
   const requiresVerification =
-    (eventType.requiresBookerEmailVerification || isPhoneOnlyEvent || isPhoneBooking) &&
+    (eventType.requiresBookerEmailVerification || isPhoneConfirmation || isPhoneBooking) &&
     !rawBookingData.rescheduleUid;
 
   if (requiresVerification) {
@@ -656,7 +644,12 @@ async function handler(
     }
 
     try {
-      await verifyCodeUnAuthenticated(effectiveBookerEmail, verificationCode);
+      const emailOrPhoneToVerify = isPhoneBooking
+        ? bookerPhoneNumber
+          ? contructEmailFromPhoneNumber(bookerPhoneNumber)
+          : effectiveBookerEmail
+        : effectiveBookerEmail;
+      await verifyCodeUnAuthenticated(emailOrPhoneToVerify, verificationCode);
     } catch {
       throw new HttpError({
         statusCode: 400,
