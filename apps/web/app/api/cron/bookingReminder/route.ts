@@ -13,10 +13,10 @@ import { BookingStatus, ReminderType } from "@calcom/prisma/enums";
 import type { EventTypeMetadata } from "@calcom/prisma/zod-utils";
 import type { CalendarEvent } from "@calcom/types/Calendar";
 
-async function postHandler(request: NextRequest) {
-  const apiKey = request.headers.get("authorization") || request.nextUrl.searchParams.get("apiKey");
+import { validateCronAuth } from "@calcom/lib/validateCronAuth";
 
-  if (process.env.CRON_API_KEY !== apiKey) {
+async function postHandler(request: NextRequest) {
+  if (!validateCronAuth(request)) {
     return NextResponse.json({ message: "Not authenticated" }, { status: 401 });
   }
 

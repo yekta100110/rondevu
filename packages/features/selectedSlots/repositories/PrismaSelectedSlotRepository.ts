@@ -89,4 +89,16 @@ export class PrismaSelectedSlotRepository implements ISelectedSlotRepository {
       },
     });
   }
+
+  async deleteManyExpiredSlotsAcrossAllEvents({
+    currentTimeInUtc,
+  }: {
+    currentTimeInUtc: string;
+  }) {
+    return this.prismaClient.selectedSlots.deleteMany({
+      where: {
+        releaseAt: { lt: currentTimeInUtc },
+      },
+    });
+  }
 }

@@ -53,8 +53,9 @@ export const VerifyCodeDialog = ({
     setHasVerified(false);
     setIsPending(false);
     resetErrors();
+    setVerificationCode(null);
     onDismiss?.();
-  }, [setIsOpenDialog, setIsPending, resetErrors, onDismiss]);
+  }, [setIsOpenDialog, setIsPending, resetErrors, setVerificationCode, onDismiss]);
 
   // Start 60-second cooldown timer when dialog opens
   useEffect(() => {
@@ -88,6 +89,7 @@ export const VerifyCodeDialog = ({
       setValue("");
       setHasVerified(false);
       setIsPending(false);
+      setVerificationCode(null);
       await onResendCode();
       setResendCooldown(60);
     } catch (err) {
@@ -118,7 +120,6 @@ export const VerifyCodeDialog = ({
     } else {
       verifyCodeWithSessionNotRequired(value, email);
     }
-    setVerificationCode(value);
     setHasVerified(true);
   }, [
     resetErrors,
@@ -128,7 +129,6 @@ export const VerifyCodeDialog = ({
     value,
     email,
     verifyCodeWithSessionNotRequired,
-    setVerificationCode,
   ]);
 
   useEffect(() => {
@@ -138,6 +138,13 @@ export const VerifyCodeDialog = ({
 
   const digitClassName =
     "h-12 w-12 text-center text-xl! text-emphasis caret-emphasis [-webkit-text-fill-color:currentColor]";
+
+  let resendLabel = "Tekrar Kod Gönder";
+  if (isResending) {
+    resendLabel = "Gönderiliyor...";
+  } else if (resendCooldown > 0) {
+    resendLabel = `Tekrar Kod Gönder (${resendCooldown}s)`;
+  }
 
   return (
     <Dialog
@@ -199,11 +206,7 @@ export const VerifyCodeDialog = ({
                       ? "cursor-not-allowed text-muted"
                       : "cursor-pointer text-emphasis hover:underline"
                   )}>
-                  {isResending
-                    ? "Gönderiliyor..."
-                    : resendCooldown > 0
-                      ? `Tekrar Kod Gönder (${resendCooldown}s)`
-                      : "Tekrar Kod Gönder"}
+                  {resendLabel}
                 </button>
               </div>
             )}

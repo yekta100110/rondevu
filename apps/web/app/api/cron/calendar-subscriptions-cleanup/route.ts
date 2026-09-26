@@ -3,20 +3,20 @@ import { NextResponse } from "next/server";
 
 import { CalendarCacheEventRepository } from "@calcom/features/calendar-subscription/lib/cache/CalendarCacheEventRepository";
 import { CalendarCacheEventService } from "@calcom/features/calendar-subscription/lib/cache/CalendarCacheEventService";
+import { PrismaSelectedSlotRepository } from "@calcom/features/selectedSlots/repositories/PrismaSelectedSlotRepository";
+import { validateCronAuth } from "@calcom/lib/validateCronAuth";
 import { prisma } from "@calcom/prisma";
 import { defaultResponderForAppDir } from "@calcom/web/app/api/defaultResponderForAppDir";
 
 /**
  * Cron webhook
- * Cleanup stale calendar cache
+ * Cleanup stale calendar cache and expired selected slots
  *
  * @param request
  * @returns
  */
 async function getHandler(request: NextRequest) {
-  const apiKey = request.headers.get("authorization") || request.nextUrl.searchParams.get("apiKey");
-
-  if (![process.env.CRON_API_KEY, `Bearer ${process.env.CRON_SECRET}`].includes(`${apiKey}`)) {
+  if (!validateCronAuth(request)) {
     return NextResponse.json({ message: "Forbidden" }, { status: 403 });
   }
 
@@ -25,9 +25,14 @@ async function getHandler(request: NextRequest) {
   const calendarCacheEventService = new CalendarCacheEventService({
     calendarCacheEventRepository,
   });
-
   try {
     await calendarCacheEventService.cleanupStaleCache();
+    if (prisma?.selectedSlots?.deleteMany) {
+      const selectedSlotsRepo = new PrismaSelectedSlotRepository(prisma);
+      await selectedSlotsRepo.deleteManyExpiredSlotsAcrossAllEvents({
+        currentTimeInUtc: new Date().toISOString(),
+      });
+    }
     return NextResponse.json({ ok: true });
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : "Unknown error";

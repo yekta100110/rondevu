@@ -129,21 +129,19 @@ export async function updatePlanContactConfig(data: PlanContactConfig): Promise<
   }
 
   // 2. Persist to candidate file paths as resilient file backups
-  let fileSuccess = false;
   for (const filePath of getConfigFileCandidates()) {
     try {
       const dir = path.dirname(filePath);
       if (fs.existsSync(dir)) {
         fs.writeFileSync(filePath, JSON.stringify(validated, null, 2), "utf8");
-        fileSuccess = true;
       }
     } catch (err) {
       console.warn(`[PlanContact] Could not write backup to ${filePath}:`, err);
     }
   }
 
-  if (!dbSuccess && !fileSuccess) {
-    console.error("[PlanContact] CRITICAL: Could not persist plan contact config to DB or filesystem.");
+  if (!dbSuccess) {
+    throw new Error("Could not persist plan contact configuration to the database.");
   }
 
   return validated;

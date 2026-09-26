@@ -14,6 +14,8 @@ import { defaultResponderForAppDir } from "@calcom/web/app/api/defaultResponderF
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
+import { validateCronAuth } from "@calcom/lib/validateCronAuth";
+
 /**
  * Cron webhook
  * Checks for new calendar subscriptions (rollouts)
@@ -22,9 +24,7 @@ import { NextResponse } from "next/server";
  * @returns
  */
 async function getHandler(request: NextRequest) {
-  const apiKey = request.headers.get("authorization") || request.nextUrl.searchParams.get("apiKey");
-
-  if (![process.env.CRON_API_KEY, `Bearer ${process.env.CRON_SECRET}`].includes(`${apiKey}`)) {
+  if (!validateCronAuth(request)) {
     return NextResponse.json({ message: "Forbiden" }, { status: 403 });
   }
 

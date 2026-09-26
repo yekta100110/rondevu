@@ -317,6 +317,7 @@ const _sendPayload = async (
       "X-Cal-Webhook-Version": version,
     },
     redirect: "manual",
+    signal: AbortSignal.timeout(10000),
     body,
   });
 

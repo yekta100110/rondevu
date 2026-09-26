@@ -25,7 +25,7 @@ export function bookingIdempotencyKeyExtension() {
     query: {
       booking: {
         async create({ args, query }) {
-          if (args.data.status === BookingStatus.ACCEPTED) {
+          if (args.data.status === BookingStatus.ACCEPTED || args.data.status === BookingStatus.PENDING) {
             const idempotencyKey = generateIdempotencyKey({
               startTime: args.data.startTime,
               endTime: args.data.endTime,

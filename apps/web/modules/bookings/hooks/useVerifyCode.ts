@@ -24,15 +24,17 @@ export const useVerifyCode = ({ onSuccess }: UseVerifyCodeProps) => {
   };
 
   const verifyCodeMutationUserSessionNotRequired = trpc.viewer.auth.verifyCodeUnAuthenticated.useMutation({
-    onSuccess: (data) => {
+    onSuccess: (data, variables) => {
       setIsPending(false);
-      onSuccess(data, lastSubmittedCode);
+      onSuccess(data, variables?.code || lastSubmittedCode);
     },
     onError: (err) => {
       setIsPending(false);
       setHasVerified(false);
       if (err.message === "invalid_code") {
         setError(t("code_provided_invalid"));
+      } else {
+        setError(err.message || t("code_provided_invalid"));
       }
     },
   });

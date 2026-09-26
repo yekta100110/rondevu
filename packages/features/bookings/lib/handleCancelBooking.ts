@@ -146,6 +146,24 @@ async function handler(input: CancelBookingInput, dependencies?: Dependencies) {
     });
   }
 
+  // Authorization check: unauthenticated requests must supply valid cancelledBy matching host or attendee
+  if (userId === -1 && !platformClientId) {
+    const normalizedCancelledBy = cancelledBy?.trim().toLowerCase();
+    const isHostEmail =
+      Boolean(normalizedCancelledBy) &&
+      bookingToDelete.user?.email.toLowerCase() === normalizedCancelledBy;
+    const isAttendeeEmail =
+      Boolean(normalizedCancelledBy) &&
+      bookingToDelete.attendees.some((a) => a.email.toLowerCase() === normalizedCancelledBy);
+
+    if (!isHostEmail && !isAttendeeEmail) {
+      throw new HttpError({
+        statusCode: 401,
+        message: "Unauthorized: Unauthenticated cancellations require valid attendee or organizer email.",
+      });
+    }
+  }
+
   const isCancellationUserHost =
     bookingToDelete.userId === userId || bookingToDelete.user.email === cancelledBy;
 

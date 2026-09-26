@@ -4,8 +4,10 @@ import { v4 as uuid } from "uuid";
 
 import dayjs from "@calcom/dayjs";
 import { PrismaSelectedSlotRepository } from "@calcom/features/selectedSlots/repositories/PrismaSelectedSlotRepository";
-import { WEBAPP_URL } from "@calcom/lib/constants";
-import { MINUTES_TO_BOOK } from "@calcom/lib/constants";
+import { checkRateLimitAndThrowError } from "@calcom/lib/checkRateLimitAndThrowError";
+import { MINUTES_TO_BOOK, WEBAPP_URL } from "@calcom/lib/constants";
+import getIP from "@calcom/lib/getIP";
+import { piiHasher } from "@calcom/lib/server/PiiHasher";
 import type { PrismaClient } from "@calcom/prisma";
 import { BookingStatus } from "@calcom/prisma/enums";
 
@@ -23,7 +25,27 @@ interface ReserveSlotOptions {
 }
 export const reserveSlotHandler = async ({ ctx, input }: ReserveSlotOptions) => {
   const { prisma, req, res } = ctx;
+
+  if (req) {
+    const userIp = getIP(req);
+    await checkRateLimitAndThrowError({
+      rateLimitingType: "core",
+      identifier: `reserveSlot:${piiHasher.hash(userIp)}`,
+    });
+  }
+
   const uid = req?.cookies?.uid || uuid();
+
+  // Limit concurrent reservations per client UID to prevent calendar hoarding
+  const MAX_ACTIVE_SLOTS_PER_UID = 3;
+  const activeUserSlots = await prisma.selectedSlots.findMany({
+    where: { uid },
+    orderBy: { releaseAt: "asc" },
+  });
+  if (activeUserSlots.length >= MAX_ACTIVE_SLOTS_PER_UID) {
+    const oldest = activeUserSlots[0];
+    await prisma.selectedSlots.delete({ where: { id: oldest.id } });
+  }
 
   const { slotUtcStartDate, slotUtcEndDate, eventTypeId, _isDryRun } = input;
   const releaseAt = dayjs.utc().add(parseInt(MINUTES_TO_BOOK), "minutes").format();

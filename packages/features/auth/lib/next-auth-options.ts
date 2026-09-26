@@ -437,12 +437,23 @@ export const getOptions = ({
           locale: session?.locale ?? token.locale ?? "en",
           name: session?.name ?? token.name,
           username: session?.username ?? token.username,
-          email: session?.email ?? token.email,
         } as JWT;
       }
       const autoMergeIdentities = async () => {
+        const userId = token.sub ? Number(token.sub) : token.id ? Number(token.id) : null;
+        const userWhere =
+          userId && !Number.isNaN(userId)
+            ? { id: userId }
+            : token.email
+            ? { email: token.email }
+            : null;
+
+        if (!userWhere) {
+          return token;
+        }
+
         const existingUser = await prisma.user.findFirst({
-          where: { email: token.email! },
+          where: userWhere,
           select: {
             id: true,
             username: true,

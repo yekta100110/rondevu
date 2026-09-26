@@ -1,9 +1,9 @@
 # Active Context — rOndevu
 
 ## Current Focus
-- Rebranding completed: Cal.diy / Cal.com → rOndevu
-- 25+ files modified, 4 new SVG logo files created
-- All user-facing Cal.diy references removed
+- SMS OTP Verification Fix & Stale State Loop Elimination: Completed & Verified
+- Audit Remediation (CRIT-01 through LOW-02): Completed & Verified
+- 26/26 Vitest unit tests passing across 5 suites, 0 TypeScript errors, Biome clean
 
 ## Recent Changes (this session)
 1. **Logo Dark Mode Inversion Fix** — Assigned `LOGO = "/rondevu-logo-dark.svg"` (`#292929`) so Tailwind's `dark:invert` properly produces white text in dark mode on mobile and desktop.
@@ -204,6 +204,24 @@
       - Implemented thorough dismissal cleanup (`onOpenChange` and `DialogClose`) resetting input `value`, `hasVerified`, `isPending`, `resetErrors()`, and firing `onDismiss?.()`.
       - Connected `onResendCode={handleVerifyEmail}` and `onDismiss` in `apps/web/modules/bookings/components/Booker.tsx`, ensuring the booking form button remains responsive without requiring a page refresh.
     - **Verification**: All 15 Vitest tests passed, `@calcom/trpc` built cleanly with code 0, Biome checks clean.
+32. **System-Wide Architectural, Logical, and Security Audit Remediation (CRIT-01 through LOW-02)** —
+    - **CRIT-01 (NextAuth Session Privilege Escalation)**: Stripped client-controlled email updates from NextAuth `trigger === "update"`. Anchored session user lookup to immutable user ID (`token.sub`/`token.id`) in `packages/features/auth/lib/next-auth-options.ts`.
+    - **CRIT-02 & LOW-01 (Cron Auth Bypass & Timing Attacks)**: Implemented centralized, constant-time `validateCronAuth.ts` rejecting requests if secrets are unconfigured and eliminating the `"Bearer undefined"` vulnerability across tasker and web cron routes (`cron.ts`, `cleanup.ts`, `calendar-subscriptions`, `selected-calendars`, `calendar-subscriptions-cleanup`, `bookingReminder`, `webhookTriggers`).
+    - **CRIT-03 (Unpaid Booking Confirmation Inversion)**: Inverted logic bug fixed in `confirm.handler.ts` by throwing `TRPCError(BAD_REQUEST)` when attempting to confirm an unpaid booking.
+    - **HIGH-01 (In-Memory Fallback Rate Limiter)**: Implemented in-memory sliding-window token bucket fallback in `rateLimit.ts` when `UNKEY_ROOT_KEY` is not present, safeguarding SMS OTP and booking routes against toll fraud and brute force in self-hosted environments.
+    - **HIGH-02 (Pending Booking Idempotency & Double-Booking Fix)**: Extended `bookingIdempotencyKeyExtension` to generate `idempotencyKey` for both `ACCEPTED` and `PENDING` bookings upon creation, closing the race condition where concurrent users could double-book the same slot.
+    - **HIGH-03 (Capability-URL Cancellation & Refund Protection)**: Enforced authorization on unauthenticated cancellation requests in `handleCancelBooking.ts`: caller must supply matching attendee or host email (`cancelledBy`), preventing unauthorized cancellations and automated refunds via intercepted UIDs.
+    - **HIGH-04 (Calendar Reservation DoS Defense)**: Added IP rate limiting and enforced a maximum of 3 concurrent active temporary slot reservations per client session UID in `reserveSlot.handler.ts`.
+    - **MED-01 (Seated Event Concurrency Protection)**: Verified transaction row-level locking (`SELECT ... FOR UPDATE`) is active on the parent booking row in `createNewSeat.ts`.
+    - **MED-02 (Plan Contact Configuration Single Source of Truth)**: Made PostgreSQL database persistence authoritative in `planContactConfig.ts`: throws explicit errors on DB failures rather than silently masking them with ephemeral container file backups.
+    - **MED-03 (Outgoing Webhook HTTP Timeout Guard)**: Attached `AbortSignal.timeout(10000)` (10 seconds) to outgoing webhook HTTP POST dispatches in `sendPayload.ts` to prevent worker socket starvation.
+    - **Verification**: 25 Vitest tests passed across all 4 suites (100%), `@calcom/trpc` compiles cleanly (0 errors), and Biome code check verified (0 errors).
+33. **Resolution of SMS OTP Twilio Single-Use Rejection and Stale State Loop** —
+    - **Twilio Verify Single-Use Invalidation**: Twilio Verify deletes/consumes the pending verification upon the initial check in `VerifyCodeDialog`, causing `RegularBookingService` during booking creation to receive 404/not approved and throw `invalid_verification_code` ("Geçersiz doğrulama kodu girildi"). Implemented `verifiedPhoneCache` with a 15-minute sliding TTL in `packages/features/auth/lib/phoneVerification.ts` so `RegularBookingService` can verify previously approved phone codes without double-calling Twilio.
+    - **Stale State Loop & Lock**: When booking creation failed, `BookerStore.verificationCode` and `verifiedEmail` remained stored, leaving `isVerified: true` and the form button in "Onayla" mode. Clicking it resent the stale code directly to `/api/book/event`. Added state cleanup in `createBookingMutation.onError` and `createRecurringBookingMutation.onError` in `useBookings.ts` to reset `setVerificationCode(null)` and `setVerifiedEmail(null)`, switching the button back to verification mode.
+    - **Premature State Set**: Removed premature `setVerificationCode(value)` from `VerifyCodeDialog.tsx` line 121, ensuring only verified codes from `useVerifyCode.onSuccess` enter `BookerStore`.
+    - **Resend Invalidation**: Added `clearPhoneVerificationCache(phoneNumber)` when dispatching a new SMS verification in `sendPhoneVerification` and resetting code state on modal dismissal.
+    - **Validation**: 26 Vitest unit tests passed (100%), tRPC server type check compiled cleanly with 0 errors, and Biome lint check passed.
 
 ## What Was NOT Changed (by design)
 - `@calcom/*` package namespace — internal implementation detail, changing would break 1000s of imports
@@ -213,7 +231,7 @@
 
 ## Next Steps
 - Commit and push changes to remote repository (`origin/main`).
-- Re-run Dokploy deployment.
+- Re-run Dokploy deployment and verify production containers.
 
 ## Brand Asset Details
 - Wordmark SVGs (`cal-logo-word*.svg`, `rondevu-logo-*.svg`): Scaled to fit original 84x26 box dimensions with 17px font, avoiding layout overflow.

@@ -20,14 +20,13 @@ import { SelectedCalendarRepository } from "@calcom/features/selectedCalendar/re
 import type { CredentialForCalendarServiceWithEmail } from "@calcom/types/Credential";
 import type { Ensure } from "@calcom/types/utils";
 
+import { validateCronAuth } from "@calcom/lib/validateCronAuth";
 import { defaultResponderForAppDir } from "../../defaultResponderForAppDir";
 
 const limitOnQueryingGoogleCalendar = 50;
 const log = logger.getSubLogger({ prefix: ["[api]", "[delegation]", "[selected-calendars/cron]"] });
 const validateRequest = (req: NextRequest) => {
-  const url = new URL(req.url);
-  const apiKey = req.headers.get("authorization") || url.searchParams.get("apiKey");
-  if (![process.env.CRON_API_KEY, `Bearer ${process.env.CRON_SECRET}`].includes(`${apiKey}`)) {
+  if (!validateCronAuth(req)) {
     throw new HttpError({ statusCode: 401, message: "Unauthorized" });
   }
 };

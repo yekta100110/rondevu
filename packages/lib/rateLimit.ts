@@ -1,11 +1,11 @@
-import { Ratelimit, type LimitOptions, type RatelimitResponse } from "@unkey/ratelimit";
-
+import process from "node:process";
+import { type LimitOptions, Ratelimit, type RatelimitResponse } from "@unkey/ratelimit";
 import { isIpInBanListString } from "./getIP";
 import logger from "./logger";
 
 const log = logger.getSubLogger({ prefix: ["RateLimit"] });
 
-export { type RatelimitResponse };
+export type { RatelimitResponse };
 
 export type RateLimitHelper = {
   rateLimitingType?:
@@ -28,6 +28,72 @@ export type RateLimitHelper = {
 
 export const API_KEY_RATE_LIMIT = 30;
 
+interface FallbackLimitConfig {
+  limit: number;
+  windowMs: number;
+}
+
+const FALLBACK_CONFIGS: Record<string, FallbackLimitConfig> = {
+  core: { limit: 10, windowMs: 60 * 1000 },
+  instantMeeting: { limit: 1, windowMs: 10 * 60 * 1000 },
+  common: { limit: 200, windowMs: 60 * 1000 },
+  forcedSlowMode: { limit: 1, windowMs: 30 * 1000 },
+  api: { limit: API_KEY_RATE_LIMIT, windowMs: 60 * 1000 },
+  ai: { limit: 20, windowMs: 24 * 60 * 60 * 1000 },
+  sms: { limit: 10, windowMs: 60 * 1000 },
+  smsMonth: { limit: 250, windowMs: 30 * 24 * 60 * 60 * 1000 },
+};
+
+interface MemoryRateLimitRecord {
+  timestamps: number[];
+}
+
+const memoryRateLimitStore = new Map<string, MemoryRateLimitRecord>();
+const MAX_MEMORY_STORE_SIZE = 10000;
+
+function cleanupMemoryRateLimitStore(now: number): void {
+  if (memoryRateLimitStore.size < MAX_MEMORY_STORE_SIZE) return;
+  memoryRateLimitStore.forEach((record, key) => {
+    record.timestamps = record.timestamps.filter((ts: number) => now - ts < 3600 * 1000);
+    if (record.timestamps.length === 0) {
+      memoryRateLimitStore.delete(key);
+    }
+  });
+}
+
+function memoryRateLimiter({ rateLimitingType = "core", identifier }: RateLimitHelper): RatelimitResponse {
+  const now = Date.now();
+  cleanupMemoryRateLimitStore(now);
+
+  const effectiveType = isIpInBanListString(identifier) ? "forcedSlowMode" : rateLimitingType;
+  const config = FALLBACK_CONFIGS[effectiveType] || { limit: 10, windowMs: 60 * 1000 };
+  const key = `${effectiveType}:${identifier}`;
+  const record = memoryRateLimitStore.get(key) || { timestamps: [] };
+
+  record.timestamps = record.timestamps.filter((ts) => now - ts < config.windowMs);
+
+  const reset = (record.timestamps[0] || now) + config.windowMs;
+
+  if (record.timestamps.length >= config.limit) {
+    return {
+      success: false,
+      limit: config.limit,
+      remaining: 0,
+      reset,
+    };
+  }
+
+  record.timestamps.push(now);
+  memoryRateLimitStore.set(key, record);
+
+  return {
+    success: true,
+    limit: config.limit,
+    remaining: config.limit - record.timestamps.length,
+    reset,
+  };
+}
+
 let warned = false;
 
 export function rateLimiter() {
@@ -35,10 +101,10 @@ export function rateLimiter() {
 
   if (!UNKEY_ROOT_KEY) {
     if (!warned) {
-      log.warn("Disabled because the UNKEY_ROOT_KEY environment variable was not found.");
+      log.info("UNKEY_ROOT_KEY not found. Using built-in in-memory fallback rate limiter.");
       warned = true;
     }
-    return () => ({ success: true, limit: 10, remaining: 999, reset: 0 }) as RatelimitResponse;
+    return async (helper: RateLimitHelper) => memoryRateLimiter(helper);
   }
   const timeout = {
     fallback: { success: true, limit: 10, remaining: 999, reset: 0 },

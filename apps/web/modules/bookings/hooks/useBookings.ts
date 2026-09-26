@@ -122,6 +122,8 @@ export const useBookings = ({ event, hashedLink, bookingForm, metadata, isBookin
     (state) => [state.bookingData, state.setBookingData],
     shallow
   );
+  const setVerificationCode = useBookerStoreContext((state) => state.setVerificationCode);
+  const setVerifiedEmail = useBookerStoreContext((state) => state.setVerifiedEmail);
   const timeslot = useBookerStoreContext((state) => state.selectedTimeslot);
   const { t } = useLocale();
   const bookingSuccessRedirect = useBookingSuccessRedirect();
@@ -295,6 +297,16 @@ export const useBookings = ({ event, hashedLink, bookingForm, metadata, isBookin
         traceId?: string;
       };
 
+      if (
+        error.message === "invalid_verification_code" ||
+        error.message === "phone_verification_required" ||
+        error.message === "email_verification_required" ||
+        error.message?.includes("verification")
+      ) {
+        setVerificationCode(null);
+        setVerifiedEmail(null);
+      }
+
       if (error.message === ErrorCode.BookerLimitExceededReschedule && error.data?.rescheduleUid) {
         setRescheduleUid(error.data?.seatUid ?? error.data?.rescheduleUid);
         setBookingData({
@@ -404,6 +416,16 @@ export const useBookings = ({ event, hashedLink, bookingForm, metadata, isBookin
     },
     onError: (err, _, ctx) => {
       console.error("Error creating recurring booking", err);
+      const error = err as Error;
+      if (
+        error?.message === "invalid_verification_code" ||
+        error?.message === "phone_verification_required" ||
+        error?.message === "email_verification_required" ||
+        error?.message?.includes("verification")
+      ) {
+        setVerificationCode(null);
+        setVerifiedEmail(null);
+      }
       // eslint-disable-next-line @calcom/eslint/no-scroll-into-view-embed -- It is only called when user takes an action in embed
       bookerFormErrorRef && bookerFormErrorRef.current?.scrollIntoView({ behavior: "smooth" });
     },

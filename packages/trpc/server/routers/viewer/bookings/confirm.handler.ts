@@ -184,16 +184,10 @@ export const confirmHandler = async ({ ctx, input }: ConfirmOptions) => {
 
   // If booking requires payment and is not paid, we don't allow confirmation
   if (confirmed && booking.payment.length > 0 && !booking.paid) {
-    await prisma.booking.update({
-      where: {
-        id: bookingId,
-      },
-      data: {
-        status: BookingStatus.ACCEPTED,
-      },
+    throw new TRPCError({
+      code: "BAD_REQUEST",
+      message: "Cannot confirm an unpaid booking. Payment must be completed before confirmation.",
     });
-
-    return { message: "Booking confirmed", status: BookingStatus.ACCEPTED };
   }
 
   // Cache translations to avoid requesting multiple times.
