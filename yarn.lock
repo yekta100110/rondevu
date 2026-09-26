@@ -2342,6 +2342,7 @@ __metadata:
   dependencies:
     "@calcom/dayjs": "workspace:*"
     "@calcom/lib": "workspace:*"
+    "@calcom/sms": "workspace:*"
     "@calcom/testing": "workspace:*"
     "@calcom/tsconfig": "workspace:*"
     "@calcom/types": "workspace:*"
@@ -2521,6 +2522,7 @@ __metadata:
     "@calcom/dayjs": "workspace:*"
     "@calcom/i18n": "workspace:*"
     "@calcom/lib": "workspace:*"
+    "@calcom/sms": "workspace:*"
     "@calcom/testing": "workspace:*"
     "@calcom/trpc": "workspace:*"
     "@calcom/ui": "workspace:*"
@@ -3086,6 +3088,17 @@ __metadata:
   resolution: "@calcom/skype@workspace:packages/app-store/skype"
   dependencies:
     "@calcom/lib": "workspace:*"
+    "@calcom/types": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@calcom/sms@workspace:*, @calcom/sms@workspace:packages/sms":
+  version: 0.0.0-use.local
+  resolution: "@calcom/sms@workspace:packages/sms"
+  dependencies:
+    "@calcom/dayjs": "workspace:*"
+    "@calcom/lib": "workspace:*"
+    "@calcom/tsconfig": "workspace:*"
     "@calcom/types": "workspace:*"
   languageName: unknown
   linkType: soft

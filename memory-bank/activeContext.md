@@ -152,6 +152,11 @@
       - Created `scheduleReminderSmsTrigger.ts` in booking creation pipeline to enqueue reminders 24h or 2h prior to booking start time.
       - Added cancellation cleanup in `handleCancelBooking.ts` via `tasker.cancelWithReference(booking.uid, "sendSms")`.
       - Updated SMS unit tests in `packages/sms/test/sms-manager.test.ts` (all 8 tests passing).
+29. **Docker Deploy Build Fix (`@calcom/trpc` TS2353 & TS2339)** —
+    - Added `smsReminderNumber?: string | null;` to the `CalendarEvent` interface in `packages/types/Calendar.d.ts`.
+    - Added `"@calcom/sms": "workspace:*"` to `dependencies` in `packages/features/package.json` and updated `yarn.lock`.
+    - Verified locally with `yarn workspace @calcom/trpc run build` (both `build:server` and `build:react` compile cleanly with exit code 0).
+    - Verified with `yarn vitest run packages/sms/test/sms-manager.test.ts` (all 8 tests pass) and Biome check (0 errors).
 
 ## What Was NOT Changed (by design)
 - `@calcom/*` package namespace — internal implementation detail, changing would break 1000s of imports
@@ -160,8 +165,8 @@
 - README.md — needs full rewrite for rOndevu
 
 ## Next Steps
-- Push changes to remote repository (`origin/main`).
-- On Dokploy server deployment: Ensure `TWILIO_SID`, `TWILIO_TOKEN`, `TWILIO_PHONE_NUMBER`, `TWILIO_MESSAGING_SID`, `TWILIO_VERIFY_SID` are active, and restart the containers.
+- Commit and push changes to remote repository (`origin/main`).
+- Re-run Dokploy deployment.
 
 ## Brand Asset Details
 - Wordmark SVGs (`cal-logo-word*.svg`, `rondevu-logo-*.svg`): Scaled to fit original 84x26 box dimensions with 17px font, avoiding layout overflow.

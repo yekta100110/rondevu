@@ -221,6 +221,7 @@ export interface CalendarEvent {
   platformBookingUrl?: string | null;
   hideBranding?: boolean;
   oneTimePassword?: string | null;
+  smsReminderNumber?: string | null;
   delegationCredentialId?: string | null;
   customReplyToEmail?: string | null;
   rescheduledBy?: string;

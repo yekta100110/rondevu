@@ -78,5 +78,10 @@
     - **Complete End-to-End SMS Lifecycle**: Removed artificial `isSmsCalEmail` constraint in `sms-manager.ts` so all booking lifecycle events (confirmation, reschedule, cancellation) dispatch SMS to attendees with phone numbers.
     - **Scheduled Reminders**: Implemented appointment reminder SMS via Tasker queue (`EventReminderSMS`, `tasks/sendSms.ts`, `scheduleReminderSmsTrigger.ts`) and cancellation cleanup (`handleCancelBooking.ts`).
     - **Validation**: All 8 SMSManager unit tests passed and Biome check clean (0 errors).
+22. Docker Deploy Build Fix (@calcom/trpc TS2353 & TS2339):
+    - Added `smsReminderNumber?: string | null;` to `CalendarEvent` in `packages/types/Calendar.d.ts`.
+    - Declared `@calcom/sms` workspace dependency in `packages/features/package.json` and updated `yarn.lock`.
+    - Verified locally with `yarn workspace @calcom/trpc run build` (build:server and build:react compile with 0 errors).
+    - Verified SMSManager test suite (8 tests passed) and Biome formatting.
 
 

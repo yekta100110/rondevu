@@ -18,6 +18,7 @@
     "@calcom/dayjs": "workspace:*",
     "@calcom/i18n": "workspace:*",
     "@calcom/lib": "workspace:*",
+    "@calcom/sms": "workspace:*",
     "@calcom/trpc": "workspace:*",
     "@calcom/ui": "workspace:*",
     "@coss/ui": "workspace:*",
