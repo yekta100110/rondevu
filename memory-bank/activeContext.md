@@ -224,7 +224,11 @@
     - **Stale State Loop & Lock**: When booking creation failed, `BookerStore.verificationCode` and `verifiedEmail` remained stored, leaving `isVerified: true` and the form button in "Onayla" mode. Clicking it resent the stale code directly to `/api/book/event`. Added state cleanup in `createBookingMutation.onError` and `createRecurringBookingMutation.onError` in `useBookings.ts` to reset `setVerificationCode(null)` and `setVerifiedEmail(null)`, switching the button back to verification mode.
     - **Premature State Set**: Removed premature `setVerificationCode(value)` from `VerifyCodeDialog.tsx` line 121, ensuring only verified codes from `useVerifyCode.onSuccess` enter `BookerStore`.
     - **Resend Invalidation**: Added `clearPhoneVerificationCache(phoneNumber)` when dispatching a new SMS verification in `sendPhoneVerification` and resetting code state on modal dismissal.
-    - **Validation**: 26 Vitest unit tests passed (100%), tRPC server type check compiled cleanly with 0 errors, and Biome lint check passed.
+34. **Critical Build Fix: Broken Import in CancelBooking.tsx & Web Build Verification** —
+    - **Broken Module Import Fixed**: In `apps/web/components/booking/CancelBooking.tsx`, fixed line 13 import from non-exported path `@calcom/ui/components/form/inputs/TextField` to valid export `@calcom/ui/components/form` (`import { CheckboxField, Input, Label, Select, TextArea } from "@calcom/ui/components/form"`).
+    - **Build Icons Unmatched Files Fix**: In `packages/ui/scripts/build-icons.mjs`, added `--no-errors-on-unmatched` to the Biome format command (`node ${biomeBin} format --write --no-errors-on-unmatched ${filepath}`) so files in `public/` (ignored by `biome.json`) do not throw exit code 1 during build.
+    - **Full Next.js Web Production Build Verified**: Ran `corepack.cmd yarn workspace @calcom/web run build`, successfully compiling and generating all 98 static pages and dynamic routes with Turbopack (`✓ Compiled successfully in 5.2min`, `✓ Generating static pages using 7 workers (98/98) in 6.1s`, exit code 0).
+    - **Validation**: Biome lint check passed (0 errors), all route pages compiled cleanly.
 
 ## What Was NOT Changed (by design)
 - `@calcom/*` package namespace — internal implementation detail, changing would break 1000s of imports
