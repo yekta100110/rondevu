@@ -14,6 +14,7 @@ import {
 } from "@calcom/app-store/zod-utils";
 import dayjs from "@calcom/dayjs";
 import getICalUID from "@calcom/emails/lib/getICalUID";
+import { consumePhoneVerification } from "@calcom/features/auth/lib/phoneVerification";
 import { verifyCodeUnAuthenticated } from "@calcom/features/auth/lib/verifyCodeUnAuthenticated";
 import type {
   BookingDataSchemaGetter,
@@ -2269,6 +2270,19 @@ async function handler(
       uid: booking.uid,
       startTime: booking.startTime,
     });
+  }
+
+  const isLastSlot =
+    !input.bookingData.allRecurringDates ||
+    input.bookingData.currentRecurringIndex === input.bookingData.allRecurringDates.length - 1;
+
+  if (!isDryRun && isLastSlot && requiresVerification && reqBody.verificationCode) {
+    const targetPhone =
+      bookerPhoneNumber ||
+      (isSmsCalEmail(effectiveBookerEmail) ? effectiveBookerEmail.split("@")[0].replace(/\D/g, "") : null);
+    if (targetPhone) {
+      consumePhoneVerification(targetPhone, reqBody.verificationCode);
+    }
   }
 
   const webhookLocation = metadata?.videoCallUrl || evt.location;

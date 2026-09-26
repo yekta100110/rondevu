@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   checkPhoneVerification,
   clearPhoneVerificationCache,
+  consumePhoneVerification,
   sendPhoneVerification,
 } from "./phoneVerification";
 
@@ -33,7 +34,7 @@ describe("phoneVerification caching and replay protection", () => {
     const smsBody = smsCalls[0][0].body;
     const codeMatch = smsBody.match(/\d{6}/);
     expect(codeMatch).toBeTruthy();
-    const code = codeMatch![0];
+    const code = codeMatch?.[0] ?? "";
 
     // 2. First check (simulates VerifyCodeDialog submission)
     const check1 = await checkPhoneVerification(phone, code);
@@ -54,7 +55,7 @@ describe("phoneVerification caching and replay protection", () => {
     await sendPhoneVerification(phone);
 
     const { sendSMS } = await import("@calcom/lib/smsTransport");
-    const firstCode = vi.mocked(sendSMS).mock.calls[0][0].body.match(/\d{6}/)![0];
+    const firstCode = vi.mocked(sendSMS).mock.calls[0][0].body.match(/\d{6}/)?.[0] ?? "";
 
     // Verify first code
     const check1 = await checkPhoneVerification(phone, firstCode);
@@ -111,7 +112,7 @@ describe("phoneVerification caching and replay protection", () => {
         status: 200,
         json: async () => ({ status: "pending" }),
       };
-    }) as any;
+    }) as unknown as typeof fetch;
 
     const phone = "+905521191987";
     const code = "123456";
@@ -125,5 +126,43 @@ describe("phoneVerification caching and replay protection", () => {
     const check2 = await checkPhoneVerification(phone, code);
     expect(check2.success).toBe(true);
     expect(verificationCheckCalls).toBe(1); // Still 1! Protected from single-use Twilio rejection
+  });
+
+  it("should immediately invalidate verification cache when consumePhoneVerification is called (post-booking replay protection)", async () => {
+    const phone = "+905521191987";
+    await sendPhoneVerification(phone);
+
+    const { sendSMS } = await import("@calcom/lib/smsTransport");
+    const code = vi.mocked(sendSMS).mock.calls[0][0].body.match(/\d{6}/)?.[0] || "";
+
+    // Verify code initially
+    const check1 = await checkPhoneVerification(phone, code);
+    expect(check1.success).toBe(true);
+
+    // Simulate booking creation consuming the verification using raw digits without leading plus
+    consumePhoneVerification("905521191987", code);
+
+    // Replay check with dummy/outdated code or unverified code should fail
+    const replayCheck = await checkPhoneVerification(phone, "000000");
+    expect(replayCheck.success).toBe(false);
+  });
+
+  it("should normalize phone number when consumePhoneVerification is called with local Turkish format", async () => {
+    const phone = "+905521191987";
+    await sendPhoneVerification(phone);
+
+    const { sendSMS } = await import("@calcom/lib/smsTransport");
+    const code = vi.mocked(sendSMS).mock.calls[0][0].body.match(/\d{6}/)?.[0] || "";
+
+    // Verify code initially
+    const check1 = await checkPhoneVerification(phone, code);
+    expect(check1.success).toBe(true);
+
+    // Consume using 05XX format
+    consumePhoneVerification("05521191987", code);
+
+    // Calling again with outdated code should fail
+    const replayCheck = await checkPhoneVerification(phone, "000000");
+    expect(replayCheck.success).toBe(false);
   });
 });

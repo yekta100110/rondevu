@@ -329,7 +329,19 @@ export const bookingCancelSchema = z.object({
   skipCancellationReasonValidation: z.boolean().optional(),
   skipCalendarSyncTaskCancellation: z.boolean().optional(),
   seatReferenceUid: z.string().optional(),
-  cancelledBy: z.string().email({ message: "Invalid email" }).optional(),
+  cancelledBy: z
+    .string()
+    .refine(
+      (val) => {
+        const trimmed = val.trim();
+        if (!trimmed) return true;
+        if (z.string().email().safeParse(trimmed).success) return true;
+        const digits = trimmed.replace(/\D/g, "");
+        return digits.length >= 7 && digits.length <= 15;
+      },
+      { message: "Invalid email or phone number" }
+    )
+    .optional(),
   internalNote: z
     .object({
       id: z.number(),

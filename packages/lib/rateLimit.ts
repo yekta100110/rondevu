@@ -51,14 +51,30 @@ interface MemoryRateLimitRecord {
 const memoryRateLimitStore = new Map<string, MemoryRateLimitRecord>();
 const MAX_MEMORY_STORE_SIZE = 10000;
 
+let lastCleanup = 0;
+const CLEANUP_INTERVAL_MS = 60 * 1000;
+
 function cleanupMemoryRateLimitStore(now: number): void {
-  if (memoryRateLimitStore.size < MAX_MEMORY_STORE_SIZE) return;
+  const isFull = memoryRateLimitStore.size >= MAX_MEMORY_STORE_SIZE;
+  const isPeriodicDue = now - lastCleanup >= CLEANUP_INTERVAL_MS;
+
+  if (!isFull && !isPeriodicDue) return;
+  lastCleanup = now;
+
+  // Phase 1: Expiry-first sweep. Always remove expired entries first.
   memoryRateLimitStore.forEach((record, key) => {
     record.timestamps = record.timestamps.filter((ts: number) => now - ts < 3600 * 1000);
     if (record.timestamps.length === 0) {
       memoryRateLimitStore.delete(key);
     }
   });
+
+  // Phase 2: Capacity fallback. Fall back to FIFO eviction ONLY if store remains full after sweeping expired keys.
+  while (memoryRateLimitStore.size >= MAX_MEMORY_STORE_SIZE) {
+    const oldestKey = memoryRateLimitStore.keys().next().value;
+    if (!oldestKey) break;
+    memoryRateLimitStore.delete(oldestKey);
+  }
 }
 
 function memoryRateLimiter({ rateLimitingType = "core", identifier }: RateLimitHelper): RatelimitResponse {

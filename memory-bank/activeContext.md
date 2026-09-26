@@ -1,9 +1,12 @@
 # Active Context — rOndevu
 
 ## Current Focus
-- SMS OTP Verification Fix & Stale State Loop Elimination: Completed & Verified
-- Audit Remediation (CRIT-01 through LOW-02): Completed & Verified
-- 26/26 Vitest unit tests passing across 5 suites, 0 TypeScript errors, Biome clean
+- System-Wide Integrity, Security & Regression Rescan (Zero-Hallucination Directive): Completed & Verified
+- Edge Case 1 (OTP Post-Booking Replay Window): Fixed & Tested with `consumePhoneVerification`
+- Edge Case 2 (Phone Attendee Cancellation Deadlock): Fixed with phone/synthetic email authorization
+- Edge Case 3 (Slot Lockout on Cancelled/Rejected Slots): Verified 100% Clean (Prisma extension nulls key)
+- Edge Case 4 (In-Memory Cache Boundaries): Fixed with strict bounded FIFO eviction
+- 0 TypeScript compiler errors (`tsc --project packages/trpc/tsconfig.server.json --noEmit` exit 0), all unit tests passing
 
 ## Recent Changes (this session)
 1. **Logo Dark Mode Inversion Fix** — Assigned `LOGO = "/rondevu-logo-dark.svg"` (`#292929`) so Tailwind's `dark:invert` properly produces white text in dark mode on mobile and desktop.

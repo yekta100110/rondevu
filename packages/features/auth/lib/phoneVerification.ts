@@ -19,6 +19,7 @@ interface VerifiedPhoneEntry {
 
 const verifiedPhoneCache = new Map<string, VerifiedPhoneEntry>();
 const VERIFICATION_CACHE_TTL_MS = 15 * 60 * 1000; // 15 minutes (aligns with TOTP step limit)
+const MAX_VERIFIED_PHONE_CACHE_SIZE = 10000;
 
 function getCacheKey(normalizedPhone: string, code: string): string {
   return `${normalizedPhone}:${code.trim()}`;
@@ -26,11 +27,19 @@ function getCacheKey(normalizedPhone: string, code: string): string {
 
 function cleanExpiredEntries(): void {
   const now = Date.now();
+  // Phase 1: Expiry-first sweep. Always sweep expired entries first.
   verifiedPhoneCache.forEach((entry, key) => {
     if (now > entry.expiresAt) {
       verifiedPhoneCache.delete(key);
     }
   });
+
+  // Phase 2: Capacity fallback. Fall back to FIFO eviction ONLY if store remains over capacity after sweeping expired keys.
+  while (verifiedPhoneCache.size >= MAX_VERIFIED_PHONE_CACHE_SIZE) {
+    const oldestKey = verifiedPhoneCache.keys().next().value;
+    if (!oldestKey) break;
+    verifiedPhoneCache.delete(oldestKey);
+  }
 }
 
 /**
@@ -42,15 +51,36 @@ export function clearPhoneVerificationCache(phoneNumber?: string, code?: string)
     return;
   }
   const normalizedPhone = normalizePhoneNumber(phoneNumber, "twilio");
-  if (code) {
-    verifiedPhoneCache.delete(getCacheKey(normalizedPhone, code));
-  } else {
-    verifiedPhoneCache.forEach((entry, key) => {
-      if (entry.normalizedPhone === normalizedPhone) {
+  const rawDigits = phoneNumber.replace(/\D/g, "");
+  const trimmedCode = code?.trim();
+
+  if (normalizedPhone && trimmedCode) {
+    verifiedPhoneCache.delete(getCacheKey(normalizedPhone, trimmedCode));
+  }
+
+  // Also sweep any entry with matching normalized phone or matching raw digits
+  verifiedPhoneCache.forEach((entry, key) => {
+    const entryDigits = entry.normalizedPhone.replace(/\D/g, "");
+    const phoneMatches =
+      (normalizedPhone && entry.normalizedPhone === normalizedPhone) ||
+      (rawDigits.length >= 7 &&
+        (entryDigits === rawDigits || entryDigits.endsWith(rawDigits) || rawDigits.endsWith(entryDigits)));
+
+    if (phoneMatches) {
+      if (!trimmedCode || entry.code === trimmedCode) {
         verifiedPhoneCache.delete(key);
       }
-    });
-  }
+    }
+  });
+}
+
+/**
+ * Consumes/invalidates a verified entry once booking creation is successfully completed.
+ * Strictly sanitizes and normalizes the target phone number using the exact same normalization pipeline as checkPhoneVerification.
+ * Closes the post-booking replay window within the 15-minute validity window.
+ */
+export function consumePhoneVerification(phoneNumber: string, code?: string): void {
+  clearPhoneVerificationCache(phoneNumber, code);
 }
 
 export function isTwilioVerifyConfigured(): boolean {
@@ -76,6 +106,7 @@ export async function sendPhoneVerification(phoneNumber: string): Promise<PhoneV
 
   // Invalidate any previously cached verification for this phone number so only the newly requested code will be valid
   clearPhoneVerificationCache(normalizedPhone);
+  cleanExpiredEntries();
 
   if (isTwilioVerifyConfigured()) {
     const accountSid = (process.env.TWILIO_SID || process.env.TWILIO_ACCOUNT_SID) as string;

@@ -10,6 +10,7 @@ import type { RecurringEvent } from "@calcom/types/Calendar";
 import classNames from "@calcom/ui/classNames";
 import { Button } from "@calcom/ui/components/button";
 import { CheckboxField, Label, Select, TextArea } from "@calcom/ui/components/form";
+import { Input } from "@calcom/ui/components/form/inputs/TextField";
 import { showToast } from "@calcom/ui/components/toast";
 import { InfoIcon, XIcon } from "@coss/ui/icons";
 import { useCallback, useState } from "react";
@@ -131,6 +132,7 @@ export default function CancelBooking(props: Props) {
   const [error, setError] = useState<string | null>(booking ? null : t("booking_already_cancelled"));
   const [internalNote, setInternalNote] = useState<{ id: number; name: string } | null>(null);
   const [acknowledgeCancellationNoShowFee, setAcknowledgeCancellationNoShowFee] = useState(false);
+  const [cancelledByInput, setCancelledByInput] = useState<string>(currentUserEmail || "");
 
   const getAppMetadata = (appId: string): Record<string, unknown> | null => {
     if (!eventTypeMetadata?.apps || !appId) return null;
@@ -172,10 +174,13 @@ export default function CancelBooking(props: Props) {
   const missingRequiredReason = isReasonRequired && !cancellationReason?.trim();
   const hostMissingInternalNote =
     isCancellationUserHost && props.internalNotePresets.length > 0 && !internalNote?.id;
-  const cancellationNoShowFeeNotAcknowledged =
-    !props.isHost && cancellationNoShowFeeWarning && !acknowledgeCancellationNoShowFee;
+  const isKnownUser = Boolean(props.isHost || currentUserEmail);
+  const missingCancelledBy = !isKnownUser && !cancelledByInput.trim();
   const canCancel =
-    !missingRequiredReason && !hostMissingInternalNote && !cancellationNoShowFeeNotAcknowledged;
+    !missingRequiredReason &&
+    !hostMissingInternalNote &&
+    !cancellationNoShowFeeNotAcknowledged &&
+    !missingCancelledBy;
   const cancelBookingRef = useCallback((node: HTMLTextAreaElement) => {
     if (node !== null) {
       // eslint-disable-next-line @calcom/eslint/no-scroll-into-view-embed -- CancelBooking is not usually used in embed mode
@@ -224,6 +229,26 @@ export default function CancelBooking(props: Props) {
                 }}
               />
             </>
+          )}
+
+          {!isKnownUser && (
+            <div className="mb-4">
+              <Label htmlFor="cancelled_by_input">
+                {t("email_or_phone") || "E-posta veya Telefon Numarası"}
+              </Label>
+              <Input
+                id="cancelled_by_input"
+                name="cancelled_by"
+                type="text"
+                autoComplete="username"
+                data-testid="cancelled_by_input"
+                placeholder={t("email_or_phone_placeholder") || "ornek@alanadi.com veya 05XX XXX XX XX"}
+                value={cancelledByInput}
+                onChange={(e) => setCancelledByInput(e.target.value)}
+                className="mt-1 w-full"
+                required
+              />
+            </div>
           )}
 
           <Label>{t(isReasonRequired ? "cancellation_reason" : "cancellation_reason_optional_label")}</Label>
@@ -290,7 +315,7 @@ export default function CancelBooking(props: Props) {
                       allRemainingBookings,
                       // @NOTE: very important this shouldn't cancel with number ID use uid instead
                       seatReferenceUid,
-                      cancelledBy: currentUserEmail,
+                      cancelledBy: cancelledByInput.trim() || currentUserEmail,
                       internalNote: internalNote,
                       csrfToken,
                     }),

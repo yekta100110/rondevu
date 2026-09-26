@@ -24,10 +24,13 @@ import {
 import sendPayload from "@calcom/features/webhooks/lib/sendOrSchedulePayload";
 import type { EventTypeInfo } from "@calcom/features/webhooks/lib/sendPayload";
 import { getTranslation } from "@calcom/i18n/server";
+import { contructEmailFromPhoneNumber } from "@calcom/lib/contructEmailFromPhoneNumber";
 import { HttpError } from "@calcom/lib/http-error";
 import { isPrismaObjOrUndefined } from "@calcom/lib/isPrismaObj";
 import { parseRecurringEvent } from "@calcom/lib/isRecurringEvent";
+import isSmsCalEmail from "@calcom/lib/isSmsCalEmail";
 import logger from "@calcom/lib/logger";
+import { normalizePhoneNumber } from "@calcom/lib/normalizePhoneNumber";
 import { safeStringify } from "@calcom/lib/safeStringify";
 import { isPrismaError } from "@calcom/lib/server/getServerErrorFromUnknown";
 import { getTimeFormatStringFromUserTimeFormat } from "@calcom/lib/timeFormat";
@@ -148,15 +151,60 @@ async function handler(input: CancelBookingInput, dependencies?: Dependencies) {
 
   // Authorization check: unauthenticated requests must supply valid cancelledBy matching host or attendee
   if (userId === -1 && !platformClientId) {
-    const normalizedCancelledBy = cancelledBy?.trim().toLowerCase();
+    const rawCancelledBy = cancelledBy?.trim() || "";
+    const normalizedCancelledBy = rawCancelledBy.toLowerCase();
     const isHostEmail =
-      Boolean(normalizedCancelledBy) &&
-      bookingToDelete.user?.email.toLowerCase() === normalizedCancelledBy;
-    const isAttendeeEmail =
-      Boolean(normalizedCancelledBy) &&
-      bookingToDelete.attendees.some((a) => a.email.toLowerCase() === normalizedCancelledBy);
+      Boolean(normalizedCancelledBy) && bookingToDelete.user?.email.toLowerCase() === normalizedCancelledBy;
 
-    if (!isHostEmail && !isAttendeeEmail) {
+    const normalizedCancelledByPhone = normalizePhoneNumber(rawCancelledBy, "twilio");
+    const syntheticEmailFromPhone = normalizedCancelledByPhone
+      ? contructEmailFromPhoneNumber(normalizedCancelledByPhone).toLowerCase()
+      : null;
+    const rawCancelledDigits = rawCancelledBy.replace(/\D/g, "");
+
+    const isAttendee =
+      Boolean(rawCancelledBy) &&
+      bookingToDelete.attendees.some((a) => {
+        // 1. Direct email match
+        if (a.email.toLowerCase() === normalizedCancelledBy) return true;
+
+        // 2. Synthetic email match (e.g. attendee entered their phone number)
+        if (syntheticEmailFromPhone && a.email.toLowerCase() === syntheticEmailFromPhone) {
+          return true;
+        }
+
+        // 3. Direct phone match if attendee record has phoneNumber
+        if (a.phoneNumber && normalizedCancelledByPhone) {
+          if (normalizePhoneNumber(a.phoneNumber, "twilio") === normalizedCancelledByPhone) {
+            return true;
+          }
+        }
+
+        // 4. Match against booking's smsReminderNumber if present
+        if (bookingToDelete.smsReminderNumber && normalizedCancelledByPhone) {
+          if (
+            normalizePhoneNumber(bookingToDelete.smsReminderNumber, "twilio") === normalizedCancelledByPhone
+          ) {
+            return true;
+          }
+        }
+
+        // 5. Fallback for synthetic email digit matching (e.g. 905521191987@sms.rondevu.org)
+        if (isSmsCalEmail(a.email) && rawCancelledDigits.length >= 7) {
+          const attendeeDigits = a.email.split("@")[0].replace(/\D/g, "");
+          if (
+            attendeeDigits === rawCancelledDigits ||
+            attendeeDigits.endsWith(rawCancelledDigits) ||
+            rawCancelledDigits.endsWith(attendeeDigits)
+          ) {
+            return true;
+          }
+        }
+
+        return false;
+      });
+
+    if (!isHostEmail && !isAttendee) {
       throw new HttpError({
         statusCode: 401,
         message: "Unauthorized: Unauthenticated cancellations require valid attendee or organizer email.",
