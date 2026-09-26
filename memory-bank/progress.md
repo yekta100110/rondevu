@@ -66,4 +66,17 @@
     - Enhanced `planContactConfig.ts` with named Prisma import, multi-path filesystem resolution for backups, and resilient DB theme parsing.
     - Added "Varsayılana Sıfırla" one-click button in admin panel with confirmation dialog.
     - Validated with automated test suite and verified 0 TypeScript errors on changed files.
+20. Homepage Terminology, Single Price Premium Access Highlight & Mobile Booking Flow Overhaul:
+    - Aligned Hero title to "Herkes için randevu sistemi" on homepage and manifest.
+    - Overhauled features & pricing sections on `/`, `/plan-bilgi`, and FAQ: clearly conveyed that no tiered plans, feature locks, or commissions exist ("Tek fiyata premium erişim").
+    - Fixed mobile responsiveness of the live booking flow simulator (`HeroBookingMockup`): eliminated URL overflow/wrap, aligned step switcher into a 3-column mobile grid, made calendar cells square and touch-friendly, arranged mobile slots into a 3-column row, and added clean section dividers.
+    - Validated all changes with Biome checks (exit code 0).
+21. Phone Verification Gate & Provider-Agnostic SMS Lifecycle Overhaul:
+    - **Twilio Architecture Separation**: Integrated Twilio Verify v2 REST API (`TWILIO_VERIFY_SID`) for OTP code sending and verification checks; used Twilio Programmable Messaging API (`TWILIO_MESSAGING_SID` / `TWILIO_PHONE_NUMBER`) for transactional booking notifications. Dokploy environment variables `TWILIO_SID` and `TWILIO_TOKEN` supported alongside `TWILIO_ACCOUNT_SID` and `TWILIO_AUTH_TOKEN`.
+    - **Decoupled Provider-Agnostic SMS Layer**: Implemented `ISmsProvider` interface with `TwilioSmsProvider`, `NetgsmSmsProvider`, `WebhookSmsProvider`, and `SimulationSmsProvider` in `packages/lib/smsTransport.ts`.
+    - **Strict Phone Verification Gate**: Automatically enforced `requiresBookerEmailVerification` when phone confirmation is toggled (`FormBuilder.tsx`, `EventAdvancedTab.tsx`), stopped frontend bypass until verified (`useVerifyEmail.ts`), and enforced backend verification code validation in `RegularBookingService.ts`.
+    - **Complete End-to-End SMS Lifecycle**: Removed artificial `isSmsCalEmail` constraint in `sms-manager.ts` so all booking lifecycle events (confirmation, reschedule, cancellation) dispatch SMS to attendees with phone numbers.
+    - **Scheduled Reminders**: Implemented appointment reminder SMS via Tasker queue (`EventReminderSMS`, `tasks/sendSms.ts`, `scheduleReminderSmsTrigger.ts`) and cancellation cleanup (`handleCancelBooking.ts`).
+    - **Validation**: All 8 SMSManager unit tests passed and Biome check clean (0 errors).
+
 

@@ -92,21 +92,24 @@ export function HomeView({ isLoggedIn = false, initialContact }: HomeViewProps) 
   const cleanWhatsapp = whatsapp.replace(/[^\d]/g, "");
 
   const monthlyFeatures = [
+    "Tüm özelliklere kısıtlamasız premium erişim",
     "Sınırsız randevu ve etkinlik türü",
     "SMS ve E-posta hatırlatıcı bildirimleri",
-    "Google & Apple Takvim çift yönlü eşitleme",
-    "Telefon ve e-posta doğrulama (OTP)",
-    "No-show ('Katılmadı') danışan takibi",
+    "Google & Apple Takvim anlık çift yönlü eşitleme",
+    "Telefon ve e-posta doğrulama (OTP koruması)",
+    "No-show ('Katılmadı') danışan takibi & koruması",
     "Out of Office (Acil durum toplu iptal & SMS)",
     "Özel gün & bayram tatili kapatma",
     "Kendi alan adına bağlama (Custom Domain)",
+    "Birebir kurulum ve uzman desteği",
   ];
 
   const yearlyFeatures = [
-    "Aylık plandaki tüm gelişmiş özellikler eksiksiz dahil",
-    "2 ay ücretsiz kullanım (1.980 ₺ tasarruf)",
-    "12 ay boyunca fiyat artışından etkilenmeme",
-    "Öncelikli birebir kurulum ve WhatsApp desteği",
+    "Aylık plandaki TÜM premium özellikler eksiksiz dahil",
+    "Hiçbir özellik veya kullanım kısıtlaması yok",
+    "2 ay ücretsiz kullanım (1.980 ₺ doğrudan tasarruf)",
+    "12 ay boyunca fiyat artışından etkilenmeme garantisi",
+    "Öncelikli birebir teknik kurulum ve WhatsApp desteği",
     "Özel takvim kuralı ve iş akışı yapılandırması",
   ];
 
@@ -178,7 +181,7 @@ export function HomeView({ isLoggedIn = false, initialContact }: HomeViewProps) 
           <h1
             id="hero-title"
             className="mx-auto max-w-4xl font-bold font-cal text-4xl text-emphasis leading-[1.14] tracking-tight sm:text-5xl md:text-6xl">
-            Herkes için randevu altyapısı
+            Herkes için randevu sistemi
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl font-normal text-base text-subtle leading-relaxed sm:text-lg">
@@ -209,7 +212,21 @@ export function HomeView({ isLoggedIn = false, initialContact }: HomeViewProps) 
         {/* ========================================================= */}
         {/* 2. 12 ÖZELLİĞİ İÇEREN 4 ANA OPERASYONEL BLOK */}
         {/* ========================================================= */}
-        <div id="features" className="border-subtle/80 border-t pt-8">
+        <div id="features" className="border-subtle/80 border-t pt-10 sm:pt-14">
+          <div className="mx-auto mb-8 max-w-3xl text-center">
+            <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-subtle bg-muted/40 px-3.5 py-1 text-xs font-medium text-emphasis shadow-2xs">
+              <Sparkles className="size-3.5 text-emphasis" />
+              <span>Tek Fiyata Premium Erişim</span>
+            </div>
+            <h2 className="font-bold font-cal text-2xl sm:text-3xl text-emphasis tracking-tight">
+              Yapay Plan Kısıtlamaları Yok, Tüm Altyapı Elinizin Altında
+            </h2>
+            <p className="mt-2.5 text-xs sm:text-sm text-subtle leading-relaxed max-w-xl mx-auto">
+              rOndevu'da "bu özellik sadece üst planda var" anlayışı veya gizli sınırlar yoktur.
+              Geliştirdiğimiz tüm güçlü araçlar ve güvenlik önlemleri her kullanıcımıza standart olarak
+              eksiksiz açılır.
+            </p>
+          </div>
           <AdminFeatureCards contactConfig={contactConfig} />
         </div>
 
@@ -221,17 +238,19 @@ export function HomeView({ isLoggedIn = false, initialContact }: HomeViewProps) 
           aria-labelledby="pricing-title"
           className="border-subtle/80 border-t py-16 sm:py-24">
           <div className="mx-auto mb-12 max-w-2xl text-center">
-            <div className="mb-3 inline-flex items-center rounded-full border border-subtle bg-muted/40 px-3 py-0.5 text-xs font-medium text-subtle">
-              <span>Sabit Fiyat, Komisyonsuz</span>
+            <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-subtle bg-muted/40 px-3.5 py-1 text-xs font-medium text-emphasis shadow-2xs">
+              <Sparkles className="size-3.5 text-emphasis" />
+              <span>Tek Fiyata Premium Erişim</span>
             </div>
             <h2
               id="pricing-title"
               className="font-bold font-cal text-3xl text-emphasis tracking-tight sm:text-4xl">
-              Planlar ve Fiyatlandırma
+              Farklı Planlar veya Kısıtlamalar Yok: Tek Fiyata Premium Erişim
             </h2>
-            <p className="mt-3 text-sm text-subtle sm:text-base">
-              Randevu başı veya danışan başı komisyon yok. Tüm gelişmiş özellikler ve altyapı araçları iki
-              planda da eksiksiz açık.
+            <p className="mt-3 text-sm text-subtle sm:text-base leading-relaxed">
+              rOndevu'da kısıtlanmış özellikler, kilitli paketler veya danışan başı komisyon yoktur. İster
+              aylık ister yıllık tercih edin; tüm randevu, takvim, SMS, güvenlik ve alan adı altyapısına
+              hiçbir erişim kısıtlaması olmadan tek fiyata premium erişirsiniz.
             </p>
 
             {/* Billing Cycle Toggle */}
@@ -274,13 +293,14 @@ export function HomeView({ isLoggedIn = false, initialContact }: HomeViewProps) 
               )}>
               <div>
                 <div className="mb-2 flex items-center justify-between">
-                  <h3 className="font-bold font-cal text-emphasis text-xl">Aylık Plan</h3>
+                  <h3 className="font-bold font-cal text-emphasis text-xl">Aylık Ödeme</h3>
                   <span className="rounded border border-subtle px-2 py-0.5 font-medium text-xs text-subtle">
-                    Taahhütsüz
+                    Kısıtlama Yok · Taahhütsüz
                   </span>
                 </div>
                 <p className="mb-6 text-sm text-subtle">
-                  Taahhütsüz kullanım; dilediğiniz zaman tek tıkla sonlandırın.
+                  Farklı paket veya kısıtlama yok; tüm premium özellikler dahil. Dilediğiniz zaman tek tıkla
+                  sonlandırın.
                 </p>
 
                 <div className="mb-6 flex items-baseline gap-1.5 border-subtle border-b pb-6">
@@ -316,12 +336,15 @@ export function HomeView({ isLoggedIn = false, initialContact }: HomeViewProps) 
               )}>
               <div>
                 <div className="mb-2 flex items-center justify-between">
-                  <h3 className="font-bold font-cal text-emphasis text-xl">Yıllık Plan</h3>
+                  <h3 className="font-bold font-cal text-emphasis text-xl">Yıllık Ödeme</h3>
                   <span className="rounded border border-subtle px-2 py-0.5 font-medium text-xs text-subtle">
-                    12 Ay (2 Ay Hediye)
+                    Kısıtlama Yok · 2 Ay Hediye
                   </span>
                 </div>
-                <p className="mb-6 text-sm text-subtle">12 ay kesintisiz kullanım, 2 ay hediye avantajı.</p>
+                <p className="mb-6 text-sm text-subtle">
+                  Tüm premium özellikler dahil; 12 ay kesintisiz kullanım, 2 ay hediye ve sabit fiyat
+                  garantisi.
+                </p>
 
                 <div className="mb-6 flex items-baseline gap-2.5 border-subtle border-b pb-6">
                   <span className="font-normal text-subtle text-xl line-through decoration-subtle/70 sm:text-2xl">

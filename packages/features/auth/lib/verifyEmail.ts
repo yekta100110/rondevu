@@ -116,26 +116,15 @@ export const sendEmailVerificationByCode = async ({
 
   if (isSms) {
     const rawDigits = email.split("@")[0].replace(/\D/g, "");
-    let targetPhone = `+${rawDigits}`;
-    if (rawDigits.startsWith("90") && rawDigits.length === 12) {
-      targetPhone = `+${rawDigits}`;
-    } else if (rawDigits.startsWith("0") && rawDigits.length === 11) {
-      targetPhone = `+9${rawDigits}`;
-    } else if (rawDigits.length === 10) {
-      targetPhone = `+90${rawDigits}`;
+    const { sendPhoneVerification } = await import("./phoneVerification");
+    const result = await sendPhoneVerification(rawDigits);
+
+    if (!result.success) {
+      log.error("Failed to send verification SMS", result.error);
+      throw new Error(result.error || "Failed to send verification SMS");
     }
 
-    try {
-      const { sendSMS } = await import("@calcom/lib/smsTransport");
-      await sendSMS({
-        to: targetPhone,
-        body: `rOndevu randevu doğrulama kodunuz: ${code}`,
-      });
-      return { ok: true, skipped: false };
-    } catch (smsErr) {
-      log.error("Failed to send verification SMS", smsErr);
-      throw smsErr;
-    }
+    return { ok: true, skipped: false };
   }
 
   await sendEmailVerificationCode({

@@ -12,7 +12,7 @@ const tasks: Record<TaskTypes, () => Promise<TaskHandler>> = {
     import("./triggerNoShow/triggerHostNoShow").then((module) => module.triggerHostNoShow),
   triggerGuestNoShowWebhook: () =>
     import("./triggerNoShow/triggerGuestNoShow").then((module) => module.triggerGuestNoShow),
-  sendSms: () => Promise.resolve(() => Promise.reject(new Error("Not implemented"))),
+  sendSms: () => import("./sendSms").then((module) => module.sendSms),
   translateEventTypeData: () =>
     import("./translateEventTypeData").then((module) => module.translateEventTypeData),
   createCRMEvent: () => import("./crm/createCRMEvent").then((module) => module.createCRMEvent),

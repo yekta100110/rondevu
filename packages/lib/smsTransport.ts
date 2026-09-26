@@ -1,86 +1,15 @@
 import process from "node:process";
-export interface SMSPayload {
-  to: string;
-  body: string;
-}
+import type { ISmsProvider, SMSPayload, SMSResponse } from "./sms/types";
 
-export interface SMSResponse {
-  success: boolean;
-  provider: "twilio" | "netgsm" | "webhook" | "simulation";
-  messageId?: string;
-  error?: string;
-}
-
-export function getSMSConfig() {
-  const twilioConfigured = Boolean(
-    (process.env.TWILIO_SID || process.env.TWILIO_ACCOUNT_SID) &&
-      (process.env.TWILIO_TOKEN || process.env.TWILIO_AUTH_TOKEN) &&
-      (process.env.TWILIO_PHONE_NUMBER || process.env.TWILIO_MESSAGING_SID)
-  );
-
-  const netgsmConfigured = Boolean(
-    process.env.NETGSM_USERCODE && process.env.NETGSM_PASSWORD && process.env.NETGSM_HEADER
-  );
-
-  const webhookConfigured = Boolean(process.env.SMS_WEBHOOK_URL);
-
-  const explicitProvider = process.env.SMS_PROVIDER?.toLowerCase();
-
-  let activeProvider: "twilio" | "netgsm" | "webhook" | "simulation" = "simulation";
-
-  if (explicitProvider === "netgsm" && netgsmConfigured) {
-    activeProvider = "netgsm";
-  } else if (explicitProvider === "twilio" && twilioConfigured) {
-    activeProvider = "twilio";
-  } else if (explicitProvider === "webhook" && webhookConfigured) {
-    activeProvider = "webhook";
-  } else if (netgsmConfigured) {
-    activeProvider = "netgsm";
-  } else if (twilioConfigured) {
-    activeProvider = "twilio";
-  } else if (webhookConfigured) {
-    activeProvider = "webhook";
-  }
-
-  const enabled =
-    process.env.NEXT_PUBLIC_SMS_ENABLED === "true" ||
-    process.env.SMS_ENABLED === "true" ||
-    activeProvider !== "simulation";
-
-  return {
-    enabled,
-    activeProvider,
-    isConfigured: twilioConfigured || netgsmConfigured || webhookConfigured,
-    providerDetails: {
-      twilio: {
-        configured: twilioConfigured,
-        phoneNumber: process.env.TWILIO_PHONE_NUMBER
-          ? process.env.TWILIO_PHONE_NUMBER.replace(/.(?=.{4})/g, "*")
-          : undefined,
-        messagingSid: process.env.TWILIO_MESSAGING_SID
-          ? `${process.env.TWILIO_MESSAGING_SID.substring(0, 6)}...`
-          : undefined,
-      },
-      netgsm: {
-        configured: netgsmConfigured,
-        usercode: process.env.NETGSM_USERCODE
-          ? process.env.NETGSM_USERCODE.replace(/.(?=.{3})/g, "*")
-          : undefined,
-        header: process.env.NETGSM_HEADER,
-      },
-      webhook: {
-        configured: webhookConfigured,
-        url: process.env.SMS_WEBHOOK_URL ? "Mevcut / Yapılandırıldı" : undefined,
-      },
-    },
-    mode: twilioConfigured || netgsmConfigured || webhookConfigured ? "production" : "simulation",
-  };
-}
+export * from "./sms/types";
 
 /**
- * Normalizes phone numbers to standard format
+ * Normalizes phone numbers to standard format according to target provider
  */
-function normalizePhoneNumber(phone: string, target: "twilio" | "netgsm" | "general"): string {
+export function normalizePhoneNumber(
+  phone: string,
+  target: "twilio" | "netgsm" | "general" = "general"
+): string {
   const digits = phone.replace(/\D/g, "");
   if (target === "twilio") {
     if (digits.startsWith("90") && digits.length === 12) return `+${digits}`;
@@ -97,14 +26,33 @@ function normalizePhoneNumber(phone: string, target: "twilio" | "netgsm" | "gene
   return digits.length > 0 ? `+${digits}` : phone.trim();
 }
 
-export async function sendSMS({ to, body }: SMSPayload): Promise<SMSResponse> {
-  const config = getSMSConfig();
+/**
+ * Twilio Programmable Messaging Provider
+ */
+export class TwilioSmsProvider implements ISmsProvider {
+  readonly name = "twilio" as const;
 
-  if (config.activeProvider === "twilio") {
+  isConfigured(): boolean {
+    const accountSid = process.env.TWILIO_SID || process.env.TWILIO_ACCOUNT_SID;
+    const authToken = process.env.TWILIO_TOKEN || process.env.TWILIO_AUTH_TOKEN;
+    const fromPhone = process.env.TWILIO_PHONE_NUMBER;
+    const messagingSid = process.env.TWILIO_MESSAGING_SID;
+    return Boolean(accountSid && authToken && (fromPhone || messagingSid));
+  }
+
+  async send({ to, body }: SMSPayload): Promise<SMSResponse> {
     const accountSid = (process.env.TWILIO_SID || process.env.TWILIO_ACCOUNT_SID) as string;
     const authToken = (process.env.TWILIO_TOKEN || process.env.TWILIO_AUTH_TOKEN) as string;
     const fromPhone = process.env.TWILIO_PHONE_NUMBER;
     const messagingSid = process.env.TWILIO_MESSAGING_SID;
+
+    if (!accountSid || !authToken || (!fromPhone && !messagingSid)) {
+      return {
+        success: false,
+        provider: "twilio",
+        error: "Twilio credentials or sender configuration missing.",
+      };
+    }
 
     const normalizedTo = normalizePhoneNumber(to, "twilio");
     const basicAuth = Buffer.from(`${accountSid}:${authToken}`).toString("base64");
@@ -112,6 +60,7 @@ export async function sendSMS({ to, body }: SMSPayload): Promise<SMSResponse> {
     const params = new URLSearchParams();
     params.append("To", normalizedTo);
     params.append("Body", body);
+
     if (messagingSid) {
       params.append("MessagingServiceSid", messagingSid);
     } else if (fromPhone) {
@@ -150,11 +99,30 @@ export async function sendSMS({ to, body }: SMSPayload): Promise<SMSResponse> {
       };
     }
   }
+}
 
-  if (config.activeProvider === "netgsm") {
+/**
+ * Netgsm Provider
+ */
+export class NetgsmSmsProvider implements ISmsProvider {
+  readonly name = "netgsm" as const;
+
+  isConfigured(): boolean {
+    return Boolean(process.env.NETGSM_USERCODE && process.env.NETGSM_PASSWORD && process.env.NETGSM_HEADER);
+  }
+
+  async send({ to, body }: SMSPayload): Promise<SMSResponse> {
     const usercode = process.env.NETGSM_USERCODE as string;
     const password = process.env.NETGSM_PASSWORD as string;
     const header = process.env.NETGSM_HEADER || "RONDEVU";
+
+    if (!usercode || !password) {
+      return {
+        success: false,
+        provider: "netgsm",
+        error: "Netgsm credentials missing.",
+      };
+    }
 
     const normalizedTo = normalizePhoneNumber(to, "netgsm");
 
@@ -167,13 +135,9 @@ export async function sendSMS({ to, body }: SMSPayload): Promise<SMSResponse> {
       url.searchParams.append("msgheader", header);
       url.searchParams.append("dil", "TR");
 
-      const res = await fetch(url.toString(), {
-        method: "GET",
-      });
-
+      const res = await fetch(url.toString(), { method: "GET" });
       const responseText = (await res.text()).trim();
 
-      // Netgsm returns "00 <jobid>" or "01 <jobid>" or "02 <jobid>" on success
       if (responseText.startsWith("00") || responseText.startsWith("01") || responseText.startsWith("02")) {
         const parts = responseText.split(" ");
         return {
@@ -206,10 +170,29 @@ export async function sendSMS({ to, body }: SMSPayload): Promise<SMSResponse> {
       };
     }
   }
+}
 
-  if (config.activeProvider === "webhook") {
+/**
+ * Custom Webhook Provider
+ */
+export class WebhookSmsProvider implements ISmsProvider {
+  readonly name = "webhook" as const;
+
+  isConfigured(): boolean {
+    return Boolean(process.env.SMS_WEBHOOK_URL);
+  }
+
+  async send({ to, body }: SMSPayload): Promise<SMSResponse> {
     const webhookUrl = process.env.SMS_WEBHOOK_URL as string;
     const token = process.env.SMS_WEBHOOK_TOKEN;
+
+    if (!webhookUrl) {
+      return {
+        success: false,
+        provider: "webhook",
+        error: "SMS_WEBHOOK_URL is not defined.",
+      };
+    }
 
     try {
       const res = await fetch(webhookUrl, {
@@ -246,12 +229,118 @@ export async function sendSMS({ to, body }: SMSPayload): Promise<SMSResponse> {
       };
     }
   }
+}
 
-  // Simulation mode (Fallback when no active provider is configured in environment)
-  console.info(`[rOndevu SMS Simülasyonu] Alıcı: ${to} | Mesaj: ${body}`);
+/**
+ * Simulation Provider (Fallback for local dev or unconfigured environments)
+ */
+export class SimulationSmsProvider implements ISmsProvider {
+  readonly name = "simulation" as const;
+
+  isConfigured(): boolean {
+    return true;
+  }
+
+  async send({ to, body }: SMSPayload): Promise<SMSResponse> {
+    console.info(`[rOndevu SMS Simülasyonu] Alıcı: ${to} | Mesaj: ${body}`);
+    return {
+      success: true,
+      provider: "simulation",
+      messageId: `sim-${Date.now()}`,
+    };
+  }
+}
+
+/**
+ * SMS Provider Factory
+ */
+export class SmsProviderFactory {
+  private static twilioProvider = new TwilioSmsProvider();
+  private static netgsmProvider = new NetgsmSmsProvider();
+  private static webhookProvider = new WebhookSmsProvider();
+  private static simulationProvider = new SimulationSmsProvider();
+
+  static getActiveProvider(): ISmsProvider {
+    const explicitProvider = process.env.SMS_PROVIDER?.toLowerCase();
+
+    if (explicitProvider === "netgsm" && SmsProviderFactory.netgsmProvider.isConfigured()) {
+      return SmsProviderFactory.netgsmProvider;
+    }
+    if (explicitProvider === "twilio" && SmsProviderFactory.twilioProvider.isConfigured()) {
+      return SmsProviderFactory.twilioProvider;
+    }
+    if (explicitProvider === "webhook" && SmsProviderFactory.webhookProvider.isConfigured()) {
+      return SmsProviderFactory.webhookProvider;
+    }
+
+    // Auto-detect priority
+    if (SmsProviderFactory.twilioProvider.isConfigured()) {
+      return SmsProviderFactory.twilioProvider;
+    }
+    if (SmsProviderFactory.netgsmProvider.isConfigured()) {
+      return SmsProviderFactory.netgsmProvider;
+    }
+    if (SmsProviderFactory.webhookProvider.isConfigured()) {
+      return SmsProviderFactory.webhookProvider;
+    }
+
+    return SmsProviderFactory.simulationProvider;
+  }
+}
+
+export function getSMSConfig() {
+  const twilioProvider = new TwilioSmsProvider();
+  const netgsmProvider = new NetgsmSmsProvider();
+  const webhookProvider = new WebhookSmsProvider();
+
+  const twilioConfigured = twilioProvider.isConfigured();
+  const netgsmConfigured = netgsmProvider.isConfigured();
+  const webhookConfigured = webhookProvider.isConfigured();
+
+  const activeProvider = SmsProviderFactory.getActiveProvider().name;
+
+  const enabled =
+    process.env.NEXT_PUBLIC_SMS_ENABLED === "true" ||
+    process.env.SMS_ENABLED === "true" ||
+    activeProvider !== "simulation";
+
   return {
-    success: true,
-    provider: "simulation",
-    messageId: `sim-${Date.now()}`,
+    enabled,
+    activeProvider,
+    isConfigured: twilioConfigured || netgsmConfigured || webhookConfigured,
+    providerDetails: {
+      twilio: {
+        configured: twilioConfigured,
+        phoneNumber: process.env.TWILIO_PHONE_NUMBER
+          ? process.env.TWILIO_PHONE_NUMBER.replace(/.(?=.{4})/g, "*")
+          : undefined,
+        messagingSid: process.env.TWILIO_MESSAGING_SID
+          ? `${process.env.TWILIO_MESSAGING_SID.substring(0, 6)}...`
+          : undefined,
+        verifySid: process.env.TWILIO_VERIFY_SID
+          ? `${process.env.TWILIO_VERIFY_SID.substring(0, 6)}...`
+          : undefined,
+      },
+      netgsm: {
+        configured: netgsmConfigured,
+        usercode: process.env.NETGSM_USERCODE
+          ? process.env.NETGSM_USERCODE.replace(/.(?=.{3})/g, "*")
+          : undefined,
+        header: process.env.NETGSM_HEADER,
+      },
+      webhook: {
+        configured: webhookConfigured,
+        url: process.env.SMS_WEBHOOK_URL ? "Mevcut / Yapılandırıldı" : undefined,
+      },
+    },
+    mode: twilioConfigured || netgsmConfigured || webhookConfigured ? "production" : "simulation",
   };
+}
+
+/**
+ * Universal SMS send entry point
+ */
+export async function sendSMS(payload: SMSPayload): Promise<SMSResponse> {
+  const provider = SmsProviderFactory.getActiveProvider();
+  return provider.send(payload);
 }

@@ -868,8 +868,12 @@ export const EventAdvancedTab = ({
                 : t("description_requires_booker_email_verification")
             }
             descriptionClassName={customClassNames?.bookerEmailVerification?.description}
-            checked={value}
-            onCheckedChange={(e) => onChange(e)}
+            checked={isPhoneConfirmation ? true : Boolean(value)}
+            disabled={isPhoneConfirmation || requiresBookerEmailVerificationProps.disabled}
+            onCheckedChange={(e) => {
+              if (isPhoneConfirmation) return;
+              onChange(e);
+            }}
           />
         )}
       />

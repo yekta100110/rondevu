@@ -1,5 +1,4 @@
 import dayjs from "@calcom/dayjs";
-import isSmsCalEmail from "@calcom/lib/isSmsCalEmail";
 import { piiHasher } from "@calcom/lib/server/PiiHasher";
 import { checkSMSRateLimit } from "@calcom/lib/smsLockState";
 import { TimeFormat } from "@calcom/lib/timeFormat";
@@ -68,10 +67,9 @@ export default abstract class SMSManager {
   abstract getMessage(attendee: Person): string;
 
   async sendSMSToAttendee(attendee: Person): Promise<unknown> {
-    const attendeePhoneNumber = attendee.phoneNumber;
-    const isPhoneOnlyBooking = Boolean(attendeePhoneNumber && isSmsCalEmail(attendee.email));
+    const attendeePhoneNumber = attendee.phoneNumber || this.calEvent.smsReminderNumber;
 
-    if (!attendeePhoneNumber || !isPhoneOnlyBooking) return;
+    if (!attendeePhoneNumber) return;
 
     return handleSendingSMS({
       reminderPhone: attendeePhoneNumber,

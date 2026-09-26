@@ -5,7 +5,7 @@ import { trpc } from "@calcom/trpc/react";
 import { Button } from "@calcom/ui/components/button";
 import { Logo } from "@calcom/ui/components/logo";
 import { motion } from "framer-motion";
-import { ArrowLeft, Check, Mail, MessageCircle, Phone } from "lucide-react";
+import { ArrowLeft, Check, Mail, MessageCircle, Phone, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
@@ -63,14 +63,14 @@ function BackgroundGrid() {
   );
 }
 
+interface PlanBilgiViewProps {
+  initialContact?: PlanContactInfo;
+}
+
 export interface PlanContactInfo {
   phone: string;
   email: string;
   whatsapp: string;
-}
-
-interface PlanBilgiViewProps {
-  initialContact?: PlanContactInfo;
 }
 
 export function PlanBilgiView({ initialContact }: PlanBilgiViewProps = {}) {
@@ -131,15 +131,16 @@ export function PlanBilgiView({ initialContact }: PlanBilgiViewProps = {}) {
           <article className="rounded-2xl border border-subtle bg-default p-7 sm:p-10 shadow-sm">
             {/* Header */}
             <div className="mb-6">
-              <div className="mb-3 inline-flex items-center rounded-full border border-subtle bg-muted/40 px-3 py-0.5 text-xs font-medium text-subtle">
-                <span>{isYearly ? "Yıllık Plan (9.900 ₺ / yıl)" : "Aylık Plan (990 ₺ / ay)"}</span>
+              <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-subtle bg-muted/40 px-3 py-0.5 text-xs font-medium text-emphasis shadow-2xs">
+                <Sparkles className="size-3 text-emphasis" />
+                <span>Tek Fiyata Premium Erişim · {isYearly ? "Yıllık Ödeme" : "Aylık Ödeme"}</span>
               </div>
               <h1 className="font-bold font-cal text-3xl text-emphasis tracking-tight sm:text-4xl">
                 Hesap Aktivasyonu
               </h1>
               <p className="mt-3 text-base text-subtle leading-relaxed">
-                Hesabınızı hemen açıp profil linkinizi teslim edelim. Başlamak veya aklınıza takılanları
-                sormak için doğrudan bize yazabilirsiniz.
+                rOndevu'da paket ayrımı veya özellik kısıtlaması yoktur; tüm gelişmiş araçlara eksiksiz
+                erişirsiniz. Hesabınızı hemen açıp profil linkinizi teslim edelim.
               </p>
             </div>
 
@@ -147,7 +148,7 @@ export function PlanBilgiView({ initialContact }: PlanBilgiViewProps = {}) {
             <div className="mb-8 rounded-xl border border-subtle bg-muted/20 p-5">
               <div className="flex items-baseline justify-between border-subtle border-b pb-3 mb-3">
                 <span className="font-medium text-sm text-emphasis">
-                  {isYearly ? "Yıllık Plan Tercihi" : "Aylık Plan Tercihi"}
+                  {isYearly ? "Yıllık Tercih (2 Ay Hediye)" : "Aylık Tercih (Taahhütsüz)"}
                 </span>
                 <span className="font-semibold text-emphasis text-base">
                   {isYearly ? "9.900 ₺ / yıl" : "990 ₺ / ay"}
@@ -155,17 +156,27 @@ export function PlanBilgiView({ initialContact }: PlanBilgiViewProps = {}) {
               </div>
               <ul className="space-y-2 text-xs text-subtle">
                 <li className="flex items-center gap-2">
-                  <Check className="size-3.5 text-subtle shrink-0" />
-                  <span>Google Takvim ve Google Meet tam entegrasyonu</span>
+                  <Check className="size-3.5 text-emphasis shrink-0" />
+                  <span className="font-medium text-emphasis">
+                    Tüm özelliklere kısıtlamasız premium erişim
+                  </span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Check className="size-3.5 text-subtle shrink-0" />
-                  <span>Özel biyografi linki (rondevu.org/adiniz)</span>
+                  <span>Google Takvim, Apple Calendar ve Google Meet tam entegrasyonu</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <Check className="size-3.5 text-subtle shrink-0" />
+                  <span>SMS ve E-posta bildirimleri, OTP doğrulama koruması</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <Check className="size-3.5 text-subtle shrink-0" />
+                  <span>Özel alan adı bağlama (doktorunuz.com) ve biyografi linki</span>
                 </li>
                 {isYearly && (
                   <li className="flex items-center gap-2">
                     <Check className="size-3.5 text-subtle shrink-0" />
-                    <span>2 ay ücretsiz kullanım ve öncelikli destek</span>
+                    <span>2 ay ücretsiz kullanım ve 1 yıl sabit fiyat garantisi</span>
                   </li>
                 )}
               </ul>

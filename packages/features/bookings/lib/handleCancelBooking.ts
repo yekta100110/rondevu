@@ -13,6 +13,7 @@ import {
   type EventTypeBrandingData,
   getEventTypeService,
 } from "@calcom/features/eventtypes/di/EventTypeService.container";
+import tasker from "@calcom/features/tasker";
 import { UserRepository } from "@calcom/features/users/repositories/UserRepository";
 import type { GetSubscriberOptions } from "@calcom/features/webhooks/lib/getWebhooks";
 import getWebhooks from "@calcom/features/webhooks/lib/getWebhooks";
@@ -501,6 +502,7 @@ async function handler(input: CancelBookingInput, dependencies?: Dependencies) {
     for (const booking of updatedBookings) {
       webhookTriggerPromises.push(deleteWebhookScheduledTriggers({ booking }));
       webhookTriggerPromises.push(cancelNoShowTasksForBooking({ bookingUid: booking.uid }));
+      webhookTriggerPromises.push(tasker.cancelWithReference(booking.uid, "sendSms").catch(() => null));
     }
 
     await Promise.allSettled(webhookTriggerPromises).then((results) => {

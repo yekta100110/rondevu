@@ -40,6 +40,7 @@ import { getEventName, updateHostInEventName } from "@calcom/features/eventtypes
 import { getFullName } from "@calcom/features/form-builder/utils";
 import type { HashedLinkService } from "@calcom/features/hashedLink/lib/service/HashedLinkService";
 import { ProfileRepository } from "@calcom/features/profile/repositories/ProfileRepository";
+import tasker from "@calcom/features/tasker";
 import { handleAnalyticsEvents } from "@calcom/features/tasker/tasks/analytics/handleAnalyticsEvents";
 import type { UserRepository } from "@calcom/features/users/repositories/UserRepository";
 import { UsersRepository } from "@calcom/features/users/users.repository";
@@ -62,6 +63,7 @@ import { ErrorCode } from "@calcom/lib/errorCodes";
 import { ErrorWithCode } from "@calcom/lib/errors";
 import { extractBaseEmail } from "@calcom/lib/extract-base-email";
 import { HttpError } from "@calcom/lib/http-error";
+import isSmsCalEmail from "@calcom/lib/isSmsCalEmail";
 import { criticalLogger } from "@calcom/lib/logger.server";
 import { getPiiFreeCalendarEvent, getPiiFreeEventType } from "@calcom/lib/piiFreeData";
 import { safeStringify } from "@calcom/lib/safeStringify";
@@ -106,6 +108,7 @@ import { loadAndValidateUsers } from "../handleNewBooking/loadAndValidateUsers";
 import type { BookingType } from "../handleNewBooking/originalRescheduledBookingUtils";
 import { getOriginalRescheduledBooking } from "../handleNewBooking/originalRescheduledBookingUtils";
 import { scheduleNoShowTriggers } from "../handleNewBooking/scheduleNoShowTriggers";
+import { scheduleReminderSmsTrigger } from "../handleNewBooking/scheduleReminderSmsTrigger";
 import type { IEventTypePaymentCredentialType, Invitee, IsFixedAwareUser } from "../handleNewBooking/types";
 import { validateBookingTimeIsNotOutOfBounds } from "../handleNewBooking/validateBookingTimeIsNotOutOfBounds";
 import { validateEventLength } from "../handleNewBooking/validateEventLength";
@@ -617,12 +620,38 @@ async function handler(
     });
   }
 
-  if (eventType.requiresBookerEmailVerification && !rawBookingData.rescheduleUid) {
+  const isPhoneOnlyEvent = Boolean(
+    eventType.bookingFields &&
+      Array.isArray(eventType.bookingFields) &&
+      eventType.bookingFields.some(
+        (f) =>
+          typeof f === "object" &&
+          f &&
+          (f as { name?: string; hidden?: boolean; required?: boolean }).name === "attendeePhoneNumber" &&
+          !(f as { name?: string; hidden?: boolean; required?: boolean }).hidden &&
+          (f as { name?: string; hidden?: boolean; required?: boolean }).required
+      ) &&
+      eventType.bookingFields.some(
+        (f) =>
+          typeof f === "object" &&
+          f &&
+          (f as { name?: string; hidden?: boolean }).name === "email" &&
+          (f as { name?: string; hidden?: boolean }).hidden
+      )
+  );
+
+  const isPhoneBooking = Boolean(bookerPhoneNumber && (!bookerEmail || isSmsCalEmail(effectiveBookerEmail)));
+
+  const requiresVerification =
+    (eventType.requiresBookerEmailVerification || isPhoneOnlyEvent || isPhoneBooking) &&
+    !rawBookingData.rescheduleUid;
+
+  if (requiresVerification) {
     const verificationCode = reqBody.verificationCode;
     if (!verificationCode) {
       throw new HttpError({
         statusCode: 400,
-        message: "email_verification_required",
+        message: isPhoneBooking ? "phone_verification_required" : "email_verification_required",
       });
     }
 
@@ -2236,6 +2265,18 @@ async function handler(
     isRecurringBooking: !!input.bookingData.allRecurringDates,
     tracingLogger,
   });
+
+  if (originalRescheduledBooking) {
+    tasker.cancelWithReference(originalRescheduledBooking.uid, "sendSms").catch(() => null);
+  }
+
+  if (!isDryRun && booking && isConfirmedByDefault) {
+    await scheduleReminderSmsTrigger({
+      id: booking.id,
+      uid: booking.uid,
+      startTime: booking.startTime,
+    });
+  }
 
   const webhookLocation = metadata?.videoCallUrl || evt.location;
 

@@ -1,7 +1,7 @@
 {
     "name": "rOndevu",
     "short_name": "rOndevu",
-    "description": "Herkes için randevu altyapısı.",
+    "description": "Herkes için randevu sistemi.",
     "icons": [
         {
             "src": "/api/logo?type=android-chrome-192",

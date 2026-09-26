@@ -72,10 +72,13 @@ export const useVerifyEmail = ({
 
   const isVerificationCodeSending = sendEmailVerificationByCodeMutation.isPending;
 
+  const isSms = Boolean(email && isSmsCalEmail(email));
+  const isVerificationRequired = Boolean(
+    requiresBookerEmailVerification || isEmailVerificationRequired || isSms
+  );
+
   const renderConfirmNotVerifyEmailButtonCond =
-    isRescheduling ||
-    (!requiresBookerEmailVerification && !isEmailVerificationRequired) ||
-    (email && verifiedEmail && verifiedEmail === email);
+    isRescheduling || !isVerificationRequired || Boolean(email && verifiedEmail && verifiedEmail === email);
 
   return {
     handleVerifyEmail,

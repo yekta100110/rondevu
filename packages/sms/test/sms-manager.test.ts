@@ -2,7 +2,6 @@ import { checkSMSRateLimit } from "@calcom/lib/smsLockState";
 import type { CalendarEvent, Person } from "@calcom/types/Calendar";
 import type { TFunction } from "i18next";
 import { beforeEach, describe, expect, test, vi } from "vitest";
-
 import SMSManager from "../sms-manager";
 
 vi.mock("@calcom/lib/smsLockState");
@@ -96,7 +95,7 @@ describe("SMSManager", () => {
       expect(checkSMSRateLimit).not.toHaveBeenCalled();
     });
 
-    test("should not send SMS if email is not @sms.cal.com", async () => {
+    test("should send SMS if attendee has phone number regardless of email domain", async () => {
       const smsManager = new TestSMSManager(mockCalEvent);
       const attendeeWithRegularEmail: TestAttendee = {
         ...mockCalEvent.attendees[0],
@@ -108,10 +107,13 @@ describe("SMSManager", () => {
 
       await smsManager.sendSMSToAttendee(attendeeWithRegularEmail);
 
-      expect(checkSMSRateLimit).not.toHaveBeenCalled();
+      expect(checkSMSRateLimit).toHaveBeenCalledWith({
+        identifier: "handleSendingSMS:org-user-1",
+        rateLimitingType: "sms",
+      });
     });
 
-    test("should check SMS rate limit only when phone number and @sms.cal.com email are present", async () => {
+    test("should check SMS rate limit when phone number is present", async () => {
       const smsManager = new TestSMSManager(mockCalEvent);
 
       await smsManager.sendSMSToAttendee(mockCalEvent.attendees[0]);
@@ -132,12 +134,12 @@ describe("SMSManager", () => {
   });
 
   describe("sendSMSToAttendees", () => {
-    test("should check rate limit only for attendees with phone number and @sms.cal.com email", async () => {
+    test("should check rate limit for all attendees with phone numbers", async () => {
       const smsManager = new TestSMSManager(mockCalEvent);
 
       await smsManager.sendSMSToAttendees();
 
-      expect(checkSMSRateLimit).toHaveBeenCalledTimes(1);
+      expect(checkSMSRateLimit).toHaveBeenCalledTimes(2);
     });
 
     test("should not check rate limit if no attendee qualifies", async () => {
@@ -146,7 +148,7 @@ describe("SMSManager", () => {
         attendees: [
           {
             ...mockCalEvent.attendees[0],
-            email: "john@example.com",
+            phoneNumber: undefined,
           },
         ],
       });
@@ -160,11 +162,7 @@ describe("SMSManager", () => {
   describe("getFormattedTime and getFormattedDate", () => {
     test("should format time correctly", () => {
       const smsManager = new TestSMSManager(mockCalEvent);
-      const formattedTime = smsManager.getFormattedTime(
-        "America/New_York",
-        "en",
-        "2024-03-20T10:00:00Z"
-      );
+      const formattedTime = smsManager.getFormattedTime("America/New_York", "en", "2024-03-20T10:00:00Z");
 
       expect(formattedTime).toContain("2024");
       expect(formattedTime).toContain("6:00am");

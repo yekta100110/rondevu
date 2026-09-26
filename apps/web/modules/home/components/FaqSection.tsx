@@ -50,9 +50,9 @@ export function FaqSection() {
         "Hayır. Sistemde kesinlikle yalnız bırakılmıyorsunuz. Üyeliğinizin ardından çalışma saatlerinizi, özel tatil günlerinizi, takvim bağlantılarınızı ve varsa özel alan adınızı uzman ekibimizle birlikte birebir yapılandırıyoruz.",
     },
     {
-      question: "Randevu başına herhangi bir komisyon veya ek ücret kesiyor musunuz?",
+      question: "Farklı paketleriniz, özellik kısıtlamalı planlarınız veya gizli ek ücretler var mı?",
       answer:
-        "Hayır. Aldığınız randevu sayısı veya seans bedeli ne olursa olsun hiçbir komisyon kesilmez. Sadece seçtiğiniz paketin sabit aylık veya yıllık ücretini ödersiniz; tüm gelişmiş özelliklere ve altyapı araçlarımıza sınırsız erişirsiniz.",
+        "Hayır. rOndevu'da yapay özellik kısıtlamalı alt/üst paketler bulunmaz. 'Tek fiyata premium erişim' standarttır; yani tüm randevu ve etkinlik türleri, SMS ve e-posta bildirimleri, takvim senkronizasyonları, No-Show ve Out of Office korumaları dahil tüm gelişmiş özellikler her kullanıcımıza eksiksiz açıktır. Randevu başı komisyon veya gizli ücret yoktur; yalnızca seçtiğiniz periyodun sabit bedelini ödersiniz.",
     },
   ];
 

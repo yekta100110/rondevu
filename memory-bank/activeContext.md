@@ -121,6 +121,37 @@
     - Added Next.js route revalidation in `updatePlanContact.handler.ts` (`revalidatePath("/")`, `revalidatePath("/plan-bilgi")`).
     - Overhauled `packages/lib/planContactConfig.ts` with named Prisma client import (`import { prisma } from "@calcom/prisma"`), multi-path directory resolution for JSON backups (`apps/web`, root, cwd), resilient `Deployment.theme` parsing, and non-blocking database fallback.
     - Verified all 5 test scenarios in `test_plan_contact_sync.ts` and confirmed zero TypeScript errors on changed files.
+27. **Homepage Terminology, "Tek Fiyata Premium Erişim" & Mobile Booking Flow Overhaul** —
+    - **Hero Title Alignment**: Updated the main headline on `/` (`home-view.tsx`) from *"Herkes için randevu altyapısı"* to *"Herkes için randevu sistemi"*, and aligned `site.webmanifest`.
+    - **"Tek Fiyata Premium Erişim" Vurgusu**:
+      - Added a prominent badge and header above the 12 features in `home-view.tsx` clarifying that all advanced features are available without tiered plan locks or artificial barriers.
+      - Overhauled the pricing section header, badges, and card copies on `home-view.tsx` and `plan-bilgi-view.tsx`: emphasizes that there are no different tiered packages or access restrictions, both monthly (990 ₺) and yearly (9.900 ₺) options include 100% of all features without limits.
+      - Updated FAQ Question 8 in `FaqSection.tsx` to explicitly explain that single-price premium access is standard and zero commissions or hidden fees exist.
+    - **Mobile Booking Flow Responsive Overhaul (`HeroBookingMockup.tsx`)**:
+      - Resolved `doktorzeynep.com` URL slipping down: restructured browser top bar into a 2-tier responsive layout with a dedicated truncated URL pill and mac traffic dots that never break or wrap onto multiple lines.
+      - Transformed step switcher on mobile into a clean 3-column equal grid with concise responsive labels (`1. Tarih`, `2. Form`, `3. Onay`) that fit all screen widths (down to 320px) without overflow.
+      - Resolved cramped layout in Step 1: added dividers on mobile between service details and calendar, converted calendar days into uniform `h-8 sm:h-9` square touch targets, and placed available time slots side-by-side in a 3-column row on mobile (`grid grid-cols-3 gap-2 lg:grid-cols-1`) so users do not have to endlessly scroll.
+      - Refined Step 2 and Step 3 on mobile with comfortable input padding, responsive summary table layout, and wrapping calendar icons.
+28. **Phone Verification Gate & Provider-Agnostic SMS Lifecycle Overhaul** —
+    - **Twilio Architecture & Dokploy Compatibility**:
+      - Separated OTP phone verification (Twilio Verify v2 API with `TWILIO_VERIFY_SID`) from transactional notifications (Twilio Programmable Messaging API with `TWILIO_MESSAGING_SID` / `TWILIO_PHONE_NUMBER`).
+      - Supported both `TWILIO_SID || TWILIO_ACCOUNT_SID` and `TWILIO_TOKEN || TWILIO_AUTH_TOKEN` in `smsTransport.ts` and `phoneVerification.ts` for direct compatibility with Dokploy env vars.
+    - **Provider-Agnostic SMS Layer**:
+      - Built `packages/lib/sms/types.ts` defining `ISmsProvider`, `SMSPayload`, and `SMSResponse`.
+      - Refactored `packages/lib/smsTransport.ts` into a decoupled adapter pattern (`TwilioSmsProvider`, `NetgsmSmsProvider`, `WebhookSmsProvider`, `SimulationSmsProvider`) with factory instantiation.
+    - **Mandatory Phone Verification Gate**:
+      - Fixed `FormBuilder.tsx` to automatically set `requiresBookerEmailVerification: true` when switching confirmation to `"phone"`.
+      - Locked the verification toggle to checked in `EventAdvancedTab.tsx` when `isPhoneConfirmation` is active.
+      - Fixed `useVerifyEmail.ts` so `renderConfirmNotVerifyEmailButtonCond` does not bypass OTP for phone bookings until validated.
+      - Fixed `RegularBookingService.ts`: backend strictly enforces that `verificationCode` is provided and validated when `eventType.requiresBookerEmailVerification || isPhoneOnlyEvent || isPhoneBooking`.
+      - Integrated Twilio Verify API in `phoneVerification.ts` (`/Verifications` and `/VerificationCheck`) with TOTP fallback.
+    - **Complete End-to-End SMS Lifecycle**:
+      - Removed artificial constraint in `sms-manager.ts` (`isSmsCalEmail(attendee.email)`): transactional SMS (confirmation, rescheduling, cancellation) is now delivered to any attendee with a valid phone number.
+      - Implemented `EventReminderSMS` (`packages/sms/attendee/event-reminder-sms.ts`).
+      - Implemented Tasker `sendSms` handler in `packages/features/tasker/tasks/sendSms.ts` and registered it in `tasks/index.ts`.
+      - Created `scheduleReminderSmsTrigger.ts` in booking creation pipeline to enqueue reminders 24h or 2h prior to booking start time.
+      - Added cancellation cleanup in `handleCancelBooking.ts` via `tasker.cancelWithReference(booking.uid, "sendSms")`.
+      - Updated SMS unit tests in `packages/sms/test/sms-manager.test.ts` (all 8 tests passing).
 
 ## What Was NOT Changed (by design)
 - `@calcom/*` package namespace — internal implementation detail, changing would break 1000s of imports
@@ -130,7 +161,7 @@
 
 ## Next Steps
 - Push changes to remote repository (`origin/main`).
-- On server deployment: ensure PostgreSQL database is up, run `yarn prisma migrate deploy`, configure environment variables (`DATABASE_URL`, `NEXTAUTH_SECRET`, `NEXT_PUBLIC_WEBAPP_URL=https://rondevu.org`), and start service with `yarn start` or Docker.
+- On Dokploy server deployment: Ensure `TWILIO_SID`, `TWILIO_TOKEN`, `TWILIO_PHONE_NUMBER`, `TWILIO_MESSAGING_SID`, `TWILIO_VERIFY_SID` are active, and restart the containers.
 
 ## Brand Asset Details
 - Wordmark SVGs (`cal-logo-word*.svg`, `rondevu-logo-*.svg`): Scaled to fit original 84x26 box dimensions with 17px font, avoiding layout overflow.

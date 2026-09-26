@@ -40,45 +40,52 @@ export function HeroBookingMockup() {
     <div className="relative mx-auto mt-10 w-full max-w-4xl text-left">
       {/* Ana Arayüz Penceresi */}
       <div className="relative overflow-hidden rounded-2xl border border-subtle bg-default shadow-xl">
-        {/* Mockup Tarayıcı Üst Çubuğu */}
-        <div className="flex flex-wrap items-center justify-between border-subtle border-b bg-muted/30 px-4 py-3 sm:px-6">
-          <div className="flex items-center gap-2">
-            <span className="size-2.5 rounded-full bg-subtle/30" />
-            <span className="size-2.5 rounded-full bg-subtle/30" />
-            <span className="size-2.5 rounded-full bg-subtle/30" />
-            <span className="ml-2 font-mono text-[11px] text-muted-foreground sm:text-xs">
-              doktorzeynep.com / online-danismanlik
-            </span>
+        {/* Mockup Tarayıcı Üst Çubuğu (Responsive, adresi ve adımları ferah tutar) */}
+        <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between border-subtle border-b bg-muted/30 px-3.5 py-2.5 sm:px-6 sm:py-3">
+          {/* Adres Çubuğu & Trafik Işıkları */}
+          <div className="flex items-center gap-2 min-w-0">
+            <div className="flex items-center gap-1.5 shrink-0">
+              <span className="size-2 rounded-full bg-subtle/40 sm:size-2.5" />
+              <span className="size-2 rounded-full bg-subtle/40 sm:size-2.5" />
+              <span className="size-2 rounded-full bg-subtle/40 sm:size-2.5" />
+            </div>
+            <div className="flex items-center gap-1.5 rounded-md border border-subtle/60 bg-default/80 px-2.5 py-1 font-mono text-[11px] text-muted-foreground sm:text-xs shadow-2xs min-w-0">
+              <Globe className="size-3 shrink-0 text-subtle" />
+              <span className="truncate">doktorzeynep.com/online-danismanlik</span>
+            </div>
           </div>
 
-          {/* Adım Değiştirici */}
-          <div className="flex items-center gap-1 rounded-lg border border-subtle bg-default p-0.5 text-xs">
+          {/* Adım Değiştirici (Mobilde eşit 3 sütun, taşmaz / aşağı kaydırmaz) */}
+          <div className="grid grid-cols-3 sm:flex items-center gap-1 rounded-lg border border-subtle bg-default p-0.5 text-xs w-full sm:w-auto">
             <button
               type="button"
               onClick={() => setActiveStep(1)}
               className={classNames(
-                "rounded-md px-2.5 py-1 font-medium transition",
+                "rounded-md px-2 py-1 font-medium transition text-center",
                 activeStep === 1 ? "bg-emphasis text-default shadow-sm" : "text-subtle hover:text-emphasis"
               )}>
-              1. Tarih & Saat
+              <span className="sm:hidden">1. Tarih</span>
+              <span className="hidden sm:inline">1. Tarih & Saat</span>
             </button>
             <button
               type="button"
               onClick={() => setActiveStep(2)}
               className={classNames(
-                "rounded-md px-2.5 py-1 font-medium transition",
+                "rounded-md px-2 py-1 font-medium transition text-center",
                 activeStep === 2 ? "bg-emphasis text-default shadow-sm" : "text-subtle hover:text-emphasis"
               )}>
-              2. Form & Doğrulama
+              <span className="sm:hidden">2. Form</span>
+              <span className="hidden sm:inline">2. Form & Doğrulama</span>
             </button>
             <button
               type="button"
               onClick={() => setActiveStep(3)}
               className={classNames(
-                "rounded-md px-2.5 py-1 font-medium transition",
+                "rounded-md px-2 py-1 font-medium transition text-center",
                 activeStep === 3 ? "bg-emphasis text-default shadow-sm" : "text-subtle hover:text-emphasis"
               )}>
-              3. Onay Kartı
+              <span className="sm:hidden">3. Onay</span>
+              <span className="hidden sm:inline">3. Onay Kartı</span>
             </button>
           </div>
         </div>
@@ -96,7 +103,7 @@ export function HeroBookingMockup() {
                 transition={{ duration: 0.15 }}
                 className="grid grid-cols-1 gap-6 lg:grid-cols-12">
                 {/* Sol Kolon: Profil & Hizmet Detayları (Screenshot 4 sol kolon) */}
-                <div className="border-subtle lg:border-r lg:pr-6 lg:col-span-4 flex flex-col justify-between">
+                <div className="border-subtle border-b pb-4 lg:border-b-0 lg:border-r lg:pr-6 lg:pb-0 lg:col-span-4 flex flex-col justify-between">
                   <div>
                     <div className="flex items-center gap-3 mb-2">
                       <div className="flex size-9 items-center justify-center rounded-full border border-subtle bg-muted font-cal font-semibold text-emphasis text-xs shadow-xs">
@@ -111,7 +118,7 @@ export function HeroBookingMockup() {
                       takviminize ve e-posta adresinize otomatik iletilir.
                     </p>
 
-                    <div className="mt-5 space-y-2 text-xs text-subtle">
+                    <div className="mt-4 sm:mt-5 space-y-2 text-xs text-subtle">
                       <div className="flex items-center gap-2">
                         <Clock className="size-4 text-subtle" />
                         <span>45dakika</span>
@@ -129,9 +136,9 @@ export function HeroBookingMockup() {
                 </div>
 
                 {/* Orta Kolon: Takvim Ayı (Screenshot 4 orta kolon) */}
-                <div className="lg:col-span-5 flex flex-col justify-between">
+                <div className="lg:col-span-5 flex flex-col justify-between py-1 lg:py-0">
                   <div>
-                    <div className="mb-4 flex items-center justify-between">
+                    <div className="mb-3 sm:mb-4 flex items-center justify-between">
                       <span className="font-bold text-emphasis text-sm">Eylül 2026</span>
                       <div className="flex items-center gap-1">
                         <button
@@ -147,7 +154,7 @@ export function HeroBookingMockup() {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-7 gap-1 text-center font-medium text-[11px] text-subtle mb-2">
+                    <div className="grid grid-cols-7 gap-1 text-center font-medium text-[10px] sm:text-[11px] text-subtle mb-1 sm:mb-2">
                       <span>PAZ</span>
                       <span>PZT</span>
                       <span>SAL</span>
@@ -158,49 +165,99 @@ export function HeroBookingMockup() {
                     </div>
 
                     <div className="grid grid-cols-7 gap-1 text-center text-xs">
-                      <span className="p-2 text-subtle/20" />
-                      <span className="p-2 text-subtle/20" />
-                      <span className="p-2 text-subtle/50">8</span>
-                      <span className="p-2 text-subtle/50">9</span>
-                      <span className="p-2 text-subtle/50">10</span>
-                      <span className="p-2 text-subtle/50">11</span>
-                      <span className="p-2 text-subtle/50">12</span>
+                      <span className="h-8 sm:h-9" />
+                      <span className="h-8 sm:h-9" />
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg text-subtle/50 text-xs">
+                        8
+                      </span>
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg text-subtle/50 text-xs">
+                        9
+                      </span>
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg text-subtle/50 text-xs">
+                        10
+                      </span>
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg text-subtle/50 text-xs">
+                        11
+                      </span>
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg text-subtle/50 text-xs">
+                        12
+                      </span>
 
-                      <span className="p-2 text-subtle/50">13</span>
-                      <span className="p-2 text-subtle/50">14</span>
-                      <span className="p-2 text-subtle/50">15</span>
-                      <span className="p-2 text-subtle/50">16</span>
-                      <span className="p-2 text-subtle/50">17</span>
-                      <span className="p-2 text-subtle/50">18</span>
-                      <span className="p-2 text-subtle/50">19</span>
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg text-subtle/50 text-xs">
+                        13
+                      </span>
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg text-subtle/50 text-xs">
+                        14
+                      </span>
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg text-subtle/50 text-xs">
+                        15
+                      </span>
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg text-subtle/50 text-xs">
+                        16
+                      </span>
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg text-subtle/50 text-xs">
+                        17
+                      </span>
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg text-subtle/50 text-xs">
+                        18
+                      </span>
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg text-subtle/50 text-xs">
+                        19
+                      </span>
 
-                      <span className="p-2 text-subtle/50">20</span>
-                      <span className="p-2 text-subtle/50">21</span>
-                      <span className="p-2 text-subtle/50">22</span>
-                      <span className="p-2 text-subtle/50">23</span>
-                      <span className="p-2 text-subtle/50">24</span>
-                      {/* Seçili 25. Gün (Screenshot 4'teki beyaz yuvarlak ve nokta stili) */}
-                      <span className="relative flex items-center justify-center rounded-lg bg-emphasis text-default font-bold shadow-sm p-2">
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg text-subtle/50 text-xs">
+                        20
+                      </span>
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg text-subtle/50 text-xs">
+                        21
+                      </span>
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg text-subtle/50 text-xs">
+                        22
+                      </span>
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg text-subtle/50 text-xs">
+                        23
+                      </span>
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg text-subtle/50 text-xs">
+                        24
+                      </span>
+                      {/* Seçili 25. Gün (Screenshot 4'teki stil) */}
+                      <span className="relative h-8 sm:h-9 flex items-center justify-center rounded-lg bg-emphasis text-default font-bold shadow-sm text-xs">
                         25
                         <span className="absolute bottom-1 size-1 rounded-full bg-emerald-400" />
                       </span>
-                      <span className="p-2 text-subtle/50">26</span>
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg text-subtle/50 text-xs">
+                        26
+                      </span>
 
-                      <span className="p-2 text-subtle/50">27</span>
-                      <span className="p-2 rounded bg-muted/30 font-medium text-emphasis">28</span>
-                      <span className="p-2 rounded bg-muted/30 font-medium text-emphasis">29</span>
-                      <span className="p-2 rounded bg-muted/30 font-medium text-emphasis">30</span>
-                      <span className="p-2 rounded bg-muted/30 font-medium text-emphasis">1</span>
-                      <span className="p-2 rounded bg-muted/30 font-medium text-emphasis">2</span>
-                      <span className="p-2 text-subtle/50">3</span>
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg text-subtle/50 text-xs">
+                        27
+                      </span>
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg bg-muted/30 font-medium text-emphasis text-xs">
+                        28
+                      </span>
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg bg-muted/30 font-medium text-emphasis text-xs">
+                        29
+                      </span>
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg bg-muted/30 font-medium text-emphasis text-xs">
+                        30
+                      </span>
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg bg-muted/30 font-medium text-emphasis text-xs">
+                        1
+                      </span>
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg bg-muted/30 font-medium text-emphasis text-xs">
+                        2
+                      </span>
+                      <span className="h-8 sm:h-9 flex items-center justify-center rounded-lg text-subtle/50 text-xs">
+                        3
+                      </span>
                     </div>
                   </div>
                 </div>
 
-                {/* Sağ Kolon: Müsait Saat Slotları (Screenshot 4 sağ kolon) */}
-                <div className="border-subtle lg:border-l lg:pl-6 lg:col-span-3 flex flex-col justify-start">
-                  <div className="mb-3 flex items-center justify-between">
-                    <span className="font-semibold text-emphasis text-xs">Cum 25</span>
+                {/* Sağ Kolon: Müsait Saat Slotları (Mobilde yatay 3'lü sıra, ferah ve kullanışlı) */}
+                <div className="border-subtle border-t pt-4 mt-1 lg:border-t-0 lg:border-l lg:pl-6 lg:pt-0 lg:mt-0 lg:col-span-3 flex flex-col justify-start">
+                  <div className="mb-2.5 flex items-center justify-between">
+                    <span className="font-semibold text-emphasis text-xs">Cum 25 · Saat Seçimi</span>
                     <div className="inline-flex rounded-md border border-subtle bg-muted/30 p-0.5 text-[10px]">
                       <span className="px-1.5 py-0.5 text-subtle">12 sa</span>
                       <span className="rounded bg-default px-1.5 py-0.5 font-medium text-emphasis shadow-xs">
@@ -209,19 +266,19 @@ export function HeroBookingMockup() {
                     </div>
                   </div>
 
-                  <div className="space-y-2">
+                  <div className="grid grid-cols-3 gap-2 lg:grid-cols-1 lg:space-y-2">
                     {availableSlots.map((slot) => (
                       <button
                         key={slot.time}
                         type="button"
                         onClick={() => handleSlotSelect(slot.time)}
                         className={classNames(
-                          "flex w-full items-center gap-2 rounded-lg border px-4 py-2.5 text-xs font-semibold transition",
+                          "flex items-center justify-center lg:justify-start gap-1.5 sm:gap-2 rounded-lg border px-2 sm:px-4 py-2 sm:py-2.5 text-xs font-semibold transition",
                           selectedSlot === slot.time
                             ? "border-emphasis bg-emphasis text-default shadow-sm"
                             : "border-subtle bg-default hover:border-emphasis/50 text-emphasis"
                         )}>
-                        <span className="size-1.5 rounded-full bg-emerald-500" />
+                        <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
                         <span>{slot.time}</span>
                       </button>
                     ))}
@@ -240,7 +297,7 @@ export function HeroBookingMockup() {
                 transition={{ duration: 0.15 }}
                 className="grid grid-cols-1 gap-6 lg:grid-cols-12">
                 {/* Sol Kolon: Seçilen Hizmet Özeti (Screenshot 5 sol kolon) */}
-                <div className="border-subtle lg:border-r lg:pr-6 lg:col-span-5 flex flex-col justify-between">
+                <div className="border-subtle border-b pb-4 lg:border-b-0 lg:border-r lg:pr-6 lg:pb-0 lg:col-span-5 flex flex-col justify-between">
                   <div>
                     <div className="flex items-center gap-2 mb-2">
                       <div className="flex size-7 items-center justify-center rounded-full border border-subtle bg-muted font-cal font-semibold text-emphasis text-[10px]">
@@ -286,7 +343,7 @@ export function HeroBookingMockup() {
                 </div>
 
                 {/* Sağ Kolon: Gerçek Form Alanları & E-postayı Doğrula Butonu (Screenshot 5 sağ kolon) */}
-                <div className="lg:col-span-7 flex flex-col justify-between">
+                <div className="lg:col-span-7 flex flex-col justify-between pt-1 lg:pt-0">
                   <div className="space-y-3">
                     <div>
                       <label className="block text-xs font-medium text-emphasis mb-1">Adınız *</label>
@@ -294,7 +351,7 @@ export function HeroBookingMockup() {
                         type="text"
                         readOnly
                         value="Ahmet Yılmaz"
-                        className="w-full rounded-lg border border-subtle bg-muted/20 px-3 py-2 text-xs text-emphasis outline-none"
+                        className="w-full rounded-lg border border-subtle bg-muted/20 px-3.5 py-2.5 text-xs text-emphasis outline-none"
                       />
                     </div>
 
@@ -304,7 +361,7 @@ export function HeroBookingMockup() {
                         type="email"
                         readOnly
                         value="ahmet.yilmaz@ornek.com"
-                        className="w-full rounded-lg border border-subtle bg-muted/20 px-3 py-2 text-xs text-emphasis outline-none"
+                        className="w-full rounded-lg border border-subtle bg-muted/20 px-3.5 py-2.5 text-xs text-emphasis outline-none"
                       />
                     </div>
 
@@ -314,7 +371,7 @@ export function HeroBookingMockup() {
                         readOnly
                         rows={2}
                         value="Lütfen toplantımıza hazırlanmamıza yardımcı olacak her şeyi paylaşın."
-                        className="w-full resize-none rounded-lg border border-subtle bg-muted/20 px-3 py-2 text-xs text-emphasis outline-none"
+                        className="w-full resize-none rounded-lg border border-subtle bg-muted/20 px-3.5 py-2.5 text-xs text-emphasis outline-none"
                       />
                     </div>
                   </div>
@@ -379,25 +436,25 @@ export function HeroBookingMockup() {
                   Herkese detayları içeren takvim davetiyesini e-posta ile gönderdik.
                 </p>
 
-                {/* Özet Tablosu */}
+                {/* Özet Tablosu (Mobilde etiket üstte değer altta ferah görünüm) */}
                 <div className="mt-5 rounded-xl border border-subtle bg-default p-4 text-left text-xs shadow-xs divide-y divide-subtle">
-                  <div className="grid grid-cols-3 gap-2 py-2.5">
+                  <div className="flex flex-col sm:grid sm:grid-cols-3 gap-1 sm:gap-2 py-2.5">
                     <span className="font-medium text-subtle">Ne</span>
-                    <span className="col-span-2 font-medium text-emphasis">
+                    <span className="sm:col-span-2 font-medium text-emphasis">
                       Dr. Zeynep Kaya ve Ahmet Yılmaz arasındaki Online Bireysel Görüşme
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-2 py-2.5">
+                  <div className="flex flex-col sm:grid sm:grid-cols-3 gap-1 sm:gap-2 py-2.5">
                     <span className="font-medium text-subtle">Ne zaman</span>
-                    <span className="col-span-2 font-medium text-emphasis">
+                    <span className="sm:col-span-2 font-medium text-emphasis">
                       25 Eylül 2026 Cuma 18:45 - 19:30 (GMT+03:00)
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-2 py-2.5">
+                  <div className="flex flex-col sm:grid sm:grid-cols-3 gap-1 sm:gap-2 py-2.5">
                     <span className="font-medium text-subtle">Kim</span>
-                    <div className="col-span-2 space-y-1">
+                    <div className="sm:col-span-2 space-y-1">
                       <div className="flex items-center gap-1.5">
                         <span className="font-medium text-emphasis">Dr. Zeynep Kaya</span>
                         <span className="rounded border border-subtle bg-muted/40 px-1.5 py-0.5 text-[10px] font-medium text-subtle">
@@ -410,9 +467,9 @@ export function HeroBookingMockup() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-2 py-2.5">
+                  <div className="flex flex-col sm:grid sm:grid-cols-3 gap-1 sm:gap-2 py-2.5">
                     <span className="font-medium text-subtle">Nerede</span>
-                    <div className="col-span-2 flex items-center gap-1.5 text-emphasis font-medium">
+                    <div className="sm:col-span-2 flex items-center gap-1.5 text-emphasis font-medium">
                       <span>Google Meet</span>
                       <ExternalLink className="size-3 text-subtle" />
                     </div>
@@ -432,7 +489,7 @@ export function HeroBookingMockup() {
                 </div>
 
                 {/* Orijinal Takvime Ekle 4 İkon Buton (Google, Outlook, Office 365, ICS) */}
-                <div className="mt-5 flex items-center justify-center gap-3 text-xs text-emphasis">
+                <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 text-xs text-emphasis">
                   <span className="font-medium text-subtle">Takvime ekle</span>
                   <div className="flex items-center gap-1.5">
                     {/* Google Calendar */}
