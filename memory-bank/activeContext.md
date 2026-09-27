@@ -1,12 +1,21 @@
 # Active Context — rOndevu
 
 ## Current Focus
-- Lightweight Enhancement: Historical No-Show Counter Badge in Bookings View
-- Added batch past no-show calculation matching by email, phone, and synthetic SMS email
-- Displayed "Katılmadı" (or "Katılmadı (count)") badge in booking list cards and details drawer
-- 10 unit tests passing, tRPC compilation passed, Biome check passed
+- Root Cause Investigation & Fix: October & Future Months Showing "No Availability" ("Ekim ayında müsaitlik yok")
+- Resolved external calendar authentication failure (`invalid_grant`) triggering total calendar slot wipeout
+- Validated via unit tests, tRPC server type check, and Biome lint check
 
 ## Recent Changes (this session)
+-3. **Fix: October Availability Outage & External Calendar Failure Handling** —
+   - **Root Cause Identified:** User 1 had an active Google Calendar integration (`SelectedCalendar` id 1, `Credential` id 2 for `rondevu.org@gmail.com`) whose OAuth refresh token was revoked (`invalid_grant`).
+   - In `packages/app-store/_utils/oauth/OAuthManager.ts`, failed refresh generates `{ myFetchError: "invalid_grant" }`.
+   - In `packages/app-store/googlecalendar/lib/CalendarAuth.ts`, `isTokenObjectUnusable` checked only `responseBody.error === "invalid_grant"`, failing to inspect `responseBody.myFetchError`. Consequently, the dead credential was never invalidated in the DB.
+   - When fetching slots, `getBusyCalendarTimes` returned an error placeholder spanning the whole month.
+   - In `packages/features/availability/lib/getUserAvailability.ts`, the `getBusyTimes` catch block threw away all user availability date ranges (`dateRanges: []`), completely shutting down booking across all future months.
+   - **Fix 1 (`CalendarAuth.ts`):** Added inspection of `myFetchError` alongside `error` for `"invalid_grant"` so unusable tokens trigger credential invalidation.
+   - **Fix 2 (`getUserAvailability.ts`):** In the `getBusyTimes` catch block, set `busyTimes = []` instead of returning `dateRanges: []`, preserving the organizer's working hours if an external calendar fails. Explicitly typed `busyTimes`.
+   - **Fix 3 (`slots/util.ts`):** Set default `_silentCalendarFailures: true` in public slot retrieval so transient external calendar outages do not block visitors from booking.
+   - **Validation:** All 29 unit tests in `packages/app-store/googlecalendar` passed, 15 tests in `packages/features/busyTimes` passed, `apps/web/modules/bookings/components/Booker.test.tsx` passed, tRPC server type check passed with exit 0, and Biome check passed.
 -2. **Historical No-Show Counter Badge in Bookings View** —
    - **Backend Batch Calculation:** Created `packages/features/bookings/lib/enrichHistoricalNoShow.ts` to batch query past no-shows (`Attendee.noShow === true`) under the organizer (`userId`) matching contact credentials (email, phone, synthetic SMS email `<digits>@sms.rondevu.org`, and canonical 10-digit Turkish phone formats). Prevents N+1 queries.
    - **tRPC Integration:** Updated `packages/trpc/server/routers/viewer/bookings/get.handler.ts` to enrich booking attendees with `historicalNoShowCount: number`.

@@ -6,6 +6,7 @@ import {
   getBusyTimesFromLimits,
   getBusyTimesFromTeamLimits,
 } from "@calcom/features/busyTimes/lib/getBusyTimesFromLimits";
+import type { BusyTimesService } from "@calcom/features/busyTimes/services/getBusyTimes";
 import { getBusyTimesService } from "@calcom/features/di/containers/BusyTimes";
 import type { EventTypeRepository } from "@calcom/features/eventtypes/repositories/eventTypeRepository";
 import type { PrismaHolidayRepository } from "@calcom/features/holidays/repositories/PrismaHolidayRepository";
@@ -581,7 +582,7 @@ export class UserAvailabilityService {
       );
     }
 
-    let busyTimes = [];
+    let busyTimes: Awaited<ReturnType<BusyTimesService["getBusyTimes"]>> = [];
     try {
       const busyTimesService = getBusyTimesService();
       busyTimes = await busyTimesService.getBusyTimes({
@@ -605,16 +606,7 @@ export class UserAvailabilityService {
       });
     } catch (error) {
       log.error(`Error fetching busy times for user ${username}:`, error);
-      return {
-        busy: [],
-        timeZone: finalTimezone,
-        dateRanges: [],
-        oooExcludedDateRanges: [],
-        workingHours: [],
-        dateOverrides: [],
-        currentSeats: [],
-        datesOutOfOffice: undefined,
-      };
+      busyTimes = [];
     }
 
     const detailedBusyTimesWithSource: EventBusyDetails[] = [

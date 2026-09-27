@@ -142,3 +142,10 @@
     - Restored `cancellationNoShowFeeNotAcknowledged = !props.isHost && cancellationNoShowFeeWarning && !acknowledgeCancellationNoShowFee` definition in `apps/web/components/booking/CancelBooking.tsx`.
     - Resolved runtime crash on rendering booking cancellation view.
     - Verified via AST diagnostics (0 errors), Biome check (0 errors), and tRPC server type check (exit code 0).
+32. Fix October & Future Months Availability Outage (External Calendar Failure Resilience):
+    - **Root Cause**: An expired/revoked Google Calendar OAuth credential for the organizer failed with `invalid_grant`. Due to `responseBody.myFetchError` not being inspected in `CalendarAuth.ts`, the credential was never marked `invalid: true`. In turn, `getBusyTimes` threw an error and `getUserAvailability`'s catch block cleared all user working hours (`dateRanges: []`), causing October and all subsequent months to show "Ekim ayında müsaitlik yok".
+    - **Remediation**:
+      - Updated `CalendarAuth.ts` to inspect `myFetchError` for `"invalid_grant"`, allowing automatic invalidation of expired credentials.
+      - Updated `getUserAvailability.ts` to set `busyTimes = []` on external calendar fetch failure, preserving user availability date ranges.
+      - Set `_silentCalendarFailures: true` by default in `slots/util.ts` for public slot queries.
+    - **Validation**: 29 unit tests passed in Google Calendar app suite, 15 tests passed in busyTimes suite, `Booker.test.tsx` passed, tRPC server type check compiled cleanly with exit 0, and Biome lint check clean.
