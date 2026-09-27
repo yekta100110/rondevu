@@ -1,6 +1,6 @@
 import { ScheduleRepository } from "@calcom/features/schedules/repositories/ScheduleRepository";
+import { sanitizeTimezone } from "@calcom/lib/dayjs";
 import { prisma } from "@calcom/prisma";
-
 import type { TrpcSessionUser } from "../../../types";
 
 type ListOptions = {
@@ -58,6 +58,7 @@ export const listHandler = async ({ ctx }: ListOptions) => {
   return {
     schedules: schedules.map((schedule) => ({
       ...schedule,
+      timeZone: sanitizeTimezone(schedule.timeZone),
       isDefault: schedule.id === defaultScheduleId,
     })),
   };

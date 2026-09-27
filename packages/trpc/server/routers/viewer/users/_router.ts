@@ -1,4 +1,5 @@
 import { WEBAPP_URL } from "@calcom/lib/constants";
+import { sanitizeTimezone } from "@calcom/lib/dayjs";
 import { CreationSource, RedirectType } from "@calcom/prisma/enums";
 import { UserSchema } from "@calcom/prisma/zod/modelSchema/UserSchema";
 import { authedAdminProcedure } from "@calcom/trpc/server/procedures/authedProcedure";
@@ -62,13 +63,56 @@ export const userAdminRouter = router({
   }),
   add: authedAdminProcedure.input(userBodySchema).mutation(async ({ ctx, input }) => {
     const { prisma } = ctx;
-    const user = await prisma.user.create({ data: { ...input, creationSource: CreationSource.WEBAPP } });
+    const safeTimezone = sanitizeTimezone(input.timeZone);
+    const user = await prisma.user.create({
+      data: {
+        ...input,
+        timeZone: safeTimezone,
+        creationSource: CreationSource.WEBAPP,
+        schedules: {
+          create: {
+            name: "Çalışma saatleri",
+            timeZone: safeTimezone,
+            availability: {
+              createMany: {
+                data: [
+                  {
+                    days: [1, 2, 3, 4, 5],
+                    startTime: new Date("1970-01-01T09:00:00Z"),
+                    endTime: new Date("1970-01-01T17:00:00Z"),
+                  },
+                ],
+              },
+            },
+          },
+        },
+      },
+      include: {
+        schedules: {
+          select: {
+            id: true,
+          },
+          take: 1,
+        },
+      },
+    });
+
+    if (user.schedules?.[0]?.id) {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { defaultScheduleId: user.schedules[0].id },
+      });
+    }
+
     return { user, message: `User with id: ${user.id} added successfully` };
   }),
   update: authedAdminProcedureWithRequestedUser
     .input(userBodySchema.partial())
     .mutation(async ({ ctx, input }) => {
       const { prisma, requestedUser } = ctx;
+      if (input.timeZone !== undefined) {
+        input.timeZone = sanitizeTimezone(input.timeZone);
+      }
 
       const user = await prisma.$transaction(async (tx) => {
         const userInternal = await tx.user.update({ where: { id: requestedUser.id }, data: input });

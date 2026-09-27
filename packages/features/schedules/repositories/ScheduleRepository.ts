@@ -1,3 +1,4 @@
+import { sanitizeTimezone } from "@calcom/lib/dayjs";
 import { hasReadPermissionsForUserId } from "@calcom/lib/hasEditPermissionForUser";
 import {
   transformAvailabilityForAtom,
@@ -120,7 +121,7 @@ export class ScheduleRepository {
       throw new Error("UNAUTHORIZED");
     }
 
-    const timeZone = schedule.timeZone || userTimeZone;
+    const timeZone = sanitizeTimezone(schedule.timeZone || userTimeZone);
 
     const schedulesCount = await this.prismaClient.schedule.count({
       where: {
@@ -186,7 +187,7 @@ export class ScheduleRepository {
         throw new Error("UNAUTHORIZED");
       }
 
-      const timeZone = schedule.timeZone || userTimeZone;
+      const timeZone = sanitizeTimezone(schedule.timeZone || userTimeZone);
       // disabling utc casting while fetching WorkingHours
       return {
         id: schedule.id,

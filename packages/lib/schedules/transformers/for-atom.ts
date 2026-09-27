@@ -1,6 +1,6 @@
 import dayjs from "@calcom/dayjs";
 import { getWorkingHours } from "@calcom/lib/availability";
-import { yyyymmdd } from "@calcom/lib/dayjs";
+import { sanitizeTimezone, yyyymmdd } from "@calcom/lib/dayjs";
 import type { Availability } from "@calcom/prisma/client";
 import type { Schedule, TimeRange } from "@calcom/types/schedule";
 
@@ -12,7 +12,7 @@ export function transformWorkingHoursForAtom(schedule: {
   availability: ScheduleAvailability;
 }) {
   return getWorkingHours(
-    { timeZone: schedule.timeZone || undefined, utcOffset: 0 },
+    { timeZone: sanitizeTimezone(schedule.timeZone), utcOffset: 0 },
     schedule.availability || []
   );
 }
@@ -30,10 +30,11 @@ export function transformDateOverridesForAtom(
   schedule: { availability: ScheduleOverride },
   timeZone: string
 ) {
+  const safeTimeZone = sanitizeTimezone(timeZone);
   const acc = schedule.availability.reduce(
     (acc, override) => {
       // only if future date override
-      const currentUtcOffset = dayjs().tz(timeZone).utcOffset();
+      const currentUtcOffset = dayjs().tz(safeTimeZone).utcOffset();
       const currentTimeInTz = dayjs().utc().add(currentUtcOffset, "minute");
 
       if (!override.date || dayjs(override.date).isBefore(currentTimeInTz, "day")) {

@@ -15,7 +15,7 @@ import type { IRedisService } from "@calcom/features/redis/IRedisService";
 import type { DateOverride, WorkingHours } from "@calcom/features/schedules/lib/date-ranges";
 import { buildDateRanges, subtract } from "@calcom/features/schedules/lib/date-ranges";
 import { getWorkingHours } from "@calcom/lib/availability";
-import { stringToDayjsZod } from "@calcom/lib/dayjs";
+import { sanitizeTimezone, stringToDayjsZod } from "@calcom/lib/dayjs";
 import { ErrorCode } from "@calcom/lib/errorCodes";
 import { getHolidayService } from "@calcom/lib/holidays";
 import { getHolidayEmoji } from "@calcom/lib/holidays/getHolidayEmoji";
@@ -430,9 +430,7 @@ export class UserAvailabilityService {
       }
     }
 
-    if (!finalTimezone) {
-      finalTimezone = schedule.timeZone;
-    }
+    finalTimezone = sanitizeTimezone(finalTimezone || schedule.timeZone || user.timeZone);
 
     const workingHours = getWorkingHours({ timeZone: finalTimezone }, availability);
 

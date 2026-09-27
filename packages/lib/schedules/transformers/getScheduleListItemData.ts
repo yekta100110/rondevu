@@ -1,8 +1,10 @@
+import { sanitizeTimezone } from "@calcom/lib/dayjs";
+
 export type Schedule = {
   isDefault: boolean;
   id: number;
   name: string;
-  timeZone: string | null;
+  timeZone?: string | null;
   availability: {
     id: number;
     userId: number | null;
@@ -17,6 +19,7 @@ export type Schedule = {
 
 export const getScheduleListItemData = (schedule: Schedule) => ({
   ...schedule,
+  timeZone: sanitizeTimezone(schedule.timeZone),
   availability: schedule.availability.map((avail) => ({
     ...avail,
     startTime: new Date(avail.startTime),

@@ -50,7 +50,7 @@ import { withSelectedCalendars } from "@calcom/features/users/repositories/UserR
 import { filterBlockedHosts } from "@calcom/features/watchlist/operations/filter-blocked-hosts.controller";
 import { shouldIgnoreContactOwner } from "@calcom/lib/bookings/routing/utils";
 import { RESERVED_SUBDOMAINS } from "@calcom/lib/constants";
-import { getUTCOffsetByTimezone } from "@calcom/lib/dayjs";
+import { getUTCOffsetByTimezone, sanitizeTimezone } from "@calcom/lib/dayjs";
 import { descendingLimitKeys, intervalLimitKeyToUnit } from "@calcom/lib/intervalLimits/intervalLimit";
 import type { IntervalLimit } from "@calcom/lib/intervalLimits/intervalLimitSchema";
 import { parseBookingLimit } from "@calcom/lib/intervalLimits/isBookingLimits";
@@ -284,18 +284,19 @@ export class AvailableSlotsService {
     endTime: string;
     timeZone: string | undefined;
   }): T {
-    if (!timeZone) {
+    if (!timeZone || timeZone.trim() === "") {
       return slotsMappedToDate;
     }
-    const inputStartTime = dayjs(startTime).tz(timeZone);
-    const inputEndTime = dayjs(endTime).tz(timeZone);
+    const safeTz = sanitizeTimezone(timeZone);
+    const inputStartTime = dayjs(startTime).tz(safeTz);
+    const inputEndTime = dayjs(endTime).tz(safeTz);
 
     // fr-CA uses YYYY-MM-DD format
     const formatter = new Intl.DateTimeFormat("fr-CA", {
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
-      timeZone: timeZone,
+      timeZone: safeTz,
     });
 
     const allowedDates = new Set<string>();
@@ -673,10 +674,11 @@ export class AvailableSlotsService {
   );
 
   private getStartTime(startTimeInput: string, timeZone?: string, minimumBookingNotice?: number) {
+    const safeTz = sanitizeTimezone(timeZone);
     const startTimeMin = dayjs.utc().add(minimumBookingNotice || 1, "minutes");
-    const startTime = timeZone === "Etc/GMT" ? dayjs.utc(startTimeInput) : dayjs(startTimeInput).tz(timeZone);
+    const startTime = safeTz === "Etc/GMT" ? dayjs.utc(startTimeInput) : dayjs(startTimeInput).tz(safeTz);
 
-    return startTimeMin.isAfter(startTime) ? startTimeMin.tz(timeZone) : startTime;
+    return startTimeMin.isAfter(startTime) ? startTimeMin.tz(safeTz) : startTime;
   }
   private async calculateHostsAndAvailabilities({
     input,
@@ -898,6 +900,7 @@ export class AvailableSlotsService {
   }
 
   async _getAvailableSlots({ input, ctx }: GetScheduleOptions): Promise<IGetAvailableSlots> {
+    input.timeZone = sanitizeTimezone(input.timeZone);
     const {
       _enableTroubleshooter: enableTroubleshooter = false,
       _bypassCalendarBusyTimes: bypassBusyCalendarTimes = false,

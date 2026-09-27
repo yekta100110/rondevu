@@ -1,6 +1,7 @@
 import type { Dayjs } from "@calcom/dayjs";
 import dayjs from "@calcom/dayjs";
 import type { IOutOfOfficeData } from "@calcom/features/availability/lib/getUserAvailability";
+import { sanitizeTimezone } from "@calcom/lib/dayjs";
 import type { Availability } from "@calcom/prisma/client";
 
 export type DateRange = {
@@ -14,14 +15,14 @@ export type WorkingHours = Pick<Availability, "days" | "startTime" | "endTime">;
 type TravelSchedule = { startDate: Dayjs; endDate?: Dayjs; timeZone: string };
 
 function getAdjustedTimezone(date: Dayjs, timeZone: string, travelSchedules: TravelSchedule[]) {
-  let adjustedTimezone = timeZone;
+  let adjustedTimezone = sanitizeTimezone(timeZone);
 
   for (const travelSchedule of travelSchedules) {
     if (
       !date.isBefore(travelSchedule.startDate) &&
       (!travelSchedule.endDate || !date.isAfter(travelSchedule.endDate))
     ) {
-      adjustedTimezone = travelSchedule.timeZone;
+      adjustedTimezone = sanitizeTimezone(travelSchedule.timeZone);
       break;
     }
   }
@@ -45,13 +46,14 @@ export function processWorkingHours(
     travelSchedules: TravelSchedule[];
   }
 ) {
+  const safeTimeZone = sanitizeTimezone(timeZone);
   const utcDateTo = dateTo.utc();
   let endTimeToKeyMap: Map<number, number[]> | undefined;
 
   for (let date = dateFrom.startOf("day"); utcDateTo.isAfter(date); date = date.add(1, "day")) {
     const fromOffset = dateFrom.startOf("day").utcOffset();
 
-    const adjustedTimezone = getAdjustedTimezone(date, timeZone, travelSchedules);
+    const adjustedTimezone = getAdjustedTimezone(date, safeTimeZone, travelSchedules);
 
     const offset = date.tz(adjustedTimezone).utcOffset();
 
@@ -183,9 +185,10 @@ export function processDateOverride({
   timeZone: string;
   travelSchedules: TravelSchedule[];
 }) {
+  const safeTimeZone = sanitizeTimezone(timeZone);
   const overrideDate = dayjs(item.date);
 
-  const adjustedTimezone = getAdjustedTimezone(overrideDate, timeZone, travelSchedules);
+  const adjustedTimezone = getAdjustedTimezone(overrideDate, safeTimeZone, travelSchedules);
 
   const itemDateStartOfDay = itemDateAsUtc.startOf("day");
   const startDate = itemDateStartOfDay
@@ -199,7 +202,7 @@ export function processDateOverride({
   const endTimeMinutes = item.endTime.getUTCMinutes();
 
   if (endTimeHours === 23 && endTimeMinutes === 59) {
-    endDate = endDate.add(1, "day").tz(timeZone, true);
+    endDate = endDate.add(1, "day").tz(safeTimeZone, true);
   } else {
     endDate = itemDateStartOfDay
       .add(endTimeHours, "hours")
@@ -216,7 +219,8 @@ export function processDateOverride({
 
 // This function processes out-of-office dates and returns a date range for each OOO date.
 function processOOO(outOfOffice: Dayjs, timeZone: string) {
-  const OOOdate = outOfOffice.tz(timeZone, true);
+  const safeTimeZone = sanitizeTimezone(timeZone);
+  const OOOdate = outOfOffice.tz(safeTimeZone, true);
   return {
     start: OOOdate,
     end: OOOdate,
@@ -238,7 +242,8 @@ export function buildDateRanges({
   travelSchedules: TravelSchedule[];
   outOfOffice?: IOutOfOfficeData;
 }): { dateRanges: DateRange[]; oooExcludedDateRanges: DateRange[] } {
-  const dateFromOrganizerTZ = dateFrom.tz(timeZone);
+  const safeTimeZone = sanitizeTimezone(timeZone);
+  const dateFromOrganizerTZ = dateFrom.tz(safeTimeZone);
 
   const groupedWorkingHours = groupByDate(
     Object.values(
@@ -249,7 +254,7 @@ export function buildDateRanges({
 
         processed = processWorkingHours(processed, {
           item,
-          timeZone,
+          timeZone: safeTimeZone,
           dateFrom: dateFromOrganizerTZ,
           dateTo,
           travelSchedules,
@@ -262,7 +267,7 @@ export function buildDateRanges({
 
   const groupedOOO = groupByDate(
     outOfOffice
-      ? Object.keys(outOfOffice).map((outOfOffice) => processOOO(dayjs.utc(outOfOffice), timeZone))
+      ? Object.keys(outOfOffice).map((outOfOffice) => processOOO(dayjs.utc(outOfOffice), safeTimeZone))
       : []
   );
 
@@ -291,7 +296,7 @@ export function buildDateRanges({
           const newProcessedDateOverride = processDateOverride({
             item,
             itemDateAsUtc,
-            timeZone,
+            timeZone: safeTimeZone,
             travelSchedules,
           });
           if (processed[newProcessedDateOverride.start.valueOf()]) {

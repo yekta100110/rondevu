@@ -1,16 +1,15 @@
-import { revalidateAvailabilityList } from "app/(use-page-wrapper)/(main-nav)/availability/actions";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-
 import { Dialog } from "@calcom/features/components/controlled-dialog";
+import { sanitizeTimezone } from "@calcom/lib/dayjs";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { HttpError } from "@calcom/lib/http-error";
 import { trpc } from "@calcom/trpc/react";
 import { Button } from "@calcom/ui/components/button";
-import { DialogContent, DialogFooter, DialogTrigger, DialogClose } from "@calcom/ui/components/dialog";
-import { Form } from "@calcom/ui/components/form";
-import { InputField } from "@calcom/ui/components/form";
+import { DialogClose, DialogContent, DialogFooter, DialogTrigger } from "@calcom/ui/components/dialog";
+import { Form, InputField } from "@calcom/ui/components/form";
 import { showToast } from "@calcom/ui/components/toast";
+import { revalidateAvailabilityList } from "app/(use-page-wrapper)/(main-nav)/availability/actions";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 
 export function NewScheduleButton({
   name = "new-schedule",
@@ -34,7 +33,12 @@ export function NewScheduleButton({
       showToast(t("schedule_created_successfully", { scheduleName: schedule.name }), "success");
       revalidateAvailabilityList();
       utils.viewer.availability.list.setData(undefined, (data) => {
-        const newSchedule = { ...schedule, isDefault: false, availability: [] };
+        const newSchedule = {
+          ...schedule,
+          timeZone: sanitizeTimezone(schedule.timeZone),
+          isDefault: false,
+          availability: [],
+        };
         if (!data)
           return {
             schedules: [newSchedule],

@@ -1,6 +1,8 @@
-import type { ITimezoneOption } from "react-timezone-select";
-
 import dayjs from "@calcom/dayjs";
+import type { ITimezoneOption } from "react-timezone-select";
+import { DEFAULT_APP_TIMEZONE, sanitizeTimezone } from "./dayjs";
+
+export { DEFAULT_APP_TIMEZONE, sanitizeTimezone };
 
 import isProblematicTimezone from "./isProblematicTimezone";
 

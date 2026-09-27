@@ -1,7 +1,6 @@
-import { z } from "zod";
-
 import type { Dayjs } from "@calcom/dayjs";
 import dayjs from "@calcom/dayjs";
+import { z } from "zod";
 
 // converts a date to 2022-04-25 for example.
 export const yyyymmdd = (date: Date | Dayjs) =>
@@ -46,6 +45,32 @@ export const isSupportedTimeZone = (timeZone: string) => {
   } catch (error) {
     return false;
   }
+};
+
+export const DEFAULT_APP_TIMEZONE = "Europe/Istanbul";
+
+/**
+ * Sanitizes a timezone string. If empty, null, undefined, or invalid according to Dayjs/Intl,
+ * returns a guaranteed safe fallback timezone (defaults to 'Europe/Istanbul').
+ */
+export const sanitizeTimezone = (
+  timeZone?: string | null,
+  fallback: string = DEFAULT_APP_TIMEZONE
+): string => {
+  if (!timeZone || typeof timeZone !== "string") {
+    return fallback;
+  }
+  const clean = timeZone.trim();
+  if (clean === "" || clean.toLowerCase() === "undefined" || clean.toLowerCase() === "null") {
+    return fallback;
+  }
+  if (clean === "+00:00") {
+    return "UTC";
+  }
+  if (isSupportedTimeZone(clean)) {
+    return clean;
+  }
+  return fallback;
 };
 
 /**

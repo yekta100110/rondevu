@@ -1,3 +1,4 @@
+import { sanitizeTimezone } from "@calcom/lib/dayjs";
 import type { GetUserAvailabilityInitialData } from "./getUserAvailability";
 
 export type ScheduleWithoutTimeZone = {
@@ -67,7 +68,7 @@ export function detectEventTypeScheduleForUser({
   const hostSchedule = eventType?.hosts?.find((host) => host.user.id === user.id)?.schedule;
 
   // TODO: It uses default timezone of user. Should we use timezone of team ?
-  const fallbackTimezoneIfScheduleIsMissing = eventType?.timeZone || user.timeZone;
+  const fallbackTimezoneIfScheduleIsMissing = sanitizeTimezone(eventType?.timeZone || user.timeZone);
 
   const fallbackSchedule = {
     ...DEFAULT_SCHEDULE_DATA,
@@ -88,14 +89,14 @@ export function detectEventTypeScheduleForUser({
 
   const isDefaultSchedule = !!(userSchedule && userSchedule.id === schedule?.id);
 
-  const isTimezoneSet = Boolean(potentialSchedule && potentialSchedule.timeZone !== null);
+  const isTimezoneSet = Boolean(potentialSchedule?.timeZone && potentialSchedule.timeZone.trim() !== "");
 
   return {
     isDefaultSchedule,
     isTimezoneSet,
     schedule: {
       ...schedule,
-      timeZone: schedule.timeZone || fallbackTimezoneIfScheduleIsMissing,
+      timeZone: sanitizeTimezone(schedule.timeZone || fallbackTimezoneIfScheduleIsMissing),
     },
   };
 }

@@ -1,9 +1,8 @@
 import { DEFAULT_SCHEDULE, getAvailabilityFromSchedule } from "@calcom/lib/availability";
+import { sanitizeTimezone } from "@calcom/lib/dayjs";
 import { prisma } from "@calcom/prisma";
 import type { Prisma } from "@calcom/prisma/client";
-
 import { TRPCError } from "@trpc/server";
-
 import type { TrpcSessionUser } from "../../../../types";
 import type { TCreateInputSchema } from "./create.schema";
 
@@ -56,7 +55,8 @@ export const createHandler = async ({ input, ctx }: CreateOptions) => {
     },
   };
 
-  data.timeZone = user.timeZone;
+  const safeTz = sanitizeTimezone(user.timeZone);
+  data.timeZone = safeTz;
 
   const schedule = await prisma.schedule.create({
     data,
@@ -73,5 +73,5 @@ export const createHandler = async ({ input, ctx }: CreateOptions) => {
     });
   }
 
-  return { schedule };
+  return { schedule: { ...schedule, timeZone: safeTz } };
 };
