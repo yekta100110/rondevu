@@ -173,6 +173,8 @@ export default function CancelBooking(props: Props) {
   const missingRequiredReason = isReasonRequired && !cancellationReason?.trim();
   const hostMissingInternalNote =
     isCancellationUserHost && props.internalNotePresets.length > 0 && !internalNote?.id;
+  const cancellationNoShowFeeNotAcknowledged =
+    !props.isHost && cancellationNoShowFeeWarning && !acknowledgeCancellationNoShowFee;
   const isKnownUser = Boolean(props.isHost || currentUserEmail);
   const missingCancelledBy = !isKnownUser && !cancelledByInput.trim();
   const canCancel =

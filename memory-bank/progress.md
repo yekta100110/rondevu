@@ -137,3 +137,7 @@
     - **Landing Page Feature (Smart Calendar Protection)**: Added "Akıllı Takvim Koruması (Çakışma Önleme)" highlight card to Block 1 and added "Akıllı Takvim Koruması (Hizmetler arası otomatik çakışma engelleme)" to `monthlyFeatures` in `apps/web/modules/home/home-view.tsx`.
     - **Terminology Standardization**: Updated 64 attendee-facing translation keys in `packages/i18n/locales/tr/common.json` replacing corporate "Toplantı" with "Randevu" and "Rezervasyon" (e.g. `your_meeting_has_been_booked`, `booking_fail`, `reschedule_fail`, `meeting_is_scheduled`, etc.).
     - **Validation**: Biome checks clean (0 errors), TypeScript server compilation passed (exit code 0), and all SMS unit tests passed (18/18).
+31. Runtime Bug Fix: `ReferenceError: cancellationNoShowFeeNotAcknowledged is not defined` in CancelBooking.tsx:
+    - Restored `cancellationNoShowFeeNotAcknowledged = !props.isHost && cancellationNoShowFeeWarning && !acknowledgeCancellationNoShowFee` definition in `apps/web/components/booking/CancelBooking.tsx`.
+    - Resolved runtime crash on rendering booking cancellation view.
+    - Verified via AST diagnostics (0 errors), Biome check (0 errors), and tRPC server type check (exit code 0).

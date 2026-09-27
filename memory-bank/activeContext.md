@@ -1,14 +1,12 @@
 # Active Context — rOndevu
 
 ## Current Focus
-- UI Polishing, "Tatil Günleri" View, Landing Page Copy & Terminology Standardization: Completed & Verified
-- Top Navigation Bar & Segmented Control spacing/padding fixes applied (`ToggleGroup.tsx` and `AdminFeatureCards.tsx`)
-- Turkish holidays interactive tab view implemented matching reference screenshot (`AdminFeatureCards.tsx`)
-- Smart Calendar Protection benefit highlight added to landing page
-- Terminology standardized from corporate "Toplantı" to "Randevu" / "Rezervasyon" in `packages/i18n/locales/tr/common.json`
-- Biome check passing (0 errors), TypeScript check passing (0 errors), Vitest tests passing (18/18)
+- Fixed Runtime Bug: `ReferenceError: cancellationNoShowFeeNotAcknowledged is not defined` in `apps/web/components/booking/CancelBooking.tsx`
+- Restored `cancellationNoShowFeeNotAcknowledged` definition gating `canCancel`
+- 0 TypeScript errors verified via AST diagnostics and server compilation, Biome check passed (0 errors)
 
 ## Recent Changes (this session)
+-1. **Runtime Fix in CancelBooking.tsx** — Restored `cancellationNoShowFeeNotAcknowledged` declaration in `apps/web/components/booking/CancelBooking.tsx`. Resolved runtime crash when rendering cancellation views (`/booking/[uid]?cancel=true`).
 0. **UI Polishing, Tatil Günleri View, Landing Page Copy & Terminology Standardization** —
    - **Out of Office Top Navigation:** Increased tab spacing and gap (`gap-4 sm:gap-6`, `whitespace-nowrap`), removed awkward overflow dot indicator from "Ofis Dışında (İzin & Acil Durum)" button, and prevented label wrapping.
    - **Segmented Control Spacing & Padding:** Fixed container padding to `p-1 rounded-xl` and active pill padding to `px-3 py-1.5 rounded-lg` in both `ToggleGroup.tsx` and `AdminFeatureCards.tsx` to completely eliminate background clipping and wrapper overflow.
