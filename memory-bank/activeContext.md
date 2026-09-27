@@ -1,14 +1,20 @@
 # Active Context — rOndevu
 
 ## Current Focus
-- System-Wide Integrity, Security & Regression Rescan (Zero-Hallucination Directive): Completed & Verified
-- Edge Case 1 (OTP Post-Booking Replay Window): Fixed & Tested with `consumePhoneVerification`
-- Edge Case 2 (Phone Attendee Cancellation Deadlock): Fixed with phone/synthetic email authorization
-- Edge Case 3 (Slot Lockout on Cancelled/Rejected Slots): Verified 100% Clean (Prisma extension nulls key)
-- Edge Case 4 (In-Memory Cache Boundaries): Fixed with strict bounded FIFO eviction
-- 0 TypeScript compiler errors (`tsc --project packages/trpc/tsconfig.server.json --noEmit` exit 0), all unit tests passing
+- UI Polishing, "Tatil Günleri" View, Landing Page Copy & Terminology Standardization: Completed & Verified
+- Top Navigation Bar & Segmented Control spacing/padding fixes applied (`ToggleGroup.tsx` and `AdminFeatureCards.tsx`)
+- Turkish holidays interactive tab view implemented matching reference screenshot (`AdminFeatureCards.tsx`)
+- Smart Calendar Protection benefit highlight added to landing page
+- Terminology standardized from corporate "Toplantı" to "Randevu" / "Rezervasyon" in `packages/i18n/locales/tr/common.json`
+- Biome check passing (0 errors), TypeScript check passing (0 errors), Vitest tests passing (18/18)
 
 ## Recent Changes (this session)
+0. **UI Polishing, Tatil Günleri View, Landing Page Copy & Terminology Standardization** —
+   - **Out of Office Top Navigation:** Increased tab spacing and gap (`gap-4 sm:gap-6`, `whitespace-nowrap`), removed awkward overflow dot indicator from "Ofis Dışında (İzin & Acil Durum)" button, and prevented label wrapping.
+   - **Segmented Control Spacing & Padding:** Fixed container padding to `p-1 rounded-xl` and active pill padding to `px-3 py-1.5 rounded-lg` in both `ToggleGroup.tsx` and `AdminFeatureCards.tsx` to completely eliminate background clipping and wrapper overflow.
+   - **"Tatil Günleri" Tab View:** Implemented interactive Turkish public & religious holiday calendar matching `Screenshot 2026-09-27 at 02-24-03 Ofis Dışında Tatil Rondevu.png` with Turkey selector (`🇹🇷 Turkey ˅`), 16 holidays with 📅 and 🌙 icons, dates, and interactive switch toggles. Automatically disables "+ Ekle" button when on the holidays tab.
+   - **Landing Page Feature (Smart Calendar Protection):** Added "Akıllı Takvim Koruması (Çakışma Önleme)" highlight card to Block 1 and added "Akıllı Takvim Koruması (Hizmetler arası otomatik çakışma engelleme)" to `monthlyFeatures` in `apps/web/modules/home/home-view.tsx`.
+   - **Terminology Standardization:** Updated 64 attendee-facing translation keys in `packages/i18n/locales/tr/common.json` replacing corporate "Toplantı" with "Randevu" and "Rezervasyon" (e.g. `your_meeting_has_been_booked`, `booking_fail`, `reschedule_fail`, `meeting_is_scheduled`, etc.).
 1. **Logo Dark Mode Inversion Fix** — Assigned `LOGO = "/rondevu-logo-dark.svg"` (`#292929`) so Tailwind's `dark:invert` properly produces white text in dark mode on mobile and desktop.
 2. **Logo Size & Clarity Enhancement** — Vectorized the "rOndevu" wordmark into exact SVG paths with tight bounding viewBox (`0.5 7.3 91.7 18.6`), eliminating 50%+ wasted vertical space. Increased default `Logo.tsx` sizing from `h-4/h-5` to `h-5/h-6 sm:h-7` so rendered text is ~3x larger and razor sharp.
 3. **Login View Title Fix** — Replaced hardcoded `Cal.diy` in `apps/web/modules/auth/login-view.tsx` with `{APP_NAME}` (`rOndevu`).

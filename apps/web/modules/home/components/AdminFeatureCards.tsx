@@ -18,6 +18,7 @@ import {
   Headphones,
   Mail,
   MessageSquare,
+  Moon,
   MoreHorizontal,
   Pencil,
   Phone,
@@ -45,6 +46,90 @@ interface AdminFeatureCardsProps {
   contactConfig?: PlanContactPropsData;
 }
 
+const TURKISH_HOLIDAYS_MOCK = [
+  { id: "new-years-day-2026", name: "New Year's Day (Yılbaşı)", date: "Thu, 1 Jan 2026", isReligious: false },
+  {
+    id: "national-sovereignty-2026",
+    name: "National Sovereignty and Children's Day (23 Nisan)",
+    date: "Thu, 23 Apr 2026",
+    isReligious: false,
+  },
+  { id: "labour-day-2026", name: "Labour Day (1 Mayıs)", date: "Fri, 1 May 2026", isReligious: false },
+  {
+    id: "ramadan-eve-2026",
+    name: "Ramadan Feast Eve (Ramazan Arifesi)",
+    date: "Thu, 19 Mar 2026",
+    isReligious: true,
+  },
+  {
+    id: "ramadan-1-2026",
+    name: "Ramadan Feast (Ramazan Bayramı 1. Gün)",
+    date: "Fri, 20 Mar 2026",
+    isReligious: true,
+  },
+  {
+    id: "ramadan-2-2026",
+    name: "Ramadan Feast Holiday (Ramazan Bayramı 2. Gün)",
+    date: "Sat, 21 Mar 2026",
+    isReligious: true,
+  },
+  {
+    id: "ramadan-3-2026",
+    name: "Ramadan Feast Holiday (Ramazan Bayramı 3. Gün)",
+    date: "Sun, 22 Mar 2026",
+    isReligious: true,
+  },
+  {
+    id: "ataturk-youth-2026",
+    name: "Commemoration of Atatürk, Youth and Sports Day (19 Mayıs)",
+    date: "Tue, 19 May 2026",
+    isReligious: false,
+  },
+  {
+    id: "sacrifice-eve-2026",
+    name: "Sacrifice Feast Eve (Kurban Arifesi)",
+    date: "Tue, 26 May 2026",
+    isReligious: true,
+  },
+  {
+    id: "sacrifice-1-2026",
+    name: "Sacrifice Feast (Kurban Bayramı 1. Gün)",
+    date: "Wed, 27 May 2026",
+    isReligious: true,
+  },
+  {
+    id: "sacrifice-2-2026",
+    name: "Sacrifice Feast Holiday (Kurban Bayramı 2. Gün)",
+    date: "Thu, 28 May 2026",
+    isReligious: true,
+  },
+  {
+    id: "sacrifice-3-2026",
+    name: "Sacrifice Feast Holiday (Kurban Bayramı 3. Gün)",
+    date: "Fri, 29 May 2026",
+    isReligious: true,
+  },
+  {
+    id: "democracy-day-2026",
+    name: "Democracy and National Unity Day (15 Temmuz)",
+    date: "Wed, 15 Jul 2026",
+    isReligious: false,
+  },
+  {
+    id: "victory-day-2026",
+    name: "Victory Day (30 Ağustos Zafer Bayramı)",
+    date: "Sun, 30 Aug 2026",
+    isReligious: false,
+  },
+  {
+    id: "republic-eve-2026",
+    name: "Republic Day Eve (28 Ekim Arifesi)",
+    date: "Wed, 28 Oct 2026",
+    isReligious: false,
+  },
+  { id: "republic-day-2026", name: "Republic Day (29 Ekim)", date: "Thu, 29 Oct 2026", isReligious: false },
+];
+
 export function AdminFeatureCards({ contactConfig: propContactConfig }: AdminFeatureCardsProps = {}) {
   const [activeOoo, setActiveOoo] = useState(false);
   const [isNoShowMarked, setIsNoShowMarked] = useState(false);
@@ -54,6 +139,9 @@ export function AdminFeatureCards({ contactConfig: propContactConfig }: AdminFea
   const [isOooModalOpen, setIsOooModalOpen] = useState(false);
   const [oooTab, setOooTab] = useState<"mine" | "holidays">("mine");
   const [showPublicPreview, setShowPublicPreview] = useState(true);
+  const [enabledHolidays, setEnabledHolidays] = useState<Record<string, boolean>>(() =>
+    Object.fromEntries(TURKISH_HOLIDAYS_MOCK.map((h) => [h.id, true]))
+  );
 
   const { data: queriedConfig } = trpc.viewer.public.getPlanContact.useQuery(undefined, {
     enabled: !propContactConfig,
@@ -133,6 +221,17 @@ export function AdminFeatureCards({ contactConfig: propContactConfig }: AdminFea
                 <p className="mt-1.5 text-xs text-subtle leading-relaxed">
                   "Randevuya 12 saat kala iptal edilemez, 4 saat kala ertelenemez" gibi katı kurallar
                   koyabilme.
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-subtle bg-default/60 p-4 sm:col-span-2">
+                <div className="flex items-center gap-2 font-semibold text-emphasis text-sm">
+                  <ShieldCheck className="size-4 text-emphasis" />
+                  <span>Akıllı Takvim Koruması (Çakışma Önleme)</span>
+                </div>
+                <p className="mt-1.5 text-xs text-subtle leading-relaxed">
+                  Bir seansınız veya hizmetiniz için randevu alındığında, aynı saat dilimi tüm diğer randevu
+                  türlerinizde otomatik olarak kapatılır ve çifte rezervasyon çakışmaları tamamen engellenir.
                 </p>
               </div>
             </div>
@@ -248,13 +347,13 @@ export function AdminFeatureCards({ contactConfig: propContactConfig }: AdminFea
           <div className="lg:col-span-6 order-2 lg:order-1">
             <div className="relative rounded-2xl border border-subtle bg-default p-6 sm:p-8 shadow-xl space-y-6">
               {/* Üst Modül Değiştirici: 1. Randevular & No-Show | 2. Ofis Dışında */}
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-subtle pb-5 gap-3">
-                <div className="inline-flex items-center gap-1.5 rounded-xl bg-muted/50 p-1.5 border border-subtle">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-subtle pb-5 gap-4 sm:gap-6">
+                <div className="inline-flex items-center gap-2 rounded-xl bg-muted/50 p-1.5 border border-subtle">
                   <button
                     type="button"
                     onClick={() => setBlock2Mode("bookings")}
                     className={classNames(
-                      "rounded-lg px-4 py-2 text-xs sm:text-sm font-semibold transition-all",
+                      "rounded-lg px-4 py-2 text-xs sm:text-sm font-semibold transition-all whitespace-nowrap",
                       block2Mode === "bookings"
                         ? "bg-default text-emphasis shadow-sm"
                         : "text-subtle hover:text-emphasis hover:bg-muted/40"
@@ -265,16 +364,15 @@ export function AdminFeatureCards({ contactConfig: propContactConfig }: AdminFea
                     type="button"
                     onClick={() => setBlock2Mode("ooo")}
                     className={classNames(
-                      "rounded-lg px-4 py-2 text-xs sm:text-sm font-semibold transition-all flex items-center gap-2",
+                      "rounded-lg px-4 py-2 text-xs sm:text-sm font-semibold transition-all whitespace-nowrap",
                       block2Mode === "ooo"
                         ? "bg-default text-emphasis shadow-sm"
                         : "text-subtle hover:text-emphasis hover:bg-muted/40"
                     )}>
-                    <span>Ofis Dışında (İzin & Acil Durum)</span>
-                    <span className="size-2 rounded-full bg-emphasis" />
+                    Ofis Dışında (İzin & Acil Durum)
                   </button>
                 </div>
-                <span className="text-[11px] text-subtle font-mono hidden sm:inline">
+                <span className="text-[11px] text-subtle font-mono shrink-0 hidden sm:inline">
                   Yönetim Paneli Görünümü
                 </span>
               </div>
@@ -490,12 +588,12 @@ export function AdminFeatureCards({ contactConfig: propContactConfig }: AdminFea
                       </div>
 
                       <div className="flex items-center gap-2">
-                        <div className="flex items-center rounded-lg border border-subtle bg-default p-0.5 text-[11px]">
+                        <div className="flex items-center rounded-xl border border-subtle bg-muted/40 p-1 text-[11px]">
                           <button
                             type="button"
                             onClick={() => setOooTab("mine")}
                             className={classNames(
-                              "rounded px-2.5 py-1 font-medium transition",
+                              "rounded-lg px-3 py-1.5 font-medium transition",
                               oooTab === "mine"
                                 ? "bg-emphasis text-default shadow-xs"
                                 : "text-subtle hover:text-emphasis"
@@ -506,7 +604,7 @@ export function AdminFeatureCards({ contactConfig: propContactConfig }: AdminFea
                             type="button"
                             onClick={() => setOooTab("holidays")}
                             className={classNames(
-                              "rounded px-2.5 py-1 font-medium transition",
+                              "rounded-lg px-3 py-1.5 font-medium transition",
                               oooTab === "holidays"
                                 ? "bg-emphasis text-default shadow-xs"
                                 : "text-subtle hover:text-emphasis"
@@ -517,81 +615,172 @@ export function AdminFeatureCards({ contactConfig: propContactConfig }: AdminFea
 
                         <button
                           type="button"
+                          disabled={oooTab === "holidays"}
                           onClick={() => setIsOooModalOpen(true)}
-                          className="inline-flex items-center gap-1 rounded-lg bg-emphasis px-2.5 py-1 font-medium text-default text-[11px] hover:opacity-90 transition shadow-xs">
+                          className={classNames(
+                            "inline-flex items-center gap-1 rounded-lg px-3 py-1.5 font-medium text-[11px] transition shadow-xs",
+                            oooTab === "holidays"
+                              ? "border border-subtle bg-muted/20 text-subtle opacity-40 cursor-not-allowed"
+                              : "bg-emphasis text-default hover:opacity-90"
+                          )}>
                           <Plus className="size-3.5" />
                           <span>Ekle</span>
                         </button>
                       </div>
                     </div>
 
-                    {/* Arama & Filtre Çubuğu */}
-                    <div className="border-subtle border-b p-2.5 flex items-center justify-between gap-2 bg-default text-[11px]">
-                      <div className="flex items-center gap-2 flex-1 max-w-xs rounded-md border border-subtle px-2.5 py-1 text-subtle">
-                        <Search className="size-3" />
-                        <span>Ara</span>
-                      </div>
-
-                      <div className="flex items-center gap-1.5">
-                        <button
-                          type="button"
-                          className="rounded-md border border-subtle px-2 py-1 text-subtle hover:text-emphasis flex items-center gap-1">
-                          <Filter className="size-3" />
-                          <span>Filtrele</span>
-                        </button>
-                        <div className="hidden sm:flex items-center gap-1 text-subtle border border-subtle rounded-md px-2 py-1">
-                          <span>Kaydedilmiş filtreler</span>
-                          <ChevronDown className="size-3" />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Liste Kartı */}
-                    <div className="p-4 bg-default space-y-2.5">
-                      <div className="text-[11px] font-semibold text-subtle">Ofis Dışında (1)</div>
-
-                      {/* Kayıt Satırı */}
-                      <div className="flex items-start justify-between rounded-lg border border-subtle bg-muted/10 p-3.5 hover:bg-muted/20 transition gap-3">
-                        <div className="flex items-start gap-3">
-                          {/* Rozet */}
-                          <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-muted border border-subtle text-sm">
-                            🏖️
+                    {/* İZİNLERİM SEKMESİ */}
+                    {oooTab === "mine" && (
+                      <>
+                        {/* Arama & Filtre Çubuğu */}
+                        <div className="border-subtle border-b p-2.5 flex items-center justify-between gap-2 bg-default text-[11px]">
+                          <div className="flex items-center gap-2 flex-1 max-w-xs rounded-md border border-subtle px-2.5 py-1 text-subtle">
+                            <Search className="size-3" />
+                            <span>Ara</span>
                           </div>
 
-                          <div className="space-y-0.5">
-                            <div className="font-semibold text-emphasis text-xs">
-                              25 Eyl 2026 - 27 Eyl 2026
+                          <div className="flex items-center gap-1.5">
+                            <button
+                              type="button"
+                              className="rounded-md border border-subtle px-2 py-1 text-subtle hover:text-emphasis flex items-center gap-1">
+                              <Filter className="size-3" />
+                              <span>Filtrele</span>
+                            </button>
+                            <div className="hidden sm:flex items-center gap-1 text-subtle border border-subtle rounded-md px-2 py-1">
+                              <span>Kaydedilmiş filtreler</span>
+                              <ChevronDown className="size-3" />
                             </div>
-                            <div className="text-[11px] text-subtle">Yönlendirme yok</div>
-                            <p className="text-[11px] text-subtle leading-relaxed mt-1">
-                              <span className="font-medium text-emphasis">Notlar:</span> Kongre Katılımı &
-                              Yıllık İzin nedeniyle seans yapılamamaktadır; acil durumlarda kliniğimize
-                              ulaşabilirsiniz.
-                            </p>
                           </div>
                         </div>
 
-                        {/* Aksiyon İkonları */}
-                        <div className="flex items-center gap-1 text-subtle shrink-0">
+                        {/* Liste Kartı */}
+                        <div className="p-4 bg-default space-y-2.5">
+                          <div className="text-[11px] font-semibold text-subtle">Ofis Dışında (1)</div>
+
+                          {/* Kayıt Satırı */}
+                          <div className="flex items-start justify-between rounded-lg border border-subtle bg-muted/10 p-3.5 hover:bg-muted/20 transition gap-3">
+                            <div className="flex items-start gap-3">
+                              {/* Rozet */}
+                              <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-muted border border-subtle text-sm">
+                                🏖️
+                              </div>
+
+                              <div className="space-y-0.5">
+                                <div className="font-semibold text-emphasis text-xs">
+                                  25 Eyl 2026 - 27 Eyl 2026
+                                </div>
+                                <div className="text-[11px] text-subtle">Yönlendirme yok</div>
+                                <p className="text-[11px] text-subtle leading-relaxed mt-1">
+                                  <span className="font-medium text-emphasis">Notlar:</span> Kongre Katılımı &
+                                  Yıllık İzin nedeniyle seans yapılamamaktadır; acil durumlarda kliniğimize
+                                  ulaşabilirsiniz.
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Aksiyon İkonları */}
+                            <div className="flex items-center gap-1 text-subtle shrink-0">
+                              <button
+                                type="button"
+                                onClick={() => setIsOooModalOpen(true)}
+                                className="rounded p-1 hover:text-emphasis hover:bg-muted/50 transition">
+                                <Pencil className="size-3.5" />
+                              </button>
+                              <button
+                                type="button"
+                                className="rounded p-1 hover:text-emphasis hover:bg-muted/50 transition">
+                                <Trash2 className="size-3.5" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Alt Çubuk */}
+                        <div className="border-subtle border-t bg-muted/20 px-4 py-2 text-[10px] text-subtle">
+                          Loaded 1 of 1
+                        </div>
+                      </>
+                    )}
+
+                    {/* TATİL GÜNLERİ SEKMESİ (Screenshot 02-24-03 Referansı) */}
+                    {oooTab === "holidays" && (
+                      <div>
+                        {/* Ülke Seçim Çubuğu */}
+                        <div className="border-subtle border-b bg-muted/10 p-3 flex items-center justify-between">
                           <button
                             type="button"
-                            onClick={() => setIsOooModalOpen(true)}
-                            className="rounded p-1 hover:text-emphasis hover:bg-muted/50 transition">
-                            <Pencil className="size-3.5" />
+                            className="inline-flex items-center gap-2 rounded-lg border border-subtle bg-default px-2.5 py-1 text-xs font-semibold text-emphasis hover:bg-muted/30 transition shadow-xs">
+                            <span className="text-base leading-none">🇹🇷</span>
+                            <span>Turkey</span>
+                            <ChevronDown className="size-3 text-subtle" />
                           </button>
-                          <button
-                            type="button"
-                            className="rounded p-1 hover:text-emphasis hover:bg-muted/50 transition">
-                            <Trash2 className="size-3.5" />
-                          </button>
+
+                          <span className="text-[11px] text-subtle">
+                            {Object.values(enabledHolidays).filter(Boolean).length} /{" "}
+                            {TURKISH_HOLIDAYS_MOCK.length} tatil aktif
+                          </span>
+                        </div>
+
+                        {/* Tatil Listesi */}
+                        <div className="divide-y divide-subtle max-h-88 overflow-y-auto bg-default">
+                          {TURKISH_HOLIDAYS_MOCK.map((holiday) => {
+                            const isChecked = enabledHolidays[holiday.id] ?? true;
+                            return (
+                              <div
+                                key={holiday.id}
+                                className="flex items-center justify-between p-3.5 hover:bg-muted/10 transition gap-3">
+                                <div className="flex items-center gap-3">
+                                  <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-muted border border-subtle">
+                                    {holiday.isReligious ? (
+                                      <Moon className="size-4 text-emphasis" />
+                                    ) : (
+                                      <Calendar className="size-4 text-emphasis" />
+                                    )}
+                                  </div>
+                                  <div>
+                                    <div className="font-semibold text-emphasis text-xs leading-tight">
+                                      {holiday.name}
+                                    </div>
+                                    <div className="text-[11px] text-subtle mt-0.5">{holiday.date}</div>
+                                  </div>
+                                </div>
+
+                                {/* Switch Toggle */}
+                                <button
+                                  type="button"
+                                  role="switch"
+                                  aria-checked={isChecked}
+                                  onClick={() =>
+                                    setEnabledHolidays((prev) => ({
+                                      ...prev,
+                                      [holiday.id]: !prev[holiday.id],
+                                    }))
+                                  }
+                                  className={classNames(
+                                    "relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-hidden",
+                                    isChecked ? "bg-emphasis" : "bg-muted"
+                                  )}>
+                                  <span
+                                    className={classNames(
+                                      "pointer-events-none inline-block h-4 w-4 transform rounded-full bg-default shadow-xs ring-0 transition duration-200 ease-in-out",
+                                      isChecked ? "translate-x-4" : "translate-x-0"
+                                    )}
+                                  />
+                                </button>
+                              </div>
+                            );
+                          })}
+                        </div>
+
+                        {/* Alt Çubuk */}
+                        <div className="border-subtle border-t bg-muted/20 px-4 py-2 text-[10px] text-subtle flex items-center justify-between">
+                          <span>Resmi tatillerde takviminiz otomatik olarak randevulara kapatılır.</span>
+                          <span className="font-medium text-emphasis">
+                            {TURKISH_HOLIDAYS_MOCK.length} tatil
+                          </span>
                         </div>
                       </div>
-                    </div>
-
-                    {/* Alt Çubuk */}
-                    <div className="border-subtle border-t bg-muted/20 px-4 py-2 text-[10px] text-subtle">
-                      Loaded 1 of 1
-                    </div>
+                    )}
                   </div>
 
                   {/* Danışan Randevu Ekranı Önizlemesi (Geniş ve Ayrı Kart) */}

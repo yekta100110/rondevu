@@ -96,6 +96,7 @@ export function HomeView({ isLoggedIn = false, initialContact }: HomeViewProps) 
     "Sınırsız randevu ve etkinlik türü",
     "SMS ve E-posta hatırlatıcı bildirimleri",
     "Google & Apple Takvim anlık çift yönlü eşitleme",
+    "Akıllı Takvim Koruması (Hizmetler arası otomatik çakışma engelleme)",
     "Telefon ve e-posta doğrulama (OTP koruması)",
     "No-show ('Katılmadı') danışan takibi & koruması",
     "Out of Office (Acil durum toplu iptal & SMS)",
