@@ -3,11 +3,11 @@
   "slug": "matomo",
   "type": "matomo_analytics",
   "logo": "icon.svg",
-  "url": "https://cal.com/",
+  "url": "https://rondevu.org",
   "variant": "analytics",
   "categories": ["analytics"],
   "publisher": "rOndevu",
-  "email": "help@cal.com",
+  "email": "info@rondevu.org",
   "description": "Google Analytics alternative that protects your data and your customers' privacy",
   "extendsFeature": "EventType",
   "appData": {

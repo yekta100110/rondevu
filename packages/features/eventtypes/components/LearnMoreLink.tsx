@@ -18,6 +18,8 @@ export const LearnMoreLink = ({ t, i18nKey, href }: LearnMoreLinkProps) => {
     return <>{text}</>;
   }
 
+  const sanitizedHref = href.startsWith("https://cal.com") ? "https://rondevu.org/docs" : href;
+
   return (
     <span>
       <ServerTrans
@@ -29,7 +31,7 @@ export const LearnMoreLink = ({ t, i18nKey, href }: LearnMoreLinkProps) => {
             className="underline underline-offset-2"
             target="_blank"
             rel="noopener noreferrer"
-            href={href}>
+            href={sanitizedHref}>
             Learn more
           </Link>,
         ]}

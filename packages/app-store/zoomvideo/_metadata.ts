@@ -9,12 +9,12 @@ export const metadata = {
   categories: ["conferencing"],
   variant: "conferencing",
   logo: "icon.svg",
-  publisher: "Cal.diy",
+  publisher: "rOndevu",
   url: "https://zoom.us/",
   category: "conferencing",
   slug: "zoom",
   title: "Zoom Video",
-  email: "help@cal.com",
+  email: "info@rondevu.org",
   appData: {
     location: {
       default: false,

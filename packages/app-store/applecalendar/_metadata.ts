@@ -11,10 +11,10 @@ export const metadata = {
   categories: ["calendar"],
   category: "calendar",
   logo: "icon.svg",
-  publisher: "Cal.diy",
+  publisher: "rOndevu",
   slug: "apple-calendar",
-  url: "https://cal.com/",
-  email: "help@cal.com",
+  url: "https://rondevu.org",
+  email: "info@rondevu.org",
   dirName: "applecalendar",
   isOAuth: false,
 } as AppMeta;

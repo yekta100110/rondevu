@@ -91,6 +91,14 @@ export const AppPage = ({
   const router = useRouter();
   const searchParams = useCompatSearchParams();
 
+  const sanitizedAuthor =
+    !author || author.toLowerCase().includes("cal.com") || author.toLowerCase().includes("cal.diy")
+      ? "rOndevu"
+      : author;
+  const sanitizedEmail = email && email.endsWith("@cal.com") ? "info@rondevu.org" : email;
+  const sanitizedWebsite = website && website.includes("cal.com") ? "https://rondevu.org" : website;
+  const sanitizedDocs = docs && docs.includes("cal.com") ? "https://rondevu.org/docs" : docs;
+
   const hasDescriptionItems = descriptionItems && descriptionItems.length > 0;
   const utils = trpc.useUtils();
 
@@ -371,12 +379,9 @@ export const AppPage = ({
                 </>
               )}
               •{" "}
-              <a target="_blank" rel="noreferrer" href={website}>
+              <a target="_blank" rel="noreferrer" href={sanitizedWebsite}>
                 {t("published_by", {
-                  author:
-                    !author || author === "Cal.diy" || author === "Cal.com, Inc." || author === "Cal.com"
-                      ? "rOndevu"
-                      : author,
+                  author: sanitizedAuthor,
                 })}
               </a>
             </h2>
@@ -445,40 +450,40 @@ export const AppPage = ({
 
         <h4 className="text-emphasis mb-2 mt-8 font-semibold ">{t("contact")}</h4>
         <ul className="prose-sm -ml-1 -mr-1 leading-5">
-          {docs && (
+          {sanitizedDocs && (
             <li>
               <a
                 target="_blank"
                 rel="noreferrer"
                 className="text-emphasis text-sm font-normal no-underline hover:underline"
-                href={docs}>
+                href={sanitizedDocs}>
                 <BookOpenIcon className="text-subtle -mt-1 mr-1 inline h-4 w-4" />
                 {t("documentation")}
               </a>
             </li>
           )}
-          {website && (
+          {sanitizedWebsite && (
             <li>
               <a
                 target="_blank"
                 rel="noreferrer"
                 className="text-emphasis font-normal no-underline hover:underline"
-                href={website}>
+                href={sanitizedWebsite}>
                 <ExternalLinkIcon className="text-subtle -mt-px mr-1 inline h-4 w-4" />
-                {website.replace("https://", "")}
+                {sanitizedWebsite.replace("https://", "")}
               </a>
             </li>
           )}
-          {email && (
+          {sanitizedEmail && (
             <li>
               <a
                 target="_blank"
                 rel="noreferrer"
                 className="text-emphasis font-normal no-underline hover:underline"
-                href={`mailto:${email}`}>
+                href={`mailto:${sanitizedEmail}`}>
                 <MailIcon className="text-subtle -mt-px mr-1 inline h-4 w-4" />
 
-                {email}
+                {sanitizedEmail}
               </a>
             </li>
           )}

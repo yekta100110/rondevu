@@ -53,7 +53,7 @@ export default function MaxActiveBookingsPerBookerController({
               <LearnMoreLink
                 t={t}
                 i18nKey="booker_booking_limit_description"
-                href="https://cal.com/help/event-types/booker-active-booking-limit"
+                href="https://rondevu.org/docs"
               />
             }
             checked={isChecked}

@@ -4,13 +4,13 @@
   "slug": "baa-for-hipaa",
   "type": "baa-for-hipaa_other",
   "logo": "icon.svg",
-  "url": "https://cal.com/BAA",
+  "url": "https://rondevu.org/terms",
   "variant": "other",
   "categories": [
     "other"
   ],
   "publisher": "rOndevu",
-  "email": "support@cal.com",
+  "email": "info@rondevu.org",
   "description": "Request a signed Business Associate Agreement for your HIPAA compliance records",
   "isTemplate": false,
   "__createdUsingCli": true,
@@ -20,7 +20,7 @@
     "mode": "subscription"
   },
   "externalLink": {
-    "url": "https://cal.com/BAA",
+    "url": "https://rondevu.org/terms",
     "newTab": true
   }
 }

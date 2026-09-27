@@ -13,10 +13,10 @@ export const metadata = {
   category: "calendar",
   categories: ["calendar"],
   logo: "icon.svg",
-  publisher: "Cal.diy",
+  publisher: "rOndevu",
   slug: "google-calendar",
-  url: "https://cal.com/",
-  email: "help@cal.com",
+  url: "https://rondevu.org",
+  email: "info@rondevu.org",
   dirName: "googlecalendar",
   isOAuth: true,
   delegationCredential: {

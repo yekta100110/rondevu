@@ -8,8 +8,8 @@
   "variant": "calendar",
   "categories": ["calendar"],
   "publisher": "rOndevu",
-  "email": "help@cal.com",
-  "description": "Import events from an ICS Feed into [Cal.diy](https://cal.com).",
+  "email": "info@rondevu.org",
+  "description": "Import events from an ICS Feed into [rOndevu](https://rondevu.org).",
   "isTemplate": false,
   "__createdUsingCli": true
 }

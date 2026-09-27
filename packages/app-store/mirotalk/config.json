@@ -4,11 +4,11 @@
   "slug": "mirotalk",
   "type": "mirotalk_video",
   "logo": "icon.svg",
-  "url": "https://cal.com/",
+  "url": "https://rondevu.org",
   "variant": "conferencing",
   "categories": ["conferencing"],
   "publisher": "rOndevu",
-  "email": "support@cal.com",
+  "email": "info@rondevu.org",
   "appData": {
     "location": {
       "type": "integrations:{SLUG}_video",

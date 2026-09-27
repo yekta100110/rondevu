@@ -7,7 +7,7 @@
   "variant": "analytics",
   "categories": ["analytics"],
   "publisher": "rOndevu",
-  "email": "help@cal.com",
+  "email": "info@rondevu.org",
   "description": "PostHog is the all-in-one platform for building better products - with product analytics, feature flags, session recordings, a/b testing, heatmaps, and more.",
   "extendsFeature": "EventType",
   "appData": {

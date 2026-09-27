@@ -4,11 +4,11 @@
   "slug": "signal",
   "type": "signal_video",
   "logo": "icon.svg",
-  "url": "https://cal.com/",
+  "url": "https://rondevu.org",
   "variant": "messaging",
   "categories": ["messaging","conferencing"],
   "publisher": "rOndevu",
-  "email": "support@cal.com",
+  "email": "info@rondevu.org",
   "description": "Schedule a chat with your guests or have a Signal Video call.",
   "__createdUsingCli": true,
   "appData": {

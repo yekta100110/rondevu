@@ -1038,7 +1038,7 @@ export default function Success(props: PageProps) {
                       <>
                         <hr className="border-subtle mt-8" />
                         <div className="text-default pt-8 text-center text-xs">
-                          <a href="https://cal.com/signup">
+                          <a href="/auth/signup">
                             {t("create_booking_link_with_calcom", { appName: APP_NAME })}
                           </a>
 
@@ -1048,7 +1048,7 @@ export default function Success(props: PageProps) {
                               const target = e.target as typeof e.target & {
                                 email: { value: string };
                               };
-                              router.push(`https://cal.com/signup?email=${target.email.value}`);
+                              router.push(`/auth/signup?email=${target.email.value}`);
                             }}
                             className="mt-4 flex">
                             <EmailInput
@@ -1056,7 +1056,7 @@ export default function Success(props: PageProps) {
                               id="email"
                               defaultValue={email}
                               className="mr- focus:border-brand-default border-default text-default mt-0 block w-full rounded-none rounded-l-md shadow-sm focus:ring-black sm:text-sm"
-                              placeholder="rick.astley@cal.com"
+                              placeholder="ornek@rondevu.org"
                             />
                             <Button
                               type="submit"
@@ -1143,7 +1143,7 @@ export default function Success(props: PageProps) {
                       <span className="underline">
                         <a
                           target="_blank"
-                          href="https://cal.com/blog/google-s-new-spam-policy-may-be-affecting-your-invitations"
+                          href="https://support.google.com/calendar/answer/10368146"
                           rel="noreferrer">
                           {t("resolve")}
                         </a>

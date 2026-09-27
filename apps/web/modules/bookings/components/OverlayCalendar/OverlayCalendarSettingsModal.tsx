@@ -1,5 +1,6 @@
 import { useIsPlatform } from "@calcom/atoms/hooks/useIsPlatform";
 import { Dialog } from "@calcom/features/components/controlled-dialog";
+import { WEBAPP_URL } from "@calcom/lib/constants";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { trpc } from "@calcom/trpc/react";
 import classNames from "@calcom/ui/classNames";
@@ -75,7 +76,7 @@ export function OverlayCalendarSettingsModal({
                   )}
                   width={40}
                   height={40}
-                  src={isPlatform ? `https://app.cal.com${item.integration.logo}` : item.integration.logo}
+                  src={isPlatform ? `${WEBAPP_URL}${item.integration.logo}` : item.integration.logo}
                   alt={`${item.integration.title} logo`}
                 />
               )}

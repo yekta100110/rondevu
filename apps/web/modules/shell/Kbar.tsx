@@ -425,7 +425,7 @@ function renderResultItem(item: string | Action, active: boolean, t: (key: strin
 
 function NoResultsFound({ searchQuery }: { searchQuery: string }): JSX.Element {
   const { t } = useLocale();
-  const helpUrl = `https://cal.com/help/welcome?search=${encodeURIComponent(searchQuery)}`;
+  const helpUrl = `https://rondevu.org/docs?search=${encodeURIComponent(searchQuery)}`;
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent): void => {

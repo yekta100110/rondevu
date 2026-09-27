@@ -10,7 +10,7 @@
   "variant": "calendar",
   "categories": ["calendar"],
   "publisher": "rOndevu",
-  "email": "help@cal.com",
+  "email": "info@rondevu.org",
   "description": "Fetch Microsoft Exchange calendars and availabilities using Exchange Web Services (EWS).",
   "__createdUsingCli": true,
   "isOAuth": false

@@ -5,9 +5,9 @@ import { teamMetadataSchema } from "@calcom/prisma/zod-utils";
 import type { TeamPermissions } from "./permissionUtils";
 
 const getBookerBaseUrlSync = (_orgSlug?: string | number | null): string =>
-  process.env.NEXT_PUBLIC_WEBAPP_URL || "https://app.cal.com";
+  process.env.NEXT_PUBLIC_WEBAPP_URL || "https://rondevu.org";
 const getBookerBaseUrl = async (_orgSlug?: string | number | null): Promise<string> =>
-  process.env.NEXT_PUBLIC_WEBAPP_URL || "https://app.cal.com";
+  process.env.NEXT_PUBLIC_WEBAPP_URL || "https://rondevu.org";
 
 export interface EventTypeGroup {
   teamId?: number | null;

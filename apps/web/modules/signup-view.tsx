@@ -368,7 +368,7 @@ export default function Signup({
               domain: isENVDev ? undefined : `.${new URL(WEBSITE_URL).hostname}`,
             }}
             domainsConfig={{
-              refer: "refer.cal.com",
+              refer: "refer.rondevu.org",
             }}
           />
         </>

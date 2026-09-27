@@ -45,8 +45,8 @@ export const testTriggerHandler = async ({ ctx: _ctx, input }: TestTriggerOption
       },
     ],
     organizer: {
-      name: "Cal",
-      email: "no-reply@cal.com",
+      name: "rOndevu",
+      email: "no-reply@rondevu.org",
       timeZone: "Europe/London",
       language,
     },
