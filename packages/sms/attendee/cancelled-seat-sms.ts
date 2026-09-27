@@ -1,5 +1,4 @@
 import type { CalendarEvent, Person } from "@calcom/types/Calendar";
-
 import SMSManager from "../sms-manager";
 
 export default class CancelledSeatSMS extends SMSManager {
@@ -8,16 +7,14 @@ export default class CancelledSeatSMS extends SMSManager {
   }
 
   getMessage(attendee: Person) {
-    const t = attendee.language.translate;
+    const title = this.getCleanTitle(30);
+    const dateStr = this.getCompactDate(attendee.timeZone);
+    const shortUrl = this.getShortBookingUrl();
 
-    const messageText = `${t("no_longer_attending", {
-      name: attendee.name,
-    })}\n\n${t("event_no_longer_attending_subject", {
-      name: this.calEvent.team?.name || this.calEvent.organizer.name,
-      date: this.getFormattedDate(attendee.timeZone, attendee.language.locale),
-      interpolation: { escapeValue: false },
-    })} `;
+    if (attendee.language?.locale && attendee.language.locale.startsWith("en")) {
+      return `rOndevu: Your seat for ${title} was cancelled. Date: ${dateStr}. Details: ${shortUrl}`;
+    }
 
-    return `${messageText}`;
+    return `rOndevu: ${title} randevusundaki kaydiniz iptal edildi. Tarih: ${dateStr}. Detay: ${shortUrl}`;
   }
 }

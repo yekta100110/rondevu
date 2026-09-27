@@ -1,6 +1,4 @@
-import { WEBAPP_URL } from "@calcom/lib/constants";
 import type { CalendarEvent, Person } from "@calcom/types/Calendar";
-
 import SMSManager from "../sms-manager";
 
 export default class EventLocationChangedSMS extends SMSManager {
@@ -9,17 +7,14 @@ export default class EventLocationChangedSMS extends SMSManager {
   }
 
   getMessage(attendee: Person) {
-    const t = attendee.language.translate;
+    const title = this.getCleanTitle(35);
+    const dateStr = this.getCompactDate(attendee.timeZone);
+    const shortUrl = this.getShortBookingUrl();
 
-    const messageText = `${t("event_location_changed")}`;
+    if (attendee.language?.locale && attendee.language.locale.startsWith("en")) {
+      return `rOndevu: ${title} location changed. Date: ${dateStr}. Details: ${shortUrl}`;
+    }
 
-    const bookingUrl = `${this.calEvent.bookerUrl ?? WEBAPP_URL}/booking/${this.calEvent.uid}?changes=true`;
-
-    const urlText = t("you_can_view_booking_details_with_this_url", {
-      url: bookingUrl,
-      interpolation: { escapeValue: false },
-    });
-
-    return `${messageText}\n\n${urlText}`;
+    return `rOndevu: ${title} randevu konumu degisti. Tarih: ${dateStr}. Detay: ${shortUrl}`;
   }
 }

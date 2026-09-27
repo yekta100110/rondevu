@@ -1,5 +1,4 @@
 import type { CalendarEvent, Person } from "@calcom/types/Calendar";
-
 import SMSManager from "../sms-manager";
 
 export default class EventDeclinedSMS extends SMSManager {
@@ -8,18 +7,13 @@ export default class EventDeclinedSMS extends SMSManager {
   }
 
   getMessage(attendee: Person) {
-    const t = attendee.language.translate;
+    const title = this.getCleanTitle(35);
+    const dateStr = this.getCompactDate(attendee.timeZone);
 
-    const eventDeclinedText = t("event_declined_subject", {
-      title: this.calEvent.title,
-      date: this.getFormattedDate(attendee.timeZone, attendee.language.locale),
-      interpolation: { escapeValue: false },
-    });
+    if (attendee.language?.locale && attendee.language.locale.startsWith("en")) {
+      return `rOndevu: ${title} request was declined. Date: ${dateStr}.`;
+    }
 
-    const messageText = `${t("hey_there")} ${attendee.name}, ${t(
-      "event_request_declined"
-    )} ${eventDeclinedText}`;
-
-    return messageText;
+    return `rOndevu: ${title} randevu talebiniz onaylanamadi. Tarih: ${dateStr}.`;
   }
 }

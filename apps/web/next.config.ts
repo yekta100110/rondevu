@@ -507,6 +507,11 @@ const nextConfig = (phase: string): NextConfig => {
     async redirects() {
       const redirects = [
         {
+          source: "/b/:uid",
+          destination: "/booking/:uid",
+          permanent: false,
+        },
+        {
           source: "/settings/organizations",
           destination: "/settings/organizations/profile",
           permanent: false,

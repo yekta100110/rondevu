@@ -4,8 +4,9 @@ import type { ISmsProvider, SMSPayload, SMSResponse } from "./sms/types";
 export * from "./sms/types";
 
 import { normalizePhoneNumber } from "./normalizePhoneNumber";
+import { sanitizeSmsText } from "./sanitizeSmsText";
 
-export { normalizePhoneNumber };
+export { normalizePhoneNumber, sanitizeSmsText };
 
 /**
  * Twilio Programmable Messaging Provider
@@ -322,6 +323,7 @@ export function getSMSConfig() {
  * Universal SMS send entry point
  */
 export async function sendSMS(payload: SMSPayload): Promise<SMSResponse> {
+  const sanitizedBody = sanitizeSmsText(payload.body);
   const provider = SmsProviderFactory.getActiveProvider();
-  return provider.send(payload);
+  return provider.send({ ...payload, body: sanitizedBody });
 }
