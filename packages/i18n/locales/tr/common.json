@@ -3071,6 +3071,8 @@
   "choose_event_type_in_agent_setup": "Lütfen ajan kurulumunda bir etkinlik türü seçin.",
   "mark_as_no_show": "Katılmadı olarak işaretle",
   "unmark_as_no_show": "Katılmadı işaretini kaldır",
+  "no_show_badge": "Katılmadı",
+  "no_show_badge_with_count": "Katılmadı ({{count}})",
   "account_unlinked_success": "Hesap başarıyla bağlantısı kesildi",
   "account_unlinked_error": "Hesabın bağlantısını keserken bir hata oluştu",
   "travel_schedule": "Seyahat programı",

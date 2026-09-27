@@ -1,4 +1,5 @@
 import dayjs from "@calcom/dayjs";
+import { enrichBookingsWithHistoricalNoShow } from "@calcom/features/bookings/lib/enrichHistoricalNoShow";
 import getAllUserBookings from "@calcom/features/bookings/lib/getAllUserBookings";
 import { isTextFilterValue } from "@calcom/features/data-table/lib/utils";
 import type { DB } from "@calcom/kysely";
@@ -20,9 +21,15 @@ import type { TGetInputSchema } from "./get.schema";
 
 class PermissionCheckService {
   constructor(_prisma?: unknown) {}
-  async checkPermission(..._args: unknown[]) { return true; }
-  async hasPermission(..._args: unknown[]) { return true; }
-  async getTeamIdsWithPermission(..._args: unknown[]): Promise<number[]> { return []; }
+  async checkPermission(..._args: unknown[]) {
+    return true;
+  }
+  async hasPermission(..._args: unknown[]) {
+    return true;
+  }
+  async getTeamIdsWithPermission(..._args: unknown[]): Promise<number[]> {
+    return [];
+  }
 }
 
 type GetOptions = {
@@ -790,7 +797,14 @@ export async function getBookings({
   // Enrich attendees with user data
   const enrichedBookings = await enrichAttendeesWithUserData(bookings, kysely);
 
-  return { bookings: enrichedBookings, recurringInfo, totalCount };
+  // Enrich attendees with historical no-show count for organizer
+  const bookingsWithHistoricalNoShow = await enrichBookingsWithHistoricalNoShow({
+    bookings: enrichedBookings,
+    prisma,
+    organizerUserId: user.id,
+  });
+
+  return { bookings: bookingsWithHistoricalNoShow, recurringInfo, totalCount };
 }
 
 type EnrichedUserData = {

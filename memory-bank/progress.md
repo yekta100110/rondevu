@@ -8,6 +8,7 @@
 - All 20 packages present
 - Branding rename completed (user-facing logos, constants, metadata, titles)
 - All logo SVGs, favicons, app icons, metro tiles, and email logos regenerated with Cal Sans font and exact dimensions
+- Historical No-Show Counter Badge in Bookings View with batch credential cross-matching (email, phone, synthetic SMS email)
 
 ## What's Left to Build
 - [ ] Environment setup (`.env` from `.env.example`)

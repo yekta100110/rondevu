@@ -1,11 +1,17 @@
 # Active Context — rOndevu
 
 ## Current Focus
-- Fixed Runtime Bug: `ReferenceError: cancellationNoShowFeeNotAcknowledged is not defined` in `apps/web/components/booking/CancelBooking.tsx`
-- Restored `cancellationNoShowFeeNotAcknowledged` definition gating `canCancel`
-- 0 TypeScript errors verified via AST diagnostics and server compilation, Biome check passed (0 errors)
+- Lightweight Enhancement: Historical No-Show Counter Badge in Bookings View
+- Added batch past no-show calculation matching by email, phone, and synthetic SMS email
+- Displayed "Katılmadı" (or "Katılmadı (count)") badge in booking list cards and details drawer
+- 10 unit tests passing, tRPC compilation passed, Biome check passed
 
 ## Recent Changes (this session)
+-2. **Historical No-Show Counter Badge in Bookings View** —
+   - **Backend Batch Calculation:** Created `packages/features/bookings/lib/enrichHistoricalNoShow.ts` to batch query past no-shows (`Attendee.noShow === true`) under the organizer (`userId`) matching contact credentials (email, phone, synthetic SMS email `<digits>@sms.rondevu.org`, and canonical 10-digit Turkish phone formats). Prevents N+1 queries.
+   - **tRPC Integration:** Updated `packages/trpc/server/routers/viewer/bookings/get.handler.ts` to enrich booking attendees with `historicalNoShowCount: number`.
+   - **Frontend Badges:** Updated `apps/web/components/booking/BookingListItem.tsx` and `apps/web/modules/bookings/components/BookingDetailsSheet.tsx` to render the red `<Badge variant="red" size="sm" startIcon="eye-off">` next to attendee names displaying `"Katılmadı"` (if 1 prior no-show) or `"Katılmadı (${count})"` (if >1 prior no-shows).
+   - **Translations:** Added `no_show_badge` and `no_show_badge_with_count` to both `tr/common.json` and `en/common.json`.
 -1. **Runtime Fix in CancelBooking.tsx** — Restored `cancellationNoShowFeeNotAcknowledged` declaration in `apps/web/components/booking/CancelBooking.tsx`. Resolved runtime crash when rendering cancellation views (`/booking/[uid]?cancel=true`).
 0. **UI Polishing, Tatil Günleri View, Landing Page Copy & Terminology Standardization** —
    - **Out of Office Top Navigation:** Increased tab spacing and gap (`gap-4 sm:gap-6`, `whitespace-nowrap`), removed awkward overflow dot indicator from "Ofis Dışında (İzin & Acil Durum)" button, and prevented label wrapping.

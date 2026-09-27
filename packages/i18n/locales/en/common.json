@@ -3170,6 +3170,8 @@
   "choose_event_type_in_agent_setup": "Please choose an event type in the agent setup.",
   "mark_as_no_show": "Mark as no-show",
   "unmark_as_no_show": "Unmark no-show",
+  "no_show_badge": "No-show",
+  "no_show_badge_with_count": "No-show ({{count}})",
   "account_unlinked_success": "Account unlinked successfully",
   "account_unlinked_error": "There was an error unlinking the account",
   "travel_schedule": "Travel schedule",
