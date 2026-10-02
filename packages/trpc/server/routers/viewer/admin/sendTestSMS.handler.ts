@@ -10,7 +10,7 @@ type SendTestSMSOptions = {
 };
 
 export default async function sendTestSMSHandler({ input }: SendTestSMSOptions) {
-  const defaultBody = "rOndevu SMS Test Bildirimi: SMS altyapınız başarıyla çalışmaktadır.";
+  const defaultBody = "rOndevu SMS Test Bildirimi: SMS servisiniz başarıyla çalışmaktadır.";
   const body = input.message?.trim() || defaultBody;
 
   const result = await sendSMS({

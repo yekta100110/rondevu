@@ -11,7 +11,6 @@ import {
   ExternalLink,
   Globe,
   RefreshCw,
-  ShieldCheck,
   Video,
 } from "lucide-react";
 import { useState } from "react";
@@ -431,7 +430,7 @@ export function HeroBookingMockup() {
                   <CheckCircle2 className="size-6" />
                 </div>
 
-                <h3 className="font-bold font-cal text-emphasis text-xl sm:text-2xl">Toplantı planlandı</h3>
+                <h3 className="font-bold font-cal text-emphasis text-xl sm:text-2xl">Randevu planlandı</h3>
                 <p className="mt-1 text-xs text-subtle">
                   Herkese detayları içeren takvim davetiyesini e-posta ile gönderdik.
                 </p>
@@ -536,44 +535,6 @@ export function HeroBookingMockup() {
               </motion.div>
             )}
           </AnimatePresence>
-        </div>
-      </div>
-
-      {/* ========================================================================= */}
-      {/* AÇIKLAYICI ÖZELLİK NOTLARI — EKRANIN DIŞINDA (Arayüzü bozmadan net anlatım) */}
-      {/* ========================================================================= */}
-      <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3 text-xs">
-        <div className="flex items-start gap-2.5 rounded-xl border border-subtle bg-default/80 p-3 shadow-xs">
-          <ShieldCheck className="size-4 shrink-0 text-emphasis mt-0.5" />
-          <div>
-            <div className="font-semibold text-emphasis">Google & Apple Takvim Senkronu</div>
-            <div className="text-subtle text-[11px] leading-relaxed mt-0.5">
-              Alınan tüm randevular anında telefonunuzdaki Google ve Apple takviminize işlenir; hiçbir
-              görüşmeyi kaçırmazsınız.
-            </div>
-          </div>
-        </div>
-
-        <div className="flex items-start gap-2.5 rounded-xl border border-subtle bg-default/80 p-3 shadow-xs">
-          <CheckCircle2 className="size-4 shrink-0 text-emphasis mt-0.5" />
-          <div>
-            <div className="font-semibold text-emphasis">İletişim Doğrulama (OTP)</div>
-            <div className="text-subtle text-[11px] leading-relaxed mt-0.5">
-              E-posta veya telefon kodu doğrulanmadan randevu açılamaz; sahte taleplerle takviminiz
-              kilitlenmez.
-            </div>
-          </div>
-        </div>
-
-        <div className="flex items-start gap-2.5 rounded-xl border border-subtle bg-default/80 p-3 shadow-xs">
-          <Clock className="size-4 shrink-0 text-emphasis mt-0.5" />
-          <div>
-            <div className="font-semibold text-emphasis">Esnek İptal Kuralları</div>
-            <div className="text-subtle text-[11px] leading-relaxed mt-0.5">
-              "En geç 12 saat kala iptal edilebilir" gibi belirleyeceğiniz prensiplere göre randevu iptali
-              yönetilir.
-            </div>
-          </div>
         </div>
       </div>
     </div>

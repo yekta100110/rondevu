@@ -9,6 +9,20 @@
 - Branding rename completed (user-facing logos, constants, metadata, titles)
 - All logo SVGs, favicons, app icons, metro tiles, and email logos regenerated with Cal Sans font and exact dimensions
 - Historical No-Show Counter Badge in Bookings View with batch credential cross-matching (email, phone, synthetic SMS email)
+- Homepage streamlined and simplified: all internal dashboard/admin mockups removed; end-user booking flow simulator (`HeroBookingMockup.tsx`) made the single visual focal point
+- Removed all 3 highlight boxes under booking mockup (zero clutter under the live booking widget)
+- Removed all redundant pills, badges, and tags: Hero top pill, ProcessSteps pill, WhatsApp/Instagram Bio tags, SMS/Takvim subtext, Features pill, Pricing pill, and plan card badges
+- Removed billing cycle toggle switch; pricing cards displayed side-by-side with on-demand collapsible plan features list
+- Independent pricing card layout: grid uses `items-start` so expanding one card's features never vertically stretches the other card emptily
+- Simplified plan feature lists down to essential counts (6 monthly, 4 yearly advantages), removing dummy and filler items
+- Natural Turkish FAQ rewrite: all 8 Q&As rewritten in friendly, conversational Turkish, eliminating jargon ("anahtar teslim", "güvenli SSL sertifikası", "Out of Office")
+- Completely eliminated technical "OTP" and "No-Show" terms across feature cards, plan lists, FAQ questions, and metadata
+- Added 3-Step Process Flow section (`ProcessSteps.tsx`: Randevu Sayfanı Oluştur, Takvimini Bağla & Linkini Paylaş, Takvimin Dolsun)
+- Reduced "Tüm Gelişmiş Özellikler Standart" section to exactly 4 essential capability cards (2x2 grid)
+- Project-wide removal of "Altyapı" and translation jargon; everyday clear Turkish descriptions (max 1-2 sentences)
+- Default dark mode established across App & Pages router with zero-flash synchronous script (`defaultTheme="dark"`, `enableSystem={false}`)
+- Dynamic admin contact information live synchronization preserved
+- Local development server running live at `http://localhost:3000` with 0 commits pushed
 
 ## What's Left to Build
 - [ ] Environment setup (`.env` from `.env.example`)
@@ -18,8 +32,8 @@
 - [ ] Deployment configuration
 
 ## Current Status
-**Phase**: Production Ready & Audited
-**Last Updated**: 2026-09-25
+**Phase**: Homepage Simplification, 3-Step Flow & Dark Mode Live on Localhost
+**Last Updated**: 2026-10-03
 
 ## Known Issues
 - TypeScript build errors ignored (`ignoreBuildErrors: true` in next.config)
@@ -149,3 +163,8 @@
       - Updated `getUserAvailability.ts` to set `busyTimes = []` on external calendar fetch failure, preserving user availability date ranges.
       - Set `_silentCalendarFailures: true` by default in `slots/util.ts` for public slot queries.
     - **Validation**: 29 unit tests passed in Google Calendar app suite, 15 tests passed in busyTimes suite, `Booker.test.tsx` passed, tRPC server type check compiled cleanly with exit 0, and Biome lint check clean.
+33. Independent Pricing Card Layout, Feature List Count Simplification, and Natural Turkish FAQ Rewrite:
+    - **Independent Pricing Card Layout**: Replaced `items-stretch` with `items-start` on the pricing cards CSS grid container in `apps/web/modules/home/home-view.tsx`. Expanding "Dahil Olan Özellikler" in one card now preserves the other card at its own compact height without creating empty vertical space.
+    - **Feature List Count Simplification**: Reduced `monthlyFeatures` from 11 items to 6 concrete, essential features (Sınırsız randevu, Google/Apple Takvim eşitleme, SMS/e-posta hatırlatma, SMS müşteri doğrulama, Özel web adresi bağlama, İzin günleri yönetimi). Reduced `yearlyFeatures` to 4 distinct advantages, completely eliminating dummy/filler entries.
+    - **Natural Turkish FAQ Rewrite**: Completely rewrote all 8 questions and answers in `apps/web/modules/home/components/FaqSection.tsx` into plain, friendly, conversational Turkish. Fully eradicated confusing technical jargon such as "anahtar teslim", "güvenli SSL sertifikası", "Out of Office (OOO)", and "entegrasyonu nasıl çalışıyor". Removed redundant top pill.
+    - **Validation**: Biome lint & format passed with 0 errors, Vitest passed (19/19 tests), and UI verified via browser subagent.

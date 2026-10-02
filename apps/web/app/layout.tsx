@@ -10,6 +10,7 @@ import Script from "next/script";
 import type React from "react";
 
 import "../styles/globals.css";
+import process from "node:process";
 import { AppRouterI18nProvider } from "./AppRouterI18nProvider";
 import { Providers } from "./providers";
 import { SpeculationRules } from "./SpeculationRules";
@@ -116,8 +117,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <head nonce={nonce}>
         <style>{`
           :root {
-            --font-sans: ${interFont.style.fontFamily.replace(/\'/g, "")}, system-ui;
-            --font-cal: ${calFont.style.fontFamily.replace(/\'/g, "")};
+            --font-sans: ${interFont.style.fontFamily.replace(/'/g, "")}, system-ui;
+            --font-cal: ${calFont.style.fontFamily.replace(/'/g, "")};
           }
         `}</style>
         <script
@@ -127,13 +128,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             __html: `(function() {
               try {
                 var stored = localStorage.getItem("app-theme");
-                var isDark = false;
-                if (stored === "dark") {
-                  isDark = true;
-                } else if (stored === "light") {
+                var isDark = true;
+                if (stored === "light") {
                   isDark = false;
-                } else {
-                  isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                } else if (stored === "dark") {
+                  isDark = true;
                 }
                 if (isDark) {
                   document.documentElement.classList.add("dark");
@@ -154,7 +153,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         )}
       </head>
       <body
-        className="dark:bg-default bg-subtle antialiased"
+        className="dark:bg-default bg-default antialiased"
         style={
           isEmbed
             ? {
@@ -175,13 +174,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <IconSprites />
         <SpeculationRules
           // URLs In Navigation
-          prerenderPathsOnHover={[
-            "/event-types",
-            "/availability",
-            "/bookings/upcoming",
-            "/teams",
-            "/apps",
-          ]}
+          prerenderPathsOnHover={["/event-types", "/availability", "/bookings/upcoming", "/teams", "/apps"]}
         />
 
         <Providers isEmbed={isEmbed} nonce={nonce} country={country}>

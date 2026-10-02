@@ -12,7 +12,7 @@ import UsersTable from "./components/UsersTable";
 export default function SMSAdminView() {
   const [testPhone, setTestPhone] = useState("+905521191987");
   const [testMessage, setTestMessage] = useState(
-    "rOndevu SMS Test Bildirimi: SMS altyapınız başarıyla çalışmaktadır."
+    "rOndevu SMS Test Bildirimi: SMS servisiniz başarıyla çalışmaktadır."
   );
   const [testResult, setTestResult] = useState<{
     success: boolean;
@@ -125,7 +125,7 @@ export default function SMSAdminView() {
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-lg font-semibold text-emphasis">SMS Altyapı ve Sağlayıcı Durumu</h3>
+              <h3 className="text-lg font-semibold text-emphasis">SMS Servis ve Sağlayıcı Durumu</h3>
               {isConfigLoading ? (
                 <Badge variant="gray">Kontrol ediliyor...</Badge>
               ) : smsConfig?.mode === "production" ? (

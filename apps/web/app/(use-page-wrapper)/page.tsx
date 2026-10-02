@@ -9,7 +9,7 @@ import { HomeView } from "~/home/home-view";
 
 const generateMetadata = async (): Promise<Metadata> => {
   const baseMetadata = await _generateMetadata(
-    () => `${APP_NAME} - Herkes İçin Randevu Altyapısı`,
+    () => `${APP_NAME} - Herkes İçin Randevu Sistemi`,
     () =>
       "Müsait saatlerinizi belirleyin, kurallarınızı koyun; randevu alma, doğrulama, SMS hatırlatma ve takvim senkronizasyonunu tek merkezden yönetin.",
     true,
@@ -20,14 +20,14 @@ const generateMetadata = async (): Promise<Metadata> => {
   return {
     ...baseMetadata,
     keywords: [
-      "herkes için randevu altyapısı",
-      "randevu altyapısı",
+      "herkes için randevu sistemi",
+      "randevu platformu",
       "online randevu",
       "danışan randevu sistemi",
       "Google Takvim randevu",
       "Google Meet randevu",
       "biyografi randevu linki",
-      "no-show koruması",
+      "randevu güvenliği",
       "komisyonsuz randevu",
       APP_NAME,
     ],
@@ -37,7 +37,7 @@ const generateMetadata = async (): Promise<Metadata> => {
     },
     openGraph: {
       ...baseMetadata.openGraph,
-      title: `${APP_NAME} - Herkes İçin Randevu Altyapısı`,
+      title: `${APP_NAME} - Herkes İçin Randevu Sistemi`,
       description:
         "Müsait saatlerinizi belirleyin, kurallarınızı koyun; randevu alma, doğrulama, SMS hatırlatma ve takvim senkronizasyonunu tek merkezden yönetin.",
       locale: "tr_TR",

@@ -1,10 +1,7 @@
+import { EmbedTheme } from "@calcom/features/embed/lib/constants";
 import type { ReadonlyURLSearchParams } from "next/navigation";
 import { describe, expect, it } from "vitest";
-
-import { EmbedTheme } from "@calcom/features/embed/lib/constants";
-
-import { getThemeProviderProps } from "../getThemeProviderProps";
-import { getUniqueIdentifierForBookingPage } from "../getThemeProviderProps";
+import { getThemeProviderProps, getUniqueIdentifierForBookingPage } from "../getThemeProviderProps";
 
 describe("getThemeProviderProps", () => {
   const fnArg = {
@@ -26,6 +23,8 @@ describe("getThemeProviderProps", () => {
       key: expectedStorageKey,
       nonce: "test-nonce",
       enableColorScheme: false,
+      defaultTheme: "dark",
+      enableSystem: false,
     };
 
     it("should return app theme configuration when not in booking page or embed mode", () => {
@@ -34,8 +33,6 @@ describe("getThemeProviderProps", () => {
         pathname: "/test",
       });
       expect(result).toEqual({
-        forcedTheme: undefined,
-        enableSystem: true,
         ...appThemeExpectedProps,
       });
     });
@@ -51,7 +48,9 @@ describe("getThemeProviderProps", () => {
       });
 
       expect(result).toEqual({
-        ...appThemeExpectedProps,
+        attribute: "class",
+        nonce: "test-nonce",
+        enableColorScheme: false,
         storageKey: "forcedThemeKey",
         key: "forcedThemeKey",
         forcedTheme: "light",
@@ -71,8 +70,6 @@ describe("getThemeProviderProps", () => {
 
       expect(result).toEqual({
         ...appThemeExpectedProps,
-        forcedTheme: undefined,
-        enableSystem: true,
       });
     });
   });
@@ -82,6 +79,8 @@ describe("getThemeProviderProps", () => {
       attribute: "class",
       nonce: "test-nonce",
       enableColorScheme: false,
+      defaultTheme: "dark",
+      enableSystem: false,
     };
 
     it("should handle booking page theme", () => {
@@ -100,8 +99,6 @@ describe("getThemeProviderProps", () => {
         ...bookingPageExpectedProps,
         storageKey: expectedStorageKey,
         key: expectedStorageKey,
-        forcedTheme: undefined,
-        enableSystem: true,
       });
     });
 
@@ -129,8 +126,8 @@ describe("getThemeProviderProps", () => {
       attribute: "class",
       nonce: "test-nonce",
       enableColorScheme: false,
-      enableSystem: true,
-      forcedTheme: undefined,
+      defaultTheme: "dark",
+      enableSystem: false,
     };
 
     it("should handle embed mode with default theme", () => {

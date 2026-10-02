@@ -164,7 +164,7 @@ export function PrivacyView({ initialContact }: PrivacyViewProps = {}) {
                 <p className="mt-2 text-xs leading-relaxed text-subtle">
                   Hesap Sahiplerinin randevu sayfaları üzerinden randevu oluşturan Katılımcıların ilettiği
                   randevu bilgileri (ad, telefon numarası, randevu notları, randevu saati) bakımından Rondevu
-                  yalnızca teknik yazılım altyapısı sağlayan <strong>Veri İşleyen</strong> konumundadır. Bu
+                  yalnızca teknik yazılım hizmeti sağlayan <strong>Veri İşleyen</strong> konumundadır. Bu
                   verilerin asıl sahibi ve Veri Sorumlusu ilgili randevu sahibi (Host) uzmandır.
                 </p>
               </div>
@@ -218,7 +218,7 @@ export function PrivacyView({ initialContact }: PrivacyViewProps = {}) {
             <div className="flex items-center gap-2">
               <ShieldCheck className="h-5 w-5 text-emphasis" />
               <h2 className="font-semibold text-lg text-emphasis sm:text-xl">
-                3. Alt İşleyenler ve Üçüncü Taraf Altyapı Sağlayıcılar (Subprocessors)
+                3. Alt İşleyenler ve Üçüncü Taraf Servis Sağlayıcılar (Subprocessors)
               </h2>
             </div>
             <p className="text-sm leading-relaxed text-subtle">
@@ -231,7 +231,7 @@ export function PrivacyView({ initialContact }: PrivacyViewProps = {}) {
                 <div className="flex items-center justify-between">
                   <span className="font-semibold text-emphasis text-sm">Twilio Inc.</span>
                   <span className="rounded bg-muted/40 px-2 py-0.5 text-xs text-subtle">
-                    SMS & OTP Altyapısı
+                    SMS & OTP Servisi
                   </span>
                 </div>
                 <p className="mt-2 text-xs leading-relaxed text-subtle">
@@ -252,7 +252,7 @@ export function PrivacyView({ initialContact }: PrivacyViewProps = {}) {
                 </div>
                 <p className="mt-2 text-xs leading-relaxed text-subtle">
                   SSL/TLS veri şifrelemesi, DNS yönlendirmesi, bot/spam filtreleme (Cloudflare Turnstile) ve
-                  DDoS saldırı koruması sağlamak amacıyla teknik altyapı sağlayıcısı olarak görev yapar.
+                  DDoS saldırı koruması sağlamak amacıyla teknik servis sağlayıcısı olarak görev yapar.
                 </p>
               </div>
             </div>

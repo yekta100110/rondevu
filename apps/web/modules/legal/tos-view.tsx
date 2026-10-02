@@ -153,7 +153,7 @@ export function TosView({ initialContact }: TosViewProps = {}) {
             <p className="text-sm leading-relaxed text-subtle">
               Rondevu, bireysel profesyonellerin ve kuruluşların müsaitlik takvimlerini yönetmelerini, randevu
               kabul etmelerini ve SMS/e-posta aracılığıyla bildirim ve doğrulama süreçlerini otomatize
-              etmelerini sağlayan bağımsız bir <strong>yazılım altyapısıdır (SaaS)</strong>.
+              etmelerini sağlayan bağımsız bir <strong>yazılım platformudur (SaaS)</strong>.
             </p>
             <div className="rounded-xl border border-subtle bg-muted/20 p-4 text-xs leading-relaxed text-subtle">
               <strong>Önemli Uyarı:</strong> Rondevu; randevu veren uzmanlar ile randevu alan
@@ -224,7 +224,7 @@ export function TosView({ initialContact }: TosViewProps = {}) {
               </h2>
             </div>
             <p className="text-sm leading-relaxed text-subtle">
-              Rondevu altyapısı ve SMS/OTP doğrulama sistemleri yalnızca iyi niyetli ve meşru randevu
+              Rondevu sistemi ve SMS/OTP doğrulama özellikleri yalnızca iyi niyetli ve meşru randevu
               organizasyonu amaçlarıyla kullanılabilir.
             </p>
             <div className="space-y-3">
@@ -254,7 +254,7 @@ export function TosView({ initialContact }: TosViewProps = {}) {
               </div>
               <p className="text-xs text-subtle">
                 <strong>Askıya Alma ve Fesih Hakkı:</strong> Yukarıda belirtilen kurallara aykırı hareket eden
-                veya SMS altyapısını kötüye kullanan kullanıcıların hesapları ve randevu sayfaları, Rondevu
+                veya SMS sistemini kötüye kullanan kullanıcıların hesapları ve randevu sayfaları, Rondevu
                 tarafından herhangi bir ön bildirime veya tazminata gerek olmaksızın{" "}
                 <strong>derhal dondurulabilir veya kalıcı olarak kapatılabilir</strong>.
               </p>

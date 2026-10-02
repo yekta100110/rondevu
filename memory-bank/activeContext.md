@@ -1,11 +1,78 @@
 # Active Context — rOndevu
 
 ## Current Focus
-- Root Cause Investigation & Fix: October & Future Months Showing "No Availability" ("Ekim ayında müsaitlik yok")
-- Resolved external calendar authentication failure (`invalid_grant`) triggering total calendar slot wipeout
-- Validated via unit tests, tRPC server type check, and Biome lint check
+- rOndevu Homepage Simplification, 3-Step Process Flow, 4 Standard Feature Cards & Default Dark Mode
+- Single UI Focal Point: Minimalist End-User Booking Flow (`HeroBookingMockup.tsx`) with zero bottom boxes
+- Clean Typography & Spacing: All redundant pills, badges, subtext, and billing toggles removed
+- On-Demand Collapsible Plan Features (`Dahil Olan Özellikler ˅`) in Pricing Cards
+- Full elimination of "OTP" and "No-Show" terms in favor of clear Turkish descriptions
+- Local development server running live at `http://localhost:3000` for user inspection (0 commits pushed)
 
 ## Recent Changes (this session)
+-7. **Independent Pricing Card Layout, Feature List Simplification & Natural Turkish FAQ Rewrite** —
+   - **Independent Pricing Card Expansion (`items-start`):**
+     - Decoupled card heights in `apps/web/modules/home/home-view.tsx` by setting `items-start` on the CSS grid container.
+     - Expanding "Dahil Olan Özellikler" on the Monthly card preserves the Yearly card at its own compact height without empty stretching.
+   - **Feature List Reduction & Dummy Item Elimination:**
+     - Reduced `monthlyFeatures` to 6 concrete items: Sınırsız randevu, Google & Apple Takvim eşitleme, SMS & e-posta hatırlatma, SMS müşteri doğrulama, Kendi web adresinizi bağlama, İzin günleri yönetimi.
+     - Reduced `yearlyFeatures` to 4 distinct advantages: Aylık plandaki tüm özellikler, 2 ay ücretsiz kullanım, 12 ay sabit fiyat garantisi, Öncelikli destek ve kurulum.
+   - **Natural Turkish FAQ Rewrite:**
+     - Overhauled all 8 FAQ Q&As in `apps/web/modules/home/components/FaqSection.tsx` into plain, friendly conversational Turkish.
+     - Fully removed "anahtar teslim", "güvenli SSL sertifikası", "Out of Office (OOO)", and "entegrasyonu nasıl çalışıyor".
+     - Removed redundant top pill `"Merak Edilenler"`.
+   - **Verification:**
+     - Visual confirmation via browser subagent screenshots (`pricing_cards_final_state_1790980917514.png`, `faq_section_natural_turkish_answers_1790980980542.png`).
+     - Biome formatting and linting clean, Vitest passing (19/19).
+-6. **Redundant Text & Badge Cleanup, Collapsible Features, and OTP/No-Show Elimination** —
+   - **Badge & Pill Removals:**
+     - Removed Hero section top pill (`"Modern, Doğrulanmış ve Güvenli Randevu Deneyimi"`).
+     - Removed ProcessSteps top pill (`"3 Adımda Kolay Başlangıç"`).
+     - Removed Step 02 `"WhatsApp Bio"` & `"Instagram Bio"` badges (retained clean Google & Apple calendar bar).
+     - Removed Step 03 subtext (`"SMS & Takvim davetiyesi otomatik iletildi"`), leaving clean confirmation check card.
+     - Removed Features section top pill (`"Temel Özellikler"`).
+     - Removed Pricing section top pill (`"Şeffaf Fiyatlandırma"`).
+     - Removed Monthly card badge (`"Kısıtlama Yok · Taahhütsüz"`) and Yearly badge (`"Kısıtlama Yok · 2 Ay Hediye"`).
+   - **Hero Booking Mockup Cleanliness:**
+     - Removed all 3 highlight boxes below the mockup card (*Google & Apple Takvim Senkronu*, *İletişim Doğrulama (OTP)*, *Esnek İptal Kuralları*).
+   - **Pricing Section & Collapsible Features Accordion:**
+     - Removed billing toggle switch buttons (`Aylık Faturalandırma / Yıllık Faturalandırma`) to keep side-by-side cards direct and uncluttered.
+     - Replaced huge static feature lists with on-demand collapsible button: `"Dahil Olan Özellikler (11) ˅"` / `"Dahil Olan Özellikler (6) ˅"`, expanding/collapsing smoothly.
+   - **Elimination of "OTP" and "No-Show" Terms:**
+     - In Card 3: Replaced `"SMS ve OTP tek kullanımlık kod..."` with `"SMS doğrulama koduyla sahte rezervasyonlar engellenir, takviminiz güvenle korunur."`
+     - In plan features: Replaced `"Telefon ve e-posta doğrulama (OTP koruması)"` with `"SMS ve e-posta doğrulama koruması"`.
+     - In plan features: Replaced `"No-show ('Katılmadı') danışan takibi & koruması"` with `"Randevusuna katılmayan danışan takibi ve koruması"`.
+     - In FAQ Q3 & Q4: Removed `(No-Show)` and `(OTP)`.
+     - In `page.tsx` metadata: Replaced `"no-show koruması"` with `"randevu güvenliği"`.
+-5. **Homepage Simplification, 3-Step Process Flow, 4 Feature Cards & Jargon Cleanup** —
+   - **Default Dark Mode (`defaultTheme="dark"`, `enableSystem={false}`):**
+     - Updated `apps/web/lib/getThemeProviderProps.ts` and `apps/web/lib/app-providers.tsx` to set `defaultTheme: "dark"` and `enableSystem: false`.
+     - Updated fast synchronous theme initialization script in `<head>` (`apps/web/app/layout.tsx`) so new visits default directly to `dark` mode without flash/flicker.
+     - Updated `apps/web/lib/__tests__/getThemeProviderProps.test.ts` to match new default dark mode configuration (19/19 tests passing).
+   - **Single UI Focal Point & Removal of Admin Mockups:**
+     - Completely removed all complex dashboard/admin mockups, management tables, and internal screenshots.
+     - Kept the end-user **"Randevu Alma Akışı"** (`HeroBookingMockup.tsx`) as the single visual UI focal point on the entire landing page.
+     - Updated Step 3 header to `"Randevu planlandı"`.
+   - **New Section: 3-Step Process Flow (`ProcessSteps.tsx`):**
+     - Added horizontal 3-step process flow right below the Hero section (`#how-it-works`):
+       - **Adım 01:** "Randevu Sayfanı Oluştur" (`rondevu.org/adiniz` interactive copy pill).
+       - **Adım 02:** "Takvimini Bağla & Linkini Paylaş" (Google & Apple Takvim indicator + WhatsApp & Instagram Bio badges).
+       - **Adım 03:** "Takvimin Dolsun" (Booking confirmation & notification alert badge).
+     - Linked "Nasıl Çalışır?" in both header navbar and footer menu.
+   - **"Tüm Gelişmiş Özellikler Standart" (Reduced to Exactly 4 Cards):**
+     - 1. **Google & Apple Takvim Eşitleme:** Çift yönlü anlık senkronizasyon, sıfır saat çakışması.
+     - 2. **SMS, E-posta & WhatsApp Hatırlatma:** Müşteriye otomatik hatırlatma, unutulan randevulara son.
+     - 3. **Müşteri Doğrulama & Sahte Randevu Koruması:** SMS/OTP doğrulamasıyla sahte rezervasyonları engelleme.
+     - 4. **Kendi Özel Alan Adınız:** Kendi markanız ve alan adınız altında kesintisiz randevu alma.
+     - All card descriptions restricted to 1-2 concise sentences.
+   - **"Altyapı" and Jargon Elimination:**
+     - Replaced all occurrences of "Altyapı" with "Sistem", "Platform" or functional terms across `page.tsx`, `tos/page.tsx`, `tos-view.tsx`, `privacy-view.tsx`, `sms-view.tsx`, and `common.json`.
+     - Cleaned translation/technical jargon like "yapay plan kısıtlamaları" and "gelişmiş rezervasyon altyapı motoru" into clear everyday Turkish.
+     - Condensed all 8 FAQ answers in `FaqSection.tsx` to 1-2 short sentences.
+   - **Dynamic Admin Contact & Local Verification:**
+     - Preserved dynamic admin contact configuration (`trpc.viewer.public.getPlanContact` + fallback).
+     - Verified dev server running at `http://localhost:3000` with 200 OK.
+     - Browser subagent verified dark mode, booking mockup transitions, copy interaction, feature cards, and accordion toggling.
+     - Strict rule respected: 0 commits pushed to remote repository.
 -3. **Fix: October Availability Outage & External Calendar Failure Handling** —
    - **Root Cause Identified:** User 1 had an active Google Calendar integration (`SelectedCalendar` id 1, `Credential` id 2 for `rondevu.org@gmail.com`) whose OAuth refresh token was revoked (`invalid_grant`).
    - In `packages/app-store/_utils/oauth/OAuthManager.ts`, failed refresh generates `{ myFetchError: "invalid_grant" }`.

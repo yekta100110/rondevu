@@ -2,7 +2,7 @@
 
 import classNames from "@calcom/ui/classNames";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, HelpCircle } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
 interface FaqItem {
@@ -15,44 +15,44 @@ export function FaqSection() {
 
   const faqs: FaqItem[] = [
     {
-      question: "Acil bir hastalık veya kaza durumunda (Out of Office) randevuları nasıl yönetirim?",
+      question: "Acil bir durumda veya izne çıktığımda randevuları nasıl yönetirim?",
       answer:
-        "Panelinizden 'Out of Office' (Acil Durum / Hastalık) modunu açtığınızda, seçtiğiniz tarihteki tüm randevular anında iptal edilir. Sistem, randevu sahiplerine sizin belirlediğiniz bir açıklama mesajını (örneğin 'Doktor rahatsızlığı nedeniyle randevunuz iptal edilmiştir') SMS ve e-posta ile otomatik ve toplu olarak gönderir.",
+        "İzin modunu açtığınızda o günkü randevularınız iptal edilir ve danışanlarınıza açıklama mesajınız otomatik iletilir.",
     },
     {
-      question: "Kendi özel web sitemin alan adını (ör. doktorayse.com) bağlayabilir miyim?",
+      question: "Kendi web sitemin adresini (ör. doktorayse.com) bağlayabilir miyim?",
       answer:
-        "Evet. Sizin karmaşık DNS ayarlarıyla veya teknik detaylarla uğraşmanıza gerek yok; kullanmak istediğiniz alan adını bize iletmeniz yeterli. Alan adı yönlendirmesini, sistem bağlantısını ve güvenli SSL sertifikası kurulumunu anahtar teslim olarak biz yapıyoruz. Randevu arayüzünüz doğrudan kendi markanız veya web sitenizin bir parçası (örneğin randevu.kliniginiz.com veya doktorayse.com) olarak prestijle çalışır.",
+        "Evet, kendi alan adınızı sisteme bağlayabilir ve randevu sayfanızı kendi adresiniz üzerinden kesintisiz kullanabilirsiniz.",
     },
     {
-      question: "Randevusuna mazeretsiz gelmeyen (No-Show) kişileri nasıl engellerim?",
+      question: "Randevusuna gelmeyen kişileri nasıl takip ederim?",
       answer:
-        "Randevusuna katılmayan danışanları panelinizden tek tıkla 'Katılmadı' olarak işaretleyebilirsiniz. Bu kişi ileride aynı telefon numarası veya e-posta adresiyle tekrar randevu almaya kalktığında sistem sizi önceden uyarır ve onayınıza sunar.",
+        "Gelmeyen danışanları tek tıkla işaretleyebilirsiniz; aynı kişi tekrar randevu almak istediğinde sistem sizi önceden uyarır.",
     },
     {
-      question: "Danışanların telefon veya e-posta doğrulaması (OTP) yapması neden önemli?",
+      question: "Danışanların telefon veya e-posta doğrulaması yapması neden gerekli?",
       answer:
-        "İnternet ortamında sahte numaralarla veya yanlış yazılan e-postalarla takvimin kilitlenmesi sık yaşanan bir sorundur. Sistemimiz, randevu onaylanmadan önce ilgili numaraya/e-postaya tek kullanımlık doğrulama kodu gönderir; böylece sadece gerçek ve ulaşılabilir danışanlar takviminizden yer alabilir.",
+        "Randevu öncesi telefona doğrulama kodu gönderilerek sahte veya hatalı numaralarla takviminizin doldurulması önlenir.",
     },
     {
-      question: "Google Takvim veya Apple Calendar entegrasyonu nasıl çalışıyor?",
+      question: "Google Takvim veya Apple Calendar bağlantısı nasıl çalışıyor?",
       answer:
-        "Oluşturulan tüm randevular anlık olarak Google Takvim ve Apple Calendar uygulamanıza aktarılır; görüşmelerinizi doğrudan kendi takviminizden takip edersiniz.",
+        "Alınan tüm randevular anında telefonunuzdaki takvime işlenir, böylece saat çakışması yaşamazsınız.",
     },
     {
-      question: "Haftalık veya aylık periyodik seanslar (randevu abonelikleri) nasıl çalışır?",
+      question: "Haftalık veya aylık periyodik randevular oluşturabilir miyim?",
       answer:
-        "Düzenli terapi, diyet kontrolü veya danışmanlık alan danışanlarınız için yinelenen randevu planı tanımlayabilirsiniz. Danışan her hafta tekrar saat aramak zorunda kalmaz; belirlenen gün ve saatte randevuları otomatik açılır ve her seans öncesi bildirimler iletilir.",
+        "Evet, düzenli danışanlarınız için haftalık veya aylık yinelenen seanslar tanımlayabilir; her randevu öncesi otomatik hatırlatma iletebilirsiniz.",
     },
     {
-      question: "Kurulumu tek başıma mı yapmak zorundayım, teknik bilgi gerekiyor mu?",
+      question: "Sistemi kullanmak için teknik bilgi gerekiyor mu?",
       answer:
-        "Hayır. Sistemde kesinlikle yalnız bırakılmıyorsunuz. Üyeliğinizin ardından çalışma saatlerinizi, özel tatil günlerinizi, takvim bağlantılarınızı ve varsa özel alan adınızı uzman ekibimizle birlikte birebir yapılandırıyoruz.",
+        "Hayır, çalışma saatlerinizi ve takviminizi dakikalar içinde ayarlayabilirsiniz. İhtiyaç duyduğunuz her an ekibimiz destek vermeye hazırdır.",
     },
     {
-      question: "Farklı paketleriniz, özellik kısıtlamalı planlarınız veya gizli ek ücretler var mı?",
+      question: "Randevu başına komisyon veya gizli ek bir ücret var mı?",
       answer:
-        "Hayır. rOndevu'da yapay özellik kısıtlamalı alt/üst paketler bulunmaz. 'Tek fiyata premium erişim' standarttır; yani tüm randevu ve etkinlik türleri, SMS ve e-posta bildirimleri, takvim senkronizasyonları, No-Show ve Out of Office korumaları dahil tüm gelişmiş özellikler her kullanıcımıza eksiksiz açıktır. Randevu başı komisyon veya gizli ücret yoktur; yalnızca seçtiğiniz periyodun sabit bedelini ödersiniz.",
+        "Hayır, randevu başına komisyon veya gizli ücret yoktur. Tüm özellikler seçtiğiniz planda eksiksiz olarak kullanıma açıktır.",
     },
   ];
 
@@ -64,10 +64,6 @@ export function FaqSection() {
     <section aria-labelledby="faq-title" className="border-subtle/80 border-t py-16 sm:py-24">
       <div className="mx-auto max-w-3xl">
         <div className="text-center mb-12">
-          <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-subtle bg-muted/40 px-3 py-1 text-xs font-medium text-subtle">
-            <HelpCircle className="size-3.5 text-emphasis" />
-            <span>Merak Edilenler</span>
-          </div>
           <h2 id="faq-title" className="font-bold font-cal text-3xl text-emphasis sm:text-4xl tracking-tight">
             Sıkça Sorulan Sorular
           </h2>
