@@ -330,15 +330,15 @@ describe("Middleware Integration Tests", () => {
       expect(cspHeader).toContain("script-src");
     });
 
-    it("should not add CSP headers to non-login pages", async () => {
+    it("should add a report-only CSP header to non-enforced pages", async () => {
       const req = createTestRequest({
         url: `${WEBAPP_URL}/team/test`,
       });
 
       const res = await callProxy(req);
-      const cspHeader = getHeader(res, "content-security-policy");
+      const cspHeader = getHeader(res, "content-security-policy-report-only");
 
-      expect(cspHeader).toBeNull();
+      expect(cspHeader).toContain("default-src");
     });
 
     it("should add x-csp-status when CSP_POLICY not set", async () => {

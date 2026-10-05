@@ -34,3 +34,18 @@ Thumbs.db
 
 # Examples and docs
 docs
+
+# Local design references and retired marketing experiments
+example
+scratch
+apps/web/public/interfaces
+apps/web/public/cal_files/beta_data
+apps/web/public/cal_files/logos
+apps/web/public/cal_files/*.avif
+apps/web/public/cal_files/*.webp
+apps/web/public/cal_files/*.svg
+apps/web/public/cal_files/*.js
+apps/web/public/cal_files/*.mjs
+apps/web/public/cal_files/*.gz
+apps/web/public/cal_files/beta.htm
+apps/web/public/cal_files/css.css

@@ -62,7 +62,20 @@ const isPagePathRequest = (url: URL) => {
 };
 
 const shouldEnforceCsp = (url: URL) => {
-  return url.pathname.startsWith("/auth/login") || url.pathname.startsWith("/login");
+  return (
+    url.pathname === "/" ||
+    url.pathname === "/pricing" ||
+    url.pathname.startsWith("/auth/login") ||
+    url.pathname.startsWith("/login")
+  );
+};
+
+const isCspEnabled = () => {
+  return (
+    Boolean(process.env.CSP_POLICY) ||
+    process.env.NODE_ENV === "production" ||
+    process.env.CALCOM_ENV === "production"
+  );
 };
 
 const proxy = async (req: NextRequest): Promise<NextResponse<unknown>> => {
@@ -138,7 +151,7 @@ const contentSecurityPolicy = {
     return res;
   },
   addRequestHeaders: ({ req }: { req: NextRequest }) => {
-    if (!process.env.CSP_POLICY) {
+    if (!isCspEnabled()) {
       return req;
     }
     const isCspApplicable = isPagePathRequest(req.nextUrl);
@@ -163,7 +176,7 @@ function enrichRequestWithHeaders({ req }: { req: NextRequest }) {
 }
 
 export const config = {
-  matcher: ["/auth/login", "/login", "/apps/installed", "/auth/logout", "/:path*/embed", "/availability", "/api/auth/signup"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };
 
 export default proxy;

@@ -1,14 +1,162 @@
 # Active Context — rOndevu
 
-## Current Focus
-- rOndevu Homepage Simplification, 3-Step Process Flow, 4 Standard Feature Cards & Default Dark Mode
-- Single UI Focal Point: Minimalist End-User Booking Flow (`HeroBookingMockup.tsx`) with zero bottom boxes
-- Clean Typography & Spacing: All redundant pills, badges, subtext, and billing toggles removed
-- On-Demand Collapsible Plan Features (`Dahil Olan Özellikler ˅`) in Pricing Cards
-- Full elimination of "OTP" and "No-Show" terms in favor of clear Turkish descriptions
-- Local development server running live at `http://localhost:3000` for user inspection (0 commits pushed)
+- **Ana Sayfa Adım ve Özellik Kartı Hareketleri (2026-10-05):**
+  - Özgün Framer exportundaki 2. adımın müsaitlik toggle/saat vurgusu ve 3. adımın görüşme ekranı hareketi yeniden etkinleştirildi.
+  - Özellik kartlarında takvim görevleri sırayla vurgulanır; SMS/e-posta kartındaki üç bildirim kademeli görünür. Diğer sabit önizlemeler hafif, farklı gecikmeli yüzer hareket kullanır.
+  - Hareket azaltma tercihi tüm bu döngüleri devre dışı bırakır.
 
-## Recent Changes (this session)
+- **Hero Hizalama ve Takvim Önizleme Döngüsü (2026-10-05):**
+  - Hero’nun desktop üst spacer’ı 96 px’ten 48 px’e çekilerek büyük kartın üstündeki boşluk azaltıldı.
+  - Takvim önizlemesi artık yalnızca tarih/süre seçimini değil; dört ayrı randevu profilinin adını, başlığını ve açıklamasını da senkron değiştirir. Türkçe ve İngilizce varyantlar ayrı tanımlanır; azaltılmış hareket tercihinde döngü çalışmaz.
+
+- **Deploy Hazırlığı: Aktif Marketing Kaynakları, CSP ve Güvenli Temizlik (2026-10-05):**
+  - `/pricing` route’u, pricing görünümü, ortak marketing bileşenleri, çeviri dosyası ve çalışır Framer fragmentleri Git index’ine alındı; temiz checkout artık aktif marketing render zincirini içerir. Commit veya uzak depoya gönderim yapılmadı.
+  - CSP, üretimde varsayılan `non-strict` moduyla açıldı: `/`, `/pricing` ve giriş sayfalarında zorlayıcı başlık; diğer sayfalarda geriye dönük uyum için rapor başlığı kullanılır. Framer görsel/font kaynakları izin listesine eklendi.
+  - Aktif import zincirinde bulunmayan eski React marketing deney bileşenleri temizlendi. Yerel referans/export kalıntıları Docker build context’inden hariç tutuldu; etkin Framer dosyaları korunuyor.
+  - Production `next build` denemesi, çıktı üretmeden yaklaşık 3.4 GB bellek kullanımında sonlandı; oluşturduğu `.next/lock` kaldırıldı. Bu nedenle production build ve staging smoke doğrulaması henüz başarılı kabul edilmez.
+
+- **SSS Akordiyon ve Yerleşim Düzeltmesi (2026-10-04):**
+  - Statik Framer SSS varyantları delegated click akışıyla gerçek bir açık/kapalı state gibi senkronize edildi; cevaplar `max-height` ve `opacity` geçişiyle açılıyor, artı ikonu dönüyor.
+  - Türkçe SSS rozeti hydration sonrasında `SSS` olarak ayarlanıyor; “Bilgi Alın” ve “Hemen Başla” eylemleri soru listesinin sonuna taşınıyor.
+  - SSS altındaki Framer divider/şekil kalıntısı scoped CSS ile gizlendi. Yerel sunucu başlatılmadı ve uzak depoya gönderim yapılmadı.
+
+- **Pricing Koyu Zemin Patlaması İçin Cerrahi CSS Düzeltmesi (2026-10-04):**
+  - `cal-pricing-framer.css` yeniden üretilmeden, yalnızca scoped kurallarla pricing canvası, plan kartları, karşılaştırma tablosu ve footer aynı antrasit yüzey ailesine bağlandı.
+  - Framer satır içi beyaz/çok açık yüzeyleri (`.framer-6fxrby`, satır ve hücre `data-framer-name` seçicileri, durum rozeti) koyu yüzey ve yumuşak sınırlarla ezildi.
+  - Yerel sunucu başlatılmadı; CSS ayrıştırması ve statik marketing doğrulaması geçti. Commit veya `git push` yapılmadı.
+
+- **Bento Takvim Rozeti ve Fiyatlandırma Kartları Düzeltmeleri Tamamlandı (2026-10-04):**
+  - **Bento "CONNECT YOUR CALENDAR" Merkez Rozeti:** Koyu modda beyaz hap zemin üzerinde beyaz yazıldığı için kaybolan "rOndevu" metni, `cal-framer.css` içerisinde `.framer-894vxg` kuralı koyu temaya (`background: #18181b !important; border: 1px solid rgba(255,255,255,0.15) !important; color: #ffffff !important;`) uyarlanarak yüksek kontrastlı hale getirildi. Ayrıca `cal-dom-tr.html` ve `cal-dom-en.html` dosyalarında `<h2>` içerisine marka logosu (`/logos/rondevu-icon.png`) entegre edildi.
+  - **Fiyatlandırma Kartları ve CTA Butonları:** Cal.com kalıntısı "Try for free >" ve "Get Started" / "Get Started Yearly" metinleri `pricing-dom-en.html` ve `pricing-dom-tr.html` dosyalarından tamamen kaldırıldı. Tüm butonlar `[data-plan-btn="true"]` özniteliğiyle şık ve tutarlı bir CTA ("Planı Seç" / "Choose Plan") olarak düzenlendi. `pricing-view.tsx` içerisine eklenen reaktif `useEffect` ile dil değişimlerinde dinamik senkronizasyon sağlandı; tıklamalar doğrudan `PlanContactModal` modalını tetikleyecek şekilde korundu.
+  - **Yıllık Plan Kartı Sağ Kenar Dikey Çizgisi:** "Yearly Plan" kartının sağ kenarında beliren dikey beyaz taşma çizgisi, `cal-pricing-framer.css` içerisindeki `.framer-6fxrby`, `.framer-o086nb` ve çevre taşıyıcılarına `overflow: hidden !important;`, `--border-color: rgba(255, 255, 255, 0.08) !important;` ve `border-right: none !important;` uygulanarak tamamen ortadan kaldırıldı.
+  - **Yerel Sunucu Doğrulaması:** `http://localhost:3000` ve `http://localhost:3000/pricing` HTTP 200 OK ile doğrulanarak çalışır durumda teslim edildi. Sıfır yasaklı kelime kuralı korundu, kesinlikle `git push` yapılmadı.
+
+- **Fiyatlandırma Tablosu Metin Çöküşü (Overlap) ve Footer Hizalama Onarımı Tamamlandı (2026-10-04):**
+  - **Sağ Kenara Sıkışan Footer Düzeltildi:** "© 2026 rOndevu. All rights reserved." / "Tüm hakları saklıdır." bloğu `#feature-breakdown` bölümünün ve tablo satır sarmalayıcısının (`framer-5bj5pn`) yatay `flex-flow: row` akışından tamamen çıkarıldı. Sayfa ana akışında (`#main-1`) bağımsız, tam genişlikli (`framer-pricing-footer-container`, `w-full max-w-[1200px] mx-auto text-center`) bir kapsayıcıya taşındı. Logo, telif metni ve sistem durumu rozeti dikey akışta (`flex-direction: column; gap: 16px`) merkezlendi.
+  - **Tablo Satırlarındaki Metin Çakışması (Overlap) Giderildi:** Alt satırlardaki ("Buffer time before & after events", "Minimum notice", "Time-slot intervals", "Limit booking frequency", "Limit total booking duration" vb.) başlık ve açıklama metinlerinin üst üste binmesi kökten çözüldü. `cal-pricing-framer.css` içinde uyuşmayan `.framer-3g2Zr` seçicileri `.framer-41gqb` ile eşitlendi; tüm satırların ilk sütununa (`Feature Text Wrapper`) açıkça `display: flex !important; flex-direction: column !important; gap: 6px !important;` tanımlandı.
+  - **Koyu Mod Taban Boşluğu ve Şeffaflık:** `#feature-breakdown .framer-5bj5pn` koyu modda `background-color: transparent !important;` yapılarak tablonun altındaki beyaz kavisli alan temizlendi.
+  - **Kritik Kurallar:** Sıfır "altyapı" kelimesi korundu, yerel sunucu çalıştırılmadı (`pnpm dev` yapılmadı), `git push` yapılmadı. HTML etiket dengesi (0 açık etiket) ve CSS kuralları doğrulandı.
+
+- **Dış Zemin Renk Bütünlüğü (#141414) ve CTA Banner Cerrahi Onarımı Tamamlandı (2026-10-04):**
+  - **Dış Zemin ve Renk Bütünlüğü (#141414):** Sayfanın tüm dış boşluklarında, `globals.css`, `layout.tsx`, `home-view.tsx`, `pricing-view.tsx`, `cal-framer.css`, `cal-pricing-framer.css` ile TR/EN HTML dosyalarındaki (`cal-dom-tr.html`, `cal-dom-en.html`, `pricing-dom-tr.html`, `pricing-dom-en.html`) zifiri siyah (`#000000`) zeminler temizlendi. Tüm taşıyıcı ve dış zeminler tasarımsal bütünlük için koyu antrasit (`#141414`) tonuna kavuşturuldu.
+  - **CTA Banner Izgara (Grid) İzolasyonu:** `.framer-12jqh3g` kartı `overflow: hidden !important;`, `border-radius: 24px !important;` ve `isolation: isolate !important;` ile sınırlandırıldı. Dışarıya ve siyah boşluğa kontrolsüzce taşan 2160px genişliğindeki `.framer-1x0adn6` ızgara çizgileri kart içine hapsedildi ve radial gradient maskesi ile sınırlandırıldı. Dış taşıyıcıdaki dikey sınır çizgileri (`--border-left-width: 0px`, `--border-right-width: 0px`) temizlendi.
+  - **Pürüzsüz Degrade / Parlama Geçişi:** Kartın arkasındaki radyal parlama (`.framer-3gy7g1-container::before`), köşeli veya sert kesilmeyecek biçimde yumuşak bir degrade (`radial-gradient` + `blur(32px)`) ile `#141414` zeminine erir hale getirildi.
+  - **Banner Buton Entegrasyonu:**
+    - "Hemen Başla" butonu `target="_blank"` kaldırılarak doğrudan `/pricing` rotasına bağlandı.
+    - "Bilgi Alın" butonu `home-view.tsx` içine entegre edilen `PlanContactModal` iletişim modalını açacak şekilde bağlandı.
+  - **Kritik Kurallar:** Sıfır "altyapı" kelimesi korundu, yerel sunucu başlatılmadı (`pnpm dev` yapılmadı), `git push` yapılmadı. Biome denetimi 0 hata ile doğrulandı.
+
+- **Ana Sayfa ve Fiyatlandırma Son Rötuşları Tamamlandı (2026-10-04):**
+  - Hero alanı tek bir `/pricing` bağlantılı “Hemen Başla” / “Get Started” eylemine indirildi; duyuru rozeti, kart gereksinimi notu ve Google/e-posta seçenekleri kaldırıldı.
+  - Kullanıcı görüşü başlığı ile tweet/yorum ızgarası TR ve EN HTML kaynaklarından tamamen çıkarıldı.
+  - Ana sayfa takvim, form, bento, entegrasyon ve alt çağrı panellerinin koyu tema yüzeyleri referans tonlarıyla eşleştirildi; bento ve entegrasyon hareketleri hydration durumundan bağımsız CSS animasyonlarına taşındı ve azaltılmış hareket tercihi desteklendi.
+  - Fiyat karşılaştırması bireysel randevu kapsamına indirildi. Aylık/Yıllık sütunları okunabilir ölçülere getirildi; mobilde tablo kendi kapsayıcısında yatay kaydırılabilir hale getirildi.
+  - Dört plan çağrısı yalnızca `data-plan="monthly|yearly"` sözleşmesini kullanıyor. `PricingView` metin tahmini yapmadan `PlanContactModal` açıyor; iletişim verisi `trpc.viewer.public.getPlanContact` üzerinden alınmaya devam ediyor.
+  - Statik içerik denetimi ve değişen kod dosyalarında Biome hata denetimi geçti. Yerel tarayıcı denetimlerinde belge taşması, koyu temada parlayan hedef panel ve React hydration hatası görülmedi; Aylık/Yıllık modalları doğru plan adıyla açıldı.
+  - Zorunlu Turbo tip kontrolü Windows'ta `spawn tsc ENOENT` nedeniyle tamamlanamadı. Doğrudan TypeScript denetimi mevcut, değişiklik dışı 42 hatayı raporladı; bu çalışmada değişen sayfa/modül dosyalarında hata üretmedi.
+  - Commit veya `git push` yapılmadı; sonuçlar çalışan yerel sunucuda `/` ve `/pricing` adreslerinde hazır.
+
+- **Eksiksiz Çift Dil (TR / EN) Mimarisi ve Çeviri Temizliği Tamamlandı:**
+  - **Sözlük ve Zemin Senkronizasyonu:** `home-translations.ts` merkezi sözlüğü üzerinden yönetilen çift dil mimarisi ana sayfa (`/`) ve fiyatlandırma sayfasında (`/pricing`) eksiksiz hale getirildi.
+  - **Türkçe Modunda Sıfır İngilizce:** `cal-dom-tr.html` ve `pricing-dom-tr.html` dosyalarındaki tüm yarım kalmış İngilizce açıklamalar (karşılaştırma tablosunun 40+ satır açıklaması, hero randevu seans metinleri, bento kart açıklamaları, mola süreleri, takvim rozetleri, danışan geri bildirimleri ve entegrasyon açıklamaları) akıcı, profesyonel ve doğal Türkçeye çevrildi.
+  - **İngilizce Modunda Sıfır Türkçe:** `cal-dom-en.html` ve `pricing-dom-en.html` dosyalarında kalan Türkçe ibareler (`Danışmanlık Seansı` -> `Consultation Session`, `Dr. Ayşe Yılmaz` -> `Dr. Ayse Yilmaz` vb.) profesyonel İngilizceye uyarlandı.
+  - **Dinamik Sekme Başlığı (Document Title):** Dil değiştirildiğinde `document.title` anında güncellenir hale getirildi (TR: `rOndevu - Herkes İçin Randevu Sistemi`, EN: `rOndevu - Clear & Simple Appointment Scheduling`; Pricing TR: `Fiyatlandırma - rOndevu`, EN: `Pricing - rOndevu`).
+  - **Yasaklı Kelime Kuralı:** Tüm Türkçe metinlerde ve çevirilerde "altyapı" kelimesi sıfır (0) adet olarak teyit edildi. "Randevu sistemi", "platform" ve fonksiyonel ifadeler kullanıldı.
+  - **Yerel Sunucu Doğrulaması:** `http://localhost:3000` ve `http://localhost:3000/pricing` HTTP 200 OK ile sorunsuz yanıt veriyor; Biome kod kontrolleri 0 hata ile geçti; kesinlikle `git push` yapılmadı.
+
+- **Kök Seviye Karanlık Mod ve Tipografi Kontrast İyileştirmeleri Tamamlandı:**
+  - **Kök Zemin Bütünlüğü:** `cal-framer.css`, `cal-pricing-framer.css` ve `globals.css` seviyesinde `html.dark`, `body`, `#main`, `[data-framer-root]`, `#cal-1to1-root` ve `#cal-pricing-1to1-root` için saf obsidian siyah (`#000000 !important`) zemin kuruldu. Koyu modda sayfa zemininin beyaz veya açık gri kalması sorunu kökten çözüldü.
+  - **Metin Kontrastı ve Okunabilirlik:** Framer SSR'ın satır içine enjekte ettiği `--extracted-r6o4lv: rgb(16, 16, 16)` ve `--extracted-a0htzi: rgb(36, 36, 36)` değişkenleri `html.dark` altında `#e4e4e7` (gövde) ve `#ffffff` (başlıklar) olarak ezildi. Başlıklar (`h1`-`h4`), gövde metinleri, takvim günleri ve tablo metinleri yüksek okunabilirlik kontrastına kavuşturuldu.
+  - **Fiyatlandırma Kartları ve Karşılaştırma Tablosu:**
+    - Fiyatlandırma plan kartları (`.framer-mnipkf`, `.framer-6fxrby`): `#121214 !important` lüks koyu kart yüzeyi ve `rgba(255, 255, 255, 0.08)` zarif 1px kenarlıklar.
+    - Fiyat başlıkları (`990 ₺`, `9.900 ₺`): `#ffffff !important` parlak beyaz. İndirim rozeti: `#172554` zemin ve `#38bdf8` açık mavi yazı.
+    - Karşılaştırma tablosunun yapışkan başlıkları (`#121214`) ve 40'tan fazla tablo satırı/hücresi (`#0c0c0e !important`) zeminle kontrastlı, göz dostu koyu yüzeylere sabitlendi.
+  - **Hero Booking Mockup & Kontroller:** Booking kartı (`#121214`), süre butonları (`#1a1a1d` zemin, seçili buton `#27272a`, beyaz metin), takvim gün ve tarihleri (`#e4e4e7`) kusursuz hale getirildi.
+  - **İkincil Butonlar ve Rozetler:** `Secondary - White` ve `Secondary - Gray` butonları koyu modda parlamayan şık koyu degradeye (`#27272a` -> `#18181b`) çekildi; onay tikleri zümrüt yeşili (`#10b981`) ile belirginleştirildi.
+  - **FOUC Önleme:** `pricing-dom-tr.html` ve `pricing-dom-en.html` dosyalarına ilk render stil etiketi eklenerek sayfa yüklenirken beyaz parlamalar tamamen önlendi.
+  - **Kritik Kurallara Uyum:** Sıfır "altyapı" kelimesi, kesinlikle `git push` yapılmadı, yerel geliştirme sunucusu kontrolü için token harcanmadan kullanıcı doğrulamasına devredildi.
+
+- **Cerrahi Arayüz ve Pricing Yerleşim Düzeltmeleri Tamamlandı:**
+  - **Sol Üst Logo Düzenlemesi:** `Navbar.tsx` içindeki ikon görseli (`<img>`) temizlenerek yalnızca net, şık ve orantılı `rOndevu` metin logosu (`font-cal text-2xl font-bold tracking-tight text-emphasis`) bırakıldı.
+  - **Ana Sayfa FAQ (SSS) Boşluğu Onarıldı:** `cal-dom-tr.html` ve `cal-dom-en.html` içindeki kapanmamış sözdizim hatası (`<div class="framer-1o2z9n8" data-border="true" <div id="rondevu-pricing-slot">...`) cerrahi olarak düzeltildi; akordiyon bileşeni eksiksiz render edilir hale getirildi.
+  - **Ana Sayfa Eski Pricing Bloğu Silindi:** Slogan (`"Daha akıllı, daha sade randevu."`) ve telif (`"© 2026 rOndevu. Tüm hakları saklıdır."`) korunarak, footer altında kalan eski `<CalPricingSection>` bloğu `home-view.tsx` dosyasından tamamen kaldırıldı. `#pricing` tıklamaları `/pricing` sayfasına pürüzsüz yönlendirildi.
+  - **Pricing Çift Başlık Hatası Giderildi:** `.framer-xw7bcr` içindeki mükerrer SSR breakpoint başlık varyantları temizlendi; tekil ve net `<h1>` + `<p>` yapısına dönüştürüldü.
+  - **Pricing Sayfa Sonu Sonsuz Boşluk Bug'ı (19.589px Yükseklik) Çözüldü:** `cal-pricing-framer.css` dosyasına eksik Framer breakpoint kuralları (`hidden-lanly2`, `hidden-zpr96j`, `hidden-1hydjgn`, `hidden-wcozae` vb.) eklendi. Cihaz varyantlarının üst üste binmesi engellendi, `</body></html>` kalıntıları temizlendi, `#cal-pricing-1to1-root` ve `.framer-41gqb` taban boşlukları normalize edildi.
+  - **Karşılaştırma Tablosu & Onay Tikleri:** `svg-templates.html` içine eksik `#svg8830033853` checkmark tanımı eklendi ve `cal-pricing-framer.css` ile zümrüt yeşili (`#10b981`, karanlık modda `#34d399`) renklendirildi.
+  - **Ekip Yönetimi Kategorisi Kaldırıldı:** Karşılaştırma tablosundaki "Ekip Yönetimi" / "Teams" başlığı (`.framer-gxw577`) ve altındaki tüm 8 satır tablodan tamamen silindi.
+  - **Kritik Kurallara Uyum:** Sıfır "altyapı" kelimesi, kesinlikle `git push` yapılmadı, yerel sunucu görsel doğrulaması için kullanıcıya devredildi.
+
+- **Ortak Navbar Bileşeni, Fiyatlandırma Yönlendirmeleri ve 1:1 Cal.com Pricing Sayfası Entegrasyonu:**
+  - **Tek ve Ortak Navbar (`Navbar.tsx`):** Hem ana sayfanın (`/`) hem de `/pricing` sayfasının çağırdığı tekil, ortak React Navbar bileşeni `apps/web/modules/home/components/Navbar.tsx` entegre edildi. Farklı barlar ve portal slot yamaları tamamen ortadan kaldırıldı.
+  - **Sade Menü (3 Link):** Sadece "Özellikler", "Fiyatlandırma", "SSS" bağlantıları bırakıldı; "Enterprise", "Developer", "Solutions" gibi menüler tamamen silindi. `/pricing` sayfasındayken "Fiyatlandırma" bağlantısı aktif (active state) olarak vurgulandı.
+  - **Dahili Kontroller:**
+    - Anında dil geçişi sağlayan `TR / EN` segmented butonları doğrudan barda yer alıyor.
+    - Sistem / Karanlık / Aydınlık mod geçiş ikonu (`Laptop / Moon / Sun`) barda yer alıyor ve tercihi anında `localStorage`'a kaydedip uyguluyor.
+    - Oturuma duyarlı "Giriş Yap" (`/auth/login`) / "Panele Git" (`/event-types`) butonu barda yer alıyor.
+  - **Fiyatlandırma Buton ve Yönlendirme Onarımı:**
+    - Ana sayfadaki tüm "Fiyatlandırma", "Paketleri İncele" veya fiyat butonları `/pricing` route'una (veya `#pricing` bölümüne) pürüzsüzce yönlendirildi. İçi boş `onClick` veya ölü buton bırakılmadı.
+  - **1:1 Cal.com Pricing Sayfası Zemin Kurulumu:**
+    - Eski uydurma/özel fiyatlandırma tasarımı tamamen silindi.
+    - `/example/Pricing _ Cal.com.htm` dosyasından Cal.com'un orijinal minified Framer CSS'i `apps/web/public/cal_files/cal-pricing-framer.css` olarak çıkarıldı, karanlık mod tokenları (`#09090b` zemin, `#121214` kart yüzeyi, `#27272a` border) ve 2 kartlı grid düzeni eklendi.
+    - `pricing-dom-tr.html` ve `pricing-dom-en.html` dosyaları cerrahi ayıklamalarla 1:1 oluşturuldu:
+      1. Paketi sadece 2 plana indirme: "Aylık" (990 ₺/ay) ve "Yıllık" (9.900 ₺/yıl, "2 Ay Hediye" rozeti). "Organizations" ve "Enterprise" paketleri tamamen silindi.
+      2. Karşılaştırma tablosu (Feature Matrix): "Organizations" ve "Enterprise" sütunları silindi; tablodan "Accept Payments" (Ödeme Alma) ve "Built-in Video" (Dahili Video) satırları tamamen çıkarıldı. Gerçek rOndevu yetenekleri korundu.
+      3. Kart ve tablo butonlarına `data-plan="monthly"` ve `data-plan="yearly"` nitelikleri eklendi; tıklandığında kredi kartı/Stripe yerine admin panelinden dinamik bilgi çeken (`trpc.viewer.public.getPlanContact`) `PlanContactModal` açılması sağlandı.
+  - **Yasaklı Kelime Kuralı:** Türkçe çevirilerde ve tüm dosyalarda "altyapı" kelimesi 0 adet olarak doğrulandı.
+  - **Kritik Kurallara Uyum:** Yerel dev sunucusu başlatılmadı (`pnpm dev`, `next dev` çalıştırılmadı), `git push` yapılmadı. Biome format ve kontrolü hatasız tamamlandı.
+
+- **Ana Sayfa Cerrahi DOM Temizliği & rOndevu Markalama (DOM Purge):**
+  - Cerrahi DOM temizliği: Mevcut sayfa layout'u, CSS gridleri ve Framer Motion taşıyıcı sınıfları 100% korunarak `cal-dom-tr.html` ve `cal-dom-en.html` dosyalarından 650+ KB gereksiz DOM ve sahte içerik silindi.
+  - Sahte Sertifikalar (ISO 27001, SOC 2, CCPA, GDPR, HIPAA) tamamen elendi (0 kaldı).
+  - Sahte İndirme Butonları (Android, iOS, Chrome, Safari, macOS, Windows, Linux) tamamen silindi (0 kaldı).
+  - Sahte İnceleme Rozetleri (Hero Trustpilot, footer G2 ve alt CTA Product Hunt / G2 / Google Reviews şeritleri) tamamen kaldırıldı (0 kaldı).
+  - Alakasız footer link sütunları (Telehealth, Law, Hiring, Cal Fonts, Affiliate, vb.) tamamen silindi.
+  - Cal misyon metni ("Our mission is to connect a billion people...") kaldırıldı.
+  - Footer'da SADECE: rOndevu logosu, sade telif hakkı yazısı ("© 2026 rOndevu. Tüm hakları saklıdır." / "© 2026 rOndevu. All rights reserved.") ve sistem durum rozeti (Status Wrapper) kaldı.
+  - Gövdeden sunulmayan özellikler: Accept payments ve Built-in video conferencing kartları silindi; harici Google Meet entegrasyonu korundu.
+  - Sponsor ve yatırımcı logo şeritleri (Ticker Dark Logos & "Trusted by fast-growing companies") 3 kırılımda silindi.
+  - Navbar Düzenlemesi: Enterprise, Developer, Kaynaklar açılır menüleri kaldırıldı; menüde sadece 3 bağlantı bırakıldı: "Özellikler", "Fiyatlandırma", "SSS".
+  - Sağ tarafa "Giriş Yap" butonu ile yanına `#rondevu-theme-lang-slot` yer tutucusu eklendi; harici yüzen `.rondevu-top-controls` kutusu kaldırılarak Dil (TR/EN) ve Tema (Oto/Koyu/Açık) seçicileri React Portal ile navbar içine entegre edildi.
+  - Logo ve Markalama: Header ve Footer'da rOndevu SVG logosu ve `rondevu-icon.png` entegre edildi; kod ve metinlerde kalan tüm "Cal" / "Cal.com" ibareleri "rOndevu" yapıldı.
+  - Doğrulama: `scripts/verify_dom_purge.js` ile tüm maddeler 100% PASS doğrulandı. Biome kontrolleri hatasız geçti. Yerel sunucu başlatılmadı, git push yapılmadı.
+
+-9. **Authentic Booker Interface, Real Phone Interface Showcase & Razor-Sharp Typography** —
+   - **Real Phone Showcase (`RealInterfaceShowcase.tsx`):**
+     - Copied all 26 mobile screenshots (`IMG_5899.PNG` to `IMG_5924.PNG`) to `apps/web/public/interfaces/phone/`.
+     - Created a showcase presenting real features discovered in the app's settings screens: *Mola ve tampon süreler* (`IMG_5909`), *Minimum 2 saat öncesinden bildirim süresi*, *Google & Apple Takvim çakışma kalkanı* (`IMG_5911`), *SMS onay zorunluluğu* (`IMG_5915`), *Kişiye özel tek kullanımlık gizli linkler* (`IMG_5916`), and *İptal nedeni zorunluluğu* (`IMG_5914`).
+     - Described every feature in natural, plain, everyday Turkish without complex jargon or AI slop.
+   - **Authentic Booking Flow Restored (`HeroPrecisionConsole.tsx`):**
+     - Completely eliminated custom/generic templates in favor of a 100% faithful interactive implementation of Cal/rOndevu Booker screens (`IMG_5903`, `IMG_5904`, `IMG_5920`, `IMG_5921`, `IMG_5923`).
+     - Step 1: Calendar view (Ekim 2026, month arrows, day columns, available days as dark rounded tiles, selected day as white tile, Pzt 05 indicator, 12 sa / 24 sa toggle, and time slot pills with green dots: `• 09:00`, `• 09:15`, `• 09:30`...).
+     - Step 2: "Bilgilerinizi onaylayın" form (Date badge `📅 5 Ekim 2026 Pazartesi, 10:00`, duration `🕒 15dakika`, Name, Email, Notes, "+ Misafir ekle", "Geri" and "E-postayı doğrula" button).
+     - Step 3: Verification modal (`IMG_5921`) with 6-digit code `[ 4 ][ 8 ][ 2 ][ 9 ][ 1 ][ 0 ]` and toast `✓ E-posta başarıyla gönderildi`.
+     - Step 4: Authentic confirmation card (`IMG_5923`) with green check circle, "Randevu planlandı", details table, "Yeniden planla veya İptal et", and 4 calendar buttons (Google, Outlook, Office 365, Apple .ics).
+   - **Elimination of Blurry/Pixelated Typography:**
+     - Added `subsets: ["latin", "latin-ext"]` to `Inter` font in `apps/web/app/layout.tsx` to ensure all Turkish glyphs (`ş, ğ, ı, İ, ö, ü, ç`) render sharply without system font fallback.
+     - Added `interFont.variable` and `calFont.variable` to `html` className attribute, and added `--font-sans` fallback to `--font-cal`.
+     - Added `text-rendering: optimizeLegibility`, `-webkit-font-smoothing: antialiased`, and `-moz-osx-font-smoothing: grayscale` to `html, body, input, textarea, select, button` in `apps/web/styles/globals.css`.
+     - Removed heavy `backdrop-filter` and subpixel `transform: translateY(...)` on text containers that caused Chromium layer compositing blur.
+   - **Anti-AI Slop & Plain Turkish:**
+     - Cleaned Hero headlines and descriptions into simple, direct, everyday Turkish: *"Randevularınızı zahmetsizce yönetin."*
+   - **Local Verification:**
+     - Verified HTTP 200 on `http://localhost:3000`.
+     - Biome formatting and linting executed cleanly.
+     - Zero token-wasting browser recording loops executed, per user instruction.
+-8. **Radical & Minimalist Principal Design Engineer Homepage Architecture** —
+   - **Zero Text Clutter & Pure Typography:** Replaced generic marketing paragraphs and boilerplate copy with sculptural Cal Sans display typography (*"Zamanınıza hükmedin."*) and single-sentence precision subtexts.
+   - **Living Precision Console (`HeroPrecisionConsole.tsx`):**
+     - Replaced static/mockup concepts with a real-time, interactive dual-perspective console.
+     - Booker perspective features live slot pills (`09:30`, `11:00`, `14:30`, `16:00`, `17:15`), instant simulated SMS OTP verification, and direct calendar reservation feedback (`0.4s` velocity).
+     - Organizer perspective gives a real-time agenda timeline with conflict shield status and ready-to-join Google Meet room.
+   - **Kinetic Bento Instruments (`BentoInstruments.tsx`):**
+     - Replaced text-heavy 4 feature cards with 4 interactive living instruments:
+       1. Dual Calendar Collision Shield (0ms conflict prevention simulation between Google and Apple Calendar).
+       2. Autonomous SMS Lifecycle (GSM 160-char formatted instant, 24h, and 2h timeline).
+       3. Personal Brand & Custom Domain Omnibar (`rondevu.org/ayse` transitioning into `doktorayse.com/randevu` with verified SSL lock).
+       4. Instant Time-Off / Vacation Mode switch (real-time schedule pause with amber status feedback).
+   - **Horological Monetary Cards:** Refined `990 ₺` / `9.900 ₺` luxury monetary typography, independent accordion drawer, and dynamic admin contact integration.
+   - **Monolithic Minimal Footer:** Minimal typography, system operational status badge, and legal routes.
+   - **Validation & Push Policy:** Tested on localhost with HTTP 200 OK, Vitest unit tests passed (19/19), Biome checks passed (0 errors), browser subagent verified, 0 commits pushed per user instruction.
 -7. **Independent Pricing Card Layout, Feature List Simplification & Natural Turkish FAQ Rewrite** —
    - **Independent Pricing Card Expansion (`items-start`):**
      - Decoupled card heights in `apps/web/modules/home/home-view.tsx` by setting `items-start` on the CSS grid container.
@@ -320,6 +468,98 @@
     - **Radical Template Shortening (<= 160 Chars / 1 Segment)**: Overhauled all 10 attendee SMS templates in `packages/sms/attendee/` (confirmation, reminder, cancellation, reschedule, booking requested, declined, location changed, awaiting payment, seat cancelled, reschedule requested) into concise, 1-segment structures. Stripped conversational greetings, attendee notes, and protocols (`https://`). Format: `"rOndevu: [Baslik] randevunuz onaylandi. Tarih: [DD.MM HH:mm]. Detay/Iptal: rondevu.org/b/[uid]"`. Added title length capping and compact date formatting (`DD.MM HH:mm`) on `SMSManager`.
     - **Short URL Redirection**: Added `/b/:uid` redirect to `/booking/:uid` in `apps/web/next.config.ts`.
     - **Validation & Tests**: Added unit tests in `packages/sms/test/sanitize-sms.test.ts` (10/10 passed, 18/18 total passed across `packages/sms/test/`). Verified server TypeScript compilation (`tsc --project packages/trpc/tsconfig.server.json --noEmit` exit 0).
+36. **Cal.com-Referenced Pricing Section & Modular Feature Comparison Matrix** —
+    - **2 Plans Only & Toggle Switcher**: Configured exactly 2 plans ("Aylık Plan" 990 ₺/mo and "Yıllık Plan" 9.900 ₺/yr with 2 months free badge) with an interactive pill toggle switch in `apps/web/modules/home/components/CalPricingSection.tsx`.
+    - **Feature Comparison Matrix (`PricingMatrix.tsx`)**: Created modular, Cal.com-styled comparison matrix in `apps/web/modules/home/components/PricingMatrix.tsx` listing 18 real rOndevu scheduling capabilities across 5 structured categories (*Çekirdek Randevu Yetenekleri*, *Mola ve Limit Yönetimi*, *Danışan Deneyimi ve Güvenlik*, *Marka ve Kişiselleştirme*, *Avantaj, Garanti ve Destek*). Tablodan "Ödeme Alma" (Payments) ve "Dahili Video" satırları tamamen çıkarıldı.
+    - **Dynamic Admin Contact Modal (`PlanContactModal.tsx`)**: Zero payment gateways or registration forms; clicking plan CTA opens modal with dynamic admin contact channels (WhatsApp with `replace(/\D/g, '')` cleaned phone & `encodeURIComponent` prefill message, Phone with `replace(/[^\d+]/g, '')`, and Email) fetched via `trpc.viewer.public.getPlanContact`.
+    - **Bilingual & Clean Copy**: Matrix categories, feature rows, and modal copy fully localized in `apps/web/modules/home/i18n/home-translations.ts` (TR/EN) with 0 occurrences of the forbidden word "altyapı".
+    - **Validation & Browser Verification**: Biome formatting checks passed, 0 console hydration errors, verified live in browser subagent on `http://localhost:3000/`. Zero git commits pushed per instruction.
+
+37. **Dark Integration/Footer Contrast Pass** —
+    - Integration logo tiles now use dark surfaces, subtle borders, and brighter image treatment; Zapier selectors are covered for readable contrast.
+    - Divider intersection plus markers use translucent dark containers with light icon treatment.
+    - Footer status is normalized after hydration to a localized “Tüm Sistemler Aktif” badge with a green active dot; duplicate footer icon imagery is removed so only the rOndevu wordmark remains.
+    - Hero calendar preview year is normalized to 2026 and empty outer border layers are suppressed without rebuilding the Framer markup.
+
+38. **Pricing White Overlay Root Cause Fix** —
+    - The exported footer status badge image was absolutely positioned inside an unpositioned Framer container on `/pricing`; its 1112×4536px image stretched over the page and intercepted clicks to `status.rondevu.org`.
+    - `PricingView` now replaces the remote badge image with the localized text/dot status markup after hydration, while pricing CSS constrains the wrapper and hides the unsafe image before hydration.
+    - Verified by Playwright that the status link is now 131×30px at the footer and center points in the former white region no longer resolve to the status link.
+
+39. **Homepage Surface and FAQ Spacing Polish** —
+    - Homepage dark canvas/structural empty bands now use `#262626`; structural Framer borders are highlighted with `#b1b1b2` for clearer section depth.
+    - FAQ expansion now measures the first answer text block and caps animated height at 240px, preventing the exported wrapper’s oversized scroll height from creating a long blank gap.
+
+40. **Homepage Surface Unification Follow-up** —
+    - The remaining `#141414` was found on the nested `#main` and page wrapper outside the Framer canvas; both now inherit the homepage `#262626` surface.
+    - All Framer elements named `Line`, including horizontal separators, now use `#b1b1b2` with controlled opacity so horizontal and vertical depth cues match.
+
+41. **Dark Theme Visual Balance Pass** —
+    - Rebalanced homepage dark mode to a single `#1c1c20` canvas/section surface instead of the overly bright `#262626` outer bands.
+    - Removed long structural shell borders and exported section-corner handles; content cards retain their own framing while separators remain softly visible.
+
+42. **Pricing Typography and Framing Cleanup** —
+    - Restored subtle vertical section edges alongside homepage horizontal separators.
+    - Pricing comparison heading top padding reduced from 96px to 32px.
+    - Annual billing copy now wraps within its card; feature headings share the same muted light text color.
+    - Footer copyright/status container now uses a restrained 12px radius, dark surface, and consistent muted text color.
+
+43. **Navigation and Pricing Interaction Polish** —
+    - Removed Features/Pricing/FAQ navbar links; enlarged and left-aligned rOndevu wordmark, simplified TR/EN and theme controls, and changed login to a compact rectangular action.
+    - Pricing comparison now normalizes missing plan checkmarks so every individual feature is included for both plans; annual billing copy wraps safely.
+    - Added subtle matrix column separators, corrected badge icon contrast, and refreshed the plan contact modal with a compact rOndevu dark-surface treatment.
+
+44. **Dark Badge Icon Contrast** —
+    - Framer `White Icon` badges now explicitly invert their nested image-based SVG icons to white in dark mode, including the Benefits/How-it-works labels.
+
+45. **Cross-page Visual QA Pass** —
+    - Reviewed homepage and pricing at desktop and 390px mobile widths in dark mode; document/body widths remain constrained to the viewport with no horizontal overflow.
+    - Tightened annual pricing copy wrapping, normalized homepage hero year replacement handling, and retained bounded dark surfaces, modal, matrix, and navbar refinements.
+
+46. **Homepage Canvas and Pricing Neutral Contrast Pass** —
+    - Set the dark homepage canvas, structural shells, `#main`, and root wrapper to the pricing canvas tone `#141414`; card-level surfaces remain distinct for depth.
+    - Centered the desktop comparison matrix with a scoped 32px correction while preserving the mobile local horizontal scroller.
+    - Unified the previously dim first two pricing feature headings to the same `#f4f4f5` contrast as the remaining headings.
+    - Removed green from the plan contact modal, pricing feature checks, and Framer icon/check SVGs; all plan-selection accents now use neutral grayscale tokens.
+    - Verified the local pricing route has no remaining green computed styles, the homepage roots resolve to `rgb(20, 20, 20)`, and both routes stay viewport-contained.
+
+47. **Final Framer wrapper and interaction cleanup (2026-10-05)** —
+    - Moved the FAQ action group below the questions in both static language fragments, preventing hydration from restoring the buttons above the accordion.
+    - Added static status-badge normalization with bounded dark styling, localized labels, and no remote image overlay; status links remain limited to the badge.
+    - Re-ran static checks: no forbidden Turkish term, old 2025 date, removed CTA, or small logo icon remains; comparison rows contain two checks each.
+    - Browser checks confirmed FAQ open/close state and answer animation, centered pricing matrix, no document overflow, working plan contact modal, and bounded status link.
+
+48. **Comparison plan header alignment (2026-10-05)** —
+    - Removed the comparison header's redundant annual billing and gift badge nodes in both locales.
+    - Shortened the annual comparison description and applied a shared flex column rhythm so monthly/yearly cards and CTAs finish on the same baseline.
+    - Narrow browser verification measured equal card heights and CTA bottoms, with horizontal scrolling still confined to the matrix viewport.
+
+49. **Pricing heading, card price rhythm, and stray outline cleanup (2026-10-05)** —
+    - Changed the localized pricing heading to “rOndevu planınızı seçin” (EN: “Choose your rOndevu plan”).
+    - Centered the monthly/yearly price text on a shared axis and removed the annual card’s redundant billing/gift labels.
+    - Removed the exported comparison wrapper pseudo-outline, matched its empty gutter to the page canvas, and canceled the exported 32px desktop offset so the matrix is truly centered while retaining row and plan-column separators.
+    - Static verification and a fresh local browser check passed with no document overflow.
+
+50. **Monthly feature link cleanup (2026-10-05)** —
+    - Removed the `/app` anchors from “Özel Rezervasyon Bağlantısı” / “Mola ve Tampon Süre Yönetimi” and their EN equivalents in the plan feature lists.
+    - Cleared the inherited link decoration variables so these labels render with the same neutral color and no underline as adjacent features.
+    - Confirmed in the local browser that the monthly feature labels have no anchors and computed `text-decoration: none`.
+
+51. **Pricing card, matrix, and footer refinement (2026-10-05)** —
+    - Removed the annual plan card's small “Yıllık” control while restoring the original top-card price/unit flow.
+    - Enlarged and centered the matrix “Özellikler” label; monthly and yearly matrix prices now occupy the same grid row.
+    - Marked the advanced-features label as a real section divider, removing its cell borders and centering its larger heading.
+    - Removed the pricing-only system status control, flattened the footer onto the page canvas, centered the copyright, and enlarged the text wordmark.
+    - Static verification and a fresh local browser check confirmed no annual control or status control, matched comparison-price vertical positions, a transparent footer, and no document overflow.
+
+52. **FAQ answer and icon repair (2026-10-05)** —
+    - Fixed the FAQ click path so the answer text opacity changes with its wrapper and its height is constrained to the measured content, eliminating the blank expanded panel.
+    - Applied stable separators to FAQ items and replaced Framer's dark SVG plus asset with a clear text glyph, removing the residual square surface in dark mode.
+    - Static TR/EN fragments were regenerated and marketing-page verification passed.
+
+53. **FAQ glyph and answer-width correction (2026-10-05)** —
+    - Removed the CSS pseudo-element that duplicated the static plus glyph.
+    - Overrode Framer's `width: 1px` flex basis on answer text so responses occupy the full FAQ row width and wrap normally.
 
 ## What Was NOT Changed (by design)
 - `@calcom/*` package namespace — internal implementation detail, changing would break 1000s of imports
@@ -328,8 +568,8 @@
 - README.md — needs full rewrite for rOndevu
 
 ## Next Steps
-- Commit and push changes to remote repository (`origin/main`).
-- Re-run Dokploy deployment and verify production containers.
+- Keep the current working-tree changes local for user review; no commit or remote push was requested.
+- Re-run the local browser visual pass after any additional design feedback.
 
 ## Brand Asset Details
 - Wordmark SVGs (`cal-logo-word*.svg`, `rondevu-logo-*.svg`): Scaled to fit original 84x26 box dimensions with 17px font, avoiding layout overflow.
@@ -337,3 +577,12 @@
 - Windows Metro Tiles (`mstile-*.png`): Pure black background with centered white "rOn".
 - Safari Pinned Tab (`safari-pinned-tab.svg`): Exact vector glyph paths of "rOn" centered in 700x700 viewBox.
 - Email Header Logos (`logo.png`, `CalLogo@2x.png`): "rOndevu" wordmark in dark #292929 matching original transparent header dimensions.
+## 2026-10-05 — Recurring appointment feature card
+
+- Home page's “...ve çok daha fazlası” feature grid now receives a localized recurring-appointment card after the static Framer markup hydrates.
+- Hover/focus reveals the recurring booking explanation; the visual treatment follows the existing light/dark card surfaces and does not require Framer runtime animation.
+## 2026-10-05 — System-preference navigation
+
+- Removed public language/theme controls from the shared marketing navbar.
+- Both home and pricing now derive locale from browser language and color scheme from `prefers-color-scheme`; legacy local overrides are cleared.
+- Refined the shared bar into a compact, translucent rOndevu header with only the wordmark and authentication action.

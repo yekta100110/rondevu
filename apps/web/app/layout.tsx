@@ -11,11 +11,17 @@ import type React from "react";
 
 import "../styles/globals.css";
 import process from "node:process";
+import classNames from "@calcom/ui/classNames";
 import { AppRouterI18nProvider } from "./AppRouterI18nProvider";
 import { Providers } from "./providers";
 import { SpeculationRules } from "./SpeculationRules";
 
-const interFont = Inter({ subsets: ["latin"], variable: "--font-sans", preload: true, display: "swap" });
+const interFont = Inter({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-sans",
+  preload: true,
+  display: "swap",
+});
 const calFont = localFont({
   src: "../fonts/CalSans-SemiBold.woff2",
   variable: "--font-cal",
@@ -107,7 +113,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html
-      className="notranslate"
+      className={classNames("notranslate", interFont.variable, calFont.variable, "bg-white dark:bg-[#141414]")}
       translate="no"
       lang={locale}
       dir={direction}
@@ -117,8 +123,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <head nonce={nonce}>
         <style>{`
           :root {
-            --font-sans: ${interFont.style.fontFamily.replace(/'/g, "")}, system-ui;
-            --font-cal: ${calFont.style.fontFamily.replace(/'/g, "")};
+            --font-sans: ${interFont.style.fontFamily}, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-cal: ${calFont.style.fontFamily}, var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
           }
         `}</style>
         <script
@@ -128,16 +134,22 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             __html: `(function() {
               try {
                 var stored = localStorage.getItem("app-theme");
-                var isDark = true;
-                if (stored === "light") {
-                  isDark = false;
-                } else if (stored === "dark") {
+                var isDark = false;
+                if (stored === "dark") {
                   isDark = true;
+                } else if (stored === "light") {
+                  isDark = false;
+                } else {
+                  isDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
                 }
                 if (isDark) {
                   document.documentElement.classList.add("dark");
+                  document.documentElement.classList.remove("light");
+                  document.documentElement.style.backgroundColor = "#141414";
                 } else {
                   document.documentElement.classList.remove("dark");
+                  document.documentElement.classList.add("light");
+                  document.documentElement.style.backgroundColor = "#ffffff";
                 }
               } catch (e) {}
             })();`,
@@ -153,7 +165,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         )}
       </head>
       <body
-        className="dark:bg-default bg-default antialiased"
+        className="bg-white dark:bg-[#141414] text-emphasis antialiased"
         style={
           isEmbed
             ? {

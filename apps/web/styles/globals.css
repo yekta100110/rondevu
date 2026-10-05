@@ -14,9 +14,15 @@
   background: var(--cal-brand);
 }
 
-body {
+html,
+body,
+input,
+textarea,
+select,
+button {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /*
@@ -422,3 +428,28 @@ html[dir="rtl"] .react-tel-input .flag-dropdown {
   left: auto !important;
   right: 0 !important;
 }
+
+/* ========================================================
+   Root Level Dark/Light Canvas Baseline
+   ======================================================== */
+html.dark,
+html.dark body,
+html.dark #main,
+html.dark main,
+html.dark [data-framer-root],
+html.dark #cal-1to1-root,
+html.dark #cal-pricing-1to1-root {
+  background-color: #141414 !important;
+  color: #f4f4f5 !important;
+  color-scheme: dark;
+}
+
+html.light,
+html.light body,
+html.light #main,
+html.light [data-framer-root] {
+  background-color: #ffffff !important;
+  color: #18181b !important;
+  color-scheme: light;
+}
+

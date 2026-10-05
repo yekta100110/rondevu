@@ -1,6 +1,8 @@
+import fs from "node:fs";
+import path from "node:path";
+import process from "node:process";
 import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
 import { APP_NAME } from "@calcom/lib/constants";
-import { getPlanContactConfig } from "@calcom/lib/planContactConfig";
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 import { _generateMetadata } from "app/_utils";
 import type { Metadata } from "next";
@@ -49,9 +51,13 @@ const generateMetadata = async (): Promise<Metadata> => {
 const HomePage = async () => {
   const session = await getServerSession({ req: buildLegacyRequest(await headers(), await cookies()) });
   const isLoggedIn = !!session?.user?.id;
-  const initialContact = await getPlanContactConfig();
 
-  return <HomeView isLoggedIn={isLoggedIn} initialContact={initialContact} />;
+  const publicDir = path.join(process.cwd(), "public", "cal_files");
+  const trHtml = fs.readFileSync(path.join(publicDir, "cal-dom-tr.html"), "utf8");
+  const enHtml = fs.readFileSync(path.join(publicDir, "cal-dom-en.html"), "utf8");
+  const svgTemplates = fs.readFileSync(path.join(publicDir, "svg-templates.html"), "utf8");
+
+  return <HomeView trHtml={trHtml} enHtml={enHtml} svgTemplates={svgTemplates} isLoggedIn={isLoggedIn} />;
 };
 
 export { generateMetadata };
