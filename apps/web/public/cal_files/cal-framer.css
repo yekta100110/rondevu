@@ -2201,3 +2201,43 @@ html.dark #cal-1to1-root .framer-hgnbQ .framer-1e41rgp-container .framer-kMQ83:h
   background: #2b2b2b !important;
 }
 
+/* Marketing pages render one shared footer with the same logo as the legal pages. */
+#cal-1to1-root .framer-1xme2uu-container {
+  display: none !important;
+}
+
+/* Framer button icons are omitted; their labels fill the available width. */
+#cal-1to1-root [data-framer-name="Primary"] .framer-1inn7p6-container,
+#cal-1to1-root [data-framer-name^="Secondary"] .framer-1inn7p6-container,
+#cal-1to1-root [data-framer-name="Chevron-right"] {
+  display: none !important;
+}
+
+#cal-1to1-root [data-framer-name="Primary"],
+#cal-1to1-root [data-framer-name^="Secondary"] {
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+#cal-1to1-root [data-framer-name="Primary"] .framer-9vlf6l,
+#cal-1to1-root [data-framer-name^="Secondary"] .framer-9vlf6l,
+#cal-1to1-root [data-framer-name="Primary"] .framer-text,
+#cal-1to1-root [data-framer-name^="Secondary"] .framer-text {
+  text-align: center !important;
+  --framer-text-alignment: center !important;
+}
+
+html.dark #cal-1to1-root [data-framer-name="Secondary - White"] {
+  background: #202020 !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  box-shadow: none !important;
+  color: #f4f4f5 !important;
+}
+
+html.dark #cal-1to1-root [data-framer-name="Secondary - White"] .framer-text {
+  color: #f4f4f5 !important;
+  --framer-text-color: #f4f4f5 !important;
+  --extracted-r6o4lv: #f4f4f5 !important;
+}
+
+

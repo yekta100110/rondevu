@@ -3,6 +3,7 @@
 import { trpc } from "@calcom/trpc/react";
 import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { Navbar } from "../home/components/Navbar";
+import { MarketingFooter } from "../home/components/MarketingFooter";
 import { PlanContactModal } from "../home/components/PlanContactModal";
 import type { Locale } from "../home/i18n/home-translations";
 
@@ -102,7 +103,11 @@ function PricingView({ trHtml, enHtml, svgTemplates, isLoggedIn = false, initial
         const cells = Array.from(row.children).slice(1) as HTMLElement[];
         if (!isFeatureRow || cells.length !== 2) return;
 
-        cells.forEach((cell) => {
+        cells.forEach((cell, index) => {
+          const planName = index === 0
+            ? locale === "tr" ? "Aylık" : "Monthly"
+            : locale === "tr" ? "Yıllık" : "Yearly";
+          cell.setAttribute("aria-label", locale === "tr" ? `${planName} plana dahil` : `Included in ${planName} plan`);
           if (
             cell.children.length === 1 &&
             cell.firstElementChild?.classList.contains("rondevu-feature-check")
@@ -201,9 +206,11 @@ function PricingView({ trHtml, enHtml, svgTemplates, isLoggedIn = false, initial
       {/* 1:1 Cal.com Pricing Sayfa Gövdesi */}
       <div
         id="cal-pricing-1to1-root"
+        data-locale={locale}
         onClick={handleContainerClick}
         dangerouslySetInnerHTML={{ __html: locale === "tr" ? trHtml : enHtml }}
       />
+      <MarketingFooter locale={locale} />
 
       {/* Admin Panelinden Dinamik İletişim Modalı (Ödeme Geçidi Yoktur) */}
       <PlanContactModal

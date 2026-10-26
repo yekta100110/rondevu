@@ -2,7 +2,6 @@
 
 import { APP_NAME } from "@calcom/lib/constants";
 import { Button } from "@calcom/ui/components/button";
-import { Logo } from "@calcom/ui/components/logo";
 import {
   AlertTriangle,
   ArrowLeft,
@@ -15,6 +14,7 @@ import {
   Scale,
 } from "lucide-react";
 import Link from "next/link";
+import { BrandLogo } from "../home/components/BrandLogo";
 
 function LegalBackgroundGrid() {
   const rows = 8;
@@ -98,17 +98,17 @@ export function TosView({ initialContact }: TosViewProps = {}) {
 
       {/* Top Navbar */}
       <header className="relative sticky top-0 z-20 border-subtle/80 border-b bg-default/80 backdrop-blur-md">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto grid h-16 max-w-6xl grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center px-4 sm:px-6 lg:px-8">
           <Link
             href="/"
-            className="flex items-center gap-2 text-subtle text-sm transition-colors hover:text-emphasis">
+            className="flex items-center justify-self-start gap-2 text-subtle text-sm transition-colors hover:text-emphasis">
             <ArrowLeft className="h-4 w-4" />
-            <span>Ana Sayfaya Dön</span>
+            <span className="hidden sm:inline">Ana Sayfaya Dön</span>
           </Link>
-          <Link href="/" className="flex items-center">
-            <Logo />
+          <Link href="/" className="flex items-center justify-self-center">
+            <BrandLogo />
           </Link>
-          <Link href="/auth/login">
+          <Link href="/auth/login" className="justify-self-end">
             <Button color="secondary" size="sm">
               Giriş Yap
             </Button>
@@ -122,12 +122,12 @@ export function TosView({ initialContact }: TosViewProps = {}) {
         <div className="mb-10 text-center">
           <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-subtle bg-muted/30 px-3 py-1 font-medium text-subtle text-xs">
             <FileText className="h-3.5 w-3.5 text-emphasis" />
-            <span>Hizmet Şartları ve Kullanıcı Sözleşmesi</span>
+            <span>Hizmet kullanımı hakkında</span>
           </div>
           <h1 className="font-semibold text-3xl text-emphasis tracking-tight sm:text-4xl">
-            Kullanım Koşulları (Terms of Service)
+            Kullanım Koşulları
           </h1>
-          <p className="mt-2 text-sm text-subtle">Son Güncelleme: 26 Eylül 2026 • Yürürlük Sürümü: 1.2</p>
+          <p className="mt-2 text-sm text-subtle">Son güncelleme: 26 Ekim 2026</p>
         </div>
 
         {/* Content Box */}
@@ -135,10 +135,9 @@ export function TosView({ initialContact }: TosViewProps = {}) {
           {/* Giriş */}
           <section className="space-y-3 border-subtle border-b pb-6">
             <p className="text-sm leading-relaxed text-subtle">
-              Bu Kullanım Koşulları, {APP_NAME} ("Rondevu", "Platform", "rondevu.org") web sitesinin, alt alan
-              adlarının ve sunulan randevu otomasyon yazılımı hizmetlerinin kullanımını bağlayan yasal
-              kuralları belirler. Platforma kaydolarak veya randevu oluşturarak bu koşulları kabul etmiş
-              sayılırsınız.
+              Bu koşullar, {APP_NAME} üzerinden hesap açılması, randevu sayfası oluşturulması ve randevu
+              alınmasıyla ilgili temel kullanım kurallarını açıklar. Hesap sahipleri, kendi randevu
+              sayfalarındaki içerikten ve sundukları hizmetlerden sorumludur.
             </p>
           </section>
 
@@ -147,69 +146,59 @@ export function TosView({ initialContact }: TosViewProps = {}) {
             <div className="flex items-center gap-2">
               <Layers className="h-5 w-5 text-emphasis" />
               <h2 className="font-semibold text-lg text-emphasis sm:text-xl">
-                1. Hizmetin Niteliği (Yalnızca Teknik SaaS Yazılım Aracı)
+                1. Hizmetin Kapsamı
               </h2>
             </div>
             <p className="text-sm leading-relaxed text-subtle">
-              Rondevu, bireysel profesyonellerin ve kuruluşların müsaitlik takvimlerini yönetmelerini, randevu
-              kabul etmelerini ve SMS/e-posta aracılığıyla bildirim ve doğrulama süreçlerini otomatize
-              etmelerini sağlayan bağımsız bir <strong>yazılım platformudur (SaaS)</strong>.
+              Rondevu, hesap sahiplerinin müsaitliklerini yönetmesine ve katılımcıların randevu oluşturmasına
+              yardımcı olan bir yazılım hizmetidir. Bildirim, SMS doğrulaması ve takvim bağlantıları gibi
+              işlevler hesap ayarlarına ve bağlı hizmetlere göre kullanılabilir.
             </p>
             <div className="rounded-xl border border-subtle bg-muted/20 p-4 text-xs leading-relaxed text-subtle">
-              <strong>Önemli Uyarı:</strong> Rondevu; randevu veren uzmanlar ile randevu alan
-              danışanlar/müşteriler arasındaki randevunun içeriğine, taraflar arasında sunulan
-              danışmanlık/sağlık/hizmet kalitesine, seans ücretlerine veya para transferlerine{" "}
-              <strong>taraf değildir</strong>. Taraflar arasındaki hukuki ve ticari ilişki münhasıran ilgili
-              uzman ile danışan arasındadır.
+              Randevuya konu olan hizmetin açıklaması, ücreti, iptal koşulları ve yerine getirilmesi
+              randevu sahibi tarafından katılımcıya bildirilmelidir. Platformdaki randevu kaydı, bu
+              hizmetin sunulduğunu veya sonucunu garanti etmez.
             </div>
           </section>
 
-          {/* 2. Sorumluluk Sınırlandırması */}
+          {/* 2. Hizmetin Kullanımı */}
           <section className="space-y-4">
             <div className="flex items-center gap-2">
               <Scale className="h-5 w-5 text-emphasis" />
               <h2 className="font-semibold text-lg text-emphasis sm:text-xl">
-                2. Sorumluluğun Sınırlandırılması (Limitation of Liability)
+                2. Randevular ve Bağlı Hizmetler
               </h2>
             </div>
             <p className="text-sm leading-relaxed text-subtle">
-              Kanunun izin verdiği azami ölçüde, Rondevu aşağıdaki hallerden kaynaklanan doğrudan veya dolaylı
-              zararlardan sorumlu tutulamaz:
+              Randevu akışını kullanırken aşağıdaki durumları dikkate alın:
             </p>
             <ul className="space-y-3 text-sm text-subtle">
               <li className="flex items-start gap-2.5">
                 <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emphasis" />
                 <span>
-                  <strong>Katılımcıların Randevuya Gelmemesi (No-Show):</strong> Danışan veya randevu
-                  sahibinin belirlenen tarih ve saatte randevuya katılmaması, randevuyu unutması veya iptal
-                  etmesi sebebiyle meydana gelen herhangi bir zaman veya kazanç kaybından Rondevu sorumlu
-                  değildir.
+                  <strong>Katılım ve iptal:</strong> Randevu sahibi ve katılımcı, randevuya katılma,
+                  yeniden planlama ve iptal konusunda kendi aralarında iletişim kurmalıdır.
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
                 <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emphasis" />
                 <span>
-                  <strong>GSM Şebekesi ve SMS Gecikmeleri:</strong> SMS OTP doğrulama kodlarının ve randevu
-                  hatırlatmalarının iletimi yerel telekomünikasyon operatörleri, baz istasyonları ve şebeke
-                  trafiğine bağlıdır. Operatör kaynaklı gecikmeler, şebeke kapsama alanı dışı kalma veya
-                  telefonun kapalı olması durumlarından dolayı Rondevu mesul tutulamaz.
+                  <strong>Bildirimler:</strong> SMS ve e-posta iletileri harici sağlayıcılara bağlıdır.
+                  Bildirim gecikirse randevu bilgilerini hesabınızdan veya onay bağlantınızdan kontrol edin.
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
                 <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emphasis" />
                 <span>
-                  <strong>Ödeme ve Hizmet Uyuşmazlıkları:</strong> Hizmet alan ile hizmet veren arasında
-                  randevu bedelleri, iadeler, gecikmeler veya uygulanan hizmetin içeriğine ilişkin çıkabilecek
-                  her türlü anlaşmazlık doğrudan tarafların kendi sorumluluğundadır.
+                  <strong>Hizmet koşulları:</strong> Randevu sahibinin sunduğu hizmete ilişkin fiyat,
+                  ödeme ve iade bilgileri ilgili hizmet sahibi tarafından açıklanır.
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
                 <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emphasis" />
                 <span>
-                  <strong>Üçüncü Taraf Entegrasyon Kesintileri:</strong> Harici takvim sağlayıcıları (Google
-                  Calendar, Apple, Microsoft vb.) veya alt servis sağlayıcılarının planlı bakım ve
-                  kesintilerinden kaynaklanan senkronizasyon gecikmelerinde sorumluluk ilgili sağlayıcılara
-                  aittir.
+                  <strong>Entegrasyonlar:</strong> Takvim ve görüşme sağlayıcılarında yaşanan kesintiler
+                  eşitlemeyi veya toplantı bağlantılarının oluşturulmasını etkileyebilir.
                 </span>
               </li>
             </ul>
@@ -224,8 +213,7 @@ export function TosView({ initialContact }: TosViewProps = {}) {
               </h2>
             </div>
             <p className="text-sm leading-relaxed text-subtle">
-              Rondevu sistemi ve SMS/OTP doğrulama özellikleri yalnızca iyi niyetli ve meşru randevu
-              organizasyonu amaçlarıyla kullanılabilir.
+              Randevu sayfaları ve bildirim özellikleri meşru randevu organizasyonu için kullanılmalıdır.
             </p>
             <div className="space-y-3">
               <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-4 text-xs leading-relaxed text-subtle dark:border-red-500/30">
@@ -247,16 +235,14 @@ export function TosView({ initialContact }: TosViewProps = {}) {
                     zedeleme amacıyla kullanmak,
                   </li>
                   <li>
-                    Sistemin API veya arayüzlerine tersine mühendislik, brute-force veya DDoS tipi aşırı
-                    yükleme saldırıları gerçekleştirmek.
+                    Başkalarının hesaplarına yetkisiz erişmeye çalışmak veya hizmeti aşırı isteklerle
+                    kullanılamaz hale getirmek.
                   </li>
                 </ul>
               </div>
               <p className="text-xs text-subtle">
-                <strong>Askıya Alma ve Fesih Hakkı:</strong> Yukarıda belirtilen kurallara aykırı hareket eden
-                veya SMS sistemini kötüye kullanan kullanıcıların hesapları ve randevu sayfaları, Rondevu
-                tarafından herhangi bir ön bildirime veya tazminata gerek olmaksızın{" "}
-                <strong>derhal dondurulabilir veya kalıcı olarak kapatılabilir</strong>.
+                Kuralları ihlal eden veya bildirim sistemini kötüye kullanan hesapların erişimi, durum
+                incelenirken sınırlandırılabilir. Sorularınız için aşağıdaki iletişim kanallarını kullanın.
               </p>
             </div>
           </section>
@@ -267,10 +253,9 @@ export function TosView({ initialContact }: TosViewProps = {}) {
               4. Fikri Mülkiyet ve Şartların Güncellenmesi
             </h2>
             <p className="text-sm leading-relaxed text-subtle">
-              Rondevu platformunun arayüz tasarımları, yazılım kodları ve markası yasal olarak korunmaktadır.
-              Rondevu, bu kullanım koşullarını yasal düzenlemeler veya hizmet geliştirme gereği dilediği zaman
-              güncelleme hakkını saklı tutar. Güncellenen metin bu sayfada yayımlandığı andan itibaren
-              yürürlüğe girer.
+              Rondevu kaynak kodu, depoda belirtilen açık kaynak lisansı kapsamında kullanılabilir;
+              marka ve görsel unsurlar için aynı lisansın geçerli olduğu varsayılmamalıdır. Bu koşullar
+              değiştiğinde güncel metin ve değişiklik tarihi bu sayfada yayımlanır.
             </p>
             <div className="mt-4 flex flex-wrap gap-4 text-xs">
               {email && (

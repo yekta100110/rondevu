@@ -4,6 +4,7 @@ import { trpc } from "@calcom/trpc/react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { Navbar } from "./components/Navbar";
+import { MarketingFooter } from "./components/MarketingFooter";
 import { PlanContactModal } from "./components/PlanContactModal";
 import type { Locale } from "./i18n/home-translations";
 
@@ -519,6 +520,7 @@ function HomeView({ trHtml, enHtml, svgTemplates, isLoggedIn = false, initialLoc
         onClick={handleContainerClick}
         dangerouslySetInnerHTML={{ __html: locale === "tr" ? trHtml : enHtml }}
       />
+      <MarketingFooter locale={locale} />
 
       {/* Admin Panelinden Dinamik İletişim Modalı */}
       <PlanContactModal

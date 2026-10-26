@@ -8,7 +8,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
   const baseMetadata = await _generateMetadata(
     () => `Gizlilik Politikası | ${APP_NAME}`,
     () =>
-      "rOndevu Gizlilik Politikası ve KVKK Aydınlatma Metni. Kişisel verilerin işlenmesi, Twilio/Cloudflare alt işleyenleri ve kullanıcı hakları.",
+      "rOndevu Gizlilik Politikası. Hesap, randevu ve teknik verilerin kullanımı ile başvuru yolları.",
     true,
     undefined,
     "/privacy"
@@ -18,7 +18,6 @@ export const generateMetadata = async (): Promise<Metadata> => {
     ...baseMetadata,
     keywords: [
       "gizlilik politikası",
-      "kvkk aydınlatma metni",
       "veri güvenliği",
       "rOndevu gizlilik",
       "subprocessors",
@@ -32,7 +31,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
       ...baseMetadata.openGraph,
       title: `Gizlilik Politikası | ${APP_NAME}`,
       description:
-        "rOndevu Gizlilik Politikası ve KVKK Aydınlatma Metni. Kişisel verilerin işlenmesi, Twilio/Cloudflare alt işleyenleri ve kullanıcı hakları.",
+        "rOndevu Gizlilik Politikası. Hesap, randevu ve teknik verilerin kullanımı ile başvuru yolları.",
       locale: "tr_TR",
       type: "website",
     },

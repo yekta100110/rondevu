@@ -1509,3 +1509,172 @@ html.dark #cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"] > *
   scrollbar-gutter: auto !important;
 }
 
+#cal-pricing-1to1-root .framer-pricing-footer-container {
+  display: none !important;
+}
+
+#cal-pricing-1to1-root [data-framer-name="Primary"] .framer-1inn7p6-container,
+#cal-pricing-1to1-root [data-framer-name^="Secondary"] .framer-1inn7p6-container,
+#cal-pricing-1to1-root [data-framer-name="Chevron-right"] {
+  display: none !important;
+}
+
+#cal-pricing-1to1-root [data-framer-name="Primary"],
+#cal-pricing-1to1-root [data-framer-name^="Secondary"] {
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+#cal-pricing-1to1-root [data-framer-name="Primary"] .framer-9vlf6l,
+#cal-pricing-1to1-root [data-framer-name^="Secondary"] .framer-9vlf6l,
+#cal-pricing-1to1-root [data-framer-name="Primary"] .framer-text,
+#cal-pricing-1to1-root [data-framer-name^="Secondary"] .framer-text {
+  text-align: center !important;
+  --framer-text-alignment: center !important;
+}
+
+@media (max-width: 767px) {
+  #cal-pricing-1to1-root,
+  #cal-pricing-1to1-root #main-1,
+  #cal-pricing-1to1-root [data-framer-name="Hero Section"],
+  #cal-pricing-1to1-root [data-framer-name="Container Large"],
+  #cal-pricing-1to1-root .framer-12t1l4y {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin-inline: auto !important;
+  }
+
+  #cal-pricing-1to1-root [data-framer-name="Hero Section"] .framer-4plf86,
+  #cal-pricing-1to1-root [data-framer-name="Hero Section"] .framer-xw7bcr,
+  #cal-pricing-1to1-root [data-framer-name="Hero Section"] .framer-f9gyza,
+  #cal-pricing-1to1-root .framer-mnipkf,
+  #cal-pricing-1to1-root .framer-6fxrby {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin-inline: auto !important;
+  }
+
+  #cal-pricing-1to1-root #feature-breakdown,
+  #cal-pricing-1to1-root #feature-breakdown .framer-5bj5pn,
+  #cal-pricing-1to1-root #feature-breakdown .framer-10p1wev,
+  #cal-pricing-1to1-root #feature-breakdown .framer-19inx37,
+  #cal-pricing-1to1-root #feature-breakdown .framer-1p8ymlz,
+  #cal-pricing-1to1-root #feature-breakdown .framer-1o86hi2,
+  #cal-pricing-1to1-root #feature-breakdown .framer-11xsfzq {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin-inline: auto !important;
+    overflow-x: visible !important;
+    scrollbar-gutter: auto !important;
+  }
+
+  #cal-pricing-1to1-root #feature-breakdown .framer-11xsfzq {
+    overflow: hidden !important;
+  }
+
+  #cal-pricing-1to1-root #feature-breakdown .framer-1euimoj {
+    display: none !important;
+  }
+
+  #cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"] {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+  }
+
+  #cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"] > * {
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    border: 0 !important;
+  }
+
+  #cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"] > :first-child {
+    grid-column: 1 / -1;
+    padding: 18px 16px 10px !important;
+  }
+
+  #cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"] > :nth-child(2),
+  #cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"] > :nth-child(3) {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 8px 16px 16px !important;
+    text-align: left !important;
+  }
+
+  #cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"] > :nth-child(2)::before,
+  #cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"] > :nth-child(3)::before {
+    color: #a3a3a3;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  #cal-pricing-1to1-root[data-locale="tr"] #feature-breakdown [data-framer-name="Row"] > :nth-child(2)::before { content: "Aylık"; }
+  #cal-pricing-1to1-root[data-locale="tr"] #feature-breakdown [data-framer-name="Row"] > :nth-child(3)::before { content: "Yıllık"; }
+  #cal-pricing-1to1-root[data-locale="en"] #feature-breakdown [data-framer-name="Row"] > :nth-child(2)::before { content: "Monthly"; }
+  #cal-pricing-1to1-root[data-locale="en"] #feature-breakdown [data-framer-name="Row"] > :nth-child(3)::before { content: "Yearly"; }
+
+  #cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"].rondevu-feature-section-divider {
+    display: block !important;
+    padding: 20px 16px !important;
+  }
+
+  #cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"].rondevu-feature-section-divider > :first-child {
+    padding: 0 !important;
+  }
+
+  #cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"].rondevu-feature-section-divider > :not(:first-child) {
+    display: none !important;
+  }
+
+  #cal-pricing-1to1-root > [data-framer-root],
+  #cal-pricing-1to1-root #main-1 {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-inline: auto !important;
+  }
+
+  #cal-pricing-1to1-root #main-1 {
+    padding-inline: 0 !important;
+  }
+
+  #cal-pricing-1to1-root #main-1 > [data-framer-name="Hero Section"],
+  #cal-pricing-1to1-root #main-1 > #feature-breakdown {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-inline: auto !important;
+    padding-inline: 16px !important;
+  }
+
+  #cal-pricing-1to1-root [data-framer-name="Hero Section"] > [data-framer-name="Padding Horizontal Wrapper"],
+  #cal-pricing-1to1-root #feature-breakdown > [data-framer-name="Padding Horizontal Wrapper"] {
+    flex: none !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  #cal-pricing-1to1-root [data-framer-name="Hero Section"] .framer-qxc4hw-container,
+  #cal-pricing-1to1-root #feature-breakdown .framer-1leeyfy-container {
+    display: none !important;
+  }
+
+  #cal-pricing-1to1-root [data-framer-name="Hero Section"] .framer-1yns97d,
+  #cal-pricing-1to1-root #feature-breakdown .framer-10p1wev {
+    flex: none !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+}
+

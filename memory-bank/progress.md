@@ -382,3 +382,14 @@
 - Removed the unsupported Next.js 16 `eslint` config entry, reduced standalone Docker source-map generation and default Node heap usage, and added a persistent BuildKit Yarn cache mount.
 - Reduced local Docker build context by excluding unneeded Yarn cache and reference directories.
 - An 8 GB Docker Desktop reproduction reached `next build` before the Docker/WSL connection became unresponsive. Docker and all Dokploy/rOndevu Swarm services were restored; the revised lower-memory build has not yet completed.
+
+## 2026-10-26 — Mobile pricing and legal content
+
+- Reworked mobile Feature Breakdown rows into readable stacked cards and removed phone-width Framer offsets and fixed widths.
+- Matched home/pricing logo placement and `/api/logo` source to the privacy navbar, and added a localized shared marketing footer.
+- Replaced broken CTA chevrons with a CSS arrow and corrected the bright dark-theme button.
+- Simplified `/tos` and `/privacy`, removed unverified compliance and technical promises, and recorded missing formal legal facts in `docs/legal-review-2026-10-26.md`.
+- Automated tests and agent visual validation remain with the user by request; local review is intended on port 3032.
+- Follow-up removed the static sales-link button wrappers from TR/EN home and pricing fragments, removed remaining marketing chevrons, and centered CTA labels.
+- After user screenshots exposed remaining arrow artifacts and tiny black marketing logos, removed the icon container markup from all four fragments and added explicit header/footer logo dimensions and dark-mode filtering.
+- Replaced the route-dependent logo component/filter with one responsive static wordmark across marketing and legal pages, centered in three-column headers and sized larger in the shared footer.

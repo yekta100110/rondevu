@@ -1,5 +1,7 @@
 # Active Context — rOndevu
 
+- **Mobil pricing merkezleme (2026-10-26):** Pricing Framer dışa aktarımındaki mobil yatay boşluk bileşenleri kaldırıldı. Hero ve Feature Breakdown bölümleri aynı simetrik 16 px kenar boşluğuyla tam genişlikte hizalandı; iç flex sarmalayıcıları mobilde %100 genişliğe sabitlendi. Kullanıcı isteği uyarınca doğrulama kullanıcıya bırakıldı; commit oluşturulmadı.
+
 - **Ana Sayfa Adım ve Özellik Kartı Hareketleri (2026-10-05):**
   - Özgün Framer exportundaki 2. adımın müsaitlik toggle/saat vurgusu ve 3. adımın görüşme ekranı hareketi yeniden etkinleştirildi.
   - Özellik kartlarında takvim görevleri sırayla vurgulanır; SMS/e-posta kartındaki üç bildirim kademeli görünür. Diğer sabit önizlemeler hafif, farklı gecikmeli yüzer hareket kullanır.
@@ -586,6 +588,15 @@
 - An 8 GB Docker Desktop build progressed through Yarn install, tRPC, and embed compilation, then its WSL connection stopped responding during `next build`. The Docker engine required a restart; this is consistent with memory pressure but no explicit OOM event was captured.
 - Docker builds now cache Yarn downloads through a BuildKit mount, exclude local Yarn cache/example files from the build context, cap the Docker Node heap at 4 GB, and omit production browser source maps in standalone Docker builds. The obsolete Next.js 16 `eslint` config key was removed.
 - Dokploy's `/etc/dokploy` bind path disappeared after the Docker Desktop restart. It was recreated in the dockerd mount namespace using Dokploy's installer permissions; all Dokploy and rOndevu Swarm services recovered. This host path may disappear on another Docker Desktop restart and needs a durable hosting solution.
+
+## 2026-10-26 — Mobile pricing and legal content
+- Marketing navbar and footer use the same `/api/logo` component as `/privacy`; the footer contains localized legal links.
+- Pricing comparison rows become full-width stacked feature cards on phones, with both plan states visible without horizontal scrolling.
+- Legal pages were simplified to product-verifiable descriptions. Missing facts for a formal notice are recorded in `docs/legal-review-2026-10-26.md`.
+- The user requested local review on port 3032 without automated tests or agent visual validation.
+- Follow-up: removed all `/talk-to-sales` buttons from both localized home/pricing fragments and hid the Framer chevron area on remaining marketing buttons; labels are centered. The shared navbar dashboard action also no longer shows a right arrow.
+- The visual follow-up showed the Framer chevron shell still occupying button space, so its markup was removed from all localized marketing button anchors. Marketing logo sizing and white contrast are now explicit for dark theme and system-dark mode.
+- Another visual report showed the `/api/logo` plus theme-filter approach remained too small and color-inconsistent between marketing and legal routes. All four routes now use one static `rondevu-logo-white.svg` BrandLogo component with larger responsive widths and `mix-blend-mode: difference` for contrast on either neutral background.
 
 ## Brand Asset Details
 - Wordmark SVGs (`cal-logo-word*.svg`, `rondevu-logo-*.svg`): Scaled to fit original 84x26 box dimensions with 17px font, avoiding layout overflow.
