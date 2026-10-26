@@ -582,6 +582,11 @@
 - The availability control uses a 28px track with a 12px knob initially aligned right; its loop moves the knob 12px left inside the track. The orbit's `framer-160tdzx` edge overlay is suppressed while the existing orbit motion remains.
 - The integration section's “Explore apps” anchor was removed from both localized static fragments. Its “Get started” control uses the neutral dark control surface.
 
+## 2026-10-26 — Docker Desktop build pressure
+- An 8 GB Docker Desktop build progressed through Yarn install, tRPC, and embed compilation, then its WSL connection stopped responding during `next build`. The Docker engine required a restart; this is consistent with memory pressure but no explicit OOM event was captured.
+- Docker builds now cache Yarn downloads through a BuildKit mount, exclude local Yarn cache/example files from the build context, cap the Docker Node heap at 4 GB, and omit production browser source maps in standalone Docker builds. The obsolete Next.js 16 `eslint` config key was removed.
+- Dokploy's `/etc/dokploy` bind path disappeared after the Docker Desktop restart. It was recreated in the dockerd mount namespace using Dokploy's installer permissions; all Dokploy and rOndevu Swarm services recovered. This host path may disappear on another Docker Desktop restart and needs a durable hosting solution.
+
 ## Brand Asset Details
 - Wordmark SVGs (`cal-logo-word*.svg`, `rondevu-logo-*.svg`): Scaled to fit original 84x26 box dimensions with 17px font, avoiding layout overflow.
 - Favicon & App Icons (`apple-touch-icon.png`, `android-chrome-*.png`, `favicon-*.png`, `favicon.ico`): Rendered in Cal Sans font, exact original dark rounded-rectangle gradient, silver metallic bevel, and "rOn" lettering with no red accent.

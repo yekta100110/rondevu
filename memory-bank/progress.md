@@ -376,3 +376,9 @@
 - Matched the availability toggle's travel to the original Framer track geometry, removed the orbit's dark edge overlay, and adjusted the integration action's dark colors.
 - Removed the integration “Explore apps” link from both Turkish and English homepage fragments. Brand assets and copy were not changed.
 - Left the changes uncommitted for user review; automated and visual verification remain with the user.
+
+## 2026-10-26 — Docker build resource mitigation
+
+- Removed the unsupported Next.js 16 `eslint` config entry, reduced standalone Docker source-map generation and default Node heap usage, and added a persistent BuildKit Yarn cache mount.
+- Reduced local Docker build context by excluding unneeded Yarn cache and reference directories.
+- An 8 GB Docker Desktop reproduction reached `next build` before the Docker/WSL connection became unresponsive. Docker and all Dokploy/rOndevu Swarm services were restored; the revised lower-memory build has not yet completed.

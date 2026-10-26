@@ -1,6 +1,8 @@
 # Dependencies
 node_modules
 **/node_modules
+.yarn/cache
+.yarn/install-state.gz
 
 # Build outputs
 .next
@@ -37,6 +39,8 @@ docs
 
 # Local design references and retired marketing experiments
 example
+example-apps
+interface
 scratch
 apps/web/public/interfaces
 apps/web/public/cal_files/beta_data

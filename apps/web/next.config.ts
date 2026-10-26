@@ -225,9 +225,6 @@ const nextConfig = (phase: string): NextConfig => {
     typescript: {
       ignoreBuildErrors: true,
     },
-    eslint: {
-      ignoreDuringBuilds: true,
-    },
     output: process.env.BUILD_STANDALONE === "true" ? "standalone" : undefined,
     serverExternalPackages: [
       "deasync",
@@ -242,7 +239,7 @@ const nextConfig = (phase: string): NextConfig => {
     experimental: {
       optimizePackageImports: ["@calcom/ui"],
     },
-    productionBrowserSourceMaps: true,
+    productionBrowserSourceMaps: process.env.BUILD_STANDALONE !== "true",
     transpilePackages: [
       "@calcom/app-store",
       "@calcom/dayjs",
