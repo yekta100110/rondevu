@@ -133,7 +133,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           dangerouslySetInnerHTML={{
             __html: `(function() {
               try {
-                var stored = localStorage.getItem("app-theme");
+                var path = window.location.pathname.replace(/\/$/, "") || "/";
+                var isMarketingPage = path === "/" || path === "/pricing";
+                var stored = isMarketingPage ? null : localStorage.getItem("app-theme");
                 var isDark = false;
                 if (stored === "dark") {
                   isDark = true;

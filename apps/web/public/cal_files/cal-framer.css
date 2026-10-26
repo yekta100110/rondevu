@@ -1474,20 +1474,7 @@ html.dark #cal-1to1-root .framer-fi1s7x {
   animation-play-state: running !important;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  #cal-1to1-root [data-framer-name="To-do cards"],
-  #cal-1to1-root .framer-VcmAu .framer-nfk873 > div,
-  #cal-1to1-root .framer-1ub77jv,
-  #cal-1to1-root .framer-1ub77jv > div {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
 
-  #cal-1to1-root .framer-fi1s7x {
-    transition: none !important;
-  }
-}
 
 /* ========================================================
    rOndevu Bottom CTA Banner ("Daha akıllı, daha sade randevu")
@@ -1712,11 +1699,7 @@ html.light .framer-894vxg .framer-text {
   transition: max-height 240ms ease, opacity 180ms ease !important;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  #cal-1to1-root [data-framer-name="Answer Wrapper"] {
-    transition: none !important;
-  }
-}
+
 
 /* Dark-theme polish for the integrations grid and divider intersection markers. */
 html.dark #cal-1to1-root .framer-VcmAu .framer-nfk873 > div {
@@ -1814,13 +1797,7 @@ html.dark #cal-1to1-root [data-framer-name="Logo Wrapper"] .framer-text {
   transition: opacity 140ms ease, transform 140ms ease;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  #cal-1to1-root .framer-647xse .framer-hw592q .framer-text,
-  #cal-1to1-root .framer-647xse .framer-y52rve .framer-text,
-  #cal-1to1-root .framer-647xse .framer-cxfwa4 .framer-text {
-    transition: none !important;
-  }
-}
+
 
 /* Restored motion for the original step and feature previews. */
 @keyframes rondevu-availability-toggle {
@@ -1831,7 +1808,7 @@ html.dark #cal-1to1-root [data-framer-name="Logo Wrapper"] .framer-text {
   }
   50%,
   82% {
-    transform: translateX(12px);
+    transform: translateX(-12px);
   }
 }
 
@@ -1926,26 +1903,7 @@ html.dark #cal-1to1-root [data-framer-name="Logo Wrapper"] .framer-text {
   transform: translateY(0);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .framer-qm9fst [data-framer-name="Toggle"],
-  .framer-qm9fst [data-framer-name="Time Wrapper"],
-  .framer-igaxec [data-framer-name="Browser Wrapper"],
-  .framer-igaxec [data-framer-name="Function Button Wrapper"],
-  .framer-1tym5sg [data-framer-name="Image Wrapper"],
-  .framer-l5bt33 [data-framer-name="Image Wrapper"],
-  .framer-cf392j [data-framer-name="Image Wrapper"] {
-    animation: none !important;
-  }
 
-  .framer-pry2jb [data-framer-name="To-do cards"],
-  .framer-54l76e [data-framer-name="1"],
-  .framer-54l76e [data-framer-name="2"],
-  .framer-54l76e [data-framer-name="3"] {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-}
 
 #cal-1to1-root .framer-647xse .framer-qayVG,
 #cal-1to1-root .framer-647xse .framer-qayVG[data-border="true"]::after,
@@ -2094,11 +2052,7 @@ html.dark #cal-1to1-root [data-framer-name="FAQ Section"] [data-framer-name="Plu
   width: 24px !important;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  #cal-1to1-root .framer-1uphd30 [data-framer-name="Answer Wrapper"] {
-    transition: none !important;
-  }
-}
+
 
 /* Hydration-safe motion for the two feature sections that otherwise render
    with Framer's frozen SSR transform values. */
@@ -2126,112 +2080,124 @@ html.dark #cal-1to1-root [data-framer-name="FAQ Section"] [data-framer-name="Plu
   animation-delay: -4s !important;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  #cal-1to1-root .framer-1j78ach .framer-1tym5sg,
-  #cal-1to1-root .framer-1j78ach .framer-qm9fst,
-  #cal-1to1-root .framer-1j78ach .framer-igaxec,
-  #cal-1to1-root .framer-1j78ach .framer-l5bt33,
-  #cal-1to1-root .framer-kvilz9 > .framer-54l76e,
-  #cal-1to1-root .framer-kvilz9 > .framer-cf392j {
-    animation: none !important;
-    transform: none !important;
-    transition: none !important;
-  }
+
+/* Marketing feature icons need a readable foreground on the dark surface. */
+html.dark #cal-1to1-root [data-framer-name="Icon Wrapper"] {
+  background-color: #27272a !important;
+  color: #f4f4f5 !important;
 }
 
-/* Recurring appointments join the exported feature grid while keeping its detail copy on hover. */
-#cal-1to1-root .rondevu-recurring-feature-container {
-  align-self: stretch;
-  display: flex;
-  min-width: 0;
+html.dark #cal-1to1-root [data-framer-name="Icon Wrapper"] svg,
+html.dark #cal-1to1-root [data-framer-name="Icon Wrapper"] svg path {
+  color: #f4f4f5 !important;
+  fill: #f4f4f5 !important;
+  stroke: #f4f4f5 !important;
 }
 
-#cal-1to1-root .rondevu-recurring-feature {
-  align-items: center;
-  background: #ffffff;
-  border: 1px solid rgba(24, 24, 27, 0.16);
-  border-radius: 16px;
-  box-sizing: border-box;
-  color: #18181b;
-  cursor: default;
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 196px;
-  overflow: hidden;
-  padding: 24px;
-  position: relative;
-  text-align: center;
+html.dark #cal-1to1-root .framer-647xse .framer-ste13c .framer-k4oXa .framer-156kf12 {
+  background-color: #242428 !important;
+  border-radius: 6px !important;
 }
 
-#cal-1to1-root .rondevu-recurring-feature-icon {
-  align-items: center;
-  background: rgba(24, 24, 27, 0.07);
-  border-radius: 999px;
-  display: inline-flex;
-  font-size: 24px;
-  height: 44px;
-  justify-content: center;
-  line-height: 1;
-  margin-bottom: 14px;
-  width: 44px;
+html.dark #cal-1to1-root .framer-647xse .framer-ste13c .framer-k4oXa .framer-156kf12 .framer-text {
+  color: #f4f4f5 !important;
+  --extracted-r6o4lv: #f4f4f5 !important;
 }
 
-#cal-1to1-root .rondevu-recurring-feature h3 {
-  font-size: 17px;
-  line-height: 1.3;
-  margin: 0;
+html.dark #cal-1to1-root [data-framer-name="Status Wrapper"] {
+  display: none !important;
 }
 
-#cal-1to1-root .rondevu-recurring-feature-hover {
-  align-items: center;
-  background: inherit;
-  display: flex;
-  flex-direction: column;
-  inset: 0;
-  justify-content: center;
-  opacity: 0;
-  padding: 24px;
-  pointer-events: none;
-  position: absolute;
-  transform: translateY(8px);
-  transition: opacity 180ms ease, transform 180ms ease;
+/* Marketing surfaces share the neutral charcoal scale of the page and navbar. */
+html.dark #cal-1to1-root {
+  --rondevu-surface: #181818;
+  --rondevu-raised: #202020;
+  --rondevu-edge: rgba(255, 255, 255, 0.11);
+  --token-dfc22ccd-cb7d-477e-862b-97507724854f: var(--rondevu-surface) !important;
+  --token-851bb574-8c69-41a0-b35c-b891de337dd8: var(--rondevu-surface) !important;
+  --token-54f4586d-f010-4ee5-bbc7-eb187ad832e5: var(--rondevu-surface) !important;
 }
 
-#cal-1to1-root .rondevu-recurring-feature-hover p {
-  font-size: 14px;
-  line-height: 1.45;
-  margin: 0;
+html.dark #cal-1to1-root .framer-Dv3SB .framer-eyoavh,
+html.dark #cal-1to1-root .framer-Dv3SB .framer-1tym5sg,
+html.dark #cal-1to1-root .framer-Dv3SB .framer-qm9fst,
+html.dark #cal-1to1-root .framer-Dv3SB .framer-igaxec,
+html.dark #cal-1to1-root .framer-Dv3SB .framer-l5bt33,
+html.dark #cal-1to1-root .framer-Dv3SB .framer-cf392j,
+html.dark #cal-1to1-root .framer-Dv3SB .framer-pry2jb,
+html.dark #cal-1to1-root .framer-Dv3SB .framer-54l76e,
+html.dark #cal-1to1-root .framer-Dv3SB .framer-g2qg4s,
+html.dark #cal-1to1-root .framer-ApMXm,
+html.dark #cal-1to1-root .framer-fi1s7x,
+html.dark #cal-1to1-root .framer-haqgsl,
+html.dark #cal-1to1-root .framer-12jqh3g,
+html.dark #cal-1to1-root .framer-YAKWS,
+html.dark #cal-1to1-root .framer-10twttb,
+html.dark #cal-1to1-root .framer-VcmAu .framer-nfk873 > div {
+  background-color: var(--rondevu-surface) !important;
+  border-color: var(--rondevu-edge) !important;
 }
 
-#cal-1to1-root .rondevu-recurring-feature-hover .rondevu-recurring-feature-hover-title {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 10px;
+html.dark #cal-1to1-root .framer-647xse .framer-qayVG,
+html.dark #cal-1to1-root .framer-647xse .framer-1p92aqg,
+html.dark #cal-1to1-root .framer-647xse .framer-1cn28oc,
+html.dark #cal-1to1-root .framer-647xse .framer-1ojv6fr {
+  background-color: var(--rondevu-surface) !important;
+  border-color: var(--rondevu-edge) !important;
 }
 
-#cal-1to1-root .rondevu-recurring-feature:hover .rondevu-recurring-feature-hover,
-#cal-1to1-root .rondevu-recurring-feature:focus-visible .rondevu-recurring-feature-hover {
-  opacity: 1;
-  transform: translateY(0);
+html.dark #cal-1to1-root .framer-11t5dr2,
+html.dark #cal-1to1-root [data-framer-name="Icon Wrapper"] {
+  background-color: var(--rondevu-raised) !important;
 }
 
-html.dark #cal-1to1-root .rondevu-recurring-feature {
-  background: #202024;
-  border-color: rgba(177, 177, 178, 0.42);
-  color: #f4f4f5;
+/* Keep the original Framer 12px knob inside its 28px availability track. */
+#cal-1to1-root .framer-qm9fst .framer-C8BLB.framer-9d5qrv {
+  width: 28px !important;
+  padding: 2px !important;
+  overflow: hidden !important;
 }
 
-html.dark #cal-1to1-root .rondevu-recurring-feature-icon {
-  background: rgba(244, 244, 245, 0.1);
-  color: #f4f4f5;
+#cal-1to1-root .framer-qm9fst .framer-C8BLB [data-framer-name="Toggle"] {
+  flex: none !important;
+  width: 12px !important;
+  height: 12px !important;
+  animation: rondevu-availability-toggle 3.6s ease-in-out infinite !important;
+  animation-play-state: running !important;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  #cal-1to1-root .rondevu-recurring-feature-hover {
-    transition: none;
-  }
+html.dark #cal-1to1-root .framer-qm9fst [data-framer-name="Row"],
+html.dark #cal-1to1-root .framer-qm9fst [data-framer-name="Toggle Wrapper"] {
+  background-color: transparent !important;
 }
 
+html.dark #cal-1to1-root .framer-qm9fst .framer-C8BLB.framer-9d5qrv {
+  background-color: #303030 !important;
+}
+
+html.dark #cal-1to1-root .framer-qm9fst .framer-C8BLB [data-framer-name="Toggle"] {
+  background-color: #f4f4f5 !important;
+}
+
+/* The original orbit wrapper already clips its circles at the card edge. */
+#cal-1to1-root .framer-vl81py > .framer-160tdzx {
+  display: none !important;
+}
+
+html.dark #cal-1to1-root .framer-hgnbQ .framer-1e41rgp-container .framer-kMQ83 {
+  background: #202020 !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  box-shadow: none !important;
+  color: #f4f4f5 !important;
+}
+
+html.dark #cal-1to1-root .framer-hgnbQ .framer-1e41rgp-container .framer-kMQ83 .framer-text {
+  color: #f4f4f5 !important;
+  --framer-text-color: #f4f4f5 !important;
+  --extracted-r6o4lv: #f4f4f5 !important;
+}
+
+html.dark #cal-1to1-root .framer-hgnbQ .framer-1e41rgp-container .framer-kMQ83:hover {
+  background: #2b2b2b !important;
+}
 

@@ -131,15 +131,13 @@ export interface Translations {
   modal: {
     title: string;
     subtitle: string;
-    selectedPlan: string;
-    price: string;
-    chooseChannel: string;
+    generalSubtitle: string;
     whatsapp: string;
     phone: string;
     email: string;
-    setupNote: string;
     close: string;
-    whatsappPrefill: (planName: string) => string;
+    whatsappPrefill: (planName: string | null) => string;
+    emailSubject: (planName: string | null) => string;
   };
   faq: {
     badge: string;
@@ -502,18 +500,19 @@ export const homeTranslations: Record<Locale, Translations> = {
       noCardNeeded: "Kredi kartı gerekmez. Başlamak için bizimle iletişime geçmeniz yeterlidir.",
     },
     modal: {
-      title: "Plan Seçimi",
-      subtitle: "Hesabınızı hemen açıp profil linkinizi teslim edelim. İletişim kanalını seçin:",
-      selectedPlan: "Seçilen Plan",
-      price: "Tutar",
-      chooseChannel: "Doğrudan İletişime Geçin",
-      whatsapp: "WhatsApp ile Yazın",
-      phone: "Telefonla Arayın",
-      email: "E-posta Gönderin",
-      setupNote: "Ekibimiz sisteminizi dakikalar içinde hazırlar ve size özel randevu sayfanızı teslim eder.",
+      title: "İletişime geçin",
+      subtitle: "Seçtiğiniz plan hakkında konuşmak için bize ulaşın.",
+      generalSubtitle: "Sorularınız için bize doğrudan ulaşabilirsiniz.",
+      whatsapp: "WhatsApp'tan yazın",
+      phone: "Telefon",
+      email: "E-posta",
       close: "Kapat",
-      whatsappPrefill: (planName: string) =>
-        `Merhaba, rOndevu ${planName} hakkında bilgi almak ve hesabımı açtırmak istiyorum.`,
+      whatsappPrefill: (planName: string | null) =>
+        planName
+          ? `Merhaba, rOndevu ${planName} hakkında bilgi almak istiyorum.`
+          : "Merhaba, rOndevu hakkında bilgi almak istiyorum.",
+      emailSubject: (planName: string | null) =>
+        planName ? `${planName} - rOndevu` : "rOndevu hakkında bilgi",
     },
     faq: {
       badge: "MERAK EDİLENLER",
@@ -884,19 +883,19 @@ export const homeTranslations: Record<Locale, Translations> = {
       noCardNeeded: "No credit card needed. Simply reach out to our team to get started.",
     },
     modal: {
-      title: "Plan Selection",
-      subtitle:
-        "We'll activate your account and deliver your personal link right away. Choose how you'd like to reach us:",
-      selectedPlan: "Selected Plan",
-      price: "Price",
-      chooseChannel: "Contact Us Directly",
-      whatsapp: "Chat on WhatsApp",
-      phone: "Call by Phone",
-      email: "Send an Email",
-      setupNote: "Our team sets up your account and personal booking link within minutes.",
+      title: "Get in touch",
+      subtitle: "Contact us to talk about the plan you selected.",
+      generalSubtitle: "Reach us directly with any questions.",
+      whatsapp: "Message on WhatsApp",
+      phone: "Phone",
+      email: "Email",
       close: "Close",
-      whatsappPrefill: (planName: string) =>
-        `Hello, I would like to get information about the rOndevu ${planName} and set up my account.`,
+      whatsappPrefill: (planName: string | null) =>
+        planName
+          ? `Hello, I would like information about the rOndevu ${planName}.`
+          : "Hello, I would like information about rOndevu.",
+      emailSubject: (planName: string | null) =>
+        planName ? `${planName} - rOndevu` : "Question about rOndevu",
     },
     faq: {
       badge: "FAQ",

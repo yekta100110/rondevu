@@ -1,7 +1,7 @@
 "use client";
 
 import { trpc } from "@calcom/trpc/react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { Navbar } from "../home/components/Navbar";
 import { PlanContactModal } from "../home/components/PlanContactModal";
 import type { Locale } from "../home/i18n/home-translations";
@@ -18,10 +18,11 @@ interface PricingViewProps {
   svgTemplates: string;
   isLoggedIn?: boolean;
   initialContact?: PlanContactData;
+  initialLocale: Locale;
 }
 
-function PricingView({ trHtml, enHtml, svgTemplates, isLoggedIn = false, initialContact }: PricingViewProps) {
-  const [locale, setLocale] = useState<Locale>("tr");
+function PricingView({ trHtml, enHtml, svgTemplates, isLoggedIn = false, initialContact, initialLocale }: PricingViewProps) {
+  const locale = initialLocale;
   const [modalPlanType, setModalPlanType] = useState<"monthly" | "yearly" | null>(null);
 
   const applySystemTheme = useCallback(() => {
@@ -41,14 +42,10 @@ function PricingView({ trHtml, enHtml, svgTemplates, isLoggedIn = false, initial
   }, []);
 
   // Otomatik Dil ve Tema Tespiti
-  useEffect(() => {
-    let initialLoc: Locale = "tr";
-    const browserLang = navigator.language?.toLowerCase() ?? "";
-    if (browserLang.startsWith("en")) initialLoc = "en";
+  useLayoutEffect(() => {
     localStorage.removeItem("app-locale");
     localStorage.removeItem("app-theme");
-    setLocale(initialLoc);
-    document.title = initialLoc === "tr" ? "Fiyatlandırma - rOndevu" : "Pricing - rOndevu";
+    document.title = locale === "tr" ? "Fiyatlandırma - rOndevu" : "Pricing - rOndevu";
 
     applySystemTheme();
 
@@ -58,7 +55,7 @@ function PricingView({ trHtml, enHtml, svgTemplates, isLoggedIn = false, initial
     };
     mediaQuery.addEventListener("change", handleMediaChange);
     return () => mediaQuery.removeEventListener("change", handleMediaChange);
-  }, [applySystemTheme]);
+  }, [applySystemTheme, locale]);
 
   // Fiyatlandırma CTA butonlarını aktif dile göre ("Planı Seç" / "Choose Plan") senkronize et
   useEffect(() => {
@@ -71,6 +68,18 @@ function PricingView({ trHtml, enHtml, svgTemplates, isLoggedIn = false, initial
       if (p && p.textContent !== label) {
         p.textContent = label;
       }
+    });
+  }, [locale]);
+
+  useEffect(() => {
+    const root = document.getElementById("cal-pricing-1to1-root");
+    if (!root) return;
+
+    root.querySelectorAll<HTMLElement>(".framer-text").forEach((text) => {
+      const label = text.textContent?.trim().toLocaleLowerCase(locale) ?? "";
+      if (!label.startsWith("advanced features") && !label.startsWith("gelişmiş randevu özellikleri")) return;
+
+      text.closest<HTMLElement>('[data-framer-name*="Row"]')?.classList.add("rondevu-feature-section-divider");
     });
   }, [locale]);
 
@@ -119,24 +128,12 @@ function PricingView({ trHtml, enHtml, svgTemplates, isLoggedIn = false, initial
     };
   }, [locale]);
 
-  // The exported Framer status badge contains an absolutely positioned remote
-  // image without a positioned container. On the pricing layout that image can
-  // stretch across the whole page and turn the footer link into an overlay.
+  // The exported status badge is not part of the pricing page content.
   useEffect(() => {
     const root = document.getElementById("cal-pricing-1to1-root");
     if (!root) return;
-
-    const label = locale === "tr" ? "Tüm Sistemler Aktif" : "All Systems Operational";
     root.querySelectorAll<HTMLElement>('[data-framer-name="Status Wrapper"]').forEach((status) => {
-      status.classList.add("rondevu-status-link");
-      status.setAttribute("title", label);
-      const dot = document.createElement("span");
-      dot.className = "rondevu-status-dot";
-      dot.setAttribute("aria-hidden", "true");
-      const text = document.createElement("span");
-      text.className = "rondevu-status-label";
-      text.textContent = label;
-      status.replaceChildren(dot, text);
+      status.remove();
     });
   }, [locale]);
 
@@ -195,10 +192,6 @@ function PricingView({ trHtml, enHtml, svgTemplates, isLoggedIn = false, initial
 
   return (
     <div className="relative min-h-screen bg-white dark:bg-[#141414] text-emphasis selection:bg-brand-default selection:text-brand transition-colors duration-200">
-      {/* 1:1 Cal.com Framer Stylesheets */}
-      <link rel="stylesheet" href="/cal_files/cal-framer.css" />
-      <link rel="stylesheet" href="/cal_files/cal-pricing-framer.css" />
-
       {/* Cal.com SVG Şablonları */}
       <div id="svg-templates-container" dangerouslySetInnerHTML={{ __html: svgTemplates }} />
 
@@ -216,7 +209,7 @@ function PricingView({ trHtml, enHtml, svgTemplates, isLoggedIn = false, initial
       <PlanContactModal
         isOpen={modalPlanType !== null}
         onClose={handleModalClose}
-        planType={modalPlanType || "monthly"}
+        planType={modalPlanType}
         locale={locale}
         phone={phone}
         email={email}

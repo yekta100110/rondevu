@@ -9,6 +9,10 @@ import { _generateMetadata } from "app/_utils";
 import type { Metadata } from "next";
 import { cookies, headers } from "next/headers";
 import { PricingView } from "~/pricing/pricing-view";
+import type { Locale } from "~/home/i18n/home-translations";
+
+import "../../../public/cal_files/cal-framer.css";
+import "../../../public/cal_files/cal-pricing-framer.css";
 
 const generateMetadata = async (): Promise<Metadata> => {
   const baseMetadata = await _generateMetadata(
@@ -46,9 +50,13 @@ const generateMetadata = async (): Promise<Metadata> => {
 };
 
 const PricingPage = async () => {
-  const session = await getServerSession({ req: buildLegacyRequest(await headers(), await cookies()) });
+  const requestHeaders = await headers();
+  const session = await getServerSession({ req: buildLegacyRequest(requestHeaders, await cookies()) });
   const isLoggedIn = !!session?.user?.id;
   const initialContact = await getPlanContactConfig();
+  const initialLocale: Locale = requestHeaders.get("accept-language")?.trim().toLowerCase().startsWith("en")
+    ? "en"
+    : "tr";
 
   const publicDir = path.join(process.cwd(), "public", "cal_files");
   const trHtml = fs.readFileSync(path.join(publicDir, "pricing-dom-tr.html"), "utf8");
@@ -62,6 +70,7 @@ const PricingPage = async () => {
       svgTemplates={svgTemplates}
       isLoggedIn={isLoggedIn}
       initialContact={initialContact}
+      initialLocale={initialLocale}
     />
   );
 };

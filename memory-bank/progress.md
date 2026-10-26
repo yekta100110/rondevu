@@ -362,3 +362,17 @@
 ## 2026-10-05 — System-preference navigation
 
 - Marketing navigation now follows browser language and color-scheme preferences and no longer exposes TR/EN or theme controls.
+
+## 2026-10-26 — Home and pricing refinement
+
+- Unified dark cards and plan surfaces with the neutral marketing canvas; adjusted the Feature Breakdown frame, advanced divider, next-row top line, and last-row bottom line.
+- Moved marketing CSS into route imports and selected the initial locale on the server to avoid the first-load style/language flash.
+- Rebuilt the plan contact dialog and added a general contact mode for the home page.
+- Removed the recurring feature insertion, retired sales/demo actions, and operational-status controls.
+- Changes remain uncommitted for the user's own inspection on port 3032; no automated or visual verification was run by the agent at the user's request.
+
+## 2026-10-26 — Homepage motion correction
+
+- Matched the availability toggle's travel to the original Framer track geometry, removed the orbit's dark edge overlay, and adjusted the integration action's dark colors.
+- Removed the integration “Explore apps” link from both Turkish and English homepage fragments. Brand assets and copy were not changed.
+- Left the changes uncommitted for user review; automated and visual verification remain with the user.

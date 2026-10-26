@@ -569,7 +569,18 @@
 
 ## Next Steps
 - Keep the current working-tree changes local for user review; no commit or remote push was requested.
-- Re-run the local browser visual pass after any additional design feedback.
+- The user will inspect the home and pricing pages on port 3032; do not run automated tests or visual verification for this change set.
+
+## 2026-10-26 — Marketing surfaces and contact flow
+- Home and pricing Framer styles are imported by their App Router pages so initial markup receives CSS on first render. Home imports only the body of each static fragment; initial locale comes from the request's `Accept-Language`, and marketing theme is selected by the early root script from the system preference.
+- Dark marketing surfaces use a neutral `#141414` canvas, `#181818` cards, `#202020` raised controls, and subdued gray edges. Pricing's feature matrix uses one rounded outer border with corrected advanced-section and final-row separators.
+- The contact dialog is a flat, localized surface with a primary WhatsApp action, secondary phone/email rows, and an optional single-line plan summary. Home's “Bilgi Alın” opens its general mode.
+- The previously injected recurring appointment feature card was removed. Retired calls to action and operational-status badges are removed from marketing views.
+
+## 2026-10-26 — Original Framer animation reference
+- `example/Cal.com _ Scheduling Software for Online Bookings.htm` and its dark variant contain the original Framer markup and component geometry. Its saved main bundle imports three absent local modules, so the full runtime is not embedded into the React marketing page.
+- The availability control uses a 28px track with a 12px knob initially aligned right; its loop moves the knob 12px left inside the track. The orbit's `framer-160tdzx` edge overlay is suppressed while the existing orbit motion remains.
+- The integration section's “Explore apps” anchor was removed from both localized static fragments. Its “Get started” control uses the neutral dark control surface.
 
 ## Brand Asset Details
 - Wordmark SVGs (`cal-logo-word*.svg`, `rondevu-logo-*.svg`): Scaled to fit original 84x26 box dimensions with 17px font, avoiding layout overflow.

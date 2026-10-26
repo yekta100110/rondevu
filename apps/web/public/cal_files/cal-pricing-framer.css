@@ -1077,30 +1077,10 @@ html.dark #cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"] > :
   border-left: 1px solid rgba(177, 177, 178, 0.24) !important;
 }
 
-/* Compact, product-style plan contact modal. */
-.rondevu-plan-modal {
-  background: linear-gradient(145deg, #1f1f23 0%, #151517 100%) !important;
-  border-color: rgba(255, 255, 255, 0.12) !important;
-  border-radius: 18px !important;
-  max-width: 480px !important;
-  padding: 24px !important;
-}
-
-.rondevu-plan-modal [data-plan-summary] {
-  background: rgba(255, 255, 255, 0.045) !important;
-  border-color: rgba(255, 255, 255, 0.1) !important;
-  border-radius: 12px !important;
-}
-
-.rondevu-plan-modal [data-contact-channel] {
-  border-radius: 12px !important;
-  padding: 12px !important;
-}
-
 /* Prevent the exported status badge image from becoming a page-sized link. */
 #cal-pricing-1to1-root [data-framer-name="Status Wrapper"] {
   align-items: center !important;
-  display: inline-flex !important;
+  display: none !important;
   height: auto !important;
   min-height: 30px !important;
   position: relative !important;
@@ -1130,8 +1110,19 @@ html.dark #cal-pricing-1to1-root #feature-breakdown {
 }
 
 #cal-pricing-1to1-root #feature-breakdown .framer-11xsfzq {
+  border: 1px solid rgba(177, 177, 178, 0.22) !important;
+  border-radius: 20px !important;
   min-width: 760px !important;
+  overflow: hidden !important;
   padding-top: 0 !important;
+}
+
+#cal-pricing-1to1-root #feature-breakdown .rondevu-feature-section-divider,
+#cal-pricing-1to1-root #feature-breakdown .rondevu-feature-section-divider > *,
+#cal-pricing-1to1-root #feature-breakdown .rondevu-feature-section-divider::before,
+#cal-pricing-1to1-root #feature-breakdown .rondevu-feature-section-divider::after {
+  border-bottom: 0 !important;
+  box-shadow: none !important;
 }
 
 #cal-pricing-1to1-root #feature-breakdown .framer-1wdzfdc {
@@ -1176,6 +1167,11 @@ html.dark #cal-pricing-1to1-root #feature-breakdown {
   overflow-x: auto !important;
   overflow-y: hidden !important;
   scrollbar-gutter: stable both-edges;
+}
+
+#cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"]:last-child,
+#cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"]:last-child > * {
+  border-bottom: 0 !important;
 }
 
 #cal-pricing-1to1-root .framer-12t1l4y {
@@ -1395,5 +1391,121 @@ html.dark #cal-pricing-1to1-root .framer-pricing-footer-container.rondevu-pricin
     margin-left: -32px !important;
     margin-right: 32px !important;
   }
+}
+
+/* A single neutral surface family for plans and the comparison matrix. */
+#cal-pricing-1to1-root {
+  --rondevu-surface: #ffffff;
+  --rondevu-raised: #f5f5f5;
+  --rondevu-edge: rgba(24, 24, 24, 0.12);
+}
+
+html.dark #cal-pricing-1to1-root {
+  --rondevu-surface: #181818;
+  --rondevu-raised: #202020;
+  --rondevu-edge: rgba(255, 255, 255, 0.11);
+  --token-dfc22ccd-cb7d-477e-862b-97507724854f: var(--rondevu-surface) !important;
+  --token-851bb574-8c69-41a0-b35c-b891de337dd8: var(--rondevu-surface) !important;
+  --token-54f4586d-f010-4ee5-bbc7-eb187ad832e5: var(--rondevu-surface) !important;
+}
+
+html.dark #cal-pricing-1to1-root .framer-mnipkf,
+html.dark #cal-pricing-1to1-root .framer-6fxrby,
+html.dark #cal-pricing-1to1-root .framer-bafron,
+html.dark #cal-pricing-1to1-root .framer-o086nb {
+  background-color: var(--rondevu-surface) !important;
+  border-color: var(--rondevu-edge) !important;
+}
+
+html.dark #cal-pricing-1to1-root [data-framer-name="Secondary - White"],
+html.dark #cal-pricing-1to1-root [data-framer-name="White Icon"] {
+  background-color: var(--rondevu-raised) !important;
+  border-color: var(--rondevu-edge) !important;
+}
+
+html.dark #cal-pricing-1to1-root #feature-breakdown .framer-1p8ymlz,
+html.dark #cal-pricing-1to1-root #feature-breakdown .framer-1o86hi2 {
+  background-color: transparent !important;
+}
+
+#cal-pricing-1to1-root #feature-breakdown .framer-11xsfzq {
+  border: 1px solid var(--rondevu-edge) !important;
+  border-radius: 16px !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+  --border-bottom-width: 0px !important;
+  --border-left-width: 0px !important;
+  --border-right-width: 0px !important;
+  --border-top-width: 0px !important;
+}
+
+#cal-pricing-1to1-root #feature-breakdown .framer-11xsfzq[data-border="true"]::after {
+  border: 0 !important;
+}
+
+html.dark #cal-pricing-1to1-root #feature-breakdown .framer-11xsfzq,
+html.dark #cal-pricing-1to1-root #feature-breakdown .framer-1wdzfdc,
+html.dark #cal-pricing-1to1-root #feature-breakdown .framer-1euimoj,
+html.dark #cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"],
+html.dark #cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"] > * {
+  background-color: var(--rondevu-surface) !important;
+}
+
+#cal-pricing-1to1-root #feature-breakdown .framer-1euimoj,
+#cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"] {
+  border-bottom: 1px solid var(--rondevu-edge) !important;
+  --border-bottom-width: 0px !important;
+}
+
+#cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"] > * {
+  --border-bottom-width: 0px !important;
+}
+
+#cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"][data-border="true"]::after,
+#cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"] > [data-border="true"]::after {
+  border-bottom: 0 !important;
+}
+
+#cal-pricing-1to1-root #feature-breakdown .framer-1euimoj > :nth-child(2),
+#cal-pricing-1to1-root #feature-breakdown .framer-1euimoj > :nth-child(3),
+#cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"] > :nth-child(2),
+#cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"] > :nth-child(3) {
+  border-left-color: var(--rondevu-edge) !important;
+}
+
+#cal-pricing-1to1-root #feature-breakdown .framer-1euimoj > :last-child,
+#cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"] > :last-child {
+  border-right: 0 !important;
+}
+
+#cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"].rondevu-feature-section-divider {
+  background-color: var(--rondevu-surface) !important;
+  border: 0 !important;
+  padding: 24px 20px !important;
+  --border-bottom-width: 0px !important;
+}
+
+#cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"].rondevu-feature-section-divider > *,
+#cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"].rondevu-feature-section-divider::after,
+#cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"].rondevu-feature-section-divider > [data-border="true"]::after {
+  background-color: transparent !important;
+  border: 0 !important;
+  --border-bottom-width: 0px !important;
+}
+
+#cal-pricing-1to1-root #feature-breakdown .rondevu-feature-section-divider + [data-framer-name="Row"] {
+  border-top: 1px solid var(--rondevu-edge) !important;
+}
+
+#cal-pricing-1to1-root #feature-breakdown .framer-11xsfzq > [data-framer-name="Row"]:last-child,
+#cal-pricing-1to1-root #feature-breakdown .framer-11xsfzq > [data-framer-name="Row"]:last-child > *,
+#cal-pricing-1to1-root #feature-breakdown .framer-11xsfzq > [data-framer-name="Row"]:last-child::after,
+#cal-pricing-1to1-root #feature-breakdown .framer-11xsfzq > [data-framer-name="Row"]:last-child > [data-border="true"]::after {
+  border-bottom: 0 !important;
+  --border-bottom-width: 0px !important;
+}
+
+#cal-pricing-1to1-root #feature-breakdown .framer-19inx37 {
+  scrollbar-gutter: auto !important;
 }
 

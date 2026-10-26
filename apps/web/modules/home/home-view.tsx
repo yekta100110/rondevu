@@ -2,7 +2,7 @@
 
 import { trpc } from "@calcom/trpc/react";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { Navbar } from "./components/Navbar";
 import { PlanContactModal } from "./components/PlanContactModal";
 import type { Locale } from "./i18n/home-translations";
@@ -12,12 +12,13 @@ interface HomeViewProps {
   enHtml: string;
   svgTemplates: string;
   isLoggedIn?: boolean;
+  initialLocale: Locale;
 }
 
-function HomeView({ trHtml, enHtml, svgTemplates, isLoggedIn = false }: HomeViewProps) {
+function HomeView({ trHtml, enHtml, svgTemplates, isLoggedIn = false, initialLocale }: HomeViewProps) {
   const router = useRouter();
-  const [locale, setLocale] = useState<Locale>("tr");
-  const [modalPlanType, setModalPlanType] = useState<"monthly" | "yearly" | null>(null);
+  const locale = initialLocale;
+  const [modalPlanType, setModalPlanType] = useState<"general" | "monthly" | "yearly" | null>(null);
   const [systemTheme, setSystemTheme] = useState<"dark" | "light">("light");
   const [mounted, setMounted] = useState(false);
 
@@ -39,20 +40,13 @@ function HomeView({ trHtml, enHtml, svgTemplates, isLoggedIn = false }: HomeView
   }, []);
 
   // Otomatik Dil ve Tema Tespiti
-  useEffect(() => {
+  useLayoutEffect(() => {
     setMounted(true);
 
-    // Browser language and color-scheme preferences determine the public marketing experience.
-    let initialLoc: Locale = "tr";
-    const browserLang = navigator.language?.toLowerCase() ?? "";
-    if (browserLang.startsWith("en")) {
-      initialLoc = "en";
-    }
     localStorage.removeItem("app-locale");
     localStorage.removeItem("app-theme");
-    setLocale(initialLoc);
     document.title =
-      initialLoc === "tr"
+      locale === "tr"
         ? "rOndevu - Herkes İçin Randevu Sistemi"
         : "rOndevu - Clear & Simple Appointment Scheduling";
 
@@ -64,13 +58,11 @@ function HomeView({ trHtml, enHtml, svgTemplates, isLoggedIn = false }: HomeView
     };
     mediaQuery.addEventListener("change", handleMediaChange);
     return () => mediaQuery.removeEventListener("change", handleMediaChange);
-  }, [applySystemTheme]);
+  }, [applySystemTheme, locale]);
 
   // Hero preview follows the source page's complete appointment-state cycle without relying on Framer runtime hydration.
   useEffect(() => {
     if (!mounted) return;
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const profiles =
       locale === "tr"
@@ -208,12 +200,16 @@ function HomeView({ trHtml, enHtml, svgTemplates, isLoggedIn = false }: HomeView
           const highlightEl = item.querySelector<HTMLElement>(".framer-156kf12");
           const dateText = item.querySelector<HTMLElement>(".framer-text");
           if (idx === profile.dateIndex && highlightEl && dateText) {
-            highlightEl.style.backgroundColor = document.documentElement.classList.contains("dark")
-              ? "rgba(255, 255, 255, 0.15)"
-              : "rgba(0, 0, 0, 0.08)";
+            highlightEl.style.setProperty(
+              "background-color",
+              document.documentElement.classList.contains("dark")
+                ? "rgba(255, 255, 255, 0.15)"
+                : "rgba(0, 0, 0, 0.08)",
+              "important"
+            );
             dateText.style.fontWeight = "700";
           } else if (highlightEl && dateText && !item.getAttribute("data-original-selected")) {
-            highlightEl.style.backgroundColor = "transparent";
+            highlightEl.style.setProperty("background-color", "transparent", "important");
             dateText.style.fontWeight = "500";
           }
         });
@@ -234,7 +230,7 @@ function HomeView({ trHtml, enHtml, svgTemplates, isLoggedIn = false }: HomeView
 
   // Restore the exported feature-preview motion without loading Framer's full runtime.
   useEffect(() => {
-    if (!mounted || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!mounted) return;
 
     let frame = 0;
     const updateFeaturePreviews = () => {
@@ -262,60 +258,6 @@ function HomeView({ trHtml, enHtml, svgTemplates, isLoggedIn = false }: HomeView
     updateFeaturePreviews();
     const interval = window.setInterval(updateFeaturePreviews, 2200);
     return () => window.clearInterval(interval);
-  }, [locale, mounted]);
-
-  // The exported feature grid is static HTML. Add the recurring-service card here so it stays in
-  // sync with the selected language without depending on Framer's client-side runtime.
-  useEffect(() => {
-    if (!mounted) return;
-
-    const root = document.getElementById("cal-1to1-root");
-    if (!root) return;
-
-    let sectionNeedle = "much more";
-    if (locale === "tr") sectionNeedle = "çok daha fazlası";
-
-    const sectionHeading = Array.from(root.querySelectorAll<HTMLElement>("h2")).find((heading): boolean => {
-      const content = heading.textContent?.toLocaleLowerCase(locale) ?? "";
-      return content.includes(sectionNeedle);
-    });
-    const featureGrid = sectionHeading
-      ?.closest<HTMLElement>('[data-framer-name="Section Structure"]')
-      ?.querySelector<HTMLElement>('[data-framer-name="Feature Grid"]');
-    if (!featureGrid) return;
-
-    featureGrid.querySelector("[data-rondevu-recurring-feature]")?.remove();
-
-    let copy = {
-      title: "Recurring appointment services",
-      description:
-        "Schedule appointments at regular intervals so recurring clients do not need to book each visit individually.",
-    };
-    if (locale === "tr") {
-      copy = {
-        title: "Tekrarlanan randevu hizmetleri",
-        description:
-          "Belirli aralıklarla randevu planlayın; düzenli danışanlarınızın her seferinde tek tek randevu almasına gerek kalmasın.",
-      };
-    }
-
-    const container = document.createElement("div");
-    container.className = "ssr-variant rondevu-recurring-feature-container";
-    container.setAttribute("data-rondevu-recurring-feature", "true");
-    container.innerHTML = `
-      <article class="rondevu-recurring-feature" tabindex="0">
-        <span class="rondevu-recurring-feature-icon" aria-hidden="true">↻</span>
-        <h3>${copy.title}</h3>
-        <div class="rondevu-recurring-feature-hover">
-          <p class="rondevu-recurring-feature-hover-title">${copy.title}</p>
-          <p>${copy.description}</p>
-        </div>
-      </article>`;
-    featureGrid.append(container);
-
-    return (): void => {
-      container.remove();
-    };
   }, [locale, mounted]);
 
   // Static Framer FAQ markup contains both visual states; normalize its copy and action order after hydration.
@@ -364,28 +306,25 @@ function HomeView({ trHtml, enHtml, svgTemplates, isLoggedIn = false }: HomeView
     return () => window.clearTimeout(timer);
   }, [locale, mounted, systemTheme]);
 
-  // Normalize the static Framer footer and hero preview after hydration so both
-  // language variants share the same readable status and current calendar year.
+  // Remove retired calls to action and status content from either static language fragment.
   useEffect(() => {
     if (!mounted) return;
 
     const root = document.querySelector<HTMLElement>("#cal-1to1-root");
     if (!root) return;
 
-    const statusLabel = locale === "tr" ? "Tüm Sistemler Aktif" : "All Systems Operational";
-    root.querySelectorAll<HTMLElement>('[data-framer-name="Status Wrapper"]').forEach((status) => {
-      status.classList.add("rondevu-status-link");
-      status.setAttribute("title", statusLabel);
-      status.replaceChildren(
-        Object.assign(document.createElement("span"), {
-          className: "rondevu-status-dot",
-          ariaHidden: "true",
-        }),
-        Object.assign(document.createElement("span"), {
-          className: "rondevu-status-label",
-          textContent: statusLabel,
-        })
+    root.querySelectorAll<HTMLElement>("a, button").forEach((action) => {
+      const label = action.textContent?.replace(/\s+/g, " ").trim().toLowerCase() ?? "";
+      if (!label.includes("book a demo") && !label.includes("talk to sales")) return;
+
+      const buttonWrapper = action.closest<HTMLElement>(
+        '[data-framer-name="Button Wrapper"], [data-framer-name="Button Container"], [class*="-container"]'
       );
+      (buttonWrapper ?? action).remove();
+    });
+
+    root.querySelectorAll<HTMLElement>('[data-framer-name="Status Wrapper"]').forEach((status) => {
+      status.remove();
     });
 
     root.querySelectorAll<HTMLElement>('[data-framer-name="Logo Wrapper"]').forEach((logo) => {
@@ -519,16 +458,9 @@ function HomeView({ trHtml, enHtml, svgTemplates, isLoggedIn = false }: HomeView
     const href = anchor.getAttribute("href") || "";
     const text = anchor.textContent?.trim().toLowerCase() || "";
 
-    // "Bilgi Alın" / "Talk to sales" / "Book a demo" -> İletişim Modalı
-    if (
-      href.includes("talk-to-sales") ||
-      href.includes("book-a-demo") ||
-      text.includes("bilgi al") ||
-      text.includes("talk to sales") ||
-      text.includes("book a demo")
-    ) {
+    if (text.includes("bilgi al")) {
       e.preventDefault();
-      setModalPlanType("monthly");
+      setModalPlanType("general");
       return;
     }
 
@@ -575,9 +507,6 @@ function HomeView({ trHtml, enHtml, svgTemplates, isLoggedIn = false }: HomeView
 
   return (
     <div className="relative min-h-screen bg-white dark:bg-[#141414] text-emphasis selection:bg-brand-default selection:text-brand transition-colors duration-200">
-      {/* 1:1 Cal.com Framer Stylesheet */}
-      <link rel="stylesheet" href="/cal_files/cal-framer.css" />
-
       {/* Cal.com SVG Şablonları */}
       <div id="svg-templates-container" dangerouslySetInnerHTML={{ __html: svgTemplates }} />
 
@@ -594,7 +523,7 @@ function HomeView({ trHtml, enHtml, svgTemplates, isLoggedIn = false }: HomeView
       {/* Admin Panelinden Dinamik İletişim Modalı */}
       <PlanContactModal
         isOpen={!!modalPlanType}
-        planType={modalPlanType}
+        planType={modalPlanType === "general" ? null : modalPlanType}
         locale={locale}
         phone={phone}
         email={email}
