@@ -396,7 +396,7 @@
 ## 2026-10-27 — Integration deployment preparation
 - Dokploy persistence was repaired with a named volume. Evolution API and n8n are healthy, and the existing `wp.rondevu.org` Tunnel reaches Evolution API on port 8080 even after the host port was restricted to `127.0.0.1`.
 - A WhatsApp instance exists but has not been paired. n8n credentials and its event deduplication tables are prepared; the receiving and outbound workflows are not activated.
-- The platform webhook application changes are still uncommitted and undeployed. The required Prisma migration and deployment secrets must be applied before activation. Cron remains off so old SMS tasks cannot run before the stale-reminder fix is deployed.
+- The default-disabled platform webhook application changes were committed locally at `3e59d130d2` but remain undeployed. The required Prisma migration and deployment secrets must be applied before activation. Cron remains off so old SMS tasks cannot run before the stale-reminder fix is deployed.
 - Local Next production build, targeted tRPC type-check, focused tests, and changed-file Biome check passed. Global type-check did not complete on Windows because Yarn could not spawn `tsc`; direct web TypeScript reports baseline errors.
 
 ## 2026-10-26 — Mobile pricing and legal content
