@@ -595,7 +595,7 @@
 
 ## 2026-10-27 — WhatsApp integration staging
 - Dokploy's `/etc/dokploy` now uses the persistent `dokploy-config` named volume, replacing the fragile bind path. Dokploy and the existing rOndevu service are healthy.
-- Evolution API, its PostgreSQL database, and Redis are running; local port 8080 and the existing `wp.rondevu.org` Cloudflare Tunnel respond. An Evolution instance named `rondevu` was created and still needs WhatsApp QR pairing.
+- Evolution API, its PostgreSQL database, and Redis are running; port 8080 is bound to `127.0.0.1` and the existing `wp.rondevu.org` Cloudflare Tunnel still responds. An Evolution instance named `rondevu` was created and still needs WhatsApp QR pairing.
 - n8n 2.44.7 and its PostgreSQL database run as a separate Dokploy Compose application. Its editor binds to `127.0.0.1:5678`; five integration credentials and a least-privilege event deduplication database are staged. No production workflow is active yet.
 - Integration secrets are outside Git in user-local DPAPI encrypted files. Platform webhook delivery remains disabled, and the rOndevu database migration/environment update has not been deployed. Do not enable `/api/tasks/cron` until the stale-reminder guard is deployed.
 - The local Next production build completed. Global Yarn type-check remains blocked by a Windows `spawn tsc ENOENT` issue; targeted tRPC TypeScript, four Vitest files, and changed-file Biome check passed. Web tsc still reports pre-existing errors.
