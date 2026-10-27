@@ -398,7 +398,13 @@
     },
     "@calcom/web#start": {
       "cache": false,
-      "dependsOn": []
+      "dependsOn": [],
+      "env": [
+        "RONDEVU_N8N_INGRESS_KEY",
+        "RONDEVU_N8N_ELIGIBILITY_TOKEN",
+        "RONDEVU_WEBHOOK_REPLAY_KEY",
+        "RONDEVU_PLATFORM_WEBHOOK_ENABLE"
+      ]
     },
     "@calcom/atoms#build-npm": {
       "outputs": ["dist/**", "globals.min.css"]
