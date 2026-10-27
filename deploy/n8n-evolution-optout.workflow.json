@@ -1,0 +1,223 @@
+{
+  "name": "rOndevu Evolution WhatsApp opt-out",
+  "settings": {
+    "saveManualExecutions": false,
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none",
+    "executionOrder": "v1"
+  },
+  "connections": {
+    "Evolution inbound": {
+      "main": [
+        [
+          {
+            "node": "Parse STOP or DUR",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse STOP or DUR": {
+      "main": [
+        [
+          {
+            "node": "Opt-out requested?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Opt-out requested?": {
+      "main": [
+        [
+          {
+            "node": "Revoke WhatsApp consent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ignore message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Revoke WhatsApp consent": {
+      "main": [
+        [
+          {
+            "node": "Opt-out acknowledged",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Opt-out retry response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "nodes": [
+    {
+      "id": "39ec5299-2c2e-4577-a16b-e058c3f511e1",
+      "name": "Evolution inbound",
+      "webhookId": "9298fe85-6921-4c88-9ab1-09e78201b4ee",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "evolution-inbound-optout",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "name": "Evolution inbound opt-out"
+        }
+      }
+    },
+    {
+      "id": "83b1fa35-ebaa-4cae-8936-bad5a1b3aaef",
+      "name": "Parse STOP or DUR",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const root = $input.first().json.body ?? {};\nconst event = String(root.event ?? '').toLowerCase();\nconst data = root.data ?? {};\nconst key = data.key ?? data.message?.key ?? {};\nconst message = data.message ?? {};\nconst text = message.conversation ?? message.extendedTextMessage?.text ?? message.ephemeralMessage?.message?.conversation ?? message.viewOnceMessage?.message?.conversation ?? '';\nconst command = String(text).trim().toLocaleUpperCase('tr-TR');\nconst remoteJid = String(key.remoteJid ?? '');\nif (event !== 'messages.upsert' || key.fromMe === true || !remoteJid.endsWith('@s.whatsapp.net') || !['STOP', 'DUR', 'İPTAL'].includes(command)) return [{ json: { shouldOptOut: false } }];\nconst digits = remoteJid.slice(0, -'@s.whatsapp.net'.length);\nif (!/^[1-9]\\d{7,14}$/.test(digits)) return [{ json: { shouldOptOut: false } }];\nreturn [{ json: { shouldOptOut: true, phoneNumber: `+${digits}` } }];"
+      }
+    },
+    {
+      "id": "c2562cf2-14fb-4a69-aae6-626e67536b22",
+      "name": "Opt-out requested?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        480,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b97a3c03-7a0d-4c92-8e28-7f47b30de17e",
+              "leftValue": "={{ $json.shouldOptOut }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "f4d21683-ac08-45d8-9df0-b4f6a86f171f",
+      "name": "Revoke WhatsApp consent",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "onError": "continueErrorOutput",
+      "position": [
+        720,
+        -80
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "http://rondevu-caldiy-i2yvzm:3000/api/internal/whatsapp/opt-out",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { phoneNumber: $json.phoneNumber } }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": false
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "name": "rOndevu eligibility"
+        }
+      }
+    },
+    {
+      "id": "28bc0461-32cc-4874-a984-b6462787bb23",
+      "name": "Opt-out acknowledged",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        960,
+        -80
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"received\":true}",
+        "options": {
+          "responseCode": 200
+        }
+      }
+    },
+    {
+      "id": "96b94552-2113-40fd-84dd-6bb29840e05e",
+      "name": "Opt-out retry response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        960,
+        80
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"received\":false,\"retry\":true}",
+        "options": {
+          "responseCode": 503
+        }
+      }
+    },
+    {
+      "id": "1d44d91e-f6e1-4446-9953-9921a8cdd06c",
+      "name": "Ignore message",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        720,
+        80
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"received\":true}",
+        "options": {
+          "responseCode": 200
+        }
+      }
+    }
+  ]
+}

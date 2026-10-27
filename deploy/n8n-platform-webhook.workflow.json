@@ -1,0 +1,756 @@
+{
+  "name": "rOndevu platform webhook delivery",
+  "settings": {
+    "saveManualExecutions": false,
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none",
+    "executionOrder": "v1"
+  },
+  "connections": {
+    "Ingress": {
+      "main": [
+        [
+          {
+            "node": "Verify HMAC",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verify HMAC": {
+      "main": [
+        [
+          {
+            "node": "Validate event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate event": {
+      "main": [
+        [
+          {
+            "node": "Record event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Record event": {
+      "main": [
+        [
+          {
+            "node": "Event state",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Event state": {
+      "main": [
+        [
+          {
+            "node": "Already completed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Already completed?": {
+      "main": [
+        [
+          {
+            "node": "Duplicate accepted",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "WhatsApp event?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp event?": {
+      "main": [
+        [
+          {
+            "node": "Fetch current WhatsApp consent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Complete non-notification event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Complete non-notification event": {
+      "main": [
+        [
+          {
+            "node": "Accepted",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch current WhatsApp consent": {
+      "main": [
+        [
+          {
+            "node": "Prepare opted-in recipients",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Temporary failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare opted-in recipients": {
+      "main": [
+        [
+          {
+            "node": "Loop recipients",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop recipients": {
+      "main": [
+        [
+          {
+            "node": "Finalize event",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Skip already sent recipient?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Skip already sent recipient?": {
+      "main": [
+        [
+          {
+            "node": "Loop recipients",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Claim recipient",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claim recipient": {
+      "main": [
+        [
+          {
+            "node": "New recipient claim?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "New recipient claim?": {
+      "main": [
+        [
+          {
+            "node": "Send WhatsApp message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Review existing send state",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Review existing send state": {
+      "main": [
+        [
+          {
+            "node": "Loop recipients",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send WhatsApp message": {
+      "main": [
+        [
+          {
+            "node": "Mark recipient sent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Temporary failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark recipient sent": {
+      "main": [
+        [
+          {
+            "node": "Loop recipients",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Finalize event": {
+      "main": [
+        [
+          {
+            "node": "Complete notified event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Complete notified event": {
+      "main": [
+        [
+          {
+            "node": "Accepted",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "nodes": [
+    {
+      "id": "0acfa4c0-dcc8-4b94-8cf2-cc1c6b9bbfb8",
+      "name": "Ingress",
+      "webhookId": "534bf6fd-98f0-4f38-920c-7a94ff85a0be",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "rondevu-platform",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {
+          "rawBody": true
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "name": "rOndevu webhook ingress"
+        }
+      }
+    },
+    {
+      "id": "bad86537-c249-41fd-bf2b-4c594b0a4433",
+      "name": "Verify HMAC",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 2,
+      "position": [
+        240,
+        0
+      ],
+      "parameters": {
+        "action": "hmac",
+        "type": "SHA256",
+        "binaryData": true,
+        "binaryPropertyName": "data",
+        "encoding": "hex",
+        "dataPropertyName": "computedHmac"
+      },
+      "credentials": {
+        "crypto": {
+          "name": "rOndevu webhook HMAC"
+        }
+      }
+    },
+    {
+      "id": "50adf0ef-d14c-42cf-a1f1-47dcf3658cf5",
+      "name": "Validate event",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const input = $input.first().json;\nconst headers = input.headers ?? {};\nconst signature = headers['x-cal-signature-256'];\nconst computed = input.computedHmac;\nif (typeof signature !== 'string' || !/^[0-9a-f]{64}$/i.test(signature) || typeof computed !== 'string' || !/^[0-9a-f]{64}$/i.test(computed)) throw new Error('Invalid webhook signature');\nlet mismatch = 0;\nfor (let i = 0; i < 64; i++) mismatch |= signature.charCodeAt(i) ^ computed.charCodeAt(i);\nif (mismatch !== 0) throw new Error('Invalid webhook signature');\nconst eventId = headers['x-rondevu-event-id'];\nconst timestamp = headers['x-rondevu-timestamp'];\nconst body = typeof input.body === 'string' ? JSON.parse(input.body) : input.body;\nif (!body || typeof body !== 'object' || !/^[0-9a-f]{64}$/i.test(eventId ?? '')) throw new Error('Invalid webhook event');\nif (typeof timestamp !== 'string' || body.createdAt !== timestamp) throw new Error('Invalid webhook timestamp');\nconst time = Date.parse(timestamp);\nif (!Number.isFinite(time) || Math.abs(Date.now() - time) > 24 * 60 * 60 * 1000) throw new Error('Expired webhook event');\nconst supported = ['BOOKING_CREATED','BOOKING_PAYMENT_INITIATED','BOOKING_PAID','BOOKING_RESCHEDULED','BOOKING_REQUESTED','BOOKING_CANCELLED','BOOKING_REJECTED','BOOKING_NO_SHOW_UPDATED','FORM_SUBMITTED','MEETING_ENDED','MEETING_STARTED','RECORDING_READY','RECORDING_TRANSCRIPTION_GENERATED','OOO_CREATED','AFTER_HOSTS_CAL_VIDEO_NO_SHOW','AFTER_GUESTS_CAL_VIDEO_NO_SHOW','FORM_SUBMITTED_NO_EVENT','DELEGATION_CREDENTIAL_ERROR','WRONG_ASSIGNMENT_REPORT'];\nconst triggerEvent = body.triggerEvent;\nif (!supported.includes(triggerEvent)) throw new Error('Invalid webhook event type');\nconst bookingUid = typeof body.payload?.uid === 'string' ? body.payload.uid : null;\nconst notifyEvents = ['BOOKING_CREATED','BOOKING_REQUESTED','BOOKING_CANCELLED','BOOKING_RESCHEDULED'];\nreturn [{ json: { eventId: eventId.toLowerCase(), triggerEvent, createdAt: timestamp, bookingUid, notify: notifyEvents.includes(triggerEvent) && Boolean(bookingUid) } }];"
+      }
+    },
+    {
+      "id": "c0963cca-7355-4db2-af1a-6598fb720275",
+      "name": "Record event",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        720,
+        0
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO event_delivery (event_id, trigger_event, status, attempts) VALUES ($1, $2, 'PROCESSING', 1) ON CONFLICT (event_id) DO UPDATE SET attempts = event_delivery.attempts + 1, status = CASE WHEN event_delivery.status = 'COMPLETED' THEN 'COMPLETED' ELSE 'PROCESSING' END, updated_at = now() RETURNING event_id, status, attempts",
+        "options": {
+          "queryReplacement": "={{ [$json.eventId, $json.triggerEvent] }}"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "name": "rOndevu event dedup"
+        }
+      }
+    },
+    {
+      "id": "59bf2d92-ddbb-4992-b58f-d0463d092337",
+      "name": "Event state",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        960,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const row = $input.first().json;\nconst validated = $('Validate event').first().json;\nreturn [{ json: { ...validated, alreadyCompleted: row.status === 'COMPLETED' } }];"
+      }
+    },
+    {
+      "id": "12307a5b-f5e5-4ad3-a4e4-f4786547aeb8",
+      "name": "Already completed?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1200,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "43fa6b7e-90f1-46ce-aeef-7bda84ade6a6",
+              "leftValue": "={{ $json.alreadyCompleted }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "257ab9ba-13b4-42ab-8332-cc69ced4618b",
+      "name": "Complete non-notification event",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1440,
+        80
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE event_delivery SET status = 'COMPLETED', updated_at = now() WHERE event_id = $1 RETURNING event_id",
+        "options": {
+          "queryReplacement": "={{ [$json.eventId] }}"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "name": "rOndevu event dedup"
+        }
+      }
+    },
+    {
+      "id": "940eb7a7-2f89-4ec6-a04d-6e3bd09152b4",
+      "name": "WhatsApp event?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1440,
+        240
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f9b4188c-0d90-458a-9f5c-59ac1bf0af36",
+              "leftValue": "={{ $json.notify }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "0827aab4-0ad0-482a-87e6-c988cf0d7464",
+      "name": "Fetch current WhatsApp consent",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "onError": "continueErrorOutput",
+      "position": [
+        1680,
+        240
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "http://rondevu-caldiy-i2yvzm:3000/api/internal/whatsapp/eligibility",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { bookingUid: $('Validate event').first().json.bookingUid, triggerEvent: $('Validate event').first().json.triggerEvent } }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": false
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "name": "rOndevu eligibility"
+        }
+      }
+    },
+    {
+      "id": "51679494-2d2e-417f-86a8-2a6baf1d1cb5",
+      "name": "Prepare opted-in recipients",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1920,
+        240
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const eligibility = $input.first().json;\nconst event = $('Event state').first().json;\nconst labels = { BOOKING_CREATED: 'Your booking is confirmed', BOOKING_REQUESTED: 'Your booking request was received', BOOKING_CANCELLED: 'Your booking was cancelled', BOOKING_RESCHEDULED: 'Your booking was rescheduled' };\nconst startTime = Date.parse(eligibility.startTime);\nif (!Number.isFinite(startTime)) throw new Error('Invalid booking time');\nconst when = new Intl.DateTimeFormat('en-GB', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Europe/Istanbul' }).format(new Date(startTime));\nconst message = `rOndevu: ${labels[event.triggerEvent]}. ${when} (Istanbul time). Reply DUR to stop these messages.`;\nconst recipients = Array.isArray(eligibility.recipients) ? eligibility.recipients : [];\nconst items = recipients.flatMap((recipient) => {\n  if (!recipient || typeof recipient.phoneNumber !== 'string' || !/^\\+?[1-9]\\d{7,14}$/.test(recipient.phoneNumber)) return [];\n  const phoneNumber = recipient.phoneNumber.replace(/^\\+/, '');\n  return [{ json: { eventId: event.eventId, role: recipient.role === 'host' ? 'host' : 'guest', phoneNumber, message } }];\n});\nif (items.length === 0) return [{ json: { eventId: event.eventId, skip: true } }];\nreturn items;"
+      }
+    },
+    {
+      "id": "f3e9eefe-b588-47d1-aa65-eef305e07ff6",
+      "name": "Loop recipients",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2160,
+        240
+      ],
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      }
+    },
+    {
+      "id": "146934cb-2118-4ad0-9914-7817c3212f93",
+      "name": "Skip already sent recipient?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2400,
+        400
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "40e40414-01cb-469c-a39d-94060a84552c",
+              "leftValue": "={{ $json.skip === true }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "9669ac02-e46e-4071-b356-682a24cf76e1",
+      "name": "Claim recipient",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        2640,
+        480
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH input AS (SELECT $1::text AS event_id, $2::text AS role, $3::text AS phone_number, $4::text AS message, encode(digest($2 || ':' || $3, 'sha256'), 'hex') AS recipient_hash), inserted AS (INSERT INTO recipient_delivery (event_id, recipient_hash, status) SELECT event_id, recipient_hash, 'SENDING' FROM input ON CONFLICT (event_id, recipient_hash) DO UPDATE SET status = 'SENDING', updated_at = now() WHERE recipient_delivery.status IN ('PENDING', 'FAILED') RETURNING event_id, recipient_hash) SELECT input.*, input.recipient_hash, EXISTS (SELECT 1 FROM inserted) AS claimed, COALESCE((SELECT status FROM recipient_delivery WHERE event_id = input.event_id AND recipient_hash = input.recipient_hash), '') AS existing_status FROM input",
+        "options": {
+          "queryReplacement": "={{ [$json.eventId, $json.role, $json.phoneNumber, $json.message] }}"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "name": "rOndevu event dedup"
+        }
+      }
+    },
+    {
+      "id": "b63e77de-eb89-4ba7-b213-ea106851ef0e",
+      "name": "New recipient claim?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2880,
+        480
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3fd34049-84ab-457e-9b53-1cf3d5cd60c0",
+              "leftValue": "={{ $json.claimed }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "49059477-df66-45cc-92da-a0b593813e9a",
+      "name": "Review existing send state",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3120,
+        640
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const row = $input.first().json;\nif (row.existing_status === 'SENT') return [{ json: { skip: true, eventId: row.event_id } }];\nthrow new Error('A prior send has an uncertain delivery state; operator review is required');"
+      }
+    },
+    {
+      "id": "a2ba154e-0a72-4a20-8270-1eae0b6a6f56",
+      "name": "Send WhatsApp message",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "onError": "continueErrorOutput",
+      "position": [
+        3120,
+        400
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "http://xyz-evolutionapi-6kspiv-evolution-api-1:8080/message/sendText/rondevu",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { number: $json.phone_number, text: $json.message } }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": false
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "name": "Evolution API"
+        }
+      }
+    },
+    {
+      "id": "2a1abcc5-87ac-4c3c-9cc0-263516fe2557",
+      "name": "Mark recipient sent",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        3360,
+        400
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE recipient_delivery SET status = 'SENT', updated_at = now() WHERE event_id = $1 AND recipient_hash = $2 RETURNING event_id",
+        "options": {
+          "queryReplacement": "={{ [$('Claim recipient').item.json.event_id, $('Claim recipient').item.json.recipient_hash] }}"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "name": "rOndevu event dedup"
+        }
+      }
+    },
+    {
+      "id": "1c1513e3-205e-47f8-98de-95c4001429d7",
+      "name": "Finalize event",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2400,
+        80
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const event = $('Event state').first().json;\nreturn [{ json: { eventId: event.eventId } }];"
+      }
+    },
+    {
+      "id": "16c2c095-f7d2-4368-877e-155dd3512046",
+      "name": "Complete notified event",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        2640,
+        80
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE event_delivery SET status = 'COMPLETED', updated_at = now() WHERE event_id = $1 RETURNING event_id",
+        "options": {
+          "queryReplacement": "={{ [$json.eventId] }}"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "name": "rOndevu event dedup"
+        }
+      }
+    },
+    {
+      "id": "816dd24c-5806-4a3b-a716-5a3a585d343a",
+      "name": "Temporary failure",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1920,
+        560
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"accepted\":false,\"retry\":true}",
+        "options": {
+          "responseCode": 503
+        }
+      }
+    },
+    {
+      "id": "f01c2729-834e-47da-839e-5762db60ad13",
+      "name": "Duplicate accepted",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1440,
+        -80
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"accepted\":true,\"duplicate\":true}",
+        "options": {
+          "responseCode": 200
+        }
+      }
+    },
+    {
+      "id": "804566cf-435a-4123-b54b-89ba60a4b056",
+      "name": "Accepted",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1680,
+        80
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"accepted\":true}",
+        "options": {
+          "responseCode": 202
+        }
+      }
+    }
+  ]
+}

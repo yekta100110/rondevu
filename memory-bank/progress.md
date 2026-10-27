@@ -395,7 +395,8 @@
 
 ## 2026-10-27 — Integration deployment preparation
 - Dokploy persistence was repaired with a named volume. Evolution API and n8n are healthy, and the existing `wp.rondevu.org` Tunnel reaches Evolution API on port 8080 even after the host port was restricted to `127.0.0.1`.
-- A WhatsApp instance exists but has not been paired. n8n credentials and its event deduplication tables are prepared; the receiving and outbound workflows are not activated.
+- A WhatsApp instance exists but has not been paired. n8n credentials and event deduplication tables are prepared. Source templates for outbound notifications and inbound opt-out are stored under `deploy/`; both local workflows and the Evolution inbound webhook remain disabled.
+- Synthetic ingress requests confirmed header and HMAC rejection, event persistence, and duplicate suppression. Full booking/consent/send checks wait for the rOndevu migration/API deployment and WhatsApp pairing. n8n audit findings were reviewed; inactive-workflow credential warnings and built-in Code/HTTP warnings are expected, while its parameterized SQL warning appears inconsistent with the stored node configuration.
 - The default-disabled platform webhook application changes were committed locally at `3e59d130d2` but remain undeployed. The required Prisma migration and deployment secrets must be applied before activation. Cron remains off so old SMS tasks cannot run before the stale-reminder fix is deployed.
 - Local Next production build, targeted tRPC type-check, focused tests, and changed-file Biome check passed. Global type-check did not complete on Windows because Yarn could not spawn `tsc`; direct web TypeScript reports baseline errors.
 

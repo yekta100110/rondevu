@@ -6,7 +6,7 @@ This integration starts disabled. Do not activate the platform webhook until the
 
 Set these secrets in the deployment manager, never in Git:
 
-- `PLATFORM_N8N_WEBHOOK_URL`: exact n8n **production** webhook URL.
+- `PLATFORM_N8N_WEBHOOK_URL`: exact private production URL, for example `http://xyz-n8nwithpostgres-x6m3jt-n8n-1:5678/webhook/rondevu-platform` on the shared `dokploy-network`.
 - `PLATFORM_N8N_ALLOW_PRIVATE_HTTP=1`: only when n8n is reached over a private Docker network. Otherwise use HTTPS.
 - `RONDEVU_N8N_INGRESS_KEY`: random 32+ byte secret; configure as the n8n Webhook node's Header Auth credential for `X-Rondevu-Ingress-Key`.
 - `RONDEVU_N8N_ELIGIBILITY_TOKEN`: different random 32+ byte secret; n8n uses it as `Authorization: Bearer ...` for the eligibility and opt-out endpoints.
@@ -27,16 +27,27 @@ The current n8n Compose definition is deployed with nonempty PostgreSQL credenti
 
 The task queue is separate from immediate Twilio SMS dispatch. Schedule authenticated `GET /api/tasks/cron` once per minute with `CRON_API_KEY`. Review existing due tasks before first activation. Booking reminder jobs now skip bookings that have already started, so overdue reminders are not sent after the appointment. Do not log queued task payloads because they can contain phone numbers and message bodies.
 
-## n8n receiving workflow
+## n8n receiving workflows
 
-1. Create a POST Webhook node with its **Production URL**, **Header Auth**, **Raw Body**, and a response node. Save successful executions without request data, and prune failed executions on a short schedule. Restrict workflow editing to operators who may see all booking data.
-2. Use the Crypto node's **Hmac / SHA256 / HEX** action on the exact raw body, with the platform webhook secret in Crypto credentials. Compare the resulting digest with `X-Cal-Signature-256` using a constant-time string comparison. Reject missing or invalid signatures before any database or HTTP node.
-3. Parse the signed JSON. Require `createdAt` to match `X-Rondevu-Timestamp` and be within 24 hours; require a 64-character hex `X-Rondevu-Event-Id`. Reject malformed events. The ingress key is an additional first gate; it does not replace the HMAC check.
-4. Persist the event ID in a dedicated n8n/PostgreSQL deduplication table with a unique index. Respond with 2xx only after validation and durable acceptance. An already accepted event must not send another message. Keep retryable failed jobs distinguishable from completed jobs.
-5. Route all supported event types into the workflow's event log, but only `BOOKING_CREATED`, `BOOKING_REQUESTED`, `BOOKING_CANCELLED`, and `BOOKING_RESCHEDULED` may enter the WhatsApp branch. Do not interpolate notes, custom answers, private meeting links, or arbitrary webhook text into messages.
-6. For a WhatsApp event, send `bookingUid = payload.uid` and `triggerEvent` to `POST /api/internal/whatsapp/eligibility`, with the eligibility bearer credential. Use only its returned recipients. Call it again immediately before a delayed retry so a revoked preference takes effect.
-7. For each recipient, claim a deduplication key consisting of event ID and recipient role/normalized number hash in the same durable store. Send via Evolution API `POST /message/sendText/{instance}` with a credential-scoped `apikey`; mark the key sent only after Evolution acknowledges it. Retry transient failures with bounded backoff; send failures to an operator queue. Keep Evolution and n8n on a private network where possible.
-8. Configure Evolution's inbound message webhook to a separate authenticated n8n workflow. On a `STOP`/`DUR` reply, normalize the sender to E.164 and call `POST /api/internal/whatsapp/opt-out` with the eligibility bearer credential. Ignore other inbound messages in the notification workflow.
+Import the checked-in templates `deploy/n8n-platform-webhook.workflow.json` and `deploy/n8n-evolution-optout.workflow.json`. Assign the named n8n credentials to each node after import. The local instances currently have both workflows **inactive**. Keep them inactive until the migration and application build are deployed, the eligibility API is live, and a test WhatsApp device is paired.
+
+The platform flow validates the ingress header, signs the raw body with HMAC-SHA256, checks timestamp/event shape, and records event and recipient hashes in the dedicated PostgreSQL database. It queries `POST /api/internal/whatsapp/eligibility` for current consent immediately before sending. It sends only the four booking events below, and the text contains no booking notes, form answers, private links, or arbitrary booking title.
+
+The inbound flow accepts only authenticated `MESSAGES_UPSERT` events, ignores group and self-sent messages, and revokes the sender's preference for `STOP`, `DUR`, or `İPTAL`. Configure Evolution to send only that event to the private n8n production URL with the dedicated `X-Rondevu-Evolution-Ingress` header. Activate the inbound flow and set Evolution's webhook only after the app's opt-out API has been deployed. Evolution expects the configuration nested under `webhook`, with request fields `byEvents`, `base64`, `events`, `headers`, `enabled`, and `url`.
+
+For outbound events, send `bookingUid = payload.uid` and `triggerEvent` to the eligibility endpoint with the bearer credential, then use only returned recipients. Claim each recipient using a hash of event ID, role, and normalized phone; no phone number or message is stored in the deduplication database. The recipient is marked `SENT` only after Evolution returns success.
+
+Evolution sends are deliberately not retried automatically after an ambiguous network failure. The recipient remains `SENDING`, and replay is rejected until an operator checks Evolution's message state. Only if Evolution did not accept the message, reset that exact row to `PENDING`, then replay the event from the rOndevu delivery screen:
+
+```sql
+UPDATE recipient_delivery
+SET status = 'PENDING', updated_at = now()
+WHERE event_id = '<event-id>'
+  AND recipient_hash = '<recipient-hash>'
+  AND status = 'SENDING';
+```
+
+The opt-out endpoint updates preferences for that E.164 number. A later opt-in requires an explicit new consent in rOndevu.
 
 The webhook event body is deliberately the existing **full** payload. It may contain personal notes and custom form answers; restrict access to n8n and disable long-lived execution data. The eligibility API returns only the current WhatsApp recipients and basic booking fields.
 Guest consent is carried to a rescheduled booking only while the prior booking's consent has not been revoked; each delivery still calls the eligibility API for the new booking UID.
@@ -53,3 +64,7 @@ Successful rOndevu deliveries discard their encrypted replay body. Set a schedul
 - Run `n8n audit` and resolve unprotected webhook and unsafe-node findings before activation.
 
 Evolution's WhatsApp Web/Baileys connection depends on an active linked-device session. Monitor its connection state and pause sending when disconnected. This transport does not provide the same operational guarantees as WhatsApp Cloud API.
+
+## Current rollout state
+
+The local n8n instance contains the two workflows, but both are inactive. The Evolution `rondevu` instance exists but has not been paired; its inbound webhook is disabled. The rOndevu feature commit is local and the Prisma migration and environment variables have not been applied to production. Keep the platform gate and task cron disabled until the application deploy and end-to-end checks finish.
