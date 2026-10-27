@@ -1,5 +1,4 @@
 import type { TimeUnit, WebhookTriggerEvents } from "@calcom/prisma/enums";
-
 import type { Webhook, WebhookSubscriber } from "../../dto/types";
 import { parseWebhookVersion } from "../../interface/IWebhookRepository";
 
@@ -108,6 +107,7 @@ export class WebhookOutputMapper {
 
   static toSubscriberPartial(prismaWebhook: {
     id: string;
+    platform?: boolean;
     subscriberUrl: string;
     eventTriggers: string[];
     version: string;
@@ -119,6 +119,7 @@ export class WebhookOutputMapper {
   }): WebhookSubscriber {
     return {
       id: prismaWebhook.id,
+      platform: prismaWebhook.platform,
       subscriberUrl: prismaWebhook.subscriberUrl,
       payloadTemplate: prismaWebhook.payloadTemplate ?? null,
       appId: prismaWebhook.appId ?? null,

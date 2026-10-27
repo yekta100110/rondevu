@@ -1,5 +1,6 @@
 "use client";
 
+import process from "node:process";
 import { ErrorCode } from "@calcom/features/auth/lib/ErrorCode";
 import { Dialog } from "@calcom/features/components/controlled-dialog";
 import SettingsHeader from "@calcom/features/settings/appDir/SettingsHeader";
@@ -41,6 +42,7 @@ import { useRef, useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import { CompanyEmailOrganizationBanner } from "./components/CompanyEmailOrganizationBanner";
+import { WhatsAppPreferences } from "./WhatsAppPreferences";
 
 interface DeleteAccountValues {
   totpCode: string;
@@ -306,6 +308,8 @@ const ProfileView = ({ user }: Props) => {
         }
         isCALIdentityProvider={isCALIdentityProvider}
       />
+
+      <WhatsAppPreferences />
 
       {shouldShowCompanyEmailAlert && (
         <div className="mt-6">

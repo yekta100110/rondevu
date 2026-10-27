@@ -44,6 +44,8 @@ export const useBookingForm = ({
 
   const bookingFormSchema = z
     .object({
+      whatsappConsent: z.boolean().optional(),
+      whatsappPhoneNumber: z.string().optional(),
       responses: event
         ? getBookingResponsesSchema({
             bookingFields: event.bookingFields,
@@ -62,6 +64,8 @@ export const useBookingForm = ({
     // to set generic error messages on. Needed until RHF has implemented root error keys.
     globalError: undefined;
     cfToken?: string;
+    whatsappConsent?: boolean;
+    whatsappPhoneNumber?: string;
   };
   const isRescheduling = !!rescheduleUid && !!bookingData;
 

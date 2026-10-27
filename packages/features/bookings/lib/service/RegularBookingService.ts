@@ -1742,6 +1742,8 @@ async function handler(
           user: reqBody.user,
           metadata: reqBody.metadata,
           recurringEventId: reqBody.recurringEventId,
+          whatsappConsent: reqBody.whatsappConsent,
+          whatsappPhoneNumber: reqBody.whatsappPhoneNumber,
         },
         eventType: {
           eventTypeData: eventType,

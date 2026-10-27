@@ -438,6 +438,7 @@ model User {
   availability        Availability[]
   invitedTo           Int?
   webhooks            Webhook[]
+  whatsappPreference  WhatsAppPreference?
   brandColor          String?
   darkBrandColor      String?
   // the location where the events will end up
@@ -869,6 +870,7 @@ model Booking {
   startTime              DateTime
   endTime                DateTime
   attendees              Attendee[]
+  whatsappConsent        WhatsAppBookingConsent?
   location               String?
   createdAt              DateTime                   @default(now())
   updatedAt              DateTime?                  @updatedAt
@@ -1160,6 +1162,7 @@ model Webhook {
   secret                String?
   platform              Boolean                    @default(false)
   scheduledTriggers     WebhookScheduledTriggers[]
+  deliveries            WebhookDelivery[]
   time                  Int?
   timeUnit              TimeUnit?
   version               String                     @default("2021-10-20")
@@ -1167,6 +1170,45 @@ model Webhook {
   @@unique([userId, subscriberUrl], name: "courseIdentifier")
   @@unique([platformOAuthClientId, subscriberUrl], name: "oauthclientwebhook")
   @@index([active])
+}
+
+model WhatsAppPreference {
+  userId        Int       @id
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  phoneNumber   String
+  optedInAt     DateTime?
+  noticeVersion String?
+  revokedAt     DateTime?
+  updatedAt     DateTime  @updatedAt
+
+  @@index([phoneNumber])
+}
+
+model WhatsAppBookingConsent {
+  bookingId     Int       @id
+  booking       Booking   @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  phoneNumber   String
+  optedInAt     DateTime  @default(now())
+  noticeVersion String
+  revokedAt     DateTime?
+
+  @@index([phoneNumber])
+}
+
+model WebhookDelivery {
+  id            String   @id @default(uuid())
+  webhookId     String
+  webhook       Webhook  @relation(fields: [webhookId], references: [id], onDelete: Cascade)
+  eventId       String
+  status        String   @default("PENDING")
+  attempts      Int      @default(0)
+  lastHttpCode  Int?
+  bodyEncrypted String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([webhookId, eventId])
+  @@index([status, updatedAt])
 }
 
 model ApiKey {

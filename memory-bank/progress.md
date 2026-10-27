@@ -1,5 +1,15 @@
 # Progress — rOndevu
 
+## 2026-10-27 — Platform webhook and WhatsApp integration in progress
+
+- Added admin ownership checks, a configured n8n-only platform destination, public-only personal destinations, and DNS-pinned outbound requests without redirect following.
+- Added delivery status/retry records, encrypted failed-payload replay, and a disabled-by-default activation gate.
+- Added host and guest WhatsApp consent records, user preference UI, restricted recipient eligibility and opt-out APIs, and an admin delivery screen.
+- Prisma client generation, schema validation, four focused tests, and the final tRPC type check passed. The web type check still reports booking and React type errors outside the newly added API routes.
+- Still needed: deploy the database migration, configure and verify the n8n/Evolution workflows with secrets and test recipients, and only then enable the platform webhook. No live WhatsApp delivery is active.
+- Local Docker inspection found no n8n container; Evolution API and its PostgreSQL restart because their required database/password and API key settings are empty. This is an external deployment blocker for end-to-end WhatsApp delivery.
+- Restored the Dokploy service after its Docker bind source path vanished on restart; `localhost:3000` is available again. This does not configure the missing Evolution/n8n services.
+
 ## 2026-10-05 — Adım ve özellik kartı animasyonları
 
 - Müsaitlik, görüşme şekli, takvim akışı ve otomatik bildirim önizlemelerindeki donuk Framer hareketleri CSS/istemci döngüsüyle etkinleştirildi.
@@ -382,6 +392,12 @@
 - Removed the unsupported Next.js 16 `eslint` config entry, reduced standalone Docker source-map generation and default Node heap usage, and added a persistent BuildKit Yarn cache mount.
 - Reduced local Docker build context by excluding unneeded Yarn cache and reference directories.
 - An 8 GB Docker Desktop reproduction reached `next build` before the Docker/WSL connection became unresponsive. Docker and all Dokploy/rOndevu Swarm services were restored; the revised lower-memory build has not yet completed.
+
+## 2026-10-27 — Integration deployment preparation
+- Dokploy persistence was repaired with a named volume. Evolution API and n8n are healthy, and the existing `wp.rondevu.org` Tunnel reaches Evolution API on port 8080.
+- A WhatsApp instance exists but has not been paired. n8n credentials and its event deduplication tables are prepared; the receiving and outbound workflows are not activated.
+- The platform webhook application changes are still uncommitted and undeployed. The required Prisma migration and deployment secrets must be applied before activation. Cron remains off so old SMS tasks cannot run before the stale-reminder fix is deployed.
+- Local Next production build, targeted tRPC type-check, focused tests, and changed-file Biome check passed. Global type-check did not complete on Windows because Yarn could not spawn `tsc`; direct web TypeScript reports baseline errors.
 
 ## 2026-10-26 — Mobile pricing and legal content
 

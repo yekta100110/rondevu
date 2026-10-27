@@ -1,26 +1,29 @@
+import process from "node:process";
 import { DEFAULT_WEBHOOK_VERSION } from "@calcom/features/webhooks/lib/interface/IWebhookRepository";
 import type { EventPayloadType } from "@calcom/features/webhooks/lib/sendPayload";
 import sendPayload from "@calcom/features/webhooks/lib/sendPayload";
-import { validateUrlForSSRFSync } from "@calcom/lib/ssrfProtection";
+import { validateWebhookDestination } from "@calcom/features/webhooks/lib/validateWebhookDestination";
 import { getTranslation } from "@calcom/i18n/server";
-
+import type { TrpcSessionUser } from "@calcom/trpc/server/types";
 import type { TTestTriggerInputSchema } from "./testTrigger.schema";
 
 type TestTriggerOptions = {
-  ctx: Record<string, unknown>;
+  ctx: { user: NonNullable<TrpcSessionUser> };
   input: TTestTriggerInputSchema;
 };
 
-export const testTriggerHandler = async ({ ctx: _ctx, input }: TestTriggerOptions) => {
+export const testTriggerHandler = async ({ ctx, input }: TestTriggerOptions) => {
   const { url, type, payloadTemplate = null, secret = null } = input;
 
   // SSRF validation for webhook URL
-  const validation = validateUrlForSSRFSync(url);
-  if (!validation.isValid) {
+  const platform = ctx.user.role === "ADMIN" && url === process.env.PLATFORM_N8N_WEBHOOK_URL;
+  if (platform && payloadTemplate)
+    return { ok: false, status: 400, message: "Platform webhook must use the full payload" };
+  if (!(await validateWebhookDestination(url, platform))) {
     return {
       ok: false,
       status: 400,
-      message: `Webhook URL is not allowed: ${validation.error}`,
+      message: "Webhook URL is not allowed",
     };
   }
 
@@ -53,7 +56,13 @@ export const testTriggerHandler = async ({ ctx: _ctx, input }: TestTriggerOption
   };
 
   try {
-    const webhook = { subscriberUrl: url, appId: null, payloadTemplate, version: DEFAULT_WEBHOOK_VERSION };
+    const webhook = {
+      subscriberUrl: url,
+      appId: null,
+      payloadTemplate,
+      version: DEFAULT_WEBHOOK_VERSION,
+      platform,
+    };
     return await sendPayload(secret, type, new Date().toISOString(), webhook, data);
   } catch {
     return {

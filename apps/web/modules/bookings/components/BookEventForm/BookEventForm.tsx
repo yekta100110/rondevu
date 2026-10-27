@@ -202,6 +202,26 @@ export const BookEventForm = ({
           </div>
         )}
 
+        {!rescheduleUid && (
+          <div className="my-3 text-sm">
+            <label className="flex items-start gap-2">
+              <input type="checkbox" {...bookingForm.register("whatsappConsent")} />
+              <span>{t("whatsapp_guest_notice")}</span>
+            </label>
+            {bookingForm.watch("whatsappConsent") && (
+              <input
+                type="tel"
+                autoComplete="tel"
+                required
+                pattern="\+[1-9][0-9]{7,14}"
+                placeholder={t("whatsapp_phone_hint")}
+                className="mt-2 w-full rounded-md border border-subtle bg-default p-2"
+                {...bookingForm.register("whatsappPhoneNumber")}
+              />
+            )}
+          </div>
+        )}
+
         {isPlatformBookerEmbed && (
           <div className="my-3 w-full text-xs text-subtle">
             {t("proceeding_agreement")}{" "}

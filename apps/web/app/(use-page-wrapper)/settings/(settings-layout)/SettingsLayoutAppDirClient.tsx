@@ -218,6 +218,11 @@ const getTabs = (
           trackingMetadata: { section: "admin", page: "sms" },
         },
         {
+          name: "platform_webhook_deliveries",
+          href: "/settings/admin/webhook-deliveries",
+          trackingMetadata: { section: "admin", page: "webhook_deliveries" },
+        },
+        {
           name: "plan_contact",
           href: "/settings/admin/plan-contact",
           trackingMetadata: { section: "admin", page: "plan_contact" },

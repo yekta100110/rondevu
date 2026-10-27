@@ -27,9 +27,9 @@ export const sendSms = async (payload: string, taskId?: string): Promise<void> =
     } else {
       parsed = payload;
     }
-  } catch (err) {
-    log.error("Failed to parse task payload", err);
-    throw new Error(`Invalid sendSms payload: ${payload}`);
+  } catch {
+    log.error("Failed to parse task payload");
+    throw new Error("Invalid sendSms payload");
   }
 
   // Direct SMS dispatch
@@ -89,6 +89,11 @@ export const sendSms = async (payload: string, taskId?: string): Promise<void> =
 
     if (booking.status !== BookingStatus.ACCEPTED) {
       log.info(`Booking ${parsed.bookingUid} is status ${booking.status}, skipping reminder SMS.`);
+      return;
+    }
+
+    if (booking.startTime <= new Date()) {
+      log.info(`Booking ${parsed.bookingUid} has already started, skipping reminder SMS.`);
       return;
     }
 

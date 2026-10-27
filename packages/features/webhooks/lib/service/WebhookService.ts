@@ -1,11 +1,14 @@
-import { createHmac } from "node:crypto";
-
+import { createHash, createHmac } from "node:crypto";
+import process from "node:process";
+import { prisma } from "@calcom/prisma";
 import { WebhookTriggerEvents } from "@calcom/prisma/enums";
-
-import type { WebhookSubscriber, WebhookDeliveryResult } from "../dto/types";
+import type { WebhookDeliveryResult, WebhookSubscriber } from "../dto/types";
+import { encryptReplayBody } from "../encryptReplayBody";
 import type { WebhookPayload } from "../factory/types";
-import type { ITasker, ILogger } from "../interface/infrastructure";
+import type { ILogger, ITasker } from "../interface/infrastructure";
 import type { IWebhookRepository, IWebhookService } from "../interface/services";
+import { postWebhookSafely } from "../postWebhookSafely";
+import { validateWebhookDestination } from "../validateWebhookDestination";
 
 export class WebhookService implements IWebhookService {
   private readonly log: ILogger;
@@ -24,8 +27,17 @@ export class WebhookService implements IWebhookService {
     subscriber: WebhookSubscriber
   ): Promise<WebhookDeliveryResult> {
     try {
+      if (subscriber.platform && process.env.RONDEVU_PLATFORM_WEBHOOK_ENABLE !== "1") {
+        return {
+          ok: false,
+          status: 0,
+          message: "Platform webhook disabled",
+          subscriberUrl: subscriber.subscriberUrl,
+          webhookId: subscriber.id,
+        };
+      }
       // TODO: Ideally we should inject this flag as well. Would be awesome when we would be able to unit test without mocking env variables too. Also with trigger.dev, this would be further worked on, so we can leave this as is for now
-      if (process.env.TASKER_ENABLE_WEBHOOKS === "1") {
+      if (process.env.TASKER_ENABLE_WEBHOOKS === "1" && !subscriber.platform) {
         return await this.scheduleWebhook(trigger, payload, subscriber);
       } else {
         return await this.sendWebhookDirectly(trigger, payload, subscriber);
@@ -34,7 +46,7 @@ export class WebhookService implements IWebhookService {
       return {
         ok: false,
         status: 0,
-        message: error instanceof Error ? error.message : String(error),
+        message: "Webhook delivery failed",
         duration: 0,
         subscriberUrl: subscriber.subscriberUrl,
         webhookId: subscriber.id,
@@ -77,13 +89,21 @@ export class WebhookService implements IWebhookService {
     payload: WebhookPayload,
     subscriber: WebhookSubscriber
   ): Promise<WebhookDeliveryResult> {
-    const { subscriberUrl, payloadTemplate } = subscriber;
+    const { subscriberUrl } = subscriber;
     if (!subscriberUrl) throw new Error("Missing subscriber URL");
-
-    const contentType =
-      !payloadTemplate || this.isJsonTemplate(payloadTemplate)
-        ? "application/json"
-        : "application/x-www-form-urlencoded";
+    if (subscriber.platform && (subscriber.appId || subscriber.payloadTemplate)) {
+      throw new Error("Platform webhook must use the full payload");
+    }
+    const ingressKey = process.env.RONDEVU_N8N_INGRESS_KEY;
+    if (
+      subscriber.platform &&
+      (!subscriber.secret || !ingressKey || !process.env.RONDEVU_WEBHOOK_REPLAY_KEY)
+    ) {
+      throw new Error("Platform webhook credentials are missing");
+    }
+    if (!(await validateWebhookDestination(subscriberUrl, subscriber.platform))) {
+      throw new Error("Webhook destination is not allowed");
+    }
 
     const body = JSON.stringify({
       triggerEvent: trigger,
@@ -94,38 +114,101 @@ export class WebhookService implements IWebhookService {
     const signature = subscriber.secret
       ? createHmac("sha256", subscriber.secret).update(body).digest("hex")
       : "no-secret-provided";
+    const eventId = createHash("sha256").update(body).digest("hex");
 
-    const response = await fetch(subscriberUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": contentType,
-        "X-Cal-Signature-256": signature,
-        "X-Cal-Webhook-Version": subscriber.version,
+    const delivery = await prisma.webhookDelivery.upsert({
+      where: { webhookId_eventId: { webhookId: subscriber.id, eventId } },
+      create: {
+        webhookId: subscriber.id,
+        eventId,
+        bodyEncrypted: subscriber.platform ? encryptReplayBody(body) : null,
       },
-      redirect: "manual",
-      body,
+      update: {},
+      select: { id: true, status: true },
     });
+    if (delivery.status === "SUCCESS") {
+      return { ok: true, status: 200, subscriberUrl, webhookId: subscriber.id };
+    }
+    const claimed = await prisma.webhookDelivery.updateMany({
+      where: { id: delivery.id, status: { in: ["PENDING", "FAILED"] } },
+      data: { status: "PROCESSING" },
+    });
+    if (!claimed.count) {
+      return {
+        ok: false,
+        status: 409,
+        message: "Delivery already in progress",
+        subscriberUrl,
+        webhookId: subscriber.id,
+      };
+    }
 
-    const responseText = await response.text();
-
+    let status = 0;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        if (subscriber.platform) {
+          const current = await prisma.webhook.findUnique({
+            where: { id: subscriber.id },
+            select: { active: true, platform: true, subscriberUrl: true, secret: true },
+          });
+          if (
+            !current?.active ||
+            !current.platform ||
+            current.subscriberUrl !== subscriberUrl ||
+            current.secret !== subscriber.secret ||
+            process.env.RONDEVU_PLATFORM_WEBHOOK_ENABLE !== "1"
+          ) {
+            await prisma.webhookDelivery.update({ where: { id: delivery.id }, data: { status: "FAILED" } });
+            return {
+              ok: false,
+              status: 0,
+              message: "Platform webhook disabled or changed",
+              subscriberUrl,
+              webhookId: subscriber.id,
+            };
+          }
+        }
+        status = await postWebhookSafely({
+          url: subscriberUrl,
+          body,
+          platform: subscriber.platform,
+          headers: {
+            "Content-Type": "application/json",
+            "X-Cal-Signature-256": signature,
+            "X-Cal-Webhook-Version": subscriber.version,
+            "X-Rondevu-Event-Id": eventId,
+            "X-Rondevu-Timestamp": payload.createdAt,
+            ...(subscriber.platform && ingressKey ? { "X-Rondevu-Ingress-Key": ingressKey } : {}),
+          },
+        });
+        await prisma.webhookDelivery.update({
+          where: { id: delivery.id },
+          data: { attempts: { increment: 1 }, lastHttpCode: status },
+        });
+        if (status >= 200 && status < 300) {
+          await prisma.webhookDelivery.update({
+            where: { id: delivery.id },
+            data: { status: "SUCCESS", bodyEncrypted: null },
+          });
+          return { ok: true, status, subscriberUrl, webhookId: subscriber.id };
+        }
+        if (status !== 429 && status < 500) break;
+      } catch {
+        await prisma.webhookDelivery.update({
+          where: { id: delivery.id },
+          data: { attempts: { increment: 1 } },
+        });
+      }
+      if (attempt < 2) await new Promise((resolve) => setTimeout(resolve, 500 * 4 ** attempt));
+    }
+    await prisma.webhookDelivery.update({ where: { id: delivery.id }, data: { status: "FAILED" } });
     return {
-      ok: response.ok,
-      status: response.status,
-      message: responseText || undefined,
-      duration: 0,
-      subscriberUrl: subscriberUrl,
+      ok: false,
+      status,
+      message: status ? `HTTP ${status}` : "Network failure",
+      subscriberUrl,
       webhookId: subscriber.id,
     };
-  }
-
-  private isJsonTemplate(template: string | null): boolean {
-    if (!template) return true;
-    try {
-      JSON.parse(template);
-      return true;
-    } catch {
-      return false;
-    }
   }
 
   async getSubscribers(options: Parameters<IWebhookRepository["getSubscribers"]>[0]) {
@@ -147,7 +230,6 @@ export class WebhookService implements IWebhookService {
         this.log.debug("Processing webhook", {
           trigger,
           webhookId: subscriber.id,
-          subscriberUrl: subscriber.subscriberUrl,
         });
 
         const result = await this.sendWebhook(trigger, payload, subscriber);
@@ -166,9 +248,10 @@ export class WebhookService implements IWebhookService {
             statusCode: result.status,
           });
         }
+        return result.ok;
       } catch (err) {
         this.log.error("Error sending webhook", {
-          error: err instanceof Error ? err.message : String(err),
+          error: "Webhook delivery error",
           trigger,
           webhookId: subscriber.id,
         });
@@ -181,8 +264,8 @@ export class WebhookService implements IWebhookService {
     const results = await Promise.allSettled(promises);
 
     // Log summary for monitoring
-    const successCount = results.filter((result) => result.status === "fulfilled").length;
-    const failureCount = results.filter((result) => result.status === "rejected").length;
+    const successCount = results.filter((result) => result.status === "fulfilled" && result.value).length;
+    const failureCount = results.length - successCount;
 
     this.log.info(`Webhook processing completed for ${trigger}`, {
       totalSubscribers: subscribers.length,
@@ -197,8 +280,7 @@ export class WebhookService implements IWebhookService {
         this.log.error(`Webhook processing failed for subscriber`, {
           trigger,
           webhookId: subscriber?.id,
-          subscriberUrl: subscriber?.subscriberUrl,
-          error: result.reason,
+          error: "Webhook delivery error",
         });
       }
     });
@@ -247,8 +329,7 @@ export class WebhookService implements IWebhookService {
       this.log.error("Failed to schedule time-based webhook", {
         trigger,
         bookingId: bookingData.id,
-        subscriberUrl: subscriber.subscriberUrl,
-        error: error instanceof Error ? error.message : String(error),
+        error: "Webhook scheduling error",
       });
     }
   }

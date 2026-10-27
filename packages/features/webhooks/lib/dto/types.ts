@@ -415,6 +415,7 @@ export interface Webhook {
  */
 export interface WebhookSubscriber {
   id: string;
+  platform?: boolean;
   subscriberUrl: string;
   payloadTemplate: string | null;
   appId: string | null;

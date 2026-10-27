@@ -1,7 +1,5 @@
 import { prisma } from "@calcom/prisma";
-
 import { TRPCError } from "@trpc/server";
-
 import authedProcedure from "../../../procedures/authedProcedure";
 import { webhookIdAndEventTypeIdSchema } from "./types";
 
@@ -20,6 +18,8 @@ export const createWebhookProcedure = () => {
           id: true,
           userId: true,
           eventTypeId: true,
+          teamId: true,
+          platform: true,
         },
       });
 
@@ -31,7 +31,19 @@ export const createWebhookProcedure = () => {
         throw new TRPCError({ code: "UNAUTHORIZED" });
       }
 
-      if (webhook.eventTypeId) {
+      if (webhook.platform) {
+        if (ctx.user.role !== "ADMIN") {
+          throw new TRPCError({ code: "FORBIDDEN" });
+        }
+      } else if (webhook.teamId) {
+        const membership = await prisma.membership.findFirst({
+          where: { userId: ctx.user.id, teamId: webhook.teamId, accepted: true },
+          select: { role: true },
+        });
+        if (!membership || !["ADMIN", "OWNER"].includes(membership.role)) {
+          throw new TRPCError({ code: "FORBIDDEN" });
+        }
+      } else if (webhook.eventTypeId) {
         const eventType = await prisma.eventType.findUnique({
           where: { id: webhook.eventTypeId },
           select: { id: true, userId: true },
@@ -44,7 +56,7 @@ export const createWebhookProcedure = () => {
         if (eventType.userId !== ctx.user.id) {
           throw new TRPCError({ code: "FORBIDDEN" });
         }
-      } else if (webhook.userId && webhook.userId !== ctx.user.id) {
+      } else if (webhook.userId !== ctx.user.id) {
         throw new TRPCError({ code: "FORBIDDEN" });
       }
     } else if (eventTypeId) {
@@ -58,6 +70,14 @@ export const createWebhookProcedure = () => {
       }
 
       if (eventType.userId !== ctx.user.id) {
+        throw new TRPCError({ code: "FORBIDDEN" });
+      }
+    } else if ("teamId" in input && typeof input.teamId === "number") {
+      const membership = await prisma.membership.findFirst({
+        where: { userId: ctx.user.id, teamId: input.teamId, accepted: true },
+        select: { role: true },
+      });
+      if (!membership || !["ADMIN", "OWNER"].includes(membership.role)) {
         throw new TRPCError({ code: "FORBIDDEN" });
       }
     }

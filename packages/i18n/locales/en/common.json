@@ -4777,5 +4777,18 @@
   "user_updated_successfully": "User updated successfully.",
   "error_updating_user": "There was an error updating this user.",
   "please_reschedule": "Please reschedule.",
+  "whatsapp_notifications": "WhatsApp booking notifications",
+  "whatsapp_host_notice": "I agree to receive booking updates from rOndevu on WhatsApp at this number. I can turn this off at any time.",
+  "whatsapp_guest_notice": "Send me updates about this booking on WhatsApp. I can opt out at any time.",
+  "whatsapp_phone_hint": "Phone number in international format, such as +905551112233",
+  "whatsapp_save": "Save WhatsApp preference",
+  "whatsapp_saved": "WhatsApp preference saved",
+  "whatsapp_save_failed": "Could not save WhatsApp preference",
+  "platform_webhook_deliveries": "Platform webhook deliveries",
+  "platform_webhook_deliveries_description": "Recent n8n deliveries and retry controls",
+  "webhook_retry": "Retry",
+  "webhook_retry_failed": "Retry failed",
+  "webhook_load_failed": "Unable to load deliveries",
+  "webhook_attempts": "attempts",
   "ADD_NEW_STRINGS_ABOVE_THIS_LINE_TO_PREVENT_MERGE_CONFLICTS": "↑↑↑↑↑↑↑↑↑↑↑↑↑ Add your new strings above here ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑"
 }

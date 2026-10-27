@@ -19,13 +19,6 @@ import type {
 import { parseWebhookVersion } from "../interface/IWebhookRepository";
 import type { GetSubscribersOptions } from "./types";
 
-class PermissionCheckService {
-  constructor(_prisma?: unknown) {}
-  async checkPermission(..._args: unknown[]) { return true; }
-  async hasPermission(..._args: unknown[]) { return true; }
-  async getTeamIdsWithPermission(..._args: unknown[]): Promise<number[]> { return []; }
-}
-
 // Type for raw query results from the database
 interface WebhookQueryResult {
   id: string;
@@ -104,6 +97,7 @@ export class WebhookRepository implements IWebhookRepository {
 
     return webhooks.map((webhook) => ({
       id: webhook.id,
+      platform: webhook.platform,
       subscriberUrl: webhook.subscriberUrl,
       payloadTemplate: webhook.payloadTemplate,
       appId: webhook.appId,
@@ -214,7 +208,7 @@ export class WebhookRepository implements IWebhookRepository {
     for (const webhook of results) {
       if (!uniqueWebhooks.has(webhook.id)) {
         const { priority: _priority, ...webhookData } = webhook;
-        uniqueWebhooks.set(webhook.id, webhookData);
+        uniqueWebhooks.set(webhook.id, { ...webhookData, platform: webhook.priority === 1 });
       }
     }
 
@@ -387,9 +381,6 @@ export class WebhookRepository implements IWebhookRepository {
       throw new Error("User not found");
     }
 
-    // Use permission service which handles both PBAC and role-based fallbacks
-    const permissionService = new PermissionCheckService();
-
     // Build webhook groups with proper permissions
     const webhookGroups: WebhookGroup[] = [];
 
@@ -408,39 +399,16 @@ export class WebhookRepository implements IWebhookRepository {
       },
     });
 
-    // Check permissions for each team
-    // The permission service handles PBAC when enabled and falls back to role-based permissions
     for (const membership of user.teams) {
-      const teamId = membership.team.id;
-
-      // Check read permission (fallback: MEMBER, ADMIN, OWNER can read)
-      const canRead = await permissionService.checkPermission({
-        userId,
-        teamId,
-        permission: "webhook.read",
-        fallbackRoles: [MembershipRole.MEMBER, MembershipRole.ADMIN, MembershipRole.OWNER],
-      });
+      const canRead = membership.role === MembershipRole.ADMIN || membership.role === MembershipRole.OWNER;
 
       if (!canRead) {
         // User doesn't have permission to view this team's webhooks
         continue;
       }
 
-      // Check update/delete permissions in parallel (fallback: only ADMIN, OWNER can modify)
-      const [canUpdate, canDelete] = await Promise.all([
-        permissionService.checkPermission({
-          userId,
-          teamId,
-          permission: "webhook.update",
-          fallbackRoles: [MembershipRole.ADMIN, MembershipRole.OWNER],
-        }),
-        permissionService.checkPermission({
-          userId,
-          teamId,
-          permission: "webhook.delete",
-          fallbackRoles: [MembershipRole.ADMIN, MembershipRole.OWNER],
-        }),
-      ]);
+      const canUpdate = canRead;
+      const canDelete = canRead;
 
       webhookGroups.push({
         teamId: membership.team.id,
@@ -523,8 +491,6 @@ export class WebhookRepository implements IWebhookRepository {
       { appId: appId ?? null },
     ];
 
-    const user = await this.userRepository.findUserTeams(userId);
-
     if (eventTypeId) {
       const managedParentId = await this.eventTypeRepository.findParentEventTypeId(eventTypeId);
 
@@ -537,23 +503,11 @@ export class WebhookRepository implements IWebhookRepository {
         whereConditions.push({ eventTypeId });
       }
     } else {
-      // No eventTypeId - filter by user and their allowed teams
-      const permissionService = new PermissionCheckService();
-      const teamIds = user?.teams?.map((m) => m.teamId) ?? [];
-
-      const allowedTeamIds = (
-        await Promise.all(
-          teamIds.map(async (teamId) => {
-            const ok = await permissionService.checkPermission({
-              userId,
-              teamId,
-              permission: "webhook.read",
-              fallbackRoles: [MembershipRole.ADMIN, MembershipRole.OWNER],
-            });
-            return ok ? teamId : null;
-          })
-        )
-      ).filter((x): x is number => x !== null);
+      const memberships = await this.prisma.membership.findMany({
+        where: { userId, accepted: true, role: { in: [MembershipRole.ADMIN, MembershipRole.OWNER] } },
+        select: { teamId: true },
+      });
+      const allowedTeamIds = memberships.map((membership) => membership.teamId);
 
       whereConditions.push({
         OR: [{ userId }, ...(allowedTeamIds.length ? [{ teamId: { in: allowedTeamIds } }] : [])],

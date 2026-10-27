@@ -2,7 +2,6 @@ import { updateTriggerForExistingBookings } from "@calcom/features/webhooks/lib/
 import { prisma } from "@calcom/prisma";
 import type { Prisma } from "@calcom/prisma/client";
 import type { TrpcSessionUser } from "@calcom/trpc/server/types";
-
 import type { TDeleteInputSchema } from "./delete.schema";
 
 type DeleteOptions = {
@@ -14,6 +13,10 @@ type DeleteOptions = {
 
 export const deleteHandler = async ({ ctx, input }: DeleteOptions) => {
   const { id } = input;
+  const memberships = await prisma.membership.findMany({
+    where: { userId: ctx.user.id, accepted: true, role: { in: ["ADMIN", "OWNER"] } },
+    select: { teamId: true },
+  });
 
   const where: Prisma.WebhookWhereInput = { AND: [{ id: id }] };
 
@@ -21,9 +24,17 @@ export const deleteHandler = async ({ ctx, input }: DeleteOptions) => {
     if (input.eventTypeId) {
       where.AND.push({ eventTypeId: input.eventTypeId });
     } else if (ctx.user.role === "ADMIN") {
-      where.AND.push({ OR: [{ platform: true }, { userId: ctx.user.id }] });
+      where.AND.push({
+        OR: [
+          { platform: true },
+          { userId: ctx.user.id },
+          { teamId: { in: memberships.map((item) => item.teamId) } },
+        ],
+      });
     } else {
-      where.AND.push({ userId: ctx.user.id });
+      where.AND.push({
+        OR: [{ userId: ctx.user.id }, { teamId: { in: memberships.map((item) => item.teamId) } }],
+      });
     }
   }
 

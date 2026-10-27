@@ -4777,5 +4777,18 @@
   "error_adding_user": "Bu kullanıcı eklenirken bir hata oluştu.",
   "user_updated_successfully": "Kullanıcı başarıyla güncellendi.",
   "error_updating_user": "Bu kullanıcı güncellenirken bir hata oluştu.",
-  "please_reschedule": "Lütfen randevuyu yeniden planlayın."
+  "please_reschedule": "Lütfen randevuyu yeniden planlayın.",
+  "whatsapp_notifications": "WhatsApp randevu bildirimleri",
+  "whatsapp_host_notice": "Bu numaraya rOndevu üzerinden WhatsApp randevu bildirimleri almayı kabul ediyorum. İstediğim zaman kapatabilirim.",
+  "whatsapp_guest_notice": "Bu randevuyla ilgili bildirimleri WhatsApp üzerinden almak istiyorum. İstediğim zaman vazgeçebilirim.",
+  "whatsapp_phone_hint": "Uluslararası biçimde telefon numarası, örneğin +905551112233",
+  "whatsapp_save": "WhatsApp tercihini kaydet",
+  "whatsapp_saved": "WhatsApp tercihi kaydedildi",
+  "whatsapp_save_failed": "WhatsApp tercihi kaydedilemedi",
+  "platform_webhook_deliveries": "Platform webhook teslimleri",
+  "platform_webhook_deliveries_description": "Son n8n teslimleri ve yeniden deneme işlemleri",
+  "webhook_retry": "Yeniden dene",
+  "webhook_retry_failed": "Yeniden gönderim başarısız",
+  "webhook_load_failed": "Teslim kayıtları yüklenemedi",
+  "webhook_attempts": "deneme"
 }

@@ -1,14 +1,13 @@
+import process from "node:process";
 import {
-  updateTriggerForExistingBookings,
-  deleteWebhookScheduledTriggers,
   cancelNoShowTasksForBooking,
+  deleteWebhookScheduledTriggers,
+  updateTriggerForExistingBookings,
 } from "@calcom/features/webhooks/lib/scheduleTrigger";
-import { validateUrlForSSRFSync } from "@calcom/lib/ssrfProtection";
+import { validateWebhookDestination } from "@calcom/features/webhooks/lib/validateWebhookDestination";
 import { prisma } from "@calcom/prisma";
 import type { TrpcSessionUser } from "@calcom/trpc/server/types";
-
 import { TRPCError } from "@trpc/server";
-
 import type { TEditInputSchema } from "./edit.schema";
 
 type EditOptions = {
@@ -19,7 +18,7 @@ type EditOptions = {
 };
 
 export const editHandler = async ({ input, ctx }: EditOptions) => {
-  const { id, webhookId: _webhookId, ...data } = input;
+  const { id, webhookId: _webhookId, eventTypeId: _eventTypeId, ...data } = input;
 
   const webhook = await prisma.webhook.findUnique({
     where: {
@@ -33,11 +32,10 @@ export const editHandler = async ({ input, ctx }: EditOptions) => {
 
   // SSRF validation: only validate if URL is being changed
   if (data.subscriberUrl && data.subscriberUrl !== webhook.subscriberUrl) {
-    const validation = validateUrlForSSRFSync(data.subscriberUrl);
-    if (!validation.isValid) {
+    if (!(await validateWebhookDestination(data.subscriberUrl, webhook.platform))) {
       throw new TRPCError({
         code: "BAD_REQUEST",
-        message: `Webhook URL is not allowed: ${validation.error}`,
+        message: "Webhook URL is not allowed",
       });
     }
   }
@@ -48,8 +46,25 @@ export const editHandler = async ({ input, ctx }: EditOptions) => {
       throw new TRPCError({ code: "UNAUTHORIZED" });
     }
   }
+  if (
+    webhook.platform &&
+    ((data.secret !== undefined && !data.secret) || (data.active && !data.secret && !webhook.secret))
+  ) {
+    throw new TRPCError({ code: "BAD_REQUEST", message: "Platform webhook signing secret is required" });
+  }
+  if (
+    webhook.platform &&
+    (data.payloadTemplate ||
+      data.appId ||
+      (data.active && ((data.payloadTemplate ?? webhook.payloadTemplate) || (data.appId ?? webhook.appId))))
+  ) {
+    throw new TRPCError({ code: "BAD_REQUEST", message: "Platform webhook must use the full payload" });
+  }
+  if (webhook.platform && data.active && process.env.RONDEVU_PLATFORM_WEBHOOK_ENABLE !== "1") {
+    throw new TRPCError({ code: "PRECONDITION_FAILED", message: "Platform webhook activation is disabled" });
+  }
 
-  const updatedWebhook= await prisma.webhook.update({
+  const updatedWebhook = await prisma.webhook.update({
     where: {
       id,
     },

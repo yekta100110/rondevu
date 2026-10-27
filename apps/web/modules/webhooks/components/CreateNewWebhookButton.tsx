@@ -8,6 +8,7 @@ import { Button } from "@coss/ui/components/button";
 import { Menu, MenuGroup, MenuGroupLabel, MenuItem, MenuPopup, MenuTrigger } from "@coss/ui/components/menu";
 import { ChevronDownIcon, PlusIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 function getInitials(name: string): string {
   return name
@@ -21,6 +22,7 @@ function getInitials(name: string): string {
 export const CreateNewWebhookButton = ({ isEmptyState }: { isEmptyState?: boolean }) => {
   const router = useRouter();
   const { t } = useLocale();
+  const session = useSession();
 
   const query = trpc.viewer.loggedInViewerRouter.teamsAndUserProfilesQuery.useQuery({
     includeOrg: true,
@@ -32,7 +34,13 @@ export const CreateNewWebhookButton = ({ isEmptyState }: { isEmptyState?: boolea
 
   if (!query.data) return null;
 
-  const options = query.data
+  const options: {
+    teamId?: number | null;
+    platform?: boolean;
+    label: string | null;
+    image?: string | null;
+    slug?: string | null;
+  }[] = query.data
     .filter((profile) => !profile.readOnly)
     .map((profile) => ({
       teamId: profile.teamId,
@@ -40,6 +48,9 @@ export const CreateNewWebhookButton = ({ isEmptyState }: { isEmptyState?: boolea
       image: profile.image,
       slug: profile.slug,
     }));
+  if (session.data?.user.role === "ADMIN") {
+    options.push({ platform: true, label: "Platform", image: null });
+  }
 
   const handleSelect = (option: { teamId?: number | null; platform?: boolean }) => {
     if (option.platform) {

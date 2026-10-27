@@ -23,6 +23,8 @@ type CreateBookingParams = {
     user: ReqBodyWithEnd["user"];
     metadata: ReqBodyWithEnd["metadata"];
     recurringEventId: ReqBodyWithEnd["recurringEventId"];
+    whatsappConsent: ReqBodyWithEnd["whatsappConsent"];
+    whatsappPhoneNumber: ReqBodyWithEnd["whatsappPhoneNumber"];
   };
   eventType: {
     eventTypeData: NewBookingEventType;
@@ -200,6 +202,20 @@ function buildNewBookingData(params: CreateBookingParams) {
         data: attendeesData,
       },
     },
+    whatsappConsent:
+      reqBody.whatsappConsent && reqBody.whatsappPhoneNumber
+        ? { create: { phoneNumber: reqBody.whatsappPhoneNumber, noticeVersion: "whatsapp-booking-v1" } }
+        : originalRescheduledBooking?.whatsappConsent &&
+            !originalRescheduledBooking.whatsappConsent.revokedAt &&
+            originalRescheduledBooking.whatsappConsent.noticeVersion === "whatsapp-booking-v1"
+          ? {
+              create: {
+                phoneNumber: originalRescheduledBooking.whatsappConsent.phoneNumber,
+                optedInAt: originalRescheduledBooking.whatsappConsent.optedInAt,
+                noticeVersion: "whatsapp-booking-v1",
+              },
+            }
+          : undefined,
     dynamicEventSlugRef: !eventType.id ? eventType.slug : null,
     dynamicGroupSlugRef: !eventType.id ? (reqBody.user as string).toLowerCase() : null,
     iCalUID: evt.iCalUID ?? "",

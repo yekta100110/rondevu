@@ -1,14 +1,17 @@
-import { createHmac } from "node:crypto";
-import { compile } from "handlebars";
-
+import { createHash, createHmac } from "node:crypto";
+import process from "node:process";
 import type { TGetTranscriptAccessLink } from "@calcom/app-store/dailyvideo/zod";
 import { getHumanReadableLocationValue } from "@calcom/app-store/locations";
-import type { WebhookSubscriber, PaymentData } from "@calcom/features/webhooks/lib/dto/types";
+import type { PaymentData, WebhookSubscriber } from "@calcom/features/webhooks/lib/dto/types";
 import { getUTCOffsetByTimezone } from "@calcom/lib/dayjs";
 import type { CalendarEvent, Person } from "@calcom/types/Calendar";
+import { compile } from "handlebars";
+import { postWebhookSafely } from "./postWebhookSafely";
+import { validateWebhookDestination } from "./validateWebhookDestination";
 
 // Minimal webhook shape for sending payloads (subset of WebhookSubscriber)
-type WebhookForPayload = Pick<WebhookSubscriber, "subscriberUrl" | "appId" | "payloadTemplate" | "version">;
+type WebhookForPayload = Pick<WebhookSubscriber, "subscriberUrl" | "appId" | "payloadTemplate" | "version"> &
+  Pick<WebhookSubscriber, "platform">;
 
 type ContentType = "application/json" | "application/x-www-form-urlencoded";
 
@@ -103,10 +106,7 @@ export type EventPayloadType = Omit<CalendarEvent, "assignmentReason"> &
       | null;
   };
 
-export type WebhookPayloadType =
-  | EventPayloadType
-  | OOOEntryPayloadType
-  | BookingNoShowUpdatedPayload;
+export type WebhookPayloadType = EventPayloadType | OOOEntryPayloadType | BookingNoShowUpdatedPayload;
 
 type WebhookDataType = WebhookPayloadType & { triggerEvent: string; createdAt: string };
 
@@ -238,10 +238,7 @@ const sendPayload = async (
   }
 
   if (body === undefined) {
-    if (
-      template &&
-      (isOOOEntryPayload(data) || isEventPayload(data) || isNoShowPayload(data))
-    ) {
+    if (template && (isOOOEntryPayload(data) || isEventPayload(data) || isNoShowPayload(data))) {
       body = applyTemplate(template, { ...data, triggerEvent, createdAt }, contentType);
     } else {
       body = JSON.stringify({
@@ -308,22 +305,43 @@ const _sendPayload = async (
   if (!subscriberUrl || !body) {
     throw new Error("Missing required elements to send webhook payload.");
   }
+  if (!(await validateWebhookDestination(subscriberUrl, webhook.platform))) {
+    throw new Error("Webhook destination is not allowed");
+  }
+  if (webhook.platform && (webhook.appId || webhook.payloadTemplate)) {
+    throw new Error("Platform webhook must use the full payload");
+  }
+  const ingressKey = process.env.RONDEVU_N8N_INGRESS_KEY;
+  if (webhook.platform && (!secretKey || !ingressKey)) {
+    throw new Error("Platform webhook credentials are missing");
+  }
+  if (webhook.platform && process.env.RONDEVU_PLATFORM_WEBHOOK_ENABLE !== "1") {
+    throw new Error("Platform webhook is disabled");
+  }
+  const createdAt = webhook.platform ? (JSON.parse(body) as { createdAt?: string }).createdAt : undefined;
+  if (webhook.platform && !createdAt) throw new Error("Platform webhook timestamp is missing");
 
-  const response = await fetch(subscriberUrl, {
-    method: "POST",
+  const status = await postWebhookSafely({
+    url: subscriberUrl,
+    body,
+    platform: webhook.platform,
     headers: {
       "Content-Type": contentType,
       "X-Cal-Signature-256": createWebhookSignature({ secret: secretKey, body }),
       "X-Cal-Webhook-Version": version,
+      ...(webhook.platform && createdAt && ingressKey
+        ? {
+            "X-Rondevu-Event-Id": createHash("sha256").update(body).digest("hex"),
+            "X-Rondevu-Timestamp": createdAt,
+            "X-Rondevu-Ingress-Key": ingressKey,
+          }
+        : {}),
     },
-    redirect: "manual",
-    signal: AbortSignal.timeout(10000),
-    body,
   });
 
   return {
-    ok: response.ok,
-    status: response.status,
+    ok: status >= 200 && status < 300,
+    status,
   };
 };
 

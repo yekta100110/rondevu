@@ -23,6 +23,9 @@ const _getBookingData = async <T extends z.ZodType>({
   schema: T;
 }) => {
   const parsedBody = await schema.parseAsync(reqBody);
+  if (parsedBody.whatsappConsent && !parsedBody.whatsappPhoneNumber) {
+    throw new Error("Phone number is required for WhatsApp notifications");
+  }
   const parsedBodyWithEnd = (body: TgetBookingDataSchema): body is ReqBodyWithEnd => {
     // Use the event length to auto-set the event end time.
     if (!Object.hasOwn(body, "end")) {

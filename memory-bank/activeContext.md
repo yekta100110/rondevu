@@ -1,5 +1,9 @@
 # Active Context — rOndevu
 
+- **System webhook / n8n WhatsApp work (2026-10-27):** A platform webhook is restricted to system admins and one configured n8n destination, with a deployment activation gate. Outbound deliveries have HMAC/timestamp/event headers, bounded retry, a delivery ledger, and encrypted failed-payload replay; successful replay bodies are discarded. Host and guest WhatsApp preferences are recorded separately, with an internal eligibility and opt-out API. The n8n/Evolution workflow and credentials are not deployed, so the platform webhook must remain inactive. Migration `20261027000000_platform_whatsapp_webhook` is required before application deployment. The `docs/n8n-whatsapp-platform.md` runbook describes deployment gates.
+- **Local integration runtime check (2026-10-27):** Docker has no n8n container. The Evolution API and its PostgreSQL container restart repeatedly; PostgreSQL reports an uninitialized database without a nonempty `POSTGRES_PASSWORD`. The Evolution API container also has empty database URI and API key values. Configure these in Dokploy before end-to-end tests; do not enable the platform webhook against this runtime.
+- **Dokploy recovery (2026-10-27):** Its Swarm service was `0/1` after a Docker Desktop restart because `/etc/dokploy` was absent in dockerd's mount namespace. Recreated only that bind directory with root-only permissions in the dockerd namespace; the service returned to `1/1`, its container became healthy, and `localhost:3000` returned HTTP 200. The fix is temporary across Docker Desktop restarts and needs a durable host path.
+
 - **Mobil pricing merkezleme (2026-10-26):** Pricing Framer dışa aktarımındaki mobil yatay boşluk bileşenleri kaldırıldı. Hero ve Feature Breakdown bölümleri aynı simetrik 16 px kenar boşluğuyla tam genişlikte hizalandı; iç flex sarmalayıcıları mobilde %100 genişliğe sabitlendi. Kullanıcı isteği uyarınca doğrulama kullanıcıya bırakıldı; commit oluşturulmadı.
 
 - **Ana Sayfa Adım ve Özellik Kartı Hareketleri (2026-10-05):**
@@ -588,6 +592,13 @@
 - An 8 GB Docker Desktop build progressed through Yarn install, tRPC, and embed compilation, then its WSL connection stopped responding during `next build`. The Docker engine required a restart; this is consistent with memory pressure but no explicit OOM event was captured.
 - Docker builds now cache Yarn downloads through a BuildKit mount, exclude local Yarn cache/example files from the build context, cap the Docker Node heap at 4 GB, and omit production browser source maps in standalone Docker builds. The obsolete Next.js 16 `eslint` config key was removed.
 - Dokploy's `/etc/dokploy` bind path disappeared after the Docker Desktop restart. It was recreated in the dockerd mount namespace using Dokploy's installer permissions; all Dokploy and rOndevu Swarm services recovered. This host path may disappear on another Docker Desktop restart and needs a durable hosting solution.
+
+## 2026-10-27 — WhatsApp integration staging
+- Dokploy's `/etc/dokploy` now uses the persistent `dokploy-config` named volume, replacing the fragile bind path. Dokploy and the existing rOndevu service are healthy.
+- Evolution API, its PostgreSQL database, and Redis are running; local port 8080 and the existing `wp.rondevu.org` Cloudflare Tunnel respond. An Evolution instance named `rondevu` was created and still needs WhatsApp QR pairing.
+- n8n 2.44.7 and its PostgreSQL database run as a separate Dokploy Compose application. Its editor binds to `127.0.0.1:5678`; five integration credentials and a least-privilege event deduplication database are staged. No production workflow is active yet.
+- Integration secrets are outside Git in user-local DPAPI encrypted files. Platform webhook delivery remains disabled, and the rOndevu database migration/environment update has not been deployed. Do not enable `/api/tasks/cron` until the stale-reminder guard is deployed.
+- The local Next production build completed. Global Yarn type-check remains blocked by a Windows `spawn tsc ENOENT` issue; targeted tRPC TypeScript, four Vitest files, and changed-file Biome check passed. Web tsc still reports pre-existing errors.
 
 ## 2026-10-26 — Mobile pricing and legal content
 - Marketing navbar and footer use the same `/api/logo` component as `/privacy`; the footer contains localized legal links.
