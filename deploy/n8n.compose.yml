@@ -16,7 +16,7 @@ services:
       retries: 5
 
   n8n:
-    image: n8nio/n8n:2.44.7
+    image: n8nio/n8n:2.45.4
     restart: unless-stopped
     ports:
       - "127.0.0.1:5678:5678"
@@ -40,6 +40,10 @@ services:
       EXECUTIONS_DATA_MAX_AGE: "24"
       N8N_DIAGNOSTICS_ENABLED: "false"
       N8N_PERSONALIZATION_ENABLED: "false"
+      N8N_COMMUNITY_PACKAGES_ENABLED: "false"
+      N8N_BLOCK_ENV_ACCESS_IN_NODE: "true"
+      N8N_PUBLIC_API_DISABLED: "true"
+      NODES_EXCLUDE: '["n8n-nodes-base.executeCommand","n8n-nodes-base.readWriteFile"]'
     volumes:
       - n8n_data:/home/node/.n8n
     depends_on:

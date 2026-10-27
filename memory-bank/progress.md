@@ -2,6 +2,10 @@
 
 ## 2026-10-27 — Platform webhook and WhatsApp integration in progress
 
+- Upgraded the local Dokploy n8n service from 2.44.7 to 2.45.4 after taking PostgreSQL backups. Health check returned HTTP 200; both WhatsApp workflows remain inactive. Updated Compose template to pin the deployed version and disable community packages and Code-node environment access.
+- Re-ran `n8n audit`: it still flags credentials unused by inactive workflows, required Code/HTTP nodes, and SQL query parameter fields. Disabled the public REST API, excluded Execute Command and file read/write nodes, and confirmed the editor and health endpoint remain HTTP 200 while the authenticated public API returns 401. Execution data retention is disabled. Review the remaining audit findings before activation.
+- The user will pair the Evolution WhatsApp device later. Do not create/show a QR or activate sending flows before app migration and end-to-end checks.
+
 - Added admin ownership checks, a configured n8n-only platform destination, public-only personal destinations, and DNS-pinned outbound requests without redirect following.
 - Added delivery status/retry records, encrypted failed-payload replay, and a disabled-by-default activation gate.
 - Added host and guest WhatsApp consent records, user preference UI, restricted recipient eligibility and opt-out APIs, and an admin delivery screen.
