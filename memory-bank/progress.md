@@ -417,7 +417,7 @@
 
 ## 2026-10-28 — WhatsApp runtime activation
 
-- Added the four `RONDEVU_*` runtime variables to the `@calcom/web#start` Turbo task and pushed commit `bc4abdb03d` to `main`. The current Swarm task uses matching Docker config `rondevu-turbo-env-bc4abdb03d`; Dokploy's environment gate is saved and enabled.
+- Added the `RONDEVU_*` and `PLATFORM_N8N_*` runtime variables to the `@calcom/web#start` Turbo task; commits `bc4abdb03d` and `452410dd77` are on `main`. The current Swarm task uses matching Docker config `rondevu-turbo-env-452410dd77`; Dokploy's environment gate is saved and enabled.
 - n8n's platform-delivery and Evolution opt-out workflows are active. Evolution `rondevu` is open with `MESSAGES_UPSERT` inbound webhook. Public health probes for site, n8n, and Evolution returned HTTP 200; an authenticated eligibility probe returned the expected 404 for a nonexistent UID.
 - A no-cache Dokploy build destabilized Docker Desktop during Yarn dependency installation and was cancelled. WSL/Docker restart restored all services. A direct, user-authorized Evolution test send was accepted (HTTP 201); it is not an end-to-end platform webhook test.
 - No platform webhook record exists and no opt-in is recorded for the test number. An administrator still needs to create the platform webhook with its HMAC secret aligned to n8n and the recipient needs an app-recorded opt-in before booking notifications can send.

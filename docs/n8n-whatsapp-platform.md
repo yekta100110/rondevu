@@ -4,7 +4,7 @@ The deployment gate is enabled, but no production platform webhook record exists
 
 ## Current deployment status (2026-10-28)
 
-- The app migration and required runtime environment are deployed. The deployment gate is enabled, and a Turbo task environment allowlist is mounted as a Docker config so the current Next.js process receives the `RONDEVU_*` variables. The source fix is committed at `bc4abdb03d`.
+- The app migration and required runtime environment are deployed. The deployment gate is enabled, and a Turbo task environment allowlist is mounted as a Docker config so the current Next.js process receives the `RONDEVU_*` and `PLATFORM_N8N_*` variables. The source fix is committed at `452410dd77`.
 - Both n8n workflows are active. The Evolution instance `rondevu` is `open`; its inbound webhook is enabled for `MESSAGES_UPSERT`. rOndevu, n8n, and Evolution health endpoints return HTTP 200.
 - **The production platform webhook has not been created.** Until an administrator creates and activates it at `/settings/developer/webhooks` with the configured private URL and a matching n8n HMAC secret, booking events will not enter the outbound workflow.
 - A direct, user-authorized Evolution send returned HTTP 201. This verifies Evolution outbound acceptance only; it does not verify the complete booking → consent → n8n → Evolution path. The test number still needs a recorded rOndevu WhatsApp opt-in before the booking workflow can send to it.
