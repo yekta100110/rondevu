@@ -400,6 +400,8 @@
       "cache": false,
       "dependsOn": [],
       "env": [
+        "PLATFORM_N8N_WEBHOOK_URL",
+        "PLATFORM_N8N_ALLOW_PRIVATE_HTTP",
         "RONDEVU_N8N_INGRESS_KEY",
         "RONDEVU_N8N_ELIGIBILITY_TOKEN",
         "RONDEVU_WEBHOOK_REPLAY_KEY",
