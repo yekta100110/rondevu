@@ -1,12 +1,12 @@
 # Platform webhook → n8n → Evolution API
 
-The deployment gate is enabled, but no production platform webhook record exists. Keep real booking delivery inactive until its admin-created HMAC secret is matched in n8n and each recipient has a current rOndevu opt-in.
+The deployment gate is enabled. One production platform webhook has been created with the configured private URL. Its HMAC secret is now matched to n8n's platform Crypto credential; the webhook itself remains inactive until the administrator enables it and recipient consent is confirmed.
 
 ## Current deployment status (2026-10-28)
 
 - The app migration and required runtime environment are deployed. The deployment gate is enabled, and a Turbo task environment allowlist is mounted as a Docker config so the current Next.js process receives the `RONDEVU_*` and `PLATFORM_N8N_*` variables. The source fix is committed at `452410dd77`.
 - Both n8n workflows are active. The Evolution instance `rondevu` is `open`; its inbound webhook is enabled for `MESSAGES_UPSERT`. rOndevu, n8n, and Evolution health endpoints return HTTP 200.
-- **The production platform webhook has not been created.** Until an administrator creates and activates it at `/settings/developer/webhooks` with the configured private URL and a matching n8n HMAC secret, booking events will not enter the outbound workflow.
+- **The production platform webhook exists but is inactive.** Its configured URL and 64-character HMAC secret were confirmed against the n8n Crypto credential. The public n8n REST API remained disabled during the credential update. Activate the webhook at `/settings/developer/webhooks` only after recipient consent is recorded.
 - A direct, user-authorized Evolution send returned HTTP 201. This verifies Evolution outbound acceptance only; it does not verify the complete booking → consent → n8n → Evolution path. The test number still needs a recorded rOndevu WhatsApp opt-in before the booking workflow can send to it.
 - A no-cache Docker build caused Docker Desktop's engine to stop responding and was cancelled. The committed Turbo configuration is active via the Docker config mount; a later successful deployment will bake it into the image.
 - A build-process diagnostic exposed portions of deployment credentials. Rotate the Dokploy and n8n API keys, Twilio auth token, and app/n8n shared secrets; update both sides of each integration before enabling real notifications.
@@ -38,7 +38,7 @@ The task queue is separate from immediate Twilio SMS dispatch. Schedule authenti
 
 ## n8n receiving workflows
 
-The checked-in templates are `deploy/n8n-platform-webhook.workflow.json` and `deploy/n8n-evolution-optout.workflow.json`. The current instance has both workflows **active** with their credentials assigned. Keep the outbound path dormant until an administrator creates the platform webhook, aligns its signing secret with the n8n HMAC credential, and records recipient opt-in in rOndevu.
+The checked-in templates are `deploy/n8n-platform-webhook.workflow.json` and `deploy/n8n-evolution-optout.workflow.json`. The current instance has both workflows **active** with their credentials assigned. The platform webhook HMAC credential is paired; the platform webhook remains inactive until an administrator activates it and records recipient opt-in in rOndevu.
 
 The platform flow validates the ingress header, signs the raw body with HMAC-SHA256, checks timestamp/event shape, and records event and recipient hashes in the dedicated PostgreSQL database. It queries `POST /api/internal/whatsapp/eligibility` for current consent immediately before sending. It sends only the four booking events below, and the text contains no booking notes, form answers, private links, or arbitrary booking title.
 
@@ -76,4 +76,4 @@ Evolution's WhatsApp Web/Baileys connection depends on an active linked-device s
 
 ## Current rollout state
 
-The local n8n instance runs `2.45.4`; its health endpoint returned HTTP 200 after the upgrade. The two workflows remain inactive, the Evolution `rondevu` instance has not been paired, and its inbound webhook is disabled. The n8n and event databases were backed up before the upgrade under the user's local Temp directory. The rOndevu feature commit is local and the Prisma migration and environment variables have not been applied to production. Keep the platform gate and task cron disabled until the application deploy and end-to-end checks finish.
+The local n8n instance runs `2.45.4`. Its public REST API remains disabled. The platform-delivery and Evolution opt-out workflows are active; Evolution `rondevu` is paired and its inbound webhook is enabled for authenticated `MESSAGES_UPSERT`. The production platform webhook exists with its configured URL and its HMAC secret matched in the n8n Crypto credential, but its active flag is still false. The test number has no confirmed app-recorded opt-in, so booking notifications must not be considered end-to-end ready. A direct Evolution send was accepted earlier, but that did not validate the full booking flow.

@@ -6,6 +6,7 @@ import { postWebhookSafely } from "@calcom/features/webhooks/lib/postWebhookSafe
 import { validateWebhookDestination } from "@calcom/features/webhooks/lib/validateWebhookDestination";
 import { prisma } from "@calcom/prisma";
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
+import { isSameOriginRequest } from "@lib/server/isSameOriginRequest";
 import { cookies, headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -35,7 +36,7 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  if (request.headers.get("origin") !== new URL(request.url).origin || !(await isAdmin())) {
+  if (!isSameOriginRequest(request) || !(await isAdmin())) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
   const parsed = z.object({ id: z.string().uuid() }).safeParse(await request.json().catch(() => null));

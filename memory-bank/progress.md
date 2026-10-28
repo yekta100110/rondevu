@@ -1,5 +1,11 @@
 # Progress — rOndevu
 
+## 2026-10-28 — Platform webhook HMAC paired
+
+- The administrator-created Platform webhook uses the configured private n8n URL and remains inactive. Its 64-character signing secret was copied directly from the app database into the existing n8n Crypto credential through n8n's credential import command, then exported again and compared without displaying it.
+- n8n's public REST API remained disabled. Temporary plaintext credential files were removed from both the workstation and n8n container.
+- The platform webhook URL and inactive flag were confirmed. Do not activate booking notifications until recipient WhatsApp consent is recorded; the direct Evolution test send did not verify the full booking path.
+
 ## 2026-10-27 — Platform webhook and WhatsApp integration in progress
 
 - Upgraded the local Dokploy n8n service from 2.44.7 to 2.45.4 after taking PostgreSQL backups. Health check returned HTTP 200; both WhatsApp workflows remain inactive. Updated Compose template to pin the deployed version and disable community packages and Code-node environment access.
