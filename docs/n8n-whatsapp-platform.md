@@ -1,6 +1,15 @@
 # Platform webhook → n8n → Evolution API
 
-This integration starts disabled. Do not activate the platform webhook until the database migration, n8n workflow, credentials, and test recipients are ready.
+The deployment gate is enabled, but no production platform webhook record exists. Keep real booking delivery inactive until its admin-created HMAC secret is matched in n8n and each recipient has a current rOndevu opt-in.
+
+## Current deployment status (2026-10-28)
+
+- The app migration and required runtime environment are deployed. The deployment gate is enabled, and a Turbo task environment allowlist is mounted as a Docker config so the current Next.js process receives the `RONDEVU_*` variables. The source fix is committed at `bc4abdb03d`.
+- Both n8n workflows are active. The Evolution instance `rondevu` is `open`; its inbound webhook is enabled for `MESSAGES_UPSERT`. rOndevu, n8n, and Evolution health endpoints return HTTP 200.
+- **The production platform webhook has not been created.** Until an administrator creates and activates it at `/settings/developer/webhooks` with the configured private URL and a matching n8n HMAC secret, booking events will not enter the outbound workflow.
+- A direct, user-authorized Evolution send returned HTTP 201. This verifies Evolution outbound acceptance only; it does not verify the complete booking → consent → n8n → Evolution path. The test number still needs a recorded rOndevu WhatsApp opt-in before the booking workflow can send to it.
+- A no-cache Docker build caused Docker Desktop's engine to stop responding and was cancelled. The committed Turbo configuration is active via the Docker config mount; a later successful deployment will bake it into the image.
+- A build-process diagnostic exposed portions of deployment credentials. Rotate the Dokploy and n8n API keys, Twilio auth token, and app/n8n shared secrets; update both sides of each integration before enabling real notifications.
 
 ## rOndevu configuration
 
@@ -29,11 +38,11 @@ The task queue is separate from immediate Twilio SMS dispatch. Schedule authenti
 
 ## n8n receiving workflows
 
-Import the checked-in templates `deploy/n8n-platform-webhook.workflow.json` and `deploy/n8n-evolution-optout.workflow.json`. Assign the named n8n credentials to each node after import. The local instances currently have both workflows **inactive**. Keep them inactive until the migration and application build are deployed, the eligibility API is live, and a test WhatsApp device is paired.
+The checked-in templates are `deploy/n8n-platform-webhook.workflow.json` and `deploy/n8n-evolution-optout.workflow.json`. The current instance has both workflows **active** with their credentials assigned. Keep the outbound path dormant until an administrator creates the platform webhook, aligns its signing secret with the n8n HMAC credential, and records recipient opt-in in rOndevu.
 
 The platform flow validates the ingress header, signs the raw body with HMAC-SHA256, checks timestamp/event shape, and records event and recipient hashes in the dedicated PostgreSQL database. It queries `POST /api/internal/whatsapp/eligibility` for current consent immediately before sending. It sends only the four booking events below, and the text contains no booking notes, form answers, private links, or arbitrary booking title.
 
-The inbound flow accepts only authenticated `MESSAGES_UPSERT` events, ignores group and self-sent messages, and revokes the sender's preference for `STOP`, `DUR`, or `İPTAL`. Configure Evolution to send only that event to the private n8n production URL with the dedicated `X-Rondevu-Evolution-Ingress` header. Activate the inbound flow and set Evolution's webhook only after the app's opt-out API has been deployed. Evolution expects the configuration nested under `webhook`, with request fields `byEvents`, `base64`, `events`, `headers`, `enabled`, and `url`.
+The inbound flow accepts only authenticated `MESSAGES_UPSERT` events, ignores group and self-sent messages, and revokes the sender's preference for `STOP`, `DUR`, or `İPTAL`. Evolution is configured to send only that event to the private n8n production URL with the dedicated `X-Rondevu-Evolution-Ingress` header. Evolution expects the configuration nested under `webhook`, with request fields `byEvents`, `base64`, `events`, `headers`, `enabled`, and `url`.
 
 For outbound events, send `bookingUid = payload.uid` and `triggerEvent` to the eligibility endpoint with the bearer credential, then use only returned recipients. Claim each recipient using a hash of event ID, role, and normalized phone; no phone number or message is stored in the deduplication database. The recipient is marked `SENT` only after Evolution returns success.
 
@@ -61,7 +70,7 @@ Successful rOndevu deliveries discard their encrypted replay body. Set a schedul
 - Confirm unsigned, altered, expired, duplicate, and redirected requests never send messages.
 - Confirm an attendee without an explicit checked preference, or a host who has disabled the preference, is excluded.
 - Confirm delivery failure appears at `/settings/admin/webhook-deliveries`; retry a failed event and confirm the same event ID cannot create a second WhatsApp message.
-- Run `n8n audit` and resolve unprotected webhook and unsafe-node findings before activation. The 2026-10-27 audit reports unused credentials because both workflows are inactive, Code and HTTP Request nodes used by the flows, and five SQL nodes whose query parameter settings are flagged. These are kept for workflow functionality; review each node and SQL parameterization before activation. Community packages and public REST API are disabled, diagnostics are disabled, the editor is loopback-bound, and execution data retention is disabled.
+- Re-run `n8n audit` after credential rotation and workflow activation. The 2026-10-27 audit reported Code and HTTP Request nodes required by the flows and five SQL nodes whose query parameter settings were flagged despite parameterized queries; review these findings. Community packages and public REST API are disabled, diagnostics are disabled, the editor is loopback-bound, and execution data retention is disabled.
 
 Evolution's WhatsApp Web/Baileys connection depends on an active linked-device session. Monitor its connection state and pause sending when disconnected. This transport does not provide the same operational guarantees as WhatsApp Cloud API.
 

@@ -414,3 +414,12 @@
 - Follow-up removed the static sales-link button wrappers from TR/EN home and pricing fragments, removed remaining marketing chevrons, and centered CTA labels.
 - After user screenshots exposed remaining arrow artifacts and tiny black marketing logos, removed the icon container markup from all four fragments and added explicit header/footer logo dimensions and dark-mode filtering.
 - Replaced the route-dependent logo component/filter with one responsive static wordmark across marketing and legal pages, centered in three-column headers and sized larger in the shared footer.
+
+## 2026-10-28 — WhatsApp runtime activation
+
+- Added the four `RONDEVU_*` runtime variables to the `@calcom/web#start` Turbo task and pushed commit `bc4abdb03d` to `main`. The current Swarm task uses matching Docker config `rondevu-turbo-env-bc4abdb03d`; Dokploy's environment gate is saved and enabled.
+- n8n's platform-delivery and Evolution opt-out workflows are active. Evolution `rondevu` is open with `MESSAGES_UPSERT` inbound webhook. Public health probes for site, n8n, and Evolution returned HTTP 200; an authenticated eligibility probe returned the expected 404 for a nonexistent UID.
+- A no-cache Dokploy build destabilized Docker Desktop during Yarn dependency installation and was cancelled. WSL/Docker restart restored all services. A direct, user-authorized Evolution test send was accepted (HTTP 201); it is not an end-to-end platform webhook test.
+- No platform webhook record exists and no opt-in is recorded for the test number. An administrator still needs to create the platform webhook with its HMAC secret aligned to n8n and the recipient needs an app-recorded opt-in before booking notifications can send.
+- The build-process diagnostic exposed portions of deployment credentials. Rotate Dokploy/n8n API keys, Twilio auth token, and rOndevu/n8n shared secrets before real customer notifications.
+- Full monorepo type-check was attempted but failed locally because `packages/app-store` could not spawn `tsc` (`ENOENT`); no code-specific type diagnostic was produced.
