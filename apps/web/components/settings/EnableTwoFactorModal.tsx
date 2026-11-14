@@ -283,7 +283,7 @@ const EnableTwoFactorModal = ({ onEnable, onCancel, open, onOpenChange }: Enable
                   }}>
                   {t("copy")}
                 </Button>
-                <a download="cal-backup-codes.txt" href={backupCodesUrl}>
+                <a download="rondevu-backup-codes.txt" href={backupCodesUrl}>
                   <Button color="primary" data-testid="backup-codes-download">
                     {t("download")}
                   </Button>

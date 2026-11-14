@@ -43,7 +43,6 @@ function collectSearchTerms(attendees: ReadonlyArray<{ email: string; phoneNumbe
             phones.add(last10);
             phones.add(`90${last10}`);
             emails.add(`90${last10}@sms.rondevu.org`);
-            emails.add(`90${last10}@sms.cal.com`);
           }
         }
       }
@@ -63,7 +62,6 @@ function collectSearchTerms(attendees: ReadonlyArray<{ email: string; phoneNumbe
           phones.add(last10);
           phones.add(`90${last10}`);
           emails.add(`90${last10}@sms.rondevu.org`);
-          emails.add(`90${last10}@sms.cal.com`);
         }
       }
     }

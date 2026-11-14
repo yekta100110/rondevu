@@ -92,26 +92,19 @@ describe("loadTranslations", () => {
     expect(Object.keys(result).length).toBeGreaterThan(100);
   });
 
-  it("returns French translations merged with English fallback", async () => {
-    const result = await loadTranslations("fr", "common");
+  it("returns Turkish translations merged with English fallback", async () => {
+    const result = await loadTranslations("tr", "common");
 
-    expect(result).toHaveProperty("welcome", "Bienvenue");
-    expect(result).toHaveProperty("cancel", "Annuler");
+    expect(result).toHaveProperty("welcome", "Hoş geldiniz");
+    expect(result).toHaveProperty("cancel", "İptal et");
     expect(Object.keys(result).length).toBeGreaterThan(100);
   });
 
-  it("aliases 'zh' to 'zh-CN'", async () => {
-    const zhResult = await loadTranslations("zh", "common");
-    const zhCNResult = await loadTranslations("zh-CN", "common");
-
-    expect(zhResult).toEqual(zhCNResult);
-  });
-
-  it("falls back to English for unsupported locales", async () => {
+  it("falls back to default locale (tr) for unsupported locales", async () => {
     const result = await loadTranslations("xx-INVALID", "common");
 
-    expect(result).toHaveProperty("welcome", "Welcome");
-    expect(result).toHaveProperty("cancel", "Cancel");
+    expect(result).toHaveProperty("welcome", "Hoş geldiniz");
+    expect(result).toHaveProperty("cancel", "İptal et");
   });
 
   it("falls back to 'common' namespace for unsupported namespaces", async () => {
@@ -122,18 +115,18 @@ describe("loadTranslations", () => {
   });
 
   it("returns cached result on subsequent calls for the same locale", async () => {
-    const first = await loadTranslations("de", "common");
-    const second = await loadTranslations("de", "common");
+    const first = await loadTranslations("tr", "common");
+    const second = await loadTranslations("tr", "common");
 
     expect(first).toBe(second);
   });
 
   it("includes English fallback keys missing from the locale file", async () => {
     const enResult = await loadTranslations("en", "common");
-    const frResult = await loadTranslations("fr", "common");
+    const trResult = await loadTranslations("tr", "common");
 
     for (const key of Object.keys(enResult)) {
-      expect(frResult).toHaveProperty(key);
+      expect(trResult).toHaveProperty(key);
     }
   });
 });
@@ -147,11 +140,11 @@ describe("getTranslation", () => {
     expect(t("cancel")).toBe("Cancel");
   });
 
-  it("returns a function that translates French keys", async () => {
-    const t = await getTranslation("fr", "common");
+  it("returns a function that translates Turkish keys", async () => {
+    const t = await getTranslation("tr", "common");
 
-    expect(t("welcome")).toBe("Bienvenue");
-    expect(t("cancel")).toBe("Annuler");
+    expect(t("welcome")).toBe("Hoş geldiniz");
+    expect(t("cancel")).toBe("İptal et");
   });
 
   it("returns the key itself for missing translation keys", async () => {
@@ -161,8 +154,8 @@ describe("getTranslation", () => {
   });
 
   it("returns consistent results from cached i18n instance on subsequent calls", async () => {
-    const first = await getTranslation("es", "common");
-    const second = await getTranslation("es", "common");
+    const first = await getTranslation("tr", "common");
+    const second = await getTranslation("tr", "common");
 
     expect(first("welcome")).toBe(second("welcome"));
     expect(first("cancel")).toBe(second("cancel"));
@@ -170,8 +163,8 @@ describe("getTranslation", () => {
 
   it("returns different translation functions for different locales", async () => {
     const enT = await getTranslation("en", "common");
-    const frT = await getTranslation("fr", "common");
+    const trT = await getTranslation("tr", "common");
 
-    expect(enT("welcome")).not.toBe(frT("welcome"));
+    expect(enT("welcome")).not.toBe(trT("welcome"));
   });
 });

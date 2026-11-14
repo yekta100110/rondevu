@@ -33,7 +33,18 @@ tags: reference, navigation, file-locations
 
 ## Translations
 
+- Turkish (primary locale): `packages/i18n/locales/tr/common.json`
 - English: `packages/i18n/locales/en/common.json`
+
+## rOndevu Core Modules & Integrations
+
+- SMS package: `packages/sms/`
+- SMS transport: `packages/lib/smsTransport.ts`
+- GSM 7-bit SMS sanitizer: `packages/lib/sanitizeSmsText.ts`
+- Phone number normalization (E.164): `packages/lib/normalizePhoneNumber.ts`
+- Phone OTP verification (Twilio Verify v2 / TOTP + cache): `packages/features/auth/lib/phoneVerification.ts`
+- Dynamic plan contact configuration: `packages/lib/planContactConfig.ts`
+- WhatsApp platform webhook & n8n/Evolution API architecture: `docs/n8n-whatsapp-platform.md`
 
 ## App Store
 

@@ -31,7 +31,6 @@ describe("@calcom/i18n/next-i18next.config", () => {
   it("has fallbackLng configured", () => {
     expect(config.fallbackLng).toBeDefined();
     expect(config.fallbackLng.default).toEqual(["tr", "en"]);
-    expect(config.fallbackLng.zh).toEqual(["zh-CN"]);
   });
 
   it("every locale in config has a corresponding locale directory with common.json", () => {
@@ -44,26 +43,12 @@ describe("@calcom/i18n/next-i18next.config", () => {
     }
   });
 
-  it("english common.json is valid JSON with translation keys", () => {
-    const enPath = path.join(config.localePath, "en", "common.json");
-    const enTranslations = JSON.parse(fs.readFileSync(enPath, "utf-8"));
-    expect(typeof enTranslations).toBe("object");
-    expect(Object.keys(enTranslations).length).toBeGreaterThan(0);
-  });
-
-  it("Indonesian translations preserve interpolation and rich-text tokens", () => {
-    const enTranslations = JSON.parse(
-      fs.readFileSync(path.join(config.localePath, "en", "common.json"), "utf-8")
-    );
-    const idTranslations = JSON.parse(
-      fs.readFileSync(path.join(config.localePath, "id", "common.json"), "utf-8")
-    );
-    const tokenPattern = /\{\{[^}]+\}\}|<\/?\d+>|\$t\([^)]*\)/g;
-    const tokens = (value: string): string[] => (value.match(tokenPattern) ?? []).sort();
-
-    for (const [key, translation] of Object.entries(idTranslations)) {
-      if (typeof enTranslations[key] !== "string" || typeof translation !== "string") continue;
-      expect(tokens(translation), key).toEqual(tokens(enTranslations[key]));
+  it("turkish and english common.json are valid JSON with translation keys", () => {
+    for (const locale of ["tr", "en"]) {
+      const localePath = path.join(config.localePath, locale, "common.json");
+      const translations = JSON.parse(fs.readFileSync(localePath, "utf-8"));
+      expect(typeof translations).toBe("object");
+      expect(Object.keys(translations).length).toBeGreaterThan(0);
     }
   });
 });

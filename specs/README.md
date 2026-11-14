@@ -1,14 +1,14 @@
-# Spec-First Development
+# Spec-First Development — rOndevu
 
-This folder contains design documents for features in development. Claude reads these to understand what to build and track progress.
+This folder contains design and implementation documents for **rOndevu** features in development. Agents read these alongside `memory-bank/` to understand what to build, maintain architectural consistency, and track progress.
 
 ## How It Works
 
-1. **Before implementing a feature**, create a spec folder with design docs
-2. **Claude reads the design** before writing any code
-3. **Progress is tracked** in implementation.md for session continuity
-4. **Decisions are recorded** in decisions.md for future reference
-5. **Docs are generated** with screenshots when feature is complete
+1. **Before implementing a feature**, create a spec folder from `specs/_templates`
+2. **Read the design and `memory-bank/` context** before writing any code
+3. **Track progress** in `implementation.md` for session continuity
+4. **Record architectural decisions** in `decisions.md`
+5. **Document operational or UI flows** in `docs/` when the feature is complete
 
 ## Starting a New Feature
 
@@ -16,67 +16,38 @@ This folder contains design documents for features in development. Claude reads 
 cp -r specs/_templates specs/{feature-name}
 ```
 
-Then tell Claude:
-```
-"I want to build {feature}. Here's my idea: [description].
-Review the codebase and fill in specs/{feature}/design.md"
-```
+Then fill in `specs/{feature-name}/design.md` with the problem statement, architectural boundaries, and verification plan.
 
 ## File Structure
 
-Each feature has:
+Each feature spec contains:
 
 | File/Folder | Purpose |
 |-------------|---------|
-| `CLAUDE.md` | Instructions for Claude when working on this feature |
-| `design.md` | Source of truth - what to build and how |
-| `implementation.md` | Progress tracking - what's done, in progress, blocked |
+| `AGENTS.md` / `CLAUDE.md` | Agent instructions when working on this feature |
+| `design.md` | Source of truth — what to build and how |
+| `implementation.md` | Progress tracking — done, in progress, blocked |
 | `decisions.md` | Architecture Decision Records (ADRs) |
 | `prompts.md` | Reusable prompts for common tasks |
 | `future-work.md` | Deferred ideas and enhancements |
-| `docs/` | Internal documentation with screenshots |
-| `docs/screenshots/` | Screenshots captured during development |
+| `docs/` | Internal feature documentation and operational runbooks |
+| `docs/screenshots/` | Screenshots captured during verification |
 
 ## Session Continuity
 
-When starting a new Claude session:
-```
-"Continue working on {feature}"
-```
+When resuming work on a feature:
+- Read `specs/{feature}/design.md` and `specs/{feature}/implementation.md`
+- Cross-check system-wide patterns in `memory-bank/systemPatterns.md` and `memory-bank/techContext.md`
 
-Claude will read `implementation.md` to pick up where it left off.
+## Documentation
 
-## Generating Documentation
+When a feature requires operational or technical documentation:
+1. Capture key UI states in `specs/{feature}/docs/screenshots/` if applicable
+2. Update `specs/{feature}/docs/README.md` or add a runbook under `docs/` (e.g., `docs/n8n-whatsapp-platform.md`)
 
-When a feature is ready for documentation:
-```
-"Generate docs with screenshots for {feature}"
-```
+## Change Discipline
 
-Claude will:
-1. Open the feature in browser
-2. Take screenshots of key UI states
-3. Save to `specs/{feature}/docs/screenshots/`
-4. Update `specs/{feature}/docs/README.md`
-
-## Promoting to Public Docs
-
-When internal docs are ready for customers:
-```
-"Promote {feature} docs to public"
-```
-
-Claude will:
-1. Copy content to `docs/{feature}.mdx` (Mintlify format)
-2. Move screenshots to `docs/images/{feature}/`
-3. Update `docs/mint.json` navigation
-4. Adjust language for customer audience
-
-## The Most Important Rule
-
-Every PR must be reviewable in under 10 minutes:
-- Max 5-7 files changed (excluding tests)
-- Max 500 lines changed
-- One focused change per PR
-
-If your change is bigger, split it into multiple PRs.
+Keep changes focused and verifiable:
+- Align with rOndevu's **De-Cal'ification** and modular Venture Studio architecture
+- Avoid introducing unused `app-store` or enterprise bloat
+- Validate with `yarn biome check`, `Vitest`, and TypeScript checks before marking complete

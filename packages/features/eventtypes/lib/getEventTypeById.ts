@@ -21,7 +21,7 @@ import { TRPCError } from "@trpc/server";
 
 const getOrganizationRepository = () => ({ findById: async (..._args: unknown[]) => null });
 const getBookerBaseUrl = async (_orgSlug?: string | number | null): Promise<string> =>
-  process.env.NEXT_PUBLIC_WEBAPP_URL || "https://app.cal.com";
+  process.env.NEXT_PUBLIC_WEBAPP_URL || "https://rondevu.org";
 
 interface getEventTypeByIdProps {
   eventTypeId: number;

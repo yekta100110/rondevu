@@ -1352,7 +1352,7 @@ async function handler(
   });
 
   const organizerOrganizationId = organizerOrganizationProfile?.organizationId;
-  const bookerUrl = process.env.NEXT_PUBLIC_WEBAPP_URL || "https://app.cal.com";
+  const bookerUrl = process.env.NEXT_PUBLIC_WEBAPP_URL || "https://rondevu.org";
 
   const destinationCalendar = eventType.destinationCalendar
     ? [eventType.destinationCalendar]
@@ -2577,7 +2577,7 @@ async function handler(
       bookingInfo: {
         name: fullName,
         email: bookerEmail,
-        eventName: "Cal.diy lead",
+        eventName: "rOndevu lead",
       },
       isTeamEventType,
     });

@@ -312,7 +312,7 @@ async function handler(input: CancelBookingInput, dependencies?: Dependencies) {
   const attendeesList = await Promise.all(attendeesListPromises);
   const tOrganizer = await getTranslation(organizer.locale ?? "en", "common");
 
-  const bookerUrl = process.env.NEXT_PUBLIC_WEBAPP_URL || "https://app.cal.com";
+  const bookerUrl = process.env.NEXT_PUBLIC_WEBAPP_URL || "https://rondevu.org";
 
   const evt: CalendarEvent = {
     bookerUrl,

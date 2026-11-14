@@ -27,8 +27,7 @@ export function mergeWithEnglishFallback(localeTranslations: Record<string, stri
  * @returns {Promise<Record<string, string>>} Translations object or fallback translations on failure
  */
 export async function loadTranslations(_locale: string, _ns: string) {
-  let locale = _locale === "zh" ? "zh-CN" : _locale;
-  locale = i18n.locales.includes(locale) ? locale : (i18n.defaultLocale || "tr");
+  const locale = i18n.locales.includes(_locale) ? _locale : (i18n.defaultLocale || "tr");
   const ns = SUPPORTED_NAMESPACES.includes(_ns) ? _ns : "common";
   const cacheKey = `${locale}-${ns}`;
 

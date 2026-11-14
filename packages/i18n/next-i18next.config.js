@@ -5,11 +5,10 @@ const i18n = require("../../i18n.json");
 const config = {
   i18n: {
     defaultLocale: i18n.locale.source,
-    locales: Array.from(new Set(i18n.locale.targets.concat([i18n.locale.source]))),
+    locales: Array.from(new Set([i18n.locale.source].concat(i18n.locale.targets))),
   },
   fallbackLng: {
     default: ["tr", "en"],
-    zh: ["zh-CN"],
   },
   reloadOnPrerender: process.env.NODE_ENV !== "production",
   localePath: path.resolve(__dirname, "./locales"),

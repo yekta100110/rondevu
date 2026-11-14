@@ -1,4 +1,4 @@
-# Cal.diy Agent Documentation Index
+# rOndevu Agent Documentation Index
 
 - **[../AGENTS.md](../AGENTS.md)** - Main guide (structure, tech stack, commands, examples)
 - **[commands.md](commands.md)** - Command reference
@@ -12,6 +12,7 @@
 - [architecture-feature-boundaries](rules/architecture-feature-boundaries.md) - Feature boundaries
 - [architecture-page-level-auth](rules/architecture-page-level-auth.md) - Auth in page.tsx, not layout.tsx
 - [architecture-features-modules](rules/architecture-features-modules.md) - packages/features vs apps/web/modules
+- [architecture-circular-dependencies](rules/architecture-circular-dependencies.md) - Prevent circular dependencies
 
 ### Quality
 
@@ -24,6 +25,7 @@
 - [quality-pr-creation](rules/quality-pr-creation.md) - PR best practices
 - [quality-code-comments](rules/quality-code-comments.md) - Comment guidelines
 - [quality-code-review](rules/quality-code-review.md) - Code review focus
+- [quality-review-checklist](rules/quality-review-checklist.md) - Code review checklist
 
 ### Data Layer
 
@@ -63,7 +65,6 @@
 
 - [patterns-dependency-injection](rules/patterns-dependency-injection.md) - DI patterns
 - [patterns-factory-pattern](rules/patterns-factory-pattern.md) - Factory pattern
-- [patterns-workflow-triggers](rules/patterns-workflow-triggers.md) - Workflow implementation
 - [patterns-app-store](rules/patterns-app-store.md) - App store integration patterns
 - [patterns-trigger-dev](rules/patterns-trigger-dev.md) - Trigger.dev task implementation
 

@@ -1,6 +1,6 @@
-# Cal.diy Engineering Rules
+# rOndevu Engineering Rules
 
-This directory contains modular, machine-readable engineering rules derived from [Cal.diy's Engineering Standards for 2026 and Beyond](https://cal.com/blog/engineering-in-2026-and-beyond).
+This directory contains modular, machine-readable engineering rules defining rOndevu's Engineering Standards.
 
 ## Structure
 
@@ -72,7 +72,7 @@ These rules are designed to be:
 
 ## Core Principles
 
-From the blog post, our engineering philosophy is:
+Our rOndevu engineering philosophy is:
 
 > We are building infrastructure that must almost never fail. To achieve this, we move fast while shipping amazing quality software with no shortcuts or compromises.
 

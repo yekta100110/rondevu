@@ -29,7 +29,7 @@ A comprehensive checklist for code reviewers to ensure consistent quality standa
   - Select selects only the fields you specify explicitly
   - Include selects the relationship AND all the fields of the table the relationship belongs to
   - Make sure the credential.key field is never returned back from tRPC endpoints or APIs
-- Always use t() for text localization in frontend code; direct text embedding should trigger a warning.
+- Always use t() for text localization in frontend code; direct text embedding should trigger a warning. Ensure any new or updated translation keys are added and kept in sync across both `packages/i18n/locales/tr/common.json` (primary locale) and `packages/i18n/locales/en/common.json`.
 - Check if there's any O(n^2) logic in backend code; we should aim for O(n log n) or O(n) ideally.
 - Check if there are circular references introduced. We should never allow these.
 - Flag excessive Day.js use in performance-critical code. Functions like `.add`, `.diff`, `.isBefore`, and `.isAfter` are slow, especially in timezone mode. Prefer `.utc()` for better performance. Where possible, replace with native Date and direct `.valueOf()` comparisons for faster execution. Recommend using native methods or Day.js `.utc()` consistently in hot paths like loops.
