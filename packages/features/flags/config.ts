@@ -21,7 +21,6 @@ export type AppFlags = {
   "booking-calendar-view": boolean;
   "booking-email-sms-tasker": boolean;
   "bookings-v3": boolean;
-  "booking-audit": boolean;
   "hwm-seating": boolean;
   "signup-watchlist-review": boolean;
   "sink-shortener": boolean;

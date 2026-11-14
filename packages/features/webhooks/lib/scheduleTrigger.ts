@@ -1,7 +1,6 @@
 import { v4 } from "uuid";
 
 import { DailyLocationType, getHumanReadableLocationValue } from "@calcom/app-store/locations";
-import { selectOOOEntries } from "@calcom/app-store/zapier/api/subscriptions/listOOOEntries";
 import dayjs from "@calcom/dayjs";
 import { getCalEventResponses } from "@calcom/features/bookings/lib/getCalEventResponses";
 import tasker from "@calcom/features/tasker";
@@ -14,6 +13,40 @@ import type { Prisma, Webhook, Booking, ApiKey } from "@calcom/prisma/client";
 import { BookingStatus, WebhookTriggerEvents } from "@calcom/prisma/enums";
 import { bookingMetadataSchema } from "@calcom/prisma/zod-utils";
 import { DEFAULT_WEBHOOK_VERSION, type WebhookVersion } from "./interface/IWebhookRepository";
+
+export const selectOOOEntries = {
+  id: true,
+  start: true,
+  end: true,
+  createdAt: true,
+  updatedAt: true,
+  notes: true,
+  showNotePublicly: true,
+  reason: {
+    select: {
+      reason: true,
+      emoji: true,
+    },
+  },
+  reasonId: true,
+  user: {
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      timeZone: true,
+    },
+  },
+  toUser: {
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      timeZone: true,
+    },
+  },
+  uuid: true,
+};
 
 const SCHEDULING_TRIGGER: WebhookTriggerEvents[] = [
   WebhookTriggerEvents.MEETING_ENDED,

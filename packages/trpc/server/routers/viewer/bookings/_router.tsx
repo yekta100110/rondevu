@@ -10,7 +10,6 @@ import { ZFindInputSchema } from "./find.schema";
 import { ZGetInputSchema } from "./get.schema";
 import { ZGetBookingAttendeesInputSchema } from "./getBookingAttendees.schema";
 import { ZGetBookingDetailsInputSchema } from "./getBookingDetails.schema";
-import { ZGetBookingHistoryInputSchema } from "./getBookingHistory.schema";
 import { ZGetWrongAssignmentReportsInputSchema } from "./getWrongAssignmentReports.schema";
 import { ZHasWrongAssignmentReportInputSchema } from "./hasWrongAssignmentReport.schema";
 import { ZReportBookingInputSchema } from "./reportBooking.schema";
@@ -125,14 +124,6 @@ export const bookingsRouter = router({
         input,
       });
     }),
-  getBookingHistory: authedProcedure.input(ZGetBookingHistoryInputSchema).query(async ({ input, ctx }) => {
-    const { getBookingHistoryHandler } = await import("./getBookingHistory.handler");
-
-    return getBookingHistoryHandler({
-      ctx,
-      input,
-    });
-  }),
   getWrongAssignmentReports: createTeamPbacProcedure("booking.readTeamBookings", [
     MembershipRole.ADMIN,
     MembershipRole.OWNER,

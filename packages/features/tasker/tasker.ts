@@ -1,7 +1,5 @@
 import type { z } from "zod";
 
-type BookingAuditTaskConsumerPayload = string;
-
 export type TaskerTypes = "internal" | "redis";
 type TaskPayloads = {
   sendWebhook: string;
@@ -17,7 +15,6 @@ type TaskPayloads = {
   >;
   createCRMEvent: z.infer<typeof import("./tasks/crm/schema").createCRMEventSchema>;
   sendAnalyticsEvent: z.infer<typeof import("./tasks/analytics/schema").sendAnalyticsEventSchema>;
-  bookingAudit: BookingAuditTaskConsumerPayload;
   sendAwaitingPaymentEmail: z.infer<
     typeof import("./tasks/sendAwaitingPaymentEmail").sendAwaitingPaymentEmailPayloadSchema
   >;

@@ -34,10 +34,9 @@ ENV NEXT_PUBLIC_WEBAPP_URL=http://NEXT_PUBLIC_WEBAPP_URL_PLACEHOLDER \
   BUILD_STANDALONE=true \
   CSP_POLICY=$CSP_POLICY
 
-COPY package.json yarn.lock .yarnrc.yml playwright.config.ts turbo.json i18n.json ./
+COPY package.json yarn.lock .yarnrc.yml turbo.json i18n.json ./
 COPY .yarn ./.yarn
 COPY apps/web ./apps/web
-COPY apps/api/v2 ./apps/api/v2
 COPY packages ./packages
 
 RUN yarn config set httpTimeout 1200000

@@ -54,7 +54,9 @@ function generateFiles() {
 
   fs.readdirSync(`${APP_STORE_PATH}`).forEach((dir) => {
     if (dir === "ee" || dir === "templates") {
-      fs.readdirSync(path.join(APP_STORE_PATH, dir)).forEach((subDir) => {
+      const subDirPath = path.join(APP_STORE_PATH, dir);
+      if (!fs.existsSync(subDirPath)) return;
+      fs.readdirSync(subDirPath).forEach((subDir) => {
         if (fs.statSync(path.join(APP_STORE_PATH, dir, subDir)).isDirectory()) {
           if (getAppName(subDir)) {
             appDirs.push({

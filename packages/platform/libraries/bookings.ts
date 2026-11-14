@@ -22,8 +22,3 @@ export {
   bookingWithUserAndEventDetailsSelect,
 } from "@calcom/prisma/selects/booking";
 export { addGuestsHandler } from "@calcom/trpc/server/routers/viewer/bookings/addGuests.handler";
-
-// Booking audit was removed during EE cleanup — makeUserActor stub for API v2
-export function makeUserActor(_uuid: string): { type: string; actorId: string } {
-  return { type: "user", actorId: _uuid };
-}

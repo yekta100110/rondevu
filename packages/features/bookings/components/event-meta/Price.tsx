@@ -1,15 +1,7 @@
-import dynamic from "next/dynamic";
-
 import { formatPrice } from "@calcom/lib/currencyConversions";
+import { SatSymbol } from "@calcom/ui/components/icon";
 
 import type { EventPrice } from "@calcom/features/bookings/types";
-
-const AlbyPriceComponent = dynamic(
-  () => import("@calcom/app-store/alby/components/AlbyPriceComponent").then((m) => m.AlbyPriceComponent),
-  {
-    ssr: false,
-  }
-);
 
 export const Price = ({ price, currency, displayAlternateSymbol = true }: EventPrice) => {
   if (price === 0) return null;
@@ -19,10 +11,9 @@ export const Price = ({ price, currency, displayAlternateSymbol = true }: EventP
   return currency !== "BTC" ? (
     <>{formattedPrice}</>
   ) : (
-    <AlbyPriceComponent
-      displaySymbol={displayAlternateSymbol}
-      price={price}
-      formattedPrice={formattedPrice}
-    />
+    <div className="inline-flex items-center justify-center">
+      {displayAlternateSymbol && <SatSymbol className="h-4 w-4" />}
+      {formattedPrice}
+    </div>
   );
 };

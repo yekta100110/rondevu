@@ -20,7 +20,6 @@ const initialData: AppFlags = {
   "booking-calendar-view": false,
   "booking-email-sms-tasker": false,
   "bookings-v3": false,
-  "booking-audit": false,
   "hwm-seating": false,
   "signup-watchlist-review": false,
   "sink-shortener": false,

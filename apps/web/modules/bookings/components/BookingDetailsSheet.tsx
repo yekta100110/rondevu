@@ -21,7 +21,6 @@ import classNames from "@calcom/ui/classNames";
 import { Avatar } from "@calcom/ui/components/avatar";
 import { Badge } from "@calcom/ui/components/badge";
 import { Button } from "@calcom/ui/components/button";
-import { SegmentedControl } from "@calcom/ui/components/segmented-control";
 import {
   Sheet,
   SheetBody,
@@ -54,7 +53,6 @@ interface BookingDetailsSheetProps {
   userTimeFormat?: number;
   userId?: number;
   userEmail?: string;
-  bookingAuditEnabled?: boolean;
 }
 
 export function BookingDetailsSheet({
@@ -62,7 +60,6 @@ export function BookingDetailsSheet({
   userTimeFormat,
   userId,
   userEmail,
-  bookingAuditEnabled = false,
 }: BookingDetailsSheetProps) {
   const booking = useBookingDetailsSheetStore((state) => state.getSelectedBooking());
   const selectedBookingUid = useBookingDetailsSheetStore((state) => state.selectedBookingUid);
@@ -88,7 +85,6 @@ export function BookingDetailsSheet({
         userTimeFormat={userTimeFormat}
         userId={userId}
         userEmail={userEmail}
-        bookingAuditEnabled={bookingAuditEnabled}
       />
     </BookingActionsStoreProvider>
   );
@@ -100,38 +96,6 @@ interface BookingDetailsSheetInnerProps {
   userTimeFormat?: number;
   userId?: number;
   userEmail?: string;
-  bookingAuditEnabled?: boolean;
-}
-
-function useActiveSegment(bookingAuditEnabled: boolean) {
-  const [activeSegment, setActiveSegmentInStore] = useBookingDetailsSheetStore((state) => [
-    state.activeSegment,
-    state.setActiveSegment,
-  ]);
-
-  const getDerivedActiveSegment = ({
-    activeSegment,
-    bookingAuditEnabled,
-  }: {
-    activeSegment: "info" | "history" | null;
-    bookingAuditEnabled: boolean;
-  }) => {
-    if (!bookingAuditEnabled && activeSegment === "history") {
-      return "info";
-    }
-    return activeSegment ?? "info";
-  };
-
-  const derivedActiveSegment = getDerivedActiveSegment({
-    activeSegment,
-    bookingAuditEnabled,
-  });
-
-  const setDerivedActiveSegment = (segment: "info" | "history") => {
-    setActiveSegmentInStore(getDerivedActiveSegment({ activeSegment: segment, bookingAuditEnabled }));
-  };
-
-  return [derivedActiveSegment, setDerivedActiveSegment] as const;
 }
 
 function BookingDetailsSheetInner({
@@ -140,10 +104,8 @@ function BookingDetailsSheetInner({
   userTimeFormat,
   userId,
   userEmail,
-  bookingAuditEnabled = false,
 }: BookingDetailsSheetInnerProps) {
   const { t } = useLocale();
-  const [activeSegment, setActiveSegment] = useActiveSegment(bookingAuditEnabled);
 
   // Fetch additional booking details for reschedule information
   const { data: bookingDetails } = trpc.viewer.bookings.getBookingDetails.useQuery(
@@ -354,60 +316,43 @@ function BookingDetailsSheetInner({
               </SheetTitle>
             </div>
 
-            {bookingAuditEnabled && (
-              <SegmentedControl
-                data={[
-                  { value: "info", label: t("info") },
-                  { value: "history", label: t("history") },
-                ]}
-                value={activeSegment}
-                onChange={(value) => setActiveSegment(value)}
-              />
-            )}
+            <WhenSection
+              rescheduled={booking.rescheduled || false}
+              startTime={startTime}
+              endTime={endTime}
+              timeZone={userTimeZone}
+              previousBooking={bookingDetails?.previousBooking}
+            />
 
-            {activeSegment === "info" && (
-              <>
-                <WhenSection
-                  rescheduled={booking.rescheduled || false}
-                  startTime={startTime}
-                  endTime={endTime}
-                  timeZone={userTimeZone}
-                  previousBooking={bookingDetails?.previousBooking}
-                />
+            <OldRescheduledBookingInfo
+              booking={booking}
+              rescheduledToBooking={bookingDetails?.rescheduledToBooking}
+            />
 
-                <OldRescheduledBookingInfo
-                  booking={booking}
-                  rescheduledToBooking={bookingDetails?.rescheduledToBooking}
-                />
+            <NewRescheduledBookingInfo booking={booking} />
 
-                <NewRescheduledBookingInfo booking={booking} />
+            <CancelledBookingInfo booking={booking} />
 
-                <CancelledBookingInfo booking={booking} />
+            <WhoSection booking={booking} />
 
-                <WhoSection booking={booking} />
+            <WhereSection booking={booking} meta={bookingMetadata} />
 
-                <WhereSection booking={booking} meta={bookingMetadata} />
+            <RecurringInfoSection recurringInfo={recurringInfo} />
 
-                <RecurringInfoSection recurringInfo={recurringInfo} />
+            <AssignmentReasonSection booking={booking} />
 
-                <AssignmentReasonSection booking={booking} />
+            {booking.payment?.[0] && <PaymentSection booking={booking} payment={booking.payment[0]} />}
 
-                {booking.payment?.[0] && <PaymentSection booking={booking} payment={booking.payment[0]} />}
+            <SlotsSection booking={booking} />
 
-                <SlotsSection booking={booking} />
+            <AdditionalNotesSection booking={booking} />
 
-                <AdditionalNotesSection booking={booking} />
+            <CustomQuestionsSection
+              responses={responses}
+              bookingFields={booking.eventType?.bookingFields}
+            />
 
-                <CustomQuestionsSection
-                  responses={responses}
-                  bookingFields={booking.eventType?.bookingFields}
-                />
-
-                <TrackingSection tracking={bookingDetails?.tracking} />
-              </>
-            )}
-
-            {/* Booking history removed (enterprise) */}
+            <TrackingSection tracking={bookingDetails?.tracking} />
           </div>
         </SheetBody>
 

@@ -66,10 +66,6 @@ vi.mock("@calcom/lib/tracing/factory", () => ({
   },
 }));
 
-vi.mock("@calcom/features/booking-audit/lib/makeActor", () => ({
-  makeUserActor: vi.fn().mockReturnValue({ type: "user", id: "test-uuid" }),
-}));
-
 // Store for mock request body - will be set by tests
 let mockRequestBody: Record<string, unknown> = {};
 

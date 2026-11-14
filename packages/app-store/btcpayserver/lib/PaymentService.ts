@@ -99,9 +99,9 @@ class BTCPayServerPaymentService implements IAbstractPaymentService {
       const uid = uuidv4();
       const invoiceRequest = {
         metadata: {
-          orderId: `cal-booking-${bookingId}`,
+          orderId: `rondevu-booking-${bookingId}`,
           itemDesc: bookingTitle || `Booking #${bookingId}`,
-          appId: "cal.com",
+          appId: "rondevu",
           referenceId: uid,
           customerName: bookerName,
           customerEmail: bookerEmail,
@@ -115,7 +115,7 @@ class BTCPayServerPaymentService implements IAbstractPaymentService {
         },
         amount: convertFromSmallestToPresentableCurrencyUnit(payment.amount, payment.currency),
         currency: payment.currency === "BTC" ? "SATS" : payment.currency,
-        additionalSearchTerms: [`cal-booking-${bookingId}`, bookerName, bookerEmail],
+        additionalSearchTerms: [`rondevu-booking-${bookingId}`, bookerName, bookerEmail],
       };
       const invoiceResponse = (await this.BTCPayApiCall(
         `/api/v1/stores/${this.credentials.storeId}/invoices`,

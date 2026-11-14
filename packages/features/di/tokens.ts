@@ -1,6 +1,5 @@
 import { BOOKING_DI_TOKENS } from "@calcom/features/bookings/di/tokens";
 import { EVENT_TYPE_DI_TOKENS } from "@calcom/features/eventtypes/di/tokens";
-import { FEATURE_OPT_IN_DI_TOKENS } from "@calcom/features/feature-opt-in/di/tokens";
 import { FLAGS_DI_TOKENS } from "@calcom/features/flags/di/tokens";
 import { HASHED_LINK_DI_TOKENS } from "@calcom/features/hashedLink/di/tokens";
 import { OAUTH_DI_TOKENS } from "@calcom/features/oauth/di/tokens";
@@ -30,7 +29,6 @@ export const DI_TOKENS = {
   AVAILABLE_SLOTS_SERVICE: Symbol("AvailableSlotsService"),
   AVAILABLE_SLOTS_SERVICE_MODULE: Symbol("AvailableSlotsModule"),
   ...FLAGS_DI_TOKENS,
-  ...FEATURE_OPT_IN_DI_TOKENS,
   CHECK_BOOKING_LIMITS_SERVICE: Symbol("CheckBookingLimitsService"),
   CHECK_BOOKING_LIMITS_SERVICE_MODULE: Symbol("CheckBookingLimitsServiceModule"),
   CHECK_BOOKING_AND_DURATION_LIMITS_SERVICE: Symbol("CheckBookingAndDurationLimitsService"),

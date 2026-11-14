@@ -1,11 +1,21 @@
 const fs = require("node:fs");
 const path = require("node:path");
-const glob = require("glob");
 const crypto = require("node:crypto");
+
+const findStaticFiles = (pattern) => {
+  try {
+    const glob = require("glob");
+    return glob.sync(pattern, { nodir: true });
+  } catch {
+    return fs
+      .globSync(pattern)
+      .filter((filePath) => fs.statSync(filePath).isFile());
+  }
+};
 
 const copyAppStoreStatic = () => {
   // Get all static files from app-store packages
-  const staticFiles = glob.sync("../../packages/app-store/**/static/**/*", { nodir: true });
+  const staticFiles = findStaticFiles("../../packages/app-store/**/static/**/*");
 
   // Object to store icon SVG hashes
   const SVG_HASHES = {};

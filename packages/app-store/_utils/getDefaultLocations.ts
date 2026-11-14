@@ -32,7 +32,7 @@ export async function getDefaultLocations(user: User): Promise<EventTypeLocation
 
   const appKeys = await getAppKeysFromSlug("daily-video");
 
-  if (typeof appKeys.api_key === "string") {
+  if (typeof appKeys.api_key === "string" || Boolean(process.env.DAILY_API_KEY)) {
     return [{ type: DailyLocationType }];
   }
 

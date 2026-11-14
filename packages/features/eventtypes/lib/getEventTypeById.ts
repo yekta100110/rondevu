@@ -110,7 +110,6 @@ export const getEventTypeById = async ({
 
   newMetadata.apps = {
     ...apps,
-    giphy: getEventTypeAppData(eventTypeWithParsedMetadata, "giphy", true) ?? undefined,
   };
 
   const parsedMetaData = newMetadata;

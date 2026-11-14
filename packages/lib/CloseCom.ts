@@ -249,6 +249,25 @@ export default class CloseCom {
     if (!this.userId) throw new Error("No userId available for token refresh");
 
     try {
+      let clientId = process.env.CLOSECOM_CLIENT_ID ?? "";
+      let clientSecret = process.env.CLOSECOM_CLIENT_SECRET ?? "";
+
+      if (!clientId || !clientSecret) {
+        const app = await prisma.app.findUnique({
+          where: { slug: "closecom" },
+          select: { keys: true },
+        });
+        const appKeys = (
+          app?.keys && typeof app.keys === "object" && !Array.isArray(app.keys) ? app.keys : {}
+        ) as Record<string, unknown>;
+        if (!clientId && typeof appKeys.client_id === "string") {
+          clientId = appKeys.client_id;
+        }
+        if (!clientSecret && typeof appKeys.client_secret === "string") {
+          clientSecret = appKeys.client_secret;
+        }
+      }
+
       const response = await fetch("https://api.close.com/oauth2/token/", {
         method: "POST",
         headers: {
@@ -257,8 +276,8 @@ export default class CloseCom {
         body: new URLSearchParams({
           grant_type: "refresh_token",
           refresh_token: this.refresh_token,
-          client_id: process.env.CLOSECOM_CLIENT_ID ?? "",
-          client_secret: process.env.CLOSECOM_CLIENT_SECRET ?? "",
+          client_id: clientId,
+          client_secret: clientSecret,
         }),
       });
 

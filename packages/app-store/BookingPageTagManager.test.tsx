@@ -41,6 +41,7 @@ describe("BookingPageTagManager", () => {
         eventType={{
           metadata: {
             apps: {
+              // @ts-expect-error gtm app removed from generated schemas
               gtm: GTM_CONFIG,
             },
           },
@@ -66,6 +67,7 @@ describe("BookingPageTagManager", () => {
         eventType={{
           metadata: {
             apps: {
+              // @ts-expect-error gtm app removed from generated schemas
               gtm: GTM_CONFIG,
             },
           },

@@ -78,10 +78,6 @@ vi.mock("@calcom/lib/tracing/factory", () => ({
   },
 }));
 
-vi.mock("@calcom/features/booking-audit/lib/makeActor", () => ({
-  makeUserActor: vi.fn().mockReturnValue({ type: "user", id: "test-uuid" }),
-}));
-
 import prisma from "@calcom/prisma";
 // Import after mocks are set up
 import { GET } from "../route";

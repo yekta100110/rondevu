@@ -43,7 +43,6 @@ function getTestExclude() {
   const baseExclude = [
     "**/node_modules/**",
     "**/dist/**",
-    "apps/api/v2/**/*.spec.ts",
     "__checks__/**/*.spec.ts",
   ];
   if (isIntegrationMode || isTimezoneMode) {

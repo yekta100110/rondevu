@@ -411,23 +411,6 @@
     "@calcom/atoms#build-npm": {
       "outputs": ["dist/**", "globals.min.css"]
     },
-    "@calcom/api-v2#build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**"],
-      "env": [
-        "NODE_ENV",
-        "API_PORT",
-        "DATABASE_READ_URL",
-        "DATABASE_WRITE_URL",
-        "LOG_LEVEL",
-        "NEXTAUTH_SECRET",
-        "USE_POOL",
-        "LOGGER_BRIDGE_LOG_LEVEL",
-        "REDIS_URL",
-        "TRIGGER_VERSION"
-      ],
-      "inputs": ["$TURBO_DEFAULT$", ".env.production"]
-    },
     "@calcom/ai#build": {
       "env": [
         "FRONTEND_URL",

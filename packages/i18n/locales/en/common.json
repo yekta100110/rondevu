@@ -4790,5 +4790,6 @@
   "webhook_retry_failed": "Retry failed",
   "webhook_load_failed": "Unable to load deliveries",
   "webhook_attempts": "attempts",
+  "meeting_is_in_the_past": "This meeting is in the past.",
   "ADD_NEW_STRINGS_ABOVE_THIS_LINE_TO_PREVENT_MERGE_CONFLICTS": "↑↑↑↑↑↑↑↑↑↑↑↑↑ Add your new strings above here ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑"
 }

@@ -42,10 +42,7 @@ const Page = async ({ params }: PageProps) => {
   // No teams in cal.diy, so canReadOthersBookings is always false.
   const canReadOthersBookings = false;
 
-  const [bookingAuditEnabled, bookingsV3Enabled] = await Promise.all([
-    featuresRepository.checkIfUserHasFeature(userId, "booking-audit"),
-    featuresRepository.checkIfUserHasFeature(userId, "bookings-v3"),
-  ]);
+  const bookingsV3Enabled = await featuresRepository.checkIfUserHasFeature(userId, "bookings-v3");
 
   return (
     <ShellMainAppDir
@@ -60,7 +57,6 @@ const Page = async ({ params }: PageProps) => {
         userId={userId}
         permissions={{ canReadOthersBookings }}
         bookingsV3Enabled={bookingsV3Enabled}
-        bookingAuditEnabled={bookingAuditEnabled}
       />
     </ShellMainAppDir>
   );

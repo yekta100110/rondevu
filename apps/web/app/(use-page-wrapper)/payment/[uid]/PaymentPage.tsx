@@ -35,21 +35,6 @@ const PaypalPaymentComponent = dynamic(
   }
 );
 
-const AlbyPaymentComponent = dynamic(
-  () => import("@calcom/web/components/apps/alby/AlbyPaymentComponent").then((m) => m.AlbyPaymentComponent),
-  {
-    ssr: false,
-  }
-);
-
-const HitpayPaymentComponent = dynamic(
-  () =>
-    import("@calcom/web/components/apps/hitpay/HitpayPaymentComponent").then((m) => m.HitpayPaymentComponent),
-  {
-    ssr: false,
-  }
-);
-
 const BtcpayPaymentComponent = dynamic(
   () =>
     import("@calcom/web/components/apps/btcpayserver/BtcpayPaymentComponent").then(
@@ -161,12 +146,6 @@ const PaymentPage: FC<PaymentPageProps> = (props) => {
                   )}
                   {props.payment.appId === "paypal" && !props.payment.success && (
                     <PaypalPaymentComponent payment={props.payment} />
-                  )}
-                  {props.payment.appId === "alby" && !props.payment.success && (
-                    <AlbyPaymentComponent payment={props.payment} paymentPageProps={props} />
-                  )}
-                  {props.payment.appId === "hitpay" && !props.payment.success && (
-                    <HitpayPaymentComponent payment={props.payment} />
                   )}
                   {props.payment.appId === "btcpayserver" && !props.payment.success && (
                     <BtcpayPaymentComponent payment={props.payment} paymentPageProps={props} />

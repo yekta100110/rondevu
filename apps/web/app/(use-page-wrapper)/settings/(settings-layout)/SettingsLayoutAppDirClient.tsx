@@ -1,6 +1,5 @@
 "use client";
 
-import { HAS_ORG_OPT_IN_FEATURES } from "@calcom/features/feature-opt-in/config";
 import type { TeamFeatures } from "@calcom/features/flags/config";
 import { IS_CALCOM, WEBAPP_URL } from "@calcom/lib/constants";
 import { getPlaceholderAvatar } from "@calcom/lib/defaultAvatarImage";
@@ -175,15 +174,6 @@ const getTabs = (
           href: "/docs",
           trackingMetadata: { section: "organization", page: "api_docs" },
         },
-        ...(HAS_ORG_OPT_IN_FEATURES
-          ? [
-              {
-                name: "features",
-                href: "/settings/organizations/features",
-                trackingMetadata: { section: "organization", page: "features" },
-              },
-            ]
-          : []),
       ],
     },
     {

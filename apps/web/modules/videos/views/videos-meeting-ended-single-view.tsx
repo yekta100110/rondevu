@@ -33,7 +33,7 @@ export default function MeetingUnavailable(props: PageProps) {
                   </div>
                   <div className="mt-3 text-center sm:mt-5">
                     <h3 className="text-emphasis text-lg font-medium leading-6" id="modal-headline">
-                      This meeting is in the past.
+                      {t("meeting_is_in_the_past")}
                     </h3>
                   </div>
                   <div className="mt-4 border-b border-t py-4">

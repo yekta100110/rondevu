@@ -4790,5 +4790,6 @@
   "webhook_retry": "Yeniden dene",
   "webhook_retry_failed": "Yeniden gönderim başarısız",
   "webhook_load_failed": "Teslim kayıtları yüklenemedi",
-  "webhook_attempts": "deneme"
+  "webhook_attempts": "deneme",
+  "meeting_is_in_the_past": "Bu görüşme sona erdi."
 }

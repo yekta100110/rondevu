@@ -271,14 +271,7 @@ export default function Success(props: PageProps) {
     t,
   };
 
-  const giphyAppData = getEventTypeAppData(
-    {
-      ...eventType,
-      metadata: eventTypeMetaDataSchemaWithTypedApps.parse(eventType.metadata),
-    },
-    "giphy"
-  );
-  const giphyImage = giphyAppData?.thankYouPage;
+  const giphyImage: string | undefined = undefined;
   const isRoundRobin = eventType.schedulingType === SchedulingType.ROUND_ROBIN;
 
   const eventName = getEventName(eventNameObject, true);
