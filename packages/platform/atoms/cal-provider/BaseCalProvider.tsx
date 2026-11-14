@@ -5,13 +5,8 @@ import { useCallback } from "react";
 
 import type { API_VERSIONS_ENUM } from "@calcom/platform-constants";
 import { IconSprites } from "@calcom/ui/components/icon";
-import deTranslations from "@calcom/i18n/locales/de/common.json";
 import enTranslations from "@calcom/i18n/locales/en/common.json";
-import esTranslations from "@calcom/i18n/locales/es/common.json";
-import frTranslations from "@calcom/i18n/locales/fr/common.json";
-import itTranslations from "@calcom/i18n/locales/it/common.json";
-import nlTranslations from "@calcom/i18n/locales/nl/common.json";
-import ptBrTranslations from "@calcom/i18n/locales/pt-BR/common.json";
+import trTranslations from "@calcom/i18n/locales/tr/common.json";
 
 import { AtomsContext } from "../hooks/useAtomsContext";
 import { useMe } from "../hooks/useMe";
@@ -25,12 +20,7 @@ import type {
   translationKeys,
   CalProviderLanguagesType,
   enTranslationKeys,
-  frTranslationKeys,
-  ptBrTranslationKeys,
-  deTranslationKeys,
-  esTranslationKeys,
-  itTranslationKeys,
-  nlTranslationKeys,
+  trTranslationKeys,
   i18nProps,
 } from "./languages";
 import { EN } from "./languages";
@@ -231,18 +221,8 @@ function getTranslation(key: string, language: CalProviderLanguagesType) {
   switch (language) {
     case "en":
       return enTranslations[key as enTranslationKeys];
-    case "fr":
-      return frTranslations[key as frTranslationKeys];
-    case "pt-BR":
-      return ptBrTranslations[key as ptBrTranslationKeys];
-    case "de":
-      return deTranslations[key as deTranslationKeys];
-    case "es":
-      return esTranslations[key as esTranslationKeys];
-    case "it":
-      return itTranslations[key as itTranslationKeys];
-    case "nl":
-      return nlTranslations[key as nlTranslationKeys];
+    case "tr":
+      return trTranslations[key as trTranslationKeys];
     default:
       return enTranslations[key as enTranslationKeys];
   }
