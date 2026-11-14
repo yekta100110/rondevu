@@ -19,13 +19,20 @@ const querySchema = z.object({
 });
 
 export const generateMetadata = async ({ params }: { params: Promise<{ category: string }> }) => {
-  return await _generateMetadata(
+  const metadata = await _generateMetadata(
     (t) => t("installed_apps"),
     (t) => t("manage_your_connected_apps"),
     undefined,
     undefined,
     `/apps/installed/${(await params).category}`
   );
+  return {
+    ...metadata,
+    robots: {
+      index: false,
+      follow: false,
+    },
+  };
 };
 
 const InstalledAppsWrapper = async ({ params }: PageProps) => {

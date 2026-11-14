@@ -83,9 +83,12 @@ export function PlanBilgiView({ initialContact }: PlanBilgiViewProps = {}) {
     staleTime: 30000,
   });
 
-  const phone = contactConfig?.phone || initialContact?.phone || "0552 119 19 87";
+  const rawPhone = contactConfig?.phone || initialContact?.phone;
+  const phone = rawPhone && rawPhone !== "0850 000 00 00" ? rawPhone : "0552 119 19 87";
   const email = contactConfig?.email || initialContact?.email || "destek@rondevu.org";
-  const whatsapp = contactConfig?.whatsapp || initialContact?.whatsapp || "905521191987";
+  const rawWhatsapp = contactConfig?.whatsapp || initialContact?.whatsapp;
+  const whatsapp =
+    rawWhatsapp && rawWhatsapp !== "908500000000" ? rawWhatsapp : "905521191987";
 
   const cleanPhone = phone.replace(/[^\d+]/g, "");
   const cleanWhatsapp = whatsapp.replace(/[^\d]/g, "");
@@ -139,8 +142,9 @@ export function PlanBilgiView({ initialContact }: PlanBilgiViewProps = {}) {
                 Hesap Aktivasyonu
               </h1>
               <p className="mt-3 text-base text-subtle leading-relaxed">
-                rOndevu'da paket ayrımı veya özellik kısıtlaması yoktur; tüm gelişmiş araçlara eksiksiz
-                erişirsiniz. Hesabınızı hemen açıp profil linkinizi teslim edelim.
+                rOndevu; doktorlar, avukatlar, psikologlar ve bağımsız danışmanlar için komisyonsuz çalışan
+                çevrimiçi randevu ve takvim yönetim platformudur. Aylık ve yıllık planlarda tüm özellikler
+                kısıtlamasız sunulur; hesabınızı hemen açıp profil linkinizi teslim edelim.
               </p>
             </div>
 
@@ -167,7 +171,7 @@ export function PlanBilgiView({ initialContact }: PlanBilgiViewProps = {}) {
                 </li>
                 <li className="flex items-center gap-2">
                   <Check className="size-3.5 text-subtle shrink-0" />
-                  <span>SMS ve E-posta bildirimleri, OTP doğrulama koruması</span>
+                  <span>WhatsApp, SMS ve E-posta bildirimleri, OTP doğrulama koruması</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Check className="size-3.5 text-subtle shrink-0" />
@@ -247,10 +251,57 @@ export function PlanBilgiView({ initialContact }: PlanBilgiViewProps = {}) {
               </div>
             </section>
 
+            {/* Nasıl Çalışır ve Kısa SSS */}
+            <section
+              aria-labelledby="how-it-works-heading"
+              className="mt-8 space-y-5 border-subtle/80 border-t pt-6">
+              <div>
+                <h2 id="how-it-works-heading" className="font-semibold text-emphasis text-sm">
+                  Nasıl Çalışır?
+                </h2>
+                <ol className="mt-2.5 space-y-1.5 text-xs text-subtle leading-relaxed">
+                  <li>
+                    <span className="font-medium text-emphasis">1. İletişim ve Plan Seçimi:</span> Telefon,
+                    WhatsApp veya e-posta üzerinden aylık ya da yıllık plan tercihinizi iletin.
+                  </li>
+                  <li>
+                    <span className="font-medium text-emphasis">2. Hızlı Kurulum:</span> Kişisel randevu
+                    linkiniz, takvim bağlantınız ve isterseniz özel alan adınız (CNAME) aynı gün hazırlanır.
+                  </li>
+                  <li>
+                    <span className="font-medium text-emphasis">3. Komisyonsuz Kullanım:</span> Danışanlarınız
+                    SMS doğrulaması ile randevu alır, hatırlatmalar otomatik iletilir.
+                  </li>
+                </ol>
+              </div>
+
+              <div>
+                <h2 className="font-semibold text-emphasis text-sm">Kısa Sıkça Sorulan Sorular</h2>
+                <dl className="mt-2.5 space-y-3 text-xs">
+                  <div>
+                    <dt className="font-medium text-emphasis">
+                      Aylık ve yıllık paket arasında özellik farkı var mı?
+                    </dt>
+                    <dd className="mt-0.5 text-subtle leading-relaxed">
+                      Hayır. Özel alan adı (CNAME), SMS OTP ve takvim senkronizasyonu dahil tüm özellikler her
+                      iki pakette de eşittir; yıllık pakette 2 ay ücretsiz fiyat avantajı sunulur.
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="font-medium text-emphasis">Randevu başına komisyon alınıyor mu?</dt>
+                    <dd className="mt-0.5 text-subtle leading-relaxed">
+                      Hayır, sabit aylık (990 ₺) veya yıllık (9.900 ₺) plan dışında randevu başına komisyon
+                      yoktur.
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+            </section>
+
             {/* Alt Bilgi */}
             <div className="mt-8 flex items-center justify-between border-subtle/80 border-t pt-5 text-xs text-subtle">
               <span>Talebiniz hızla yanıtlanır.</span>
-              <Link href="/" className="font-medium text-emphasis hover:underline">
+              <Link href="/pricing" className="font-medium text-emphasis hover:underline">
                 ← Planlara geri dön
               </Link>
             </div>

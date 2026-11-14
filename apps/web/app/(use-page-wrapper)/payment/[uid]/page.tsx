@@ -49,13 +49,20 @@ export const generateMetadata = async ({ params, searchParams }: PageProps) => {
     buildLegacyCtx(await headers(), await cookies(), await params, await searchParams)
   );
   const eventName = props.booking.title;
-  return await _generateMetadata(
+  const metadata = await _generateMetadata(
     (t) => `${t("payment")} | ${eventName} | ${APP_NAME}`,
     () => "",
     undefined,
     undefined,
     `/payment/${(await params).uid}`
   );
+  return {
+    ...metadata,
+    robots: {
+      index: false,
+      follow: false,
+    },
+  };
 };
 
 const getData = withAppDirSsr<PaymentPageProps>(async () => ({

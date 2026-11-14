@@ -11,6 +11,10 @@ export const metadata: Metadata = {
   title: "rOndevu referral program - Earn money by sharing your link",
   description:
     "Earn 20% recurring commissions for a full year by referring others to rOndevu, while giving your referrals 20% off for 12 months. Share your link and start earning today!",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 // Export the appropriate component based on the feature flag

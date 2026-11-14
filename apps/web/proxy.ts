@@ -61,12 +61,22 @@ const isPagePathRequest = (url: URL) => {
   return !isNonPagePathPrefix.test(pathname) && !isFile.test(pathname);
 };
 
+const isEmbedRoute = (url: URL) => {
+  return url.pathname === "/embed" || url.pathname.endsWith("/embed");
+};
+
 const shouldEnforceCsp = (url: URL) => {
+  const pathname = url.pathname.replace(/\/+$/, "") || "/";
   return (
-    url.pathname === "/" ||
-    url.pathname === "/pricing" ||
-    url.pathname.startsWith("/auth/login") ||
-    url.pathname.startsWith("/login")
+    pathname === "/" ||
+    pathname === "/en" ||
+    pathname === "/pricing" ||
+    pathname === "/en/pricing" ||
+    pathname === "/plan-bilgi" ||
+    pathname === "/privacy" ||
+    pathname === "/tos" ||
+    pathname.startsWith("/auth/login") ||
+    pathname.startsWith("/login")
   );
 };
 
@@ -82,6 +92,7 @@ const proxy = async (req: NextRequest): Promise<NextResponse<unknown>> => {
   const url = req.nextUrl;
   const reqWithEnrichedHeaders = enrichRequestWithHeaders({ req });
   const requestHeaders = new Headers(reqWithEnrichedHeaders.headers);
+  requestHeaders.set("x-pathname", url.pathname);
 
   if (url.pathname.startsWith("/api/auth/signup")) {
     const isSignupDisabled = await safeGet<boolean>("isSignupDisabled");
@@ -119,7 +130,10 @@ const proxy = async (req: NextRequest): Promise<NextResponse<unknown>> => {
 
 const embeds = {
   addResponseHeaders: ({ url, res }: { url: URL; res: NextResponse }) => {
-    if (!url.pathname.endsWith("/embed")) {
+    if (!isEmbedRoute(url)) {
+      if (isPagePathRequest(url)) {
+        res.headers.set("X-Frame-Options", "DENY");
+      }
       return res;
     }
     const isCOEPEnabled = url.searchParams.get("flag.coep") === "true";
@@ -144,7 +158,11 @@ const contentSecurityPolicy = {
       res.headers.set("x-csp-status", "not-opted-in");
       return res;
     }
-    const cspHeader = getCspHeader({ shouldEnforceCsp: shouldEnforceCsp(req.nextUrl), nonce });
+    const cspHeader = getCspHeader({
+      shouldEnforceCsp: shouldEnforceCsp(req.nextUrl),
+      nonce,
+      isEmbed: isEmbedRoute(req.nextUrl),
+    });
     if (cspHeader) {
       res.headers.set(cspHeader.name, cspHeader.value);
     }

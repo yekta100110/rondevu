@@ -1,10 +1,26 @@
 "use client";
 
 import { APP_NAME } from "@calcom/lib/constants";
+import type { PlanContactConfig } from "@calcom/lib/planContactConfig";
+import { trpc } from "@calcom/trpc/react";
 import { Button } from "@calcom/ui/components/button";
-import { ArrowLeft, CheckCircle2, Database, Mail, Phone, ShieldCheck, UserCheck } from "lucide-react";
+import {
+  ArrowLeft,
+  CheckCircle2,
+  Cookie,
+  Database,
+  Globe,
+  Mail,
+  Phone,
+  Scale,
+  ShieldCheck,
+  UserCheck,
+} from "lucide-react";
 import Link from "next/link";
 import { BrandLogo } from "../home/components/BrandLogo";
+
+const DEFAULT_SUPPORT_EMAIL = "destek@rondevu.org";
+const DEFAULT_SUPPORT_PHONE = "0552 119 19 87";
 
 function LegalBackgroundGrid() {
   const rows = 8;
@@ -60,10 +76,6 @@ function LegalBackgroundGrid() {
   );
 }
 
-import process from "node:process";
-import type { PlanContactConfig } from "@calcom/lib/planContactConfig";
-import { trpc } from "@calcom/trpc/react";
-
 interface PrivacyViewProps {
   initialContact?: PlanContactConfig;
 }
@@ -74,13 +86,10 @@ export function PrivacyView({ initialContact }: PrivacyViewProps = {}) {
     staleTime: 30000,
   });
 
-  const email =
-    contactConfig?.email ||
-    initialContact?.email ||
-    process.env.NEXT_PUBLIC_SUPPORT_EMAIL ||
-    "destek@rondevu.org";
-  const phone = contactConfig?.phone || initialContact?.phone;
-  const cleanPhone = phone ? phone.replace(/[^\d+]/g, "") : "";
+  const email = contactConfig?.email || initialContact?.email || DEFAULT_SUPPORT_EMAIL;
+  const rawPhone = contactConfig?.phone || initialContact?.phone;
+  const phone = rawPhone && rawPhone !== "0850 000 00 00" ? rawPhone : DEFAULT_SUPPORT_PHONE;
+  const cleanPhone = phone.replace(/[^\d+]/g, "");
 
   return (
     <div className="relative min-h-screen bg-default text-emphasis selection:bg-brand-default selection:text-brand">
@@ -112,23 +121,44 @@ export function PrivacyView({ initialContact }: PrivacyViewProps = {}) {
         <div className="mb-10 text-center">
           <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-subtle bg-muted/30 px-3 py-1 font-medium text-subtle text-xs">
             <ShieldCheck className="h-3.5 w-3.5 text-emphasis" />
-            <span>Verileriniz hakkında</span>
+            <span>6698 Sayılı KVKK Kapsamında Aydınlatma Metni</span>
           </div>
           <h1 className="font-semibold text-3xl text-emphasis tracking-tight sm:text-4xl">
-            Gizlilik Politikası
+            Gizlilik Politikası ve KVKK Aydınlatma Metni
           </h1>
-          <p className="mt-2 text-sm text-subtle">Son güncelleme: 26 Ekim 2026</p>
+          <p className="mt-2 text-sm text-subtle">Son güncelleme: 14 Kasım 2026</p>
         </div>
 
         {/* Content Box */}
         <div className="space-y-8 rounded-2xl border border-subtle bg-default/90 p-6 shadow-sm backdrop-blur-sm sm:p-10">
-          {/* Section: Giriş */}
-          <section className="space-y-3 border-subtle border-b pb-6">
+          {/* Section: Giriş ve Veri Sorumlusu */}
+          <section className="space-y-4 border-subtle border-b pb-6">
             <p className="text-sm leading-relaxed text-subtle">
-              {APP_NAME}, hesap sahiplerinin randevu sayfaları oluşturmasına ve katılımcıların bu sayfalardan
-              randevu almasına yardımcı olur. Bu politika, hizmet kullanılırken hangi veri türlerinin
-              işlenebileceğini ve bunların hangi işlevlerde kullanıldığını genel olarak açıklar.
+              Bu metin, 6698 sayılı Kişisel Verilerin Korunması Kanunu (&ldquo;KVKK&rdquo;) uyarınca{" "}
+              <strong>{APP_NAME}</strong> (<code>https://rondevu.org</code>) üzerinden sunulan çevrimiçi
+              randevu ve takvim yönetimi hizmetleri kapsamında kişisel verilerin işlenme amaçlarını, hukuki
+              sebeplerini, aktarım koşullarını ve ilgili kişi haklarını açıklamak amacıyla hazırlanmıştır.
             </p>
+            <div className="rounded-xl border border-subtle bg-muted/20 p-4 text-xs leading-relaxed text-subtle">
+              <p className="font-medium text-emphasis">Veri Sorumlusu İletişim Kanalları</p>
+              <p className="mt-1">
+                Platform: {APP_NAME} (<code>https://rondevu.org</code>)
+              </p>
+              <div className="mt-2.5 flex flex-wrap items-center gap-x-5 gap-y-2">
+                <a href={`mailto:${email}`} className="inline-flex items-center gap-1.5 text-emphasis hover:underline">
+                  <Mail className="h-3.5 w-3.5" />
+                  <span>{email}</span>
+                </a>
+                <a href={`tel:${cleanPhone}`} className="inline-flex items-center gap-1.5 text-emphasis hover:underline">
+                  <Phone className="h-3.5 w-3.5" />
+                  <span>{phone}</span>
+                </a>
+                <Link href="/plan-bilgi" className="inline-flex items-center gap-1.5 text-emphasis hover:underline">
+                  <Globe className="h-3.5 w-3.5" />
+                  <span>https://rondevu.org/plan-bilgi</span>
+                </Link>
+              </div>
+            </div>
           </section>
 
           {/* Section 1: Rol Ayrımı */}
@@ -136,99 +166,178 @@ export function PrivacyView({ initialContact }: PrivacyViewProps = {}) {
             <div className="flex items-center gap-2">
               <UserCheck className="h-5 w-5 text-emphasis" />
               <h2 className="font-semibold text-lg text-emphasis sm:text-xl">
-                1. Hesap ve Randevu Bilgileri
+                1. Hesap Sahibi ve Katılımcı Rolleri
               </h2>
             </div>
             <p className="text-sm leading-relaxed text-subtle">
-              İşlenen bilgiler, hesap sahibinin kullandığı özelliklere ve randevu formunda istediği alanlara
-              göre değişebilir.
+              İşlenen kişisel veriler, hesap sahibinin etkinleştirdiği özelliklere ve randevu formunda talep
+              ettiği alanlara göre değişiklik gösterebilir.
             </p>
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="rounded-xl border border-subtle bg-muted/20 p-4">
-                <h3 className="font-medium text-emphasis text-sm">
-                  Hesap sahipleri
-                </h3>
+                <h3 className="font-medium text-emphasis text-sm">Hesap sahipleri (Uzmanlar & İşletmeler)</h3>
                 <p className="mt-2 text-xs leading-relaxed text-subtle">
-                  Hesap oluşturma ve yönetme sırasında ad, e-posta adresi, oturum bilgileri, müsaitlik
-                  tercihleri ve bağlı takvim ayarları işlenebilir.
+                  Hesap oluşturma, abonelik aktivasyonu ve takvim yönetimi sırasında ad, soyad, e-posta
+                  adresi, telefon numarası, oturum bilgileri, müsaitlik tercihleri ve bağlı takvim ayarları
+                  işlenir.
                 </p>
               </div>
               <div className="rounded-xl border border-subtle bg-muted/20 p-4">
-                <h3 className="font-medium text-emphasis text-sm">
-                  Randevu alan kişiler
-                </h3>
+                <h3 className="font-medium text-emphasis text-sm">Randevu alan kişiler (Danışanlar)</h3>
                 <p className="mt-2 text-xs leading-relaxed text-subtle">
-                  Randevu sırasında verilen ad, iletişim bilgileri, seçilen zaman ve form yanıtları,
-                  randevunun oluşturulması ve yönetilmesi için kullanılır. Hesap sahibi, kendi randevu
-                  sayfasında istediği ek bilgilerin amacı hakkında katılımcıları bilgilendirmelidir.
+                  Randevu oluşturma sırasında paylaşılan ad, e-posta, telefon numarası, seçilen zaman dilimi
+                  ve form yanıtları randevunun kurulması ve bildirimlerin iletilmesi için işlenir. Hesap
+                  sahibi, kendi randevu sayfasında istediği ek alanlara ilişkin kendi aydınlatma
+                  yükümlülüğünden sorumludur.
                 </p>
               </div>
             </div>
           </section>
 
-          {/* Section 2: Toplanan Veriler */}
+          {/* Section 2: İşlenen Kişisel Veri Kategorileri */}
           <section className="space-y-4">
             <div className="flex items-center gap-2">
               <Database className="h-5 w-5 text-emphasis" />
               <h2 className="font-semibold text-lg text-emphasis sm:text-xl">
-                2. Toplanan Kişisel Veriler ve İşlenme Amaçları
+                2. İşlenen Kişisel Veri Kategorileri ve Amaçları
               </h2>
             </div>
             <ul className="space-y-3 text-sm text-subtle">
               <li className="flex items-start gap-2.5">
                 <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emphasis" />
                 <span>
-                  <strong>Telefon numarası:</strong> Etkinleştirilmişse SMS doğrulaması, randevu bildirimi ve
-                  hatırlatma göndermek için kullanılır.
+                  <strong>Kimlik ve İletişim Bilgileri (Ad, soyad, e-posta, telefon numarası):</strong>{" "}
+                  Hesap açılışı ve doğrulaması, katılımcının randevu sahibine bildirilmesi, SMS OTP
+                  doğrulaması (etkinleştirildiğinde), randevu onayı ve hatırlatma iletilerinin gönderilmesi
+                  amacıyla işlenir.
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
                 <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emphasis" />
                 <span>
-                  <strong>Ad ve e-posta:</strong> Katılımcıyı randevu sahibine göstermek ve randevuyla ilgili
-                  e-posta bildirimlerini iletmek için kullanılır.
+                  <strong>Randevu ve İşlem Bilgileri (Randevu zamanı, müsaitlik, form yanıtları):</strong>{" "}
+                  Uygun zaman aralıklarının hesaplanması, randevu oluşturma, yeniden planlama veya iptal
+                  süreçlerinin yürütülmesi ve bağlı takvimlerle eşitleme yapılması için işlenir.
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
                 <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emphasis" />
                 <span>
-                  <strong>Randevu zamanı ve form yanıtları:</strong> Müsaitliği hesaplamak, rezervasyonu
-                  yönetmek ve bağlı takvimlerle eşitlemek için kullanılabilir.
-                </span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emphasis" />
-                <span>
-                  <strong>Teknik kayıtlar:</strong> IP adresi, tarayıcı bilgisi ve erişim zamanı gibi veriler
-                  hizmetin işletilmesi, hata incelemesi ve kötüye kullanımı önlemek için işlenebilir.
+                  <strong>İşlem Güvenliği ve Teknik Kayıtlar (IP adresi, tarayıcı/cihaz bilgisi, erişim kayıtları):</strong>{" "}
+                  Hizmetin kesintisiz işletilmesi, oturum güvenliğinin sağlanması, hata incelemesi ve
+                  kötüye kullanım ile yetkisiz erişim girişimlerinin önlenmesi amacıyla işlenir.
                 </span>
               </li>
             </ul>
           </section>
 
-          {/* Section 3: Alt İşleyenler */}
+          {/* Section 3: Hukuki Sebepler (KVKK m.5) */}
+          <section className="space-y-4">
+            <div className="flex items-center gap-2">
+              <Scale className="h-5 w-5 text-emphasis" />
+              <h2 className="font-semibold text-lg text-emphasis sm:text-xl">
+                3. Kişisel Verilerin İşlenme Hukuki Sebepleri (KVKK m. 5)
+              </h2>
+            </div>
+            <p className="text-sm leading-relaxed text-subtle">
+              Kişisel verileriniz, KVKK&apos;nın 5. maddesinin 2. fıkrasında düzenlenen aşağıdaki hukuki
+              sebeplere dayanılarak otomatik veya kısmen otomatik yollarla işlenir:
+            </p>
+            <ul className="space-y-2.5 text-sm text-subtle">
+              <li className="flex items-start gap-2.5">
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emphasis" />
+                <span>
+                  <strong>Sözleşmenin kurulması ve ifası (KVKK m. 5/2-c):</strong> Hesap aktivasyonu,
+                  randevu sayfasının işletilmesi, randevu kaydının oluşturulması ve bildirimlerin
+                  iletilmesi.
+                </span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emphasis" />
+                <span>
+                  <strong>Hukuki yükümlülüğün yerine getirilmesi (KVKK m. 5/2-ç):</strong> Yasal
+                  düzenlemelerden kaynaklanan kayıt tutma ve yetkili kurum taleplerinin karşılanması.
+                </span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emphasis" />
+                <span>
+                  <strong>Bir hakkın tesisi, kullanılması veya korunması (KVKK m. 5/2-e):</strong>{" "}
+                  Randevu ve işlem kayıtlarına ilişkin olası uyuşmazlıklarda doğrulama sağlanması.
+                </span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emphasis" />
+                <span>
+                  <strong>Meşru menfaat (KVKK m. 5/2-f):</strong> Temel hak ve özgürlüklerinize zarar
+                  vermemek kaydıyla sistem güvenliği, anti-spam/OTP suistimal koruması ve hata giderme
+                  çalışmaları.
+                </span>
+              </li>
+            </ul>
+            <p className="text-xs leading-relaxed text-subtle">
+              Yasal olarak açık rıza gerektiren isteğe bağlı entegrasyonlar veya özel tercihler söz konusu
+              olduğunda verileriniz KVKK m. 5/1 kapsamında açık rızanıza dayalı olarak işlenir.
+            </p>
+          </section>
+
+          {/* Section 4: Çerezler ve Oturum Kullanımı */}
+          <section className="space-y-4">
+            <div className="flex items-center gap-2">
+              <Cookie className="h-5 w-5 text-emphasis" />
+              <h2 className="font-semibold text-lg text-emphasis sm:text-xl">
+                4. Çerezler (Cookies) ve Oturum Kullanımı
+              </h2>
+            </div>
+            <p className="text-sm leading-relaxed text-subtle">
+              {APP_NAME}, hizmetin temel işlevlerini yürütebilmek için yalnızca gerekli oturum ve tercih
+              çerezlerinden yararlanır. Üçüncü taraf reklam ağı veya davranışsal hedefleme çerezleri
+              kullanılmaz.
+            </p>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded-xl border border-subtle bg-muted/20 p-4">
+                <h3 className="font-medium text-emphasis text-sm">Zorunlu Oturum ve Güvenlik Çerezleri</h3>
+                <p className="mt-2 text-xs leading-relaxed text-subtle">
+                  Kullanıcı oturumunun sürdürülmesi, kimlik doğrulama güvenliği, CSRF koruması ile
+                  Cloudflare ağ güvenliği/bot koruma kontrolleri için kullanılır.
+                </p>
+              </div>
+              <div className="rounded-xl border border-subtle bg-muted/20 p-4">
+                <h3 className="font-medium text-emphasis text-sm">İşlevsel Tercih Çerezleri</h3>
+                <p className="mt-2 text-xs leading-relaxed text-subtle">
+                  Saat dilimi, arayüz dili ve tema tercihi (açık/koyu mod) gibi kullanıcı ayarlarını
+                  hatırlamak amacıyla kullanılır. Tarayıcı ayarlarınız üzerinden çerezleri yönetebilir
+                  veya silebilirsiniz.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Section 5: Bağlı Hizmetler */}
           <section className="space-y-4">
             <div className="flex items-center gap-2">
               <ShieldCheck className="h-5 w-5 text-emphasis" />
               <h2 className="font-semibold text-lg text-emphasis sm:text-xl">
-                3. Bağlı Hizmetler
+                5. Bağlı Hizmetler ve Veri Aktarımı
               </h2>
             </div>
             <p className="text-sm leading-relaxed text-subtle">
-              Kullanılan özelliklere göre bazı bilgiler, ilgili işlevi sağlayan hizmetlere iletilebilir:
+              Kişisel verileriniz üçüncü kişilere satılmaz. Yalnızca kullanılan özelliklerin çalışabilmesi
+              için ilgili teknik altyapı ve iletişim sağlayıcılarıyla gereken asgari düzeyde paylaşım
+              yapılabilir:
             </p>
             <div className="space-y-3">
               <div className="rounded-xl border border-subtle p-4">
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-emphasis text-sm">SMS sağlayıcısı</span>
+                  <span className="font-semibold text-emphasis text-sm">SMS / OTP Sağlayıcısı</span>
                   <span className="rounded bg-muted/40 px-2 py-0.5 text-xs text-subtle">
                     SMS & OTP Servisi
                   </span>
                 </div>
                 <p className="mt-2 text-xs leading-relaxed text-subtle">
-                  SMS doğrulaması veya hatırlatması etkinse telefon numarası ve mesajın gönderilmesi için
-                  gereken bilgiler SMS sağlayıcısına iletilebilir. Kullanılan sağlayıcı yapılandırmaya
-                  bağlıdır.
+                  SMS doğrulaması veya randevu hatırlatması etkinleştirildiğinde telefon numarası ve
+                  iletim için gereken mesaj bilgisi yalnızca gönderimin gerçekleştirilmesi amacıyla SMS
+                  sağlayıcısına iletilir.
                 </p>
               </div>
 
@@ -240,70 +349,92 @@ export function PrivacyView({ initialContact }: PrivacyViewProps = {}) {
                   </span>
                 </div>
                 <p className="mt-2 text-xs leading-relaxed text-subtle">
-                  Web trafiği ve alan adı hizmetleri için kullanılabilir. Ayrıca hesap sahibi bir takvim
-                  veya görüşme hizmeti bağlarsa ilgili randevu bilgileri seçilen hizmetle paylaşılabilir.
+                  Web trafiği güvenliği, DDoS/bot koruması ve alan adı yönlendirme hizmetleri kapsamında
+                  teknik erişim verileri işlenebilir.
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-subtle p-4">
+                <div className="flex items-center justify-between">
+                  <span className="font-semibold text-emphasis text-sm">Takvim ve Görüşme Entegrasyonları</span>
+                  <span className="rounded bg-muted/40 px-2 py-0.5 text-xs text-subtle">
+                    Kullanıcı Tercihine Bağlı
+                  </span>
+                </div>
+                <p className="mt-2 text-xs leading-relaxed text-subtle">
+                  Hesap sahibi Google Takvim veya çevrimiçi görüşme servisi bağlarsa randevu zamanı ve
+                  ilgili toplantı detayları yalnızca yetkilendirilen entegrasyonla eşitlenir.
                 </p>
               </div>
             </div>
           </section>
 
-          {/* Section 4: Veri Saklama ve Haklar */}
+          {/* Section 6: Veri Saklama ve KVKK m.11 Hakları */}
           <section className="space-y-4">
             <h2 className="font-semibold text-lg text-emphasis sm:text-xl">
-              4. Saklama ve Başvurular
+              6. Saklama Süresi ve KVKK Madde 11 Kapsamındaki Haklarınız
             </h2>
             <p className="text-sm leading-relaxed text-subtle">
-              Verilerin saklanması, hesabın ve randevuların yönetimi ile geçerli yasal yükümlülüklere
-              bağlıdır. Size ait veriler hakkında aşağıdaki konularda başvuru yapabilirsiniz:
+              Kişisel verileriniz, hizmet ilişkisinin devamı boyunca ve ilgili mevzuatta öngörülen saklama
+              veya zamanaşımı süreleri kadar muhafaza edilir; işleme amacının ve yasal sürelerin sona
+              ermesinin ardından silinir, yok edilir veya anonim hale getirilir. KVKK&apos;nın 11. maddesi
+              uyarınca aşağıdaki haklara sahipsiniz:
             </p>
             <ul className="list-inside list-disc space-y-1.5 text-xs text-subtle">
-              <li>Verilerinizin işlenip işlenmediğini öğrenme,</li>
-              <li>İşlenmişse buna ilişkin bilgi talep etme ve kopyasını alma,</li>
-              <li>Eksik veya yanlış işlenmişse düzeltilmesini isteme,</li>
-              <li>
-                Mevzuat şartları çerçevesinde verilerinizin silinmesini veya yok edilmesini talep etme
-                hakkınız bulunmaktadır.
-              </li>
+              <li>Kişisel verilerinizin işlenip işlenmediğini öğrenme,</li>
+              <li>Kişisel verileriniz işlenmişse buna ilişkin bilgi talep etme,</li>
+              <li>Kişisel verilerinizin işlenme amacını ve bunların amacına uygun kullanılıp kullanılmadığını öğrenme,</li>
+              <li>Yurt içinde veya yurt dışında kişisel verilerinizin aktarıldığı üçüncü kişileri bilme,</li>
+              <li>Eksik veya yanlış işlenmiş olması hâlinde bunların düzeltilmesini isteme,</li>
+              <li>KVKK m. 7 şartları çerçevesinde kişisel verilerinizin silinmesini veya yok edilmesini isteme,</li>
+              <li>Düzeltme, silme veya yok etme işlemlerinin aktarılan üçüncü kişilere bildirilmesini isteme,</li>
+              <li>Münhasıran otomatik sistemler vasıtasıyla analiz edilmesi suretiyle aleyhinize bir sonucun ortaya çıkmasına itiraz etme ve kanuna aykırı işleme nedeniyle zararın giderilmesini talep etme.</li>
             </ul>
             <div className="mt-4 rounded-xl border border-subtle bg-muted/20 p-4">
-              <p className="text-xs text-subtle">
-                <strong>İletişim:</strong> Hesap veya randevu verileriyle ilgili erişim, düzeltme ve silme
-                taleplerinizi aşağıdaki kanallardan iletebilirsiniz. Bir randevu formuna verilen bilgiler
-                için randevu sahibine de başvurabilirsiniz.
+              <p className="text-xs leading-relaxed text-subtle">
+                <strong>Başvuru Kanalları:</strong> KVKK m. 11 kapsamındaki taleplerinizi ve randevu
+                verilerinize ilişkin başvurularınızı aşağıdaki kanallar üzerinden bize iletebilirsiniz.
+                Doğrudan hesap sahibinin randevu formunda talep ettiği özel bilgiler için ilgili randevu
+                sahibine de başvurabilirsiniz.
               </p>
-              <div className="mt-3 flex flex-wrap gap-4 text-xs">
-                {email && (
-                  <a
-                    href={`mailto:${email}`}
-                    className="flex items-center gap-1.5 text-emphasis hover:underline">
-                    <Mail className="h-3.5 w-3.5" />
-                    <span>{email}</span>
-                  </a>
-                )}
-                {phone && (
-                  <a
-                    href={`tel:${cleanPhone}`}
-                    className="flex items-center gap-1.5 text-emphasis hover:underline">
-                    <Phone className="h-3.5 w-3.5" />
-                    <span>{phone}</span>
-                  </a>
-                )}
+              <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-xs">
+                <a
+                  href={`mailto:${email}`}
+                  className="flex items-center gap-1.5 text-emphasis hover:underline">
+                  <Mail className="h-3.5 w-3.5" />
+                  <span>{email}</span>
+                </a>
+                <a
+                  href={`tel:${cleanPhone}`}
+                  className="flex items-center gap-1.5 text-emphasis hover:underline">
+                  <Phone className="h-3.5 w-3.5" />
+                  <span>{phone}</span>
+                </a>
+                <Link
+                  href="/plan-bilgi"
+                  className="flex items-center gap-1.5 text-emphasis hover:underline">
+                  <Globe className="h-3.5 w-3.5" />
+                  <span>https://rondevu.org/plan-bilgi</span>
+                </Link>
               </div>
             </div>
           </section>
         </div>
 
         {/* Footer Navigation */}
-        <div className="mt-8 flex items-center justify-between text-xs text-subtle">
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-4 text-xs text-subtle">
           <span>
             © {new Date().getFullYear()} {APP_NAME}. Tüm hakları saklıdır.
           </span>
-          <div className="flex gap-4">
+          <div className="flex flex-wrap gap-4">
+            <Link href="/pricing" className="hover:text-emphasis hover:underline">
+              Fiyatlandırma
+            </Link>
             <Link href="/tos" className="hover:text-emphasis hover:underline">
               Kullanım Koşulları
             </Link>
             <Link href="/plan-bilgi" className="hover:text-emphasis hover:underline">
-              İletişim & Destek
+              İletişim & Aktivasyon
             </Link>
           </div>
         </div>

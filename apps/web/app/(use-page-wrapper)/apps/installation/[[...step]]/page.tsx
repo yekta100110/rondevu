@@ -12,13 +12,20 @@ import Page from "~/apps/installation/[[...step]]/step-view";
 export const generateMetadata = async ({ params }: PageProps) => {
   const stepParam = (await params).step;
   const step = stepParam && Array.isArray(stepParam) ? stepParam.join("/") : "";
-  return await _generateMetadata(
+  const metadata = await _generateMetadata(
     (t) => t("app_installation"),
     () => "",
     undefined,
     undefined,
     `/apps/installation${step ? `/${step}` : ""}`
   );
+  return {
+    ...metadata,
+    robots: {
+      index: false,
+      follow: false,
+    },
+  };
 };
 
 const getData = withAppDirSsr<OnboardingPageProps>(getServerSideProps);

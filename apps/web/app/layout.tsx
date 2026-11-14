@@ -1,4 +1,5 @@
 import { getLocale } from "@calcom/features/auth/lib/getLocale";
+import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
 import { loadTranslations } from "@calcom/i18n/server";
 import { IconSprites } from "@calcom/ui/components/icon";
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
@@ -26,15 +27,13 @@ const calFont = localFont({
   src: "../fonts/CalSans-SemiBold.woff2",
   variable: "--font-cal",
   preload: true,
-  display: "block",
+  display: "swap",
   weight: "600",
 });
 
 export const viewport = {
   width: "device-width",
   initialScale: 1.0,
-  maximumScale: 1.0,
-  userScalable: false,
   viewportFit: "cover",
   themeColor: [
     {
@@ -79,17 +78,30 @@ export const metadata = {
     creator: "@rondevu",
     card: "summary_large_image",
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+};
+
+const TURKISH_MARKETING_PATHS = new Set(["/", "/pricing", "/plan-bilgi", "/privacy", "/tos"]);
+
+const resolveRouteLocale = async (h: Awaited<ReturnType<typeof headers>>): Promise<string> => {
+  const rawPathname = h.get("x-pathname");
+  const normalizedPathname = rawPathname ? rawPathname.replace(/\/+$/, "") || "/" : null;
+
+  if (normalizedPathname === "/en" || normalizedPathname?.startsWith("/en/")) {
+    return "en";
+  }
+
+  if (normalizedPathname && TURKISH_MARKETING_PATHS.has(normalizedPathname)) {
+    return "tr";
+  }
+
+  return (await getLocale(buildLegacyRequest(h, await cookies()))) ?? "tr";
 };
 
 const getInitialProps = async () => {
   const h = await headers();
   const isEmbed = h.get("x-isEmbed") === "true";
   const embedColorScheme = h.get("x-embedColorScheme");
-  const newLocale = (await getLocale(buildLegacyRequest(await headers(), await cookies()))) ?? "tr";
+  const newLocale = await resolveRouteLocale(h);
   const direction = dir(newLocale) ?? "ltr";
 
   return {
@@ -108,13 +120,20 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   const { locale, direction, isEmbed, embedColorScheme } = await getInitialProps();
 
+  let isLoggedIn = false;
+  try {
+    const session = await getServerSession({ req: buildLegacyRequest(h, await cookies()) });
+    isLoggedIn = !!session?.user?.id;
+  } catch {
+    isLoggedIn = false;
+  }
+
   const ns = "common";
   const translations = await loadTranslations(locale, ns);
 
   return (
     <html
-      className={classNames("notranslate", interFont.variable, calFont.variable, "bg-white dark:bg-[#141414]")}
-      translate="no"
+      className={classNames(interFont.variable, calFont.variable, "bg-white dark:bg-[#141414]")}
       lang={locale}
       dir={direction}
       style={embedColorScheme ? { colorScheme: embedColorScheme as string } : undefined}
@@ -134,7 +153,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             __html: `(function() {
               try {
                 var path = window.location.pathname.replace(/\/$/, "") || "/";
-                var isMarketingPage = path === "/" || path === "/pricing";
+                var isMarketingPage =
+                  path === "/" || path === "/en" || path === "/pricing" || path === "/en/pricing";
                 var stored = isMarketingPage ? null : localStorage.getItem("app-theme");
                 var isDark = false;
                 if (stored === "dark") {
@@ -186,10 +206,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               }
         }>
         <IconSprites />
-        <SpeculationRules
-          // URLs In Navigation
-          prerenderPathsOnHover={["/event-types", "/availability", "/bookings/upcoming", "/teams", "/apps"]}
-        />
+        {isLoggedIn && (
+          <SpeculationRules
+            // URLs In Navigation
+            prerenderPathsOnHover={["/event-types", "/availability", "/bookings/upcoming", "/teams", "/apps"]}
+          />
+        )}
 
         <Providers isEmbed={isEmbed} nonce={nonce} country={country}>
           <AppRouterI18nProvider translations={translations} locale={locale} ns={ns}>

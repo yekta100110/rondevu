@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { withAppDirSsr } from "app/WithAppDirSsr";
 import type { PageProps as ServerPageProps } from "app/_types";
 import { cookies, headers } from "next/headers";
@@ -11,6 +12,13 @@ import { getServerSideProps } from "@server/lib/auth/signin/getServerSideProps";
 
 import SignIn from "~/auth/signin-view";
 import type { PageProps as ClientPageProps } from "~/auth/signin-view";
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 const getData = withAppDirSsr<ClientPageProps>(getServerSideProps);
 const ServerPage = async ({ params, searchParams }: ServerPageProps) => {

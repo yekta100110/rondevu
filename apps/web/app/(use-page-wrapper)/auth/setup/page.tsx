@@ -13,13 +13,20 @@ import Setup from "~/auth/setup-view";
 import type { PageProps as ClientPageProps } from "~/auth/setup-view";
 
 export const generateMetadata = async () => {
-  return await _generateMetadata(
+  const metadata = await _generateMetadata(
     (t) => t("setup"),
     (t) => t("setup_description"),
     undefined,
     undefined,
     "/auth/setup"
   );
+  return {
+    ...metadata,
+    robots: {
+      index: false,
+      follow: false,
+    },
+  };
 };
 
 const getData = withAppDirSsr<ClientPageProps>(getServerSideProps);

@@ -1,6 +1,8 @@
 "use client";
 
 import { APP_NAME } from "@calcom/lib/constants";
+import type { PlanContactConfig } from "@calcom/lib/planContactConfig";
+import { trpc } from "@calcom/trpc/react";
 import { Button } from "@calcom/ui/components/button";
 import {
   AlertTriangle,
@@ -8,6 +10,7 @@ import {
   Ban,
   CheckCircle2,
   FileText,
+  Globe,
   Layers,
   Mail,
   Phone,
@@ -15,6 +18,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { BrandLogo } from "../home/components/BrandLogo";
+
+const DEFAULT_SUPPORT_EMAIL = "destek@rondevu.org";
+const DEFAULT_SUPPORT_PHONE = "0552 119 19 87";
 
 function LegalBackgroundGrid() {
   const rows = 8;
@@ -70,10 +76,6 @@ function LegalBackgroundGrid() {
   );
 }
 
-import process from "node:process";
-import type { PlanContactConfig } from "@calcom/lib/planContactConfig";
-import { trpc } from "@calcom/trpc/react";
-
 interface TosViewProps {
   initialContact?: PlanContactConfig;
 }
@@ -84,13 +86,10 @@ export function TosView({ initialContact }: TosViewProps = {}) {
     staleTime: 30000,
   });
 
-  const email =
-    contactConfig?.email ||
-    initialContact?.email ||
-    process.env.NEXT_PUBLIC_SUPPORT_EMAIL ||
-    "destek@rondevu.org";
-  const phone = contactConfig?.phone || initialContact?.phone;
-  const cleanPhone = phone ? phone.replace(/[^\d+]/g, "") : "";
+  const email = contactConfig?.email || initialContact?.email || DEFAULT_SUPPORT_EMAIL;
+  const rawPhone = contactConfig?.phone || initialContact?.phone;
+  const phone = rawPhone && rawPhone !== "0850 000 00 00" ? rawPhone : DEFAULT_SUPPORT_PHONE;
+  const cleanPhone = phone.replace(/[^\d+]/g, "");
 
   return (
     <div className="relative min-h-screen bg-default text-emphasis selection:bg-brand-default selection:text-brand">
@@ -127,7 +126,7 @@ export function TosView({ initialContact }: TosViewProps = {}) {
           <h1 className="font-semibold text-3xl text-emphasis tracking-tight sm:text-4xl">
             Kullanım Koşulları
           </h1>
-          <p className="mt-2 text-sm text-subtle">Son güncelleme: 26 Ekim 2026</p>
+          <p className="mt-2 text-sm text-subtle">Son güncelleme: 14 Kasım 2026</p>
         </div>
 
         {/* Content Box */}
@@ -135,9 +134,10 @@ export function TosView({ initialContact }: TosViewProps = {}) {
           {/* Giriş */}
           <section className="space-y-3 border-subtle border-b pb-6">
             <p className="text-sm leading-relaxed text-subtle">
-              Bu koşullar, {APP_NAME} üzerinden hesap açılması, randevu sayfası oluşturulması ve randevu
-              alınmasıyla ilgili temel kullanım kurallarını açıklar. Hesap sahipleri, kendi randevu
-              sayfalarındaki içerikten ve sundukları hizmetlerden sorumludur.
+              Bu koşullar, <strong>{APP_NAME}</strong> (<code>https://rondevu.org</code>) üzerinden hesap
+              açılması, randevu sayfası oluşturulması ve randevu alınmasıyla ilgili temel kullanım
+              kurallarını açıklar. Hesap sahipleri, kendi randevu sayfalarındaki içerikten, hesap erişim
+              güvenliğinden ve sundukları hizmetlerden sorumludur.
             </p>
           </section>
 
@@ -146,13 +146,22 @@ export function TosView({ initialContact }: TosViewProps = {}) {
             <div className="flex items-center gap-2">
               <Layers className="h-5 w-5 text-emphasis" />
               <h2 className="font-semibold text-lg text-emphasis sm:text-xl">
-                1. Hizmetin Kapsamı
+                1. Hizmetin Kapsamı ve Hesap Aktivasyonu
               </h2>
             </div>
             <p className="text-sm leading-relaxed text-subtle">
-              Rondevu, hesap sahiplerinin müsaitliklerini yönetmesine ve katılımcıların randevu oluşturmasına
-              yardımcı olan bir yazılım hizmetidir. Bildirim, SMS doğrulaması ve takvim bağlantıları gibi
-              işlevler hesap ayarlarına ve bağlı hizmetlere göre kullanılabilir.
+              {APP_NAME}, hesap sahiplerinin müsaitliklerini yönetmesine ve katılımcıların çevrimiçi randevu
+              oluşturmasına yardımcı olan bir yazılım hizmetidir. Bildirim, SMS doğrulaması, görüşme
+              bağlantısı ve takvim eşitleme gibi işlevler aktif plan kapsamına ve hesap ayarlarına göre
+              sunulur. Güncel plan detayları{" "}
+              <Link href="/pricing" className="text-emphasis underline-offset-2 hover:underline">
+                Fiyatlandırma
+              </Link>{" "}
+              ve{" "}
+              <Link href="/plan-bilgi" className="text-emphasis underline-offset-2 hover:underline">
+                İletişim &amp; Aktivasyon
+              </Link>{" "}
+              sayfalarında yer alır.
             </p>
             <div className="rounded-xl border border-subtle bg-muted/20 p-4 text-xs leading-relaxed text-subtle">
               Randevuya konu olan hizmetin açıklaması, ücreti, iptal koşulları ve yerine getirilmesi
@@ -235,8 +244,8 @@ export function TosView({ initialContact }: TosViewProps = {}) {
                     zedeleme amacıyla kullanmak,
                   </li>
                   <li>
-                    Başkalarının hesaplarına yetkisiz erişmeye çalışmak veya hizmeti aşırı isteklerle
-                    kullanılamaz hale getirmek.
+                    Başkalarının hesaplarına yetkisiz erişmeye çalışmak, otomatik veri çekme (scraping)
+                    yapmak veya hizmeti aşırı isteklerle kullanılamaz hale getirmek.
                   </li>
                 </ul>
               </div>
@@ -250,45 +259,57 @@ export function TosView({ initialContact }: TosViewProps = {}) {
           {/* 4. Fikri Mülkiyet ve Değişiklikler */}
           <section className="space-y-4 border-subtle border-t pt-6">
             <h2 className="font-semibold text-lg text-emphasis sm:text-xl">
-              4. Fikri Mülkiyet ve Şartların Güncellenmesi
+              4. Fikri Mülkiyet, Kullanım Sınırları ve İletişim
             </h2>
             <p className="text-sm leading-relaxed text-subtle">
-              Rondevu kaynak kodu, depoda belirtilen açık kaynak lisansı kapsamında kullanılabilir;
-              marka ve görsel unsurlar için aynı lisansın geçerli olduğu varsayılmamalıdır. Bu koşullar
-              değiştiğinde güncel metin ve değişiklik tarihi bu sayfada yayımlanır.
+              {APP_NAME} platformu, marka adı, logosu, alan adı, arayüz tasarımları ve özel yazılım
+              bileşenleri üzerindeki tüm fikri ve sınai mülkiyet hakları {APP_NAME}&apos;ya aittir
+              (alt bileşenlerde yer alan üçüncü taraf açık kaynak lisans hükümleri saklıdır). Kullanıcılar
+              hizmeti yalnızca aktif hesap kapsamındaki bireysel veya kurumsal randevu yönetimi amacıyla
+              kullanabilir; platform unsurları izinsiz kopyalanamaz, yeniden markalanamaz (white-label)
+              veya üçüncü kişilere yeniden satılamaz. Bu koşullar güncellendiğinde güncel metin ve tarih
+              bu sayfada yayımlanır.
             </p>
-            <div className="mt-4 flex flex-wrap gap-4 text-xs">
-              {email && (
+            <div className="mt-4 rounded-xl border border-subtle bg-muted/20 p-4">
+              <p className="text-xs font-medium text-emphasis">Destek ve Hukuki İletişim Kanalları</p>
+              <div className="mt-2.5 flex flex-wrap gap-x-5 gap-y-2 text-xs">
                 <a
                   href={`mailto:${email}`}
                   className="flex items-center gap-1.5 text-emphasis hover:underline">
                   <Mail className="h-3.5 w-3.5" />
                   <span>{email}</span>
                 </a>
-              )}
-              {phone && (
                 <a
                   href={`tel:${cleanPhone}`}
                   className="flex items-center gap-1.5 text-emphasis hover:underline">
                   <Phone className="h-3.5 w-3.5" />
                   <span>{phone}</span>
                 </a>
-              )}
+                <Link
+                  href="/plan-bilgi"
+                  className="flex items-center gap-1.5 text-emphasis hover:underline">
+                  <Globe className="h-3.5 w-3.5" />
+                  <span>https://rondevu.org/plan-bilgi</span>
+                </Link>
+              </div>
             </div>
           </section>
         </div>
 
         {/* Footer Navigation */}
-        <div className="mt-8 flex items-center justify-between text-xs text-subtle">
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-4 text-xs text-subtle">
           <span>
             © {new Date().getFullYear()} {APP_NAME}. Tüm hakları saklıdır.
           </span>
-          <div className="flex gap-4">
+          <div className="flex flex-wrap gap-4">
+            <Link href="/pricing" className="hover:text-emphasis hover:underline">
+              Fiyatlandırma
+            </Link>
             <Link href="/privacy" className="hover:text-emphasis hover:underline">
-              Gizlilik Politikası
+              Gizlilik Politikası ve KVKK
             </Link>
             <Link href="/plan-bilgi" className="hover:text-emphasis hover:underline">
-              İletişim & Destek
+              İletişim &amp; Aktivasyon
             </Link>
           </div>
         </div>

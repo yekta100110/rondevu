@@ -1,11 +1,9 @@
-import fs from "node:fs";
-import path from "node:path";
-import process from "node:process";
 import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
-import { APP_NAME } from "@calcom/lib/constants";
+import { APP_NAME, WEBSITE_URL } from "@calcom/lib/constants";
 import { getPlanContactConfig } from "@calcom/lib/planContactConfig";
+import { PricingSchema } from "@components/schemas/MarketingSchemas";
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
-import { _generateMetadata } from "app/_utils";
+import { _generateMetadata, loadCalMarketingAssets } from "app/_utils";
 import type { Metadata } from "next";
 import { cookies, headers } from "next/headers";
 import { PricingView } from "~/pricing/pricing-view";
@@ -14,26 +12,27 @@ import type { Locale } from "~/home/i18n/home-translations";
 import "../../../public/cal_files/cal-framer.css";
 import "../../../public/cal_files/cal-pricing-framer.css";
 
+const SITE_URL = WEBSITE_URL.replace(/\/+$/, "");
+const PRICING_LANGUAGES = {
+  tr: `${SITE_URL}/pricing`,
+  en: `${SITE_URL}/en/pricing`,
+  "x-default": `${SITE_URL}/pricing`,
+};
+
 const generateMetadata = async (): Promise<Metadata> => {
   const baseMetadata = await _generateMetadata(
     () => `Fiyatlandırma - ${APP_NAME}`,
     () =>
       "rOndevu şeffaf ve net fiyatlandırma: Aylık ve yıllık esnek paketler, sınırsız randevu, SMS doğrulaması ve takvim senkronizasyonu.",
     true,
-    undefined,
-    "/pricing"
+    SITE_URL,
+    "/pricing",
+    PRICING_LANGUAGES,
+    "tr_TR"
   );
 
   return {
     ...baseMetadata,
-    keywords: [
-      "randevu sistemi fiyatları",
-      "online randevu ücreti",
-      "komisyonsuz randevu",
-      "aylık randevu paketi",
-      "yıllık randevu paketi",
-      APP_NAME,
-    ],
     robots: {
       index: true,
       follow: true,
@@ -54,24 +53,21 @@ const PricingPage = async () => {
   const session = await getServerSession({ req: buildLegacyRequest(requestHeaders, await cookies()) });
   const isLoggedIn = !!session?.user?.id;
   const initialContact = await getPlanContactConfig();
-  const initialLocale: Locale = requestHeaders.get("accept-language")?.trim().toLowerCase().startsWith("en")
-    ? "en"
-    : "tr";
+  const initialLocale: Locale = "tr";
 
-  const publicDir = path.join(process.cwd(), "public", "cal_files");
-  const trHtml = fs.readFileSync(path.join(publicDir, "pricing-dom-tr.html"), "utf8");
-  const enHtml = fs.readFileSync(path.join(publicDir, "pricing-dom-en.html"), "utf8");
-  const svgTemplates = fs.readFileSync(path.join(publicDir, "svg-templates.html"), "utf8");
+  const { html, svgTemplates } = loadCalMarketingAssets("pricing-dom-tr.html");
 
   return (
-    <PricingView
-      trHtml={trHtml}
-      enHtml={enHtml}
-      svgTemplates={svgTemplates}
-      isLoggedIn={isLoggedIn}
-      initialContact={initialContact}
-      initialLocale={initialLocale}
-    />
+    <>
+      <PricingSchema contact={initialContact} locale={initialLocale} />
+      <PricingView
+        html={html}
+        svgTemplates={svgTemplates}
+        isLoggedIn={isLoggedIn}
+        initialContact={initialContact}
+        initialLocale={initialLocale}
+      />
+    </>
   );
 };
 

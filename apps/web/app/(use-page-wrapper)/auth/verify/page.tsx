@@ -14,13 +14,20 @@ export const generateMetadata = async ({ params, searchParams }: _PageProps) => 
   const p = { ...(await params), ...(await searchParams) };
   const { sessionId } = querySchema.parse(p);
 
-  return await _generateMetadata(
+  const metadata = await _generateMetadata(
     () => (sessionId ? "Payment Page" : `Verify your email`),
     () => "",
     undefined,
     undefined,
     "/auth/verify"
   );
+  return {
+    ...metadata,
+    robots: {
+      index: false,
+      follow: false,
+    },
+  };
 };
 
 const ServerPage = () => {

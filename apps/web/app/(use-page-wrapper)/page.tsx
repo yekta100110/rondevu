@@ -1,10 +1,9 @@
-import fs from "node:fs";
-import path from "node:path";
-import process from "node:process";
 import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
-import { APP_NAME } from "@calcom/lib/constants";
+import { APP_NAME, WEBSITE_URL } from "@calcom/lib/constants";
+import { getPlanContactConfig } from "@calcom/lib/planContactConfig";
+import { HomeSchema } from "@components/schemas/MarketingSchemas";
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
-import { _generateMetadata } from "app/_utils";
+import { _generateMetadata, loadCalMarketingAssets } from "app/_utils";
 import type { Metadata } from "next";
 import { cookies, headers } from "next/headers";
 import { HomeView } from "~/home/home-view";
@@ -12,11 +11,11 @@ import type { Locale } from "~/home/i18n/home-translations";
 
 import "../../public/cal_files/cal-framer.css";
 
-const getFramerBody = (markup: string): string => {
-  const openingBody = /<body[^>]*>/i.exec(markup);
-  const closingBody = markup.lastIndexOf("</body>");
-  if (!openingBody || closingBody < 0) return markup;
-  return markup.slice(openingBody.index + openingBody[0].length, closingBody);
+const SITE_URL = WEBSITE_URL.replace(/\/+$/, "");
+const HOME_LANGUAGES = {
+  tr: SITE_URL,
+  en: `${SITE_URL}/en`,
+  "x-default": SITE_URL,
 };
 
 const generateMetadata = async (): Promise<Metadata> => {
@@ -25,24 +24,14 @@ const generateMetadata = async (): Promise<Metadata> => {
     () =>
       "Müsait saatlerinizi belirleyin, kurallarınızı koyun; randevu alma, doğrulama, SMS hatırlatma ve takvim senkronizasyonunu tek merkezden yönetin.",
     true,
-    undefined,
-    "/"
+    SITE_URL,
+    "/",
+    HOME_LANGUAGES,
+    "tr_TR"
   );
 
   return {
     ...baseMetadata,
-    keywords: [
-      "herkes için randevu sistemi",
-      "randevu platformu",
-      "online randevu",
-      "danışan randevu sistemi",
-      "Google Takvim randevu",
-      "Google Meet randevu",
-      "biyografi randevu linki",
-      "randevu güvenliği",
-      "komisyonsuz randevu",
-      APP_NAME,
-    ],
     robots: {
       index: true,
       follow: true,
@@ -60,25 +49,25 @@ const generateMetadata = async (): Promise<Metadata> => {
 
 const HomePage = async () => {
   const requestHeaders = await headers();
-  const session = await getServerSession({ req: buildLegacyRequest(requestHeaders, await cookies()) });
+  const [session, contact] = await Promise.all([
+    getServerSession({ req: buildLegacyRequest(requestHeaders, await cookies()) }),
+    getPlanContactConfig(),
+  ]);
   const isLoggedIn = !!session?.user?.id;
-  const initialLocale: Locale = requestHeaders.get("accept-language")?.trim().toLowerCase().startsWith("en")
-    ? "en"
-    : "tr";
+  const initialLocale: Locale = "tr";
 
-  const publicDir = path.join(process.cwd(), "public", "cal_files");
-  const trHtml = getFramerBody(fs.readFileSync(path.join(publicDir, "cal-dom-tr.html"), "utf8"));
-  const enHtml = getFramerBody(fs.readFileSync(path.join(publicDir, "cal-dom-en.html"), "utf8"));
-  const svgTemplates = fs.readFileSync(path.join(publicDir, "svg-templates.html"), "utf8");
+  const { html, svgTemplates } = loadCalMarketingAssets("cal-dom-tr.html", { extractBody: true });
 
   return (
-    <HomeView
-      trHtml={trHtml}
-      enHtml={enHtml}
-      svgTemplates={svgTemplates}
-      isLoggedIn={isLoggedIn}
-      initialLocale={initialLocale}
-    />
+    <>
+      <HomeSchema contact={contact} locale={initialLocale} />
+      <HomeView
+        html={html}
+        svgTemplates={svgTemplates}
+        isLoggedIn={isLoggedIn}
+        initialLocale={initialLocale}
+      />
+    </>
   );
 };
 

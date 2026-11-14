@@ -14,7 +14,7 @@ export function Logo({
   src?: string;
 }) {
   return (
-    <h3 className={classNames("logo", inline && "inline", className)}>
+    <span className={classNames("logo", inline ? "inline" : "block", className)}>
       <strong>
         {icon ? (
           <img className="mx-auto w-9 dark:invert" alt="rOndevu" title="rOndevu" src={`${src}?type=icon`} />
@@ -27,6 +27,6 @@ export function Logo({
           />
         )}
       </strong>
-    </h3>
+    </span>
   );
 }

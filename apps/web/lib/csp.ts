@@ -2,7 +2,7 @@ import process from "node:process";
 import { IS_PRODUCTION, WEBAPP_URL } from "@calcom/lib/constants";
 import { buildNonce } from "./buildNonce";
 
-function getCspPolicy(nonce: string): string {
+function getCspPolicy(nonce: string, isEmbed = false): string {
   //TODO: Do we need to explicitly define it in turbo.json
   const CSP_POLICY = process.env.CSP_POLICY ?? "non-strict";
 
@@ -24,11 +24,12 @@ function getCspPolicy(nonce: string): string {
     };
     object-src 'none';
     base-uri 'none';
+    ${isEmbed ? "" : "frame-ancestors 'none';"}
 	  child-src 'self';
 	  style-src 'self' ${
       IS_PRODUCTION ? (useNonStrictPolicy ? "'unsafe-inline'" : "") : "'unsafe-inline'"
     } https://framerusercontent.com;
-  font-src 'self' https://framerusercontent.com data:;
+  font-src 'self' https://fonts.gstatic.com https://framerusercontent.com data:;
   img-src 'self' ${WEBAPP_URL} https://img.youtube.com https://eu.ui-avatars.com/api/ https://framerusercontent.com data:;
     connect-src 'self' https://framerusercontent.com;
     form-action 'self';
@@ -41,13 +42,21 @@ export function getCspNonce(): string {
   return nonce;
 }
 
-export function getCspHeader({ shouldEnforceCsp, nonce }: { shouldEnforceCsp: boolean; nonce: string }): {
+export function getCspHeader({
+  shouldEnforceCsp,
+  nonce,
+  isEmbed = false,
+}: {
+  shouldEnforceCsp: boolean;
+  nonce: string;
+  isEmbed?: boolean;
+}): {
   name: string;
   value: string;
 } {
   const cspHeaderName = shouldEnforceCsp ? "Content-Security-Policy" : "Content-Security-Policy-Report-Only";
 
-  const cspHeaderValue = getCspPolicy(nonce)
+  const cspHeaderValue = getCspPolicy(nonce, isEmbed)
     .replace(/\s{2,}/g, " ")
     .trim();
 

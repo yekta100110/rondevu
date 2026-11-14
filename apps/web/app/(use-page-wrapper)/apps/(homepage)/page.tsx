@@ -12,13 +12,20 @@ import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 import AppsPage from "~/apps/apps-view";
 
 export const generateMetadata = async () => {
-  return await _generateMetadata(
+  const metadata = await _generateMetadata(
     (t) => t("app_store"),
     (t) => t("app_store_description"),
     undefined,
     undefined,
     "/apps"
   );
+  return {
+    ...metadata,
+    robots: {
+      index: false,
+      follow: false,
+    },
+  };
 };
 
 const ServerPage = async () => {

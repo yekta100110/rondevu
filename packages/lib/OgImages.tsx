@@ -121,7 +121,7 @@ export const constructMeetingImage = async ({
 
   params.set("v", await getOGImageVersion("meeting"));
 
-  return encodeURIComponent(`/api/social/og/image?${params.toString()}`);
+  return `/api/social/og/image?${params.toString()}`;
 };
 
 /**
@@ -144,7 +144,7 @@ export const constructAppImage = async ({
 
   params.set("v", await getOGImageVersion("app"));
 
-  return encodeURIComponent(`/api/social/og/image?${params.toString()}`);
+  return `/api/social/og/image?${params.toString()}`;
 };
 
 export const constructGenericImage = async ({ title, description }: GenericImageProps): Promise<string> => {
@@ -156,7 +156,7 @@ export const constructGenericImage = async ({ title, description }: GenericImage
 
   params.set("v", await getOGImageVersion("generic"));
 
-  return encodeURIComponent(`/api/social/og/image?${params.toString()}`);
+  return `/api/social/og/image?${params.toString()}`;
 };
 
 const Wrapper = ({ children, variant = "light", rotateBackground }: WrapperProps) => (

@@ -5,10 +5,13 @@ import type { Metadata } from "next";
 import { PrivacyView } from "~/legal/privacy-view";
 
 export const generateMetadata = async (): Promise<Metadata> => {
+  const title = `Gizlilik Politikası ve KVKK Aydınlatma Metni | ${APP_NAME}`;
+  const description =
+    "rOndevu Gizlilik Politikası ve KVKK aydınlatma metni: hesap, randevu, SMS doğrulama ve teknik verilerin işlenmesi, saklanması ve başvuru haklarınız.";
+
   const baseMetadata = await _generateMetadata(
-    () => `Gizlilik Politikası | ${APP_NAME}`,
-    () =>
-      "rOndevu Gizlilik Politikası. Hesap, randevu ve teknik verilerin kullanımı ile başvuru yolları.",
+    () => title,
+    () => description,
     true,
     undefined,
     "/privacy"
@@ -16,22 +19,14 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
   return {
     ...baseMetadata,
-    keywords: [
-      "gizlilik politikası",
-      "veri güvenliği",
-      "rOndevu gizlilik",
-      "subprocessors",
-      APP_NAME,
-    ],
     robots: {
       index: true,
       follow: true,
     },
     openGraph: {
       ...baseMetadata.openGraph,
-      title: `Gizlilik Politikası | ${APP_NAME}`,
-      description:
-        "rOndevu Gizlilik Politikası. Hesap, randevu ve teknik verilerin kullanımı ile başvuru yolları.",
+      title,
+      description,
       locale: "tr_TR",
       type: "website",
     },

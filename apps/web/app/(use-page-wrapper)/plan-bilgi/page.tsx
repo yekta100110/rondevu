@@ -1,14 +1,18 @@
 import { APP_NAME } from "@calcom/lib/constants";
 import { getPlanContactConfig } from "@calcom/lib/planContactConfig";
+import { PlanBilgiSchema } from "@components/schemas/MarketingSchemas";
 import { _generateMetadata } from "app/_utils";
 import type { Metadata } from "next";
 import { PlanBilgiView } from "~/plan-bilgi/plan-bilgi-view";
 
 export const generateMetadata = async (): Promise<Metadata> => {
+  const title = `Hesap Aktivasyonu ve İletişim | ${APP_NAME}`;
+  const description =
+    "rOndevu hesabınızı hemen aktive edip kişisel randevu linkinizi alın. Kurulum, plan seçimi ve destek için WhatsApp, telefon ya da e-posta ile ulaşın.";
+
   const baseMetadata = await _generateMetadata(
-    () => `Hesap Aktivasyonu | ${APP_NAME}`,
-    () =>
-      "Hesabınızı hemen açıp profil linkinizi teslim edelim. Başlamak veya aklınıza takılanları sormak için doğrudan bize yazabilirsiniz.",
+    () => title,
+    () => description,
     true,
     undefined,
     "/plan-bilgi"
@@ -16,23 +20,14 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
   return {
     ...baseMetadata,
-    keywords: [
-      "hesap aktivasyonu",
-      "rOndevu aktivasyon",
-      "iletişim",
-      "danışma",
-      "bireysel randevu sistemi",
-      APP_NAME,
-    ],
     robots: {
       index: true,
       follow: true,
     },
     openGraph: {
       ...baseMetadata.openGraph,
-      title: `Hesap Aktivasyonu | ${APP_NAME}`,
-      description:
-        "Hesabınızı hemen açıp profil linkinizi teslim edelim. Başlamak veya aklınıza takılanları sormak için doğrudan bize yazabilirsiniz.",
+      title,
+      description,
       locale: "tr_TR",
       type: "website",
     },
@@ -41,5 +36,10 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
 export default async function PlanBilgiPage() {
   const initialContact = await getPlanContactConfig();
-  return <PlanBilgiView initialContact={initialContact} />;
+  return (
+    <>
+      <PlanBilgiSchema contact={initialContact} />
+      <PlanBilgiView initialContact={initialContact} />
+    </>
+  );
 }

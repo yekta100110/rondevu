@@ -10,13 +10,20 @@ import { XIcon } from "@coss/ui/icons";
 import AuthContainer from "@components/ui/AuthContainer";
 
 export const generateMetadata = async () => {
-  return await _generateMetadata(
+  const metadata = await _generateMetadata(
     (t) => t("error"),
     () => "",
     undefined,
     undefined,
     "/auth/error"
   );
+  return {
+    ...metadata,
+    robots: {
+      index: false,
+      follow: false,
+    },
+  };
 };
 
 const querySchema = z.object({

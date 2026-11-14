@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import type { PageProps } from "app/_types";
 import { redirect } from "next/navigation";
 import { z } from "zod";
@@ -7,6 +8,13 @@ import { AppCategories } from "@calcom/prisma/enums";
 import { getStaticProps } from "@lib/apps/categories/[category]/getStaticProps";
 
 import CategoryPage from "~/apps/categories/[category]/category-view";
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 const querySchema = z.object({
   category: z.enum(Object.values(AppCategories) as [AppCategories, ...AppCategories[]]),

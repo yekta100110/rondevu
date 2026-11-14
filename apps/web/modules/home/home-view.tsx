@@ -9,14 +9,13 @@ import { PlanContactModal } from "./components/PlanContactModal";
 import type { Locale } from "./i18n/home-translations";
 
 interface HomeViewProps {
-  trHtml: string;
-  enHtml: string;
+  html: string;
   svgTemplates: string;
   isLoggedIn?: boolean;
   initialLocale: Locale;
 }
 
-function HomeView({ trHtml, enHtml, svgTemplates, isLoggedIn = false, initialLocale }: HomeViewProps) {
+function HomeView({ html, svgTemplates, isLoggedIn = false, initialLocale }: HomeViewProps) {
   const router = useRouter();
   const locale = initialLocale;
   const [modalPlanType, setModalPlanType] = useState<"general" | "monthly" | "yearly" | null>(null);
@@ -368,9 +367,13 @@ function HomeView({ trHtml, enHtml, svgTemplates, isLoggedIn = false, initialLoc
     staleTime: 30000,
   });
 
-  const phone = contactConfig?.phone || "0552 119 19 87";
+  const phone =
+    contactConfig?.phone && contactConfig.phone !== "0850 000 00 00" ? contactConfig.phone : "0552 119 19 87";
   const email = contactConfig?.email || "destek@rondevu.org";
-  const whatsapp = contactConfig?.whatsapp || "905521191987";
+  const whatsapp =
+    contactConfig?.whatsapp && contactConfig.whatsapp !== "908500000000"
+      ? contactConfig.whatsapp
+      : "905521191987";
 
   const handleModalClose = (): void => {
     setModalPlanType(null);
@@ -518,7 +521,7 @@ function HomeView({ trHtml, enHtml, svgTemplates, isLoggedIn = false, initialLoc
       <div
         id="cal-1to1-root"
         onClick={handleContainerClick}
-        dangerouslySetInnerHTML={{ __html: locale === "tr" ? trHtml : enHtml }}
+        dangerouslySetInnerHTML={{ __html: html }}
       />
       <MarketingFooter locale={locale} />
 

@@ -1,0 +1,39 @@
+# rOndevu
+
+> rOndevu, bireysel çalışan uzmanlar ve küçük işletmeler için geliştirilmiş komisyonsuz, SMS doğrulamalı ve takvim senkronizasyonlu online randevu ve zaman yönetimi platformudur.
+
+## Temel Sayfalar
+
+- [Ana Sayfa](https://rondevu.org): Platform tanıtımı, özellikler, canlı randevu akışı ve sıkça sorulan sorular.
+- [Fiyatlandırma](https://rondevu.org/pricing): Şeffaf aylık (990 TL/ay) ve yıllık (9.900 TL/yıl) planlar ve özellik karşılaştırması.
+- [Fiyatlandırma (Markdown)](https://rondevu.org/pricing.md): Yapay zeka sistemleri için sadeleştirilmiş fiyatlandırma ve paket özeti.
+- [Hesap Aktivasyonu ve İletişim](https://rondevu.org/plan-bilgi): Hesap açılışı ve doğrudan iletişim kanalları.
+- [Gizlilik Politikası](https://rondevu.org/privacy): Kişisel verilerin işlenmesi, güvenlik ve başvuru hakları.
+- [Kullanım Koşulları](https://rondevu.org/tos): Hizmet şartları ve kabul edilebilir kullanım ilkeleri.
+
+## English Pages
+
+- [Home (English)](https://rondevu.org/en): English overview of rOndevu, commission-free appointment scheduling, SMS verification, and calendar sync.
+- [Pricing (English)](https://rondevu.org/en/pricing): Transparent monthly and annual plans in English with included features.
+
+## Öne Çıkan Özellikler
+
+- **Sınırsız Randevu ve Hizmet Türü:** Her iki planda da randevu başı komisyon veya sayı kısıtlaması olmadan sınırsız randevu ve seans türü oluşturulabilir.
+- **Takvim Senkronizasyonu:** Google Takvim, Apple Calendar ve Outlook ile gerçek zamanlı çift yönlü eşitleme ve otomatik çakışma koruması.
+- **SMS / OTP Doğrulama ve Hatırlatmalar:** Randevu sırasında danışana 6 haneli SMS onay kodu göndererek sahte randevuları engeller; görüşme öncesi otomatik SMS ve e-posta hatırlatıcıları iletir.
+- **Esnek Görüşme Seçenekleri:** Google Meet görüntülü görüşme, telefon araması veya ofiste yüz yüze randevu desteği.
+- **Mola ve Limit Yönetimi:** Seans öncesi/sonrası tampon süreler, minimum son dakika bildirim kuralı, günlük/haftalık kota ve tek dokunuşla izin modu.
+- **Kişisel Link, Özel Alan Adı ve Web Gömme:** `rondevu.org/<kullanici>` profil linki, kendi alan adınızı bağlama, tek kullanımlık gizli linkler ve web sitelerine gömme (embed) desteği.
+- **Çoklu Dil ve Danışan Deneyimi:** Türkçe ve İngilizce arayüz, otomatik saat dilimi tespiti, özel form soruları ve zorunlu iptal/erteleme nedeni.
+
+## Fiyatlandırma Özeti
+
+- **Aylık Plan:** 990 TL / ay (taahhütsüz, tüm özellikler dahil, standart destek).
+- **Yıllık Plan:** 9.900 TL / yıl (2 ay hediye, 12 ay sabit fiyat garantisi, tüm özellikler dahil, öncelikli birebir kurulum ve destek).
+
+## Destek ve İletişim Kanalları
+
+- **E-posta:** destek@rondevu.org
+- **Telefon:** 0552 119 19 87
+- **WhatsApp:** https://wa.me/905521191987
+- **Aktivasyon Sayfası:** https://rondevu.org/plan-bilgi

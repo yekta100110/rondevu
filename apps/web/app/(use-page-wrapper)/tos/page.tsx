@@ -5,10 +5,13 @@ import type { Metadata } from "next";
 import { TosView } from "~/legal/tos-view";
 
 export const generateMetadata = async (): Promise<Metadata> => {
+  const title = `Kullanım Koşulları | ${APP_NAME}`;
+  const description =
+    "rOndevu Kullanım Koşulları: randevu ve abonelik akışı, takvim ve SMS entegrasyonları, sorumluluk sınırları ile kabul edilebilir kullanım ilkeleri.";
+
   const baseMetadata = await _generateMetadata(
-    () => `Kullanım Koşulları | ${APP_NAME}`,
-    () =>
-      "rOndevu Kullanım Koşulları. Randevu akışı, bağlı hizmetler ve kabul edilebilir kullanım ilkeleri.",
+    () => title,
+    () => description,
     true,
     undefined,
     "/tos"
@@ -16,23 +19,14 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
   return {
     ...baseMetadata,
-    keywords: [
-      "kullanım koşulları",
-      "hizmet şartları",
-      "terms of service",
-      "randevu yazılımı kuralları",
-      "anti-spam politikası",
-      APP_NAME,
-    ],
     robots: {
       index: true,
       follow: true,
     },
     openGraph: {
       ...baseMetadata.openGraph,
-      title: `Kullanım Koşulları | ${APP_NAME}`,
-      description:
-        "rOndevu Kullanım Koşulları. Randevu akışı, bağlı hizmetler ve kabul edilebilir kullanım ilkeleri.",
+      title,
+      description,
       locale: "tr_TR",
       type: "website",
     },

@@ -11,13 +11,20 @@ import type { PageProps as ClientPageProps } from "~/auth/forgot-password/[id]/f
 import SetNewUserPassword from "~/auth/forgot-password/[id]/forgot-password-single-view";
 
 export const generateMetadata = async ({ params }: { params: Promise<{ id: string }> }) => {
-  return await _generateMetadata(
+  const metadata = await _generateMetadata(
     (t) => t("reset_password"),
     (t) => t("change_your_password"),
     undefined,
     undefined,
     `/auth/forgot-password/${(await params).id}`
   );
+  return {
+    ...metadata,
+    robots: {
+      index: false,
+      follow: false,
+    },
+  };
 };
 
 const getData = withAppDirSsr<ClientPageProps>(getServerSideProps);

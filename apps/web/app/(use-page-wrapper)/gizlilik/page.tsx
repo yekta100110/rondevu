@@ -1,1 +1,5 @@
-export { default, generateMetadata } from "../privacy/page";
+import { permanentRedirect } from "next/navigation";
+
+export default function GizlilikRedirectPage() {
+  permanentRedirect("/privacy");
+}

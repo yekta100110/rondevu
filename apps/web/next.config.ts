@@ -3,7 +3,6 @@ import { config as dotenvConfig } from "dotenv";
 import type { NextConfig } from "next";
 import type { RouteHas } from "next/dist/lib/load-custom-routes";
 import { withAxiom } from "next-axiom";
-import i18nConfig from "@calcom/i18n/next-i18next.config";
 import packageJson from "./package.json";
 import {
   nextJsOrgRewriteConfig,
@@ -16,9 +15,6 @@ import { TRIGGER_VERSION } from "./trigger.version"; // adjust path as needed
 dotenvConfig({ path: "../../.env" });
 
 const { version } = packageJson;
-const {
-  i18n: { locales },
-} = i18nConfig;
 
 type NextConfigPlugin = (config: NextConfig) => NextConfig;
 
@@ -222,6 +218,7 @@ const nextConfig = (phase: string): NextConfig => {
   }
 
   return {
+    poweredByHeader: false,
     typescript: {
       ignoreBuildErrors: true,
     },
@@ -263,10 +260,6 @@ const nextConfig = (phase: string): NextConfig => {
     async rewrites() {
       const { orgSlug } = nextJsOrgRewriteConfig;
       const beforeFiles = [
-        {
-          source: `/(${locales.join("|")})/:path*`,
-          destination: "/:path*",
-        },
         {
           source: "/forms/:formQuery*",
           destination: "/apps/routing-forms/routing-link/:formQuery*",
@@ -413,6 +406,10 @@ const nextConfig = (phase: string): NextConfig => {
               key: "Referrer-Policy",
               value: "strict-origin-when-cross-origin",
             },
+            {
+              key: "Strict-Transport-Security",
+              value: "max-age=31536000; includeSubDomains",
+            },
           ],
         },
         {
@@ -422,21 +419,6 @@ const nextConfig = (phase: string): NextConfig => {
         {
           source: "/:path*/embed",
           headers: [CORP_CROSS_ORIGIN_HEADER],
-        },
-        {
-          source: "/:path*",
-          has: [
-            {
-              type: "host" as const,
-              value: "rondevu.org",
-            },
-          ],
-          headers: [
-            {
-              key: "Referrer-Policy",
-              value: "no-referrer-when-downgrade",
-            },
-          ],
         },
         {
           source: "/api/avatar/:path*",
@@ -503,6 +485,31 @@ const nextConfig = (phase: string): NextConfig => {
     },
     async redirects() {
       const redirects = [
+        {
+          source: "/tr",
+          destination: "/",
+          permanent: true,
+        },
+        {
+          source: "/tr/:path*",
+          destination: "/:path*",
+          permanent: true,
+        },
+        {
+          source: "/en/privacy",
+          destination: "/privacy",
+          permanent: true,
+        },
+        {
+          source: "/en/tos",
+          destination: "/tos",
+          permanent: true,
+        },
+        {
+          source: "/en/plan-bilgi",
+          destination: "/plan-bilgi",
+          permanent: true,
+        },
         {
           source: "/b/:uid",
           destination: "/booking/:uid",

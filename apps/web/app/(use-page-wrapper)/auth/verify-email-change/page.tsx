@@ -11,13 +11,20 @@ import type { PageProps as ClientPageProps } from "~/auth/verify-email-change-vi
 import VerifyEmailChange from "~/auth/verify-email-change-view";
 
 export const generateMetadata = async () => {
-  return await _generateMetadata(
+  const metadata = await _generateMetadata(
     (t) => t("verify_email_change"),
     () => "",
     undefined,
     undefined,
     "/auth/verify-email-change"
   );
+  return {
+    ...metadata,
+    robots: {
+      index: false,
+      follow: false,
+    },
+  };
 };
 
 const getData = withAppDirSsr<ClientPageProps>(getServerSideProps);

@@ -6,12 +6,15 @@ import PageWrapper from "@components/PageWrapperAppDir";
 import { NotFound } from "./notFoundClient";
 
 export const generateMetadata = async () => {
-  const metadata = await _generateMetadata(
+  const { alternates: _alternates, openGraph, ...rest } = await _generateMetadata(
     (t) => t("404_page_not_found"),
     (t) => t("404_page_not_found")
   );
+  const { url: _ogUrl, ...restOpenGraph } = openGraph;
+
   return {
-    ...metadata,
+    ...rest,
+    openGraph: restOpenGraph,
     robots: {
       index: false,
       follow: false,

@@ -25,7 +25,7 @@ export const generateMetadata = async ({ params }: _PageProps) => {
   }
   const { name, logo, dirName: appStoreDirSlug, slug: appSlug, description } = props.data;
 
-  return await generateAppMetadata(
+  const metadata = await generateAppMetadata(
     { slug: appStoreDirSlug ?? appSlug, logoUrl: logo, name, description },
     () => name,
     () => description,
@@ -33,6 +33,14 @@ export const generateMetadata = async ({ params }: _PageProps) => {
     undefined,
     `/apps/${appSlug}`
   );
+
+  return {
+    ...metadata,
+    robots: {
+      index: false,
+      follow: false,
+    },
+  };
 };
 
 async function Page({ params }: _PageProps) {

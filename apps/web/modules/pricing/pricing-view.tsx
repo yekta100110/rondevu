@@ -14,15 +14,14 @@ interface PlanContactData {
 }
 
 interface PricingViewProps {
-  trHtml: string;
-  enHtml: string;
+  html: string;
   svgTemplates: string;
   isLoggedIn?: boolean;
   initialContact?: PlanContactData;
   initialLocale: Locale;
 }
 
-function PricingView({ trHtml, enHtml, svgTemplates, isLoggedIn = false, initialContact, initialLocale }: PricingViewProps) {
+function PricingView({ html, svgTemplates, isLoggedIn = false, initialContact, initialLocale }: PricingViewProps) {
   const locale = initialLocale;
   const [modalPlanType, setModalPlanType] = useState<"monthly" | "yearly" | null>(null);
 
@@ -60,7 +59,7 @@ function PricingView({ trHtml, enHtml, svgTemplates, isLoggedIn = false, initial
 
   // Fiyatlandırma CTA butonlarını aktif dile göre ("Planı Seç" / "Choose Plan") senkronize et
   useEffect(() => {
-    const root = document.getElementById("cal-1to1-pricing-root");
+    const root = document.getElementById("cal-pricing-1to1-root");
     if (!root) return;
     const planBtns = root.querySelectorAll<HTMLElement>("[data-plan-btn='true']");
     const label = locale === "tr" ? "Planı Seç" : "Choose Plan";
@@ -147,9 +146,12 @@ function PricingView({ trHtml, enHtml, svgTemplates, isLoggedIn = false, initial
     staleTime: 30000,
   });
 
-  const phone = contactConfig?.phone || initialContact?.phone || "0552 119 19 87";
+  const rawPhone = contactConfig?.phone || initialContact?.phone;
+  const phone = rawPhone && rawPhone !== "0850 000 00 00" ? rawPhone : "0552 119 19 87";
   const email = contactConfig?.email || initialContact?.email || "destek@rondevu.org";
-  const whatsapp = contactConfig?.whatsapp || initialContact?.whatsapp || "905521191987";
+  const rawWhatsapp = contactConfig?.whatsapp || initialContact?.whatsapp;
+  const whatsapp =
+    rawWhatsapp && rawWhatsapp !== "908500000000" ? rawWhatsapp : "905521191987";
 
   // Framer DOM içindeki etkileşimli tıklamaları yakalama (Paket Seçimi & İletişim Modalı)
   const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -208,7 +210,7 @@ function PricingView({ trHtml, enHtml, svgTemplates, isLoggedIn = false, initial
         id="cal-pricing-1to1-root"
         data-locale={locale}
         onClick={handleContainerClick}
-        dangerouslySetInnerHTML={{ __html: locale === "tr" ? trHtml : enHtml }}
+        dangerouslySetInnerHTML={{ __html: html }}
       />
       <MarketingFooter locale={locale} />
 

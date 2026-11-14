@@ -7,13 +7,20 @@ import { buildLegacyCtx } from "@lib/buildLegacyCtx";
 import Logout from "~/auth/logout-view";
 
 export const generateMetadata = async () => {
-  return await _generateMetadata(
+  const metadata = await _generateMetadata(
     (t) => t("logged_out"),
     (t) => t("youve_been_logged_out"),
     undefined,
     undefined,
     "/auth/logout"
   );
+  return {
+    ...metadata,
+    robots: {
+      index: false,
+      follow: false,
+    },
+  };
 };
 
 const Page = async ({ params, searchParams }: PageProps) => {

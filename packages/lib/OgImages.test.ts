@@ -32,16 +32,16 @@ describe("OgImages", () => {
   });
 
   describe("constructMeetingImage", () => {
-    it("returns an encoded URL with meeting parameters", async () => {
+    it("returns a URL path with meeting parameters", async () => {
       const result = await constructMeetingImage({
         title: "30min",
         profile: { name: "Test User" },
         users: [],
       });
-      const decoded = decodeURIComponent(result);
-      expect(decoded).toContain("type=meeting");
-      expect(decoded).toContain("title=30min");
-      expect(decoded).toContain("meetingProfileName=Test+User");
+      expect(result).toMatch(/^\/api\/social\/og\/image\?/);
+      expect(result).toContain("type=meeting");
+      expect(result).toContain("title=30min");
+      expect(result).toContain("meetingProfileName=Test+User");
     });
 
     it("includes meetingImage when profile has an image", async () => {
@@ -50,36 +50,36 @@ describe("OgImages", () => {
         profile: { name: "Test User", image: "https://example.com/avatar.png" },
         users: [],
       });
-      const decoded = decodeURIComponent(result);
-      expect(decoded).toContain("meetingImage=https%3A%2F%2Fexample.com%2Favatar.png");
+      expect(result).toMatch(/^\/api\/social\/og\/image\?/);
+      expect(result).toContain("meetingImage=https%3A%2F%2Fexample.com%2Favatar.png");
     });
   });
 
   describe("constructAppImage", () => {
-    it("returns an encoded URL with app parameters", async () => {
+    it("returns a URL path with app parameters", async () => {
       const result = await constructAppImage({
         name: "TestApp",
         slug: "test-app",
         description: "A test app",
         logoUrl: "/app-store/test/icon.svg",
       });
-      const decoded = decodeURIComponent(result);
-      expect(decoded).toContain("type=app");
-      expect(decoded).toContain("name=TestApp");
-      expect(decoded).toContain("slug=test-app");
+      expect(result).toMatch(/^\/api\/social\/og\/image\?/);
+      expect(result).toContain("type=app");
+      expect(result).toContain("name=TestApp");
+      expect(result).toContain("slug=test-app");
     });
   });
 
   describe("constructGenericImage", () => {
-    it("returns an encoded URL with generic parameters", async () => {
+    it("returns a URL path with generic parameters", async () => {
       const result = await constructGenericImage({
         title: "Login",
         description: "Sign in to your account",
       });
-      const decoded = decodeURIComponent(result);
-      expect(decoded).toContain("type=generic");
-      expect(decoded).toContain("title=Login");
-      expect(decoded).toContain("description=Sign+in+to+your+account");
+      expect(result).toMatch(/^\/api\/social\/og\/image\?/);
+      expect(result).toContain("type=generic");
+      expect(result).toContain("title=Login");
+      expect(result).toContain("description=Sign+in+to+your+account");
     });
   });
 
