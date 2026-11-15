@@ -12,6 +12,7 @@ import {
   Globe,
   Layers,
   Mail,
+  MessageCircle,
   Phone,
   Scale,
 } from "lucide-react";
@@ -19,6 +20,7 @@ import Link from "next/link";
 
 const DEFAULT_SUPPORT_EMAIL = "destek@rondevu.org";
 const DEFAULT_SUPPORT_PHONE = "0552 119 19 87";
+const DEFAULT_SUPPORT_WHATSAPP = "905521191987";
 
 function LegalBackgroundGrid() {
   const rows = 8;
@@ -88,6 +90,10 @@ export function TosView({ initialContact }: TosViewProps = {}) {
   const rawPhone = resolvedContact?.phone;
   const phone = rawPhone && rawPhone !== "0850 000 00 00" ? rawPhone : DEFAULT_SUPPORT_PHONE;
   const cleanPhone = phone.replace(/[^\d+]/g, "");
+  const rawWhatsapp = resolvedContact?.whatsapp;
+  const whatsapp =
+    rawWhatsapp && rawWhatsapp !== "908500000000" ? rawWhatsapp : DEFAULT_SUPPORT_WHATSAPP;
+  const cleanWhatsapp = whatsapp.replace(/[^\d]/g, "");
 
   return (
     <div className="relative min-h-screen bg-default text-emphasis selection:bg-brand-default selection:text-brand">
@@ -179,8 +185,9 @@ export function TosView({ initialContact }: TosViewProps = {}) {
               <li className="flex items-start gap-2.5">
                 <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emphasis" />
                 <span>
-                  <strong>Bildirimler:</strong> SMS ve e-posta iletileri harici sağlayıcılara bağlıdır.
-                  Bildirim gecikirse randevu bilgilerini hesabınızdan veya onay bağlantınızdan kontrol edin.
+                  <strong>Bildirimler:</strong> SMS, WhatsApp (Evolution API) ve e-posta bildirim
+                  iletileri harici sağlayıcılara ve ağ bağlantılarına bağlıdır. Bildirim gecikirse randevu
+                  bilgilerini hesabınızdan veya onay bağlantınızdan kontrol edin.
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
@@ -193,8 +200,9 @@ export function TosView({ initialContact }: TosViewProps = {}) {
               <li className="flex items-start gap-2.5">
                 <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emphasis" />
                 <span>
-                  <strong>Entegrasyonlar:</strong> Takvim ve görüşme sağlayıcılarında yaşanan kesintiler
-                  eşitlemeyi veya toplantı bağlantılarının oluşturulmasını etkileyebilir.
+                  <strong>Entegrasyonlar:</strong> Takvim, WhatsApp (Evolution API) ve görüşme
+                  sağlayıcılarında yaşanan kesintiler eşitlemeyi, bildirim iletimini veya toplantı
+                  bağlantılarının oluşturulmasını etkileyebilir.
                 </span>
               </li>
             </ul>
@@ -219,8 +227,8 @@ export function TosView({ initialContact }: TosViewProps = {}) {
                 </div>
                 <ul className="mt-2 list-inside list-disc space-y-1">
                   <li>
-                    SMS veya e-posta servislerini izinsiz ticari reklam, promosyon veya toplu pazarlama (spam)
-                    amacıyla kullanmak,
+                    SMS, WhatsApp veya e-posta servislerini izinsiz ticari reklam, promosyon veya toplu
+                    pazarlama (spam) amacıyla kullanmak,
                   </li>
                   <li>
                     Kişilerin rızası olmaksızın telefon numaralarına mükerrer OTP kodu veya rahatsız edici
@@ -271,6 +279,14 @@ export function TosView({ initialContact }: TosViewProps = {}) {
                   className="flex items-center gap-1.5 text-emphasis hover:underline">
                   <Phone className="h-3.5 w-3.5" />
                   <span>{phone}</span>
+                </a>
+                <a
+                  href={`https://wa.me/${cleanWhatsapp}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-emphasis hover:underline">
+                  <MessageCircle className="h-3.5 w-3.5" />
+                  <span>WhatsApp</span>
                 </a>
                 <Link
                   href="/plan-bilgi"

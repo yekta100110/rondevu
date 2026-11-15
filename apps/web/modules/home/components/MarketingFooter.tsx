@@ -74,7 +74,9 @@ export function MarketingFooter({ locale, initialContact }: MarketingFooterProps
         <Link href={pricingHref} className="transition-colors hover:text-emphasis">
           {locale === "tr" ? "Fiyatlandırma" : "Pricing"}
         </Link>
-        <Link href="/plan-bilgi" className="transition-colors hover:text-emphasis">
+        <Link
+          href={locale === "en" ? "/plan-bilgi?lang=en" : "/plan-bilgi"}
+          className="transition-colors hover:text-emphasis">
           {locale === "tr" ? "İletişim & Aktivasyon" : "Contact & Activation"}
         </Link>
         <Link href="/tos" className="transition-colors hover:text-emphasis">

@@ -40,7 +40,7 @@ const PLACEHOLDER_PHONE_DIGITS = new Set(["08500000000", "908500000000"]);
 const HOME_FAQ_TR: readonly FaqItem[] = [
   {
     q: "Acil bir durumda veya izne çıktığımda randevuları nasıl yönetirim?",
-    a: "İzin modunu açtığınızda o günkü randevularınız iptal edilir ve danışanlarınıza açıklama mesajınız otomatik iletilir.",
+    a: "İzin modunu açtığınızda o günkü randevularınız iptal edilir ve danışanlarınıza açıklama mesajınız WhatsApp, SMS veya e-posta ile otomatik iletilir.",
   },
   {
     q: "Kendi web sitemin adresini (ör. doktorayse.com) bağlayabilir miyim?",
@@ -51,19 +51,23 @@ const HOME_FAQ_TR: readonly FaqItem[] = [
     a: "Randevu öncesi telefona 6 haneli kod gönderilerek sahte veya hatalı numaralarla takviminizin doldurulması önlenir.",
   },
   {
-    q: "Google Takvim veya Apple Calendar bağlantısı nasıl çalışıyor?",
-    a: "Kişisel takviminizdeki herhangi bir meşguliyet rOndevu'da o saati otomatik kapatır; yeni alınan randevular da takviminize işlenir.",
+    q: "Google Takvim, Apple Calendar veya Outlook bağlantısı nasıl çalışıyor?",
+    a: "Google Takvim, Apple Calendar veya Outlook takviminizdeki herhangi bir meşguliyet rOndevu'da o saati otomatik kapatır; yeni alınan randevular da takviminize ve Google Meet, Zoom, Microsoft Teams veya rOndevu Video bağlantılarınıza işlenir.",
   },
   {
     q: "Randevu başına komisyon veya gizli ek bir ücret var mı?",
-    a: "Hayır, randevu başına komisyon veya gizli ücret yoktur. Randevu sistemi her iki pakette de tüm özellikleriyle tam olarak açıktır.",
+    a: "Hayır, randevu başına komisyon veya gizli ücret yoktur. Özel alan adı (CNAME), WhatsApp, SMS ve e-posta bildirimleri ile tüm özellikler her iki pakette de tam olarak açıktır.",
+  },
+  {
+    q: "Sistemi kullanmak ve kurulum yapmak için teknik bilgi gerekiyor mu?",
+    a: "Hayır, profiliniz dakikalar içinde hazır hale gelir. Takvim eşitleme, WhatsApp/SMS bildirimleri ve özel alan adı kurulumunda ekibimiz doğrudan destek sağlar.",
   },
 ];
 
 const HOME_FAQ_EN: readonly FaqItem[] = [
   {
     q: "How do I handle emergencies or vacations?",
-    a: "Turning on time-off mode pauses your schedule, closes available slots, and optionally notifies affected clients.",
+    a: "Turning on time-off mode pauses your schedule, closes available slots, and automatically notifies affected clients via WhatsApp, SMS, or email.",
   },
   {
     q: "Can I connect my own custom domain (e.g. drsmith.com)?",
@@ -74,8 +78,16 @@ const HOME_FAQ_EN: readonly FaqItem[] = [
     a: "A 6-digit code is sent to the client's phone before confirmation, preventing fake submissions and empty slots.",
   },
   {
-    q: "How does the calendar synchronization work?",
-    a: "Any personal event in your Google or Apple Calendar instantly blocks that time in rOndevu, eliminating conflicts.",
+    q: "How do calendar and video integrations work?",
+    a: "Any personal event in your Google, Apple, or Outlook Calendar instantly blocks that time in rOndevu, while new bookings sync automatically with Google Meet, Zoom, Microsoft Teams, or rOndevu Video links.",
+  },
+  {
+    q: "Is there any commission or per-booking fee?",
+    a: "No, there are no per-booking commissions or hidden fees. All features—including Custom Domain (CNAME), WhatsApp, SMS, and email notifications, SMS OTP verification, and calendar sync—are included equally in both our monthly and yearly plans.",
+  },
+  {
+    q: "Do I need technical skills to set up and use rOndevu?",
+    a: "Not at all. Your profile is ready in minutes, and our team assists you directly with calendar sync, WhatsApp/SMS notifications, and custom domain setup.",
   },
 ];
 
@@ -137,6 +149,9 @@ function buildOrganizationNode(baseUrl: string, contact?: MarketingContactInfo):
 }
 
 function buildPlanOffers(baseUrl: string, isEn: boolean, plan?: "monthly" | "yearly" | null): Offer[] {
+  const planBaseUrl = isEn ? `${baseUrl}/plan-bilgi?lang=en` : `${baseUrl}/plan-bilgi`;
+  const planSep = isEn ? "&" : "?";
+
   const monthlyOffer: Offer = {
     "@type": "Offer",
     name: isEn ? "Monthly Plan" : "Aylık Plan",
@@ -146,7 +161,7 @@ function buildPlanOffers(baseUrl: string, isEn: boolean, plan?: "monthly" | "yea
     price: 990,
     priceCurrency: "TRY",
     availability: "https://schema.org/InStock",
-    url: `${baseUrl}/plan-bilgi?plan=monthly`,
+    url: `${planBaseUrl}${planSep}plan=monthly`,
     priceSpecification: {
       "@type": "UnitPriceSpecification",
       price: 990,
@@ -165,7 +180,7 @@ function buildPlanOffers(baseUrl: string, isEn: boolean, plan?: "monthly" | "yea
     price: 9900,
     priceCurrency: "TRY",
     availability: "https://schema.org/InStock",
-    url: `${baseUrl}/plan-bilgi?plan=yearly`,
+    url: `${planBaseUrl}${planSep}plan=yearly`,
     priceSpecification: {
       "@type": "UnitPriceSpecification",
       price: 9900,
@@ -190,24 +205,24 @@ function buildSoftwareNode(baseUrl: string, isEn: boolean, plan?: "monthly" | "y
     url: isEn ? `${baseUrl}/en` : baseUrl,
     inLanguage: isEn ? "en-US" : "tr-TR",
     description: isEn
-      ? "Online appointment scheduling platform with Google and Apple Calendar sync, SMS verification, reminders, and custom domain support."
-      : "Müsait saatlerinizi belirleyin, kurallarınızı koyun; randevu alma, SMS doğrulama, otomatik hatırlatma ve takvim senkronizasyonunu tek merkezden yönetin.",
+      ? "Online appointment scheduling platform with Google, Apple, and Outlook Calendar sync, Google Meet, Zoom, Microsoft Teams, and rOndevu Video integrations, SMS verification, WhatsApp, SMS, and email notifications/reminders, and custom domain support."
+      : "Müsait saatlerinizi belirleyin, kurallarınızı koyun; randevu alma, SMS doğrulama, WhatsApp, SMS ve e-posta bildirimleri/hatırlatmaları ile Google, Apple, Outlook Takvim ve Google Meet, Zoom, Microsoft Teams, rOndevu Video entegrasyonlarını tek merkezden yönetin.",
     featureList: isEn
       ? [
           "Unlimited appointment types and bookings",
-          "Google Calendar and Apple Calendar sync",
-          "Google Meet integration",
+          "Google Calendar, Apple Calendar, and Outlook Calendar sync",
+          "Google Meet, Zoom, Microsoft Teams, and rOndevu Video integrations",
           "6-digit SMS OTP booker verification",
-          "Automated SMS and email reminders",
+          "Automated WhatsApp, SMS, and email notifications and reminders",
           "Custom domain mapping",
           "Time-off mode and buffer time management",
         ]
       : [
           "Sınırsız randevu ve hizmet türü",
-          "Google Takvim ve Apple Calendar eşitleme",
-          "Google Meet entegrasyonu",
+          "Google Takvim, Apple Calendar ve Outlook Calendar eşitleme",
+          "Google Meet, Zoom, Microsoft Teams ve rOndevu Video entegrasyonları",
           "6 haneli SMS / OTP danışan doğrulaması",
-          "Otomatik SMS ve e-posta hatırlatıcıları",
+          "Otomatik WhatsApp, SMS ve e-posta bildirimleri ve hatırlatıcıları",
           "Özel alan adı bağlama",
           "İzin modu ve mola süresi yönetimi",
         ],
@@ -270,14 +285,16 @@ function HomeSchema({ locale = "tr", contact }: MarketingSchemaProps) {
 function PricingSchema({ locale = "tr", contact }: MarketingSchemaProps) {
   const baseUrl = getBaseUrl();
   const isEn = locale === "en";
+  const inLanguage = isEn ? "en-US" : "tr-TR";
   const homeUrl = isEn ? `${baseUrl}/en` : baseUrl;
   const pricingUrl = isEn ? `${baseUrl}/en/pricing` : `${baseUrl}/pricing`;
+  const breadcrumbId = `${pricingUrl}#breadcrumb`;
 
   const organization = buildOrganizationNode(baseUrl, contact);
   const softwareApplication = buildSoftwareNode(baseUrl, isEn);
   const breadcrumb: BreadcrumbList = {
     "@type": "BreadcrumbList",
-    "@id": `${pricingUrl}#breadcrumb`,
+    "@id": breadcrumbId,
     itemListElement: [
       {
         "@type": "ListItem",
@@ -293,10 +310,23 @@ function PricingSchema({ locale = "tr", contact }: MarketingSchemaProps) {
       },
     ],
   };
+  const webPage: WebPage = {
+    "@type": "WebPage",
+    "@id": `${pricingUrl}#webpage`,
+    name: isEn ? `Pricing | ${APP_NAME || "rOndevu"}` : `Fiyatlandırma | ${APP_NAME || "rOndevu"}`,
+    description: isEn
+      ? "Transparent and simple pricing for rOndevu: flexible monthly and yearly plans with unlimited appointments, SMS verification, WhatsApp/SMS/email notifications, and calendar sync."
+      : "rOndevu şeffaf ve net fiyatlandırma: Aylık ve yıllık esnek paketler, sınırsız randevu, SMS doğrulaması, WhatsApp/SMS/e-posta bildirimleri ve takvim senkronizasyonu.",
+    url: pricingUrl,
+    inLanguage,
+    about: { "@id": `${baseUrl}/#software` },
+    publisher: { "@id": `${baseUrl}/#org` },
+    breadcrumb: { "@id": breadcrumbId },
+  };
 
   const graph: Graph = {
     "@context": "https://schema.org",
-    "@graph": [organization, softwareApplication, breadcrumb],
+    "@graph": [organization, webPage, softwareApplication, breadcrumb],
   };
 
   return <JsonLdScript data={graph} />;
@@ -306,7 +336,8 @@ function PlanBilgiSchema({ locale = "tr", contact, plan }: PlanBilgiSchemaProps)
   const baseUrl = getBaseUrl();
   const isEn = locale === "en";
   const inLanguage = isEn ? "en-US" : "tr-TR";
-  const pageUrl = `${baseUrl}/plan-bilgi`;
+  const homeUrl = isEn ? `${baseUrl}/en` : baseUrl;
+  const pageUrl = isEn ? `${baseUrl}/plan-bilgi?lang=en` : `${baseUrl}/plan-bilgi`;
   const breadcrumbId = `${pageUrl}#breadcrumb`;
 
   const organization = buildOrganizationNode(baseUrl, contact);
@@ -319,7 +350,7 @@ function PlanBilgiSchema({ locale = "tr", contact, plan }: PlanBilgiSchemaProps)
         "@type": "ListItem",
         position: 1,
         name: isEn ? "Home" : "Ana Sayfa",
-        item: baseUrl,
+        item: homeUrl,
       },
       {
         "@type": "ListItem",
@@ -334,7 +365,7 @@ function PlanBilgiSchema({ locale = "tr", contact, plan }: PlanBilgiSchemaProps)
     "@id": `${pageUrl}#webpage`,
     name: isEn ? `Account Activation | ${APP_NAME || "rOndevu"}` : `Hesap Aktivasyonu | ${APP_NAME || "rOndevu"}`,
     description: isEn
-      ? "Activate your rOndevu account and receive your personal booking link."
+      ? "Activate your rOndevu account and receive your personal booking link. Reach us directly via WhatsApp, phone, or email for fast onboarding and setup."
       : "rOndevu hesabınızı hemen açıp profil linkinizi teslim edelim. Doğrudan iletişim kanallarından ulaşabilirsiniz.",
     url: pageUrl,
     inLanguage,

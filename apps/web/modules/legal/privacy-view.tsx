@@ -10,6 +10,7 @@ import {
   Database,
   Globe,
   Mail,
+  MessageCircle,
   Phone,
   Scale,
   ShieldCheck,
@@ -19,6 +20,7 @@ import Link from "next/link";
 
 const DEFAULT_SUPPORT_EMAIL = "destek@rondevu.org";
 const DEFAULT_SUPPORT_PHONE = "0552 119 19 87";
+const DEFAULT_SUPPORT_WHATSAPP = "905521191987";
 
 function LegalBackgroundGrid() {
   const rows = 8;
@@ -88,6 +90,10 @@ export function PrivacyView({ initialContact }: PrivacyViewProps = {}) {
   const rawPhone = resolvedContact?.phone;
   const phone = rawPhone && rawPhone !== "0850 000 00 00" ? rawPhone : DEFAULT_SUPPORT_PHONE;
   const cleanPhone = phone.replace(/[^\d+]/g, "");
+  const rawWhatsapp = resolvedContact?.whatsapp;
+  const whatsapp =
+    rawWhatsapp && rawWhatsapp !== "908500000000" ? rawWhatsapp : DEFAULT_SUPPORT_WHATSAPP;
+  const cleanWhatsapp = whatsapp.replace(/[^\d]/g, "");
 
   return (
     <div className="relative min-h-screen bg-default text-emphasis selection:bg-brand-default selection:text-brand">
@@ -139,6 +145,14 @@ export function PrivacyView({ initialContact }: PrivacyViewProps = {}) {
                 <a href={`tel:${cleanPhone}`} className="inline-flex items-center gap-1.5 text-emphasis hover:underline">
                   <Phone className="h-3.5 w-3.5" />
                   <span>{phone}</span>
+                </a>
+                <a
+                  href={`https://wa.me/${cleanWhatsapp}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-emphasis hover:underline">
+                  <MessageCircle className="h-3.5 w-3.5" />
+                  <span>WhatsApp</span>
                 </a>
                 <Link href="/plan-bilgi" className="inline-flex items-center gap-1.5 text-emphasis hover:underline">
                   <Globe className="h-3.5 w-3.5" />
@@ -195,8 +209,8 @@ export function PrivacyView({ initialContact }: PrivacyViewProps = {}) {
                 <span>
                   <strong>Kimlik ve İletişim Bilgileri (Ad, soyad, e-posta, telefon numarası):</strong>{" "}
                   Hesap açılışı ve doğrulaması, katılımcının randevu sahibine bildirilmesi, SMS OTP
-                  doğrulaması (etkinleştirildiğinde), randevu onayı ve hatırlatma iletilerinin gönderilmesi
-                  amacıyla işlenir.
+                  doğrulaması (etkinleştirildiğinde) ile e-posta, SMS ve WhatsApp üzerinden randevu
+                  onayı ve hatırlatma iletilerinin gönderilmesi amacıyla işlenir.
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
@@ -235,8 +249,8 @@ export function PrivacyView({ initialContact }: PrivacyViewProps = {}) {
                 <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emphasis" />
                 <span>
                   <strong>Sözleşmenin kurulması ve ifası (KVKK m. 5/2-c):</strong> Hesap aktivasyonu,
-                  randevu sayfasının işletilmesi, randevu kaydının oluşturulması ve bildirimlerin
-                  iletilmesi.
+                  randevu sayfasının işletilmesi, randevu kaydının oluşturulması ile e-posta, SMS ve
+                  WhatsApp bildirimlerinin iletilmesi.
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
@@ -330,6 +344,38 @@ export function PrivacyView({ initialContact }: PrivacyViewProps = {}) {
 
               <div className="rounded-xl border border-subtle p-4">
                 <div className="flex items-center justify-between">
+                  <span className="font-semibold text-emphasis text-sm">
+                    WhatsApp Bildirim Altyapısı (Evolution API)
+                  </span>
+                  <span className="rounded bg-muted/40 px-2 py-0.5 text-xs text-subtle">
+                    WhatsApp Bildirimleri
+                  </span>
+                </div>
+                <p className="mt-2 text-xs leading-relaxed text-subtle">
+                  WhatsApp üzerinden randevu onayı veya hatırlatma gönderimi etkinleştirildiğinde
+                  telefon numarası ve randevu bildirim içeriği yalnızca mesajın iletilmesi amacıyla
+                  Evolution API altyapısı üzerinden işlenir.
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-subtle p-4">
+                <div className="flex items-center justify-between">
+                  <span className="font-semibold text-emphasis text-sm">
+                    E-posta İletim Altyapısı (SMTP / E-posta Servisi)
+                  </span>
+                  <span className="rounded bg-muted/40 px-2 py-0.5 text-xs text-subtle">
+                    E-posta Bildirimleri
+                  </span>
+                </div>
+                <p className="mt-2 text-xs leading-relaxed text-subtle">
+                  Hesap doğrulama, randevu onayı, takvim davetiyesi (.ics) ve hatırlatma iletilerinin
+                  gönderilmesi için e-posta adresi ve ileti içeriği yalnızca gönderimin tamamlanması
+                  amacıyla yapılandırılan SMTP / e-posta servisi üzerinden aktarılır.
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-subtle p-4">
+                <div className="flex items-center justify-between">
                   <span className="font-semibold text-emphasis text-sm">Cloudflare, Inc.</span>
                   <span className="rounded bg-muted/40 px-2 py-0.5 text-xs text-subtle">
                     Ağ Güvenliği & WAF
@@ -349,8 +395,9 @@ export function PrivacyView({ initialContact }: PrivacyViewProps = {}) {
                   </span>
                 </div>
                 <p className="mt-2 text-xs leading-relaxed text-subtle">
-                  Hesap sahibi Google Takvim veya çevrimiçi görüşme servisi bağlarsa randevu zamanı ve
-                  ilgili toplantı detayları yalnızca yetkilendirilen entegrasyonla eşitlenir.
+                  Hesap sahibi Google Takvim, Apple Calendar veya Outlook/Microsoft 365 takvimi ile
+                  Google Meet, Zoom, Microsoft Teams ya da rOndevu Video görüşme servisi bağlarsa randevu
+                  zamanı ve ilgili toplantı detayları yalnızca yetkilendirilen entegrasyonla eşitlenir.
                 </p>
               </div>
             </div>
@@ -396,6 +443,14 @@ export function PrivacyView({ initialContact }: PrivacyViewProps = {}) {
                   className="flex items-center gap-1.5 text-emphasis hover:underline">
                   <Phone className="h-3.5 w-3.5" />
                   <span>{phone}</span>
+                </a>
+                <a
+                  href={`https://wa.me/${cleanWhatsapp}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-emphasis hover:underline">
+                  <MessageCircle className="h-3.5 w-3.5" />
+                  <span>WhatsApp</span>
                 </a>
                 <Link
                   href="/plan-bilgi"
