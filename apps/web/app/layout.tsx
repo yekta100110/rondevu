@@ -152,9 +152,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           dangerouslySetInnerHTML={{
             __html: `(function() {
               try {
-                var path = window.location.pathname.replace(/\/$/, "") || "/";
+                var path = window.location.pathname.replace(/\\\/$/, "") || "/";
                 var isMarketingPage =
-                  path === "/" || path === "/en" || path === "/pricing" || path === "/en/pricing";
+                  path === "/" ||
+                  path === "/en" ||
+                  path === "/pricing" ||
+                  path === "/en/pricing" ||
+                  path === "/tos" ||
+                  path === "/privacy";
                 var stored = isMarketingPage ? null : localStorage.getItem("app-theme");
                 var isDark = false;
                 if (stored === "dark") {
@@ -167,11 +172,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 if (isDark) {
                   document.documentElement.classList.add("dark");
                   document.documentElement.classList.remove("light");
-                  document.documentElement.style.backgroundColor = "#141414";
+                  if (!isMarketingPage) {
+                    document.documentElement.style.backgroundColor = "#141414";
+                  }
                 } else {
                   document.documentElement.classList.remove("dark");
                   document.documentElement.classList.add("light");
-                  document.documentElement.style.backgroundColor = "#ffffff";
+                  if (!isMarketingPage) {
+                    document.documentElement.style.backgroundColor = "#ffffff";
+                  }
                 }
               } catch (e) {}
             })();`,

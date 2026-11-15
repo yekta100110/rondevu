@@ -10,9 +10,22 @@ import type { Locale } from "../i18n/home-translations";
 const DEFAULT_SUPPORT_EMAIL = "destek@rondevu.org";
 const DEFAULT_SUPPORT_PHONE = "0552 119 19 87";
 
-export function MarketingFooter({ locale }: { locale: Locale }) {
+interface MarketingFooterContact {
+  phone?: string;
+  email?: string;
+  whatsapp?: string;
+}
+
+interface MarketingFooterProps {
+  locale: Locale;
+  initialContact?: MarketingFooterContact;
+}
+
+export function MarketingFooter({ locale, initialContact }: MarketingFooterProps) {
   const pathname = usePathname();
   const normalizedPath = pathname && pathname !== "/" ? pathname.replace(/\/+$/, "") : "/";
+  const homeHref = locale === "en" ? "/en" : "/";
+  const pricingHref = locale === "en" ? "/en/pricing" : "/pricing";
 
   const languageSwitch = (() => {
     if (normalizedPath === "/en") {
@@ -36,22 +49,29 @@ export function MarketingFooter({ locale }: { locale: Locale }) {
     staleTime: 30000,
   });
 
-  const email = contactConfig?.email || DEFAULT_SUPPORT_EMAIL;
+  const resolvedContact = contactConfig ?? initialContact;
+  const email = resolvedContact?.email || DEFAULT_SUPPORT_EMAIL;
   const phone =
-    contactConfig?.phone && contactConfig.phone !== "0850 000 00 00"
-      ? contactConfig.phone
+    resolvedContact?.phone && resolvedContact.phone !== "0850 000 00 00"
+      ? resolvedContact.phone
       : DEFAULT_SUPPORT_PHONE;
   const cleanPhone = phone.replace(/[^\d+]/g, "");
 
   return (
     <footer className="relative z-10 border-t border-subtle/70 bg-default px-4 py-12 text-center sm:px-6">
-      <Link href="/" aria-label="rOndevu Anasayfa" className="inline-flex items-center justify-center">
+      <Link
+        href={homeHref}
+        aria-label={locale === "tr" ? "rOndevu Ana Sayfa" : "rOndevu Home"}
+        className="inline-flex items-center justify-center">
         <BrandLogo placement="footer" />
       </Link>
       <nav
         aria-label={locale === "tr" ? "Alt menü ve yasal bağlantılar" : "Footer navigation and legal links"}
         className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm text-subtle">
-        <Link href="/pricing" className="transition-colors hover:text-emphasis">
+        <Link href={homeHref} className="transition-colors hover:text-emphasis">
+          {locale === "tr" ? "Ana Sayfa" : "Home"}
+        </Link>
+        <Link href={pricingHref} className="transition-colors hover:text-emphasis">
           {locale === "tr" ? "Fiyatlandırma" : "Pricing"}
         </Link>
         <Link href="/plan-bilgi" className="transition-colors hover:text-emphasis">
@@ -62,6 +82,9 @@ export function MarketingFooter({ locale }: { locale: Locale }) {
         </Link>
         <Link href="/privacy" className="transition-colors hover:text-emphasis">
           {locale === "tr" ? "Gizlilik Politikası" : "Privacy Policy"}
+        </Link>
+        <Link href="/auth/login" className="transition-colors hover:text-emphasis">
+          {locale === "tr" ? "Giriş Yap" : "Sign In"}
         </Link>
         <Link
           href={languageSwitch.href}

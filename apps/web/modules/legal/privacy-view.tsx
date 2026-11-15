@@ -3,7 +3,6 @@
 import { APP_NAME } from "@calcom/lib/constants";
 import type { PlanContactConfig } from "@calcom/lib/planContactConfig";
 import { trpc } from "@calcom/trpc/react";
-import { Button } from "@calcom/ui/components/button";
 import {
   ArrowLeft,
   CheckCircle2,
@@ -17,7 +16,6 @@ import {
   UserCheck,
 } from "lucide-react";
 import Link from "next/link";
-import { BrandLogo } from "../home/components/BrandLogo";
 
 const DEFAULT_SUPPORT_EMAIL = "destek@rondevu.org";
 const DEFAULT_SUPPORT_PHONE = "0552 119 19 87";
@@ -82,12 +80,12 @@ interface PrivacyViewProps {
 
 export function PrivacyView({ initialContact }: PrivacyViewProps = {}) {
   const { data: contactConfig } = trpc.viewer.public.getPlanContact.useQuery(undefined, {
-    initialData: initialContact,
     staleTime: 30000,
   });
 
-  const email = contactConfig?.email || initialContact?.email || DEFAULT_SUPPORT_EMAIL;
-  const rawPhone = contactConfig?.phone || initialContact?.phone;
+  const resolvedContact = contactConfig ?? initialContact;
+  const email = resolvedContact?.email || DEFAULT_SUPPORT_EMAIL;
+  const rawPhone = resolvedContact?.phone;
   const phone = rawPhone && rawPhone !== "0850 000 00 00" ? rawPhone : DEFAULT_SUPPORT_PHONE;
   const cleanPhone = phone.replace(/[^\d+]/g, "");
 
@@ -95,28 +93,17 @@ export function PrivacyView({ initialContact }: PrivacyViewProps = {}) {
     <div className="relative min-h-screen bg-default text-emphasis selection:bg-brand-default selection:text-brand">
       <LegalBackgroundGrid />
 
-      {/* Top Navbar */}
-      <header className="relative sticky top-0 z-20 border-subtle/80 border-b bg-default/80 backdrop-blur-md">
-        <div className="mx-auto grid h-16 max-w-6xl grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center px-4 sm:px-6 lg:px-8">
+      {/* Main Container */}
+      <main className="relative z-10 mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
+        <div className="mb-8">
           <Link
             href="/"
-            className="flex items-center justify-self-start gap-2 text-subtle text-sm transition-colors hover:text-emphasis">
-            <ArrowLeft className="h-4 w-4" />
-            <span className="hidden sm:inline">Ana Sayfaya Dön</span>
-          </Link>
-          <Link href="/" className="flex items-center justify-self-center">
-            <BrandLogo />
-          </Link>
-          <Link href="/auth/login" className="justify-self-end">
-            <Button color="secondary" size="sm">
-              Giriş Yap
-            </Button>
+            className="inline-flex items-center gap-2 text-sm text-subtle transition-colors hover:text-emphasis">
+            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+            <span>Ana Sayfaya Dön</span>
           </Link>
         </div>
-      </header>
 
-      {/* Main Container */}
-      <main className="relative z-10 mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
         {/* Header Hero */}
         <div className="mb-10 text-center">
           <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-subtle bg-muted/30 px-3 py-1 font-medium text-subtle text-xs">
@@ -427,6 +414,9 @@ export function PrivacyView({ initialContact }: PrivacyViewProps = {}) {
             © {new Date().getFullYear()} {APP_NAME}. Tüm hakları saklıdır.
           </span>
           <div className="flex flex-wrap gap-4">
+            <Link href="/" className="hover:text-emphasis hover:underline">
+              Ana Sayfa
+            </Link>
             <Link href="/pricing" className="hover:text-emphasis hover:underline">
               Fiyatlandırma
             </Link>
@@ -434,7 +424,10 @@ export function PrivacyView({ initialContact }: PrivacyViewProps = {}) {
               Kullanım Koşulları
             </Link>
             <Link href="/plan-bilgi" className="hover:text-emphasis hover:underline">
-              İletişim & Aktivasyon
+              İletişim &amp; Aktivasyon
+            </Link>
+            <Link href="/auth/login" className="hover:text-emphasis hover:underline">
+              Giriş Yap
             </Link>
           </div>
         </div>

@@ -13,9 +13,9 @@ html.dark, :root.dark, body.dark {
   --token-9595f573-f11c-4bb6-9658-3a8516976be5: #18181b !important;
 }
 
-/* Page Background */
-html body {
-  background-color: var(--token-851bb574-8c69-41a0-b35c-b891de337dd8, #09090b) !important;
+/* Page Background (scoped to pricing root so main app and light mode are untouched) */
+#cal-pricing-1to1-root {
+  background-color: var(--token-929b8a8e-1101-4904-980f-6a5ad686df10, #f4f4f4);
 }
 
 /* 2-Plan Card Grid Override */
@@ -60,7 +60,7 @@ html body {
 }
 
 /* Dark Mode Tokens & Surface Contrast Rules for Pricing */
-html.dark, html.dark body {
+html.dark #cal-pricing-1to1-root {
   background-color: #141414 !important;
   color: #f4f4f5 !important;
   color-scheme: dark;
@@ -221,10 +221,8 @@ html.dark .framer-1d4gdfe svg {
 /* ========================================================
    rOndevu Kökten Karanlık Mod Tasarım Sistemi (Pricing Framer)
    ======================================================== */
-html.dark,
-html.dark body,
 html.dark #cal-pricing-1to1-root,
-html.dark .framer-41gqb.framer-lanly2 {
+html.dark #cal-pricing-1to1-root .framer-41gqb.framer-lanly2 {
   background-color: #141414 !important;
   color: #f4f4f5 !important;
   color-scheme: dark;
@@ -1676,5 +1674,31 @@ html.dark #cal-pricing-1to1-root #feature-breakdown [data-framer-name="Row"] > *
     width: 100% !important;
     min-width: 0 !important;
   }
+}
+
+/* Tighten top spacing now that the sticky marketing header is removed */
+#cal-pricing-1to1-root .framer-50cecz {
+  padding-top: 32px !important;
+}
+
+#cal-pricing-1to1-root .framer-jx05l-container {
+  display: none !important;
+}
+
+/* Keep local pricing badge icon legible on dark raised surfaces */
+html.dark #cal-pricing-1to1-root .framer-ww10i6 img[src="/cal_files/pricing-badge-icon.svg"] {
+  filter: brightness(0) invert(1) opacity(0.9);
+}
+
+#cal-pricing-1to1-root .rondevu-feature-check {
+  align-items: center;
+  color: #18181b;
+  display: inline-flex;
+  font-size: 14px;
+  font-weight: 700;
+  justify-content: center;
+  line-height: 1;
+  min-height: 20px;
+  min-width: 20px;
 }
 

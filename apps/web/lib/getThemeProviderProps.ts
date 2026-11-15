@@ -9,7 +9,11 @@ enum ThemeSupport {
   App = "appConfigured",
   // Booking Pages
   Booking = "bookingConfigured",
+  // Marketing and Legal Pages (follow system theme, isolated from app-theme)
+  Marketing = "marketingConfigured",
 }
+
+const MARKETING_SYSTEM_THEME_PATHS = new Set(["/", "/en", "/pricing", "/en/pricing", "/tos", "/privacy"]);
 
 /**
  * Returns a unique identifier that remains the same as long as we land on the public page for the same entity like event-type/dynamic-group-booking etc
@@ -88,11 +92,20 @@ export function getThemeProviderProps({
   searchParams: ReadonlyURLSearchParams | null;
 }) {
   const isBookingPage = props.isBookingPage;
+  const normalizedPath = pathname ? pathname.replace(/\/+$/, "") || "/" : null;
+  const isMarketingSystemThemeRoute =
+    !isBookingPage &&
+    !isEmbedMode &&
+    normalizedPath !== null &&
+    MARKETING_SYSTEM_THEME_PATHS.has(normalizedPath);
+
   const themeSupport = isBookingPage
     ? ThemeSupport.Booking
     : props.isThemeSupported === false
       ? ThemeSupport.None
-      : ThemeSupport.App;
+      : isMarketingSystemThemeRoute
+        ? ThemeSupport.Marketing
+        : ThemeSupport.App;
 
   const themeQueryParam = searchParams?.get("theme") ?? "";
   const themeParsed = z.enum(["light", "dark", "system", "auto"]).safeParse(themeQueryParam);
@@ -107,6 +120,19 @@ export function getThemeProviderProps({
       nonce: props.nonce,
       enableColorScheme: false,
       enableSystem: themeSupport !== ThemeSupport.None,
+    };
+  }
+
+  if (themeSupport === ThemeSupport.Marketing) {
+    return {
+      key: "marketing-system-theme",
+      storageKey: "marketing-system-theme",
+      defaultTheme: "system",
+      enableSystem: true,
+      forcedTheme: undefined,
+      attribute: "class",
+      enableColorScheme: false,
+      nonce: props.nonce,
     };
   }
 

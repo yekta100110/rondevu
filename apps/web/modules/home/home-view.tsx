@@ -1,9 +1,9 @@
 "use client";
 
+import type { PlanContactConfig } from "@calcom/lib/planContactConfig";
 import { trpc } from "@calcom/trpc/react";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useLayoutEffect, useState } from "react";
-import { Navbar } from "./components/Navbar";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { MarketingFooter } from "./components/MarketingFooter";
 import { PlanContactModal } from "./components/PlanContactModal";
 import type { Locale } from "./i18n/home-translations";
@@ -12,53 +12,26 @@ interface HomeViewProps {
   html: string;
   svgTemplates: string;
   isLoggedIn?: boolean;
+  initialContact?: PlanContactConfig;
   initialLocale: Locale;
 }
 
-function HomeView({ html, svgTemplates, isLoggedIn = false, initialLocale }: HomeViewProps) {
+function HomeView({ html, svgTemplates, isLoggedIn = false, initialContact, initialLocale }: HomeViewProps) {
   const router = useRouter();
   const locale = initialLocale;
   const [modalPlanType, setModalPlanType] = useState<"general" | "monthly" | "yearly" | null>(null);
-  const [systemTheme, setSystemTheme] = useState<"dark" | "light">("light");
   const [mounted, setMounted] = useState(false);
 
-  const applySystemTheme = useCallback(() => {
-    const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    setSystemTheme(isDark ? "dark" : "light");
-
-    if (isDark) {
-      document.documentElement.classList.add("dark");
-      document.documentElement.classList.remove("light");
-      document.documentElement.style.backgroundColor = "#141414";
-      document.body.style.backgroundColor = "#141414";
-    } else {
-      document.documentElement.classList.remove("dark");
-      document.documentElement.classList.add("light");
-      document.documentElement.style.backgroundColor = "#ffffff";
-      document.body.style.backgroundColor = "#ffffff";
-    }
-  }, []);
-
-  // Otomatik Dil ve Tema Tespiti
+  // Otomatik Dil ve Başlık Tespiti (Tema yönetimi izole ThemeProvider tarafından yapılır)
   useLayoutEffect(() => {
     setMounted(true);
 
     localStorage.removeItem("app-locale");
-    localStorage.removeItem("app-theme");
     document.title =
       locale === "tr"
         ? "rOndevu - Herkes İçin Randevu Sistemi"
         : "rOndevu - Clear & Simple Appointment Scheduling";
-
-    applySystemTheme();
-
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const handleMediaChange = () => {
-      applySystemTheme();
-    };
-    mediaQuery.addEventListener("change", handleMediaChange);
-    return () => mediaQuery.removeEventListener("change", handleMediaChange);
-  }, [applySystemTheme, locale]);
+  }, [locale]);
 
   // Hero preview follows the source page's complete appointment-state cycle without relying on Framer runtime hydration.
   useEffect(() => {
@@ -244,13 +217,22 @@ function HomeView({ html, svgTemplates, isLoggedIn = false, initialLocale }: Hom
         card.classList.toggle("rondevu-calendar-card-active", index === frame % calendarCards.length);
       });
 
-      const notifications = root.querySelectorAll<HTMLElement>(
-        '.framer-54l76e [data-framer-name="1"], .framer-54l76e [data-framer-name="2"], .framer-54l76e [data-framer-name="3"]'
-      );
-      notifications.forEach((notification, index) => {
-        const notificationFrame = (frame + 1) % notifications.length;
-        notification.classList.toggle("rondevu-notification-visible", index <= notificationFrame);
-      });
+      const notificationSelectors = [
+        '.framer-54l76e [data-framer-name="1"]',
+        '.framer-54l76e [data-framer-name="2"]',
+        '.framer-54l76e [data-framer-name="3"]',
+      ] as const;
+      const notifications = notificationSelectors
+        .map((sel) => root.querySelector<HTMLElement>(sel))
+        .filter((el): el is HTMLElement => Boolean(el));
+      if (notifications.length > 0) {
+        const activeIdx = frame % notifications.length;
+        notifications.forEach((notification, index) => {
+          const stackPos = (index - activeIdx + notifications.length) % notifications.length;
+          notification.setAttribute("data-rondevu-stack-pos", String(stackPos));
+          notification.classList.toggle("rondevu-notification-visible", stackPos === 0);
+        });
+      }
 
       frame += 1;
     };
@@ -303,8 +285,28 @@ function HomeView({ html, svgTemplates, isLoggedIn = false, initialLocale }: Hom
 
     normalizeFaqChrome();
     const timer = window.setTimeout(normalizeFaqChrome, 0);
-    return () => window.clearTimeout(timer);
-  }, [locale, mounted, systemTheme]);
+    const themeObserver = new MutationObserver(normalizeFaqChrome);
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    return () => {
+      window.clearTimeout(timer);
+      themeObserver.disconnect();
+    };
+  }, [locale, mounted]);
+
+  useEffect(() => {
+    if (!mounted) return;
+    const links = document.querySelectorAll<HTMLAnchorElement>("#cal-1to1-root .rondevu-hero-login-link");
+    links.forEach((link) => {
+      if (isLoggedIn) {
+        link.setAttribute("href", "/event-types");
+        link.textContent = locale === "en" ? "Go to Dashboard" : "Hesabım var · Panele Git";
+      } else {
+        link.setAttribute("href", "/auth/login");
+        link.textContent =
+          locale === "en" ? "Already have an account? Sign in" : "Hesabım var · Giriş Yap";
+      }
+    });
+  }, [isLoggedIn, locale, mounted]);
 
   // Remove retired calls to action and status content from either static language fragment.
   useEffect(() => {
@@ -367,12 +369,15 @@ function HomeView({ html, svgTemplates, isLoggedIn = false, initialLocale }: Hom
     staleTime: 30000,
   });
 
+  const resolvedContact = contactConfig ?? initialContact;
   const phone =
-    contactConfig?.phone && contactConfig.phone !== "0850 000 00 00" ? contactConfig.phone : "0552 119 19 87";
-  const email = contactConfig?.email || "destek@rondevu.org";
+    resolvedContact?.phone && resolvedContact.phone !== "0850 000 00 00"
+      ? resolvedContact.phone
+      : "0552 119 19 87";
+  const email = resolvedContact?.email || "destek@rondevu.org";
   const whatsapp =
-    contactConfig?.whatsapp && contactConfig.whatsapp !== "908500000000"
-      ? contactConfig.whatsapp
+    resolvedContact?.whatsapp && resolvedContact.whatsapp !== "908500000000"
+      ? resolvedContact.whatsapp
       : "905521191987";
 
   const handleModalClose = (): void => {
@@ -461,6 +466,13 @@ function HomeView({ html, svgTemplates, isLoggedIn = false, initialLocale }: Hom
 
     const href = anchor.getAttribute("href") || "";
     const text = anchor.textContent?.trim().toLowerCase() || "";
+    const pricingPath = locale === "en" ? "/en/pricing" : "/pricing";
+
+    if (href === "/auth/login" || href === "/event-types") {
+      e.preventDefault();
+      router.push(href);
+      return;
+    }
 
     if (text.includes("bilgi al")) {
       e.preventDefault();
@@ -468,10 +480,10 @@ function HomeView({ html, svgTemplates, isLoggedIn = false, initialLocale }: Hom
       return;
     }
 
-    // Doğrudan /pricing sayfasına gitme
-    if (href === "/pricing") {
+    // Doğrudan fiyatlandırma sayfasına gitme
+    if (href === "/pricing" || href === "/en/pricing") {
       e.preventDefault();
-      router.push("/pricing");
+      router.push(pricingPath);
       return;
     }
 
@@ -488,15 +500,13 @@ function HomeView({ html, svgTemplates, isLoggedIn = false, initialLocale }: Hom
       if (pricingEl) {
         pricingEl.scrollIntoView({ behavior: "smooth" });
       } else {
-        router.push("/pricing");
+        router.push(pricingPath);
       }
       return;
     }
 
-    // "Hemen Başla" / "Get started" / Kayıt butonları -> Doğrudan /pricing
+    // "Hemen Başla" / "Get started" / Kayıt butonları -> Doğrudan fiyatlandırma
     if (
-      href === "/pricing" ||
-      href.includes("/pricing") ||
       href.includes("signup") ||
       text.includes("get started") ||
       text.includes("hemen başla") ||
@@ -504,7 +514,7 @@ function HomeView({ html, svgTemplates, isLoggedIn = false, initialLocale }: Hom
       text.includes("plan seç")
     ) {
       e.preventDefault();
-      router.push("/pricing");
+      router.push(pricingPath);
       return;
     }
   };
@@ -514,16 +524,13 @@ function HomeView({ html, svgTemplates, isLoggedIn = false, initialLocale }: Hom
       {/* Cal.com SVG Şablonları */}
       <div id="svg-templates-container" dangerouslySetInnerHTML={{ __html: svgTemplates }} />
 
-      {/* Ortak ve Tekil Navbar */}
-      <Navbar locale={locale} isLoggedIn={isLoggedIn} />
-
       {/* 1:1 Cal.com Sayfa Gövdesi */}
       <div
         id="cal-1to1-root"
         onClick={handleContainerClick}
         dangerouslySetInnerHTML={{ __html: html }}
       />
-      <MarketingFooter locale={locale} />
+      <MarketingFooter locale={locale} initialContact={resolvedContact} />
 
       {/* Admin Panelinden Dinamik İletişim Modalı */}
       <PlanContactModal

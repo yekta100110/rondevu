@@ -65,6 +65,7 @@ const HomePage = async () => {
         html={html}
         svgTemplates={svgTemplates}
         isLoggedIn={isLoggedIn}
+        initialContact={contact}
         initialLocale={initialLocale}
       />
     </>

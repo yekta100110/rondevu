@@ -181,6 +181,67 @@ describe("getThemeProviderProps", () => {
       });
     });
   });
+
+  describe("Marketing and Legal System Theme Support", () => {
+    const marketingExpectedProps = {
+      key: "marketing-system-theme",
+      storageKey: "marketing-system-theme",
+      defaultTheme: "system",
+      enableSystem: true,
+      forcedTheme: undefined,
+      attribute: "class",
+      enableColorScheme: false,
+      nonce: "test-nonce",
+    };
+
+    it.each(["/", "/en", "/pricing", "/en/pricing", "/tos", "/privacy", "/en/", "/pricing/"])(
+      "should return isolated marketing-system-theme for %s when not booking or embed",
+      (pathname) => {
+        const result = getThemeProviderProps({
+          ...fnArg,
+          pathname,
+        });
+        expect(result).toEqual(marketingExpectedProps);
+      }
+    );
+
+    it("should keep booking theme on root path when isBookingPage is true", () => {
+      const result = getThemeProviderProps({
+        ...fnArg,
+        pathname: "/",
+        props: {
+          ...fnArg.props,
+          isBookingPage: true,
+        },
+      });
+      expect(result.storageKey).toBe("booking-theme:/");
+      expect(result.enableSystem).toBe(false);
+    });
+
+    it("should keep embed theme on root path when isEmbedMode is true", () => {
+      const result = getThemeProviderProps({
+        ...fnArg,
+        isEmbedMode: true,
+        embedNamespace: "ns",
+        pathname: "/",
+      });
+      expect(result.storageKey).toBe("embed-theme-ns:/");
+      expect(result.enableSystem).toBe(false);
+    });
+
+    it.each(["/event-types", "/settings/my-account/appearance", "/auth/login"])(
+      "should keep app-theme for %s",
+      (pathname) => {
+        const result = getThemeProviderProps({
+          ...fnArg,
+          pathname,
+        });
+        expect(result.storageKey).toBe("app-theme");
+        expect(result.defaultTheme).toBe("dark");
+        expect(result.enableSystem).toBe(false);
+      }
+    );
+  });
 });
 
 describe("getUniqueIdentifierForBookingPage", () => {
