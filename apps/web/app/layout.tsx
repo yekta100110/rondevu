@@ -158,6 +158,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   path === "/en" ||
                   path === "/pricing" ||
                   path === "/en/pricing" ||
+                  path === "/plan-bilgi" ||
                   path === "/tos" ||
                   path === "/privacy";
                 var stored = isMarketingPage ? null : localStorage.getItem("app-theme");

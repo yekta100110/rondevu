@@ -194,7 +194,18 @@ describe("getThemeProviderProps", () => {
       nonce: "test-nonce",
     };
 
-    it.each(["/", "/en", "/pricing", "/en/pricing", "/tos", "/privacy", "/en/", "/pricing/"])(
+    it.each([
+      "/",
+      "/en",
+      "/pricing",
+      "/en/pricing",
+      "/plan-bilgi",
+      "/tos",
+      "/privacy",
+      "/en/",
+      "/pricing/",
+      "/plan-bilgi/",
+    ])(
       "should return isolated marketing-system-theme for %s when not booking or embed",
       (pathname) => {
         const result = getThemeProviderProps({

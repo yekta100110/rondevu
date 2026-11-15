@@ -2500,12 +2500,20 @@ html.dark #cal-1to1-root .framer-a1alhw svg {
   transform: scale(1.06);
 }
 
+#cal-1to1-root .framer-647xse .framer-ste13c .framer-jayspg-container,
+#cal-1to1-root .framer-647xse .framer-ste13c .framer-7v3s4-container,
+#cal-1to1-root .framer-647xse .framer-ste13c .framer-rg8ycl-container,
+#cal-1to1-root .framer-647xse .framer-ste13c .framer-1y93p6n-container {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 #cal-1to1-root .framer-647xse .framer-ste13c .framer-k4oXa[data-rondevu-day-state="empty"] .framer-156kf12 {
   background-color: transparent !important;
 }
 
 #cal-1to1-root .framer-647xse .framer-ste13c .framer-k4oXa[data-rondevu-day-state="empty"] .framer-text {
-  opacity: 0.35;
+  opacity: 0 !important;
 }
 
 #cal-1to1-root .framer-647xse .framer-ste13c .framer-k4oXa[data-rondevu-day-state="default"] .framer-156kf12 {

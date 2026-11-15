@@ -3,7 +3,7 @@
 import type { PlanContactConfig } from "@calcom/lib/planContactConfig";
 import { trpc } from "@calcom/trpc/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { MarketingFooter } from "./components/MarketingFooter";
 import { PlanContactModal } from "./components/PlanContactModal";
 import type { Locale } from "./i18n/home-translations";
@@ -15,6 +15,22 @@ interface HomeViewProps {
   initialContact?: PlanContactConfig;
   initialLocale: Locale;
 }
+
+const SvgTemplatesBody = memo(function SvgTemplatesBody({ svgTemplates }: { svgTemplates: string }) {
+  const markup = useMemo(() => ({ __html: svgTemplates }), [svgTemplates]);
+  return <div id="svg-templates-container" dangerouslySetInnerHTML={markup} />;
+});
+
+const FramerDomBody = memo(function FramerDomBody({
+  html,
+  onClick,
+}: {
+  html: string;
+  onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+}) {
+  const markup = useMemo(() => ({ __html: html }), [html]);
+  return <div id="cal-1to1-root" onClick={onClick} dangerouslySetInnerHTML={markup} />;
+});
 
 /** Applies consistent open/closed FAQ accordion height and icon rotation without clipping long answers. */
 function applyFaqItemState(item: HTMLElement, isOpen: boolean, immediate: boolean): void {
@@ -664,10 +680,10 @@ function HomeView({ html, svgTemplates, isLoggedIn = false, initialContact, init
       const iconColor = document.documentElement.classList.contains("dark") ? "#f4f4f5" : "#18181b";
       faqSection
         .querySelectorAll<HTMLElement>('[data-framer-name="Open"], [data-framer-name="Closed"]')
-        .forEach((item) => {
+        .forEach((item, index) => {
           item.style.setProperty("border-bottom", "1px solid rgba(177, 177, 178, 0.3)", "important");
           if (item.dataset.faqOpen === undefined) {
-            const initiallyOpen = item.getAttribute("data-framer-name") === "Open";
+            const initiallyOpen = index === 0 || item.getAttribute("data-framer-name") === "Open";
             applyFaqItemState(item, initiallyOpen, true);
           }
         });
@@ -701,6 +717,7 @@ function HomeView({ html, svgTemplates, isLoggedIn = false, initialContact, init
     };
 
     normalizeFaqChrome();
+    const rafId = window.requestAnimationFrame(refreshOpenHeights);
     const timer = window.setTimeout(() => {
       normalizeFaqChrome();
       refreshOpenHeights();
@@ -709,6 +726,7 @@ function HomeView({ html, svgTemplates, isLoggedIn = false, initialContact, init
     themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
     window.addEventListener("resize", refreshOpenHeights);
     return () => {
+      window.cancelAnimationFrame(rafId);
       window.clearTimeout(timer);
       themeObserver.disconnect();
       window.removeEventListener("resize", refreshOpenHeights);
@@ -897,17 +915,19 @@ function HomeView({ html, svgTemplates, isLoggedIn = false, initialContact, init
     }
   };
 
+  const handleContainerClickRef = useRef(handleContainerClick);
+  handleContainerClickRef.current = handleContainerClick;
+  const onRootClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    handleContainerClickRef.current(e);
+  }, []);
+
   return (
     <div className="relative min-h-screen bg-white dark:bg-[#141414] text-emphasis selection:bg-brand-default selection:text-brand transition-colors duration-200">
       {/* Cal.com SVG Şablonları */}
-      <div id="svg-templates-container" dangerouslySetInnerHTML={{ __html: svgTemplates }} />
+      <SvgTemplatesBody svgTemplates={svgTemplates} />
 
       {/* 1:1 Cal.com Sayfa Gövdesi */}
-      <div
-        id="cal-1to1-root"
-        onClick={handleContainerClick}
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
+      <FramerDomBody html={html} onClick={onRootClick} />
       <MarketingFooter locale={locale} initialContact={resolvedContact} />
 
       {/* Admin Panelinden Dinamik İletişim Modalı */}

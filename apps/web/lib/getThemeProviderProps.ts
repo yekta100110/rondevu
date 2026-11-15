@@ -13,7 +13,15 @@ enum ThemeSupport {
   Marketing = "marketingConfigured",
 }
 
-const MARKETING_SYSTEM_THEME_PATHS = new Set(["/", "/en", "/pricing", "/en/pricing", "/tos", "/privacy"]);
+const MARKETING_SYSTEM_THEME_PATHS = new Set([
+  "/",
+  "/en",
+  "/pricing",
+  "/en/pricing",
+  "/plan-bilgi",
+  "/tos",
+  "/privacy",
+]);
 
 /**
  * Returns a unique identifier that remains the same as long as we land on the public page for the same entity like event-type/dynamic-group-booking etc

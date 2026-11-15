@@ -2,7 +2,7 @@
 
 import { trpc } from "@calcom/trpc/react";
 import { CheckCircle2, Clock, MessageCircle, Plus } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { MarketingFooter } from "../home/components/MarketingFooter";
 import { PlanContactModal } from "../home/components/PlanContactModal";
 import type { Locale } from "../home/i18n/home-translations";
@@ -93,6 +93,26 @@ const FAQ_COPY: Record<Locale, { heading: string; subheading: string; items: Faq
     ],
   },
 };
+
+interface StaticSvgTemplatesProps {
+  svgTemplates: string;
+}
+
+const StaticSvgTemplates = memo(function StaticSvgTemplates({ svgTemplates }: StaticSvgTemplatesProps) {
+  const markup = useMemo(() => ({ __html: svgTemplates }), [svgTemplates]);
+  return <div id="svg-templates-container" dangerouslySetInnerHTML={markup} />;
+});
+
+interface StaticPricingBodyProps {
+  html: string;
+  locale: Locale;
+  onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+}
+
+const StaticPricingBody = memo(function StaticPricingBody({ html, locale, onClick }: StaticPricingBodyProps) {
+  const markup = useMemo(() => ({ __html: html }), [html]);
+  return <div id="cal-pricing-1to1-root" data-locale={locale} onClick={onClick} dangerouslySetInnerHTML={markup} />;
+});
 
 function PricingView({ html, svgTemplates, initialContact, initialLocale }: PricingViewProps) {
   const locale = initialLocale;
@@ -220,7 +240,7 @@ function PricingView({ html, svgTemplates, initialContact, initialLocale }: Pric
     rawWhatsapp && rawWhatsapp !== "908500000000" ? rawWhatsapp : "905521191987";
 
   // Framer DOM içindeki etkileşimli tıklamaları yakalama (Paket Seçimi & İletişim Modalı)
-  const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleContainerClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLElement;
 
     // 1. data-plan niteliği taşıyan butonlar (yeni sekme/orta tık linke gitsin)
@@ -246,7 +266,7 @@ function PricingView({ html, svgTemplates, initialContact, initialLocale }: Pric
       const el = document.getElementById("feature-breakdown");
       if (el) el.scrollIntoView({ behavior: "smooth" });
     }
-  };
+  }, []);
 
   const handleModalClose = (): void => {
     setModalPlanType(null);
@@ -258,15 +278,10 @@ function PricingView({ html, svgTemplates, initialContact, initialLocale }: Pric
   return (
     <div className="relative min-h-screen bg-white dark:bg-[#141414] text-emphasis selection:bg-brand-default selection:text-brand transition-colors duration-200">
       {/* Cal.com SVG Şablonları */}
-      <div id="svg-templates-container" dangerouslySetInnerHTML={{ __html: svgTemplates }} />
+      <StaticSvgTemplates svgTemplates={svgTemplates} />
 
       {/* 1:1 Cal.com Pricing Sayfa Gövdesi */}
-      <div
-        id="cal-pricing-1to1-root"
-        data-locale={locale}
-        onClick={handleContainerClick}
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
+      <StaticPricingBody html={html} locale={locale} onClick={handleContainerClick} />
 
       {/* Güven Bandı */}
       <section
