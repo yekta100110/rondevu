@@ -1,5 +1,4 @@
 import logger from "@calcom/lib/logger";
-import { metrics } from "@sentry/nextjs";
 import type {
   Calendar,
   CalendarEvent,
@@ -10,6 +9,7 @@ import type {
   IntegrationCalendar,
   NewCalendarEventType,
 } from "@calcom/types/Calendar";
+import { metrics } from "@sentry/nextjs";
 
 const log = logger.getSubLogger({ prefix: ["CalendarTelemetryWrapper"] });
 
@@ -179,6 +179,10 @@ export class CalendarTelemetryWrapper implements Calendar {
     });
 
     return results ?? [];
+  }
+
+  getAvailabilityWithTitles(params: GetAvailabilityParams): Promise<EventBusyDate[]> {
+    return this.deps.originalCalendar.getAvailabilityWithTitles?.(params) ?? this.getAvailability(params);
   }
 
   fetchAvailabilityAndSetCache?(selectedCalendars: IntegrationCalendar[]): Promise<unknown> {
