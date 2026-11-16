@@ -2,211 +2,808 @@
 
 import type { PlanContactConfig } from "@calcom/lib/planContactConfig";
 import { trpc } from "@calcom/trpc/react";
-import {
-  Calendar as CalendarIcon,
-  CheckCircle2,
-  Clock,
-  Globe,
-  Lock,
-  MessageCircle,
-  MessageSquare,
-  Minus,
-  Plus,
-  RefreshCw,
-  ShieldCheck,
-  Smartphone,
-  Sparkles,
-  UserCheck,
-} from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useId, useState } from "react";
+import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { MarketingFooter } from "./components/MarketingFooter";
-import { MarketingHeader } from "./components/MarketingHeader";
 import { PlanContactModal } from "./components/PlanContactModal";
 import type { Locale } from "./i18n/home-translations";
 
 interface HomeViewProps {
-  html?: string;
-  svgTemplates?: string;
+  html: string;
+  svgTemplates: string;
   isLoggedIn?: boolean;
   initialContact?: PlanContactConfig;
-  initialLocale?: Locale;
+  initialLocale: Locale;
 }
 
-interface SpecialistProfile {
-  name: string;
-  specialty: string;
-  service: string;
-  duration: string;
-  avatar: string;
+const SvgTemplatesBody = memo(function SvgTemplatesBody({ svgTemplates }: { svgTemplates: string }) {
+  const markup = useMemo(() => ({ __html: svgTemplates }), [svgTemplates]);
+  return <div id="svg-templates-container" dangerouslySetInnerHTML={markup} />;
+});
+
+const FramerDomBody = memo(function FramerDomBody({
+  html,
+  onClick,
+}: {
+  html: string;
+  onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+}) {
+  const markup = useMemo(() => ({ __html: html }), [html]);
+  return <div id="cal-1to1-root" onClick={onClick} dangerouslySetInnerHTML={markup} />;
+});
+
+/** Applies consistent open/closed FAQ accordion height and icon rotation without clipping long answers. */
+function applyFaqItemState(item: HTMLElement, isOpen: boolean, immediate: boolean): void {
+  item.dataset.faqOpen = String(isOpen);
+  item.setAttribute("aria-expanded", String(isOpen));
+
+  const answerWrapper = item.querySelector<HTMLElement>('[data-framer-name="Answer Wrapper"]');
+  const answer = item.querySelector<HTMLElement>('[data-framer-name="Answer"]');
+  const plusIcon = item.querySelector<HTMLElement>('[data-framer-name="Icon Wrapper"], .framer-1xikzrs');
+
+  if (answer) {
+    answer.style.setProperty("height", "auto", "important");
+    answer.style.opacity = isOpen ? "1" : "0";
+    answer.style.transform = "none";
+    answer.style.transition = immediate ? "none" : "opacity 180ms ease";
+  }
+
+  if (answerWrapper) {
+    const answerText = answer?.querySelector<HTMLElement>(".framer-text") ?? answer;
+    const measuredHeight = Math.max(
+      (answerText?.scrollHeight ?? answerText?.offsetHeight ?? 48) + 12,
+      48
+    );
+    answerWrapper.style.display = "block";
+    answerWrapper.style.overflow = "hidden";
+    answerWrapper.style.transition = immediate ? "none" : "max-height 260ms ease, opacity 180ms ease";
+    answerWrapper.style.maxHeight = isOpen ? `${measuredHeight}px` : "0px";
+    answerWrapper.style.opacity = isOpen ? "1" : "0";
+  }
+
+  if (plusIcon) {
+    plusIcon.style.transform = isOpen ? "rotate(45deg)" : "rotate(0deg)";
+    plusIcon.style.transition = immediate ? "none" : "transform 200ms ease";
+    const plus = plusIcon.matches('[data-framer-name="Plus, add small"]')
+      ? plusIcon
+      : plusIcon.querySelector<HTMLElement>('[data-framer-name="Plus, add small"]');
+    if (plus) {
+      plus.replaceChildren(document.createTextNode("+"));
+      plus.style.setProperty("background", "transparent", "important");
+      plus.style.setProperty(
+        "color",
+        document.documentElement.classList.contains("dark") ? "#f4f4f5" : "#18181b",
+        "important"
+      );
+      plus.style.setProperty("display", "flex", "important");
+      plus.style.setProperty("justify-content", "center", "important");
+      plus.style.setProperty("align-items", "center", "important");
+    }
+  }
 }
 
-const SPECIALIST_PROFILES: Record<Locale, SpecialistProfile[]> = {
-  tr: [
-    {
-      name: "Uzm. Dyt. Selin Aktaş",
-      specialty: "Beslenme & Diyet",
-      service: "Bireysel Beslenme Seansı",
-      duration: "45 dk",
-      avatar: "SA",
-    },
-    {
-      name: "Psk. Cem Arslan",
-      specialty: "Klinik Psikoloji",
-      service: "Bireysel Terapi Görüşmesi",
-      duration: "50 dk",
-      avatar: "CA",
-    },
-    {
-      name: "Fzt. Elif Kaya",
-      specialty: "Manuel Terapi & Rehabilitasyon",
-      service: "Fizik Tedavi & Egzersiz Seansı",
-      duration: "60 dk",
-      avatar: "EK",
-    },
-    {
-      name: "Stilist Burak Demir",
-      specialty: "Kuaför & Saç Tasarımı",
-      service: "Özel Bakım ve Kesim",
-      duration: "30 dk",
-      avatar: "BD",
-    },
-  ],
-  en: [
-    {
-      name: "Selin Aktas, RD",
-      specialty: "Clinical Dietitian",
-      service: "Personal Nutrition Session",
-      duration: "45 min",
-      avatar: "SA",
-    },
-    {
-      name: "Cem Arslan, MSc",
-      specialty: "Clinical Psychologist",
-      service: "Individual Therapy Session",
-      duration: "50 min",
-      avatar: "CA",
-    },
-    {
-      name: "Elif Kaya, PT",
-      specialty: "Physical Therapy & Rehab",
-      service: "Physiotherapy & Exercise Session",
-      duration: "60 min",
-      avatar: "EK",
-    },
-    {
-      name: "Burak Demir",
-      specialty: "Hair & Grooming Specialist",
-      service: "Signature Cut & Styling",
-      duration: "30 min",
-      avatar: "BD",
-    },
-  ],
-};
-
-const DURATION_OPTIONS = {
-  tr: ["15 dk", "30 dk", "45 dk", "60 dk"],
-  en: ["15 min", "30 min", "45 min", "60 min"],
-};
-
-const AVAILABLE_DAYS = [18, 19, 20, 21, 22, 25, 26, 27];
-const TIME_SLOTS = ["09:30", "11:00", "13:30", "15:00", "16:30"];
-
-interface FaqEntry {
-  q: string;
-  a: string;
-}
-
-const FAQ_LIST: Record<Locale, FaqEntry[]> = {
-  tr: [
-    {
-      q: "rOndevu kurulumu ne kadar sürer, teknik bilgi gerekir mi?",
-      a: "Herhangi bir kodlama veya teknik kurulum gerekmez. Hesabınız oluşturulduktan sonra çalışma saatlerinizi belirleyip takviminizi bağlayarak 5 dakika içinde randevu almaya başlayabilirsiniz.",
-    },
-    {
-      q: "SMS doğrulaması nasıl çalışır ve randevu kayıplarını nasıl önler?",
-      a: "Danışan randevu saatini seçtikten sonra telefon numarasına gelen tek kullanımlık SMS onay kodunu girer. Böylece sahte, hatalı veya mükerrer numaralarla randevu oluşturulması engellenir; takviminiz yalnızca gerçek danışanlara ayrılır.",
-    },
-    {
-      q: "WhatsApp bildirimleri için ek bir hesap veya kurulum gerekir mi?",
-      a: "Hayır. Randevu onayları ve randevu öncesi hatırlatma mesajları sistem tarafından doğrudan iletilir. Danışanınız onay ve adres detaylarını doğrudan WhatsApp mesajı olarak alır.",
-    },
-    {
-      q: "Google ve Microsoft Outlook takvimimle çakışmalar nasıl engellenir?",
-      a: "Takvim hesabınızı tek tıkla yetkilendirebilirsiniz. Kişisel takviminizde oluşturduğunuz herhangi bir etkinlik randevu saatlerinizi anında kapatır; rOndevu üzerinden alınan randevular ise doğrudan kişisel takviminize işlenir. Çift randevu riski tamamen ortadan kalkar.",
-    },
-    {
-      q: "Özel alan adı (CNAME) kullanabilir miyim?",
-      a: "Evet. Randevu sayfanızı kendi alan adınız altında (örneğin randevu.kliniginiz.com veya randevu.adiniz.com) çalıştırabilirsiniz. Otomatik SSL sertifikası sistem tarafından sağlanır ve danışanlarınıza kurumsal bir güven verir.",
-    },
-    {
-      q: "Ofis Dışı ve İzin günlerimi nasıl planlarım?",
-      a: "Ofis Dışı / İzinlerim bölümünden resmi tatilleri, yıllık izinlerinizi veya beklenmedik randevusuz günlerinizi seçebilirsiniz. Haftalık çalışma saati şablonunuzu bozmadan dilediğiniz tarih aralığını anında randevulara kapatabilirsiniz.",
-    },
-    {
-      q: "Aylık ve yıllık planlar arasında fark var mı, geçiş yapabilir miyim?",
-      a: "Tüm özellikler her iki pakette de eksiksiz sunulur. Yıllık planda 2 ay hediye avantajından yararlanır ve fiyatınızı 12 ay boyunca sabitlersiniz. Dilediğiniz zaman planlar arasında geçiş yapabilirsiniz.",
-    },
-  ],
-  en: [
-    {
-      q: "How long does setup take, and do I need technical skills?",
-      a: "No coding or technical skills are required. Once your workspace is ready, define your working hours, connect your calendar, and start receiving appointments within 5 minutes.",
-    },
-    {
-      q: "How does SMS verification work and prevent no-shows?",
-      a: "When clients pick a time slot, they confirm a one-time SMS verification code sent to their mobile phone. This stops spam, invalid, or duplicate bookings and keeps your schedule filled only by verified clients.",
-    },
-    {
-      q: "Do I need separate setup for WhatsApp notifications?",
-      a: "No. Booking confirmations and reminders are delivered automatically by the platform. Your clients receive time, location, and session notes directly via WhatsApp.",
-    },
-    {
-      q: "How does two-way calendar sync prevent schedule conflicts?",
-      a: "Connect Google Calendar or Microsoft Outlook with a single authorization. Personal appointments on your calendar instantly block booking windows on rOndevu, and new client reservations appear immediately in your schedule.",
-    },
-    {
-      q: "Can I use my own custom domain (CNAME)?",
-      a: "Yes. You can publish your booking page on your own domain (such as booking.yourclinic.com). An automatic SSL certificate is provisioned to give clients a seamless, trusted experience.",
-    },
-    {
-      q: "How do I manage holidays and out-of-office days?",
-      a: "Using the Out of Office / Leaves section, block specific dates or ranges for holidays and personal time off without altering your recurring weekly schedule.",
-    },
-    {
-      q: "Is there any feature difference between monthly and yearly plans?",
-      a: "All features are identical in both plans. The yearly plan includes 2 free months and locks your price for 12 months. You can transition between plans whenever you wish.",
-    },
-  ],
-};
-
-function HomeView({
-  html: _html,
-  svgTemplates: _svgTemplates,
-  isLoggedIn = false,
-  initialContact,
-  initialLocale = "tr",
-}: HomeViewProps) {
+function HomeView({ html, svgTemplates, isLoggedIn = false, initialContact, initialLocale }: HomeViewProps) {
   const router = useRouter();
   const locale = initialLocale;
-
   const [modalPlanType, setModalPlanType] = useState<"general" | "monthly" | "yearly" | null>(null);
-  const [selectedProfileIndex, setSelectedProfileIndex] = useState(0);
-  const [selectedDurationIndex, setSelectedDurationIndex] = useState(1);
-  const [selectedDay, setSelectedDay] = useState(19);
-  const [selectedTime, setSelectedTime] = useState("13:30");
-  const [isSimulatedVerified, setIsSimulatedVerified] = useState(true);
-  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+  const [mounted, setMounted] = useState(false);
 
-  const baseFaqId = useId();
+  // Otomatik Dil ve Başlık Tespiti (Tema yönetimi izole ThemeProvider tarafından yapılır)
+  useLayoutEffect(() => {
+    setMounted(true);
 
-  useEffect(() => {
+    localStorage.removeItem("app-locale");
     document.title =
       locale === "tr"
         ? "rOndevu - Herkes İçin Randevu Sistemi"
         : "rOndevu - Clear & Simple Appointment Scheduling";
   }, [locale]);
+
+  // Hero preview follows the source page's complete appointment-state cycle and user clicks across all responsive variants.
+  useEffect(() => {
+    if (!mounted) return;
+
+    const profiles =
+      locale === "tr"
+        ? [
+            {
+              name: "Dr. Ayşe Yılmaz",
+              title: "Danışmanlık Seansı",
+              description:
+                "Danışmanlık, klinik veya bireysel randevularınız için rOndevu ile hemen başlayın.",
+              durationIndex: 0,
+              dateIndex: 17,
+            },
+            {
+              name: "Uzm. Deniz Kaya",
+              title: "İlk Değerlendirme",
+              description: "İlk görüşmenizi seçin; uygun saati ve görüşme ayrıntılarını tek ekranda görün.",
+              durationIndex: 1,
+              dateIndex: 22,
+            },
+            {
+              name: "Ece Demir",
+              title: "Proje Planlama",
+              description:
+                "Projenizin sonraki adımlarını netleştirmek için kısa bir planlama görüşmesi ayarlayın.",
+              durationIndex: 2,
+              dateIndex: 26,
+            },
+            {
+              name: "Mert Arslan",
+              title: "Tanışma Görüşmesi",
+              description: "İhtiyaçlarınızı konuşalım ve size uygun randevu akışını birlikte oluşturalım.",
+              durationIndex: 3,
+              dateIndex: 30,
+            },
+          ]
+        : [
+            {
+              name: "Dr. Ayse Yilmaz",
+              title: "Consultation Session",
+              description:
+                "Start scheduling your consultations, clinic visits, or personal appointments with rOndevu.",
+              durationIndex: 0,
+              dateIndex: 17,
+            },
+            {
+              name: "Deniz Kaya",
+              title: "Initial Assessment",
+              description:
+                "Choose your first session and see an available time with every meeting detail in one place.",
+              durationIndex: 1,
+              dateIndex: 22,
+            },
+            {
+              name: "Ece Demir",
+              title: "Project Planning",
+              description: "Book a focused planning session to clarify the next steps for your project.",
+              durationIndex: 2,
+              dateIndex: 26,
+            },
+            {
+              name: "Mert Arslan",
+              title: "Introductory Call",
+              description: "Let’s discuss your needs and shape the appointment flow that works for you.",
+              durationIndex: 3,
+              dateIndex: 30,
+            },
+          ];
+
+    const months =
+      locale === "tr"
+        ? ["Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos"]
+        : ["April", "May", "June", "July", "August"];
+    const availableDayIndices = new Set([17, 18, 19, 22, 23, 24, 25, 26, 29, 30, 31, 32, 33]);
+
+    let activeProfileIndex = 0;
+    let activeDurationIndex = profiles[0].durationIndex;
+    let activeDateIndex = profiles[0].dateIndex;
+    let activeMonthIndex = 1; // Mayıs / May
+    let autoTimer: number | null = null;
+    const transitionTimers = new Set<number>();
+
+    const setPreviewText = (elements: NodeListOf<HTMLElement>, value: string) => {
+      elements.forEach((element) => {
+        if (element.textContent === value) return;
+        element.classList.add("rondevu-hero-preview-changing");
+        const timer = window.setTimeout(() => {
+          element.textContent = value;
+          element.classList.remove("rondevu-hero-preview-changing");
+          transitionTimers.delete(timer);
+        }, 140);
+        transitionTimers.add(timer);
+      });
+    };
+
+    const updatePreview = () => {
+      const heroContainer = document.querySelector<HTMLElement>(".framer-647xse");
+      if (!heroContainer) return;
+
+      const profile = profiles[activeProfileIndex];
+      if (!profile) return;
+
+      setPreviewText(
+        heroContainer.querySelectorAll<HTMLElement>(".framer-hw592q .framer-text"),
+        profile.name
+      );
+      setPreviewText(
+        heroContainer.querySelectorAll<HTMLElement>(".framer-y52rve .framer-text"),
+        profile.title
+      );
+      setPreviewText(
+        heroContainer.querySelectorAll<HTMLElement>(".framer-cxfwa4 .framer-text"),
+        profile.description
+      );
+
+      const monthText = months[activeMonthIndex] ?? months[1];
+      heroContainer.querySelectorAll<HTMLElement>(".framer-1qlv0sk .framer-text").forEach((el) => {
+        if (el.textContent !== monthText) el.textContent = monthText;
+      });
+
+      const isDark = document.documentElement.classList.contains("dark");
+
+      const durationPills = heroContainer.querySelectorAll<HTMLElement>(".framer-103r016 .framer-V26CA");
+      durationPills.forEach((pill, idx) => {
+        const isSelected = idx % 4 === activeDurationIndex;
+        pill.setAttribute("data-framer-name", isSelected ? "Selected" : "Unselected");
+        pill.style.backgroundColor = isSelected ? (isDark ? "#27272a" : "#ffffff") : "transparent";
+        pill.style.boxShadow = isSelected ? "0px 1px 3px 0px rgba(0, 0, 0, 0.1)" : "none";
+        const textEl = pill.querySelector<HTMLElement>(".framer-text");
+        if (textEl) {
+          textEl.style.color = isSelected
+            ? isDark
+              ? "#ffffff"
+              : "rgb(16, 16, 16)"
+            : isDark
+              ? "#71717a"
+              : "rgb(137, 137, 137)";
+        }
+      });
+
+      const dateItems = heroContainer.querySelectorAll<HTMLElement>(".framer-ste13c .framer-k4oXa");
+      dateItems.forEach((item, idx) => {
+        const dayIdx = idx % 35;
+        const isEmpty = dayIdx < 3 || dayIdx > 33;
+        const highlightEl = item.querySelector<HTMLElement>(".framer-156kf12");
+        const dateText = item.querySelector<HTMLElement>(".framer-text");
+        if (!highlightEl || !dateText) return;
+
+        highlightEl.style.removeProperty("background-color");
+        dateText.style.removeProperty("font-weight");
+
+        if (isEmpty) {
+          item.setAttribute("data-rondevu-day-state", "empty");
+          item.setAttribute("data-rondevu-day-valid", "false");
+          return;
+        }
+
+        item.setAttribute("data-rondevu-day-valid", "true");
+        if (dayIdx === activeDateIndex) {
+          item.setAttribute("data-rondevu-day-state", "selected");
+        } else if (availableDayIndices.has(dayIdx)) {
+          item.setAttribute("data-rondevu-day-state", "available");
+        } else {
+          item.setAttribute("data-rondevu-day-state", "default");
+        }
+      });
+    };
+
+    const startAutoCycle = () => {
+      if (autoTimer !== null) window.clearInterval(autoTimer);
+      autoTimer = window.setInterval(() => {
+        activeProfileIndex = (activeProfileIndex + 1) % profiles.length;
+        const nextProfile = profiles[activeProfileIndex];
+        activeDurationIndex = nextProfile.durationIndex;
+        activeDateIndex = nextProfile.dateIndex;
+        updatePreview();
+      }, 3500);
+    };
+
+    const heroEl = document.querySelector<HTMLElement>(".framer-647xse");
+    const handleHeroClick = (event: Event) => {
+      const target = event.target as HTMLElement | null;
+      if (!target || !heroEl) return;
+
+      const pill = target.closest<HTMLElement>(".framer-103r016 .framer-V26CA");
+      if (pill) {
+        const allPills = Array.from(heroEl.querySelectorAll<HTMLElement>(".framer-103r016 .framer-V26CA"));
+        const idx = allPills.indexOf(pill);
+        if (idx !== -1) {
+          activeDurationIndex = idx % 4;
+          activeProfileIndex = activeDurationIndex;
+          updatePreview();
+          startAutoCycle();
+        }
+        return;
+      }
+
+      const dayCell = target.closest<HTMLElement>('.framer-ste13c .framer-k4oXa[data-rondevu-day-valid="true"]');
+      if (dayCell) {
+        const allDays = Array.from(heroEl.querySelectorAll<HTMLElement>(".framer-ste13c .framer-k4oXa"));
+        const idx = allDays.indexOf(dayCell);
+        if (idx !== -1) {
+          activeDateIndex = idx % 35;
+          updatePreview();
+          startAutoCycle();
+        }
+        return;
+      }
+
+      const prevBtn = target.closest<HTMLElement>(".framer-qd088j");
+      if (prevBtn) {
+        activeMonthIndex = (activeMonthIndex - 1 + months.length) % months.length;
+        updatePreview();
+        startAutoCycle();
+        return;
+      }
+
+      const nextBtn = target.closest<HTMLElement>(".framer-191znqb");
+      if (nextBtn) {
+        activeMonthIndex = (activeMonthIndex + 1) % months.length;
+        updatePreview();
+        startAutoCycle();
+      }
+    };
+
+    updatePreview();
+    startAutoCycle();
+    heroEl?.addEventListener("click", handleHeroClick);
+    const themeObserver = new MutationObserver(updatePreview);
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+
+    return () => {
+      if (autoTimer !== null) window.clearInterval(autoTimer);
+      heroEl?.removeEventListener("click", handleHeroClick);
+      themeObserver.disconnect();
+      transitionTimers.forEach((timer) => window.clearTimeout(timer));
+    };
+  }, [locale, mounted]);
+
+  // Restore all step & bento interactive animations (Bento 1-4, Step 02-03) and keep them responsive to clicks.
+  useEffect(() => {
+    if (!mounted) return;
+
+    const root = document.getElementById("cal-1to1-root");
+    if (!root) return;
+
+    // 1. Bento Kart 3: 6 To-do cards cycle + 12h/24h switcher + "Takvimimi üzerine ekle" toggle
+    const todoTimeFormats = {
+      tr: {
+        h24: ["12:00 - 13:00", "11:00 - 12:00", "13:00 - 15:00", "12:00 - 14:00", "11:30 - 13:00", "11:00 - 14:30"],
+        h12: ["12 ÖS - 1 ÖS", "11 ÖÖ - 12 ÖS", "1 ÖS - 3 ÖS", "12 ÖS - 2 ÖS", "11:30 ÖÖ - 1 ÖS", "11 ÖÖ - 2:30 ÖS"],
+      },
+      en: {
+        h24: ["12:00 - 13:00", "11:00 - 12:00", "13:00 - 15:00", "12:00 - 14:00", "11:30 - 13:00", "11:00 - 14:30"],
+        h12: ["12 PM - 1 PM", "11 AM - 12 PM", "1 PM - 3 PM", "12 PM - 2 PM", "11:30 AM - 1 PM", "11 AM - 2:30 PM"],
+      },
+    } as const;
+
+    let hourMode: "12h" | "24h" = locale === "tr" ? "24h" : "12h";
+
+    const applyBento3HourMode = () => {
+      const pry = root.querySelector<HTMLElement>(".framer-pry2jb");
+      if (!pry) return;
+      const btn12 = pry.querySelector<HTMLElement>(".framer-1fcbxls");
+      const btn24 = pry.querySelector<HTMLElement>(".framer-1qb6d8o");
+      btn12?.setAttribute("data-rondevu-hour-active", String(hourMode === "12h"));
+      btn24?.setAttribute("data-rondevu-hour-active", String(hourMode === "24h"));
+
+      const labels = locale === "tr" ? todoTimeFormats.tr : todoTimeFormats.en;
+      const times = hourMode === "24h" ? labels.h24 : labels.h12;
+      const cards = pry.querySelectorAll<HTMLElement>('[data-framer-name="To-do cards"]');
+      cards.forEach((card, index) => {
+        const timeText = card.querySelectorAll<HTMLElement>(".framer-text")[1];
+        if (timeText && times[index]) {
+          timeText.textContent = times[index];
+        }
+      });
+    };
+
+    applyBento3HourMode();
+
+    // 2. Bento Kart 1: Notice & buffer selector cycling + click interaction
+    const noticeOptions =
+      locale === "tr"
+        ? [
+            ["12 saat", "24 saat", "48 saat"],
+            ["15 dk", "30 dk", "45 dk"],
+            ["15 dk", "30 dk", "45 dk"],
+            ["Seans süresini kullan (varsayılan)", "15 dk aralık", "30 dk aralık"],
+          ]
+        : [
+            ["12 hours", "24 hours", "48 hours"],
+            ["15 mins", "30 mins", "45 mins"],
+            ["15 mins", "30 mins", "45 mins"],
+            ["Use event length (default)", "15 min intervals", "30 min intervals"],
+          ];
+    const noticeIndices = [1, 1, 1, 0];
+
+    const applyBento1NoticeValues = () => {
+      const boxes = root.querySelectorAll<HTMLElement>(".framer-l5bt33 .framer-gJkts");
+      boxes.forEach((box, idx) => {
+        const opts = noticeOptions[idx];
+        const textEl = box.querySelector<HTMLElement>(".framer-9pkuhi .framer-text");
+        if (opts && textEl) {
+          textEl.textContent = opts[noticeIndices[idx] % opts.length];
+        }
+      });
+    };
+
+    // 3. Bento Kart 2: Custom booking link duration pills cycling + click interaction
+    let bento2DurationIndex = 1;
+    const applyBento2Pills = () => {
+      const cf = root.querySelector<HTMLElement>(".framer-cf392j");
+      if (!cf) return;
+      const isDark = document.documentElement.classList.contains("dark");
+      const pills = cf.querySelectorAll<HTMLElement>(".framer-103r016 .framer-V26CA");
+      pills.forEach((pill, idx) => {
+        const isSelected = idx % 4 === bento2DurationIndex;
+        pill.setAttribute("data-framer-name", isSelected ? "Selected" : "Unselected");
+        pill.style.backgroundColor = isSelected ? (isDark ? "#27272a" : "#ffffff") : "transparent";
+        pill.style.boxShadow = isSelected ? "0px 1px 3px 0px rgba(0, 0, 0, 0.1)" : "none";
+        const textEl = pill.querySelector<HTMLElement>(".framer-text");
+        if (textEl) {
+          textEl.style.color = isSelected
+            ? isDark
+              ? "#ffffff"
+              : "rgb(16, 16, 16)"
+            : isDark
+              ? "#71717a"
+              : "rgb(137, 137, 137)";
+        }
+      });
+    };
+    applyBento2Pills();
+
+    let frame = 0;
+    const updateFeaturePreviews = () => {
+      const calendarCards = root.querySelectorAll<HTMLElement>(
+        '.framer-pry2jb [data-framer-name="To-do cards"]'
+      );
+      if (calendarCards.length > 0) {
+        calendarCards.forEach((card, index) => {
+          card.classList.toggle("rondevu-calendar-card-active", index === frame % calendarCards.length);
+        });
+      }
+
+      const notificationSelectors = [
+        '.framer-54l76e [data-framer-name="1"]',
+        '.framer-54l76e [data-framer-name="2"]',
+        '.framer-54l76e [data-framer-name="3"]',
+      ] as const;
+      const notifications = notificationSelectors
+        .map((sel) => root.querySelector<HTMLElement>(sel))
+        .filter((el): el is HTMLElement => Boolean(el));
+      if (notifications.length > 0) {
+        const activeIdx = frame % notifications.length;
+        notifications.forEach((notification, index) => {
+          const stackPos = (index - activeIdx + notifications.length) % notifications.length;
+          notification.setAttribute("data-rondevu-stack-pos", String(stackPos));
+          notification.classList.toggle("rondevu-notification-visible", stackPos === 0);
+        });
+      }
+
+      if (frame > 0) {
+        bento2DurationIndex = (bento2DurationIndex + 1) % 4;
+        applyBento2Pills();
+
+        const boxToRotate = frame % 3;
+        noticeIndices[boxToRotate] = (noticeIndices[boxToRotate] + 1) % noticeOptions[boxToRotate].length;
+        applyBento1NoticeValues();
+      }
+
+      frame += 1;
+    };
+
+    const handleFeatureClick = (event: Event) => {
+      const target = event.target as HTMLElement | null;
+      if (!target) return;
+
+      // Step 02 row toggle click
+      const step2Row = target.closest<HTMLElement>('.framer-qm9fst [data-framer-name="Row"]');
+      if (step2Row) {
+        const isOff = step2Row.classList.contains("rondevu-row-off");
+        step2Row.classList.toggle("rondevu-row-off", !isOff);
+        step2Row.classList.toggle("rondevu-row-on", isOff);
+        return;
+      }
+
+      // Step 03 meeting controls click
+      const meetingBtn = target.closest<HTMLElement>(
+        '.framer-igaxec [data-framer-name="Function Button Wrapper"] > [data-framer-component-type="SVG"]'
+      );
+      if (meetingBtn) {
+        const allBtns = root.querySelectorAll<HTMLElement>(
+          '.framer-igaxec [data-framer-name="Function Button Wrapper"] > [data-framer-component-type="SVG"]'
+        );
+        const wasPinned = meetingBtn.classList.contains("rondevu-control-pinned");
+        allBtns.forEach((btn) => btn.classList.remove("rondevu-control-pinned"));
+        if (!wasPinned) meetingBtn.classList.add("rondevu-control-pinned");
+        return;
+      }
+
+      // Bento 1 notice selector click
+      const noticeBox = target.closest<HTMLElement>(".framer-l5bt33 .framer-gJkts");
+      if (noticeBox) {
+        const allBoxes = Array.from(root.querySelectorAll<HTMLElement>(".framer-l5bt33 .framer-gJkts"));
+        const idx = allBoxes.indexOf(noticeBox);
+        if (idx !== -1 && noticeOptions[idx]) {
+          noticeIndices[idx] = (noticeIndices[idx] + 1) % noticeOptions[idx].length;
+          applyBento1NoticeValues();
+          noticeBox.classList.add("rondevu-pill-pulse");
+          window.setTimeout(() => noticeBox.classList.remove("rondevu-pill-pulse"), 160);
+        }
+        return;
+      }
+
+      // Bento 2 duration pill click
+      const bento2Pill = target.closest<HTMLElement>(".framer-cf392j .framer-103r016 .framer-V26CA");
+      if (bento2Pill) {
+        const allPills = Array.from(root.querySelectorAll<HTMLElement>(".framer-cf392j .framer-103r016 .framer-V26CA"));
+        const idx = allPills.indexOf(bento2Pill);
+        if (idx !== -1) {
+          bento2DurationIndex = idx % 4;
+          applyBento2Pills();
+        }
+        return;
+      }
+
+      // Bento 3 "Takvimimi üzerine ekle" toggle
+      const overlayToggle = target.closest<HTMLElement>(".framer-pry2jb .framer-m9yoxo");
+      if (overlayToggle) {
+        const pry = root.querySelector<HTMLElement>(".framer-pry2jb");
+        pry?.classList.toggle("rondevu-overlay-off");
+        return;
+      }
+
+      // Bento 3 "12h / 24h" switcher
+      const btn12 = target.closest<HTMLElement>(".framer-pry2jb .framer-1fcbxls");
+      if (btn12) {
+        hourMode = "12h";
+        applyBento3HourMode();
+        return;
+      }
+      const btn24 = target.closest<HTMLElement>(".framer-pry2jb .framer-1qb6d8o");
+      if (btn24) {
+        hourMode = "24h";
+        applyBento3HourMode();
+        return;
+      }
+
+      // Bento 4 notification stack click to cycle immediately
+      const notifArea = target.closest<HTMLElement>(".framer-54l76e .framer-ZlJxc");
+      if (notifArea) {
+        updateFeaturePreviews();
+      }
+    };
+
+    updateFeaturePreviews();
+    const interval = window.setInterval(updateFeaturePreviews, 2400);
+    root.addEventListener("click", handleFeatureClick);
+    const themeObserver = new MutationObserver(applyBento2Pills);
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+
+    return () => {
+      window.clearInterval(interval);
+      root.removeEventListener("click", handleFeatureClick);
+      themeObserver.disconnect();
+    };
+  }, [locale, mounted]);
+
+  // Lightweight IntersectionObserver scroll-reveal for below-the-fold sections (with reduced-motion & fallback safety).
+  useEffect(() => {
+    if (!mounted) return;
+    const root = document.getElementById("cal-1to1-root");
+    if (!root) return;
+
+    const integrationContainers = Array.from(
+      root.querySelectorAll<HTMLElement>(".framer-1btm4pg-container")
+    ).map((el) => el.closest<HTMLElement>(".framer-f96tv2 > div") ?? el);
+    const ctaContainers = Array.from(
+      root.querySelectorAll<HTMLElement>(".framer-3gy7g1-container")
+    ).map((el) => el.closest<HTMLElement>(".framer-f96tv2 > div") ?? el);
+    const targets = Array.from(
+      new Set(
+        [
+          root.querySelector<HTMLElement>(".framer-1uc0xrr"),
+          root.querySelector<HTMLElement>(".framer-1j78ach"),
+          root.querySelector<HTMLElement>(".framer-1bsidtw"),
+          ...integrationContainers,
+          root.querySelector<HTMLElement>(".framer-1o2z9n8"),
+          ...ctaContainers,
+        ].filter((el): el is HTMLElement => Boolean(el))
+      )
+    );
+
+    if (targets.length === 0) return;
+
+    const prefersReducedMotion =
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion || typeof IntersectionObserver === "undefined") {
+      targets.forEach((el) => {
+        el.classList.remove("rondevu-reveal");
+        el.classList.add("rondevu-revealed");
+      });
+      return;
+    }
+
+    const revealIfVisible = (el: HTMLElement) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.96) {
+        el.classList.add("rondevu-revealed");
+        return true;
+      }
+      return false;
+    };
+
+    const pending = new Set<HTMLElement>();
+    targets.forEach((el) => {
+      el.classList.add("rondevu-reveal");
+      if (!revealIfVisible(el)) {
+        pending.add(el);
+      }
+    });
+
+    if (pending.size === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting || entry.boundingClientRect.top < window.innerHeight) {
+            const target = entry.target as HTMLElement;
+            target.classList.add("rondevu-revealed");
+            pending.delete(target);
+            observer.unobserve(target);
+          }
+        });
+      },
+      { threshold: 0.04, rootMargin: "0px 0px -24px 0px" }
+    );
+
+    pending.forEach((el) => observer.observe(el));
+
+    const handleScrollCheck = () => {
+      pending.forEach((el) => {
+        if (revealIfVisible(el)) {
+          pending.delete(el);
+          observer.unobserve(el);
+        }
+      });
+    };
+
+    window.addEventListener("scroll", handleScrollCheck, { passive: true });
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", handleScrollCheck);
+    };
+  }, [locale, mounted]);
+
+  // Static Framer FAQ markup contains both visual states; normalize initial open/closed heights and chrome cleanly.
+  useEffect(() => {
+    if (!mounted) return;
+
+    const faqSection = document.querySelector<HTMLElement>('#cal-1to1-root [data-framer-name="FAQ Section"]');
+    if (!faqSection) return;
+
+    const badge = faqSection.querySelector<HTMLElement>('[data-framer-name="White Icon"] p');
+    if (badge) badge.textContent = locale === "tr" ? "SSS" : "FAQ";
+
+    const actions = faqSection.querySelector<HTMLElement>('[data-framer-name="Button Wrapper"]');
+    const questionGroup = faqSection.querySelector<HTMLElement>('[data-framer-name="Question 1"]');
+    const target = questionGroup?.parentElement?.parentElement?.parentElement;
+    if (actions && target) target.append(actions);
+
+    const normalizeFaqChrome = () => {
+      const iconColor = document.documentElement.classList.contains("dark") ? "#f4f4f5" : "#18181b";
+      faqSection
+        .querySelectorAll<HTMLElement>('[data-framer-name="Open"], [data-framer-name="Closed"]')
+        .forEach((item, index) => {
+          item.style.setProperty("border-bottom", "1px solid rgba(177, 177, 178, 0.3)", "important");
+          if (item.dataset.faqOpen === undefined) {
+            const initiallyOpen = index === 0 || item.getAttribute("data-framer-name") === "Open";
+            applyFaqItemState(item, initiallyOpen, true);
+          }
+        });
+      faqSection.querySelectorAll<HTMLElement>('[data-framer-name="Icon Wrapper"]').forEach((iconWrapper) => {
+        iconWrapper.style.setProperty("background", "transparent", "important");
+        iconWrapper.style.setProperty("border", "0", "important");
+        iconWrapper.style.setProperty("box-shadow", "none", "important");
+      });
+      faqSection.querySelectorAll<HTMLElement>('[data-framer-name="Plus, add small"]').forEach((plus) => {
+        plus.replaceChildren(document.createTextNode("+"));
+        plus.style.setProperty("align-items", "center", "important");
+        plus.style.setProperty("background", "transparent", "important");
+        plus.style.setProperty("color", iconColor, "important");
+        plus.style.setProperty("display", "flex", "important");
+        plus.style.setProperty("font-family", "Arial, sans-serif", "important");
+        plus.style.setProperty("font-size", "22px", "important");
+        plus.style.setProperty("font-weight", "300", "important");
+        plus.style.setProperty("justify-content", "center", "important");
+        plus.style.setProperty("line-height", "1", "important");
+      });
+    };
+
+    const refreshOpenHeights = () => {
+      faqSection
+        .querySelectorAll<HTMLElement>('[data-framer-name="Open"], [data-framer-name="Closed"]')
+        .forEach((item) => {
+          if (item.dataset.faqOpen === "true") {
+            applyFaqItemState(item, true, true);
+          }
+        });
+    };
+
+    normalizeFaqChrome();
+    const rafId = window.requestAnimationFrame(refreshOpenHeights);
+    const timer = window.setTimeout(() => {
+      normalizeFaqChrome();
+      refreshOpenHeights();
+    }, 0);
+    const themeObserver = new MutationObserver(normalizeFaqChrome);
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    window.addEventListener("resize", refreshOpenHeights);
+    return () => {
+      window.cancelAnimationFrame(rafId);
+      window.clearTimeout(timer);
+      themeObserver.disconnect();
+      window.removeEventListener("resize", refreshOpenHeights);
+    };
+  }, [locale, mounted]);
+
+  useEffect(() => {
+    if (!mounted) return;
+    const links = document.querySelectorAll<HTMLAnchorElement>("#cal-1to1-root .rondevu-hero-login-link");
+    links.forEach((link) => {
+      if (isLoggedIn) {
+        link.setAttribute("href", "/event-types");
+        link.textContent = locale === "en" ? "Go to Dashboard" : "Hesabım var · Panele Git";
+      } else {
+        link.setAttribute("href", "/auth/login");
+        link.textContent =
+          locale === "en" ? "Already have an account? Sign in" : "Hesabım var · Giriş Yap";
+      }
+    });
+  }, [isLoggedIn, locale, mounted]);
+
+  // Remove retired calls to action and status content from either static language fragment.
+  useEffect(() => {
+    if (!mounted) return;
+
+    const root = document.querySelector<HTMLElement>("#cal-1to1-root");
+    if (!root) return;
+
+    root.querySelectorAll<HTMLElement>("a, button").forEach((action) => {
+      const label = action.textContent?.replace(/\s+/g, " ").trim().toLowerCase() ?? "";
+      if (!label.includes("book a demo") && !label.includes("talk to sales")) return;
+
+      const buttonWrapper = action.closest<HTMLElement>(
+        '[data-framer-name="Button Wrapper"], [data-framer-name="Button Container"], [class*="-container"]'
+      );
+      (buttonWrapper ?? action).remove();
+    });
+
+    root.querySelectorAll<HTMLElement>('[data-framer-name="Status Wrapper"]').forEach((status) => {
+      status.remove();
+    });
+
+    root.querySelectorAll<HTMLElement>('[data-framer-name="Logo Wrapper"]').forEach((logo) => {
+      if (!logo.closest('[data-framer-name="Status Wrapper"]')) {
+        logo.querySelectorAll<HTMLImageElement>('img[src*="rondevu-icon.png"]').forEach((image) => {
+          image.remove();
+        });
+      }
+    });
+  }, [locale, mounted]);
+
+  useEffect(() => {
+    if (!mounted) return;
+
+    const normalizeYear = () => {
+      const root = document.querySelector<HTMLElement>("#cal-1to1-root");
+      if (!root) return;
+      root
+        .querySelectorAll<HTMLElement>('.framer-13qztwn .framer-text, [data-framer-name="2022"] .framer-text')
+        .forEach((year) => {
+          if (year.textContent?.trim() === "2025") year.textContent = "2026";
+        });
+      root.querySelectorAll<HTMLElement>(".framer-1u8wsic .framer-text").forEach((year) => {
+        if (year.textContent?.trim() === "2025") year.textContent = "2026";
+      });
+    };
+
+    normalizeYear();
+    const observer = new MutationObserver(normalizeYear);
+    const root = document.querySelector<HTMLElement>("#cal-1to1-root");
+    if (root) observer.observe(root, { childList: true, subtree: true });
+    const timer = window.setTimeout(() => observer.disconnect(), 2000);
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(timer);
+    };
+  }, [mounted]);
 
   const { data: contactConfig } = trpc.viewer.public.getPlanContact.useQuery(undefined, {
     staleTime: 30000,
@@ -227,626 +824,113 @@ function HomeView({
     setModalPlanType(null);
   };
 
-  const pricingHref = locale === "en" ? "/en/pricing" : "/pricing";
-  const profiles = SPECIALIST_PROFILES[locale];
-  const activeProfile = profiles[selectedProfileIndex] ?? profiles[0];
-  const durations = DURATION_OPTIONS[locale];
-  const faqItems = FAQ_LIST[locale];
+  // Framer DOM içindeki etkileşimli öğeleri yakalama (SSS Accordion & Fiyatlandırma Yönlendirmeleri)
+  const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+
+    // SSS Akordeon Tıklaması
+    const questionTrigger = target.closest<HTMLElement>(
+      '[data-framer-name="Question"], [data-framer-name="Question Wrapper"], .framer-1xikzrs'
+    );
+    if (questionTrigger) {
+      const variant = questionTrigger.closest<HTMLElement>(
+        '[data-framer-name="Open"], [data-framer-name="Closed"]'
+      );
+      const question = questionTrigger
+        .closest<HTMLElement>('[data-framer-name="FAQ Wrapper"]')
+        ?.querySelector<HTMLElement>('[data-framer-name="Question"]');
+      const questionText = question?.textContent?.trim();
+      if (!variant || !questionText) return;
+
+      const faqVariants = Array.from(
+        document.querySelectorAll<HTMLElement>('[data-framer-name="Open"], [data-framer-name="Closed"]')
+      ).filter(
+        (item) =>
+          item.querySelector<HTMLElement>('[data-framer-name="Question"]')?.textContent?.trim() ===
+          questionText
+      );
+      const nextOpen = !faqVariants.some((item) => item.dataset.faqOpen === "true");
+
+      faqVariants.forEach((item) => {
+        applyFaqItemState(item, nextOpen, false);
+      });
+      return;
+    }
+
+    const anchor = target.closest("a, button");
+    if (!anchor) return;
+
+    const href = anchor.getAttribute("href") || "";
+    const text = anchor.textContent?.trim().toLowerCase() || "";
+    const pricingPath = locale === "en" ? "/en/pricing" : "/pricing";
+
+    if (href === "/auth/login" || href === "/event-types") {
+      e.preventDefault();
+      router.push(href);
+      return;
+    }
+
+    if (text.includes("bilgi al")) {
+      e.preventDefault();
+      setModalPlanType("general");
+      return;
+    }
+
+    // Doğrudan fiyatlandırma sayfasına gitme
+    if (href === "/pricing" || href === "/en/pricing") {
+      e.preventDefault();
+      router.push(pricingPath);
+      return;
+    }
+
+    // Fiyatlandırma veya paket bağlantıları
+    if (
+      href.includes("#pricing") ||
+      href.includes("/pricing") ||
+      text.includes("fiyatlandırma") ||
+      text.includes("pricing") ||
+      text.includes("paketleri incele")
+    ) {
+      e.preventDefault();
+      const pricingEl = document.getElementById("pricing");
+      if (pricingEl) {
+        pricingEl.scrollIntoView({ behavior: "smooth" });
+      } else {
+        router.push(pricingPath);
+      }
+      return;
+    }
+
+    // "Hemen Başla" / "Get started" / Kayıt butonları -> Doğrudan fiyatlandırma
+    if (
+      href.includes("signup") ||
+      text.includes("get started") ||
+      text.includes("hemen başla") ||
+      text.includes("hemen başlayın") ||
+      text.includes("plan seç")
+    ) {
+      e.preventDefault();
+      router.push(pricingPath);
+      return;
+    }
+  };
+
+  const handleContainerClickRef = useRef(handleContainerClick);
+  handleContainerClickRef.current = handleContainerClick;
+  const onRootClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    handleContainerClickRef.current(e);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-[#111214] text-[#F4F4F2] selection:bg-[#26282e] selection:text-[#F4F4F2] antialiased">
-      {/* 1. Header Navigation */}
-      <MarketingHeader
-        locale={locale}
-        isLoggedIn={isLoggedIn}
-        onContactClick={() => setModalPlanType("general")}
-      />
+    <div className="relative min-h-screen bg-white dark:bg-[#141414] text-emphasis selection:bg-brand-default selection:text-brand transition-colors duration-200">
+      {/* Cal.com SVG Şablonları */}
+      <SvgTemplatesBody svgTemplates={svgTemplates} />
 
-      <main className="w-full">
-        {/* =========================================================
-            SCREEN 1: HERO SECTION
-            ========================================================= */}
-        <section
-          aria-labelledby="hero-title"
-          className="relative border-b border-[#26282e] px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-          <div className="mx-auto max-w-6xl">
-            <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8">
-              {/* Left Column: Value Proposition & Clear Actions */}
-              <div className="lg:col-span-6 lg:pr-4">
-                <div className="inline-flex items-center gap-2 rounded-full border border-[#26282e] bg-[#18191d] px-3.5 py-1.5 text-xs text-[#9CA3AF]">
-                  <Sparkles className="h-3.5 w-3.5 text-amber-400" aria-hidden="true" />
-                  <span>
-                    {locale === "tr"
-                      ? "Doğrulanmış Randevu ve Takvim Yönetimi"
-                      : "Verified Appointment & Calendar Management"}
-                  </span>
-                </div>
-
-                <h1
-                  id="hero-title"
-                  className="mt-6 text-3xl font-bold tracking-tight text-[#F4F4F2] sm:text-4xl lg:text-5xl">
-                  {locale === "tr"
-                    ? "Randevu sürecinizi tek merkezden yönetin."
-                    : "Streamline your client bookings with total clarity."}
-                </h1>
-
-                <p className="mt-5 text-base leading-relaxed text-[#9CA3AF] sm:text-lg">
-                  {locale === "tr"
-                    ? "Diyetisyenler, psikologlar, klinikler ve randevuyla çalışan uzmanlar için: Takvim eşitlemesi, SMS doğrulaması ve WhatsApp bildirimleri tek ekranda."
-                    : "Tailored for dietitians, psychologists, clinics, and independent specialists: Calendar sync, SMS verification, and WhatsApp notifications in one place."}
-                </p>
-
-                {/* Primary CTA Buttons */}
-                <div className="mt-8 flex flex-wrap items-center gap-4">
-                  <Link
-                    href={pricingHref}
-                    className="inline-flex min-h-[46px] items-center justify-center rounded-lg bg-[#F4F4F2] px-6 text-sm font-semibold text-[#111214] transition hover:bg-white active:scale-[0.98]">
-                    {locale === "tr" ? "Planları İnceleyin" : "View Plans"}
-                  </Link>
-
-                  <button
-                    type="button"
-                    onClick={() => setModalPlanType("general")}
-                    className="inline-flex min-h-[46px] items-center justify-center rounded-lg border border-[#26282e] bg-[#18191d] px-5 text-sm font-semibold text-[#F4F4F2] transition hover:border-[#3a3d46] hover:bg-[#1f2127] active:scale-[0.98]">
-                    <MessageCircle className="mr-2 h-4 w-4 text-emerald-400" aria-hidden="true" />
-                    {locale === "tr" ? "Bilgi Alın" : "Contact Us"}
-                  </button>
-                </div>
-
-                {/* Core Facts Checklist */}
-                <ul className="mt-10 space-y-3 text-xs sm:text-sm text-[#9CA3AF]">
-                  <li className="flex items-center gap-2.5">
-                    <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400" aria-hidden="true" />
-                    <span>
-                      {locale === "tr"
-                        ? "SMS doğrulamasıyla sahte ve mükerrer randevulara son"
-                        : "SMS verification prevents invalid and duplicate bookings"}
-                    </span>
-                  </li>
-                  <li className="flex items-center gap-2.5">
-                    <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400" aria-hidden="true" />
-                    <span>
-                      {locale === "tr"
-                        ? "Google ve Outlook takvimleriyle çift yönlü senkronizasyon"
-                        : "Two-way synchronization with Google and Outlook calendars"}
-                    </span>
-                  </li>
-                  <li className="flex items-center gap-2.5">
-                    <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400" aria-hidden="true" />
-                    <span>
-                      {locale === "tr"
-                        ? "Kendi özel alan adınız (CNAME) ve otomatik SSL"
-                        : "Your custom domain (CNAME) with automated SSL"}
-                    </span>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Right Column: Interactive Live Booking Preview */}
-              <div className="lg:col-span-6">
-                <div className="rounded-2xl border border-[#26282e] bg-[#18191d] p-5 shadow-2xl sm:p-6">
-                  {/* Specialist Selector Tabs */}
-                  <div className="flex items-center justify-between border-b border-[#26282e] pb-4">
-                    <span className="text-xs font-medium text-[#9CA3AF]">
-                      {locale === "tr" ? "Uzman Seçimi:" : "Specialist:"}
-                    </span>
-                    <div className="flex flex-wrap gap-1">
-                      {profiles.map((p, idx) => (
-                        <button
-                          key={p.name}
-                          type="button"
-                          onClick={() => setSelectedProfileIndex(idx)}
-                          className={`rounded-md px-2.5 py-1 text-xs font-medium transition ${
-                            idx === selectedProfileIndex
-                              ? "bg-[#26282e] text-[#F4F4F2]"
-                              : "text-[#9CA3AF] hover:text-[#F4F4F2]"
-                          }`}>
-                          {p.avatar}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Active Specialist Card */}
-                  <div className="mt-4 flex items-center justify-between">
-                    <div>
-                      <h2 className="text-base font-semibold text-[#F4F4F2]">{activeProfile.name}</h2>
-                      <p className="text-xs text-[#9CA3AF]">
-                        {activeProfile.specialty} · {activeProfile.service}
-                      </p>
-                    </div>
-                    <span className="rounded-full border border-emerald-900/60 bg-emerald-950/40 px-2.5 py-1 text-[11px] font-medium text-emerald-400">
-                      {locale === "tr" ? "Randevuya Açık" : "Accepting Bookings"}
-                    </span>
-                  </div>
-
-                  {/* Duration Selector */}
-                  <div className="mt-5">
-                    <span className="text-xs font-medium text-[#9CA3AF]">
-                      {locale === "tr" ? "Görüşme Süresi" : "Session Duration"}
-                    </span>
-                    <div className="mt-2 grid grid-cols-4 gap-2">
-                      {durations.map((dur, dIdx) => (
-                        <button
-                          key={dur}
-                          type="button"
-                          onClick={() => setSelectedDurationIndex(dIdx)}
-                          className={`rounded-lg border py-2 text-center text-xs font-medium transition ${
-                            dIdx === selectedDurationIndex
-                              ? "border-zinc-500 bg-[#26282e] text-[#F4F4F2]"
-                              : "border-[#26282e] bg-[#111214] text-[#9CA3AF] hover:border-zinc-700"
-                          }`}>
-                          {dur}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Calendar Dates Grid */}
-                  <div className="mt-5 rounded-xl border border-[#26282e] bg-[#111214] p-3.5">
-                    <div className="flex items-center justify-between text-xs text-[#9CA3AF]">
-                      <span className="font-medium text-[#F4F4F2]">
-                        {locale === "tr" ? "Mayıs 2026" : "May 2026"}
-                      </span>
-                      <span>{locale === "tr" ? "Müsait Günler" : "Available Days"}</span>
-                    </div>
-
-                    <div className="mt-3 grid grid-cols-4 gap-2 sm:grid-cols-8">
-                      {AVAILABLE_DAYS.map((day) => (
-                        <button
-                          key={day}
-                          type="button"
-                          onClick={() => setSelectedDay(day)}
-                          className={`flex flex-col items-center justify-center rounded-md py-1.5 text-xs transition ${
-                            day === selectedDay
-                              ? "bg-[#F4F4F2] font-semibold text-[#111214]"
-                              : "bg-[#18191d] text-[#9CA3AF] hover:bg-[#26282e] hover:text-[#F4F4F2]"
-                          }`}>
-                          <span>{day}</span>
-                        </button>
-                      ))}
-                    </div>
-
-                    {/* Time Slot Picker */}
-                    <div className="mt-3 border-t border-[#26282e] pt-3">
-                      <div className="flex items-center justify-between text-xs text-[#9CA3AF]">
-                        <span>{locale === "tr" ? "Saat Dilimi" : "Available Times"}</span>
-                        <span>{locale === "tr" ? "İstanbul (GMT+3)" : "Timezone (GMT+3)"}</span>
-                      </div>
-                      <div className="mt-2 flex flex-wrap gap-2">
-                        {TIME_SLOTS.map((slot) => (
-                          <button
-                            key={slot}
-                            type="button"
-                            onClick={() => setSelectedTime(slot)}
-                            className={`rounded-md px-3 py-1.5 text-xs font-medium transition ${
-                              slot === selectedTime
-                                ? "border border-zinc-400 bg-[#26282e] text-[#F4F4F2]"
-                                : "border border-[#26282e] bg-[#18191d] text-[#9CA3AF] hover:border-zinc-700 hover:text-[#F4F4F2]"
-                            }`}>
-                            {slot}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Simulated Booking & WhatsApp Confirmation Notification */}
-                  <div className="mt-4 rounded-xl border border-[#26282e] bg-[#111214] p-3.5">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-xs font-medium text-emerald-400">
-                        <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
-                        <span>
-                          {isSimulatedVerified
-                            ? locale === "tr"
-                              ? "SMS ile Doğrulandı"
-                              : "Verified via SMS"
-                            : locale === "tr"
-                              ? "SMS Kodu Bekleniyor"
-                              : "Awaiting SMS Code"}
-                        </span>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => setIsSimulatedVerified(!isSimulatedVerified)}
-                        className="text-[11px] text-[#9CA3AF] underline hover:text-[#F4F4F2]">
-                        {locale === "tr" ? "Durumu Değiştir" : "Toggle State"}
-                      </button>
-                    </div>
-
-                    {/* Simulated WhatsApp Preview Bubble */}
-                    <div className="mt-2.5 rounded-lg border border-emerald-950/60 bg-[#16221c] p-2.5 text-xs text-emerald-200">
-                      <div className="flex items-center gap-1.5 font-medium text-emerald-300">
-                        <MessageSquare className="h-3.5 w-3.5" aria-hidden="true" />
-                        <span>{locale === "tr" ? "WhatsApp Teyit Mesajı" : "WhatsApp Confirmation"}</span>
-                      </div>
-                      <p className="mt-1 leading-relaxed text-[11px] text-emerald-100/90">
-                        {locale === "tr"
-                          ? `Randevunuz onaylandı: ${activeProfile.name} ile ${selectedDay} Mayıs 2026, ${selectedTime} (${durations[selectedDurationIndex]}). Takviminize eklendi.`
-                          : `Appointment confirmed: ${activeProfile.name} on May ${selectedDay}, 2026 at ${selectedTime} (${durations[selectedDurationIndex]}). Synced to calendar.`}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* =========================================================
-            SCREEN 2: İŞ AKIŞI VE TEMEL ÖZELLİKLER (WORKFLOW & FEATURES)
-            ========================================================= */}
-        <section
-          aria-labelledby="features-title"
-          className="relative border-b border-[#26282e] px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-          <div className="mx-auto max-w-6xl">
-            <div className="max-w-2xl">
-              <span className="text-xs font-semibold text-[#9CA3AF]">
-                {locale === "tr" ? "İş Akışı ve Özellikler" : "Workflow & Core Capabilities"}
-              </span>
-              <h2
-                id="features-title"
-                className="mt-3 text-2xl font-bold tracking-tight text-[#F4F4F2] sm:text-3xl">
-                {locale === "tr"
-                  ? "Randevu sürecini baştan sona koruyan araçlar."
-                  : "Reliable tools safeguarding your entire booking cycle."}
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-[#9CA3AF] sm:text-base">
-                {locale === "tr"
-                  ? "SMS doğrulaması, WhatsApp bildirimleri, Google ve Outlook takvim entegrasyonu tek bir sistemde buluşuyor."
-                  : "SMS verification, automated WhatsApp alerts, and two-way calendar sync working seamlessly together."}
-              </p>
-            </div>
-
-            {/* 4 Bento Feature Cards */}
-            <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
-              {/* Feature 1: WhatsApp & SMS */}
-              <div className="flex flex-col justify-between rounded-2xl border border-[#26282e] bg-[#18191d] p-6 transition hover:border-zinc-700">
-                <div>
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-emerald-800/40 bg-emerald-950/40 text-emerald-400">
-                    <Smartphone className="h-5 w-5" aria-hidden="true" />
-                  </div>
-                  <h3 className="mt-5 text-lg font-semibold text-[#F4F4F2]">
-                    {locale === "tr"
-                      ? "SMS Doğrulaması ve WhatsApp Bildirimleri"
-                      : "SMS Verification & WhatsApp Alerts"}
-                  </h3>
-                  <p className="mt-2.5 text-sm leading-relaxed text-[#9CA3AF]">
-                    {locale === "tr"
-                      ? "Danışan randevusunu oluştururken tek kullanımlık SMS koduyla numarasını doğrular. Sahte kayıtlar elenir; onay ve randevu öncesi hatırlatmalar WhatsApp üzerinden anında iletilir."
-                      : "Clients verify their mobile number with a one-time SMS passcode. Invalid bookings are eliminated, while confirmations and reminder messages are sent straight to WhatsApp."}
-                  </p>
-                </div>
-
-                <div className="mt-6 rounded-xl border border-[#26282e] bg-[#111214] p-3.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-medium text-[#F4F4F2]">
-                      {locale === "tr" ? "SMS Güvenlik Protokolü" : "SMS Security Protocol"}
-                    </span>
-                    <span className="text-emerald-400">
-                      {locale === "tr" ? "Aktif · Sahte Kayıt Yok" : "Active · Zero Spam"}
-                    </span>
-                  </div>
-                  <div className="mt-2 flex items-center gap-2 text-xs text-[#9CA3AF]">
-                    <ShieldCheck className="h-4 w-4 text-emerald-400" aria-hidden="true" />
-                    <span>
-                      {locale === "tr"
-                        ? "OTP Doğrulama Kodu: 481-920 (Zaman Aşımı: 180 sn)"
-                        : "OTP Verification Code: 481-920 (Expires: 180s)"}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Feature 2: Calendar Synchronization */}
-              <div className="flex flex-col justify-between rounded-2xl border border-[#26282e] bg-[#18191d] p-6 transition hover:border-zinc-700">
-                <div>
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-sky-800/40 bg-sky-950/40 text-sky-400">
-                    <RefreshCw className="h-5 w-5" aria-hidden="true" />
-                  </div>
-                  <h3 className="mt-5 text-lg font-semibold text-[#F4F4F2]">
-                    {locale === "tr"
-                      ? "Google ve Outlook Çift Yönlü Takvim Senkronizasyonu"
-                      : "Two-Way Google & Outlook Calendar Sync"}
-                  </h3>
-                  <p className="mt-2.5 text-sm leading-relaxed text-[#9CA3AF]">
-                    {locale === "tr"
-                      ? "Kişisel Google veya Microsoft Outlook takvimlerinizi bağlayın. Takviminizdeki kişisel planlar randevu sayfanızdaki saatleri otomatik kapatır; yeni randevular ise anında takviminize işlenir."
-                      : "Link your personal Google or Outlook calendars. Personal appointments automatically block booking availability, and new client reservations appear immediately in your schedule."}
-                  </p>
-                </div>
-
-                <div className="mt-6 rounded-xl border border-[#26282e] bg-[#111214] p-3.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-medium text-[#F4F4F2]">
-                      {locale === "tr" ? "Çakışma Koruması" : "Conflict Guard"}
-                    </span>
-                    <span className="text-sky-400">
-                      {locale === "tr" ? "Gerçek Zamanlı Eşitlendi" : "Real-time Synced"}
-                    </span>
-                  </div>
-                  <div className="mt-2 flex items-center gap-2 text-xs text-[#9CA3AF]">
-                    <CalendarIcon className="h-4 w-4 text-sky-400" aria-hidden="true" />
-                    <span>
-                      {locale === "tr"
-                        ? "Google Calendar & Outlook Takvimi eşzamanlı aktif"
-                        : "Google Calendar & Outlook simultaneously active"}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Feature 3: Custom Domain (CNAME) */}
-              <div className="flex flex-col justify-between rounded-2xl border border-[#26282e] bg-[#18191d] p-6 transition hover:border-zinc-700">
-                <div>
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-indigo-800/40 bg-indigo-950/40 text-indigo-400">
-                    <Globe className="h-5 w-5" aria-hidden="true" />
-                  </div>
-                  <h3 className="mt-5 text-lg font-semibold text-[#F4F4F2]">
-                    {locale === "tr"
-                      ? "Özel Alan Adı (CNAME) ve Marka Kimliği"
-                      : "Custom Domain (CNAME) & Brand Identity"}
-                  </h3>
-                  <p className="mt-2.5 text-sm leading-relaxed text-[#9CA3AF]">
-                    {locale === "tr"
-                      ? "Randevu sayfanızı doğrudan kendi web adresiniz altında çalıştırın: randevu.siteniz.com. Ücretsiz SSL sertifikası ile güvenli ve profesyonel bir duruş sergileyin."
-                      : "Host your booking portal on your own web address: booking.yourdomain.com. Establish institutional trust with automatic SSL encryption and a clean presence."}
-                  </p>
-                </div>
-
-                <div className="mt-6 rounded-xl border border-[#26282e] bg-[#111214] p-3.5">
-                  <div className="flex items-center gap-2 text-xs">
-                    <Lock className="h-3.5 w-3.5 text-emerald-400" aria-hidden="true" />
-                    <span className="font-mono text-zinc-300">https://randevu.kliniginiz.com</span>
-                    <span className="ml-auto rounded bg-emerald-950/60 px-2 py-0.5 text-[10px] text-emerald-400">
-                      SSL Aktif
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Feature 4: Out of Office / Leaves */}
-              <div className="flex flex-col justify-between rounded-2xl border border-[#26282e] bg-[#18191d] p-6 transition hover:border-zinc-700">
-                <div>
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-amber-800/40 bg-amber-950/40 text-amber-400">
-                    <Clock className="h-5 w-5" aria-hidden="true" />
-                  </div>
-                  <h3 className="mt-5 text-lg font-semibold text-[#F4F4F2]">
-                    {locale === "tr" ? "Ofis Dışı / İzinlerim Yönetimi" : "Out of Office & Leave Scheduling"}
-                  </h3>
-                  <p className="mt-2.5 text-sm leading-relaxed text-[#9CA3AF]">
-                    {locale === "tr"
-                      ? "Resmi tatiller, seminerler veya yıllık izinleriniz için çalışma saatlerinizi tek tıkla randevulara kapatın. Düzenli çalışma şablonunuzu bozmadan esnek takvim planı yapın."
-                      : "Block availability for public holidays, conferences, or personal leaves in one click. Maintain your core working template without manual calendar adjustments."}
-                  </p>
-                </div>
-
-                <div className="mt-6 rounded-xl border border-[#26282e] bg-[#111214] p-3.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-[#9CA3AF]">
-                      {locale === "tr" ? "Planlı İzin Aralığı" : "Scheduled Leave Window"}
-                    </span>
-                    <span className="font-medium text-amber-400">
-                      {locale === "tr" ? "Kilitli / Randevuya Kapalı" : "Blocked / Unavailable"}
-                    </span>
-                  </div>
-                  <p className="mt-1 text-xs text-[#F4F4F2]">
-                    {locale === "tr"
-                      ? "15 Temmuz - 18 Temmuz · Yıllık İzin (Otomatik Engellendi)"
-                      : "July 15 - July 18 · Annual Leave (Auto Blocked)"}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* =========================================================
-            SCREEN 3: CANLI RANDEVU AKIŞI (STEP-BY-STEP LIVE FLOW)
-            ========================================================= */}
-        <section
-          aria-labelledby="flow-title"
-          className="relative border-b border-[#26282e] px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-          <div className="mx-auto max-w-6xl">
-            <div className="text-center">
-              <span className="text-xs font-semibold text-[#9CA3AF]">
-                {locale === "tr" ? "Adım Adım Çalışma Akışı" : "Step-by-Step Experience"}
-              </span>
-              <h2
-                id="flow-title"
-                className="mt-3 text-2xl font-bold tracking-tight text-[#F4F4F2] sm:text-3xl">
-                {locale === "tr"
-                  ? "Talepten teyide pürüzsüz randevu akışı."
-                  : "A seamless journey from booking to confirmation."}
-              </h2>
-              <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-[#9CA3AF] sm:text-base">
-                {locale === "tr"
-                  ? "Danışanınız linkinize tıklar, saatini seçer ve SMS ile teyit eder. Tüm süreç otomatik tamamlanır."
-                  : "Your client opens your link, selects an open time, and confirms via SMS. The entire flow completes automatically."}
-              </p>
-            </div>
-
-            {/* 4 Interactive Process Steps */}
-            <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {/* Step 1 */}
-              <div className="relative rounded-2xl border border-[#26282e] bg-[#18191d] p-5">
-                <div className="flex items-center justify-between">
-                  <span className="rounded-md border border-[#26282e] bg-[#111214] px-2.5 py-1 text-xs font-semibold text-[#F4F4F2]">
-                    01
-                  </span>
-                  <Clock className="h-4 w-4 text-[#9CA3AF]" aria-hidden="true" />
-                </div>
-                <h3 className="mt-4 text-base font-semibold text-[#F4F4F2]">
-                  {locale === "tr" ? "Müsaitliği Belirle" : "Set Availability"}
-                </h3>
-                <p className="mt-2 text-xs leading-relaxed text-[#9CA3AF]">
-                  {locale === "tr"
-                    ? "Haftalık çalışma saatlerinizi, randevu sürelerinizi ve seanslar arası dinlenme tamponlarını tanımlayın."
-                    : "Define your weekly working hours, appointment lengths, and buffer periods between sessions."}
-                </p>
-              </div>
-
-              {/* Step 2 */}
-              <div className="relative rounded-2xl border border-[#26282e] bg-[#18191d] p-5">
-                <div className="flex items-center justify-between">
-                  <span className="rounded-md border border-[#26282e] bg-[#111214] px-2.5 py-1 text-xs font-semibold text-[#F4F4F2]">
-                    02
-                  </span>
-                  <Globe className="h-4 w-4 text-[#9CA3AF]" aria-hidden="true" />
-                </div>
-                <h3 className="mt-4 text-base font-semibold text-[#F4F4F2]">
-                  {locale === "tr" ? "Linkini Paylaş" : "Share Your Link"}
-                </h3>
-                <p className="mt-2 text-xs leading-relaxed text-[#9CA3AF]">
-                  {locale === "tr"
-                    ? "Özel randevu bağlantınızı Instagram bio'nuza, web sitenize veya WhatsApp durumunuza ekleyin."
-                    : "Place your custom booking link in your Instagram bio, company website, or WhatsApp status."}
-                </p>
-              </div>
-
-              {/* Step 3 */}
-              <div className="relative rounded-2xl border border-[#26282e] bg-[#18191d] p-5">
-                <div className="flex items-center justify-between">
-                  <span className="rounded-md border border-[#26282e] bg-[#111214] px-2.5 py-1 text-xs font-semibold text-emerald-400">
-                    03
-                  </span>
-                  <ShieldCheck className="h-4 w-4 text-emerald-400" aria-hidden="true" />
-                </div>
-                <h3 className="mt-4 text-base font-semibold text-[#F4F4F2]">
-                  {locale === "tr" ? "SMS Teyidi Al" : "SMS Verification"}
-                </h3>
-                <p className="mt-2 text-xs leading-relaxed text-[#9CA3AF]">
-                  {locale === "tr"
-                    ? "Danışan tek kullanımlık SMS koduyla numarasını doğrular. Asılsız ve mükerrer talepler engellenir."
-                    : "The client verifies their mobile number with a one-time SMS passcode, preventing ghost bookings."}
-                </p>
-              </div>
-
-              {/* Step 4 */}
-              <div className="relative rounded-2xl border border-[#26282e] bg-[#18191d] p-5">
-                <div className="flex items-center justify-between">
-                  <span className="rounded-md border border-[#26282e] bg-[#111214] px-2.5 py-1 text-xs font-semibold text-sky-400">
-                    04
-                  </span>
-                  <MessageCircle className="h-4 w-4 text-sky-400" aria-hidden="true" />
-                </div>
-                <h3 className="mt-4 text-base font-semibold text-[#F4F4F2]">
-                  {locale === "tr" ? "Takvim & WhatsApp" : "Sync & Remind"}
-                </h3>
-                <p className="mt-2 text-xs leading-relaxed text-[#9CA3AF]">
-                  {locale === "tr"
-                    ? "Randevu takviminize işlenir; görüşme öncesinde hem size hem danışana WhatsApp bildirimi iletilir."
-                    : "The appointment syncs to your calendar; automated WhatsApp reminders go out before the session."}
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* =========================================================
-            SCREEN 4: SSS AKORDEONU (FAQ ACCORDION)
-            ========================================================= */}
-        <section
-          aria-labelledby="faq-title"
-          className="relative border-b border-[#26282e] px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-          <div className="mx-auto max-w-4xl">
-            <div className="text-center">
-              <span className="text-xs font-semibold text-[#9CA3AF]">
-                {locale === "tr" ? "Sıkça Sorulan Sorular" : "Frequently Asked Questions"}
-              </span>
-              <h2
-                id="faq-title"
-                className="mt-3 text-2xl font-bold tracking-tight text-[#F4F4F2] sm:text-3xl">
-                {locale === "tr" ? "Merak Edilen Sorular ve Cevaplar" : "Clear Answers to Common Questions"}
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-[#9CA3AF]">
-                {locale === "tr"
-                  ? "rOndevu özellikleri, takvim senkronizasyonu ve kurulum süreci hakkında ayrıntılı bilgi."
-                  : "Everything you need to know about rOndevu capabilities, calendar sync, and activation."}
-              </p>
-            </div>
-
-            {/* Accordion Items */}
-            <div className="mt-10 divide-y divide-[#26282e] border-y border-[#26282e]">
-              {faqItems.map((item, index) => {
-                const isOpen = openFaqIndex === index;
-                const questionId = `${baseFaqId}-q-${index}`;
-                const answerId = `${baseFaqId}-a-${index}`;
-
-                return (
-                  <div key={item.q} className="py-4">
-                    <button
-                      type="button"
-                      id={questionId}
-                      aria-expanded={isOpen}
-                      aria-controls={answerId}
-                      onClick={() => setOpenFaqIndex(isOpen ? null : index)}
-                      className="flex w-full items-center justify-between text-left text-base font-medium text-[#F4F4F2] transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400">
-                      <span className="pr-4">{item.q}</span>
-                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-[#26282e] bg-[#18191d] text-[#9CA3AF]">
-                        {isOpen ? (
-                          <Minus className="h-4 w-4" aria-hidden="true" />
-                        ) : (
-                          <Plus className="h-4 w-4" aria-hidden="true" />
-                        )}
-                      </span>
-                    </button>
-
-                    {isOpen && (
-                      <div
-                        id={answerId}
-                        role="region"
-                        aria-labelledby={questionId}
-                        className="mt-3 pr-8 text-sm leading-relaxed text-[#9CA3AF]">
-                        <p>{item.a}</p>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* =========================================================
-            SCREEN 5: CTA / KAPANIŞ KARTI (CALL TO ACTION)
-            ========================================================= */}
-        <section aria-labelledby="cta-title" className="relative px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-          <div className="mx-auto max-w-4xl rounded-3xl border border-[#26282e] bg-[#18191d] p-8 text-center sm:p-12">
-            <h2 id="cta-title" className="text-2xl font-bold tracking-tight text-[#F4F4F2] sm:text-3xl">
-              {locale === "tr"
-                ? "Randevularınızı düzene sokun, zamanınızı işinize ayırın."
-                : "Bring order to your schedule and focus on your practice."}
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-[#9CA3AF] sm:text-base">
-              {locale === "tr"
-                ? "SMS doğrulaması, WhatsApp bildirimleri ve çift yönlü takvim eşitlemesi ile profesyonel randevu deneyimine bugün başlayın."
-                : "Start delivering a premium scheduling experience today with verified SMS, WhatsApp alerts, and two-way calendar sync."}
-            </p>
-
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-              <Link
-                href={pricingHref}
-                className="inline-flex min-h-[46px] items-center justify-center rounded-lg bg-[#F4F4F2] px-6 text-sm font-semibold text-[#111214] transition hover:bg-white active:scale-[0.98]">
-                {locale === "tr" ? "Planları İnceleyin" : "View Plans"}
-              </Link>
-
-              <button
-                type="button"
-                onClick={() => setModalPlanType("general")}
-                className="inline-flex min-h-[46px] items-center justify-center rounded-lg border border-[#26282e] bg-[#111214] px-5 text-sm font-semibold text-[#F4F4F2] transition hover:border-[#3a3d46] hover:bg-[#1f2127] active:scale-[0.98]">
-                <MessageCircle className="mr-2 h-4 w-4 text-emerald-400" aria-hidden="true" />
-                {locale === "tr" ? "WhatsApp ile Bilgi Alın" : "Inquire via WhatsApp"}
-              </button>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      {/* 2. Marketing Footer */}
+      {/* 1:1 Cal.com Sayfa Gövdesi */}
+      <FramerDomBody html={html} onClick={onRootClick} />
       <MarketingFooter locale={locale} initialContact={resolvedContact} />
 
-      {/* 3. Dynamic Plan Contact Modal */}
+      {/* Admin Panelinden Dinamik İletişim Modalı */}
       <PlanContactModal
         isOpen={!!modalPlanType}
         planType={modalPlanType === "general" ? null : modalPlanType}
@@ -862,4 +946,3 @@ function HomeView({
 
 export type { HomeViewProps };
 export { HomeView };
-export default HomeView;
