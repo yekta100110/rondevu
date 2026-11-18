@@ -139,7 +139,7 @@ describe("withEmbedSsr", () => {
       it("should add layout and embed params from the current query when destination URL is HTTPS", async () => {
         const withEmbedGetSsr = withEmbedSsr(
           getServerSidePropsFnGenerator({
-            redirectUrl: "https://rondevu.cal.local/owner",
+            redirectUrl: "https://rondevu.rondevu.local/owner",
           })
         );
 
@@ -154,7 +154,7 @@ describe("withEmbedSsr", () => {
 
         expect(ret).toEqual({
           redirect: {
-            destination: "https://rondevu.cal.local/owner/embed?layout=week_view&embed=namespace1",
+            destination: "https://rondevu.rondevu.local/owner/embed?layout=week_view&embed=namespace1",
             permanent: false,
           },
         });
@@ -162,7 +162,7 @@ describe("withEmbedSsr", () => {
       it("should add layout and embed params from the current query when destination URL is HTTP", async () => {
         const withEmbedGetSsr = withEmbedSsr(
           getServerSidePropsFnGenerator({
-            redirectUrl: "http://rondevu.cal.local/owner",
+            redirectUrl: "http://rondevu.rondevu.local/owner",
           })
         );
 
@@ -177,7 +177,7 @@ describe("withEmbedSsr", () => {
 
         expect(ret).toEqual({
           redirect: {
-            destination: "http://rondevu.cal.local/owner/embed?layout=week_view&embed=namespace1",
+            destination: "http://rondevu.rondevu.local/owner/embed?layout=week_view&embed=namespace1",
             permanent: false,
           },
         });
@@ -185,7 +185,7 @@ describe("withEmbedSsr", () => {
       it("should correctly identify a URL as non absolute URL if protocol is missing", async () => {
         const withEmbedGetSsr = withEmbedSsr(
           getServerSidePropsFnGenerator({
-            redirectUrl: "httprondevu.cal.local/owner",
+            redirectUrl: "httprondevu.rondevu.local/owner",
           })
         );
 
@@ -201,7 +201,7 @@ describe("withEmbedSsr", () => {
         expect(ret).toEqual({
           redirect: {
             // FIXME: Note that it is adding a / in the beginning of the path, which might be fine for now, but could be an issue
-            destination: "/httprondevu.cal.local/owner/embed?layout=week_view&embed=namespace1",
+            destination: "/httprondevu.rondevu.local/owner/embed?layout=week_view&embed=namespace1",
             permanent: false,
           },
         });

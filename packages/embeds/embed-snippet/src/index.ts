@@ -33,10 +33,10 @@ export default function EmbedSnippet(url = EMBED_LIB_URL) {
       a.q.push(ar);
     };
     let d = C.document;
-    C.Cal =
-      C.Cal ||
+    C.Rondevu =
+      C.Rondevu ||
       function () {
-        let cal = C.Cal;
+        let cal = C.Rondevu;
         let ar = arguments;
         if (!cal.loaded) {
           // 'ns' and 'q' are now definitely set with the following 2 lines, so you can safely assert in TypeScript that it's GlobalCal now.
@@ -65,9 +65,9 @@ export default function EmbedSnippet(url = EMBED_LIB_URL) {
         p(cal as GlobalCal, ar);
       };
   })(
-    window as Omit<Window, "Cal"> & {
+    window as Omit<Window, "Rondevu"> & {
       // Make 'ns' and 'q' optional as they are set through the snippet above
-      Cal: Optional<GlobalCal, "ns" | "q">;
+      Rondevu: Optional<GlobalCal, "ns" | "q">;
     },
     //! Replace it with "https://rondevu.org/embed.js" or the URL where you have embed.js installed
     url,
@@ -75,7 +75,7 @@ export default function EmbedSnippet(url = EMBED_LIB_URL) {
   );
   /*!  Copying ends here. */
 
-  return window.Cal;
+  return window.Rondevu;
 }
 
 export const EmbedSnippetString = EmbedSnippet.toString();

@@ -5,8 +5,8 @@ import { DailyLocationType } from "@rondevu/app-store/constants";
 import { getDailyAppKeys } from "@rondevu/app-store/dailyvideo/lib/getDailyAppKeys";
 import { getVideoAdapters } from "@rondevu/app-store/getVideoAdapters";
 import { sendBrokenIntegrationEmail } from "@rondevu/emails/integration-email-service";
-import { getUid } from "@rondevu/lib/CalEventParser";
-import { CAL_VIDEO, CAL_VIDEO_TYPE } from "@rondevu/lib/constants";
+import { getUid } from "@rondevu/lib/RondevuEventParser";
+import { RONDEVU_VIDEO, RONDEVU_VIDEO_TYPE } from "@rondevu/lib/constants";
 import logger from "@rondevu/lib/logger";
 import { getPiiFreeCalendarEvent, getPiiFreeCredential } from "@rondevu/lib/piiFreeData";
 import { safeStringify } from "@rondevu/lib/safeStringify";
@@ -174,8 +174,8 @@ const createMeetingWithCalVideo = async (calEvent: CalendarEvent) => {
   const [videoAdapter] = await getVideoAdapters([
     {
       id: 0,
-      appId: CAL_VIDEO,
-      type: CAL_VIDEO_TYPE,
+      appId: RONDEVU_VIDEO,
+      type: RONDEVU_VIDEO_TYPE,
       userId: null,
       user: { email: "" },
       teamId: null,
@@ -198,8 +198,8 @@ export const createInstantMeetingWithCalVideo = async (endTime: string) => {
   const [videoAdapter] = await getVideoAdapters([
     {
       id: 0,
-      appId: CAL_VIDEO,
-      type: CAL_VIDEO_TYPE,
+      appId: RONDEVU_VIDEO,
+      type: RONDEVU_VIDEO_TYPE,
       userId: null,
       user: { email: "" },
       teamId: null,
@@ -219,14 +219,14 @@ const getRecordingsOfCalVideoByRoomName = async (
   try {
     dailyAppKeys = await getDailyAppKeys();
   } catch {
-    console.error("Error: Cal video provider is not installed.");
+    console.error("Error: rOndevu Video provider is not installed.");
     return;
   }
   const [videoAdapter] = await getVideoAdapters([
     {
       id: 0,
-      appId: CAL_VIDEO,
-      type: CAL_VIDEO_TYPE,
+      appId: RONDEVU_VIDEO,
+      type: RONDEVU_VIDEO_TYPE,
       userId: null,
       user: { email: "" },
       teamId: null,
@@ -246,14 +246,14 @@ const getDownloadLinkOfCalVideoByRecordingId = async (
   try {
     dailyAppKeys = await getDailyAppKeys();
   } catch {
-    console.error("Error: Cal video provider is not installed.");
+    console.error("Error: rOndevu Video provider is not installed.");
     return;
   }
   const [videoAdapter] = await getVideoAdapters([
     {
       id: 0,
-      appId: CAL_VIDEO,
-      type: CAL_VIDEO_TYPE,
+      appId: RONDEVU_VIDEO,
+      type: RONDEVU_VIDEO_TYPE,
       userId: null,
       user: { email: "" },
       teamId: null,
@@ -271,14 +271,14 @@ const getAllTranscriptsAccessLinkFromRoomName = async (roomName: string) => {
   try {
     dailyAppKeys = await getDailyAppKeys();
   } catch {
-    console.error("Error: Cal video provider is not installed.");
+    console.error("Error: rOndevu Video provider is not installed.");
     return;
   }
   const [videoAdapter] = await getVideoAdapters([
     {
       id: 0,
-      appId: CAL_VIDEO,
-      type: CAL_VIDEO_TYPE,
+      appId: RONDEVU_VIDEO,
+      type: RONDEVU_VIDEO_TYPE,
       userId: null,
       user: { email: "" },
       teamId: null,
@@ -296,14 +296,14 @@ const getAllTranscriptsAccessLinkFromMeetingId = async (meetingId: string) => {
   try {
     dailyAppKeys = await getDailyAppKeys();
   } catch {
-    console.error("Error: Cal video provider is not installed.");
+    console.error("Error: rOndevu Video provider is not installed.");
     return;
   }
   const [videoAdapter] = await getVideoAdapters([
     {
       id: 0,
-      appId: CAL_VIDEO,
-      type: CAL_VIDEO_TYPE,
+      appId: RONDEVU_VIDEO,
+      type: RONDEVU_VIDEO_TYPE,
       userId: null,
       user: { email: "" },
       teamId: null,
@@ -321,14 +321,14 @@ const submitBatchProcessorTranscriptionJob = async (recordingId: string) => {
   try {
     dailyAppKeys = await getDailyAppKeys();
   } catch {
-    console.error("Error: Cal video provider is not installed.");
+    console.error("Error: rOndevu Video provider is not installed.");
     return;
   }
   const [videoAdapter] = await getVideoAdapters([
     {
       id: 0,
-      appId: CAL_VIDEO,
-      type: CAL_VIDEO_TYPE,
+      appId: RONDEVU_VIDEO,
+      type: RONDEVU_VIDEO_TYPE,
       userId: null,
       user: { email: "" },
       teamId: null,
@@ -358,14 +358,14 @@ const getTranscriptsAccessLinkFromRecordingId = async (recordingId: string) => {
   try {
     dailyAppKeys = await getDailyAppKeys();
   } catch {
-    console.error("Error: Cal video provider is not installed.");
+    console.error("Error: rOndevu Video provider is not installed.");
     return;
   }
   const [videoAdapter] = await getVideoAdapters([
     {
       id: 0,
-      appId: CAL_VIDEO,
-      type: CAL_VIDEO_TYPE,
+      appId: RONDEVU_VIDEO,
+      type: RONDEVU_VIDEO_TYPE,
       userId: null,
       user: { email: "" },
       teamId: null,
@@ -384,14 +384,14 @@ const checkIfRoomNameMatchesInRecording = async (roomName: string, recordingId: 
   try {
     dailyAppKeys = await getDailyAppKeys();
   } catch {
-    console.error("Error: Cal video provider is not installed.");
+    console.error("Error: rOndevu Video provider is not installed.");
     return;
   }
   const [videoAdapter] = await getVideoAdapters([
     {
       id: 0,
-      appId: CAL_VIDEO,
-      type: CAL_VIDEO_TYPE,
+      appId: RONDEVU_VIDEO,
+      type: RONDEVU_VIDEO_TYPE,
       userId: null,
       user: { email: "" },
       teamId: null,
@@ -410,14 +410,14 @@ const getCalVideoMeetingSessionsByRoomName = async (roomName: string) => {
   try {
     dailyAppKeys = await getDailyAppKeys();
   } catch (e) {
-    console.error("Error: Cal video provider is not installed.");
+    console.error("Error: rOndevu Video provider is not installed.");
     return { data: [] };
   }
   const [videoAdapter] = await getVideoAdapters([
     {
       id: 0,
-      appId: CAL_VIDEO,
-      type: CAL_VIDEO_TYPE,
+      appId: RONDEVU_VIDEO,
+      type: RONDEVU_VIDEO_TYPE,
       userId: null,
       user: { email: "" },
       teamId: null,

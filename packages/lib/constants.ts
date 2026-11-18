@@ -13,11 +13,11 @@ const VERCEL_URL = process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.N
 const RAILWAY_STATIC_URL = process.env.RAILWAY_STATIC_URL ? `https://${process.env.RAILWAY_STATIC_URL}` : "";
 const HEROKU_URL = process.env.HEROKU_APP_NAME ? `https://${process.env.HEROKU_APP_NAME}.herokuapp.com` : "";
 const RENDER_URL = process.env.RENDER_EXTERNAL_URL ? `https://${process.env.RENDER_EXTERNAL_URL}` : "";
-export const CALCOM_ENV = process.env.CALCOM_ENV || process.env.NODE_ENV;
-export const IS_PRODUCTION = CALCOM_ENV === "production";
+export const RONDEVU_ENV = process.env.RONDEVU_ENV || process.env.NODE_ENV;
+export const IS_PRODUCTION = RONDEVU_ENV === "production";
 export const IS_PRODUCTION_BUILD = process.env.NODE_ENV === "production";
 export const ORGANIZER_EMAIL_EXEMPT_DOMAINS = process.env.ORGANIZER_EMAIL_EXEMPT_DOMAINS || "";
-const IS_DEV = CALCOM_ENV === "development";
+const IS_DEV = RONDEVU_ENV === "development";
 export const SINGLE_ORG_SLUG = process.env.NEXT_PUBLIC_SINGLE_ORG_SLUG;
 /** https://app.rondevu.org */
 export const WEBAPP_URL =
@@ -42,33 +42,33 @@ export const SENDER_ID = process.env.NEXT_PUBLIC_SENDER_ID || "rOndevu";
 export const SENDER_NAME = process.env.NEXT_PUBLIC_SENDGRID_SENDER_NAME || "rOndevu";
 export const EMAIL_FROM_NAME = process.env.EMAIL_FROM_NAME || APP_NAME;
 
-// This is the URL from which all Cal Links and their assets are served.
+// This is the URL from which all Rondevu Links and their assets are served.
 // Use website URL to make links shorter(rondevu.org and not app.rondevu.org)
 // As website isn't setup for preview environments, use the webapp url instead
 // If it's a .vercel.app domain, keep it.
 // Else use the website url if defined and finally fallback to the webapp url
-export const CAL_URL = new URL(WEBAPP_URL).hostname.endsWith(".vercel.app")
+export const RONDEVU_URL = new URL(WEBAPP_URL).hostname.endsWith(".vercel.app")
   ? WEBAPP_URL
   : ensureProtocol(process.env.NEXT_PUBLIC_WEBSITE_URL) || WEBAPP_URL;
 
-export const IS_CALCOM =
+export const IS_RONDEVU =
   WEBAPP_URL &&
   (new URL(WEBAPP_URL).hostname.endsWith("rondevu.org") ||
     new URL(WEBAPP_URL).hostname.endsWith("cal.dev") ||
     new URL(WEBAPP_URL).hostname.endsWith("cal.qa") ||
-    new URL(WEBAPP_URL).hostname.endsWith("cal-staging.com") ||
+    new URL(WEBAPP_URL).hostname.endsWith("rondevu-staging.com") ||
     new URL(WEBAPP_URL).hostname.endsWith("cal.eu"));
 
 export const CONSOLE_URL =
   new URL(WEBAPP_URL).hostname.endsWith(".cal.dev") ||
   new URL(WEBAPP_URL).hostname.endsWith(".cal.qa") ||
-  new URL(WEBAPP_URL).hostname.endsWith(".cal-staging.com") ||
+  new URL(WEBAPP_URL).hostname.endsWith(".rondevu-staging.com") ||
   process.env.NODE_ENV !== "production"
     ? `https://console.cal.dev`
     : `https://console.rondevu.org`;
-const CAL_DOMAINS = [".rondevu.org", ".cal.dev", ".cal.eu", ".cal.qa"];
+const RONDEVU_DOMAINS = [".rondevu.org", ".cal.dev", ".cal.eu", ".cal.qa"];
 const WEBAPP_HOSTNAME = new URL(WEBAPP_URL).hostname;
-export const IS_SELF_HOSTED = !CAL_DOMAINS.some((domain) => WEBAPP_HOSTNAME.endsWith(domain));
+export const IS_SELF_HOSTED = !RONDEVU_DOMAINS.some((domain) => WEBAPP_HOSTNAME.endsWith(domain));
 export const EMBED_LIB_URL = process.env.NEXT_PUBLIC_EMBED_LIB_URL || `${WEBAPP_URL}/embed/embed.js`;
 export const TRIAL_LIMIT_DAYS = 14;
 export const MAX_SEATS_PER_TIME_SLOT = 1000;
@@ -114,10 +114,10 @@ export const JOIN_COMMUNITY = "https://rondevu.org";
 export const POWERED_BY_URL = "https://rondevu.org";
 export const DOCS_URL = "https://rondevu.org/docs";
 export const DEVELOPER_DOCS = "https://rondevu.org/developer";
-export const SEO_IMG_DEFAULT = `${CAL_URL}/og-image.png`;
+export const SEO_IMG_DEFAULT = `${RONDEVU_URL}/og-image.png`;
 // Direct OG image base URL (serves /api/social/og/image directly without Next Image optimizer).
-export const SEO_IMG_OGIMG = `${CAL_URL}`;
-export const SEO_IMG_OGIMG_VIDEO = `${CAL_URL}/video-og-image.png`;
+export const SEO_IMG_OGIMG = `${RONDEVU_URL}`;
+export const SEO_IMG_OGIMG_VIDEO = `${RONDEVU_URL}/video-og-image.png`;
 export const IS_STRIPE_ENABLED = !!(
   process.env.STRIPE_CLIENT_ID &&
   process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY &&
@@ -143,18 +143,18 @@ export const ORGANIZATION_SELF_SERVE_PRICE = parseFloat(
 
 // Needed for emails in E2E
 export const IS_MAILHOG_ENABLED = process.env.E2E_TEST_MAILHOG_ENABLED === "1";
-export const CALCOM_VERSION = process.env.NEXT_PUBLIC_CALCOM_VERSION as string;
+export const RONDEVU_VERSION = process.env.NEXT_PUBLIC_RONDEVU_VERSION as string;
 
 export const APP_CREDENTIAL_SHARING_ENABLED =
-  !!process.env.CALCOM_CREDENTIAL_SYNC_SECRET && !!process.env.CALCOM_APP_CREDENTIAL_ENCRYPTION_KEY;
-export const CREDENTIAL_SYNC_SECRET = process.env.CALCOM_CREDENTIAL_SYNC_SECRET;
+  !!process.env.RONDEVU_CREDENTIAL_SYNC_SECRET && !!process.env.RONDEVU_APP_CREDENTIAL_ENCRYPTION_KEY;
+export const CREDENTIAL_SYNC_SECRET = process.env.RONDEVU_CREDENTIAL_SYNC_SECRET;
 export const CREDENTIAL_SYNC_SECRET_HEADER_NAME =
-  process.env.CALCOM_CREDENTIAL_SYNC_HEADER_NAME || "rondevu-credential-sync-secret";
+  process.env.RONDEVU_CREDENTIAL_SYNC_HEADER_NAME || "rondevu-credential-sync-secret";
 
-export const CREDENTIAL_SYNC_ENDPOINT = process.env.CALCOM_CREDENTIAL_SYNC_ENDPOINT;
+export const CREDENTIAL_SYNC_ENDPOINT = process.env.RONDEVU_CREDENTIAL_SYNC_ENDPOINT;
 
 // Service Account Encryption Key for encrypting/decrypting service account keys
-export const SERVICE_ACCOUNT_ENCRYPTION_KEY = process.env.CALCOM_SERVICE_ACCOUNT_ENCRYPTION_KEY;
+export const SERVICE_ACCOUNT_ENCRYPTION_KEY = process.env.RONDEVU_SERVICE_ACCOUNT_ENCRYPTION_KEY;
 
 export const DEFAULT_LIGHT_BRAND_COLOR = "#292929";
 export const DEFAULT_DARK_BRAND_COLOR = "#fafafa";
@@ -162,7 +162,7 @@ export const DEFAULT_DARK_BRAND_COLOR = "#fafafa";
 export const TOP_BANNER_HEIGHT = 40;
 
 export const IS_PREMIUM_USERNAME_ENABLED =
-  (IS_CALCOM || (process.env.NEXT_PUBLIC_IS_E2E && IS_STRIPE_ENABLED)) &&
+  (IS_RONDEVU || (process.env.NEXT_PUBLIC_IS_E2E && IS_STRIPE_ENABLED)) &&
   process.env.NEXT_PUBLIC_STRIPE_PREMIUM_PLAN_PRICE_MONTHLY;
 
 // Max number of invites to join a team/org that can be sent at once
@@ -183,7 +183,7 @@ export const ORG_SELF_SERVE_ENABLED = process.env.NEXT_PUBLIC_ORG_SELF_SERVE_ENA
 export const ORG_MINIMUM_PUBLISHED_TEAMS_SELF_SERVE = 0;
 export const ORG_MINIMUM_PUBLISHED_TEAMS_SELF_SERVE_HELPER_DIALOGUE = 1;
 
-export const CALCOM_PRIVATE_API_ROUTE = process.env.CALCOM_PRIVATE_API_ROUTE || "https://rondevu.org/api";
+export const RONDEVU_PRIVATE_API_ROUTE = process.env.RONDEVU_PRIVATE_API_ROUTE || "https://rondevu.org/api";
 export const WEBSITE_PRIVACY_POLICY_URL =
   process.env.NEXT_PUBLIC_WEBSITE_PRIVACY_POLICY_URL || "https://rondevu.org/privacy";
 export const WEBSITE_TERMS_URL = process.env.NEXT_PUBLIC_WEBSITE_TERMS_URL || "https://rondevu.org/tos";
@@ -223,7 +223,7 @@ export const IS_DUB_REFERRALS_ENABLED =
 export const DUB_SMS_DOMAIN = process.env.DUB_SMS_DOMAIN;
 export const DUB_SMS_FOLDER_ID = process.env.DUB_SMS_FOLDER_ID;
 
-export const CAL_VIDEO_MEETING_LINK_FOR_TESTING = process.env.CAL_VIDEO_MEETING_LINK_FOR_TESTING;
+export const RONDEVU_VIDEO_MEETING_LINK_FOR_TESTING = process.env.RONDEVU_VIDEO_MEETING_LINK_FOR_TESTING;
 
 export const IS_SMS_CREDITS_ENABLED =
   !!process.env.NEXT_PUBLIC_STRIPE_CREDITS_PRICE_ID || !!process.env.NEXT_PUBLIC_IS_E2E;
@@ -234,7 +234,7 @@ export const NEXTJS_CACHE_TTL = 3600; // 1 hour
 export const DEFAULT_GROUP_ID = "default_group_id";
 
 const _rawCalAiPrice = process.env.NEXT_PUBLIC_CAL_AI_PHONE_NUMBER_MONTHLY_PRICE;
-export const CAL_AI_PHONE_NUMBER_MONTHLY_PRICE = (() => {
+export const RONDEVU_AI_PHONE_NUMBER_MONTHLY_PRICE = (() => {
   const parsed = _rawCalAiPrice && _rawCalAiPrice.trim() !== "" ? Number(_rawCalAiPrice) : NaN;
   return Number.isFinite(parsed) ? parsed : 5;
 })();
@@ -256,9 +256,9 @@ export const RETELL_AI_TEST_EVENT_TYPE_MAP = (() => {
 export const ENV_PAST_BOOKING_RESCHEDULE_CHANGE_TEAM_IDS =
   process.env._CAL_INTERNAL_PAST_BOOKING_RESCHEDULE_CHANGE_TEAM_IDS;
 
-// Cal Video (Daily) app identifiers
-export const CAL_VIDEO = "daily-video";
-export const CAL_VIDEO_TYPE = "daily_video";
+// rOndevu Video (Daily) app identifiers
+export const RONDEVU_VIDEO = "daily-video";
+export const RONDEVU_VIDEO_TYPE = "daily_video";
 
 export const ORG_TRIAL_DAYS = process.env.STRIPE_ORG_TRIAL_DAYS
   ? Math.max(0, parseInt(process.env.STRIPE_ORG_TRIAL_DAYS, 10))

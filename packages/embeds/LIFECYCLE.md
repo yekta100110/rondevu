@@ -31,13 +31,13 @@ All messages use the `originator: "CAL"` identifier to distinguish rOndevu embed
 
 ## Inline Embed Lifecycle
 
-Inline embeds are created immediately when `Cal.inline()` is called. They have a simpler lifecycle without prerendering support.
+Inline embeds are created immediately when `Rondevu.inline()` is called. They have a simpler lifecycle without prerendering support.
 
 See [inline-embed-lifecycle.mermaid](./inline-embed-lifecycle.mermaid) for the complete sequence diagram.
 
 ## Modal Embed Lifecycle
 
-Modal embeds are created when a CTA is clicked or `Cal.modal()` is called. They support reuse, state management, and prerendering.
+Modal embeds are created when a CTA is clicked or `Rondevu.modal()` is called. They support reuse, state management, and prerendering.
 
 See [modal-embed-lifecycle.mermaid](./modal-embed-lifecycle.mermaid) for the complete sequence diagram.
 
@@ -197,7 +197,7 @@ The embed system queues commands sent before the iframe is ready. Once the ifram
 
 ## Popup Window Analogy
 
-Think of the embed like `window.open("url", "cal-booker")` with a hypothetical enhancement - when you close the popup, it stays in the background ready to spring back:
+Think of the embed like `window.open("url", "rondevu-booker")` with a hypothetical enhancement - when you close the popup, it stays in the background ready to spring back:
 
 - **`bookerViewed`** = Opening a new popup window (first time, or after previous was destroyed due to staleness)
 - **`bookerReopened`** = Clicking CTA that targets the same window name, bringing back the hidden popup

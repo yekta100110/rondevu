@@ -327,8 +327,8 @@ const _sendPayload = async (
     platform: webhook.platform,
     headers: {
       "Content-Type": contentType,
-      "X-Cal-Signature-256": createWebhookSignature({ secret: secretKey, body }),
-      "X-Cal-Webhook-Version": version,
+      "X-Rondevu-Signature-256": createWebhookSignature({ secret: secretKey, body }),
+      "X-Rondevu-Webhook-Version": version,
       ...(webhook.platform && createdAt && ingressKey
         ? {
             "X-Rondevu-Event-Id": createHash("sha256").update(body).digest("hex"),

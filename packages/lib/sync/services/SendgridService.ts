@@ -7,7 +7,7 @@ import type ISyncService from "../ISyncService";
 import SyncServiceCore from "../ISyncService";
 
 // rOndevu Custom Contact Fields
-const calComCustomContactFields: SendgridFieldOptions = [
+const rondevuCustomContactFields: SendgridFieldOptions = [
   // Field name, field type
   ["username", "Text"],
   ["plan", "Text"],
@@ -26,7 +26,7 @@ export default class SendgridService extends SyncServiceCore implements ISyncSer
   upsert = async (user: WebUserInfoType | ConsoleUserInfoType) => {
     this.log.debug("sync:sendgrid:user", user);
     // Get Custom Contact fields ids
-    const customFieldsIds = await this.service.getSendgridCustomFieldsIds(calComCustomContactFields);
+    const customFieldsIds = await this.service.getSendgridCustomFieldsIds(rondevuCustomContactFields);
     this.log.debug("sync:sendgrid:user:customFieldsIds", customFieldsIds);
     const lastBooking = "email" in user ? await this.getUserLastBooking(user) : null;
     this.log.debug("sync:sendgrid:user:lastBooking", lastBooking);

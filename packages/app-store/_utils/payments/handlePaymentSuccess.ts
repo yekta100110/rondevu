@@ -12,7 +12,7 @@ import tasker from "@rondevu/features/tasker";
 import getWebhooks from "@rondevu/features/webhooks/lib/getWebhooks";
 import sendPayload from "@rondevu/features/webhooks/lib/sendOrSchedulePayload";
 import type { EventPayloadType, EventTypeInfo } from "@rondevu/features/webhooks/lib/sendPayload";
-import { getVideoCallUrlFromCalEvent } from "@rondevu/lib/CalEventParser";
+import { getVideoCallUrlFromCalEvent } from "@rondevu/lib/RondevuEventParser";
 import { getTeamIdFromEventType } from "@rondevu/lib/getTeamIdFromEventType";
 import { HttpError as HttpCode } from "@rondevu/lib/http-error";
 import logger from "@rondevu/lib/logger";

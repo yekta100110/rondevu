@@ -406,16 +406,16 @@ function renderResultItem(item: string | Action, active: boolean, t: (key: strin
     return <div className="bg-default p-4 font-bold text-emphasis text-xs uppercase">{t(item)}</div>;
   }
 
-  let background = "var(--cal-bg-default)";
+  let background = "var(--rondevu-bg-default)";
   let borderLeft = "2px solid transparent";
   if (active) {
-    background = "var(--cal-bg-subtle)";
-    borderLeft = "2px solid var(--cal-border)";
+    background = "var(--rondevu-bg-subtle)";
+    borderLeft = "2px solid var(--rondevu-border)";
   }
 
   return (
     <div
-      style={{ background, borderLeft, color: "var(--cal-text)" }}
+      style={{ background, borderLeft, color: "var(--rondevu-text)" }}
       className="flex items-center justify-between px-4 py-2.5 text-sm transition hover:cursor-pointer">
       <span>{t(item.name)}</span>
       <DisplayShortcuts shortcuts={item.shortcut} />

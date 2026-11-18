@@ -26,7 +26,7 @@ Yabancı kurumsal takvim yazılımlarının (Calendly, rOndevu Enterprise vb.) e
 3. **Şifremi Unuttum ile Sürtünmesiz Devralma (Claim):** İşletme sahibi kendi e-posta adresiyle tanımlanmış hesabı beğendiğinde **"Şifremi Unuttum"** akışıyla şifresini belirleyerek hesabına erişir; ödeme/abonelik adımını tamamladığında demo bayrağı kaldırılarak hesap kalıcı hale gelir.
 4. **15 Günlük Otomatik Temizlik (TTL Cleanup):** Oluşturulma tarihinden 15 gün sonra hâlâ devralınmamış (aktifleşmemiş) demo hesapları ve bağlı kayıtlar otomatik temizlik göreviyle veritabanından silinir.
 
-## User Experience & De-Cal'ification Goals
+## User Experience & De-Rondevu'ification Goals
 - **Yalın ve Yerel Deneyim:** Kurumsal/yabancı jargonlardan ("Toplantı", "OOO", "Organizations", "Teams") arındırılmış; "Randevu", "İzinlerim", "Katılmadı" gibi doğal Türkçe terminolojiye sahip arayüz.
-- **De-Cal'ification:** rOndevu'dan miras kalan gereksiz `app-store` eklentilerinin ve kurumsal karmaşanın temizlenerek yalnızca çekirdek randevu, takvim, SMS ve WhatsApp akışlarının öne çıkarılması.
+- **De-Rondevu'ification:** rOndevu'dan miras kalan gereksiz `app-store` eklentilerinin ve kurumsal karmaşanın temizlenerek yalnızca çekirdek randevu, takvim, SMS ve WhatsApp akışlarının öne çıkarılması.
 - **Şeffaf İki Planlı Model:** Özellik kısıtlaması veya komisyon olmadan tüm yetenekleri sunan Aylık ve Yıllık plan yapısı (`PlanContactModal` üzerinden doğrudan iletişim ve aktivasyon).

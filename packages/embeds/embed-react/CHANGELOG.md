@@ -100,7 +100,7 @@
 
 ### Minor Changes
 
-- Fix missing types for @rondevu/embed-react. Also, release support for floatingButton config parameter. Though the support is available using embed.js already, for users using getCalApi the TypeScript types would report that config isn't supported.
+- Fix missing types for @rondevu/embed-react. Also, release support for floatingButton config parameter. Though the support is available using embed.js already, for users using getRondevuApi the TypeScript types would report that config isn't supported.
 
 ### Patch Changes
 

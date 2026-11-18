@@ -6,7 +6,7 @@ import { createJSONStorage, type StateStorage } from "zustand/middleware";
  * making it suitable for storing large base64-encoded images (logos, banners, etc.).
  * Falls back to localStorage if IndexedDB is not available.
  */
-const DB_NAME = "cal-onboarding-idb";
+const DB_NAME = "rondevu-onboarding-idb";
 const DB_VERSION = 1;
 const STORE_NAME = "keyval";
 

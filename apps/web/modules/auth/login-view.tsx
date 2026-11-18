@@ -188,7 +188,7 @@ export default function Login({
         <div className="w-full rounded-xl border border-subtle bg-default p-10 shadow-sm">
           {/* Logo */}
           <div className="mb-2 text-center">
-            <h1 className="font-cal text-2xl font-bold text-emphasis">{APP_NAME}</h1>
+            <h1 className="font-display text-2xl font-bold text-emphasis">{APP_NAME}</h1>
           </div>
 
           {/* Heading */}

@@ -8,7 +8,7 @@ import type { AppMeta } from "@rondevu/types/App";
 
 import type { appDataSchemas } from "./apps.schemas.generated";
 
-const PushEventPrefix = "cal_analytics_app_";
+const PushEventPrefix = "rondevu_analytics_app_";
 
 // AnalyticApp has appData.tag always set
 type AnalyticApp = Omit<AppMeta, "appData"> & {
@@ -135,7 +135,7 @@ export default function BookingPageTagManager({
           return (
             // biome-ignore lint/security/noDangerouslySetInnerHtml: Analytics script injection
             <Script
-              data-testid={`cal-analytics-app-${appId}`}
+              data-testid={`rondevu-analytics-app-${appId}`}
               src={parseValue(script.src)}
               id={`${appId}-${index}`}
               key={`${appId}-${index}`}

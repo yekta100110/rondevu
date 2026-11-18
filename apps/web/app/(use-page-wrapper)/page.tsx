@@ -9,7 +9,7 @@ import { cookies, headers } from "next/headers";
 import { HomeView } from "~/home/home-view";
 import type { Locale } from "~/home/i18n/home-translations";
 
-import "../../public/cal_files/cal-framer.css";
+import "../../public/rondevu_files/rondevu-framer.css";
 
 const SITE_URL = WEBSITE_URL.replace(/\/+$/, "");
 const HOME_LANGUAGES = {
@@ -56,7 +56,7 @@ const HomePage = async () => {
   const isLoggedIn = !!session?.user?.id;
   const initialLocale: Locale = "tr";
 
-  const { html, svgTemplates } = loadCalMarketingAssets("cal-dom-tr.html", { extractBody: true });
+  const { html, svgTemplates } = loadCalMarketingAssets("rondevu-dom-tr.html", { extractBody: true });
 
   return (
     <>

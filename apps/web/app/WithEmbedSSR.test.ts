@@ -139,7 +139,7 @@ describe("withEmbedSsrAppDir", () => {
       it("should handle HTTPS URLs", async () => {
         const withEmbedGetSsr = withEmbedSsrAppDir(
           getServerSidePropsFnGenerator({
-            redirectUrl: "https://rondevu.cal.local/owner",
+            redirectUrl: "https://rondevu.rondevu.local/owner",
           })
         );
 
@@ -153,14 +153,14 @@ describe("withEmbedSsrAppDir", () => {
         ).catch(noop);
 
         expect(redirect).toHaveBeenCalledWith(
-          "https://rondevu.cal.local/owner/embed?layout=week_view&embed=namespace1"
+          "https://rondevu.rondevu.local/owner/embed?layout=week_view&embed=namespace1"
         );
       });
 
       it("should handle HTTP URLs", async () => {
         const withEmbedGetSsr = withEmbedSsrAppDir(
           getServerSidePropsFnGenerator({
-            redirectUrl: "http://rondevu.cal.local/owner",
+            redirectUrl: "http://rondevu.rondevu.local/owner",
           })
         );
 
@@ -174,14 +174,14 @@ describe("withEmbedSsrAppDir", () => {
         ).catch(noop);
 
         expect(redirect).toHaveBeenCalledWith(
-          "http://rondevu.cal.local/owner/embed?layout=week_view&embed=namespace1"
+          "http://rondevu.rondevu.local/owner/embed?layout=week_view&embed=namespace1"
         );
       });
 
       it("should treat URLs without protocol as relative", async () => {
         const withEmbedGetSsr = withEmbedSsrAppDir(
           getServerSidePropsFnGenerator({
-            redirectUrl: "rondevu.cal.local/owner",
+            redirectUrl: "rondevu.rondevu.local/owner",
           })
         );
 
@@ -195,7 +195,7 @@ describe("withEmbedSsrAppDir", () => {
         ).catch(noop);
 
         expect(redirect).toHaveBeenCalledWith(
-          "/rondevu.cal.local/owner/embed?layout=week_view&embed=namespace1"
+          "/rondevu.rondevu.local/owner/embed?layout=week_view&embed=namespace1"
         );
       });
     });

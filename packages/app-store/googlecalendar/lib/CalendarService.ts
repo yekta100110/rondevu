@@ -4,7 +4,7 @@ import { MeetLocationType } from "@rondevu/app-store/constants";
 import dayjs from "@rondevu/dayjs";
 import { getDestinationCalendarRepository } from "@rondevu/features/di/containers/DestinationCalendar";
 import { SelectedCalendarRepository } from "@rondevu/features/selectedCalendar/repositories/SelectedCalendarRepository";
-import { getLocation, getRichDescription } from "@rondevu/lib/CalEventParser";
+import { getLocation, getRichDescription } from "@rondevu/lib/RondevuEventParser";
 import { ORGANIZER_EMAIL_EXEMPT_DOMAINS } from "@rondevu/lib/constants";
 import logger from "@rondevu/lib/logger";
 import { safeStringify } from "@rondevu/lib/safeStringify";
@@ -247,12 +247,12 @@ class GoogleCalendarService implements Calendar {
         });
         if (recurringEventInstances.data.items) {
           // Compare timestamps directly for more reliable and faster matching
-          const calComEventStartTimeMs = new Date(calEvent.startTime).getTime();
+          const rondevuEventStartTimeMs = new Date(calEvent.startTime).getTime();
           for (let i = 0; i < recurringEventInstances.data.items.length; i++) {
             const instance = recurringEventInstances.data.items[i];
             const instanceStartTimeMs = new Date(instance.start?.dateTime || "").getTime();
 
-            if (instanceStartTimeMs === calComEventStartTimeMs) {
+            if (instanceStartTimeMs === rondevuEventStartTimeMs) {
               event = instance;
               break;
             }
@@ -954,7 +954,7 @@ class GoogleCalendarService implements Calendar {
       });
       return response.data;
     } catch (error) {
-      // should not be reached because Google Cal always has a primary cal
+      // should not be reached because Google Rondevu always has a primary cal
       logger.error("Error getting primary calendar", { error });
       throw error;
     }

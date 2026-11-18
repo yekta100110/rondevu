@@ -3,8 +3,8 @@ import type { DateArray, ParticipationRole, EventStatus, ParticipationStatus } f
 import { createEvent } from "ics";
 import { RRule } from "rrule";
 
-import { getRichDescription } from "@rondevu/lib/CalEventParser";
-import { getVideoCallUrlFromCalEvent } from "@rondevu/lib/CalEventParser";
+import { getRichDescription } from "@rondevu/lib/RondevuEventParser";
+import { getVideoCallUrlFromCalEvent } from "@rondevu/lib/RondevuEventParser";
 import { ORGANIZER_EMAIL_EXEMPT_DOMAINS } from "@rondevu/lib/constants";
 import { ErrorCode } from "@rondevu/lib/errorCodes";
 import { ErrorWithCode } from "@rondevu/lib/errors";

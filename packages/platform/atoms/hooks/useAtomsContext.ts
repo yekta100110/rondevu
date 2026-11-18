@@ -2,7 +2,7 @@
 
 import { createContext, useContext } from "react";
 
-import type { CalProviderLanguagesType, translationKeys } from "../cal-provider/languages";
+import type { RondevuProviderLanguagesType, translationKeys } from "../rondevu-provider/languages";
 import type http from "../lib/http";
 
 export interface IAtomsContextOptions {
@@ -24,9 +24,9 @@ export interface IAtomsContext {
   isInit: boolean;
   t: (key: string, values: Record<string, string | number | undefined | null>) => string;
   i18n: {
-    language: CalProviderLanguagesType;
-    defaultLocale: CalProviderLanguagesType;
-    locales: CalProviderLanguagesType[];
+    language: RondevuProviderLanguagesType;
+    defaultLocale: RondevuProviderLanguagesType;
+    locales: RondevuProviderLanguagesType[];
     exists: (key: translationKeys | string) => boolean;
   };
   organizationId: number;

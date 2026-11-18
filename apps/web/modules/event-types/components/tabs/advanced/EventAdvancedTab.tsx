@@ -635,7 +635,7 @@ export const EventAdvancedTab = ({
         />
       )}
 
-      <div className="rounded-lg border border-subtle bg-cal-muted p-1">
+      <div className="rounded-lg border border-subtle bg-muted p-1">
         <div className="p-5">
           <div className="font-semibold text-default text-sm leading-none ltr:mr-1 rtl:ml-1">
             {t("booking_questions_title")}
@@ -774,7 +774,7 @@ export const EventAdvancedTab = ({
               customClassNames?.canSendCalVideoTranscriptionEmails?.container
             )}
             title={t("send_cal_video_transcription_emails")}
-            data-testid="send-cal-video-transcription-emails"
+            data-testid="send-rondevu-video-transcription-emails"
             {...sendCalVideoTranscriptionEmailsProps}
             description={t("description_send_cal_video_transcription_emails")}
             descriptionClassName={customClassNames?.canSendCalVideoTranscriptionEmails?.description}

@@ -69,7 +69,7 @@ export const OnboardingMigrateMembersBrowserView = ({
           <ArrowRightIcon className="h-4 w-4 text-subtle" />
           <RotateCwIcon className="h-4 w-4 text-subtle" />
         </div>
-        <div className="flex w-full min-w-0 items-center gap-2 rounded-[32px] bg-cal-muted px-3 py-2">
+        <div className="flex w-full min-w-0 items-center gap-2 rounded-[32px] bg-muted px-3 py-2">
           <LockIcon className="h-4 w-4 text-subtle" />
           <p className="truncate font-medium text-default text-sm leading-tight">{displayUrl}/members</p>
         </div>
@@ -77,7 +77,7 @@ export const OnboardingMigrateMembersBrowserView = ({
       </div>
 
       {/* Content */}
-      <div className="h-full bg-cal-muted pt-11 pl-11">
+      <div className="h-full bg-muted pt-11 pl-11">
         <AnimatePresence mode="wait">
           <motion.div
             key={pathname}
@@ -170,7 +170,7 @@ export const OnboardingMigrateMembersBrowserView = ({
                 ))
               ) : (
                 <div className="flex flex-col items-center justify-center gap-3 px-5 py-12">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-cal-muted">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-muted">
                     <UserPlusIcon className="h-8 w-8 text-subtle" />
                   </div>
                   <div className="flex flex-col gap-1 text-center">

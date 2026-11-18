@@ -115,7 +115,7 @@ export function DataTable<TData>({
   return (
     <div
       className={classNames(
-        !hasWrapperContext ? "grid" : "bg-cal-muted grid rounded-xl px-0.5 pb-0.5",
+        !hasWrapperContext ? "grid" : "bg-muted grid rounded-xl px-0.5 pb-0.5",
         className
       )}
       style={{
@@ -150,7 +150,7 @@ export function DataTable<TData>({
         <TableNew
           className={classNames(
             "data-table grid border-0",
-            !hasWrapperContext && "bg-cal-muted rounded-xl px-0.5 pb-0.5"
+            !hasWrapperContext && "bg-muted rounded-xl px-0.5 pb-0.5"
           )}
           style={{
             ...columnSizingVars,
@@ -172,7 +172,7 @@ export function DataTable<TData>({
                       className={classNames(
                         "relative flex items-center",
                         column.columnDef.meta?.autoWidth ? "grow" : "shrink-0",
-                        "bg-cal-muted",
+                        "bg-muted",
                         column.getIsPinned() && "top-0 z-20 sm:sticky"
                       )}>
                       <TableHeadLabel header={header} />
@@ -285,7 +285,7 @@ function SeparatorRowRenderer({ separator, className }: { separator: SeparatorRo
   return (
     <div
       className={classNames(
-        "bg-cal-muted text-emphasis w-full px-3 py-2 font-semibold",
+        "bg-muted text-emphasis w-full px-3 py-2 font-semibold",
         separator.className,
         className
       )}>
@@ -427,10 +427,10 @@ function DataTableBody<TData>({
                     width: `var(--col-${kebabCase(cell.column.id)}-size)`,
                   }}
                   className={classNames(
-                    "bg-default group-hover:!bg-cal-muted group-data-[state=selected]:bg-subtle flex shrink-0 items-center overflow-hidden",
+                    "bg-default group-hover:!bg-muted group-data-[state=selected]:bg-subtle flex shrink-0 items-center overflow-hidden",
                     variant === "compact" && "p-0",
                     column.getIsPinned() &&
-                      "bg-default group-hover:!bg-cal-muted group-data-[state=selected]:bg-subtle sm:sticky"
+                      "bg-default group-hover:!bg-muted group-data-[state=selected]:bg-subtle sm:sticky"
                   )}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
@@ -469,7 +469,7 @@ const TableHeadLabel = <TData,>({ header }: { header: Header<TData, unknown> }) 
           type="button"
           className={classNames(
             "group mr-1 flex w-full items-center gap-2 rounded-md px-2 py-1",
-            open && "bg-cal-muted"
+            open && "bg-muted"
           )}>
           <div
             className="text-default truncate text-sm leading-none"

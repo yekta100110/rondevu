@@ -8,8 +8,8 @@ export type translationKeys = enTranslationKeys | trTranslationKeys;
 export const EN = "en";
 export const TR = "tr";
 
-const CAL_PROVIDER_LANGUAGES = [EN, TR] as const;
-export type CalProviderLanguagesType = (typeof CAL_PROVIDER_LANGUAGES)[number];
+const RONDEVU_PROVIDER_LANGUAGES = [EN, TR] as const;
+export type RondevuProviderLanguagesType = (typeof RONDEVU_PROVIDER_LANGUAGES)[number];
 
 type i18nEnProps = {
   labels?: Partial<Record<enTranslationKeys, string>>;

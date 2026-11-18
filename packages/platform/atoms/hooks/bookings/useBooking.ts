@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   V2_ENDPOINTS,
   SUCCESS_STATUS,
-  CAL_API_VERSION_HEADER,
+  RONDEVU_API_VERSION_HEADER,
   VERSION_2024_08_13,
 } from "@rondevu/platform-constants";
 import type { GetBookingOutput_2024_08_13 } from "@rondevu/platform-types";
@@ -13,7 +13,7 @@ import http from "../../lib/http";
 export const useBooking = (uid: string) => {
   const pathname = `/${V2_ENDPOINTS.bookings}/${uid}`;
   const headers = {
-    [CAL_API_VERSION_HEADER]: VERSION_2024_08_13,
+    [RONDEVU_API_VERSION_HEADER]: VERSION_2024_08_13,
   };
 
   const bookingQuery = useQuery({

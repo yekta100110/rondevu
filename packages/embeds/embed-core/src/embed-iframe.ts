@@ -53,7 +53,7 @@ const eventsAllowedInPrerendering = [
 
 declare global {
   interface Window {
-    CalEmbed: {
+    RondevuEmbed: {
       __logQueue?: unknown[];
       embedStore: typeof embedStore;
       applyCssVars: (cssVarsPerTheme: UiConfig["cssVarsPerTheme"]) => void;
@@ -66,8 +66,8 @@ declare global {
 let isSafariBrowser = false;
 
 if (isBrowser) {
-  window.CalEmbed = window?.CalEmbed || {};
-  window.CalEmbed.embedStore = embedStore;
+  window.RondevuEmbed = window?.RondevuEmbed || {};
+  window.RondevuEmbed.embedStore = embedStore;
   const ua = navigator.userAgent.toLowerCase();
   isSafariBrowser = ua.includes("safari") && !ua.includes("chrome");
   if (isSafariBrowser) {
@@ -403,7 +403,7 @@ export const methods = {
       const mappedCssVarsPerTheme = mapOldToNewCssVars(
         uiConfig.cssVarsPerTheme
       );
-      window.CalEmbed.applyCssVars(mappedCssVarsPerTheme);
+      window.RondevuEmbed.applyCssVars(mappedCssVarsPerTheme);
     }
 
     if (uiConfig.colorScheme) {
@@ -476,7 +476,7 @@ export const methods = {
 
     const connectVersion = embedStore.connectVersion;
     // Config is just a typed and more declarative way to pass the query params from the parent(except iframeAttrs which is meant to be consumed by parent and not supposed to passed to child)
-    // So, query params can come directly by providing them to calLink or through config
+    // So, query params can come directly by providing them to rondevuLink or through config
     const toBeThereParams = {
       ...params,
       // Query params from config takes precedence over query params in url

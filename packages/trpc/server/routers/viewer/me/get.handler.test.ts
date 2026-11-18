@@ -187,12 +187,12 @@ describe("getHandler - identity provider email lookup", () => {
   it("maps CAL identity provider to 'cal' in account lookup", async () => {
     const ctx = createCtx({
       identityProvider: IdentityProvider.CAL,
-      identityProviderId: "cal-id-789",
+      identityProviderId: "rondevu-id-789",
     } as any);
     mockEnrichUserWithTheProfile.mockImplementation(({ user }) => ({
       ...user,
       identityProvider: IdentityProvider.CAL,
-      identityProviderId: "cal-id-789",
+      identityProviderId: "rondevu-id-789",
       profile: null,
     }));
     mockFindUnique.mockResolvedValue(null);
@@ -204,7 +204,7 @@ describe("getHandler - identity provider email lookup", () => {
         where: {
           provider_providerAccountId: {
             provider: "cal",
-            providerAccountId: "cal-id-789",
+            providerAccountId: "rondevu-id-789",
           },
         },
       })

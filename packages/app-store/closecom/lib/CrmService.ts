@@ -27,10 +27,10 @@ const credentialSchema = z
     }
   );
 
-const CALENDSO_ENCRYPTION_KEY = process.env.CALENDSO_ENCRYPTION_KEY || "";
+const RONDEVU_ENCRYPTION_KEY = process.env.RONDEVU_ENCRYPTION_KEY || "";
 
 // rOndevu Custom Activity Fields
-const calComCustomActivityFields: CloseComFieldOptions = [
+const rondevuCustomActivityFields: CloseComFieldOptions = [
   // Field name, field type, required?, multiple values?
   ["Attendees", "contact", false, true],
   ["Date & Time", "datetime", true, false],
@@ -77,7 +77,7 @@ class CloseComCRMService implements CRM {
     // Initialize CloseCom client based on credential type
     if (parsedKey.data.encrypted) {
       // API key authentication
-      const decrypted = symmetricDecrypt(parsedKey.data.encrypted, CALENDSO_ENCRYPTION_KEY);
+      const decrypted = symmetricDecrypt(parsedKey.data.encrypted, RONDEVU_ENCRYPTION_KEY);
       const { api_key } = JSON.parse(decrypted);
       this.closeCom = new CloseCom(api_key);
     } else if (parsedKey.data.access_token) {
@@ -96,7 +96,7 @@ class CloseComCRMService implements CRM {
   closeComUpdateCustomActivity = async (uid: string, event: CalendarEvent) => {
     const customActivityTypeInstanceData = await getCustomActivityTypeInstanceData(
       event,
-      calComCustomActivityFields,
+      rondevuCustomActivityFields,
       this.closeCom
     );
     // Create Custom Activity type instance
@@ -113,7 +113,7 @@ class CloseComCRMService implements CRM {
   async createEvent(event: CalendarEvent): Promise<CrmEvent> {
     const customActivityTypeInstanceData = await getCustomActivityTypeInstanceData(
       event,
-      calComCustomActivityFields,
+      rondevuCustomActivityFields,
       this.closeCom
     );
     // Create Custom Activity type instance

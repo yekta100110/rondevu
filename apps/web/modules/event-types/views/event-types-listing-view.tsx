@@ -539,7 +539,7 @@ export const InfiniteEventTypeList = ({
         {pages.map((page, pageIdx) => {
           return page?.eventTypes?.map((type, index) => {
             const embedLink = `${group.profile.slug}/${type.slug}`;
-            const calLink = `${bookerUrl}/${embedLink}`;
+            const rondevuLink = `${bookerUrl}/${embedLink}`;
 
             const activeHashedLinks = type.hashedLink ? filterActiveLinks(type.hashedLink, userTimezone) : [];
 
@@ -557,7 +557,7 @@ export const InfiniteEventTypeList = ({
               type.schedulingType !== SchedulingType.MANAGED;
             return (
               <li key={type.id}>
-                <div className="flex w-full items-center justify-between transition hover:bg-cal-muted">
+                <div className="flex w-full items-center justify-between transition hover:bg-muted">
                   <div className="group flex w-full max-w-full items-center justify-between overflow-hidden px-4 py-4 sm:px-6">
                     {!(firstItem && firstItem.id === type.id) && (
                       <ArrowButton
@@ -627,7 +627,7 @@ export const InfiniteEventTypeList = ({
                                     color="secondary"
                                     target="_blank"
                                     variant="icon"
-                                    href={calLink}
+                                    href={rondevuLink}
                                     StartIcon="external-link"
                                   />
                                 </Tooltip>
@@ -639,7 +639,7 @@ export const InfiniteEventTypeList = ({
                                     StartIcon="link"
                                     onClick={() => {
                                       showToast(t("link_copied"), "success");
-                                      copyToClipboard(calLink);
+                                      copyToClipboard(rondevuLink);
                                     }}
                                   />
                                 </Tooltip>
@@ -753,7 +753,7 @@ export const InfiniteEventTypeList = ({
                             <>
                               <DropdownMenuItem className="outline-none">
                                 <DropdownItem
-                                  href={calLink}
+                                  href={rondevuLink}
                                   target="_blank"
                                   StartIcon="external-link"
                                   className="w-full rounded-none">
@@ -764,7 +764,7 @@ export const InfiniteEventTypeList = ({
                                 <DropdownItem
                                   data-testid={`event-type-duplicate-${type.id}`}
                                   onClick={() => {
-                                    navigator.clipboard.writeText(calLink);
+                                    navigator.clipboard.writeText(rondevuLink);
                                     showToast(t("link_copied"), "success");
                                   }}
                                   StartIcon="clipboard"
@@ -785,7 +785,7 @@ export const InfiniteEventTypeList = ({
                                       text: t("share_event", {
                                         appName: APP_NAME,
                                       }),
-                                      url: calLink,
+                                      url: rondevuLink,
                                     })
                                     .then(() => showToast(t("link_shared"), "success"))
                                     .catch(() => showToast(t("failed"), "error"));

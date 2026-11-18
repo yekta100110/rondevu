@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import {
-  CAL_API_VERSION_HEADER,
+  RONDEVU_API_VERSION_HEADER,
   SUCCESS_STATUS,
   V2_ENDPOINTS,
   VERSION_2024_08_13,
@@ -16,7 +16,7 @@ const QUERY_KEY = "use-bookings";
 export const useBookings = (input: GetBookingsInput_2024_08_13) => {
   const pathname = `/${V2_ENDPOINTS.bookings}`;
   const headers = {
-    [CAL_API_VERSION_HEADER]: VERSION_2024_08_13,
+    [RONDEVU_API_VERSION_HEADER]: VERSION_2024_08_13,
   };
 
   const bookingsQuery = useQuery({

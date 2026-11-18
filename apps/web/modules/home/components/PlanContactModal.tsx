@@ -95,7 +95,7 @@ export function PlanContactModal({
         </button>
 
         <div className="pr-10">
-          <h2 id="rondevu-contact-title" className="font-cal text-2xl font-semibold tracking-tight sm:text-3xl">
+          <h2 id="rondevu-contact-title" className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
             {t.modal.title}
           </h2>
           <p
@@ -109,7 +109,7 @@ export function PlanContactModal({
           <div
             data-plan-summary
             className="mt-6 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-y border-[#e5e5e5] py-4 dark:border-white/10">
-            <span className="font-cal text-lg font-semibold">{plan.name}</span>
+            <span className="font-display text-lg font-semibold">{plan.name}</span>
             <span className="text-sm font-medium">
               {plan.price} <span className="font-normal text-[#737373] dark:text-[#a3a3a3]">{plan.period}</span>
             </span>

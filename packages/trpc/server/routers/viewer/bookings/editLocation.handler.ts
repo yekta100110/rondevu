@@ -8,7 +8,7 @@ import { CredentialRepository } from "@rondevu/features/credentials/repositories
 import { CredentialAccessService } from "@rondevu/features/credentials/services/CredentialAccessService";
 import { UserRepository } from "@rondevu/features/users/repositories/UserRepository";
 import { buildCalEventFromBooking } from "@rondevu/lib/buildCalEventFromBooking";
-import { getVideoCallUrlFromCalEvent } from "@rondevu/lib/CalEventParser";
+import { getVideoCallUrlFromCalEvent } from "@rondevu/lib/RondevuEventParser";
 import logger from "@rondevu/lib/logger";
 import { safeStringify } from "@rondevu/lib/safeStringify";
 import { getTranslation } from "@rondevu/i18n/server";

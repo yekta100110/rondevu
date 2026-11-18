@@ -1,10 +1,10 @@
 import getFloatingButtonHtml from "./FloatingButtonHtml";
 
 type ModalTargetDatasetProps = {
-  calLink: string;
-  calNamespace: string;
-  calOrigin: string;
-  calConfig: string;
+  rondevuLink: string;
+  rondevuNamespace: string;
+  rondevuOrigin: string;
+  rondevuConfig: string;
 };
 
 type CamelCase<T extends string> = T extends `${infer U}${infer V}` ? `${Uppercase<U>}${V}` : T;
@@ -101,7 +101,7 @@ export class FloatingButton extends HTMLElement {
     const buttonTextColor = dataset.buttonTextColor;
 
     //TODO: Logic is duplicated over HTML generation and attribute change, keep it at one place
-    const buttonHtml = `<style>${window.Cal.__css}</style> ${getFloatingButtonHtml({
+    const buttonHtml = `<style>${window.Rondevu.__css}</style> ${getFloatingButtonHtml({
       buttonText: buttonText,
       buttonClasses: [FloatingButton.updatedClassString(buttonPosition, "")],
       buttonColor: buttonColor,

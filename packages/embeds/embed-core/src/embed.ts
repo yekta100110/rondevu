@@ -41,14 +41,14 @@ export type Message = {
 // This is happening because we are not able to generate an App and a lib using single Vite Config.
 const WEBAPP_URL = process.env.EMBED_PUBLIC_WEBAPP_URL || `https://${process.env.EMBED_PUBLIC_VERCEL_URL}`;
 
-customElements.define("cal-modal-box", ModalBox);
-customElements.define("cal-floating-button", FloatingButton);
-customElements.define("cal-inline", Inline);
+customElements.define("rondevu-modal-box", ModalBox);
+customElements.define("rondevu-floating-button", FloatingButton);
+customElements.define("rondevu-inline", Inline);
 
 declare module "*.css";
 type Namespace = string;
-type CalConfig = {
-  calOrigin: string;
+type RondevuConfig = {
+  rondevuOrigin: string;
   debug?: boolean;
   uiDebug?: boolean;
 };
@@ -66,7 +66,7 @@ type ModalStateData = {
   prerenderOptions: ModalPrerenderOptions | null;
 };
 
-type InitArgConfig = Partial<CalConfig> & {
+type InitArgConfig = Partial<RondevuConfig> & {
   origin?: string;
 };
 
@@ -77,9 +77,9 @@ type DoInIframeArg = {
   };
 }[keyof typeof interfaceWithParent];
 
-const globalCal = window.Cal;
+const globalCal = window.Rondevu;
 if (!globalCal || !globalCal.q) {
-  throw new Error("Cal is not defined. This shouldn't happen");
+  throw new Error("Rondevu is not defined. This shouldn't happen");
 }
 
 initializeGlobalCalProps();
@@ -178,8 +178,8 @@ type SingleInstructionMap = {
   on: ["on", allPossibleCallbacksAndActions];
   off: ["off", allPossibleCallbacksAndActions];
 } & {
-  [K in Exclude<keyof CalApi, "on" | "off">]: CalApi[K] extends (...args: never[]) => void
-    ? [K, ...Parameters<CalApi[K]>]
+  [K in Exclude<keyof RondevuApi, "on" | "off">]: RondevuApi[K] extends (...args: never[]) => void
+    ? [K, ...Parameters<RondevuApi[K]>]
     : never;
 };
 
@@ -214,10 +214,10 @@ type PrefillAndIframeAttrsConfigWithGuestAndColorScheme = PrefillAndIframeAttrsC
   "ui.color-scheme"?: string | null;
 };
 
-export class Cal {
+export class Rondevu {
   iframe?: HTMLIFrameElement;
 
-  __config: CalConfig;
+  __config: RondevuConfig;
 
   modalBox?: ModalBoxElement;
 
@@ -231,7 +231,7 @@ export class Cal {
 
   iframeDoQueue: DoInIframeArg[] = [];
 
-  api: CalApi;
+  api: RondevuApi;
 
   /**
    * Commands for which the queue persists across iframe resets
@@ -241,8 +241,8 @@ export class Cal {
   isPrerendering?: boolean;
 
   static actionsManagers: Record<Namespace, SdkActionManager>;
-  // Store calLink separately and not rely on deriving it from iframe.src, because we could load different URL in iframe(derived from calLink e.g. calLink=Router -> redirects to eventBookingUrl and then we load that URL in iframe)
-  calLink: string | null = null;
+  // Store rondevuLink separately and not rely on deriving it from iframe.src, because we could load different URL in iframe(derived from rondevuLink e.g. rondevuLink=Router -> redirects to eventBookingUrl and then we load that URL in iframe)
+  rondevuLink: string | null = null;
   embedConfig: PrefillAndIframeAttrsConfig | null = null;
   // Tracks the time when the embed was last rendered with some changes to iframe i.e. it identifies if the iframe is freshly updated and when
   embedRenderStartTime: number | null = null;
@@ -296,40 +296,40 @@ export class Cal {
   }
 
   /**
-   * Iframe is added invisible and shown only after color-scheme is set by the embedded calLink to avoid flash of non-transparent(white/black) background
+   * Iframe is added invisible and shown only after color-scheme is set by the embedded rondevuLink to avoid flash of non-transparent(white/black) background
    */
   createIframe({
-    calLink,
+    rondevuLink,
     config = {},
-    calOrigin,
+    rondevuOrigin,
   }: {
-    calLink: string;
+    rondevuLink: string;
     config?: PrefillAndIframeAttrsConfigWithGuestAndColorScheme;
-    calOrigin: string | null;
+    rondevuOrigin: string | null;
   }) {
     const iframe = (this.iframe = document.createElement("iframe"));
-    iframe.className = "cal-embed";
-    iframe.name = `cal-embed=${this.namespace}`;
+    iframe.className = "rondevu-embed";
+    iframe.name = `rondevu-embed=${this.namespace}`;
     iframe.title = `Book a call`;
 
-    this.loadInIframe({ calLink, config, calOrigin, iframe });
+    this.loadInIframe({ rondevuLink, config, rondevuOrigin, iframe });
     return iframe;
   }
 
   loadInIframe({
-    calLink,
+    rondevuLink,
     config = {},
-    calOrigin,
+    rondevuOrigin,
     iframe,
   }: {
     iframe: HTMLIFrameElement;
-    calLink: string;
+    rondevuLink: string;
     config?: PrefillAndIframeAttrsConfig;
-    calOrigin: string | null;
+    rondevuOrigin: string | null;
   }) {
-    log("Loading in iframe", calLink, "with config", JSON.stringify(config));
-    iframe.dataset.calLink = calLink;
-    const calConfig = this.getCalConfig();
+    log("Loading in iframe", rondevuLink, "with config", JSON.stringify(config));
+    iframe.dataset.rondevuLink = rondevuLink;
+    const rondevuConfig = this.getRondevuConfig();
     const { iframeAttrs, ...queryParamsFromConfig } = config;
 
     if (iframeAttrs && iframeAttrs.id) {
@@ -341,12 +341,12 @@ export class Cal {
     const searchParams = this.buildFilteredQueryParams(queryParamsFromConfig);
 
     // rondevu.org has rewrite issues on Safari that sometimes cause 404 for assets.
-    const originToUse = (calOrigin || calConfig.calOrigin || "").replace(
+    const originToUse = (rondevuOrigin || rondevuConfig.rondevuOrigin || "").replace(
       "https://rondevu.org",
       "https://app.rondevu.org"
     );
 
-    const urlInstance = new URL(`${originToUse}/${calLink}`);
+    const urlInstance = new URL(`${originToUse}/${rondevuLink}`);
     if (!urlInstance.pathname.endsWith("embed")) {
       // TODO: Make a list of patterns that are embeddable. All except that should be allowed with a warning that "The page isn't optimized for embedding"
       urlInstance.pathname = `${urlInstance.pathname}/embed`;
@@ -356,14 +356,14 @@ export class Cal {
 
     const pageParams = this.getQueryParamsFromPage();
     // cal.embed.logging=1 enabled logging in parent and by setting debug=true in iframe, it enables logging in iframe(child) as well
-    if (calConfig.debug || pageParams["cal.embed.logging"] === "1") {
+    if (rondevuConfig.debug || pageParams["cal.embed.logging"] === "1") {
       urlInstance.searchParams.set("debug", "true");
     }
 
-    // Keep iframe invisible, till the embedded calLink sets its color-scheme. This is so that there is no flash of non-transparent(white/black) background
+    // Keep iframe invisible, till the embedded rondevuLink sets its color-scheme. This is so that there is no flash of non-transparent(white/black) background
     iframe.style.visibility = "hidden";
 
-    if (calConfig.uiDebug) {
+    if (rondevuConfig.uiDebug) {
       iframe.style.border = "1px solid green";
     }
 
@@ -386,11 +386,11 @@ export class Cal {
   }
 
   /**
-   * Returns the config applicable to entire Cal namespace.
+   * Returns the config applicable to entire Rondevu namespace.
    * Individual embeds can have their own embed config passed via `config` prop normally.
-   * Also, calOrigin could be passed individually as well at the moment
+   * Also, rondevuOrigin could be passed individually as well at the moment
    */
-  getCalConfig() {
+  getRondevuConfig() {
     return this.__config;
   }
 
@@ -427,14 +427,14 @@ export class Cal {
   constructor(namespace: string, q: Queue) {
     this.__config = {
       // Use WEBAPP_URL till full page reload problem with website URL is solved
-      calOrigin: WEBAPP_URL,
+      rondevuOrigin: WEBAPP_URL,
     };
-    this.api = new CalApi(this);
+    this.api = new RondevuApi(this);
     this.namespace = namespace;
     this.actionManager = new SdkActionManager(namespace);
 
-    Cal.actionsManagers = Cal.actionsManagers || {};
-    Cal.actionsManagers[namespace] = this.actionManager;
+    Rondevu.actionsManagers = Rondevu.actionsManagers || {};
+    Rondevu.actionsManagers[namespace] = this.actionManager;
 
     this.processQueue(q);
 
@@ -466,10 +466,10 @@ export class Cal {
       
       this.iframeReady = true;
       if (!e.detail.data.isPrerendering) {
-        // It's a bit late to make the iframe visible here. We just needed to wait for the HTML tag of the embedded calLink to be rendered(which then informs the browser of the color-scheme)
+        // It's a bit late to make the iframe visible here. We just needed to wait for the HTML tag of the embedded rondevuLink to be rendered(which then informs the browser of the color-scheme)
         // TODO: Right now it would wait for embed-iframe.js bundle to be loaded as well. We can speed that up by inlining the JS that informs about color-scheme being set in the HTML.
-        // But it's okay to do it here for now because the embedded calLink also keeps itself hidden till it receives `parentKnowsIframeReady` message(It has it's own reasons for that)
-        // Once the embedded calLink starts not hiding the document, we should optimize this line to make the iframe visible earlier than this.
+        // But it's okay to do it here for now because the embedded rondevuLink also keeps itself hidden till it receives `parentKnowsIframeReady` message(It has it's own reasons for that)
+        // Once the embedded rondevuLink starts not hiding the document, we should optimize this line to make the iframe visible earlier than this.
         // Imp: Don't use visibility:visible as that would make the iframe show even if the host element(A parent of the iframe) has visibility:hidden set. Just reset the visibility to default
         this.iframe.style.visibility = "";
       }
@@ -587,12 +587,12 @@ export class Cal {
       embedRenderStartTime,
       prerenderOptions,
     } = stateData;
-    const calConfig = this.getCalConfig();
+    const rondevuConfig = this.getRondevuConfig();
     const lastLoadedUrlInIframeObject = this.getLastLoadedLinkInframe();
     const lastLoadedPathInIframe = lastLoadedUrlInIframeObject?.pathname ?? null;
-    const urlToLoadObject = new URL(pathWithQueryToLoad, calConfig.calOrigin as string);
+    const urlToLoadObject = new URL(pathWithQueryToLoad, rondevuConfig.rondevuOrigin as string);
 
-    const existingModalEl = document.querySelector(`cal-modal-box[uid="${modal.uid}"]`);
+    const existingModalEl = document.querySelector(`rondevu-modal-box[uid="${modal.uid}"]`);
     const urlToLoadPath = urlToLoadObject.pathname;
     // We only check for path because query params are handled by connect flow
     // Also origin we assume never changes without page reload of the embedding page
@@ -713,18 +713,18 @@ export class Cal {
    * Removes /embed from the pathname and returns the origin.
    */
   getLastLoadedLinkInframe() {
-    if (!this.iframe || !this.iframe.dataset.calLink) {
+    if (!this.iframe || !this.iframe.dataset.rondevuLink) {
       return null;
     }
-    const calLink = this.iframe.dataset.calLink;
-    if (!calLink) {
+    const rondevuLink = this.iframe.dataset.rondevuLink;
+    if (!rondevuLink) {
       return null;
     }
-    const urlObject = new URL(calLink, new URL(this.iframe.src).origin);
+    const urlObject = new URL(rondevuLink, new URL(this.iframe.src).origin);
     return new URL(`${urlObject.pathname}${urlObject.search}`, urlObject.origin);
   }
 
-  // We record the updated params on dataset.calLink which allows us to determine if something actually changed since the last time we loaded
+  // We record the updated params on dataset.rondevuLink which allows us to determine if something actually changed since the last time we loaded
   // This is used by getNextActionForModal
   recordUpdatedParamsForIframe(params: Record<string, string | string[]>) {
     const lastLoadedUrlInIframeObject = this.getLastLoadedLinkInframe();
@@ -736,22 +736,22 @@ export class Cal {
     for (const [key, value] of Object.entries(params)) {
       urlObject.searchParams.set(key, value as string);
     }
-    this.iframe.dataset.calLink = `${urlObject.pathname.replace(/^\//, "")}${urlObject.search}`;
+    this.iframe.dataset.rondevuLink = `${urlObject.pathname.replace(/^\//, "")}${urlObject.search}`;
   }
 
   canPrerenderLink({
-    calLink,
-    calOrigin,
+    rondevuLink,
+    rondevuOrigin,
     previousEmbedRenderStartTime,
   }: {
-    calLink: string;
-    calOrigin: string;
+    rondevuLink: string;
+    rondevuOrigin: string;
     previousEmbedRenderStartTime: number | null;
   }) {
     const lastLoadedUrlInIframeObject = this.getLastLoadedLinkInframe();
     // Trying to prerender a link that is already prerendered.
     // Prevent unnecessary repeat prerenders
-    if (lastLoadedUrlInIframeObject?.toString() === new URL(calLink, calOrigin).toString()) {
+    if (lastLoadedUrlInIframeObject?.toString() === new URL(rondevuLink, rondevuOrigin).toString()) {
       const isThresholdCrossed = hasCrossedThreshold();
       if (isThresholdCrossed) {
         log("Threshold crossed, allowing repeat prerender");
@@ -775,19 +775,19 @@ export class Cal {
   }
 
   prepareForPrerender({
-    calLink,
-    calOrigin,
+    rondevuLink,
+    rondevuOrigin,
     previousEmbedRenderStartTime,
     prerenderOptions,
     isHeadlessRouterPath,
   }: {
-    calLink: string;
-    calOrigin: string;
+    rondevuLink: string;
+    rondevuOrigin: string;
     previousEmbedRenderStartTime: number | null;
     prerenderOptions: ModalPrerenderOptions;
     isHeadlessRouterPath: boolean;
   }) {
-    if (!this.canPrerenderLink({ calLink, calOrigin, previousEmbedRenderStartTime })) {
+    if (!this.canPrerenderLink({ rondevuLink, rondevuOrigin, previousEmbedRenderStartTime })) {
       return null;
     }
 
@@ -849,13 +849,13 @@ export class Cal {
   }
 }
 
-class CalApi {
-  cal: Cal;
+class RondevuApi {
+  cal: Rondevu;
   static initializedNamespaces = [] as string[];
   modalUid?: string;
   prerenderedModalUid?: string;
   prerenderOptions?: ModalPrerenderOptions;
-  constructor(cal: Cal) {
+  constructor(cal: Rondevu) {
     this.cal = cal;
   }
 
@@ -866,7 +866,7 @@ class CalApi {
   init(namespaceOrConfig?: string | InitArgConfig, config = {} as InitArgConfig) {
     let initForNamespace = "";
     if (typeof namespaceOrConfig !== "string") {
-      config = (namespaceOrConfig || {}) as CalConfig;
+      config = (namespaceOrConfig || {}) as RondevuConfig;
     } else {
       initForNamespace = namespaceOrConfig;
     }
@@ -877,11 +877,11 @@ class CalApi {
       return;
     }
 
-    CalApi.initializedNamespaces.push(this.cal.namespace);
+    RondevuApi.initializedNamespaces.push(this.cal.namespace);
 
-    const { calOrigin, origin, ...restConfig } = config;
+    const { rondevuOrigin, origin, ...restConfig } = config;
 
-    this.cal.__config.calOrigin = calOrigin || origin || this.cal.__config.calOrigin;
+    this.cal.__config.rondevuOrigin = rondevuOrigin || origin || this.cal.__config.rondevuOrigin;
 
     this.cal.__config = { ...this.cal.__config, ...restConfig };
   }
@@ -893,17 +893,17 @@ class CalApi {
   initNamespace(namespace: string) {
     // Creating this instance automatically starts processing the queue for the namespace
     globalCal.ns[namespace].instance =
-      globalCal.ns[namespace].instance || new Cal(namespace, globalCal.ns[namespace].q);
+      globalCal.ns[namespace].instance || new Rondevu(namespace, globalCal.ns[namespace].q);
   }
   /**
    * It is an instruction that adds embed iframe inline as last child of the element
    */
   inline({
-    calLink,
+    rondevuLink,
     elementOrSelector,
     config,
   }: {
-    calLink: string;
+    rondevuLink: string;
     elementOrSelector: string | HTMLElement;
     config?: PrefillAndIframeAttrsConfig;
   }) {
@@ -911,8 +911,8 @@ class CalApi {
     validate(arguments[0], {
       required: true,
       props: {
-        calLink: {
-          // TODO: Add a special type calLink for it and validate that it doesn't start with / or https?://
+        rondevuLink: {
+          // TODO: Add a special type rondevuLink for it and validate that it doesn't start with / or https?://
           required: true,
           type: "string",
         },
@@ -947,63 +947,63 @@ class CalApi {
     }
 
     config.embedType = "inline";
-    const calConfig = this.cal.getCalConfig();
+    const rondevuConfig = this.cal.getRondevuConfig();
 
     const iframe = this.cal.createIframe({
-      calLink,
-      config: withColorScheme(Cal.ensureGuestKey(config), containerEl),
-      calOrigin: calConfig.calOrigin,
+      rondevuLink,
+      config: withColorScheme(Rondevu.ensureGuestKey(config), containerEl),
+      rondevuOrigin: rondevuConfig.rondevuOrigin,
     });
 
     iframe.style.height = "100%";
     iframe.style.width = "100%";
 
-    containerEl.classList.add("cal-inline-container");
+    containerEl.classList.add("rondevu-inline-container");
 
     const template = document.createElement("template");
     const layout = getConfigProp(config, "layout");
     const pageType = getConfigProp(config, "cal.embed.pageType");
     const theme = getConfigProp(config, "theme");
 
-    template.innerHTML = `<cal-inline 
+    template.innerHTML = `<rondevu-inline 
       ${generateDataAttributes({
         pageType,
         theme,
         layout,
       })}
       style="max-height:inherit;height:inherit;min-height:inherit;display:flex;position:relative;flex-wrap:wrap;width:100%">
-    </cal-inline>
-    <style>.cal-inline-container::-webkit-scrollbar{display:none}.cal-inline-container{scrollbar-width:none}</style>`;
+    </rondevu-inline>
+    <style>.rondevu-inline-container::-webkit-scrollbar{display:none}.rondevu-inline-container{scrollbar-width:none}</style>`;
     this.cal.inlineEl = template.content.children[0];
     this.cal.inlineEl.appendChild(iframe);
     containerEl.appendChild(template.content);
   }
 
   floatingButton({
-    calLink,
-    buttonText = "Book my Cal",
+    rondevuLink,
+    buttonText = "Book my Rondevu",
     hideButtonIcon = false,
     attributes,
     buttonPosition = "bottom-right",
     buttonColor = "rgb(0, 0, 0)",
     buttonTextColor = "rgb(255, 255, 255)",
-    calOrigin,
+    rondevuOrigin,
     config,
   }: {
-    calLink: string;
+    rondevuLink: string;
     buttonText?: string;
     attributes?: Record<"id", string> & Record<string | "id", string>;
     hideButtonIcon?: boolean;
     buttonPosition?: "bottom-left" | "bottom-right";
     buttonColor?: string;
     buttonTextColor?: string;
-    calOrigin?: string;
+    rondevuOrigin?: string;
     config?: PrefillAndIframeAttrsConfig;
   }) {
     // validate(arguments[0], {
     //   required: true,
     //   props: {
-    //     calLink: {
+    //     rondevuLink: {
     //       required: true,
     //       type: "string",
     //     },
@@ -1016,13 +1016,13 @@ class CalApi {
     }
     let el: FloatingButton;
     if (!existingEl) {
-      el = document.createElement("cal-floating-button") as FloatingButton;
+      el = document.createElement("rondevu-floating-button") as FloatingButton;
       // It makes it a target element that opens up embed modal on click
-      el.dataset.calLink = calLink;
-      el.dataset.calNamespace = this.cal.namespace;
-      el.dataset.calOrigin = calOrigin ?? "";
+      el.dataset.rondevuLink = rondevuLink;
+      el.dataset.rondevuNamespace = this.cal.namespace;
+      el.dataset.rondevuOrigin = rondevuOrigin ?? "";
       if (config) {
-        el.dataset.calConfig = JSON.stringify(config);
+        el.dataset.rondevuConfig = JSON.stringify(config);
       }
 
       if (attributes?.id) {
@@ -1042,15 +1042,15 @@ class CalApi {
   }
 
   async modal({
-    calLink,
+    rondevuLink,
     config = {},
-    calOrigin,
+    rondevuOrigin,
     __prerender = false,
     prerenderOptions = {},
   }: {
-    calLink: string;
+    rondevuLink: string;
     config?: PrefillAndIframeAttrsConfig;
-    calOrigin?: string;
+    rondevuOrigin?: string;
     __prerender?: boolean;
     prerenderOptions?: ModalPrerenderOptions;
   }) {
@@ -1059,21 +1059,21 @@ class CalApi {
       throw new Error("iframeAttrs should be an object");
     }
     const containerEl = document.body;
-    const calConfig = this.cal.getCalConfig();
+    const rondevuConfig = this.cal.getRondevuConfig();
     // Clone so that it doesn't mutate the original config
     config = { ...config };
 
-    // calOrigin could have been passed as empty string by the user
-    calOrigin = calOrigin || calConfig.calOrigin;
+    // rondevuOrigin could have been passed as empty string by the user
+    rondevuOrigin = rondevuOrigin || rondevuConfig.rondevuOrigin;
 
-    const calLinkUrlObject = new URL(calLink, calOrigin);
-    const isHeadlessRouterPath = calLinkUrlObject ? isRouterPath(calLinkUrlObject.toString()) : false;
+    const rondevuLinkUrlObject = new URL(rondevuLink, rondevuOrigin);
+    const isHeadlessRouterPath = rondevuLinkUrlObject ? isRouterPath(rondevuLinkUrlObject.toString()) : false;
     const { embedConfig: previousEmbedConfig, embedRenderStartTime: previousEmbedRenderStartTime } =
       this.cal.getPreviousModalRenderStartVariables();
 
     let enrichedConfig: PrefillAndIframeAttrsConfig;
     const configWithGuestKeyAndColorScheme = withColorScheme(
-      Cal.ensureGuestKey({
+      Rondevu.ensureGuestKey({
         ...config,
         embedType: "modal",
       }),
@@ -1083,15 +1083,15 @@ class CalApi {
     let enrichedPrerenderOptions: ModalPrerenderOptions | undefined;
     if (isPrerendering) {
       const preparationResult = this.cal.prepareForPrerender({
-        calLink,
-        calOrigin,
+        rondevuLink,
+        rondevuOrigin,
         previousEmbedRenderStartTime,
         prerenderOptions,
         isHeadlessRouterPath,
       });
 
       if (!preparationResult) {
-        log(`Prevented unnecessary repeat prerender for ${calLink}`);
+        log(`Prevented unnecessary repeat prerender for ${rondevuLink}`);
         return {
           status: "prerender-prevented",
         };
@@ -1132,9 +1132,9 @@ class CalApi {
     });
 
     return this.__modal({
-      calLink,
+      rondevuLink,
       enrichedConfig,
-      calOrigin,
+      rondevuOrigin,
       isPrerendering,
       stateData,
       uid,
@@ -1144,25 +1144,25 @@ class CalApi {
 
   async __modal({
     uid,
-    calLink,
+    rondevuLink,
     enrichedConfig,
-    calOrigin,
+    rondevuOrigin,
     isPrerendering,
     stateData,
     containerEl,
   }: {
     uid: string;
-    calLink: string;
+    rondevuLink: string;
     enrichedConfig: PrefillAndIframeAttrsConfig;
-    calOrigin: string;
+    rondevuOrigin: string;
     isPrerendering: boolean;
     stateData: ModalStateData;
     containerEl: HTMLElement;
   }) {
-    const calLinkUrlObject = new URL(calLink, calOrigin);
-    const isHeadlessRouterPath = calLinkUrlObject ? isRouterPath(calLinkUrlObject.toString()) : false;
+    const rondevuLinkUrlObject = new URL(rondevuLink, rondevuOrigin);
+    const isHeadlessRouterPath = rondevuLinkUrlObject ? isRouterPath(rondevuLinkUrlObject.toString()) : false;
 
-    const existingModalEl = document.querySelector(`cal-modal-box[uid="${uid}"]`);
+    const existingModalEl = document.querySelector(`rondevu-modal-box[uid="${uid}"]`);
     // isConnectionPossible
     if (!!existingModalEl && !!this.cal.iframe) {
       log(`Trying to reuse modal ${uid}`);
@@ -1171,12 +1171,12 @@ class CalApi {
 
       if (isHeadlessRouterPath && !lastLoadedPathIsRouter) {
         throw new Error(
-          "`prerender` instruction should have been fired with headless router path as calLink(i.e. router?form={FORM_ID}&PARAMS=VALUES)"
+          "`prerender` instruction should have been fired with headless router path as rondevuLink(i.e. router?form={FORM_ID}&PARAMS=VALUES)"
         );
       } else {
         const actionToTake = this.cal.getNextActionForModal({
           modal: { uid },
-          pathWithQueryToLoad: `${calLinkUrlObject.pathname}${calLinkUrlObject.search}`,
+          pathWithQueryToLoad: `${rondevuLinkUrlObject.pathname}${rondevuLinkUrlObject.search}`,
           stateData,
         });
 
@@ -1198,8 +1198,8 @@ class CalApi {
         if (actionToTake === "fullReload") {
           log("Initiating full page load");
           this.cal.loadInIframe({
-            calLink,
-            calOrigin,
+            rondevuLink,
+            rondevuOrigin,
             iframe: this.cal.iframe,
             config: enrichedConfig,
           });
@@ -1207,7 +1207,7 @@ class CalApi {
           // Send it after loadInIframe so that new iframe can process it.
           this.cal.doInIframe({ method: "__reloadInitiated", arg: {} });
         } else if (actionToTake === "connect" || actionToTake === "connect-no-slots-fetch") {
-          const paramsToAdd = fromEntriesWithDuplicateKeys(calLinkUrlObject.searchParams.entries());
+          const paramsToAdd = fromEntriesWithDuplicateKeys(rondevuLinkUrlObject.searchParams.entries());
           this.cal.connect({
             config: {
               ...enrichedConfig,
@@ -1240,9 +1240,9 @@ class CalApi {
 
     if (!iframe) {
       iframe = this.cal.createIframe({
-        calLink,
+        rondevuLink,
         config: enrichedConfig,
-        calOrigin,
+        rondevuOrigin,
       });
     }
 
@@ -1254,14 +1254,14 @@ class CalApi {
     const theme = getConfigProp(enrichedConfig, "theme");
     const layout = getConfigProp(enrichedConfig, "layout");
 
-    template.innerHTML = `<cal-modal-box 
+    template.innerHTML = `<rondevu-modal-box 
       ${generateDataAttributes({
         pageType,
         theme,
         layout,
       })}
       uid="${uid}">
-    </cal-modal-box>`;
+    </rondevu-modal-box>`;
     this.cal.modalBox = template.content.children[0];
     this.cal.modalBox.appendChild(iframe);
     // Set state through setAttribute so that onAttributeChangedCallback is triggered
@@ -1351,13 +1351,13 @@ class CalApi {
    * type is not provided and prerenderIframe set to false. We would preload assets only
    */
   preload({
-    calLink,
+    rondevuLink,
     type,
     options = {},
     pageType,
-    calOrigin,
+    rondevuOrigin,
   }: {
-    calLink: string;
+    rondevuLink: string;
     type?: "modal" | "floatingButton";
     options?: {
       prerenderIframe?: boolean;
@@ -1365,13 +1365,13 @@ class CalApi {
       iframeForceReloadThresholdMs?: number;
     };
     pageType?: EmbedPageType;
-    calOrigin?: string;
+    rondevuOrigin?: string;
   }) {
     // eslint-disable-next-line prefer-rest-params
     validate(arguments[0], {
       required: true,
       props: {
-        calLink: {
+        rondevuLink: {
           type: "string",
           required: true,
         },
@@ -1395,7 +1395,7 @@ class CalApi {
       throw new Error(`Namespace ${namespace} isn't defined`);
     }
 
-    const config = this.cal.getCalConfig();
+    const config = this.cal.getRondevuConfig();
     const { prerenderIframe: prerenderIframeOption, ...prerenderOptions } = options;
     let prerenderIframe = prerenderIframeOption;
     if (type && prerenderIframe === undefined) {
@@ -1410,18 +1410,18 @@ class CalApi {
       if (type === "modal" || type === "floatingButton") {
         this.cal.isPrerendering = true;
         this.modal({
-          calLink,
-          calOrigin: calOrigin || config.calOrigin,
+          rondevuLink,
+          rondevuOrigin: rondevuOrigin || config.rondevuOrigin,
           __prerender: true,
           prerenderOptions,
           ...(pageType ? { config: { "cal.embed.pageType": pageType } } : {}),
         });
       } else {
         console.warn("Ignoring - full preload for inline embed and instead preloading assets only");
-        preloadAssetsForCalLink({ calLink, config });
+        preloadAssetsForCalLink({ rondevuLink, config });
       }
     } else {
-      preloadAssetsForCalLink({ calLink, config });
+      preloadAssetsForCalLink({ rondevuLink, config });
     }
   }
 
@@ -1434,19 +1434,19 @@ class CalApi {
    * - Loads the availability as per the team members identified by Routing - Attribute Rules
    * - At this point, the booking page is ready to be used but is hidden behind the scenes
    *
-   * A call to `modal` instruction(which automatically happens when an element with `data-cal-link` attribute is clicked) would then show this prerendered booking page sending a request `queued-response` that records the field values now as a response and connect it to the queued-response
+   * A call to `modal` instruction(which automatically happens when an element with `data-rondevu-link` attribute is clicked) would then show this prerendered booking page sending a request `queued-response` that records the field values now as a response and connect it to the queued-response
    */
   prerender({
-    calLink,
+    rondevuLink,
     type,
     pageType,
-    calOrigin,
+    rondevuOrigin,
     options = {},
   }: {
-    calLink: string;
+    rondevuLink: string;
     type: "modal" | "floatingButton";
     pageType?: EmbedPageType;
-    calOrigin?: string;
+    rondevuOrigin?: string;
     options?: {
       /**
        * Time in milliseconds after which the prerendered slots/availability should be considered stale and would be requested again when the modal is opened.
@@ -1481,10 +1481,10 @@ class CalApi {
     };
   }) {
     this.preload({
-      calLink,
+      rondevuLink,
       type,
       pageType,
-      calOrigin,
+      rondevuOrigin,
       options,
     });
   }
@@ -1520,7 +1520,7 @@ type GlobalConfig = {
 };
 
 type KeyOfSingleInstructionMap = keyof SingleInstructionMap;
-// This is a full fledged Cal instance but doesn't have ns property because it would be nested inside an ns instance already
+// This is a full fledged Rondevu instance but doesn't have ns property because it would be nested inside an ns instance already
 export interface GlobalCalWithoutNs {
   <T extends KeyOfSingleInstructionMap>(methodName: T, ...arg: Rest<SingleInstructionMap[T]>): void;
   /** Marks that the embed.js is loaded. Avoids re-downloading it. */
@@ -1528,7 +1528,7 @@ export interface GlobalCalWithoutNs {
   /** Maintains a queue till the time embed.js isn't loaded */
   q: Queue;
   /** If user registers multiple namespaces, those are available here */
-  instance?: Cal;
+  instance?: Rondevu;
   __css?: string;
   fingerprint?: string;
   version?: string;
@@ -1545,22 +1545,22 @@ export type GlobalCal = GlobalCalWithNs;
 
 declare global {
   interface Window {
-    Cal: GlobalCal;
+    Rondevu: GlobalCal;
   }
 }
 
 export interface CalWindow extends Window {
-  Cal: GlobalCal;
+  Rondevu: GlobalCal;
 }
 
 const DEFAULT_NAMESPACE = "";
 
-globalCal.instance = new Cal(DEFAULT_NAMESPACE, globalCal.q);
+globalCal.instance = new Rondevu(DEFAULT_NAMESPACE, globalCal.q);
 
 // Namespaces created before embed.js executes are instantiated here for old Embed Snippets which don't use 'initNamespace' instruction
 // Snippets that support 'initNamespace' instruction don't really need this but it is okay if it's done because it's idempotent
 for (const [ns, api] of Object.entries(globalCal.ns)) {
-  api.instance = api.instance ?? new Cal(ns, api.q);
+  api.instance = api.instance ?? new Rondevu(ns, api.q);
 }
 
 /**
@@ -1574,7 +1574,7 @@ window.addEventListener("message", (e) => {
     return;
   }
 
-  const actionManager = Cal.actionsManagers[parsedAction.ns];
+  const actionManager = Rondevu.actionsManagers[parsedAction.ns];
   globalCal.__logQueue = globalCal.__logQueue || [];
   globalCal.__logQueue.push({ ...parsedAction, data: detail.data });
 
@@ -1588,15 +1588,15 @@ window.addEventListener("message", (e) => {
 document.addEventListener("click", (e) => {
   const targetEl = e.target;
 
-  const calLinkEl = getCalLinkEl(targetEl);
-  const path = calLinkEl?.dataset?.calLink;
+  const rondevuLinkEl = getCalLinkEl(targetEl);
+  const path = rondevuLinkEl?.dataset?.rondevuLink;
   if (!path) {
     return;
   }
 
-  const namespace = calLinkEl.dataset.calNamespace;
-  const configString = calLinkEl.dataset.calConfig || "";
-  const calOrigin = calLinkEl.dataset.calOrigin || "";
+  const namespace = rondevuLinkEl.dataset.rondevuNamespace;
+  const configString = rondevuLinkEl.dataset.rondevuConfig || "";
+  const rondevuOrigin = rondevuLinkEl.dataset.rondevuOrigin || "";
   let config: PrefillAndIframeAttrsConfig;
   try {
     config = JSON.parse(configString);
@@ -1615,28 +1615,28 @@ document.addEventListener("click", (e) => {
   }
 
   api("modal", {
-    calLink: path,
+    rondevuLink: path,
     config,
-    calOrigin,
+    rondevuOrigin,
   });
 
   function getCalLinkEl(target: EventTarget | null) {
-    let calLinkEl: HTMLElement | Element | undefined;
+    let rondevuLinkEl: HTMLElement | Element | undefined;
     if (!(target instanceof HTMLElement)) {
       return null;
     }
-    if (target?.dataset.calLink) {
-      calLinkEl = target;
+    if (target?.dataset.rondevuLink) {
+      rondevuLinkEl = target;
     } else {
-      // If the element clicked is a child of the cal-link element, then return the cal-link element
-      calLinkEl = Array.from(document.querySelectorAll("[data-cal-link]")).find((el) => el.contains(target));
+      // If the element clicked is a child of the rondevu-link element, then return the rondevu-link element
+      rondevuLinkEl = Array.from(document.querySelectorAll("[data-rondevu-link]")).find((el) => el.contains(target));
     }
 
-    if (!(calLinkEl instanceof HTMLElement)) {
+    if (!(rondevuLinkEl instanceof HTMLElement)) {
       return null;
     }
 
-    return calLinkEl;
+    return rondevuLinkEl;
   }
 });
 
@@ -1649,7 +1649,7 @@ let currentColorScheme: string | null = null;
     if (colorScheme && colorScheme !== currentColorScheme) {
       currentColorScheme = colorScheme;
       // Go through all the embeds on the same page and update all of them with this info
-      CalApi.initializedNamespaces.forEach((ns) => {
+      RondevuApi.initializedNamespaces.forEach((ns) => {
         const api = getEmbedApiFn(ns);
         api("ui", {
           colorScheme: colorScheme,
@@ -1669,10 +1669,10 @@ function getEmbedApiFn(ns: string) {
   return api;
 }
 
-function preloadAssetsForCalLink({ config, calLink }: { config: CalConfig; calLink: string }) {
+function preloadAssetsForCalLink({ config, rondevuLink }: { config: RondevuConfig; rondevuLink: string }) {
   const iframe = document.body.appendChild(document.createElement("iframe"));
 
-  const urlInstance = new URL(`${config.calOrigin}/${calLink}`);
+  const urlInstance = new URL(`${config.rondevuOrigin}/${rondevuLink}`);
   urlInstance.searchParams.set("preload", "true");
   iframe.src = urlInstance.toString();
   iframe.style.width = "0";

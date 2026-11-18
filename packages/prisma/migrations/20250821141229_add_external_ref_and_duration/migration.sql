@@ -12,11 +12,11 @@ ADD COLUMN     "externalRef" TEXT;
 CREATE UNIQUE INDEX "CreditExpenseLog_externalRef_key" ON "CreditExpenseLog"("externalRef");
 
 -- CreateEnum
-CREATE TYPE "CreditUsageType" AS ENUM ('SMS', 'CAL_AI_PHONE_CALL');
+CREATE TYPE "CreditUsageType" AS ENUM ('SMS', 'RONDEVU_AI_PHONE_CALL');
 
 -- AlterTable
 ALTER TABLE "CreditExpenseLog" ADD COLUMN     "creditFor" "CreditUsageType";
 
--- Add check constraint for CAL_AI_PHONE_CALL requiring callDuration
+-- Add check constraint for RONDEVU_AI_PHONE_CALL requiring callDuration
 ALTER TABLE "CreditExpenseLog" ADD CONSTRAINT "CreditExpenseLog_cal_ai_phone_call_duration_required"
-CHECK ("creditFor" != 'CAL_AI_PHONE_CALL' OR "callDuration" IS NOT NULL);
+CHECK ("creditFor" != 'RONDEVU_AI_PHONE_CALL' OR "callDuration" IS NOT NULL);

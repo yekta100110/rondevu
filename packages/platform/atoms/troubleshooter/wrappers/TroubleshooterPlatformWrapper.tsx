@@ -46,7 +46,7 @@ export const TroubleshooterComponent = ({
               gridTemplateRows: "auto",
             }}
             className={classNames(
-              "bg-default dark:bg-cal-muted text-default min-h-full w-full sm:transition-[width] sm:duration-300"
+              "bg-default dark:bg-muted text-default min-h-full w-full sm:transition-[width] sm:duration-300"
             )}
           >
             <div className="sticky top-0 z-10 self-start ps-6 [grid-area:meta]">

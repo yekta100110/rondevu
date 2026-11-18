@@ -11,8 +11,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, "src/index.ts"),
-      name: "Cal",
-      fileName: (format) => `Cal.${format}.js`,
+      name: "Rondevu",
+      fileName: (format) => `Rondevu.${format}.js`,
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled

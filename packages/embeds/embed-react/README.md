@@ -1,6 +1,6 @@
-# cal-react
+# rondevu-react
 
-Embed Cal Link as a React Component
+Embed Rondevu Link as a React Component
 
 To know how to use it, follow the steps at <https://developer.rondevu.org/embed/install-with-react>
 

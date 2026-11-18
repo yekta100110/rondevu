@@ -160,7 +160,7 @@ export const OnboardingInviteBrowserView = ({
   }
 
   return (
-    <div className="border-subtle bg-cal-muted hidden h-full w-full flex-col overflow-hidden rounded-l-2xl border xl:flex">
+    <div className="border-subtle bg-muted hidden h-full w-full flex-col overflow-hidden rounded-l-2xl border xl:flex">
       {/* Content */}
       <div className="h-full px-6 pt-6">
         <AnimatePresence mode="wait">
@@ -232,7 +232,7 @@ export const OnboardingInviteBrowserView = ({
                     className="border-default mb-4 h-12 w-12 border-2"
                   />
                 )}
-                <h2 className="text-emphasis font-cal w-full text-left text-xl font-semibold leading-tight">
+                <h2 className="text-emphasis font-display w-full text-left text-xl font-semibold leading-tight">
                   {displayName}
                 </h2>
                 <p className="text-subtle text-left text-sm font-normal leading-tight">

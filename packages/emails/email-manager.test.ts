@@ -26,7 +26,7 @@ vi.mock("@rondevu/lib/getReplyToHeader", () => ({
   getReplyToHeader: vi.fn(() => ({})),
 }));
 
-vi.mock("@rondevu/lib/CalEventParser", () => ({
+vi.mock("@rondevu/lib/RondevuEventParser", () => ({
   getRichDescription: vi.fn(() => "mock-description"),
 }));
 

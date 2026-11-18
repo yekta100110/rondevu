@@ -3,7 +3,7 @@
 import { BookingRepository } from "@rondevu/features/bookings/repositories/BookingRepository";
 import { checkIfFreeEmailDomain } from "@rondevu/features/watchlist/lib/freeEmailDomainCheck/checkIfFreeEmailDomain";
 import getLabelValueMapFromResponses from "@rondevu/lib/bookings/getLabelValueMapFromResponses";
-import { getLocation } from "@rondevu/lib/CalEventParser";
+import { getLocation } from "@rondevu/lib/RondevuEventParser";
 import { WEBAPP_URL } from "@rondevu/lib/constants";
 import { HttpError } from "@rondevu/lib/http-error";
 import logger from "@rondevu/lib/logger";

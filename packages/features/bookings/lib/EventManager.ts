@@ -13,7 +13,7 @@ import { CredentialRepository } from "@rondevu/features/credentials/repositories
 import CrmManager from "@rondevu/features/crmManager/crmManager";
 import CRMScheduler from "@rondevu/features/crmManager/crmScheduler";
 import { FeaturesRepository } from "@rondevu/features/flags/features.repository";
-import { getUid } from "@rondevu/lib/CalEventParser";
+import { getUid } from "@rondevu/lib/RondevuEventParser";
 import { symmetricDecrypt } from "@rondevu/lib/crypto";
 import { isDelegationCredential } from "@rondevu/lib/delegationCredential";
 import logger from "@rondevu/lib/logger";
@@ -38,7 +38,7 @@ import type {
 } from "@rondevu/types/EventManager";
 
 const log = logger.getSubLogger({ prefix: ["EventManager"] });
-const CALENDSO_ENCRYPTION_KEY = process.env.CALENDSO_ENCRYPTION_KEY || "";
+const RONDEVU_ENCRYPTION_KEY = process.env.RONDEVU_ENCRYPTION_KEY || "";
 const CALDAV_CALENDAR_TYPE = "caldav_calendar";
 export const isDedicatedIntegration = (location: string): boolean => {
   return location !== MeetLocationType && location.includes("integrations:");
@@ -178,7 +178,7 @@ export default class EventManager {
         return null;
       }
 
-      const decryptedData = JSON.parse(symmetricDecrypt(credential.key as string, CALENDSO_ENCRYPTION_KEY));
+      const decryptedData = JSON.parse(symmetricDecrypt(credential.key as string, RONDEVU_ENCRYPTION_KEY));
 
       if (!decryptedData.url) {
         return null;
@@ -292,9 +292,9 @@ export default class EventManager {
     // TODO this method shouldn't be modifying the event object that's passed in
     const evt = processLocation(event);
 
-    // Fallback to cal video if no location is set
+    // Fallback to rOndevu video if no location is set
     if (!evt.location) {
-      // See if cal video is enabled & has keys
+      // See if rOndevu video is enabled & has keys
       const calVideo = await prisma.app.findUnique({
         where: {
           slug: "daily-video",
@@ -308,13 +308,13 @@ export default class EventManager {
       const calVideoKeys = calVideoKeysSchema.safeParse(calVideo?.keys);
 
       if (calVideo?.enabled && calVideoKeys.success) evt["location"] = "integrations:daily";
-      log.warn("Falling back to cal video as no location is set");
+      log.warn("Falling back to rOndevu video as no location is set");
     }
 
     const [mainHostDestinationCalendar] =
       (evt.destinationCalendar as [undefined | NonNullable<typeof evt.destinationCalendar>[number]]) ?? [];
 
-    // Fallback to Cal Video if Google Meet is selected w/o a Google Calendar connection
+    // Fallback to rOndevu Video if Google Meet is selected w/o a Google Calendar connection
     if (evt.location === MeetLocationType && mainHostDestinationCalendar?.integration !== "google_calendar") {
       const [googleCalendarCredential] = this.calendarCredentials.filter(
         (cred) => cred.type === "google_calendar"
@@ -323,7 +323,7 @@ export default class EventManager {
       // TODO: We could extend this logic to Regular Credentials also. Having a Google Calendar credential would cause fallback to use that credential to create calendar and thus we could have Google Meet link
       if (!isDelegationCredential({ credentialId: googleCalendarCredential?.id })) {
         log.warn(
-          "Falling back to Cal Video integration for Regular Credential as Google Calendar is not set as destination calendar"
+          "Falling back to rOndevu Video integration for Regular Credential as Google Calendar is not set as destination calendar"
         );
         evt["location"] = "integrations:daily";
         evt["conferenceCredentialId"] = undefined;
@@ -1055,7 +1055,7 @@ export default class EventManager {
     }
 
     /**
-     * This might happen if someone tries to use a location with a missing credential, so we fallback to Cal Video.
+     * This might happen if someone tries to use a location with a missing credential, so we fallback to rOndevu Video.
      * @todo remove location from event types that has missing credentials
      * */
     if (!videoCredential) {

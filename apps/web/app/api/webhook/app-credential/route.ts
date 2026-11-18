@@ -13,7 +13,7 @@ const appCredentialWebhookRequestBodySchema = z.object({
   // UserId of the rondevu.org user
   userId: z.number().int(),
   appSlug: z.string(),
-  // Keys should be AES256 encrypted with the CALCOM_APP_CREDENTIAL_ENCRYPTION_KEY
+  // Keys should be AES256 encrypted with the RONDEVU_APP_CREDENTIAL_ENCRYPTION_KEY
   keys: z.string(),
 });
 
@@ -62,7 +62,7 @@ async function postHandler(request: NextRequest) {
     }
 
     const keys = JSON.parse(
-      symmetricDecrypt(reqBody.keys, process.env.CALCOM_APP_CREDENTIAL_ENCRYPTION_KEY || "")
+      symmetricDecrypt(reqBody.keys, process.env.RONDEVU_APP_CREDENTIAL_ENCRYPTION_KEY || "")
     );
 
     // INFO: Can't use prisma upsert as we don't know the id of the credential

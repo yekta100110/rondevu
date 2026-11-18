@@ -1,4 +1,4 @@
 <svg width="567" height="107" viewBox="0 0 567 107" fill="none" xmlns="http://www.w3.org/2000/svg">
-<style>@font-face{font-family:'Cal Sans';src:url('/fonts/CalSans-SemiBold.woff2') format('woff2');font-weight:600;}</style>
-<text x="10" y="75" font-family="'Cal Sans','Inter',system-ui,sans-serif" font-size="72" font-weight="600" fill="#fff" letter-spacing="-1.5px">rOndevu</text>
+<style>@font-face{font-family:'Rondevu Sans';src:url('/fonts/RondevuSans-SemiBold.woff2') format('woff2');font-weight:600;}</style>
+<text x="10" y="75" font-family="'Rondevu Sans','Inter',system-ui,sans-serif" font-size="72" font-weight="600" fill="#fff" letter-spacing="-1.5px">rOndevu</text>
 </svg>

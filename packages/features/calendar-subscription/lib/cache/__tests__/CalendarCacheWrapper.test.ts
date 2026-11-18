@@ -462,10 +462,10 @@ describe("CalendarCacheWrapper", () => {
 
       vi.mocked(mockOriginalCalendar.createEvent).mockResolvedValue(mockResult);
 
-      const result = await wrapper.createEvent(mockEvent, 123, "cal-id");
+      const result = await wrapper.createEvent(mockEvent, 123, "rondevu-id");
 
       expect(result).toBe(mockResult);
-      expect(mockOriginalCalendar.createEvent).toHaveBeenCalledWith(mockEvent, 123, "cal-id");
+      expect(mockOriginalCalendar.createEvent).toHaveBeenCalledWith(mockEvent, 123, "rondevu-id");
     });
 
     it("should delegate updateEvent to original calendar", async () => {
@@ -485,10 +485,10 @@ describe("CalendarCacheWrapper", () => {
 
       vi.mocked(mockOriginalCalendar.updateEvent).mockResolvedValue(mockResult);
 
-      const result = await wrapper.updateEvent("uid-123", mockEvent, "cal-id");
+      const result = await wrapper.updateEvent("uid-123", mockEvent, "rondevu-id");
 
       expect(result).toBe(mockResult);
-      expect(mockOriginalCalendar.updateEvent).toHaveBeenCalledWith("uid-123", mockEvent, "cal-id");
+      expect(mockOriginalCalendar.updateEvent).toHaveBeenCalledWith("uid-123", mockEvent, "rondevu-id");
     });
 
     it("should delegate deleteEvent to original calendar", async () => {
@@ -501,9 +501,9 @@ describe("CalendarCacheWrapper", () => {
 
       vi.mocked(mockOriginalCalendar.deleteEvent).mockResolvedValue(undefined);
 
-      await wrapper.deleteEvent("uid-123", mockEvent, "cal-id");
+      await wrapper.deleteEvent("uid-123", mockEvent, "rondevu-id");
 
-      expect(mockOriginalCalendar.deleteEvent).toHaveBeenCalledWith("uid-123", mockEvent, "cal-id");
+      expect(mockOriginalCalendar.deleteEvent).toHaveBeenCalledWith("uid-123", mockEvent, "rondevu-id");
     });
 
     it("should delegate listCalendars to original calendar", async () => {

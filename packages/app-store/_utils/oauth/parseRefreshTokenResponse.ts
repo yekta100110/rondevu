@@ -25,8 +25,8 @@ export type ParseRefreshTokenResponse<S extends z.ZodTypeAny> =
 const parseRefreshTokenResponse = (response: any, schema: z.ZodTypeAny) => {
   let refreshTokenResponse;
   const credentialSyncingEnabled =
-    APP_CREDENTIAL_SHARING_ENABLED && process.env.CALCOM_CREDENTIAL_SYNC_ENDPOINT;
-  if (APP_CREDENTIAL_SHARING_ENABLED && process.env.CALCOM_CREDENTIAL_SYNC_ENDPOINT) {
+    APP_CREDENTIAL_SHARING_ENABLED && process.env.RONDEVU_CREDENTIAL_SYNC_ENDPOINT;
+  if (APP_CREDENTIAL_SHARING_ENABLED && process.env.RONDEVU_CREDENTIAL_SYNC_ENDPOINT) {
     refreshTokenResponse = minimumTokenResponseSchema.safeParse(response);
   } else {
     refreshTokenResponse = schema.safeParse(response);

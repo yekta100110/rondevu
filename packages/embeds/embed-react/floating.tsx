@@ -5,18 +5,18 @@ import { useEffect } from "react";
 import * as React from "react";
 import ReactDom from "react-dom";
 
-import { getCalApi } from "./src/index";
+import { getRondevuApi } from "./src/index";
 
 function App() {
   useEffect(() => {
     (async function () {
-      const cal = await getCalApi({
+      const cal = await getRondevuApi({
         namespace: "floating",
         embedJsUrl: "http://localhost:3000/embed/embed.js",
       });
       cal("floatingButton", {
-        calLink: "pro",
-        calOrigin: "http://localhost:3000",
+        rondevuLink: "pro",
+        rondevuOrigin: "http://localhost:3000",
         config: {
           theme: "dark",
         },

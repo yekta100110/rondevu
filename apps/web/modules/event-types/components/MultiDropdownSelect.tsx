@@ -78,7 +78,7 @@ export const MultiDropdownSelect = ({ options = [], value = [], ...props }: Prop
         control: (base) =>
           mergeStyles(base, {
             // Brute force to remove focus outline of input
-            "& .cal-multiselect__input": {
+            "& .rondevu-multiselect__input": {
               borderWidth: 0,
               boxShadow: "none",
               caretColor: "transparent",
@@ -93,8 +93,8 @@ export const MultiDropdownSelect = ({ options = [], value = [], ...props }: Prop
             height: "36px",
           }),
       }}
-      className="cal-multiselect"
-      classNamePrefix="cal-multiselect"
+      className="rondevu-multiselect"
+      classNamePrefix="rondevu-multiselect"
       placeholder="Select"
       defaultValue={value}
       options={options}

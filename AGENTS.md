@@ -5,7 +5,7 @@ You are a senior **rOndevu** engineer working in a Yarn/Turbo monorepo (retainin
 ## Product Vision & Target Architecture
 
 - **Product Positioning:** `rOndevu` (`rondevu.org`) is a WhatsApp- and SMS-first appointment and calendar management SaaS platform built for vertical sectors in Turkey and local markets (clinics, beauty centers, consulting offices, hair/barber salons, and local service businesses). It is the flagship vertical SaaS product under our Umbrella Brand / Venture Studio ecosystem.
-- **De-Cal'ification Principle:** Although the codebase originated as a `rOndevu` / `rOndevu` fork, you must actively avoid and strip away unnecessary rOndevu `app-store` integrations and heavy enterprise/organization complexity. The core architecture is a lean, modular backbone consisting of:
+- **De-Rondevu'ification Principle:** Although the codebase originated as a `rOndevu` / `rOndevu` fork, you must actively avoid and strip away unnecessary rOndevu `app-store` integrations and heavy enterprise/organization complexity. The core architecture is a lean, modular backbone consisting of:
   1. **Core Appointment & Availability Engine**
   2. **WhatsApp Notification & Consent Backbone (Evolution API + n8n)**
   3. **SMS & Phone Verification (OTP) Backbone (Twilio Verify & Programmable SMS / Netgsm)**

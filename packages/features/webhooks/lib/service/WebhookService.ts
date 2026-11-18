@@ -174,8 +174,8 @@ export class WebhookService implements IWebhookService {
           platform: subscriber.platform,
           headers: {
             "Content-Type": "application/json",
-            "X-Cal-Signature-256": signature,
-            "X-Cal-Webhook-Version": subscriber.version,
+            "X-Rondevu-Signature-256": signature,
+            "X-Rondevu-Webhook-Version": subscriber.version,
             "X-Rondevu-Event-Id": eventId,
             "X-Rondevu-Timestamp": payload.createdAt,
             ...(subscriber.platform && ingressKey ? { "X-Rondevu-Ingress-Key": ingressKey } : {}),

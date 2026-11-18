@@ -19,7 +19,7 @@
       "value": "https://HEROKU_APP_NAME.herokuapp.com",
       "required": "true"
     },
-    "CALENDSO_ENCRYPTION_KEY": {
+    "RONDEVU_ENCRYPTION_KEY": {
       "description": "Application Key for symmetric encryption and decryption. Must be 32 bytes for AES256 encryption algorithm.",
       "value": "secret",
       "required": "true"

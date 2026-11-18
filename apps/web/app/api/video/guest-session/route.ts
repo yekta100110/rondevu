@@ -9,7 +9,7 @@ import {
 } from "@rondevu/app-store/dailyvideo/lib/VideoApiAdapter";
 import { getHostsAndGuests } from "@rondevu/features/bookings/lib/getHostsAndGuests";
 import { BookingRepository } from "@rondevu/features/bookings/repositories/BookingRepository";
-import { getCalVideoReference } from "@rondevu/features/get-cal-video-reference";
+import { getCalVideoReference } from "@rondevu/features/get-rondevu-video-reference";
 import { VideoCallGuestRepository } from "@rondevu/features/video-call-guest/repositories/VideoCallGuestRepository";
 import prisma from "@rondevu/prisma";
 import { validateCsrfToken } from "@rondevu/web/lib/validateCsrfToken";

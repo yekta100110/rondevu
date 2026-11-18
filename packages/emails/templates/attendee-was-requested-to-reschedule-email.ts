@@ -1,4 +1,4 @@
-import { getManageLink } from "@rondevu/lib/CalEventParser";
+import { getManageLink } from "@rondevu/lib/RondevuEventParser";
 import { EMAIL_FROM_NAME } from "@rondevu/lib/constants";
 import type { CalendarEvent } from "@rondevu/types/Calendar";
 

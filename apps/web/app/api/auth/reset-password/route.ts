@@ -61,7 +61,7 @@ async function handler(req: NextRequest) {
 
   const hashedPassword = await hashPassword(rawPassword);
   // this can fail if a password request has been made for an email that has since changed or-
-  // never existed within Cal. In this case we do not want to disclose the email's existence.
+  // never existed within Rondevu. In this case we do not want to disclose the email's existence.
   // instead, we just return 404
   try {
     await prisma.user.update({

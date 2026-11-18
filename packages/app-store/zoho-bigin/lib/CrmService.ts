@@ -1,7 +1,7 @@
 import axios from "axios";
 import qs from "qs";
 
-import { getLocation } from "@rondevu/lib/CalEventParser";
+import { getLocation } from "@rondevu/lib/RondevuEventParser";
 import logger from "@rondevu/lib/logger";
 import prisma from "@rondevu/prisma";
 import type {

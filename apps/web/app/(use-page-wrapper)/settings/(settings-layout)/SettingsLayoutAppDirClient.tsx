@@ -1,7 +1,7 @@
 "use client";
 
 import type { TeamFeatures } from "@rondevu/features/flags/config";
-import { IS_CALCOM, WEBAPP_URL } from "@rondevu/lib/constants";
+import { IS_RONDEVU, WEBAPP_URL } from "@rondevu/lib/constants";
 import { getPlaceholderAvatar } from "@rondevu/lib/defaultAvatarImage";
 import { getUserAvatarUrl } from "@rondevu/lib/getAvatarUrl";
 import { useIsStandalone } from "@rondevu/lib/hooks/useIsStandalone";
@@ -237,7 +237,7 @@ const getTabs = (
   ];
 
   for (const tab of tabs) {
-    if (tab.name === "admin" && IS_CALCOM) {
+    if (tab.name === "admin" && IS_RONDEVU) {
       tab.children?.push({
         name: "create_org",
         href: "/settings/organizations/new",
@@ -424,7 +424,7 @@ const SettingsSidebarContainer = ({
     <nav
       style={{ maxHeight: `calc(100vh - ${bannersHeight}px)`, top: `${bannersHeight}px` }}
       className={classNames(
-        "no-scrollbar stack-y-1 fixed top-0 bottom-0 left-0 z-20 flex max-h-screen w-56 flex-col overflow-x-hidden overflow-y-scroll bg-cal-muted px-2 pb-3 transition-transform max-lg:z-10 lg:sticky lg:flex",
+        "no-scrollbar stack-y-1 fixed top-0 bottom-0 left-0 z-20 flex max-h-screen w-56 flex-col overflow-x-hidden overflow-y-scroll bg-muted px-2 pb-3 transition-transform max-lg:z-10 lg:sticky lg:flex",
         className,
         navigationIsOpenedOnMobile
           ? "translate-x-0 opacity-100"
@@ -499,7 +499,7 @@ const MobileSettingsContainer = (props: { onSideContainerOpen?: () => void }) =>
   if (isStandalone) return null;
 
   return (
-    <nav className="sticky top-0 z-20 flex w-full items-center justify-between border-muted border-b bg-cal-muted px-2 py-2 sm:relative lg:hidden">
+    <nav className="sticky top-0 z-20 flex w-full items-center justify-between border-muted border-b bg-muted px-2 py-2 sm:relative lg:hidden">
       <div className="flex items-center space-x-3">
         <Button StartIcon="menu" color="minimal" variant="icon" onClick={props.onSideContainerOpen}>
           <span className="sr-only">{t("show_navigation")}</span>

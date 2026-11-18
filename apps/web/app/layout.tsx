@@ -24,8 +24,8 @@ const interFont = Inter({
   display: "swap",
 });
 const calFont = localFont({
-  src: "../fonts/CalSans-SemiBold.woff2",
-  variable: "--font-cal",
+  src: "../fonts/RondevuSans-SemiBold.woff2",
+  variable: "--font-display",
   preload: true,
   display: "swap",
   weight: "600",
@@ -143,7 +143,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <style>{`
           :root {
             --font-sans: ${interFont.style.fontFamily}, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            --font-cal: ${calFont.style.fontFamily}, var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-display: ${calFont.style.fontFamily}, var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
           }
         `}</style>
         <script

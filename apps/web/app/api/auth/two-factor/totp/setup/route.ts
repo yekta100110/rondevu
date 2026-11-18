@@ -54,7 +54,7 @@ async function postHandler(req: NextRequest) {
     return NextResponse.json({ error: ErrorCode.TwoFactorAlreadyEnabled }, { status: 400 });
   }
 
-  if (!process.env.CALENDSO_ENCRYPTION_KEY) {
+  if (!process.env.RONDEVU_ENCRYPTION_KEY) {
     console.error("Missing encryption key; cannot proceed with two factor setup.");
     return NextResponse.json({ error: ErrorCode.InternalServerError }, { status: 500 });
   }
@@ -76,14 +76,14 @@ async function postHandler(req: NextRequest) {
       id: session.user.id,
     },
     data: {
-      backupCodes: symmetricEncrypt(JSON.stringify(backupCodes), process.env.CALENDSO_ENCRYPTION_KEY),
+      backupCodes: symmetricEncrypt(JSON.stringify(backupCodes), process.env.RONDEVU_ENCRYPTION_KEY),
       twoFactorEnabled: false,
-      twoFactorSecret: symmetricEncrypt(secret, process.env.CALENDSO_ENCRYPTION_KEY),
+      twoFactorSecret: symmetricEncrypt(secret, process.env.RONDEVU_ENCRYPTION_KEY),
     },
   });
 
   const name = user.email || user.username || user.id.toString();
-  const keyUri = authenticator.keyuri(name, "Cal", secret);
+  const keyUri = authenticator.keyuri(name, "Rondevu", secret);
   const dataUri = await qrcode.toDataURL(keyUri);
 
   return NextResponse.json({ secret, keyUri, dataUri, backupCodes });

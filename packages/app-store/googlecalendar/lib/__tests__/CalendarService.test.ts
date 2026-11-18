@@ -517,7 +517,7 @@ describe("createEvent", () => {
     // Test input - simplified CalendarServiceEvent
     const testCalEvent = {
       type: "test-event-type",
-      uid: "cal-event-uid-123",
+      uid: "rondevu-event-uid-123",
       title: "Test Meeting",
       startTime: "2024-06-15T10:00:00Z",
       endTime: "2024-06-15T11:00:00Z",
@@ -789,7 +789,7 @@ describe("createEvent", () => {
 
     const testCalEvent = {
       type: "test-event-type",
-      uid: "cal-event-uid-456",
+      uid: "rondevu-event-uid-456",
       title: "Test Meeting Default Reminder",
       startTime: "2024-06-15T10:00:00Z",
       endTime: "2024-06-15T11:00:00Z",
@@ -855,7 +855,7 @@ describe("createEvent", () => {
 
     const testCalEvent = {
       type: "test-event-type",
-      uid: "cal-event-uid-789",
+      uid: "rondevu-event-uid-789",
       title: "Test Meeting Just In Time",
       startTime: "2024-06-15T10:00:00Z",
       endTime: "2024-06-15T11:00:00Z",
@@ -926,7 +926,7 @@ describe("createEvent", () => {
 
     const testCalEvent = {
       type: "test-event-type",
-      uid: "cal-event-uid-hangout",
+      uid: "rondevu-event-uid-hangout",
       title: "Test Meeting with Hangout",
       startTime: "2024-06-15T10:00:00Z",
       endTime: "2024-06-15T11:00:00Z",

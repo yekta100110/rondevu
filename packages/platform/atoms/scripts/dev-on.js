@@ -8,8 +8,8 @@ const viteConfigPath = path.join(__dirname, "../vite.config.ts");
 
 // Modify package.json
 const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
-packageJson.main = "./dist/cal-atoms.umd.cjs";
-packageJson.exports["."].require = "./dist/cal-atoms.umd.cjs";
+packageJson.main = "./dist/rondevu-atoms.umd.cjs";
+packageJson.exports["."].require = "./dist/rondevu-atoms.umd.cjs";
 fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
 // Modify vite.config.ts

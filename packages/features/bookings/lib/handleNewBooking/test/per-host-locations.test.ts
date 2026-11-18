@@ -112,7 +112,7 @@ describe("Per-Host Locations - handleNewBooking", () => {
       });
 
       expect(createdBooking).toBeDefined();
-      // Per-host location resolution was removed during EE cleanup, so the system falls back to Cal Video
+      // Per-host location resolution was removed during EE cleanup, so the system falls back to rOndevu Video
       expect(createdBooking.location).toBe("integrations:daily");
 
       await expectBookingToBeInDatabase({
@@ -121,7 +121,7 @@ describe("Per-Host Locations - handleNewBooking", () => {
       });
     });
 
-    test("should use Cal Video when host location is integrations:daily", async () => {
+    test("should use rOndevu Video when host location is integrations:daily", async () => {
       const handleNewBooking = getNewBookingHandler();
       const booker = getBooker({
         email: "booker@example.com",
@@ -474,7 +474,7 @@ describe("Per-Host Locations - handleNewBooking", () => {
       });
 
       expect(createdBooking).toBeDefined();
-      // Per-host location resolution was removed during EE cleanup, so the system falls back to Cal Video
+      // Per-host location resolution was removed during EE cleanup, so the system falls back to rOndevu Video
       expect(createdBooking.location).toBe("integrations:daily");
 
       await expectBookingToBeInDatabase({
@@ -483,7 +483,7 @@ describe("Per-Host Locations - handleNewBooking", () => {
       });
     });
 
-    test("should fallback to Cal Video when no matching credential found", async () => {
+    test("should fallback to rOndevu Video when no matching credential found", async () => {
       const handleNewBooking = getNewBookingHandler();
       const booker = getBooker({
         email: "booker@example.com",

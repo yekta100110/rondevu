@@ -60,7 +60,7 @@
   - Sıfır "altyapı" kelimesi, `git push` yapılmadı, yerel sunucu çalıştırılmadı.
 
 - Dış Zemin Renk Bütünlüğü (#141414) ve CTA Banner Cerrahi Onarımı (2026-10-04):
-  - Kök zemin rengi `globals.css`, `layout.tsx`, `home-view.tsx`, `pricing-view.tsx`, `cal-framer.css`, `cal-pricing-framer.css`, TR/EN DOM dosyalarında saf siyah (#000000) yerine koyu antrasit (#141414) tonuna eşitlendi.
+  - Kök zemin rengi `globals.css`, `layout.tsx`, `home-view.tsx`, `pricing-view.tsx`, `rondevu-framer.css`, `rondevu-pricing-framer.css`, TR/EN DOM dosyalarında saf siyah (#000000) yerine koyu antrasit (#141414) tonuna eşitlendi.
   - "Daha akıllı, daha sade randevu" banner kartı (`.framer-12jqh3g`) `overflow: hidden`, `border-radius: 24px`, `isolation: isolate` ile sınırlandırıldı.
   - Taşan ızgara sınır çizgileri (`.framer-1x0adn6`) kart içine hapsedildi; dış taşıyıcı dikey kenar çizgileri (`--border-left-width: 0px`, `--border-right-width: 0px`) kaldırıldı.
   - Kartın arkasındaki radyal parlama maskesi köşesiz, yumuşak bir degrade ile `#141414` zeminine erir hale getirildi.
@@ -77,25 +77,25 @@
 
 - Eksiksiz Çift Dil (TR / EN) Mimarisi ve Çeviri Temizliği:
   - Merkezi Sözlük: `home-translations.ts` merkezi sözlük yapısı tüm bileşenlerle senkronize edildi.
-  - Türkçe Zemin: `cal-dom-tr.html` ve `pricing-dom-tr.html` içindeki tüm yarım kalmış İngilizce açıklamalar (karşılaştırma tablosunun 40+ açıklaması, bento kart açıklamaları, hero randevu metinleri, takvim rozetleri, kullanıcı görüşleri ve entegrasyon metinleri) akıcı, kusursuz Türkçeye çevrildi.
-  - İngilizce Zemin: `cal-dom-en.html` ve `pricing-dom-en.html` içinde kalan Türkçe ibareler profesyonel İngilizceye uyarlandı.
+  - Türkçe Zemin: `rondevu-dom-tr.html` ve `pricing-dom-tr.html` içindeki tüm yarım kalmış İngilizce açıklamalar (karşılaştırma tablosunun 40+ açıklaması, bento kart açıklamaları, hero randevu metinleri, takvim rozetleri, kullanıcı görüşleri ve entegrasyon metinleri) akıcı, kusursuz Türkçeye çevrildi.
+  - İngilizce Zemin: `rondevu-dom-en.html` ve `pricing-dom-en.html` içinde kalan Türkçe ibareler profesyonel İngilizceye uyarlandı.
   - Sekme Başlığı: Dil geçişlerinde `document.title` anlık ve otomatik güncelleniyor.
   - Sıfır "altyapı" kelimesi, kesinlikle `git push` yapılmadı.
   - Yerel sunucu (`localhost:3000`) HTTP 200 OK ile sorunsuz çalışıyor.
 
 - Kök Seviye Karanlık Mod ve Tipografi Kontrast İyileştirmeleri:
-  - Zemin Bütünlüğü: Kök seviyede `html.dark`, `body`, `#main`, `#cal-1to1-root`, `#cal-pricing-1to1-root` için saf obsidian siyah (`#000000 !important`) zemin kuruldu.
+  - Zemin Bütünlüğü: Kök seviyede `html.dark`, `body`, `#main`, `#rondevu-1to1-root`, `#rondevu-pricing-1to1-root` için saf obsidian siyah (`#000000 !important`) zemin kuruldu.
   - Metin Kontrastı: Framer SSR'ın satır içi `--extracted-r6o4lv` ve `--extracted-a0htzi` değişkenleri `#e4e4e7` ve `#ffffff` olarak ezildi. Başlıklar ve metinler koyu zeminde kristal netliğine ulaştı.
   - Fiyatlandırma Kartları ve Karşılaştırma Tablosu: Kartlar `#121214 !important` yüzeye, karşılaştırma tablosu satırları `#0c0c0e !important` yüzeye ve 1px zarif kenarlıklara (`rgba(255, 255, 255, 0.08)`) kavuşturuldu.
   - Onay Tikleri: Canlı zümrüt yeşili (`#10b981`) ile belirginleştirildi.
   - Sıfır "altyapı" kelimesi, kesinlikle `git push` yapılmadı.
 
 - Cerrahi Arayüz ve Pricing Yerleşim Düzeltmeleri:
-  - Navbar Sol Üst Logo: İkon görseli kaldırılarak temiz ve orantılı `rOndevu` metin logosu (`font-cal text-2xl font-bold tracking-tight text-emphasis`) yerleştirildi.
-  - Ana Sayfa FAQ Boşluğu ve Akordiyon: `cal-dom-tr.html` ve `cal-dom-en.html` dosyalarındaki kapanmamış etiket sözdizim hatası düzeltildi; SSS akordiyonu sorunsuz render edilmeye başlandı.
+  - Navbar Sol Üst Logo: İkon görseli kaldırılarak temiz ve orantılı `rOndevu` metin logosu (`font-display text-2xl font-bold tracking-tight text-emphasis`) yerleştirildi.
+  - Ana Sayfa FAQ Boşluğu ve Akordiyon: `rondevu-dom-tr.html` ve `rondevu-dom-en.html` dosyalarındaki kapanmamış etiket sözdizim hatası düzeltildi; SSS akordiyonu sorunsuz render edilmeye başlandı.
   - Ana Sayfa Eski Pricing Bloğu Silindi: `"Daha akıllı, daha sade randevu."` sloganı ve telif satırı korunarak, footer altındaki eski `CalPricingSection` DOM'dan temizlendi.
   - Pricing Çift Başlık Giderildi: `.framer-xw7bcr` kapsayıcısındaki mükerrer başlık varyantı tekil `<h1>` + `<p>` yapısına indirgendi.
-  - Pricing 19.589px Yükseklik ve Sayfa Sonu Sonsuz Boşluk Bug'ı Çözüldü: `cal-pricing-framer.css` içine eksik breakpoint medya sorguları eklenerek cihaz varyantlarının üst üste binmesi engellendi, `</body></html>` etiketleri ayıklandı, taban boşlukları normalize edildi.
+  - Pricing 19.589px Yükseklik ve Sayfa Sonu Sonsuz Boşluk Bug'ı Çözüldü: `rondevu-pricing-framer.css` içine eksik breakpoint medya sorguları eklenerek cihaz varyantlarının üst üste binmesi engellendi, `</body></html>` etiketleri ayıklandı, taban boşlukları normalize edildi.
   - Karşılaştırma Tablosu Onay Tikleri: `svg-templates.html` dosyasına eksik `#svg8830033853` checkmark tanımı eklenip zümrüt yeşili renklendirildi.
   - Ekip Yönetimi Kaldırıldı: Karşılaştırma tablosundaki "Ekip Yönetimi" / "Teams" başlığı ve altındaki 8 satır tablodan tamamen silindi.
   - Sıfır "altyapı" kelimesi, kesinlikle `git push` yapılmadı.
@@ -106,28 +106,28 @@
 - All 61 feature modules present
 - All 20 packages present
 - Branding rename completed (user-facing logos, constants, metadata, titles)
-- All logo SVGs, favicons, app icons, metro tiles, and email logos regenerated with Cal Sans font and exact dimensions
+- All logo SVGs, favicons, app icons, metro tiles, and email logos regenerated with Rondevu Sans font and exact dimensions
 - Historical No-Show Counter Badge in Bookings View with batch credential cross-matching (email, phone, synthetic SMS email)
 - 1:1 rOndevu Ground Adaptation for rOndevu (`/example` -> rOndevu):
   - rOndevu homepage file (`/example/rOndevu _ Scheduling Software for Online Bookings.htm`) taken 1:1 as the sole architectural ground.
-  - Base layout hierarchy, DOM structure, CSS (`data-framer-css`), Cal Sans/Matter typography, SVG templates, and Framer Motion animation flow preserved intact.
+  - Base layout hierarchy, DOM structure, CSS (`data-framer-css`), Rondevu Sans/Matter typography, SVG templates, and Framer Motion animation flow preserved intact.
   - Old hybrid components (`HeroPrecisionConsole`, `RealInterfaceShowcase`, etc.) completely eliminated from root page.
-  - All brand names replaced: 132 occurrences of "Cal" / "rOndevu" converted to "rOndevu" (0 remaining).
+  - All brand names replaced: 132 occurrences of "Rondevu" / "rOndevu" converted to "rOndevu" (0 remaining).
   - Logo assets integrated: `rondevu-icon.png` from `/example/logos` and official SVG wordmarks in header & nav.
   - Accept payments (Stripe/billing), Built-in video conferencing (dahili video), and external sponsor/investor tickers cleanly stripped.
   - Public instant signup removed; all buttons connect to `#pricing` and the 2-tier pricing model: Aylık (990 ₺/ay) & Yıllık (9.900 ₺/yıl - 2 Ay Hediye).
   - Plan selection opens dynamic `PlanContactModal` pulling live admin contacts from `trpc.viewer.public.getPlanContact`.
   - Deep luxury dark mode with automatic OS detection (`prefers-color-scheme`) + manual switcher (System / Dark / Light).
   - Bilingual support with automatic system detection (`navigator.language` -> `en`, default fallback `tr`) + manual `TR / EN` switch.
-  - Server-side pre-reading of transformed DOMs (`cal-dom-tr.html`, `cal-dom-en.html`, `svg-templates.html`) delivers instant TTFB and zero hydration issues.
+  - Server-side pre-reading of transformed DOMs (`rondevu-dom-tr.html`, `rondevu-dom-en.html`, `svg-templates.html`) delivers instant TTFB and zero hydration issues.
   - Local development server running live with HTTP 200 OK verified on `/` and `/pricing`.
 - Karanlık Mod, Donmuş Animasyonların Onarımı ve Çift Dil (TR/EN) Mimarisi:
-  - Karanlık Mod Onarımı: `cal-framer.css` içindeki hardcoded beyaz zeminli kartlar (`.framer-eyoavh`, `.framer-1tym5sg`, `.framer-igaxec` vb.) koyu zemin (`#121214`), koyu kenarlık (`#27272a`) ve gölgelerle hem `html.dark` hem de `@media (prefers-color-scheme: dark)` için tam uyumlu hale getirildi; beyaz zemin parlamaları giderildi.
+  - Karanlık Mod Onarımı: `rondevu-framer.css` içindeki hardcoded beyaz zeminli kartlar (`.framer-eyoavh`, `.framer-1tym5sg`, `.framer-igaxec` vb.) koyu zemin (`#121214`), koyu kenarlık (`#27272a`) ve gölgelerle hem `html.dark` hem de `@media (prefers-color-scheme: dark)` için tam uyumlu hale getirildi; beyaz zemin parlamaları giderildi.
   - Senkron Tema Başlatıcı: `layout.tsx` scripti açık modda `html.light` sınıfını da ekleyerek koyu işletim sistemlerinde açık temanın ezilmesini önledi.
   - Donmuş Animasyon Çözümü: Framer SSR'dan kalan `opacity: 0.001` ve `opacity: 0` inline kilitleri çözüldü (Navbar CTA butonları, takvim haftalık görünümü, rezervasyon kartları). Mikro hover efektleri ve nabız parlamaları eklendi.
   - SSS Akordiyon Etkileşimi: `home-view.tsx` içine event delegation eklenerek sorulara tıklandığında cevap alanlarının akıcı açılıp kapanması sağlandı.
   - YASAKLI KELİME KURALI: `home-translations.ts` dosyasından "altyapı" kelimesi tamamen temizlendi, proje genelinde 0 eşleşme doğrulandı.
-  - Tam Çift Dil Senkronizasyonu: `cal-dom-tr.html` içerisinde kalan İngilizce SSS soruları, alt CTA ve bildirim hapları doğal Türkçe metinlere dönüştürüldü.
+  - Tam Çift Dil Senkronizasyonu: `rondevu-dom-tr.html` içerisinde kalan İngilizce SSS soruları, alt CTA ve bildirim hapları doğal Türkçe metinlere dönüştürüldü.
   - Doğrulama: `scripts/verify_all_fixes.js` 24 testin tümünde 100% PASS verdi. Dev sunucusu başlatılmadı, git push yapılmadı.
 - Cerrahi DOM Temizliği & rOndevu Markalama (DOM Purge):
   - Sahte sertifikalar (ISO 27001, SOC 2, CCPA, GDPR, HIPAA) tamamen temizlendi (0).
@@ -174,7 +174,7 @@
 16. User feedback implementation:
     - Synchronized `/settings/admin/plan-contact` updates live to homepage (`home-view.tsx` and `AdminFeatureCards.tsx` Block 4) with direct phone, WhatsApp, and email buttons.
     - Restored Hero Step 3 confirmation card to exact fidelity of `Screenshot 2026-09-25 at 16-57-09` with authentic 4 square calendar buttons (Google `G`, Microsoft Outlook, Office 365, Apple Calendar `.ics`) and top navigation link.
-    - Re-established minimalist monochromatic Cal aesthetic across all landing modules by removing loud/rainbow colors.
+    - Re-established minimalist monochromatic Rondevu aesthetic across all landing modules by removing loud/rainbow colors.
     - Overhauled Block 2 layout with wide switcher tabs and cleanly decoupled the client preview ("Danışan randevu ekranı önizlemesi") into its own spacious distinct card.
     - Implemented phone OTP SMS verification for phone bookings and fixed cancellation SMS dispatch when organizer cancels appointments.
     - Simplified SSS calendar synchronization explanation to state direct export to Google/Apple calendar.
@@ -297,7 +297,7 @@
     - **Validation**: Biome code check clean (0 errors), dev server verified live at `http://localhost:3000/` with 0 console hydration errors and full browser subagent verification, 0 commits pushed per user instruction.
 
 36. Dark integration/footer contrast pass:
-    - Added scoped dark styling for integration tiles, Zapier contrast, divider plus markers, footer status, and hero preview border layers in `cal-framer.css`.
+    - Added scoped dark styling for integration tiles, Zapier contrast, divider plus markers, footer status, and hero preview border layers in `rondevu-framer.css`.
     - Added hydration-safe footer status/logo normalization and Mayıs 2026 hero year update in `home-view.tsx`.
     - Local server verified with HTTP 200 on `/` and `/pricing`; `yarn type-check:ci --force` reached package checks but failed in existing workspace setup because several packages could not spawn `tsc` (`ENOENT`). No push or commit performed.
 

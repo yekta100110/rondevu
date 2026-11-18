@@ -1,7 +1,7 @@
 {
   "name": "@rondevu/embed-core",
   "version": "1.5.3",
-  "description": "This is the vanilla JS core script that embeds Cal Link",
+  "description": "This is the vanilla JS core script that embeds Rondevu Link",
   "main": "./dist/embed/embed.js",
   "types": "./dist/index.d.ts",
   "license": "SEE LICENSE IN LICENSE",

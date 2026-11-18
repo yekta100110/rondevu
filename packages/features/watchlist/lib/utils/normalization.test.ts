@@ -42,7 +42,7 @@ describe("normalization", () => {
     });
 
     test("should accept and preserve wildcard prefix", () => {
-      expect(normalizeDomain("*.rondevu.org")).toBe("*.rondevu.org");
+      expect(normalizeDomain("*.example.org")).toBe("*.example.org");
       expect(normalizeDomain("*.EXAMPLE.COM")).toBe("*.example.com");
       expect(normalizeDomain("  *.domain.org  ")).toBe("*.domain.org");
       expect(normalizeDomain("*.sub.domain.co.uk")).toBe("*.sub.domain.co.uk");
@@ -117,7 +117,7 @@ describe("normalization", () => {
 
   describe("getWildcardPatternsForDomain", () => {
     test("should return wildcard pattern for a subdomain", () => {
-      expect(getWildcardPatternsForDomain("app.rondevu.org")).toEqual(["*.rondevu.org"]);
+      expect(getWildcardPatternsForDomain("app.rondevu.org")).toEqual(["*.example.org"]);
     });
 
     test("should return single wildcard pattern for deeply nested subdomains", () => {
@@ -125,7 +125,7 @@ describe("normalization", () => {
     });
 
     test("should return empty array for a simple domain (no subdomains)", () => {
-      expect(getWildcardPatternsForDomain("rondevu.org")).toEqual([]);
+      expect(getWildcardPatternsForDomain("example.org")).toEqual([]);
     });
 
     test("should handle multi-level TLDs correctly", () => {
@@ -140,27 +140,27 @@ describe("normalization", () => {
 
   describe("domainMatchesWatchlistEntry", () => {
     test("should match exact domain when no wildcard", () => {
-      expect(domainMatchesWatchlistEntry("rondevu.org", "rondevu.org")).toBe(true);
-      expect(domainMatchesWatchlistEntry("app.rondevu.org", "rondevu.org")).toBe(false);
+      expect(domainMatchesWatchlistEntry("rondevu.org", "example.org")).toBe(true);
+      expect(domainMatchesWatchlistEntry("app.rondevu.org", "example.org")).toBe(false);
     });
 
     test("should match subdomain when wildcard is used", () => {
-      expect(domainMatchesWatchlistEntry("app.rondevu.org", "*.rondevu.org")).toBe(true);
-      expect(domainMatchesWatchlistEntry("sub.app.rondevu.org", "*.rondevu.org")).toBe(true);
+      expect(domainMatchesWatchlistEntry("app.rondevu.org", "*.example.org")).toBe(true);
+      expect(domainMatchesWatchlistEntry("sub.app.rondevu.org", "*.example.org")).toBe(true);
     });
 
     test("should not match exact domain with wildcard pattern", () => {
-      expect(domainMatchesWatchlistEntry("rondevu.org", "*.rondevu.org")).toBe(false);
+      expect(domainMatchesWatchlistEntry("rondevu.org", "*.example.org")).toBe(false);
     });
 
     test("should be case insensitive", () => {
-      expect(domainMatchesWatchlistEntry("APP.CAL.COM", "*.rondevu.org")).toBe(true);
-      expect(domainMatchesWatchlistEntry("app.rondevu.org", "*.CAL.COM")).toBe(true);
+      expect(domainMatchesWatchlistEntry("APP.EXAMPLE.ORG", "*.example.org")).toBe(true);
+      expect(domainMatchesWatchlistEntry("app.example.org", "*.EXAMPLE.ORG")).toBe(true);
     });
 
     test("should not match unrelated domains", () => {
-      expect(domainMatchesWatchlistEntry("app.example.com", "*.rondevu.org")).toBe(false);
-      expect(domainMatchesWatchlistEntry("notcal.com", "rondevu.org")).toBe(false);
+      expect(domainMatchesWatchlistEntry("app.example.com", "*.example.org")).toBe(false);
+      expect(domainMatchesWatchlistEntry("notexample.org", "example.org")).toBe(false);
     });
   });
 });

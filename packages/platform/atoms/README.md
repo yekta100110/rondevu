@@ -17,7 +17,7 @@ want to use version without any suffix e.g. `1.0.103`.
 
 ### Documentation 
 Documentation on how to get started with platform solution is [here](https://rondevu.org/docs/platform/quickstart) and list of atoms can be viewed
-[here](https://rondevu.org/docs/platform/atoms/cal-provider)
+[here](https://rondevu.org/docs/platform/atoms/rondevu-provider)
 
 ## Contributors guide
 
@@ -45,7 +45,7 @@ Atoms are tested in CI using e2e tests within the example platform app. To run t
 ```
 NEXT_PUBLIC_X_CAL_ID=""
 X_CAL_SECRET_KEY=""
-NEXT_PUBLIC_CALCOM_API_URL="https://api.rondevu.org/v2"
+NEXT_PUBLIC_RONDEVU_API_URL="https://api.rondevu.org/v2"
 VITE_BOOKER_EMBED_OAUTH_CLIENT_ID=""
 VITE_BOOKER_EMBED_API_URL="https://api.rondevu.org/v2"
 ORGANIZATION_ID=""

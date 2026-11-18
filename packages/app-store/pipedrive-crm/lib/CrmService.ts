@@ -4,7 +4,7 @@ import {
   CREDENTIAL_SYNC_SECRET,
   CREDENTIAL_SYNC_SECRET_HEADER_NAME,
 } from "@rondevu/lib/constants";
-import { getLocation } from "@rondevu/lib/CalEventParser";
+import { getLocation } from "@rondevu/lib/RondevuEventParser";
 import logger from "@rondevu/lib/logger";
 import { safeStringify } from "@rondevu/lib/safeStringify";
 import type {

@@ -6,7 +6,7 @@ import { TroubleshooterListItemHeader } from "@rondevu/features/troubleshooter/c
 function ConnectedAppsItem() {
   return (
     <TroubleshooterListItemHeader
-      title="Google Cal"
+      title="Google Rondevu"
       subtitle="google@calendar.com"
       prefixSlot={
         <>

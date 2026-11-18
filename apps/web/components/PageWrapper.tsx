@@ -16,7 +16,7 @@ import Head from "next/head";
 import Script from "next/script";
 
 import "@rondevu/embed-core/src/embed-iframe";
-import { IS_CALCOM, WEBAPP_URL } from "@rondevu/lib/constants";
+import { IS_RONDEVU, WEBAPP_URL } from "@rondevu/lib/constants";
 import { getRondevuUrl } from "@rondevu/lib/getRondevuUrl";
 import { buildCanonical } from "@rondevu/lib/next-seo.config";
 import { IconSprites } from "@rondevu/ui/components/icon";
@@ -34,8 +34,8 @@ export interface CalPageWrapper {
 
 const interFont = Inter({ subsets: ["latin"], variable: "--font-sans", preload: true, display: "swap" });
 const calFont = localFont({
-  src: "../fonts/CalSans-SemiBold.woff2",
-  variable: "--font-cal",
+  src: "../fonts/RondevuSans-SemiBold.woff2",
+  variable: "--font-display",
   preload: true,
   display: "swap",
   weight: "600",
@@ -72,7 +72,7 @@ function PageWrapper(props: AppProps) {
       <DefaultSeo
         // Set canonical to https://rondevu.org or self-hosted URL
         canonical={
-          IS_CALCOM
+          IS_RONDEVU
             ? buildCanonical({ path, origin: getRondevuUrl() }) // rondevu.org & .dev
             : buildCanonical({ path, origin: WEBAPP_URL }) // self-hosted
         }
@@ -90,7 +90,7 @@ function PageWrapper(props: AppProps) {
       <style jsx global>{`
         :root {
           --font-sans: ${interFont.style.fontFamily}, system-ui;
-          --font-cal: ${calFont.style.fontFamily};
+          --font-display: ${calFont.style.fontFamily};
         }
       `}</style>
       <IconSprites />

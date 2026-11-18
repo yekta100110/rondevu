@@ -185,7 +185,7 @@ export default async function main() {
     });
   }
 
-  await createApp("wipe-my-cal", "wipemycalother", ["automation"], "wipemycal_other");
+  await createApp("wipe-my-rondevu", "wipemycalother", ["automation"], "wipemycal_other");
   if (process.env.GIPHY_API_KEY) {
     await createApp("giphy", "giphy", ["other"], "giphy_other", {
       api_key: process.env.GIPHY_API_KEY,

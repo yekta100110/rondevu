@@ -6,17 +6,17 @@ import { EmbedElement } from "../EmbedElement";
 import { ModalBox } from "./ModalBox";
 
 function setupWindowCal() {
-    // Mock window.Cal.__css which is required by ModalBox constructor
-    if (!window.Cal) {
+    // Mock window.Rondevu.__css which is required by ModalBox constructor
+    if (!window.Rondevu) {
         // @ts-expect-error - Test setup
-        window.Cal = {};
+        window.Rondevu = {};
     }
-    window.Cal.__css = "/* mock css */";
+    window.Rondevu.__css = "/* mock css */";
 }
 
 // Register ModalBox as a custom element for testing
-if (!customElements.get("cal-modal-box")) {
-    customElements.define("cal-modal-box", ModalBox);
+if (!customElements.get("rondevu-modal-box")) {
+    customElements.define("rondevu-modal-box", ModalBox);
 }
 
 describe("ModalBox", () => {

@@ -31,7 +31,7 @@ const _testWithAndWithoutOrg = (
         sms,
         org: {
           organization: org,
-          urlOrigin: `${WEBSITE_PROTOCOL}//${org.slug}.cal.local:3000`,
+          urlOrigin: `${WEBSITE_PROTOCOL}//${org.slug}.rondevu.local:3000`,
         },
       });
     },

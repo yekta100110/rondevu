@@ -57,11 +57,11 @@ export async function handleWebhookScheduledTriggers(prisma: PrismaClient) {
     const headers: Record<string, string> = {
       "Content-Type":
         !job.payload || jsonParse(job.payload) ? "application/json" : "application/x-www-form-urlencoded",
-      "X-Cal-Webhook-Version": webhook?.version ?? DEFAULT_WEBHOOK_VERSION,
+      "X-Rondevu-Webhook-Version": webhook?.version ?? DEFAULT_WEBHOOK_VERSION,
     };
 
     if (webhook) {
-      headers["X-Cal-Signature-256"] = createWebhookSignature({ secret: webhook.secret, body: job.payload });
+      headers["X-Rondevu-Signature-256"] = createWebhookSignature({ secret: webhook.secret, body: job.payload });
     }
     fetchPromises.push(
       fetch(job.subscriberUrl, {

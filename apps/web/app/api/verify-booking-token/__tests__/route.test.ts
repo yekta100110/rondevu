@@ -77,8 +77,8 @@ function setMockRequestBody(body: Record<string, unknown>) {
   mockRequestBody = body;
 }
 
-// Vitest sets NEXT_PUBLIC_WEBAPP_URL to http://app.cal.local:3000 (see vitest.config.mts)
-const EXPECTED_REDIRECT_ORIGIN = "http://app.cal.local:3000";
+// Vitest sets NEXT_PUBLIC_WEBAPP_URL to http://app.rondevu.local:3000 (see vitest.config.mts)
+const EXPECTED_REDIRECT_ORIGIN = "http://app.rondevu.local:3000";
 
 function expectErrorRedirect(res: Response, path: string, error: string) {
   const location = res.headers.get("location");

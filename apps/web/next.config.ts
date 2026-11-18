@@ -44,7 +44,7 @@ function adjustEnvVariables(): void {
 adjustEnvVariables();
 
 if (!process.env.NEXTAUTH_SECRET) throw new Error("Please set NEXTAUTH_SECRET");
-if (!process.env.CALENDSO_ENCRYPTION_KEY) throw new Error("Please set CALENDSO_ENCRYPTION_KEY");
+if (!process.env.RONDEVU_ENCRYPTION_KEY) throw new Error("Please set RONDEVU_ENCRYPTION_KEY");
 
 const isOrganizationsEnabled =
   process.env.ORGANIZATIONS_ENABLED === "1" || process.env.ORGANIZATIONS_ENABLED === "true";
@@ -52,9 +52,9 @@ const isOrganizationsEnabled =
 // Type-safe way to assign to process.env (which is typed as readonly in environment.d.ts)
 const env = process.env as Record<string, string | undefined>;
 
-env.NEXT_PUBLIC_CALCOM_VERSION = version;
+env.NEXT_PUBLIC_RONDEVU_VERSION = version;
 
-if (process.env.NODE_ENV === "production" || process.env.CALCOM_ENV === "production") {
+if (process.env.NODE_ENV === "production" || process.env.RONDEVU_ENV === "production") {
   env.TRIGGER_VERSION = TRIGGER_VERSION;
 }
 
@@ -72,7 +72,7 @@ if (!process.env.NEXT_PUBLIC_WEBSITE_URL) {
 
 if (
   process.env.CSP_POLICY === "strict" &&
-  (process.env.CALCOM_ENV === "production" || process.env.NODE_ENV === "production")
+  (process.env.RONDEVU_ENV === "production" || process.env.NODE_ENV === "production")
 ) {
   throw new Error(
     "Strict CSP policy(for style-src) is not yet supported in production. You can experiment with it in Dev Mode"
@@ -446,7 +446,7 @@ const nextConfig = (phase: string): NextConfig => {
                     ...orgDomainMatcherConfig.root,
                     headers: [
                       {
-                        key: "X-Cal-Org-path",
+                        key: "X-Rondevu-Org-path",
                         value: `/team/${orgSlug}`,
                       },
                     ],
@@ -456,7 +456,7 @@ const nextConfig = (phase: string): NextConfig => {
                 ...orgDomainMatcherConfig.user,
                 headers: [
                   {
-                    key: "X-Cal-Org-path",
+                    key: "X-Rondevu-Org-path",
                     value: `/org/${orgSlug}/:user`,
                   },
                 ],
@@ -465,7 +465,7 @@ const nextConfig = (phase: string): NextConfig => {
                 ...orgDomainMatcherConfig.userType,
                 headers: [
                   {
-                    key: "X-Cal-Org-path",
+                    key: "X-Rondevu-Org-path",
                     value: `/org/${orgSlug}/:user/:type`,
                   },
                 ],
@@ -474,7 +474,7 @@ const nextConfig = (phase: string): NextConfig => {
                 ...orgDomainMatcherConfig.userTypeEmbed,
                 headers: [
                   {
-                    key: "X-Cal-Org-path",
+                    key: "X-Rondevu-Org-path",
                     value: `/org/${orgSlug}/:user/:type/embed`,
                   },
                 ],

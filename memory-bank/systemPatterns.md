@@ -63,8 +63,8 @@
 - **15-Day TTL Metadata**: Demo accounts are flagged with `isOutreachDemo: true`, `demoCreatedAt`, and `demoExpiresAt` (`+15 days`). Unclaimed demo accounts and their dependent records are purged automatically by a scheduled cleanup job after 15 days.
 - **Frictionless Claim via Password Reset**: Prospect accounts are created silently under the prospect's real email address. When the prospect likes their live demo page, they claim ownership via the **"Şifremi Unuttum" (Forgot Password)** flow and convert to a permanent account upon completing payment/subscription (clearing `isOutreachDemo`).
 
-### 5. De-Cal'ification & Modular Venture Studio Boundaries
-- **Progressive De-Cal'ification**: Enterprise/Organization/Team tiers and unused `packages/app-store` integrations are stripped from user-facing surfaces and progressively pruned from the codebase.
+### 5. De-Rondevu'ification & Modular Venture Studio Boundaries
+- **Progressive De-Rondevu'ification**: Enterprise/Organization/Team tiers and unused `packages/app-store` integrations are stripped from user-facing surfaces and progressively pruned from the codebase.
 - **Reusable Studio Primitives**: Auth, SMS/WhatsApp messaging transports, webhook signing/replay, and outreach demo provisioning are structured with clean module boundaries so they can be reused across sister SaaS products under the Umbrella Brand.
 
 ## Component Relationships

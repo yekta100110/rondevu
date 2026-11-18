@@ -19,7 +19,7 @@ describe("phoneVerification caching and replay protection", () => {
     delete process.env.TWILIO_SID;
     delete process.env.TWILIO_TOKEN;
     delete process.env.TWILIO_VERIFY_SID;
-    process.env.CALENDSO_ENCRYPTION_KEY = "test-encryption-key-for-totp";
+    process.env.RONDEVU_ENCRYPTION_KEY = "test-encryption-key-for-totp";
   });
 
   it("should successfully verify local TOTP and cache the result for replay in booking service", async () => {

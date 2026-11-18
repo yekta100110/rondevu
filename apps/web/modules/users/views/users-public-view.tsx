@@ -82,7 +82,7 @@ export function UserPage(props: PageProps) {
               />
               <h1
                 className={classNames(
-                  "font-cal text-emphasis mb-1 text-xl",
+                  "font-display text-emphasis mb-1 text-xl",
                   isOrg && user.profile.organization?.bannerUrl ? "" : "mt-4"
                 )}
                 data-testid="name-title">
@@ -130,7 +130,7 @@ export function UserPage(props: PageProps) {
                     eventType: type,
                   });
                 }}
-                className="bg-default border-subtle dark:bg-cal-muted dark:hover:bg-subtle hover:bg-cal-muted group relative border-b transition first:rounded-t-md last:rounded-b-md last:border-b-0"
+                className="bg-default border-subtle dark:bg-muted dark:hover:bg-subtle hover:bg-muted group relative border-b transition first:rounded-t-md last:rounded-b-md last:border-b-0"
                 data-testid="event-type-link">
                 <Icon
                   name="arrow-right"

@@ -70,8 +70,8 @@ describe("WebhookService", () => {
     vi.unstubAllGlobals();
   });
 
-  describe("X-Cal-Webhook-Version header", () => {
-    it("should include X-Cal-Webhook-Version header when sending webhook directly", async () => {
+  describe("X-Rondevu-Webhook-Version header", () => {
+    it("should include X-Rondevu-Webhook-Version header when sending webhook directly", async () => {
       const service = new WebhookService(
         mockRepository as unknown as IWebhookRepository,
         mockTasker as unknown as ITasker,
@@ -99,8 +99,8 @@ describe("WebhookService", () => {
       const [url, options] = mockFetch.mock.calls[0];
 
       expect(url).toBe("https://example.com/webhook");
-      expect(options.headers).toHaveProperty("X-Cal-Webhook-Version", "2021-10-20");
-      expect(options.headers).toHaveProperty("X-Cal-Signature-256");
+      expect(options.headers).toHaveProperty("X-Rondevu-Webhook-Version", "2021-10-20");
+      expect(options.headers).toHaveProperty("X-Rondevu-Signature-256");
       expect(options.headers).toHaveProperty("Content-Type", "application/json");
     });
 
@@ -146,7 +146,7 @@ describe("WebhookService", () => {
       // Check both calls have the version header
       mockFetch.mock.calls.forEach((call) => {
         const [, options] = call;
-        expect(options.headers).toHaveProperty("X-Cal-Webhook-Version", "2021-10-20");
+        expect(options.headers).toHaveProperty("X-Rondevu-Webhook-Version", "2021-10-20");
       });
     });
 

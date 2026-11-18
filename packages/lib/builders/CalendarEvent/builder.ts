@@ -2,7 +2,7 @@ import short from "short-uuid";
 import { v5 as uuidv5 } from "uuid";
 
 import dayjs from "@rondevu/dayjs";
-import { getRescheduleLink } from "@rondevu/lib/CalEventParser";
+import { getRescheduleLink } from "@rondevu/lib/RondevuEventParser";
 import { getTranslation } from "@rondevu/i18n/server";
 import prisma from "@rondevu/prisma";
 import type { Prisma } from "@rondevu/prisma/client";

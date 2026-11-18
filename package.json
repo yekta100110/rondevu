@@ -75,6 +75,7 @@
     "test:ui": "TZ=UTC vitest --ui",
     "type-check": "turbo run type-check",
     "type-check:ci": "turbo run type-check:ci --log-prefix=none",
+    "check:brand": "bash scripts/check-brand-residue.sh",
     "web": "yarn workspace @rondevu/web",
     "changesets-add": "yarn changeset add",
     "changesets-version": "yarn changeset version",

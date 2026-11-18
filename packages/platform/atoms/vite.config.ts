@@ -6,7 +6,7 @@ import dts from "vite-plugin-dts";
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), ""); // .env inside of packages/platform/atoms
   const webAppUrl = env.NEXT_PUBLIC_WEBAPP_URL ?? "https://rondevu.org";
-  const rondevuVersion = env.NEXT_PUBLIC_CALCOM_VERSION ?? "";
+  const rondevuVersion = env.NEXT_PUBLIC_RONDEVU_VERSION ?? "";
   const vercelCommitSha = env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA ?? "";
 
   return {
@@ -40,7 +40,7 @@ export default defineConfig(({ mode }) => {
     ],
     define: {
       "process.env.NEXT_PUBLIC_WEBAPP_URL": `"${webAppUrl}"`,
-      "process.env.NEXT_PUBLIC_CALCOM_VERSION": `"${rondevuVersion}"`,
+      "process.env.NEXT_PUBLIC_RONDEVU_VERSION": `"${rondevuVersion}"`,
       "process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA": `"${vercelCommitSha}"`,
       "process.env.NODE_ENV": `"${mode}"`,
       "process.env.__NEXT_ROUTER_BASEPATH": `""`,
@@ -56,7 +56,7 @@ export default defineConfig(({ mode }) => {
       lib: {
         entry: [resolve(__dirname, "index.ts")],
         name: "CalAtoms",
-        fileName: "cal-atoms",
+        fileName: "rondevu-atoms",
         formats: ["es"],
       },
       rollupOptions: {

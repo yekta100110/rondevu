@@ -190,18 +190,18 @@ const useGetBrandingColours = ({
 
   const theme = {
     light: {
-      "cal-brand": lightColourMap["500"],
-      "cal-brand-emphasis": lightColourMap["400"],
-      "cal-brand-subtle": lightColourMap["200"],
-      "cal-brand-text": getWCAGContrastColor(lightColourMap["500"]),
-      "cal-brand-accent": getWCAGContrastColor(lightColourMap["500"]),
+      "rondevu-brand": lightColourMap["500"],
+      "rondevu-brand-emphasis": lightColourMap["400"],
+      "rondevu-brand-subtle": lightColourMap["200"],
+      "rondevu-brand-text": getWCAGContrastColor(lightColourMap["500"]),
+      "rondevu-brand-accent": getWCAGContrastColor(lightColourMap["500"]),
     },
     dark: {
-      "cal-brand": darkColourMap["500"],
-      "cal-brand-emphasis": darkColourMap["600"],
-      "cal-brand-subtle": darkColourMap["800"],
-      "cal-brand-text": getWCAGContrastColor(darkColourMap["500"]),
-      "cal-brand-accent": getWCAGContrastColor(darkColourMap["500"]),
+      "rondevu-brand": darkColourMap["500"],
+      "rondevu-brand-emphasis": darkColourMap["600"],
+      "rondevu-brand-subtle": darkColourMap["800"],
+      "rondevu-brand-text": getWCAGContrastColor(darkColourMap["500"]),
+      "rondevu-brand-accent": getWCAGContrastColor(darkColourMap["500"]),
     },
   };
   return theme;

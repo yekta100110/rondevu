@@ -1848,7 +1848,7 @@ describe("CalendarEventBuilder", () => {
         references: [
           {
             type: "google_calendar",
-            uid: "google-cal-uid-123",
+            uid: "google-rondevu-uid-123",
             meetingId: null,
             meetingPassword: null,
             meetingUrl: null,

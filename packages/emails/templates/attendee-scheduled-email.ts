@@ -1,4 +1,4 @@
-import { getRichDescription } from "@rondevu/lib/CalEventParser";
+import { getRichDescription } from "@rondevu/lib/RondevuEventParser";
 import { getReplyToHeader } from "@rondevu/lib/getReplyToHeader";
 import { TimeFormat } from "@rondevu/lib/timeFormat";
 import type { CalendarEvent, Person } from "@rondevu/types/Calendar";

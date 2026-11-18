@@ -7,7 +7,7 @@ function getStyle() {
   <style>
     /* 
       Modal box is added as a child of the top-most element which is body(the container)
-      If the container has grid layout being used. Even if the cal-modal-box is visibility:hidden, it causes it to take up space in the grid layout
+      If the container has grid layout being used. Even if the rondevu-modal-box is visibility:hidden, it causes it to take up space in the grid layout
       It causes that space to keep on increasing as modal box is opened and closed repeatedly
       We set position:absolute to move it out of the regular flow of the grid layout
     */
@@ -57,7 +57,7 @@ function getStyle() {
     }
     /*Modal background is black only, so hardcode white */
     .loader {
-      --cal-brand:white;
+      --rondevu-brand:white;
     }
   </style>
       `;
@@ -86,7 +86,7 @@ ${getStyle()}
   <div class="header">
     <button type="button" class="close" aria-label="Close">&times;</button>
   </div>
-  <div id="message-container" style="left: 50%; top: 50%; transform: translate(-50%, -50%);" class="message-container flex items-center p-24 justify-center dark:bg-cal-muted rounded-md border-subtle border bg-default text-default  absolute z-highest">
+  <div id="message-container" style="left: 50%; top: 50%; transform: translate(-50%, -50%);" class="message-container flex items-center p-24 justify-center dark:bg-muted rounded-md border-subtle border bg-default text-default  absolute z-highest">
     <div id="message"></div>
   </div>
   <div class="modal-box">

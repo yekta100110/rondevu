@@ -10,4 +10,4 @@ export {
 
 export { FAKE_DAILY_CREDENTIAL } from "@rondevu/app-store/dailyvideo/lib/VideoApiAdapter";
 
-export type { CalMeetingParticipant, CalMeetingSession } from "@rondevu/app-store/dailyvideo/zod";
+export type { RondevuMeetingParticipant, RondevuMeetingSession } from "@rondevu/app-store/dailyvideo/zod";

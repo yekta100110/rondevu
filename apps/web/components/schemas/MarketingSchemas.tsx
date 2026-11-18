@@ -11,7 +11,7 @@ import type {
   WithContext,
 } from "schema-dts";
 
-import { APP_NAME, CAL_URL } from "@rondevu/lib/constants";
+import { APP_NAME, RONDEVU_URL } from "@rondevu/lib/constants";
 
 interface MarketingContactInfo {
   phone?: string;
@@ -92,7 +92,7 @@ const HOME_FAQ_EN: readonly FaqItem[] = [
 ];
 
 function getBaseUrl(): string {
-  return (CAL_URL || "https://rondevu.org").replace(/\/+$/, "");
+  return (RONDEVU_URL || "https://rondevu.org").replace(/\/+$/, "");
 }
 
 function normalizeTelephone(rawPhone?: string): string {

@@ -93,8 +93,8 @@ const createMockRequest = (url: string): NextRequest => {
   } as unknown as NextRequest;
 };
 
-// Vitest sets NEXT_PUBLIC_WEBAPP_URL to http://app.cal.local:3000 (see vitest.config.mts)
-const EXPECTED_REDIRECT_ORIGIN = "http://app.cal.local:3000";
+// Vitest sets NEXT_PUBLIC_WEBAPP_URL to http://app.rondevu.local:3000 (see vitest.config.mts)
+const EXPECTED_REDIRECT_ORIGIN = "http://app.rondevu.local:3000";
 
 describe("link route", () => {
   beforeEach(() => {

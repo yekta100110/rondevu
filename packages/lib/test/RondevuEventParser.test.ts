@@ -6,7 +6,7 @@ import {
   getPublicVideoCallUrl,
   getVideoCallPassword,
   getVideoCallUrlFromCalEvent,
-} from "../CalEventParser";
+} from "../RondevuEventParser";
 import { buildCalendarEvent, buildVideoCallData } from "./builder";
 
 vi.mock("@rondevu/lib/constants", () => ({

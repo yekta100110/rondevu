@@ -48,6 +48,6 @@ When a feature requires operational or technical documentation:
 ## Change Discipline
 
 Keep changes focused and verifiable:
-- Align with rOndevu's **De-Cal'ification** and modular Venture Studio architecture
+- Align with rOndevu's **De-Rondevu'ification** and modular Venture Studio architecture
 - Avoid introducing unused `app-store` or enterprise bloat
 - Validate with `yarn biome check`, `Vitest`, and TypeScript checks before marking complete

@@ -208,7 +208,7 @@ const ChooseEmbedTypesDialogContent = ({
   return (
     <DialogContent className="rounded-lg p-10" type="creation" size="lg">
       <div className="mb-2">
-        <h3 className="font-cal text-emphasis mb-2 text-2xl font-semibold leading-none" id="modal-title">
+        <h3 className="font-display text-emphasis mb-2 text-2xl font-semibold leading-none" id="modal-title">
           {t("how_you_want_add_cal_site", { appName: APP_NAME })}
         </h3>
         <div>
@@ -218,7 +218,7 @@ const ChooseEmbedTypesDialogContent = ({
       <div className="items-start stack-y-2 md:flex md:stack-y-0">
         {types.map((embed, index) => (
           <button
-            className="hover:bg-subtle bg-cal-muted	w-full self-stretch rounded-md border border-transparent p-6 text-left transition hover:rounded-md ltr:mr-4 ltr:last:mr-0 rtl:ml-4 rtl:last:ml-0 lg:w-1/3"
+            className="hover:bg-subtle bg-muted	w-full self-stretch rounded-md border border-transparent p-6 text-left transition hover:rounded-md ltr:mr-4 ltr:last:mr-0 rtl:ml-4 rtl:last:ml-0 lg:w-1/3"
             key={index}
             data-testid={embed.type}
             onClick={() => {
@@ -474,7 +474,7 @@ const EmailEmbedPreview = ({
   username,
   month,
   selectedDateAndTime,
-  calLink,
+  rondevuLink,
   selectedDuration,
   userSettingsTimezone,
 }: {
@@ -484,7 +484,7 @@ const EmailEmbedPreview = ({
   username?: string;
   month?: string;
   selectedDateAndTime: { [key: string]: string[] };
-  calLink: string;
+  rondevuLink: string;
   selectedDuration: number | undefined;
   userSettingsTimezone?: string;
 }) => {
@@ -666,7 +666,7 @@ const EmailEmbedPreview = ({
                 <a
                   className="more"
                   data-testid="see_all_available_times"
-                  href={`${eventType.bookerUrl}/${calLink}?cal.tz=${timezone}`}
+                  href={`${eventType.bookerUrl}/${rondevuLink}?cal.tz=${timezone}`}
                   style={{
                     textDecoration: "none",
                     cursor: "pointer",
@@ -728,7 +728,7 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
   const embedParams = useEmbedParams(noQueryParamMode);
   const eventId = embedParams.eventId;
   const parsedEventId = parseInt(eventId ?? "", 10);
-  const calLink = decodeURIComponent(embedUrl);
+  const rondevuLink = decodeURIComponent(embedUrl);
   const { data: eventTypeData } = trpc.viewer.eventTypes.get.useQuery(
     { id: parsedEventId },
     {
@@ -847,7 +847,7 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
   const previewInstruction = (instruction: { name: string; arg: unknown }) => {
     iframeRef.current?.contentWindow?.postMessage(
       {
-        mode: "cal:preview",
+        mode: "rondevu:preview",
         type: "instruction",
         instruction,
       },
@@ -858,7 +858,7 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
   const inlineEmbedDimensionUpdate = ({ width, height }: { width: string; height: string }) => {
     iframeRef.current?.contentWindow?.postMessage(
       {
-        mode: "cal:preview",
+        mode: "rondevu:preview",
         type: "inlineEmbedDimensionUpdate",
         data: {
           width: getDimension(width),
@@ -949,7 +949,7 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
       className="rounded-lg p-0.5 sm:max-w-7xl!"
       type="creation">
       <div className="flex">
-        <div className="bg-cal-muted flex h-[95vh] w-1/3 flex-col overflow-y-auto p-8">
+        <div className="bg-muted flex h-[95vh] w-1/3 flex-col overflow-y-auto p-8">
           <h3
             className="text-emphasis mb-2.5 flex items-center text-xl font-semibold leading-5"
             id="modal-title">
@@ -1310,7 +1310,7 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
                         <tab.Component
                           namespace={namespace}
                           embedType={embedType}
-                          calLink={calLink}
+                          rondevuLink={rondevuLink}
                           previewState={previewState}
                           ref={refOfEmbedCodesRefs.current[tab.name]}
                         />
@@ -1329,7 +1329,7 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
                     <div className="flex h-[55vh] grow flex-col">
                       <EmailEmbedPreview
                         selectedDuration={selectedDuration}
-                        calLink={calLink}
+                        rondevuLink={rondevuLink}
                         eventType={eventTypeData?.eventType}
                         emailContentRef={emailContentRef}
                         username={teamSlug ?? (data?.user.username as string)}
@@ -1352,7 +1352,7 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
                   <previewTab.Component
                     namespace={namespace}
                     embedType={embedType}
-                    calLink={calLink}
+                    rondevuLink={rondevuLink}
                     previewState={previewState}
                     ref={iframeRef}
                   />

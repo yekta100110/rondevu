@@ -1,1 +1,1 @@
-export const CALCOM_ATOMS_WRAPPER_CLASS = "rondevu-atoms";
+export const RONDEVU_ATOMS_WRAPPER_CLASS = "rondevu-atoms";

@@ -85,8 +85,8 @@ export async function POST(request: Request) {
       platform: true,
       headers: {
         "Content-Type": "application/json",
-        "X-Cal-Signature-256": createHmac("sha256", delivery.webhook.secret).update(body).digest("hex"),
-        "X-Cal-Webhook-Version": delivery.webhook.version,
+        "X-Rondevu-Signature-256": createHmac("sha256", delivery.webhook.secret).update(body).digest("hex"),
+        "X-Rondevu-Webhook-Version": delivery.webhook.version,
         "X-Rondevu-Event-Id": delivery.eventId,
         "X-Rondevu-Timestamp": sentAt,
         "X-Rondevu-Ingress-Key": process.env.RONDEVU_N8N_INGRESS_KEY,

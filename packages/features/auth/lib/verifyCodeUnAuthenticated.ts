@@ -26,7 +26,7 @@ export const verifyCodeUnAuthenticated = async (email: string, code: string) => 
   }
 
   const secret = createHash("md5")
-    .update(email + (process.env.CALENDSO_ENCRYPTION_KEY || ""))
+    .update(email + (process.env.RONDEVU_ENCRYPTION_KEY || ""))
     .digest("hex");
 
   const isValidToken = totpRawCheck(code, secret, { step: 900 });

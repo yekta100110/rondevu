@@ -77,9 +77,9 @@ function getDailyVideoRegionFromEnv(): RoomGeo | undefined {
 }
 
 const isS3StorageEnabled =
-  process.env.CAL_VIDEO_BUCKET_NAME &&
-  process.env.CAL_VIDEO_BUCKET_REGION &&
-  process.env.CAL_VIDEO_ASSUME_ROLE_ARN;
+  process.env.RONDEVU_VIDEO_BUCKET_NAME &&
+  process.env.RONDEVU_VIDEO_BUCKET_REGION &&
+  process.env.RONDEVU_VIDEO_ASSUME_ROLE_ARN;
 
 /** @deprecated use metadata on index file */
 export const FAKE_DAILY_CREDENTIAL: CredentialForCalendarService & { invalid: boolean } = {
@@ -297,9 +297,9 @@ const DailyVideoApiAdapter = (): VideoApiAdapter => {
         ...(!!enableRecording &&
           isS3StorageEnabled && {
             recordings_bucket: {
-              bucket_name: process.env.CAL_VIDEO_BUCKET_NAME,
-              bucket_region: process.env.CAL_VIDEO_BUCKET_REGION,
-              assume_role_arn: process.env.CAL_VIDEO_ASSUME_ROLE_ARN,
+              bucket_name: process.env.RONDEVU_VIDEO_BUCKET_NAME,
+              bucket_region: process.env.RONDEVU_VIDEO_BUCKET_REGION,
+              assume_role_arn: process.env.RONDEVU_VIDEO_ASSUME_ROLE_ARN,
               allow_api_access: true,
               allow_streaming_from_bucket: false,
             },
@@ -313,9 +313,9 @@ const DailyVideoApiAdapter = (): VideoApiAdapter => {
         ...(isTranscriptionEnabled &&
           isS3StorageEnabled && {
             transcription_bucket: {
-              bucket_name: process.env.CAL_VIDEO_BUCKET_NAME,
-              bucket_region: process.env.CAL_VIDEO_BUCKET_REGION,
-              assume_role_arn: process.env.CAL_VIDEO_ASSUME_ROLE_ARN,
+              bucket_name: process.env.RONDEVU_VIDEO_BUCKET_NAME,
+              bucket_region: process.env.RONDEVU_VIDEO_BUCKET_REGION,
+              assume_role_arn: process.env.RONDEVU_VIDEO_ASSUME_ROLE_ARN,
               allow_api_access: true,
             },
           }),
@@ -346,9 +346,9 @@ const DailyVideoApiAdapter = (): VideoApiAdapter => {
         ...(!!enableRecording &&
           isS3StorageEnabled && {
             recordings_bucket: {
-              bucket_name: process.env.CAL_VIDEO_BUCKET_NAME,
-              bucket_region: process.env.CAL_VIDEO_BUCKET_REGION,
-              assume_role_arn: process.env.CAL_VIDEO_ASSUME_ROLE_ARN,
+              bucket_name: process.env.RONDEVU_VIDEO_BUCKET_NAME,
+              bucket_region: process.env.RONDEVU_VIDEO_BUCKET_REGION,
+              assume_role_arn: process.env.RONDEVU_VIDEO_ASSUME_ROLE_ARN,
               allow_api_access: true,
               allow_streaming_from_bucket: false,
             },
@@ -361,9 +361,9 @@ const DailyVideoApiAdapter = (): VideoApiAdapter => {
               canAdmin: ["transcription"],
             },
             transcription_bucket: {
-              bucket_name: process.env.CAL_VIDEO_BUCKET_NAME,
-              bucket_region: process.env.CAL_VIDEO_BUCKET_REGION,
-              assume_role_arn: process.env.CAL_VIDEO_ASSUME_ROLE_ARN,
+              bucket_name: process.env.RONDEVU_VIDEO_BUCKET_NAME,
+              bucket_region: process.env.RONDEVU_VIDEO_BUCKET_REGION,
+              assume_role_arn: process.env.RONDEVU_VIDEO_ASSUME_ROLE_ARN,
               allow_api_access: true,
             },
           }),

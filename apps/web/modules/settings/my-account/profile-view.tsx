@@ -734,7 +734,7 @@ const ProfileForm = ({
             </div>
           </div>
         )}
-        {/* // For Non-Cal identities, we merge the values from DB and the user logging in,
+        {/* // For Non-Rondevu identities, we merge the values from DB and the user logging in,
         so essentially there's no point in allowing them to disconnect, since when they log in they will get logged into the same account */}
         {!isCALIdentityProvider && user.email !== user.identityProviderEmail && (
           <div className="mt-6">

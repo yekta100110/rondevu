@@ -48,13 +48,13 @@ Status:
 
 
 ## Prerendering vs Preloading
-- Preloading loads the calLink in iframe with the sole purpose of preloading the static assets, so that when the embed actually opens, it uses the static assets from browser cache.
+- Preloading loads the rondevuLink in iframe with the sole purpose of preloading the static assets, so that when the embed actually opens, it uses the static assets from browser cache.
 - Prerendering means continuing over the preloaded iframe, so that the user books on the prerendered iframe only. So, it is much more complex than preloading and gives much more benefits in terms of performance.
 Note: API wise `prerender` delegates its task to `preload` API which then identifies whether to preload or prerender.
 
 
 ## Modalbox re-opening performance optimization
-- ModalBox supports reusing the same cal-modal-box element and thus same iframe and thus providing a lightning fast experience when the same modal is opened multiple times [This feature is currently disabled in code because of stale booking page UI issues]
+- ModalBox supports reusing the same rondevu-modal-box element and thus same iframe and thus providing a lightning fast experience when the same modal is opened multiple times [This feature is currently disabled in code because of stale booking page UI issues]
 
 ## Embed Core Architecture and Features
 
@@ -63,8 +63,8 @@ Note: API wise `prerender` delegates its task to `preload` API which then identi
 #### Initialization and Bootstrap Process
 The embed system initializes through a multi-step process:
 1. The embed script is loaded on the parent page
-2. It creates a global `Cal` object that acts as the entry point
-3. The system initializes necessary custom elements (`cal-modal-box`, `cal-floating-button`, `cal-inline`)
+2. It creates a global `Rondevu` object that acts as the entry point
+3. The system initializes necessary custom elements (`rondevu-modal-box`, `rondevu-floating-button`, `rondevu-inline`)
 4. A namespace-based action manager is created for event handling
 
 #### Parent-Iframe Communication System
@@ -107,17 +107,17 @@ if (!this.iframeReady) {
 #### Inline Embedding
 Embeds the calendar directly within the page flow:
 ```typescript
-Cal.inline({
-  elementOrSelector: "#my-cal-inline",
-  calLink: "organization/event-type"
+Rondevu.inline({
+  elementOrSelector: "#my-rondevu-inline",
+  rondevuLink: "organization/event-type"
 });
 ```
 
 #### Modal Embedding
 Creates a modal dialog with the calendar:
 ```typescript
-Cal.modal({
-  calLink: "organization/event-type",
+Rondevu.modal({
+  rondevuLink: "organization/event-type",
   config: {
     // Optional configuration
     useSlotsViewOnSmallScreen: "true"
@@ -128,8 +128,8 @@ Cal.modal({
 #### FloatingButton Embedding
 Adds a floating action button that opens the calendar in a modal. It uses modal embedding under the hood.
 ```typescript
-Cal.floatingButton({
-  calLink: "organization/event-type",
+Rondevu.floatingButton({
+  rondevuLink: "organization/event-type",
   buttonText: "Book meeting",
   buttonPosition: "bottom-right"
 });
@@ -140,8 +140,8 @@ Cal.floatingButton({
 #### Prefill System
 Allows pre-filling form fields:
 ```typescript
-Cal.inline({
-  calLink: "organization/event-type",
+Rondevu.inline({
+  rondevuLink: "organization/event-type",
   config: {
     name: "John Doe",
     email: "john@example.com",
@@ -154,8 +154,8 @@ Cal.inline({
 #### Query Parameter Handling
 The system allows automatically forwarding query params to the iframe, by setting. This code must be present right after the embed snippet is added to the page.
 ```js
-Cal.config = Cal.config || {};
-Cal.config.forwardQueryParams=true
+Rondevu.config = Rondevu.config || {};
+Rondevu.config.forwardQueryParams=true
 ```
 
 #### Enabling Logging
@@ -168,8 +168,8 @@ For example, if your page is `https.example.com/contact`, you can enable logging
 #### Routing Prerendering System
 The prerendering system optimizes the initial load:
 ```typescript
-Cal("prerender", {
-  calLink,
+Rondevu("prerender", {
+  rondevuLink,
   type: "modal"
 });
 ```
@@ -212,8 +212,8 @@ Modal's Iframe Reuse and Reload Conditions. There could be four situations:
 **Without namespace:**
 Prerender when there are high chances of user clicking the CTA.
 ```js
-Cal('prerender', {
-  calLink: "router?formId=123&ONLY_THOSE_FIELDS_THAT_ARE_REQUIRED_BY_ROUTING_RULES_SHOULD_BE_PRESENT_HERE",
+Rondevu('prerender', {
+  rondevuLink: "router?formId=123&ONLY_THOSE_FIELDS_THAT_ARE_REQUIRED_BY_ROUTING_RULES_SHOULD_BE_PRESENT_HERE",
   // Prerender right now works only with "modal", so 'element click' embed is able to reuse this prerendered iframe
   type: "modal",
   // Shows skeleton loader for a Team Event's booking slots page
@@ -222,14 +222,14 @@ Cal('prerender', {
 ```
 Using the prerendered iframe with a CTA:
 ```js
-<button data-cal-link="router?formId=123&ALL_FIELDS_HERE">Demo</button>
+<button data-rondevu-link="router?formId=123&ALL_FIELDS_HERE">Demo</button>
 ```
 
 **With namespace:**
 Prerender when there are high changes of user clicking the CTA.
 ```js
-Cal.ns.myNamespace('prerender', {
-  calLink: "router?formId=123&ONLY_THOSE_FIELDS_THAT_ARE_REQUIRED_BY_ROUTING_RULES_SHOULD_BE_PRESENT_HERE",
+Rondevu.ns.myNamespace('prerender', {
+  rondevuLink: "router?formId=123&ONLY_THOSE_FIELDS_THAT_ARE_REQUIRED_BY_ROUTING_RULES_SHOULD_BE_PRESENT_HERE",
   // Prerender right now works only with "modal", so 'element click' embed is able to reuse this prerendered iframe
   type: "modal"
   // Shows skeleton loader for a Team Event's booking slots page
@@ -238,5 +238,5 @@ Cal.ns.myNamespace('prerender', {
 ```
 Using the prerendered iframe with a CTA:
 ```js
-<button data-cal-namespace="myNamespace" data-cal-link="router?formId=123&ALL_FIELDS_HERE">Demo</button>
+<button data-rondevu-namespace="myNamespace" data-rondevu-link="router?formId=123&ALL_FIELDS_HERE">Demo</button>
 ```

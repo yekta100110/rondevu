@@ -553,7 +553,7 @@ export const DeploymentTheme = z
     bookingMedian: z.string().default("#494949"),
     bookingDark: z.string().default("#313131"),
     bookingDarker: z.string().default("#292929"),
-    fontName: z.string().default("Cal Sans"),
+    fontName: z.string().default("Rondevu Sans"),
     fontSrc: z.string().default("https://rondevu.org/cal.ttf"),
   })
   .optional();

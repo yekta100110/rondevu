@@ -8,7 +8,7 @@ vi.mock("@rondevu/lib/constants", async () => {
   const actual = (await vi.importActual("@rondevu/lib/constants")) as typeof import("@rondevu/lib/constants");
   return {
     ...actual,
-    CALCOM_VERSION: "mockedVersion",
+    RONDEVU_VERSION: "mockedVersion",
   };
 });
 
@@ -16,7 +16,7 @@ describe("Tests for Credits component", () => {
   test("Should render credits section with links", () => {
     render(<Credits />);
 
-    const creditsLinkElement = screen.getByRole("link", { name: /Cal\.com, Inc\./i });
+    const creditsLinkElement = screen.getByRole("link", { name: /Rondevu\.com, Inc\./i });
     expect(creditsLinkElement).toBeInTheDocument();
     expect(creditsLinkElement).toHaveAttribute("href", "https://go.rondevu.org/credits");
 

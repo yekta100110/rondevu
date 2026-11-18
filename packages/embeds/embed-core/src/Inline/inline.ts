@@ -34,7 +34,7 @@ export class Inline extends EmbedElement {
     super({ isModal: false, getSkeletonData });
     this.attachShadow({ mode: "open" });
     this.assertHasShadowRoot();
-    this.shadowRoot.innerHTML = `<style>${window.Cal.__css}</style><style>${loaderCss}</style>${inlineHtml({
+    this.shadowRoot.innerHTML = `<style>${window.Rondevu.__css}</style><style>${loaderCss}</style>${inlineHtml({
       layout: this.layout,
       pageType: this.getPageType() ?? null,
       externalThemeClass: this.themeClass

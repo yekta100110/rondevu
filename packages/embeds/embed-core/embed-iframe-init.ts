@@ -18,8 +18,8 @@ export default function EmbedInitIframe() {
   const embedNamespace =
     typeof embedNameSpaceFromQueryParam === "string"
       ? embedNameSpaceFromQueryParam
-      : window.name.includes("cal-embed=")
-      ? window.name.replace(/cal-embed=(.*)/, "$1").trim()
+      : window.name.includes("rondevu-embed=")
+      ? window.name.replace(/rondevu-embed=(.*)/, "$1").trim()
       : hasEmbedPath
       ? defaultNamespace // If query param is not there but /embed is used then assume default namespace.
       : null;
@@ -31,9 +31,9 @@ export default function EmbedInitIframe() {
 
   window.getEmbedTheme = () => {
     // Note that embedStore.theme is lost if hard navigation occurs.(Though, it isn't something that we expect to happen normally)
-    if (window.CalEmbed.embedStore.theme) {
+    if (window.RondevuEmbed.embedStore.theme) {
       // It is important to ensure that the theme is consistent during browsing so that ThemeProvider doesn't get different themes to show and it avoids theme switching.
-      return window.CalEmbed.embedStore.theme;
+      return window.RondevuEmbed.embedStore.theme;
     }
     const url = new URL(document.URL);
     return url.searchParams.get("theme") as EmbedThemeConfig | null;
@@ -43,9 +43,9 @@ export default function EmbedInitIframe() {
     return embedNamespace;
   };
 
-  window.CalEmbed = window.CalEmbed || {};
+  window.RondevuEmbed = window.RondevuEmbed || {};
 
-  window.CalEmbed.applyCssVars = (cssVarsPerTheme) => {
+  window.RondevuEmbed.applyCssVars = (cssVarsPerTheme) => {
     const cssVarsStyle = [];
     if (cssVarsPerTheme) {
       for (const [themeName, cssVars] of Object.entries(cssVarsPerTheme)) {

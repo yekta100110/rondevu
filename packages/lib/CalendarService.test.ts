@@ -35,7 +35,7 @@ vi.mock("@rondevu/lib/crypto", () => ({
   }),
 }));
 
-vi.mock("./CalEventParser", () => ({
+vi.mock("./RondevuEventParser", () => ({
   getLocation: vi.fn().mockReturnValue("Test Location"),
   getRichDescription: vi.fn().mockReturnValue("Test Description"),
 }));

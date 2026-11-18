@@ -4,7 +4,7 @@ import { IsEnum, ValidateNested, IsNumber, IsString, IsBoolean, IsArray } from "
 
 import { SUCCESS_STATUS, ERROR_STATUS } from "@rondevu/platform-constants";
 
-export class CalMeetingParticipant {
+export class RondevuMeetingParticipant {
   @ApiProperty({ example: "user123", nullable: true })
   @IsString()
   userId!: string | null;
@@ -22,7 +22,7 @@ export class CalMeetingParticipant {
   duration!: number;
 }
 
-export class CalMeetingSession {
+export class RondevuMeetingSession {
   @ApiProperty({ example: "session123" })
   @IsString()
   id!: string;
@@ -47,11 +47,11 @@ export class CalMeetingSession {
   @IsNumber()
   maxParticipants!: number;
 
-  @ApiProperty({ type: [CalMeetingParticipant] })
+  @ApiProperty({ type: [RondevuMeetingParticipant] })
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => CalMeetingParticipant)
-  participants!: CalMeetingParticipant[];
+  @Type(() => RondevuMeetingParticipant)
+  participants!: RondevuMeetingParticipant[];
 }
 
 export class GetBookingVideoSessionsOutput {
@@ -61,8 +61,8 @@ export class GetBookingVideoSessionsOutput {
 
   error?: Error;
 
-  @ApiProperty({ type: [CalMeetingSession] })
+  @ApiProperty({ type: [RondevuMeetingSession] })
   @ValidateNested({ each: true })
-  @Type(() => CalMeetingSession)
-  data!: CalMeetingSession[];
+  @Type(() => RondevuMeetingSession)
+  data!: RondevuMeetingSession[];
 }

@@ -5,7 +5,7 @@ export interface RecentImpersonation {
   timestamp: number;
 }
 
-const STORAGE_KEY = "cal-recent-impersonations";
+const STORAGE_KEY = "rondevu-recent-impersonations";
 const MAX_RECENT = 5;
 
 export function getRecentImpersonations(): RecentImpersonation[] {

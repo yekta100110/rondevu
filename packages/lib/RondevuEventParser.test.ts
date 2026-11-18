@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 
 import type { CalendarEvent } from "@rondevu/types/Calendar";
 
-import { getRichDescription, getUserFieldsResponses } from "./CalEventParser";
+import { getRichDescription, getUserFieldsResponses } from "./RondevuEventParser";
 
 describe("getRichDescription", () => {
   const t = ((key: string, _args?: Record<string, unknown>) => key) as TFunction;

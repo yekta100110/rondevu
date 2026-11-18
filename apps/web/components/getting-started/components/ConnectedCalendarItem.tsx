@@ -29,7 +29,7 @@ const ConnectedCalendarItem = (prop: IConnectedCalendarItem): JSX.Element => {
           <p className="font-bold font-sans text-sm leading-5">
             {name}
             {/* Temporarily removed till we use it on another place */}
-            {/* <span className="mx-1 rounded-[4px] bg-cal-success py-[2px] px-[6px] font-sans text-xs font-medium text-green-600">
+            {/* <span className="mx-1 rounded-[4px] bg-rondevu-success py-[2px] px-[6px] font-sans text-xs font-medium text-green-600">
               {t("default")}
             </span> */}
           </p>

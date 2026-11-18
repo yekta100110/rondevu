@@ -172,7 +172,7 @@ export function PlanBilgiView({ initialContact, initialLocale = "tr" }: PlanBilg
                     : `Tek Fiyata Premium Erişim · ${isYearly ? "Yıllık Ödeme" : "Aylık Ödeme"}`}
                 </span>
               </div>
-              <h1 className="font-bold font-cal text-3xl text-emphasis tracking-tight sm:text-4xl">
+              <h1 className="font-bold font-display text-3xl text-emphasis tracking-tight sm:text-4xl">
                 {isEn ? "Account Activation" : "Hesap Aktivasyonu"}
               </h1>
               <p className="mt-3 text-base text-subtle leading-relaxed">

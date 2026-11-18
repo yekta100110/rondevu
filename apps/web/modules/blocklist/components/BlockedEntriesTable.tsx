@@ -6,7 +6,7 @@ import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
 
 import { DataTableSelectionBar, DataTableWrapper } from "@rondevu/web/modules/data-table/components";
-import { IS_CALCOM } from "@rondevu/lib/constants";
+import { IS_RONDEVU } from "@rondevu/lib/constants";
 import { useLocale } from "@rondevu/lib/hooks/useLocale";
 import { Button } from "@rondevu/ui/components/button";
 import { ConfirmationDialogContent, Dialog } from "@rondevu/ui/components/dialog";
@@ -163,7 +163,7 @@ export function BlockedEntriesTable<T extends BlocklistEntry>({
                   disabled={!isSystem && !permissions?.canCreate}>
                   {t("add")}
                 </Button>
-                {IS_CALCOM && (
+                {IS_RONDEVU && (
                   <Button
                     StartIcon="book"
                     color="secondary"

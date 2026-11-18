@@ -246,7 +246,7 @@ export class ModalBox extends EmbedElement {
 
   constructor() {
     super({ isModal: true, getSkeletonData });
-    const modalHtml = `<style>${window.Cal.__css}</style><style>${loaderCss}</style>${modalBoxHtml({
+    const modalHtml = `<style>${window.Rondevu.__css}</style><style>${loaderCss}</style>${modalBoxHtml({
       layout: this.getLayout(),
       pageType: this.getPageType() ?? null,
       externalThemeClass: this.themeClass

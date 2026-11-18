@@ -380,8 +380,8 @@ describe("CredentialsProvider authorize", () => {
     });
 
     it("sets reason to 'password' when password is invalid and 2FA is enabled", async () => {
-      const originalKey = process.env.CALENDSO_ENCRYPTION_KEY;
-      process.env.CALENDSO_ENCRYPTION_KEY = "test";
+      const originalKey = process.env.RONDEVU_ENCRYPTION_KEY;
+      process.env.RONDEVU_ENCRYPTION_KEY = "test";
 
       try {
         const { isPasswordValid } = await import("@rondevu/lib/auth/isPasswordValid");
@@ -412,13 +412,13 @@ describe("CredentialsProvider authorize", () => {
         expect(result?.role).toBe("INACTIVE_ADMIN");
         expect(result?.inactiveAdminReason).toBe("password");
       } finally {
-        process.env.CALENDSO_ENCRYPTION_KEY = originalKey;
+        process.env.RONDEVU_ENCRYPTION_KEY = originalKey;
       }
     });
 
     it("does not set inactiveAdminReason when admin requirements are met", async () => {
-      const originalKey = process.env.CALENDSO_ENCRYPTION_KEY;
-      process.env.CALENDSO_ENCRYPTION_KEY = "test";
+      const originalKey = process.env.RONDEVU_ENCRYPTION_KEY;
+      process.env.RONDEVU_ENCRYPTION_KEY = "test";
 
       try {
         const { isPasswordValid } = await import("@rondevu/lib/auth/isPasswordValid");
@@ -449,7 +449,7 @@ describe("CredentialsProvider authorize", () => {
         expect(result?.role).toBe(UserPermissionRole.ADMIN);
         expect(result?.inactiveAdminReason).toBeUndefined();
       } finally {
-        process.env.CALENDSO_ENCRYPTION_KEY = originalKey;
+        process.env.RONDEVU_ENCRYPTION_KEY = originalKey;
       }
     });
   });
@@ -949,7 +949,7 @@ describe("Azure AD JWT callback", () => {
       mockCredentialRepoFindFirst.mockResolvedValue(null);
       globalThis.fetch = vi.fn().mockResolvedValue({
         ok: true,
-        json: () => Promise.resolve({ value: [{ id: "cal-id-1", isDefaultCalendar: true }] }),
+        json: () => Promise.resolve({ value: [{ id: "rondevu-id-1", isDefaultCalendar: true }] }),
       }) as unknown as typeof fetch;
 
       await jwtCallback({
@@ -1105,7 +1105,7 @@ describe("Azure AD JWT callback", () => {
           Promise.resolve({
             value: [
               { id: "non-default-cal", isDefaultCalendar: false },
-              { id: "default-cal-id", isDefaultCalendar: true },
+              { id: "default-rondevu-id", isDefaultCalendar: true },
             ],
           }),
       }) as unknown as typeof fetch;
@@ -1127,7 +1127,7 @@ describe("Azure AD JWT callback", () => {
       expect(mockPrismaSelectedCalendarCreate).toHaveBeenCalledWith({
         data: expect.objectContaining({
           integration: "office365_calendar",
-          externalId: "default-cal-id",
+          externalId: "default-rondevu-id",
           credentialId: 77,
         }),
       });

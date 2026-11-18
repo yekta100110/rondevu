@@ -1,16 +1,16 @@
 import type { EmbedEvent, GlobalCal } from "../../src/embed";
 
-const Cal = window.Cal as GlobalCal;
-Cal.config = Cal.config || {};
-Cal.config.forwardQueryParams = true;
+const Rondevu = window.Rondevu as GlobalCal;
+Rondevu.config = Rondevu.config || {};
+Rondevu.config.forwardQueryParams = true;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const callback = (e: any) => {
   const detail = e.detail;
 };
 
-// @ts-expect-error  window.calOrigin is set in index.html
-const origin = `${new URL(document.URL).protocol}//${window.calOrigin.split("//")[1]}`;
+// @ts-expect-error  window.rondevuOrigin is set in index.html
+const origin = `${new URL(document.URL).protocol}//${window.rondevuOrigin.split("//")[1]}`;
 document.addEventListener("click", (e) => {
   const target = e.target as HTMLElement;
   if ("href" in target && typeof target.href === "string") {
@@ -43,7 +43,7 @@ if (themeInParam && !theme) {
   throw new Error(`Invalid theme: ${themeInParam}`);
 }
 
-const calLink = searchParams.get("cal-link");
+const rondevuLink = searchParams.get("rondevu-link");
 
 function fakeEvent({ namespace, eventType, data }) {
   window.postMessage({
@@ -56,30 +56,30 @@ function fakeEvent({ namespace, eventType, data }) {
 }
 
 window.heavilyCustomizeUi = ({ namespace }) => {
-  Cal.ns[namespace]("ui", {
+  Rondevu.ns[namespace]("ui", {
     theme: "light",
     cssVarsPerTheme: {
       light: {
-        "cal-brand": "#6F61C0",
-        "cal-text": "#6F61C0",
-        "cal-text-emphasis": "#4D408D",
-        "cal-border-emphasis": "#4D408D",
-        "cal-text-error": "pink",
-        "cal-border": "#A090E0",
-        "cal-border-default": "#A090E0",
-        "cal-border-subtle": "#A090E0",
-        "cal-border-booker": "red",
-        "cal-text-muted": "#C0B8FF",
-        "cal-bg-emphasis": "#E1DFFF",
-        "cal-border-booker-width": "3px",
-        "cal-radius": "1px",
-        "cal-radius-md": "2px",
-        "cal-radius-lg": "3px",
-        "cal-radius-xl": "4px",
-        "cal-radius-2xl": "5px",
-        "cal-radius-3xl": "6px",
-        "cal-radius-full": "7px",
-        "cal-spacing-px": "5px",
+        "rondevu-brand": "#6F61C0",
+        "rondevu-text": "#6F61C0",
+        "rondevu-text-emphasis": "#4D408D",
+        "rondevu-border-emphasis": "#4D408D",
+        "rondevu-text-error": "pink",
+        "rondevu-border": "#A090E0",
+        "rondevu-border-default": "#A090E0",
+        "rondevu-border-subtle": "#A090E0",
+        "rondevu-border-booker": "red",
+        "rondevu-text-muted": "#C0B8FF",
+        "rondevu-bg-emphasis": "#E1DFFF",
+        "rondevu-border-booker-width": "3px",
+        "rondevu-radius": "1px",
+        "rondevu-radius-md": "2px",
+        "rondevu-radius-lg": "3px",
+        "rondevu-radius-xl": "4px",
+        "rondevu-radius-2xl": "5px",
+        "rondevu-radius-3xl": "6px",
+        "rondevu-radius-full": "7px",
+        "rondevu-spacing-px": "5px",
         // More CSS variables are defined here
         // https://github.com/yekta100110/rOndevu/blob/main/packages/config/tailwind-preset.js
       },
@@ -99,17 +99,17 @@ window.fakeErrorScenario = ({ namespace }) => {
 };
 
 if (only === "all" || only === "ns:default") {
-  Cal("init", {
+  Rondevu("init", {
     debug: true,
-    calOrigin: origin,
+    rondevuOrigin: origin,
   });
 
-  Cal("inline", {
-    elementOrSelector: "#cal-booking-place-default .place",
-    calLink: "pro?case=1",
+  Rondevu("inline", {
+    elementOrSelector: "#rondevu-booking-place-default .place",
+    rondevuLink: "pro?case=1",
     config: {
       iframeAttrs: {
-        id: "cal-booking-place-default-iframe",
+        id: "rondevu-booking-place-default-iframe",
       },
       name: "John",
       email: "johndoe@gmail.com",
@@ -118,57 +118,57 @@ if (only === "all" || only === "ns:default") {
       "flag.coep": "true",
     },
   });
-  Cal("on", {
+  Rondevu("on", {
     action: "*",
     callback,
   });
 }
 if (only === "all" || only === "ns:second") {
-  // Create a namespace "second". It can be accessed as Cal.ns.second with the exact same API as Cal
-  Cal("init", "second", {
+  // Create a namespace "second". It can be accessed as Rondevu.ns.second with the exact same API as Rondevu
+  Rondevu("init", "second", {
     debug: true,
     origin: origin,
   });
 
-  Cal.ns.second(
+  Rondevu.ns.second(
     "inline",
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-expect-error
     {
-      elementOrSelector: "#cal-booking-place-second .place",
-      calLink: "pro?case=2",
+      elementOrSelector: "#rondevu-booking-place-second .place",
+      rondevuLink: "pro?case=2",
       config: {
         iframeAttrs: {
-          id: "cal-booking-place-second-iframe",
+          id: "rondevu-booking-place-second-iframe",
         },
         theme: "auto",
         "flag.coep": "true",
       },
     }
   );
-  Cal.ns.second("on", {
+  Rondevu.ns.second("on", {
     action: "*",
     callback,
   });
 }
 if (only === "all" || only === "ns:third") {
-  // Create a namespace "third". It can be accessed as Cal.ns.second with the exact same API as Cal
-  Cal("init", "third", {
+  // Create a namespace "third". It can be accessed as Rondevu.ns.second with the exact same API as Rondevu
+  Rondevu("init", "third", {
     debug: true,
     origin: origin,
   });
 
-  Cal.ns.third(
+  Rondevu.ns.third(
     [
       "inline",
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-expect-error
       {
-        elementOrSelector: "#cal-booking-place-third .place",
-        calLink: "pro/30min",
+        elementOrSelector: "#rondevu-booking-place-third .place",
+        rondevuLink: "pro/30min",
         config: {
           iframeAttrs: {
-            id: "cal-booking-place-third-iframe",
+            id: "rondevu-booking-place-third-iframe",
           },
           "flag.coep": "true",
         },
@@ -199,27 +199,27 @@ if (only === "all" || only === "ns:third") {
       },
     ]
   );
-  Cal.ns.third("on", {
+  Rondevu.ns.third("on", {
     action: "*",
     callback,
   });
 }
 if (only === "all" || only === "ns:fourth") {
-  Cal("init", "fourth", {
+  Rondevu("init", "fourth", {
     debug: true,
     origin: origin,
   });
-  Cal.ns.fourth(
+  Rondevu.ns.fourth(
     [
       "inline",
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-expect-error
       {
-        elementOrSelector: "#cal-booking-place-fourth .place",
-        calLink: "team/seeded-team",
+        elementOrSelector: "#rondevu-booking-place-fourth .place",
+        rondevuLink: "team/seeded-team",
         config: {
           iframeAttrs: {
-            id: "cal-booking-place-fourth-iframe",
+            id: "rondevu-booking-place-fourth-iframe",
           },
           "flag.coep": "true",
         },
@@ -244,27 +244,27 @@ if (only === "all" || only === "ns:fourth") {
       },
     ]
   );
-  Cal.ns.fourth("on", {
+  Rondevu.ns.fourth("on", {
     action: "*",
     callback,
   });
 }
 
 if (only === "all" || only === "ns:corpTest") {
-  Cal("init", "corpTest", {
+  Rondevu("init", "corpTest", {
     debug: true,
     origin: "http://localhost:3000",
   });
-  Cal.ns.corpTest([
+  Rondevu.ns.corpTest([
     "inline",
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-expect-error
     {
-      elementOrSelector: "#cal-booking-place-corpTest .place",
-      calLink: "pro",
+      elementOrSelector: "#rondevu-booking-place-corpTest .place",
+      rondevuLink: "pro",
       config: {
         iframeAttrs: {
-          id: "cal-booking-place-corpTest-iframe",
+          id: "rondevu-booking-place-corpTest-iframe",
         },
         "flag.coep": "false",
       },
@@ -272,70 +272,70 @@ if (only === "all" || only === "ns:corpTest") {
   ]);
 }
 if (only === "all" || only === "ns:fifth") {
-  Cal("init", "fifth", {
+  Rondevu("init", "fifth", {
     debug: true,
     origin: origin,
   });
-  Cal.ns.fifth([
+  Rondevu.ns.fifth([
     "inline",
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-expect-error
     {
-      elementOrSelector: "#cal-booking-place-fifth .place",
-      calLink: "team/seeded-team/collective-seeded-team-event",
+      elementOrSelector: "#rondevu-booking-place-fifth .place",
+      rondevuLink: "team/seeded-team/collective-seeded-team-event",
       config: {
         iframeAttrs: {
-          id: "cal-booking-place-fifth-iframe",
+          id: "rondevu-booking-place-fifth-iframe",
         },
         "flag.coep": "true",
       },
     },
   ]);
-  Cal.ns.fifth("on", {
+  Rondevu.ns.fifth("on", {
     action: "*",
     callback,
   });
 }
 
 if (only === "all" || only === "prerender-test") {
-  Cal("init", "e2ePrerenderLightTheme", {
+  Rondevu("init", "e2ePrerenderLightTheme", {
     debug: true,
     origin: origin,
   });
-  Cal.ns.e2ePrerenderLightTheme("prerender", {
-    calLink: "free/30min?flag.coep=true",
+  Rondevu.ns.e2ePrerenderLightTheme("prerender", {
+    rondevuLink: "free/30min?flag.coep=true",
     type: "modal",
   });
 }
 
 if (only === "all" || only === "preload-test") {
-  Cal("init", "preloadTest", {
+  Rondevu("init", "preloadTest", {
     debug: true,
     origin: origin,
   });
-  Cal.ns.preloadTest("preload", {
-    calLink: "free/30min",
+  Rondevu.ns.preloadTest("preload", {
+    rondevuLink: "free/30min",
   });
 }
 
 if (only === "all" || only === "ns:hideEventTypeDetails") {
   const identifier = "hideEventTypeDetails";
-  Cal("init", identifier, {
+  Rondevu("init", identifier, {
     debug: true,
     origin: origin,
   });
 
-  Cal.ns.hideEventTypeDetails(
+  Rondevu.ns.hideEventTypeDetails(
     [
       "inline",
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-expect-error
       {
-        elementOrSelector: `#cal-booking-place-${identifier} .place`,
-        calLink: "free/30min",
+        elementOrSelector: `#rondevu-booking-place-${identifier} .place`,
+        rondevuLink: "free/30min",
         config: {
           iframeAttrs: {
-            id: `cal-booking-place-${identifier}-iframe`,
+            id: `rondevu-booking-place-${identifier}-iframe`,
           },
           "flag.coep": "true",
         },
@@ -351,110 +351,110 @@ if (only === "all" || only === "ns:hideEventTypeDetails") {
 }
 
 if (only === "conflicting-theme") {
-  Cal("init", "conflictingTheme", {
+  Rondevu("init", "conflictingTheme", {
     debug: true,
     origin: origin,
   });
 
-  Cal.ns.conflictingTheme("inline", {
-    elementOrSelector: "#cal-booking-place-conflicting-theme .dark",
-    calLink: "pro/30min",
+  Rondevu.ns.conflictingTheme("inline", {
+    elementOrSelector: "#rondevu-booking-place-conflicting-theme .dark",
+    rondevuLink: "pro/30min",
     config: {
       theme: "dark",
     },
   });
-  Cal.ns.conflictingTheme("inline", {
-    elementOrSelector: "#cal-booking-place-conflicting-theme .light",
-    calLink: "pro/30min",
+  Rondevu.ns.conflictingTheme("inline", {
+    elementOrSelector: "#rondevu-booking-place-conflicting-theme .light",
+    rondevuLink: "pro/30min",
     config: {
       theme: "light",
     },
   });
 }
 
-Cal("init", "popupDarkTheme", {
+Rondevu("init", "popupDarkTheme", {
   debug: true,
   origin: origin,
 });
 
-Cal("init", "e2ePopupLightTheme", {
+Rondevu("init", "e2ePopupLightTheme", {
   debug: true,
   origin: origin,
 });
 
-Cal("init", "popupHideEventTypeDetails", {
+Rondevu("init", "popupHideEventTypeDetails", {
   debug: true,
   origin: origin,
 });
 
-Cal.ns.popupHideEventTypeDetails("ui", {
+Rondevu.ns.popupHideEventTypeDetails("ui", {
   hideEventTypeDetails: true,
 });
 
-Cal("init", "popupRescheduleWithReschedulePath", {
+Rondevu("init", "popupRescheduleWithReschedulePath", {
   debug: true,
   origin: origin,
 });
 
-Cal("init", "popupRescheduleWithRescheduleUidParam", {
+Rondevu("init", "popupRescheduleWithRescheduleUidParam", {
   debug: true,
   origin: origin,
 });
 
-Cal("init", "popupCancelBooking", {
+Rondevu("init", "popupCancelBooking", {
   debug: true,
   origin: origin,
 });
 
-Cal("init", "popupAutoTheme", {
+Rondevu("init", "popupAutoTheme", {
   debug: true,
   origin: origin,
 });
 
-Cal("init", "popupTeamLinkLightTheme", {
+Rondevu("init", "popupTeamLinkLightTheme", {
   debug: true,
   origin: origin,
 });
 
-Cal("init", "popupTeamLinkDarkTheme", {
+Rondevu("init", "popupTeamLinkDarkTheme", {
   debug: true,
   origin: origin,
 });
 
-Cal("init", "popupTeamLinkDarkTheme", {
+Rondevu("init", "popupTeamLinkDarkTheme", {
   debug: true,
   origin: origin,
 });
 
-Cal("init", "popupTeamLinksList", {
+Rondevu("init", "popupTeamLinksList", {
   debug: true,
   origin: origin,
 });
 
-Cal("init", "popupPaidEvent", {
+Rondevu("init", "popupPaidEvent", {
   debug: true,
   origin: origin,
 });
 
-Cal("init", "childElementTarget", {
+Rondevu("init", "childElementTarget", {
   debug: true,
   origin: origin,
 });
 
-Cal("init", "floatingButton", {
+Rondevu("init", "floatingButton", {
   debug: true,
   origin: origin,
 });
 
 if (only === "all" || only == "ns:floatingButton") {
   if (prerender == "true") {
-    Cal.ns.floatingButton("prerender", {
-      calLink: calLink || "pro",
+    Rondevu.ns.floatingButton("prerender", {
+      rondevuLink: rondevuLink || "pro",
       type: "floatingButton",
     });
   }
-  Cal.ns.floatingButton("floatingButton", {
-    calLink: calLink || "pro",
+  Rondevu.ns.floatingButton("floatingButton", {
+    rondevuLink: rondevuLink || "pro",
     config: {
       iframeAttrs: {
         id: "floatingtest",
@@ -469,22 +469,22 @@ if (only === "all" || only == "ns:floatingButton") {
 }
 
 if (only === "all" || only == "ns:monthView") {
-  // Create a namespace "second". It can be accessed as Cal.ns.second with the exact same API as Cal
-  Cal("init", "monthView", {
+  // Create a namespace "second". It can be accessed as Rondevu.ns.second with the exact same API as Rondevu
+  Rondevu("init", "monthView", {
     debug: true,
     origin: origin,
   });
 
-  Cal.ns.monthView(
+  Rondevu.ns.monthView(
     "inline",
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-expect-error
     {
-      elementOrSelector: "#cal-booking-place-monthView .place",
-      calLink: "free/30min",
+      elementOrSelector: "#rondevu-booking-place-monthView .place",
+      rondevuLink: "free/30min",
       config: {
         iframeAttrs: {
-          id: "cal-booking-place-monthView-iframe",
+          id: "rondevu-booking-place-monthView-iframe",
         },
         "flag.coep": "true",
         layout: "month_view",
@@ -494,51 +494,51 @@ if (only === "all" || only == "ns:monthView") {
 }
 
 if (only === "all" || only == "ns:weekView") {
-  // Create a namespace "second". It can be accessed as Cal.ns.second with the exact same API as Cal
-  Cal("init", "weekView", {
+  // Create a namespace "second". It can be accessed as Rondevu.ns.second with the exact same API as Rondevu
+  Rondevu("init", "weekView", {
     debug: true,
     origin: origin,
   });
 
-  Cal.ns.weekView(
+  Rondevu.ns.weekView(
     "inline",
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-expect-error
     {
-      elementOrSelector: "#cal-booking-place-weekView .place",
-      calLink: "free/30min",
+      elementOrSelector: "#rondevu-booking-place-weekView .place",
+      rondevuLink: "free/30min",
       config: {
         iframeAttrs: {
-          id: "cal-booking-place-weekView-iframe",
+          id: "rondevu-booking-place-weekView-iframe",
         },
         "flag.coep": "true",
         layout: "week_view",
       },
     }
   );
-  Cal.ns.weekView("on", {
+  Rondevu.ns.weekView("on", {
     action: "*",
     callback,
   });
 }
 
 if (only === "all" || only == "ns:columnView") {
-  // Create a namespace "second". It can be accessed as Cal.ns.second with the exact same API as Cal
-  Cal("init", "columnView", {
+  // Create a namespace "second". It can be accessed as Rondevu.ns.second with the exact same API as Rondevu
+  Rondevu("init", "columnView", {
     debug: true,
     origin: origin,
   });
 
-  Cal.ns.columnView(
+  Rondevu.ns.columnView(
     "inline",
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-expect-error
     {
-      elementOrSelector: "#cal-booking-place-columnView .place",
-      calLink: "free/30min",
+      elementOrSelector: "#rondevu-booking-place-columnView .place",
+      rondevuLink: "free/30min",
       config: {
         iframeAttrs: {
-          id: "cal-booking-place-columnView-iframe",
+          id: "rondevu-booking-place-columnView-iframe",
         },
         "flag.coep": "true",
         layout: "column_view",
@@ -546,28 +546,28 @@ if (only === "all" || only == "ns:columnView") {
     }
   );
 
-  Cal.ns.columnView("on", {
+  Rondevu.ns.columnView("on", {
     action: "*",
     callback,
   });
 }
 
 if (only === "all" || only == "ns:twoStepSlotSelection") {
-  Cal("init", "twoStepSlotSelection", {
+  Rondevu("init", "twoStepSlotSelection", {
     debug: true,
     origin: origin,
   });
 
-  Cal.ns.twoStepSlotSelection(
+  Rondevu.ns.twoStepSlotSelection(
     "inline",
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-expect-error
     {
-      elementOrSelector: "#cal-booking-place-twoStepSlotSelection .place",
-      calLink: "free/30min",
+      elementOrSelector: "#rondevu-booking-place-twoStepSlotSelection .place",
+      rondevuLink: "free/30min",
       config: {
         iframeAttrs: {
-          id: "cal-booking-place-twoStepSlotSelection-iframe",
+          id: "rondevu-booking-place-twoStepSlotSelection-iframe",
         },
         "flag.coep": "true",
         name: "John",
@@ -579,29 +579,29 @@ if (only === "all" || only == "ns:twoStepSlotSelection") {
     }
   );
 
-  Cal.ns.twoStepSlotSelection("on", {
+  Rondevu.ns.twoStepSlotSelection("on", {
     action: "*",
     callback,
   });
 }
 
 if (only === "all" || only == "ns:columnViewHideEventTypeDetails") {
-  // Create a namespace "second". It can be accessed as Cal.ns.second with the exact same API as Cal
-  Cal("init", "columnViewHideEventTypeDetails", {
+  // Create a namespace "second". It can be accessed as Rondevu.ns.second with the exact same API as Rondevu
+  Rondevu("init", "columnViewHideEventTypeDetails", {
     debug: true,
     origin: origin,
   });
 
-  Cal.ns.columnViewHideEventTypeDetails(
+  Rondevu.ns.columnViewHideEventTypeDetails(
     "inline",
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-expect-error
     {
-      elementOrSelector: "#cal-booking-place-columnViewHideEventTypeDetails .place",
-      calLink: "free/30min",
+      elementOrSelector: "#rondevu-booking-place-columnViewHideEventTypeDetails .place",
+      rondevuLink: "free/30min",
       config: {
         iframeAttrs: {
-          id: "cal-booking-place-columnView-iframe",
+          id: "rondevu-booking-place-columnView-iframe",
         },
         "flag.coep": "true",
         layout: "column_view",
@@ -609,27 +609,27 @@ if (only === "all" || only == "ns:columnViewHideEventTypeDetails") {
     }
   );
 
-  Cal.ns.columnViewHideEventTypeDetails("ui", {
+  Rondevu.ns.columnViewHideEventTypeDetails("ui", {
     hideEventTypeDetails: true,
   });
 
-  Cal.ns.columnViewHideEventTypeDetails("on", {
+  Rondevu.ns.columnViewHideEventTypeDetails("on", {
     action: "*",
     callback,
   });
 }
 
 if (only === "all" || only == "ns:autoScrollTest") {
-  if (!calLink) {
-    throw new Error("cal-link parameter is required for autoScrollTest");
+  if (!rondevuLink) {
+    throw new Error("rondevu-link parameter is required for autoScrollTest");
   }
-  Cal("init", "autoScrollTest", {
+  Rondevu("init", "autoScrollTest", {
     debug: true,
     origin: origin,
   });
-  Cal.ns.autoScrollTest("inline", {
-    elementOrSelector: "#cal-booking-place-autoScrollTest .place",
-    calLink: calLink,
+  Rondevu.ns.autoScrollTest("inline", {
+    elementOrSelector: "#rondevu-booking-place-autoScrollTest .place",
+    rondevuLink: rondevuLink,
     config: {
       "flag.coep": "true",
     },
@@ -637,17 +637,17 @@ if (only === "all" || only == "ns:autoScrollTest") {
 }
 
 if (only === "all" || only == "ns:pageParamsForwarding") {
-  Cal("init", "pageParamsForwarding", {
+  Rondevu("init", "pageParamsForwarding", {
     debug: true,
     origin: origin,
   });
 
-  Cal.ns.pageParamsForwarding("inline", {
-    elementOrSelector: "#cal-booking-place-pageParamsForwarding .place",
-    calLink: "pro/paid?embedType=inline&month=2024-08&date=2024-08-26&slot=2024-08-26T14%3A00%3A00.000Z",
+  Rondevu.ns.pageParamsForwarding("inline", {
+    elementOrSelector: "#rondevu-booking-place-pageParamsForwarding .place",
+    rondevuLink: "pro/paid?embedType=inline&month=2024-08&date=2024-08-26&slot=2024-08-26T14%3A00%3A00.000Z",
     config: {
       iframeAttrs: {
-        id: "cal-booking-place-pageParamsForwarding-iframe",
+        id: "rondevu-booking-place-pageParamsForwarding-iframe",
       },
       "flag.coep": "true",
     },
@@ -664,13 +664,13 @@ const bookingSuccessfulV2Callback = (e: EmbedEvent<"bookingSuccessfulV2">) => {
   });
 
   // Remove the event listener after it is fired once
-  Cal("off", {
+  Rondevu("off", {
     action: "bookingSuccessfulV2",
     callback: bookingSuccessfulV2Callback,
   });
 };
 
-Cal("on", {
+Rondevu("on", {
   action: "bookingSuccessfulV2",
   callback: bookingSuccessfulV2Callback,
 });
@@ -682,66 +682,66 @@ const bookerReadyCallback = (e: EmbedEvent<"bookerReady">) => {
     eventSlug: data.eventSlug,
   });
 
-  Cal("off", {
+  Rondevu("off", {
     action: "bookerReady",
     callback: bookerReadyCallback,
   });
 };
 
-Cal("on", {
+Rondevu("on", {
   action: "bookerReady",
   callback: bookerReadyCallback,
 });
 
 if (only === "all" || only === "ns:skeletonDemo") {
-  Cal("init", "skeletonDemo", {
+  Rondevu("init", "skeletonDemo", {
     debug: true,
     origin: origin,
   });
 
   // Example showing booking page skeleton
-  Cal.ns.skeletonDemo("inline", {
-    elementOrSelector: "#cal-booking-place-skeletonDemo .place",
-    calLink: "pro/30min",
+  Rondevu.ns.skeletonDemo("inline", {
+    elementOrSelector: "#rondevu-booking-place-skeletonDemo .place",
+    rondevuLink: "pro/30min",
     config: {
       theme: "auto",
       iframeAttrs: {
-        id: "cal-booking-place-skeletonDemo-iframe",
+        id: "rondevu-booking-place-skeletonDemo-iframe",
       },
       "flag.coep": "true",
       "cal.embed.pageType": "user.event.booking.slots",
     },
   });
 
-  Cal.ns.skeletonDemo("on", {
+  Rondevu.ns.skeletonDemo("on", {
     action: "*",
     callback,
   });
 }
 
 if (only === "all" || only === "ns:skeletonDemoElementClick") {
-  Cal("init", "skeletonDemoElementClick", {
+  Rondevu("init", "skeletonDemoElementClick", {
     debug: true,
     origin: origin,
   });
 
-  Cal.ns.skeletonDemoElementClick("on", {
+  Rondevu.ns.skeletonDemoElementClick("on", {
     action: "*",
     callback,
   });
 }
 
 if (only === "all" || only === "ns:containerScrollToTimeslot") {
-  Cal("init", "containerScrollToTimeslot", {
+  Rondevu("init", "containerScrollToTimeslot", {
     debug: true,
     origin,
   });
-  Cal.ns.containerScrollToTimeslot("inline", {
-    elementOrSelector: "#cal-booking-place-containerScrollToTimeslot .place",
-    calLink: "free/30min",
+  Rondevu.ns.containerScrollToTimeslot("inline", {
+    elementOrSelector: "#rondevu-booking-place-containerScrollToTimeslot .place",
+    rondevuLink: "free/30min",
     config: {
       iframeAttrs: {
-        id: "cal-booking-place-containerScrollToTimeslot-iframe",
+        id: "rondevu-booking-place-containerScrollToTimeslot-iframe",
       },
       "flag.coep": "true",
     },
@@ -749,16 +749,16 @@ if (only === "all" || only === "ns:containerScrollToTimeslot") {
 }
 
 if (only === "all" || only === "ns:windowScrollToTimeslot") {
-  Cal("init", "windowScrollToTimeslot", {
+  Rondevu("init", "windowScrollToTimeslot", {
     debug: true,
     origin,
   });
-  Cal.ns.windowScrollToTimeslot("inline", {
-    elementOrSelector: "#cal-booking-place-windowScrollToTimeslot .place",
-    calLink: "free/30min",
+  Rondevu.ns.windowScrollToTimeslot("inline", {
+    elementOrSelector: "#rondevu-booking-place-windowScrollToTimeslot .place",
+    rondevuLink: "free/30min",
     config: {
       iframeAttrs: {
-        id: "cal-booking-place-windowScrollToTimeslot-iframe",
+        id: "rondevu-booking-place-windowScrollToTimeslot-iframe",
       },
       "flag.coep": "true",
     },
@@ -770,7 +770,7 @@ if (only === "all" || only === "ns:windowScrollToTimeslot") {
   // Reset the hash so that we can scroll to correct iframe
   // Also, even if we need to scroll to the same iframe, we need to still reset it otherwise hashchange event will not fire
   location.hash = "";
-  let api: typeof Cal | (typeof Cal)["ns"][string] | null = null;
+  let api: typeof Rondevu | (typeof Rondevu)["ns"][string] | null = null;
 
   const getNamespace = () => {
     const url = new URL(document.URL);
@@ -780,14 +780,14 @@ if (only === "all" || only === "ns:windowScrollToTimeslot") {
 
   const updateApiOnNamespaceChange = () => {
     const namespace = getNamespace();
-    api = namespace && namespace !== "default" ? Cal.ns[namespace] : Cal;
+    api = namespace && namespace !== "default" ? Rondevu.ns[namespace] : Rondevu;
     api?.("on", {
       action: "*",
       callback: (e) => {
         function scrollToIframeInPlayground() {
           const namespace = getNamespace();
           if (namespace) {
-            location.hash = `#cal-booking-place-${namespace}-iframe`;
+            location.hash = `#rondevu-booking-place-${namespace}-iframe`;
           }
         }
         scrollToIframeInPlayground();

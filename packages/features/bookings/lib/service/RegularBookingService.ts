@@ -57,7 +57,7 @@ import type { EventPayloadType, EventTypeInfo } from "@rondevu/features/webhooks
 import { getTranslation } from "@rondevu/i18n/server";
 import { groupHostsByGroupId } from "@rondevu/lib/bookings/hostGroupUtils";
 import { shouldIgnoreContactOwner } from "@rondevu/lib/bookings/routing/utils";
-import { getVideoCallUrlFromCalEvent } from "@rondevu/lib/CalEventParser";
+import { getVideoCallUrlFromCalEvent } from "@rondevu/lib/RondevuEventParser";
 import { DEFAULT_GROUP_ID, ENABLE_ASYNC_TASKER } from "@rondevu/lib/constants";
 import { contructEmailFromPhoneNumber } from "@rondevu/lib/contructEmailFromPhoneNumber";
 import { ErrorCode } from "@rondevu/lib/errorCodes";

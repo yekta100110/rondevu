@@ -16,9 +16,9 @@ export const updateHandler = async ({ input }: UpdateOptions) => {
 
   // Encrypt and store the signature token if provided
   if (input.signatureToken) {
-    const encryptionKey = process.env.CALENDSO_ENCRYPTION_KEY;
+    const encryptionKey = process.env.RONDEVU_ENCRYPTION_KEY;
     if (!encryptionKey) {
-      throw new Error("CALENDSO_ENCRYPTION_KEY is required to encrypt signature token");
+      throw new Error("RONDEVU_ENCRYPTION_KEY is required to encrypt signature token");
     }
     data.signatureTokenEncrypted = symmetricEncrypt(input.signatureToken, encryptionKey);
   }

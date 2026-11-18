@@ -60,7 +60,7 @@
 - `yarn db-seed` - Seed database with test data
 - `yarn db-deploy` - Deploy database migrations
 - `yarn db-studio` - Open Prisma Studio
-- `psql "postgresql://postgres:@localhost:5432/calendso"` - Connect to local PostgreSQL database
+- `psql "postgresql://postgres:@localhost:5432/rondevu"` - Connect to local PostgreSQL database
 
 ## App Store Commands
 

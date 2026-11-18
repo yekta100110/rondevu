@@ -30,7 +30,7 @@ function log(...args: any[]) {
   console.log("Test:", ...args);
 }
 
-function buildModalArg(arg: { calLink: string; config: Record<string, string> }) {
+function buildModalArg(arg: { rondevuLink: string; config: Record<string, string> }) {
   return {
     ...arg,
     // Copies the config object so that we don't mutate the original one
@@ -41,7 +41,7 @@ function buildModalArg(arg: { calLink: string; config: Record<string, string> })
 }
 
 function expectCalModalBoxToBeInDocument(expectedAttrs: ExpectedModalBoxAttrs) {
-  const calModalBox = document.querySelector("cal-modal-box") as HTMLElement;
+  const calModalBox = document.querySelector("rondevu-modal-box") as HTMLElement;
   expect(calModalBox).toBeTruthy();
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const modalBox = calModalBox!;
@@ -123,9 +123,9 @@ function expectCalModalBoxToBeInDocumentWithIframeHavingUrl({
   return { modalBox, iframe };
 }
 
-describe("Cal", () => {
+describe("Rondevu", () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let CalClass: any;
+  let RondevuClass: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let calInstance: any;
 
@@ -138,24 +138,24 @@ describe("Cal", () => {
 
   beforeAll(async () => {
     vi.stubEnv("EMBED_PUBLIC_WEBAPP_URL", "https://app.rondevu.org");
-    // Mock window.Cal
+    // Mock window.Rondevu
     const mockWindowCal = {
       q: [],
       ns: {},
     };
-    Object.defineProperty(window, "Cal", {
+    Object.defineProperty(window, "Rondevu", {
       value: mockWindowCal,
       writable: true,
     });
 
     // Import dynamicall so that we could mock/override certain things before loading the embed.ts as it has side effects
-    CalClass = (await import("./embed")).Cal;
+    RondevuClass = (await import("./embed")).Rondevu;
   });
 
   beforeEach(() => {
     vi.stubEnv("WEBAPP_URL", "https://app.rondevu.org");
 
-    calInstance = new CalClass("test-namespace", []);
+    calInstance = new RondevuClass("test-namespace", []);
     // Reset the document body before each test
     document.body.innerHTML = "";
   });
@@ -167,19 +167,19 @@ describe("Cal", () => {
   describe("calInstance.createIframe", () => {
     describe("params handling with forwardQueryParams feature enabled", () => {
       beforeEach(() => {
-        calInstance = new CalClass("test-namespace", []);
-        window.Cal.config = { forwardQueryParams: true };
+        calInstance = new RondevuClass("test-namespace", []);
+        window.Rondevu.config = { forwardQueryParams: true };
         // Mock the getConfig method
-        calInstance.getConfig = vi.fn().mockReturnValue({ calOrigin: "https://app.rondevu.org" });
+        calInstance.getConfig = vi.fn().mockReturnValue({ rondevuOrigin: "https://app.rondevu.org" });
       });
 
       it("should merge query parameters from URL and explicit params", () => {
         mockSearchParams("?existingParam=value");
 
         const iframe = calInstance.createIframe({
-          calLink: "john-doe/meeting",
+          rondevuLink: "john-doe/meeting",
           config: { newParam: "newValue" },
-          calOrigin: null,
+          rondevuOrigin: null,
         });
 
         expect(iframe.src).toContain("existingParam=value");
@@ -190,9 +190,9 @@ describe("Cal", () => {
         mockSearchParams("?param1=value1&param1=value2");
 
         const iframe = calInstance.createIframe({
-          calLink: "john-doe/meeting",
+          rondevuLink: "john-doe/meeting",
           config: { param2: "value3" },
-          calOrigin: null,
+          rondevuOrigin: null,
         });
 
         const urlParams = new URLSearchParams(new URL(iframe.src).search);
@@ -204,9 +204,9 @@ describe("Cal", () => {
         mockSearchParams("?param=value1&param=value2");
 
         const iframe = calInstance.createIframe({
-          calLink: "john-doe/meeting",
+          rondevuLink: "john-doe/meeting",
           config: { param: "value3" },
-          calOrigin: null,
+          rondevuOrigin: null,
         });
 
         const urlParams = new URLSearchParams(new URL(iframe.src).search);
@@ -218,11 +218,11 @@ describe("Cal", () => {
         mockSearchParams("?date=2023-05-01&duration=30&hello=world");
 
         const iframe = calInstance.createIframe({
-          calLink: "john-doe/meeting",
+          rondevuLink: "john-doe/meeting",
           config: {
             email: "test@example.com",
           },
-          calOrigin: null,
+          rondevuOrigin: null,
         });
 
         expect(iframe.src).not.toContain("date=");
@@ -233,13 +233,13 @@ describe("Cal", () => {
 
       it("should allow configuring reserved params through config(as it is explicitly passed by user)", () => {
         const iframe = calInstance.createIframe({
-          calLink: "john-doe/meeting",
+          rondevuLink: "john-doe/meeting",
           config: {
             date: "2023-05-01",
             duration: "30",
             email: "test@example.com",
           },
-          calOrigin: null,
+          rondevuOrigin: null,
         });
 
         expect(iframe.src).toContain("date=2023-05-01");
@@ -247,10 +247,10 @@ describe("Cal", () => {
         expect(iframe.src).toContain("email=test%40example.com");
       });
 
-      it("should allow configuring reserved params through direct URL params to embed calLink(as it is explicitly passed by user)", () => {
+      it("should allow configuring reserved params through direct URL params to embed rondevuLink(as it is explicitly passed by user)", () => {
         const iframe = calInstance.createIframe({
-          calLink: "john-doe/meeting?date=2023-05-01&duration=30&email=test@example.com",
-          calOrigin: null,
+          rondevuLink: "john-doe/meeting?date=2023-05-01&duration=30&email=test@example.com",
+          rondevuOrigin: null,
         });
 
         expect(iframe.src).toContain("date=2023-05-01");
@@ -260,9 +260,9 @@ describe("Cal", () => {
 
       it("should set allow='payment' attribute by default to allow Payment Apps to acccept payments", () => {
         const iframe = calInstance.createIframe({
-          calLink: "john-doe/meeting",
+          rondevuLink: "john-doe/meeting",
           config: {},
-          calOrigin: null,
+          rondevuOrigin: null,
         });
 
         expect(iframe.getAttribute("allow")).toBe("payment");
@@ -270,8 +270,8 @@ describe("Cal", () => {
 
       it("should set allow='payment' even when no config is provided", () => {
         const iframe = calInstance.createIframe({
-          calLink: "john-doe/meeting",
-          calOrigin: null,
+          rondevuLink: "john-doe/meeting",
+          rondevuOrigin: null,
         });
 
         expect(iframe.getAttribute("allow")).toBe("payment");
@@ -279,9 +279,9 @@ describe("Cal", () => {
 
       it("should set allow='payment' when iframeAttrs is empty", () => {
         const iframe = calInstance.createIframe({
-          calLink: "john-doe/meeting",
+          rondevuLink: "john-doe/meeting",
           config: { iframeAttrs: {} },
-          calOrigin: null,
+          rondevuOrigin: null,
         });
 
         expect(iframe.getAttribute("allow")).toBe("payment");
@@ -289,7 +289,7 @@ describe("Cal", () => {
 
       it("should only apply id from iframeAttrs and ignore other attributes", () => {
         const iframe = calInstance.createIframe({
-          calLink: "john-doe/meeting",
+          rondevuLink: "john-doe/meeting",
           config: {
             iframeAttrs: {
               id: "custom-id",
@@ -297,13 +297,13 @@ describe("Cal", () => {
               class: "custom-class",
             },
           },
-          calOrigin: null,
+          rondevuOrigin: null,
         });
 
         expect(iframe.getAttribute("id")).toBe("custom-id");
         // Other attributes should not be applied
         expect(iframe.getAttribute("data-custom")).toBeNull();
-        expect(iframe.getAttribute("class")).toBe("cal-embed");
+        expect(iframe.getAttribute("class")).toBe("rondevu-embed");
         // Allow attribute should always be set
         expect(iframe.getAttribute("allow")).toBe("payment");
       });
@@ -311,12 +311,12 @@ describe("Cal", () => {
       it("should respect forwardQueryParams setting to disable sending page query params but still send the ones in the config", () => {
         mockSearchParams("?param1=value");
 
-        window.Cal.config = { forwardQueryParams: false };
+        window.Rondevu.config = { forwardQueryParams: false };
 
         const iframe = calInstance.createIframe({
-          calLink: "john-doe/meeting",
+          rondevuLink: "john-doe/meeting",
           config: { param2: "value" },
-          calOrigin: null,
+          rondevuOrigin: null,
         });
 
         expect(iframe.src).not.toContain("param1=value");
@@ -343,11 +343,11 @@ describe("Cal", () => {
     }
 
     it("ignores __iframeReady on an instance that has no iframe", () => {
-      const instanceWithIframe = new CalClass("dup-ns", []);
+      const instanceWithIframe = new RondevuClass("dup-ns", []);
       const host = document.createElement("div");
       document.body.appendChild(host);
-      instanceWithIframe.api.inline({ calLink: "user/30min", elementOrSelector: host });
-      const instanceWithoutIframe = new CalClass("dup-ns", []);
+      instanceWithIframe.api.inline({ rondevuLink: "user/30min", elementOrSelector: host });
+      const instanceWithoutIframe = new RondevuClass("dup-ns", []);
 
       expect(fireIframeReady("dup-ns")).toEqual([]);
       expect(instanceWithIframe.iframeReady).toBe(true);
@@ -355,10 +355,10 @@ describe("Cal", () => {
     });
 
     it("marks the iframe ready and visible when the instance owns an iframe", () => {
-      const cal = new CalClass("ready-ns", []);
+      const cal = new RondevuClass("ready-ns", []);
       const host = document.createElement("div");
       document.body.appendChild(host);
-      cal.api.inline({ calLink: "user/30min", elementOrSelector: host });
+      cal.api.inline({ rondevuLink: "user/30min", elementOrSelector: host });
       cal.iframe!.style.visibility = "hidden";
 
       expect(fireIframeReady("ready-ns")).toEqual([]);
@@ -373,7 +373,7 @@ describe("Cal", () => {
   describe("calInstance.api.modal", () => {
     const initialStateOfModal = "loading";
     const baseModalArgs = {
-      calLink: "john-doe/meeting",
+      rondevuLink: "john-doe/meeting",
       config: {
         theme: "light",
         layout: "modern",
@@ -396,7 +396,7 @@ describe("Cal", () => {
       expectIframeToHaveMatchingUrl({
         element: modalBox,
         expectedIframeUrlObject: {
-          pathname: `/${baseModalArgs.calLink}`,
+          pathname: `/${baseModalArgs.rondevuLink}`,
           searchParams: new URLSearchParams({
             ...baseModalArgs.config,
             embedType: "modal",
@@ -414,7 +414,7 @@ describe("Cal", () => {
             ...baseModalArgs.config,
             "cal.embed.pageType": "doesntmatter",
           },
-          calOrigin: null,
+          rondevuOrigin: null,
           __prerender: true,
         };
         calInstance.api.modal(modalArg);
@@ -434,7 +434,7 @@ describe("Cal", () => {
         expectIframeToHaveMatchingUrl({
           element: modalBox,
           expectedIframeUrlObject: {
-            pathname: `/${modalArg.calLink}`,
+            pathname: `/${modalArg.rondevuLink}`,
             searchParams: new URLSearchParams({
               ...modalArg.config,
               prerender: "true",
@@ -449,12 +449,12 @@ describe("Cal", () => {
       it("should create modal having iframe with queueFormResponse=true param when prerendering headless router", () => {
         const modalArg = {
           ...baseModalArgs,
-          calLink: "router?form=123&email=john@example.com",
+          rondevuLink: "router?form=123&email=john@example.com",
           config: {
             ...baseModalArgs.config,
             "cal.embed.pageType": "doesntmatter",
           },
-          calOrigin: null,
+          rondevuOrigin: null,
           __prerender: true,
         };
         calInstance.api.modal(modalArg);
@@ -469,7 +469,7 @@ describe("Cal", () => {
         expectIframeToHaveMatchingUrl({
           element: modalBox,
           expectedIframeUrlObject: {
-            pathname: `${new URL(modalArg.calLink, "http://example.com").pathname}`,
+            pathname: `${new URL(modalArg.rondevuLink, "http://example.com").pathname}`,
             searchParams: new URLSearchParams({
               ...modalArg.config,
               prerender: "true",
@@ -486,7 +486,7 @@ describe("Cal", () => {
       it("Accidental repeat prerender prevention", async () => {
         const modalArg = {
           ...baseModalArgs,
-          calLink: "router?form=123&email=john@example.com",
+          rondevuLink: "router?form=123&email=john@example.com",
         };
 
         const { status: status1 } = await calInstance.api.modal({
@@ -509,7 +509,7 @@ describe("Cal", () => {
         vi.useFakeTimers();
         const modalArg = {
           ...baseModalArgs,
-          calLink: "router?form=123&email=john@example.com",
+          rondevuLink: "router?form=123&email=john@example.com",
         };
 
         // First prerender
@@ -536,7 +536,7 @@ describe("Cal", () => {
       it("Prerender with non-headless router link and then CTA click with headless router is not allowed", async () => {
         const modalArg = {
           ...baseModalArgs,
-          calLink: "john-doe/meeting",
+          rondevuLink: "john-doe/meeting",
         };
 
         const { status: status1 } = await calInstance.api.modal({
@@ -548,7 +548,7 @@ describe("Cal", () => {
         await expect(
           calInstance.api.modal({
             ...modalArg,
-            calLink: "router?form=123&email=john@example.com",
+            rondevuLink: "router?form=123&email=john@example.com",
           })
         ).rejects.toThrow("`prerender` instruction should have been fired with headless router path");
       });
@@ -558,7 +558,7 @@ describe("Cal", () => {
           // Prerender the modal
           const modalArg = {
             ...baseModalArgs,
-            calLink: "router?form=FORM_ID&routingField1=value1&routingField2=value2",
+            rondevuLink: "router?form=FORM_ID&routingField1=value1&routingField2=value2",
           };
 
           const { modalBoxUid, expectedConfig } = (function prerender(): {
@@ -581,7 +581,7 @@ describe("Cal", () => {
                 pageType: null,
               },
               expectedIframeUrlObject: {
-                pathname: `${new URL(modalArg.calLink, "https://baseurl.example").pathname}`,
+                pathname: `${new URL(modalArg.rondevuLink, "https://baseurl.example").pathname}`,
                 searchParams: new URLSearchParams({
                   ...expectedConfig,
                   prerender: "true",
@@ -623,7 +623,7 @@ describe("Cal", () => {
                 uid: modalBoxUid,
               },
               expectedIframeUrlObject: {
-                pathname: `${new URL(modalArg.calLink, "https://baseurl.example").pathname}`,
+                pathname: `${new URL(modalArg.rondevuLink, "https://baseurl.example").pathname}`,
                 searchParams: new URLSearchParams({
                   ...expectedConfig,
                   // It remains because internally we remove prerender=true in iframe, as it is connect mode
@@ -691,7 +691,7 @@ describe("Cal", () => {
             //     uid: modalBoxUid,
             //   },
             //   expectedIframeUrlObject: {
-            //     pathname: `/${modalArg.calLink}`,
+            //     pathname: `/${modalArg.rondevuLink}`,
             //     searchParams: new URLSearchParams({
             //       ...expectedConfig,
             //       // It remains because we are just reopening the same modal
@@ -702,7 +702,7 @@ describe("Cal", () => {
             //   },
             // });
 
-            expect(document.querySelectorAll("cal-modal-box").length).toBe(1);
+            expect(document.querySelectorAll("rondevu-modal-box").length).toBe(1);
           })();
         });
       });
@@ -713,7 +713,7 @@ describe("Cal", () => {
       it.skip("should reuse the same modal", () => {
         // Preloaded modal
         const modalArg = {
-          calLink: "john-doe/meeting",
+          rondevuLink: "john-doe/meeting",
           config: {
             theme: "light",
             layout: "modern",
@@ -741,7 +741,7 @@ describe("Cal", () => {
           pageType: null,
           uid: prerenderedModalBoxUid,
         });
-        expect(document.querySelectorAll("cal-modal-box").length).toBe(1);
+        expect(document.querySelectorAll("rondevu-modal-box").length).toBe(1);
       });
     });
   });
@@ -755,14 +755,14 @@ describe("Cal", () => {
      * - If __reloadInitiated is NOT sent → iframe has reloadInitiated=false → bookerViewed fires
      */
     beforeEach(() => {
-      calInstance = new CalClass("test-namespace", []);
-      window.Cal.config = { forwardQueryParams: false };
+      calInstance = new RondevuClass("test-namespace", []);
+      window.Rondevu.config = { forwardQueryParams: false };
       vi.spyOn(calInstance, "doInIframe");
     });
 
     it("should send __reloadInitiated when fullReload action is taken (bookerReloaded should fire)", async () => {
       const baseModalArgs = {
-        calLink: "john-doe/meeting",
+        rondevuLink: "john-doe/meeting",
         config: { theme: "light", layout: "modern" },
       };
 
@@ -774,11 +774,11 @@ describe("Cal", () => {
 
       vi.mocked(calInstance.doInIframe).mockClear();
 
-      // 2. Open modal with DIFFERENT calLink - triggers fullReload
+      // 2. Open modal with DIFFERENT rondevuLink - triggers fullReload
       // This should send __reloadInitiated because it's a reload scenario
       await calInstance.api.modal({
         ...baseModalArgs,
-        calLink: "jane-doe/meeting",
+        rondevuLink: "jane-doe/meeting",
       });
 
       expect(calInstance.doInIframe).toHaveBeenCalledWith({
@@ -789,7 +789,7 @@ describe("Cal", () => {
 
     it("should NOT send __reloadInitiated when creating a new modal (bookerViewed should fire)", async () => {
       const baseModalArgs = {
-        calLink: "john-doe/meeting",
+        rondevuLink: "john-doe/meeting",
         config: { theme: "light", layout: "modern" },
       };
 
@@ -803,7 +803,7 @@ describe("Cal", () => {
 
     it("should NOT send __reloadInitiated when connect action is taken (bookerViewed should fire)", async () => {
       const baseModalArgs = {
-        calLink: "john-doe/meeting",
+        rondevuLink: "john-doe/meeting",
         config: { theme: "light", layout: "modern" },
       };
 
@@ -811,7 +811,7 @@ describe("Cal", () => {
       await calInstance.api.modal({ ...baseModalArgs, __prerender: true });
       vi.mocked(calInstance.doInIframe).mockClear();
 
-      // 2. Open modal with same calLink but different config - triggers connect (not fullReload)
+      // 2. Open modal with same rondevuLink but different config - triggers connect (not fullReload)
       await calInstance.api.modal({
         ...baseModalArgs,
         config: { ...baseModalArgs.config, name: "John Doe" },
@@ -832,9 +832,9 @@ describe("Cal", () => {
       
       // 1. Create iframe
       const iframe = calInstance.createIframe({
-        calLink: "john-doe/meeting",
+        rondevuLink: "john-doe/meeting",
         config: {},
-        calOrigin: null,
+        rondevuOrigin: null,
       });
 
       // 2. Simulate __reloadInitiated being queued (happens during fullReload)
@@ -845,9 +845,9 @@ describe("Cal", () => {
       // 3. loadInIframe is called again (e.g., another fullReload before iframe ready)
       // This should clear the queue, removing the stale __reloadInitiated
       calInstance.loadInIframe({
-        calLink: "jane-doe/meeting",
+        rondevuLink: "jane-doe/meeting",
         config: {},
-        calOrigin: null,
+        rondevuOrigin: null,
         iframe,
       });
 
@@ -862,8 +862,8 @@ describe("Cal", () => {
       pathWithQueryToLoad: "john-doe/meeting",
       modal: {
         uid: "test-uid",
-        element: document.querySelector("cal-modal-box") as HTMLElement,
-        calOrigin: "https://app.rondevu.org",
+        element: document.querySelector("rondevu-modal-box") as HTMLElement,
+        rondevuOrigin: "https://app.rondevu.org",
       },
       stateData: {
         embedConfig: { theme: "light" },
@@ -875,16 +875,16 @@ describe("Cal", () => {
     };
 
     beforeEach(() => {
-      calInstance = new CalClass("test-namespace", []);
+      calInstance = new RondevuClass("test-namespace", []);
       calInstance.iframe = {
         src: "https://app.rondevu.org/john-doe/meeting",
         dataset: {
-          calLink: "john-doe/meeting",
+          rondevuLink: "john-doe/meeting",
         },
       };
       // Initialize config
       calInstance.__config = {
-        calOrigin: "https://app.rondevu.org",
+        rondevuOrigin: "https://app.rondevu.org",
       };
       // Reset document.querySelector mock before each test
       vi.restoreAllMocks();
@@ -894,7 +894,7 @@ describe("Cal", () => {
     });
 
     it("should return fullReload when cal link is different", () => {
-      calInstance.iframe.dataset.calLink = "jane-doe/meeting";
+      calInstance.iframe.dataset.rondevuLink = "jane-doe/meeting";
       const result = calInstance.getNextActionForModal({
         ...baseArgs,
       });

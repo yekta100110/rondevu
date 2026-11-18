@@ -147,7 +147,7 @@ export async function sendPhoneVerification(phoneNumber: string): Promise<PhoneV
 
   // Fallback: Generate local TOTP and dispatch via general SMS transport
   const secret = createHash("md5")
-    .update(normalizedPhone + (process.env.CALENDSO_ENCRYPTION_KEY || ""))
+    .update(normalizedPhone + (process.env.RONDEVU_ENCRYPTION_KEY || ""))
     .digest("hex");
 
   totp.options = { step: 900 };
@@ -251,7 +251,7 @@ export async function checkPhoneVerification(
 
   // Fallback: Verify local TOTP
   const secret = createHash("md5")
-    .update(normalizedPhone + (process.env.CALENDSO_ENCRYPTION_KEY || ""))
+    .update(normalizedPhone + (process.env.RONDEVU_ENCRYPTION_KEY || ""))
     .digest("hex");
 
   const isValidToken = totpRawCheck(trimmedCode, secret, { step: 900 });

@@ -968,7 +968,7 @@ describe("getSchedule", () => {
   });
 
   describe("User Event", () => {
-    test("correctly identifies unavailable slots from Cal Bookings in different status", async () => {
+    test("correctly identifies unavailable slots from Rondevu Bookings in different status", async () => {
       const { dateString: plus1DateString } = getDate({ dateIncrement: 1 });
       const { dateString: plus2DateString } = getDate({ dateIncrement: 2 });
       const { dateString: plus3DateString } = getDate({ dateIncrement: 3 });
@@ -1280,7 +1280,7 @@ describe("getSchedule", () => {
       );
     });
 
-    test("afterBuffer and beforeBuffer tests - Non Cal Busy Time", async () => {
+    test("afterBuffer and beforeBuffer tests - Non Rondevu Busy Time", async () => {
       const { dateString: plus2DateString } = getDate({ dateIncrement: 2 });
       const { dateString: plus3DateString } = getDate({ dateIncrement: 3 });
 
@@ -1346,7 +1346,7 @@ describe("getSchedule", () => {
       );
     });
 
-    test("afterBuffer and beforeBuffer tests - Cal Busy Time", async () => {
+    test("afterBuffer and beforeBuffer tests - Rondevu Busy Time", async () => {
       const { dateString: plus1DateString } = getDate({ dateIncrement: 1 });
       const { dateString: plus2DateString } = getDate({ dateIncrement: 2 });
       const { dateString: plus3DateString } = getDate({ dateIncrement: 3 });

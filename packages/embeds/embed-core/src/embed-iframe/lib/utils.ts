@@ -176,7 +176,7 @@ export function log(...args: unknown[]) {
   if (isBrowser) {
     const namespace = getNamespace();
     const searchParams = new URL(document.URL).searchParams;
-    const logQueue = (window.CalEmbed.__logQueue = window.CalEmbed.__logQueue || []);
+    const logQueue = (window.RondevuEmbed.__logQueue = window.RondevuEmbed.__logQueue || []);
     args.push({
       ns: namespace,
       url: document.URL,

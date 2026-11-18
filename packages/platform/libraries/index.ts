@@ -107,7 +107,7 @@ export { SelectedCalendarRepository } from "@rondevu/features/selectedCalendar/r
 export type { Tasker } from "@rondevu/features/tasker/tasker";
 export { getTasker } from "@rondevu/features/tasker/tasker-factory";
 export { buildCalEventFromBooking } from "@rondevu/lib/buildCalEventFromBooking";
-export { getVideoCallUrlFromCalEvent } from "@rondevu/lib/CalEventParser";
+export { getVideoCallUrlFromCalEvent } from "@rondevu/lib/RondevuEventParser";
 export { verifyCodeChallenge } from "@rondevu/lib/pkce";
 export { encryptServiceAccountKey } from "@rondevu/lib/server/serviceAccountKey";
 export { validateUrlForSSRFSync } from "@rondevu/lib/ssrfProtection";

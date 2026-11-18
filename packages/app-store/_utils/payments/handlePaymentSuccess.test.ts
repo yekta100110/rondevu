@@ -38,7 +38,7 @@ vi.mock("@rondevu/prisma", async (importOriginal) => {
   };
 });
 vi.mock("@rondevu/lib/getTeamIdFromEventType");
-vi.mock("@rondevu/lib/CalEventParser");
+vi.mock("@rondevu/lib/RondevuEventParser");
 vi.mock("@rondevu/features/platform-oauth-client/platform-oauth-client.repository", () => ({
   PlatformOAuthClientRepository: class {
     getByUserId = vi.fn().mockResolvedValue(null);

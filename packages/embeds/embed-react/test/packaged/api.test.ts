@@ -7,15 +7,15 @@
 import { expect, test } from "vitest";
 
 // This import may show up as an error in your IDE, but it's fine because typings are available only after embed-react is built.
-import { getCalApi } from "@rondevu/embed-react";
+import { getRondevuApi } from "@rondevu/embed-react";
 
-const api = getCalApi();
+const api = getRondevuApi();
 
 test("Check that the API is available", async () => {
   expect(api).toBeDefined();
   const awaitedApi = await api;
   awaitedApi("floatingButton", {
-    calLink: "free",
+    rondevuLink: "free",
     config: {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error We are intentionally testing invalid value

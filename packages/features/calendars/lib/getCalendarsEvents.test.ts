@@ -882,12 +882,12 @@ describe("CalDAV credential leak prevention", () => {
       // Selected calendars from both servers
       const selectedCalendars = [
         buildCalDAVSelectedCalendar({
-          id: "cal_1",
+          id: "rondevu_1",
           externalId: "https://server-a.example.com/dav/calendars/user/calendar1/",
           credentialId: 1,
         }),
         buildCalDAVSelectedCalendar({
-          id: "cal_2",
+          id: "rondevu_2",
           externalId: "https://server-b.example.com/dav/calendars/user/calendar2/",
           credentialId: 2,
         }),
@@ -917,12 +917,12 @@ describe("CalDAV credential leak prevention", () => {
 
       const selectedCalendars = [
         buildCalDAVSelectedCalendar({
-          id: "cal_1",
+          id: "rondevu_1",
           externalId: "https://server-a.example.com/dav/calendars/user/calendar1/",
           credentialId: 1,
         }),
         buildCalDAVSelectedCalendar({
-          id: "cal_2",
+          id: "rondevu_2",
           externalId: "https://server-b.example.com/dav/calendars/user/calendar2/",
           credentialId: 2,
         }),
@@ -962,12 +962,12 @@ describe("CalDAV credential leak prevention", () => {
 
       const selectedCalendars = [
         buildCalDAVSelectedCalendar({
-          id: "cal_1",
+          id: "rondevu_1",
           externalId: "https://server-a.example.com/dav/calendars/user/calendar1/",
         }),
         {
           ...buildCalDAVSelectedCalendar({
-            id: "cal_2",
+            id: "rondevu_2",
             externalId: "primary",
           }),
           integration: "google_calendar",
@@ -995,7 +995,7 @@ describe("CalDAV credential leak prevention", () => {
 
       const selectedCalendars = [
         buildCalDAVSelectedCalendar({
-          id: "cal_1",
+          id: "rondevu_1",
           externalId: "https://server-a.example.com/dav/calendars/user/calendar1/",
         }),
       ];

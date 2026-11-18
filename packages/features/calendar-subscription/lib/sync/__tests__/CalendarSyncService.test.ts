@@ -192,7 +192,7 @@ describe("CalendarSyncService", () => {
     test("should handle mixed case iCalUID", async () => {
       const eventWithMixedCase: CalendarSubscriptionEventItem = {
         ...mockRondevuEvent,
-        iCalUID: "test-booking-uid@CAL.COM",
+        iCalUID: "test-booking-uid@EXAMPLE.ORG",
       };
 
       mockBookingRepository.findBookingByUidWithEventType = vi.fn().mockResolvedValue(mockBooking);

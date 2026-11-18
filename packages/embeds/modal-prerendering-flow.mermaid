@@ -5,9 +5,9 @@ sequenceDiagram
     participant UI as UI Components(iframe)
     
     Note over Parent: Prerender Phase
-    Parent->>Parent: Cal.prerender() or Cal.preload() called
+    Parent->>Parent: Rondevu.prerender() or Rondevu.preload() called
     Note over Parent: Set prerender=true in URL
-    Parent->>Parent: Create cal-modal-box (hidden)
+    Parent->>Parent: Create rondevu-modal-box (hidden)
     Parent->>Parent: Create iframe (hidden)
     Parent->>Parent: Set state="prerendering"
     
@@ -51,7 +51,7 @@ sequenceDiagram
     Note right of Embed: Purpose: Signals prerendered embed<br/>is ready in background<br/>Embed stays hidden until connect()
     Note over Parent: Prerender complete, waiting for connect()
     
-    Note over Parent: User clicks CTA or Cal.modal() called
+    Note over Parent: User clicks CTA or Rondevu.modal() called
     
     Note over Parent: Connect Phase
     Parent->>Embed: connect() with new config/params

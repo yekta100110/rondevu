@@ -106,7 +106,7 @@ describe("handleNewBooking", () => {
 
   describe("Fresh/New Booking:", () => {
     testWithAndWithoutOrg(
-      `should create a successful booking with Cal Video(Daily Video) if no explicit location is provided
+      `should create a successful booking with rOndevu Video(Daily Video) if no explicit location is provided
           1. Should create a booking in the database
           2. Should send emails to the booker as well as organizer
           3. Should create a booking in the event's destination calendar
@@ -1289,7 +1289,7 @@ describe("handleNewBooking", () => {
       );
 
       test(
-        `should fallback to Cal Video when organizer's default conferencing app is Google Meet but destination calendar is NOT Google Calendar`,
+        `should fallback to rOndevu Video when organizer's default conferencing app is Google Meet but destination calendar is NOT Google Calendar`,
         async ({ emails }) => {
           const handleNewBooking = getNewBookingHandler();
           const booker = getBooker({
@@ -1371,7 +1371,7 @@ describe("handleNewBooking", () => {
             bookingData: mockedBookingData,
           });
 
-          // Should fallback to Cal Video instead of Google Meet
+          // Should fallback to rOndevu Video instead of Google Meet
           expect(createdBooking).toEqual(
             expect.objectContaining({
               location: BookingLocations.CalVideo,
@@ -2970,7 +2970,7 @@ describe("handleNewBooking", () => {
 
     // FIXME: We shouldn't throw error here, the behaviour should be fixed.
     test(
-      `if booking with Cal Video(Daily Video) fails, booking creation fails with uncaught error`,
+      `if booking with rOndevu Video(Daily Video) fails, booking creation fails with uncaught error`,
       async () => {
         const handleNewBooking = getNewBookingHandler();
         const booker = getBooker({

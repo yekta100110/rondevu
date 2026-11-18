@@ -9,7 +9,7 @@ import { isConferencing as isConferencingApp } from "@rondevu/app-store/utils";
 import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
 import { UserRepository } from "@rondevu/features/users/repositories/UserRepository";
 import { AppOnboardingSteps } from "@rondevu/lib/apps/appOnboardingSteps";
-import { CAL_URL } from "@rondevu/lib/constants";
+import { RONDEVU_URL } from "@rondevu/lib/constants";
 import { getPlaceholderAvatar } from "@rondevu/lib/defaultAvatarImage";
 import prisma from "@rondevu/prisma";
 import { Prisma } from "@rondevu/prisma/client";
@@ -80,7 +80,7 @@ const mapEventType = (item: EventTypeFromDb): TEventType => {
 
   return {
     ...item,
-    URL: `${CAL_URL}/${urlPart}/${item.slug}`,
+    URL: `${RONDEVU_URL}/${urlPart}/${item.slug}`,
     selected: false,
     locations: item.locations as unknown as LocationObject[],
     bookingFields: eventTypeBookingFields.parse(item.bookingFields || []),

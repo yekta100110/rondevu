@@ -1,7 +1,7 @@
 import { MSTeamsLocationType } from "@rondevu/app-store/constants";
 import dayjs from "@rondevu/dayjs";
 import { triggerDelegationCredentialErrorWebhook } from "@rondevu/features/webhooks/lib/triggerDelegationCredentialErrorWebhook";
-import { getLocation, getRichDescriptionHTML } from "@rondevu/lib/CalEventParser";
+import { getLocation, getRichDescriptionHTML } from "@rondevu/lib/RondevuEventParser";
 import {
   CalendarAppDelegationCredentialConfigurationError,
   CalendarAppDelegationCredentialInvalidGrantError,

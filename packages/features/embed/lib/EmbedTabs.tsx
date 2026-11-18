@@ -30,8 +30,8 @@ export const tabs = [
     "data-testid": "HTML",
     Component: forwardRef<
       HTMLTextAreaElement | HTMLIFrameElement | null,
-      { embedType: EmbedType; calLink: string; previewState: PreviewState; namespace: string }
-    >(function EmbedHtml({ embedType, calLink, previewState, namespace }, ref) {
+      { embedType: EmbedType; rondevuLink: string; previewState: PreviewState; namespace: string }
+    >(function EmbedHtml({ embedType, rondevuLink, previewState, namespace }, ref) {
       const { t } = useLocale();
       const embedSnippetString = useGetEmbedSnippetString(namespace);
       const embedCalOrigin = useEmbedCalOrigin();
@@ -55,24 +55,24 @@ export const tabs = [
             className="text-default bg-default h-[calc(100%-50px)] font-mono"
             style={{ resize: "none", overflow: "auto" }}
             readOnly
-            value={`<!-- Cal ${embedType} embed code begins -->\n${
+            value={`<!-- Rondevu ${embedType} embed code begins -->\n${
               embedType === "inline"
                 ? `<div style="width:${getDimension(previewState.inline.width)};height:${getDimension(
                     previewState.inline.height
-                  )};overflow:scroll" id="my-cal-inline-${namespace}"></div>\n`
+                  )};overflow:scroll" id="my-rondevu-inline-${namespace}"></div>\n`
                 : ""
             }<script type="text/javascript">
   ${embedSnippetString}
   ${getEmbedTypeSpecificString({
     embedFramework: "HTML",
     embedType,
-    calLink,
+    rondevuLink,
     previewState,
     embedCalOrigin,
     namespace,
   })}
   </script>
-  <!-- Cal ${embedType} embed code ends -->`}
+  <!-- Rondevu ${embedType} embed code ends -->`}
           />
           <p className="text-subtle hidden text-sm">{t("need_help_embedding")}</p>
         </>
@@ -87,8 +87,8 @@ export const tabs = [
     type: "code",
     Component: forwardRef<
       HTMLTextAreaElement | HTMLIFrameElement | null,
-      { embedType: EmbedType; calLink: string; previewState: PreviewState; namespace: string }
-    >(function EmbedReact({ embedType, calLink, previewState, namespace }, ref) {
+      { embedType: EmbedType; rondevuLink: string; previewState: PreviewState; namespace: string }
+    >(function EmbedReact({ embedType, rondevuLink, previewState, namespace }, ref) {
       const { t } = useLocale();
       const embedCalOrigin = useEmbedCalOrigin();
 
@@ -118,7 +118,7 @@ export const tabs = [
   ${getEmbedTypeSpecificString({
     embedFramework: "react",
     embedType,
-    calLink,
+    rondevuLink,
     previewState,
     embedCalOrigin,
     namespace,
@@ -137,8 +137,8 @@ export const tabs = [
     type: "code",
     Component: forwardRef<
       HTMLTextAreaElement | HTMLIFrameElement | null,
-      { embedType: EmbedType; calLink: string; previewState: PreviewState; namespace: string }
-    >(function EmbedReactAtom({ embedType, calLink, previewState, namespace }, ref) {
+      { embedType: EmbedType; rondevuLink: string; previewState: PreviewState; namespace: string }
+    >(function EmbedReactAtom({ embedType, rondevuLink, previewState, namespace }, ref) {
       const { t } = useLocale();
       const embedCalOrigin = useEmbedCalOrigin();
 
@@ -168,7 +168,7 @@ export const tabs = [
 ${getEmbedTypeSpecificString({
   embedFramework: "react-atom" as EmbedFramework,
   embedType,
-  calLink,
+  rondevuLink,
   previewState,
   embedCalOrigin,
   namespace,
@@ -186,10 +186,10 @@ ${getEmbedTypeSpecificString({
     "data-testid": "Preview",
     Component: forwardRef<
       HTMLIFrameElement | HTMLTextAreaElement | null,
-      { calLink: string; embedType: EmbedType; previewState: PreviewState; namespace: string }
-    >(function Preview({ calLink, embedType }, ref) {
+      { rondevuLink: string; embedType: EmbedType; previewState: PreviewState; namespace: string }
+    >(function Preview({ rondevuLink, embedType }, ref) {
       const bookerUrl = useEmbedBookerUrl();
-      const iframeSrc = `${EMBED_PREVIEW_HTML_URL}?embedType=${embedType}&calLink=${calLink}&embedLibUrl=${embedLibUrl}&bookerUrl=${bookerUrl}`;
+      const iframeSrc = `${EMBED_PREVIEW_HTML_URL}?embedType=${embedType}&rondevuLink=${rondevuLink}&embedLibUrl=${embedLibUrl}&bookerUrl=${bookerUrl}`;
       if (ref instanceof Function || !ref) {
         return null;
       }
@@ -214,14 +214,14 @@ ${getEmbedTypeSpecificString({
 const getEmbedTypeSpecificString = ({
   embedFramework,
   embedType,
-  calLink,
+  rondevuLink,
   embedCalOrigin,
   previewState,
   namespace,
 }: {
   embedFramework: EmbedFramework;
   embedType: EmbedType;
-  calLink: string;
+  rondevuLink: string;
   previewState: PreviewState;
   embedCalOrigin: string;
   namespace: string;
@@ -249,12 +249,12 @@ const getEmbedTypeSpecificString = ({
   if (embedFramework === "react") {
     uiInstructionStringArg = {
       ...baseUiInstructionStringArg,
-      apiName: getApiNameForReactSnippet({ mainApiName: "cal" }),
+      apiName: getApiNameForReactSnippet({ mainApiName: "rondevu" }),
     };
   } else {
     uiInstructionStringArg = {
       ...baseUiInstructionStringArg,
-      apiName: getApiNameForVanillaJsSnippet({ namespace, mainApiName: "Cal" }),
+      apiName: getApiNameForVanillaJsSnippet({ namespace, mainApiName: "Rondevu" }),
     };
   }
   if (!frameworkCodes[embedType]) {
@@ -262,7 +262,7 @@ const getEmbedTypeSpecificString = ({
   }
 
   const codeGeneratorInput = {
-    calLink,
+    rondevuLink,
     uiInstructionCode: getEmbedUIInstructionString(uiInstructionStringArg),
     embedCalOrigin,
     namespace,
@@ -335,7 +335,7 @@ function useGetEmbedSnippetString(namespace: string | null) {
   // TODO: Import this string from @rondevu/embed-snippet
   // Right now the problem is that embed-snippet export is not minified and has comments which makes it unsuitable for giving it to users.
   // If we can minify that during build time and then import the built code here, that could work
-  return `(function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "${embedLibUrl}", "init");
-Cal("init", ${namespace ? `"${namespace}",` : ""} {origin:"${bookerUrl}"});
+  return `(function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Rondevu = C.Rondevu || function () { let cal = C.Rondevu; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "${embedLibUrl}", "init");
+Rondevu("init", ${namespace ? `"${namespace}",` : ""} {origin:"${bookerUrl}"});
 `;
 }

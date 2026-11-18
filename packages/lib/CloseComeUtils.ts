@@ -155,13 +155,13 @@ export async function getCloseComCustomActivityTypeFieldsIds(
 ) {
   // Check if Custom Activity Type exists
   const customActivities = await closeCom.customActivity.type.get();
-  const calComCustomActivity = customActivities.data.filter((act) => act.name === `${APP_NAME} Activity`);
-  if (calComCustomActivity.length > 0) {
+  const rondevuCustomActivity = customActivities.data.filter((act) => act.name === `${APP_NAME} Activity`);
+  if (rondevuCustomActivity.length > 0) {
     // rOndevu Custom Activity type exist
     // Get Custom Activity Type fields ids
-    const fields = await getCustomFieldsIds("activity", customFields, closeCom, calComCustomActivity[0].id);
+    const fields = await getCustomFieldsIds("activity", customFields, closeCom, rondevuCustomActivity[0].id);
     return {
-      activityType: calComCustomActivity[0].id,
+      activityType: rondevuCustomActivity[0].id,
       fields,
     };
   } else {

@@ -84,7 +84,7 @@ const isCspEnabled = () => {
   return (
     Boolean(process.env.CSP_POLICY) ||
     process.env.NODE_ENV === "production" ||
-    process.env.CALCOM_ENV === "production"
+    process.env.RONDEVU_ENV === "production"
   );
 };
 

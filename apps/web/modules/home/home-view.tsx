@@ -29,7 +29,7 @@ const FramerDomBody = memo(function FramerDomBody({
   onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
 }) {
   const markup = useMemo(() => ({ __html: html }), [html]);
-  return <div id="cal-1to1-root" onClick={onClick} dangerouslySetInnerHTML={markup} />;
+  return <div id="rondevu-1to1-root" onClick={onClick} dangerouslySetInnerHTML={markup} />;
 });
 
 /** Applies consistent open/closed FAQ accordion height and icon rotation without clipping long answers. */
@@ -344,7 +344,7 @@ function HomeView({ html, svgTemplates, isLoggedIn = false, initialContact, init
   useEffect(() => {
     if (!mounted) return;
 
-    const root = document.getElementById("cal-1to1-root");
+    const root = document.getElementById("rondevu-1to1-root");
     if (!root) return;
 
     // 1. Bento Kart 3: 6 To-do cards cycle + 12h/24h switcher + "Takvimimi üzerine ekle" toggle
@@ -574,7 +574,7 @@ function HomeView({ html, svgTemplates, isLoggedIn = false, initialContact, init
   // Lightweight IntersectionObserver scroll-reveal for below-the-fold sections (with reduced-motion & fallback safety).
   useEffect(() => {
     if (!mounted) return;
-    const root = document.getElementById("cal-1to1-root");
+    const root = document.getElementById("rondevu-1to1-root");
     if (!root) return;
 
     const integrationContainers = Array.from(
@@ -665,7 +665,7 @@ function HomeView({ html, svgTemplates, isLoggedIn = false, initialContact, init
   useEffect(() => {
     if (!mounted) return;
 
-    const faqSection = document.querySelector<HTMLElement>('#cal-1to1-root [data-framer-name="FAQ Section"]');
+    const faqSection = document.querySelector<HTMLElement>('#rondevu-1to1-root [data-framer-name="FAQ Section"]');
     if (!faqSection) return;
 
     const badge = faqSection.querySelector<HTMLElement>('[data-framer-name="White Icon"] p');
@@ -735,7 +735,7 @@ function HomeView({ html, svgTemplates, isLoggedIn = false, initialContact, init
 
   useEffect(() => {
     if (!mounted) return;
-    const links = document.querySelectorAll<HTMLAnchorElement>("#cal-1to1-root .rondevu-hero-login-link");
+    const links = document.querySelectorAll<HTMLAnchorElement>("#rondevu-1to1-root .rondevu-hero-login-link");
     links.forEach((link) => {
       if (isLoggedIn) {
         link.setAttribute("href", "/event-types");
@@ -752,7 +752,7 @@ function HomeView({ html, svgTemplates, isLoggedIn = false, initialContact, init
   useEffect(() => {
     if (!mounted) return;
 
-    const root = document.querySelector<HTMLElement>("#cal-1to1-root");
+    const root = document.querySelector<HTMLElement>("#rondevu-1to1-root");
     if (!root) return;
 
     root.querySelectorAll<HTMLElement>("a, button").forEach((action) => {
@@ -782,7 +782,7 @@ function HomeView({ html, svgTemplates, isLoggedIn = false, initialContact, init
     if (!mounted) return;
 
     const normalizeYear = () => {
-      const root = document.querySelector<HTMLElement>("#cal-1to1-root");
+      const root = document.querySelector<HTMLElement>("#rondevu-1to1-root");
       if (!root) return;
       root
         .querySelectorAll<HTMLElement>('.framer-13qztwn .framer-text, [data-framer-name="2022"] .framer-text')
@@ -796,7 +796,7 @@ function HomeView({ html, svgTemplates, isLoggedIn = false, initialContact, init
 
     normalizeYear();
     const observer = new MutationObserver(normalizeYear);
-    const root = document.querySelector<HTMLElement>("#cal-1to1-root");
+    const root = document.querySelector<HTMLElement>("#rondevu-1to1-root");
     if (root) observer.observe(root, { childList: true, subtree: true });
     const timer = window.setTimeout(() => observer.disconnect(), 2000);
     return () => {

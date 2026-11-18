@@ -1,6 +1,6 @@
 "use client";
 
-import { DOCS_URL, IS_CALCOM, WEBSITE_URL } from "@rondevu/lib/constants";
+import { DOCS_URL, IS_RONDEVU, WEBSITE_URL } from "@rondevu/lib/constants";
 import { useLocale } from "@rondevu/lib/hooks/useLocale";
 import { Icon } from "@rondevu/ui/components/icon";
 import Link from "next/link";
@@ -54,12 +54,12 @@ export function NotFound({ host }: { host: string }) {
       <main className="mx-auto max-w-xl pt-16 pb-6 sm:pt-24">
         <div className="text-center">
           <p className="font-semibold text-emphasis text-sm uppercase tracking-wide">{t("error_404")}</p>
-          <h1 className="mt-2 font-cal font-extrabold text-4xl text-emphasis sm:text-5xl">
+          <h1 className="mt-2 font-display font-extrabold text-4xl text-emphasis sm:text-5xl">
             {isBookingSuccessPage ? "Booking not found" : t("page_doesnt_exist")}
           </h1>
           {isSubpage ? (
             <span className="mt-2 inline-block text-lg">{t("check_spelling_mistakes_or_go_back")}</span>
-          ) : IS_CALCOM ? (
+          ) : IS_RONDEVU ? (
             <a target="_blank" href={url} className="mt-2 inline-block text-lg" rel="noreferrer">
               {t(`404_the_${pageType.toLowerCase()}`)}{" "}
               {username ? (
@@ -83,7 +83,7 @@ export function NotFound({ host }: { host: string }) {
           )}
         </div>
         <div className="mt-12">
-          {!isSubpage && IS_CALCOM && (
+          {!isSubpage && IS_RONDEVU && (
             <ul role="list" className="my-4">
               <li className="border-2 border-green-500 px-4 py-2">
                 <a
@@ -120,7 +120,7 @@ export function NotFound({ host }: { host: string }) {
               <li key={linkIdx} className="px-4 py-2">
                 <a href={link.href} className="relative flex items-start space-x-4 py-6 rtl:space-x-reverse">
                   <div className="shrink-0">
-                    <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-cal-muted">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-muted">
                       <Icon name={link.icon} className="h-6 w-6 text-default" aria-hidden="true" />
                     </span>
                   </div>

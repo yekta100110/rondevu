@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { CAL_API_VERSION_HEADER, X_CAL_CLIENT_ID, X_CAL_PLATFORM_EMBED } from "@rondevu/platform-constants";
+import { RONDEVU_API_VERSION_HEADER, X_CAL_CLIENT_ID, X_CAL_PLATFORM_EMBED } from "@rondevu/platform-constants";
 
 // Immediately Invoked Function Expression to create simple singleton class like
 
@@ -49,7 +49,7 @@ const http = (function () {
       return instance.defaults.headers.common?.[X_CAL_PLATFORM_EMBED]?.toString() ?? "";
     },
     setVersionHeader: (clientId: string) => {
-      instance.defaults.headers.common[CAL_API_VERSION_HEADER] = clientId;
+      instance.defaults.headers.common[RONDEVU_API_VERSION_HEADER] = clientId;
     },
     getVersionHeader: () => {
       return instance.defaults.headers.common?.[X_CAL_CLIENT_ID]?.toString() ?? "";

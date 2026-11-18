@@ -31,14 +31,14 @@ import {
   updateCalendarObject,
 } from "tsdav";
 import { v4 as uuidv4 } from "uuid";
-import { getLocation, getRichDescription } from "./CalEventParser";
+import { getLocation, getRichDescription } from "./RondevuEventParser";
 import { symmetricDecrypt } from "./crypto";
 import logger from "./logger";
 
 const TIMEZONE_FORMAT = "YYYY-MM-DDTHH:mm:ss[Z]";
 const DEFAULT_CALENDAR_TYPE = "caldav";
 
-const CALENDSO_ENCRYPTION_KEY = process.env.CALENDSO_ENCRYPTION_KEY || "";
+const RONDEVU_ENCRYPTION_KEY = process.env.RONDEVU_ENCRYPTION_KEY || "";
 
 type FetchObjectsWithOptionalExpandOptionsType = {
   selectedCalendars: IntegrationCalendar[];
@@ -400,7 +400,7 @@ export default abstract class BaseCalendarService implements Calendar {
       username,
       password,
       url: credentialURL,
-    } = JSON.parse(symmetricDecrypt(credential.key as string, CALENDSO_ENCRYPTION_KEY));
+    } = JSON.parse(symmetricDecrypt(credential.key as string, RONDEVU_ENCRYPTION_KEY));
 
     this.url = url || credentialURL;
 

@@ -56,14 +56,14 @@ export const ConfirmationContent = (props: PropsWithChildren<ConfirmationDialogC
               </div>
             )}
             {variety === "success" && (
-              <div className="bg-cal-success mx-auto rounded-full p-2 text-center">
+              <div className="bg-rondevu-success mx-auto rounded-full p-2 text-center">
                 <CheckIcon className="h-5 w-5 text-green-600" />
               </div>
             )}
           </div>
         )}
         <div className="w-full">
-          <DialogPrimitive.Title className="font-cal text-emphasis mt-1 text-xl">
+          <DialogPrimitive.Title className="font-display text-emphasis mt-1 text-xl">
             {title}
           </DialogPrimitive.Title>
           <DialogPrimitive.Description asChild>

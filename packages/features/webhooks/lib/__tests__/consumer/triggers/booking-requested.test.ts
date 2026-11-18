@@ -403,14 +403,14 @@ describe("BOOKING_REQUESTED Trigger", () => {
       const consumerWithRealBuilder = buildConsumerWithRealBuilder();
       await consumerWithRealBuilder.processWebhookTask(
         {
-          operationId: "op-cal-evt",
+          operationId: "op-rondevu-evt",
           triggerEvent: WebhookTriggerEvents.BOOKING_REQUESTED,
           bookingUid: "booking-uid-123",
           eventTypeId: 456,
           userId: 789,
           timestamp: new Date().toISOString(),
         },
-        "task-cal-evt"
+        "task-rondevu-evt"
       );
 
       const p = getDeliveredPayload();

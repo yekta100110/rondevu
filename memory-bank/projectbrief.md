@@ -13,10 +13,10 @@
 
 ## Architectural & Strategic Goals
 1. **Bütünsel Tasarım ve UX Ayrışması:** rOndevu / rOndevu tasarım dilinden kopularak Çatı Marka (`brand.md`) değerleriyle uyumlu, yerel dikey sektörlerin WhatsApp/SMS odaklı randevu alışkanlıklarına hitap eden özgün arayüz.
-2. **Kod Tabanı Arındırma (De-Cal'ification):** rOndevu kapsamında kullanılmayan rOndevu `app-store` entegrasyonlarının, karmaşık organizasyon/enterprise bileşenlerinin ve ölü kodların ayıklanarak yalnızca çekirdek randevu motoru, WhatsApp, SMS ve yerel ödeme/bildirim katmanlarından oluşan hafif ve modüler bir mimariye ulaşılması.
+2. **Kod Tabanı Arındırma (De-Rondevu'ification):** rOndevu kapsamında kullanılmayan rOndevu `app-store` entegrasyonlarının, karmaşık organizasyon/enterprise bileşenlerinin ve ölü kodların ayıklanarak yalnızca çekirdek randevu motoru, WhatsApp, SMS ve yerel ödeme/bildirim katmanlarından oluşan hafif ve modüler bir mimariye ulaşılması.
 3. **Yeniden Kullanılabilir Çatı Marka Bileşenleri:** Kimlik doğrulama, mesajlaşma omurgası (Evolution API / WhatsApp, SMS), webhook yönetimi ve outreach demo motorunun gelecekteki diğer Venture Studio dikey ürünlerine aktarılabilecek temiz sınırlarla (decoupled) kurgulanması.
 
 ## Project Status
 - Sistem genelinde `rOndevu` white-labeling, TR/EN çift dil mimarisi ve özel karanlık mod (dark-first) açılış/fiyatlandırma sayfaları tamamlandı.
 - SMS doğrulama (Twilio Verify + `verifiedPhoneCache`), GSM 7-bit SMS bildirim hattı ve Platform Webhook -> n8n -> Evolution API WhatsApp entegrasyonu devreye alındı.
-- Sıradaki odak: **De-Cal'ification** (gereksiz eklenti/enterprise yüklerinin temizliği), bağımsız UX dönüşümü ve **15 Günlük TTL Outreach Demo Enjeksiyonu** mimarisinin uygulanması.
+- Sıradaki odak: **De-Rondevu'ification** (gereksiz eklenti/enterprise yüklerinin temizliği), bağımsız UX dönüşümü ve **15 Günlük TTL Outreach Demo Enjeksiyonu** mimarisinin uygulanması.

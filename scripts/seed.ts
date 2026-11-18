@@ -515,7 +515,7 @@ async function seedApiKey(userId: number, apiKey: string) {
     },
   });
 
-  const apiKeyPrefix = process.env.API_KEY_PREFIX ?? "cal_";
+  const apiKeyPrefix = process.env.API_KEY_PREFIX ?? "rondevu_";
   console.log(`🔑 Created seeded API Key: ${apiKeyPrefix}${apiKey}`);
 }
 
@@ -627,7 +627,7 @@ async function seedPerHostLocationsInAcmeOrg() {
 
   console.log(
     `Seeded per-host locations in Acme Org for event "${eventType.slug}" (id=${eventType.id}): ` +
-      `owner1->Cal Video, member0->Link, member2->Phone`
+      `owner1->rOndevu Video, member0->Link, member2->Phone`
   );
 }
 
@@ -1027,11 +1027,11 @@ async function main() {
     });
   }
 
-  if (process.env.E2E_TEST_CALCOM_QA_EMAIL && process.env.E2E_TEST_CALCOM_QA_PASSWORD) {
+  if (process.env.E2E_TEST_RONDEVU_QA_EMAIL && process.env.E2E_TEST_RONDEVU_QA_PASSWORD) {
     await createUserAndEventType({
       user: {
-        email: process.env.E2E_TEST_CALCOM_QA_EMAIL || "qa@example.com",
-        password: process.env.E2E_TEST_CALCOM_QA_PASSWORD || "qa",
+        email: process.env.E2E_TEST_RONDEVU_QA_EMAIL || "qa@example.com",
+        password: process.env.E2E_TEST_RONDEVU_QA_PASSWORD || "qa",
         username: "qa",
         name: "QA Example",
       },
@@ -1043,10 +1043,10 @@ async function main() {
         },
       ],
       credentials: [
-        process.env.E2E_TEST_CALCOM_QA_GCAL_CREDENTIALS
+        process.env.E2E_TEST_RONDEVU_QA_GCAL_CREDENTIALS
           ? {
               type: "google_calendar",
-              key: JSON.parse(process.env.E2E_TEST_CALCOM_QA_GCAL_CREDENTIALS) as Prisma.JsonObject,
+              key: JSON.parse(process.env.E2E_TEST_RONDEVU_QA_GCAL_CREDENTIALS) as Prisma.JsonObject,
               appId: "google-calendar",
             }
           : null,

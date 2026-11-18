@@ -256,7 +256,7 @@ const EventTypeScheduleDetails = memo(
             })}
           </ol>
         </div>
-        <div className="flex flex-col items-center gap-2 rounded-b-md border border-subtle bg-cal-muted p-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col items-center gap-2 rounded-b-md border border-subtle bg-muted p-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-2">
             <span className="flex items-center justify-center text-center text-default text-sm sm:justify-start">
               <GlobeIcon className="h-3.5 w-3.5 ltr:mr-2 rtl:ml-2" />
@@ -382,7 +382,7 @@ const EventTypeRestrictionScheduleDetails = memo(
             })}
           </ol>
         </div>
-        <div className="flex flex-col justify-center gap-2 rounded-b-md border border-subtle bg-cal-muted p-6 sm:flex-row sm:justify-between">
+        <div className="flex flex-col justify-center gap-2 rounded-b-md border border-subtle bg-muted p-6 sm:flex-row sm:justify-between">
           <div className="flex flex-col gap-2">
             <span
               className={classNames(

@@ -7,8 +7,8 @@ import type { PrefillAndIframeAttrsConfig } from "@rondevu/embed-core";
 import useEmbed from "./useEmbed";
 
 type CalProps = {
-  calOrigin?: string;
-  calLink: string;
+  rondevuOrigin?: string;
+  rondevuLink: string;
   initConfig?: {
     debug?: boolean;
     uiDebug?: boolean;
@@ -18,47 +18,47 @@ type CalProps = {
   embedJsUrl?: string;
 } & React.HTMLAttributes<HTMLDivElement>;
 
-const Cal = function Cal(props: CalProps) {
-  const { calLink, calOrigin, namespace = "", config, initConfig = {}, embedJsUrl, ...restProps } = props;
-  if (!calLink) {
-    throw new Error("calLink is required");
+const Rondevu = function Rondevu(props: CalProps) {
+  const { rondevuLink, rondevuOrigin, namespace = "", config, initConfig = {}, embedJsUrl, ...restProps } = props;
+  if (!rondevuLink) {
+    throw new Error("rondevuLink is required");
   }
   const initializedRef = useRef(false);
-  const Cal = useEmbed(embedJsUrl);
+  const Rondevu = useEmbed(embedJsUrl);
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (!Cal || initializedRef.current || !ref.current) {
+    if (!Rondevu || initializedRef.current || !ref.current) {
       return;
     }
     initializedRef.current = true;
     const element = ref.current;
     if (namespace) {
-      Cal("init", namespace, {
+      Rondevu("init", namespace, {
         ...initConfig,
-        origin: calOrigin,
+        origin: rondevuOrigin,
       });
-      Cal.ns[namespace]("inline", {
+      Rondevu.ns[namespace]("inline", {
         elementOrSelector: element,
-        calLink,
+        rondevuLink,
         config,
       });
     } else {
-      Cal("init", {
+      Rondevu("init", {
         ...initConfig,
-        origin: calOrigin,
+        origin: rondevuOrigin,
       });
-      Cal("inline", {
+      Rondevu("inline", {
         elementOrSelector: element,
-        calLink,
+        rondevuLink,
         config,
       });
     }
-  }, [Cal, calLink, config, namespace, calOrigin, initConfig]);
+  }, [Rondevu, rondevuLink, config, namespace, rondevuOrigin, initConfig]);
 
-  if (!Cal) {
+  if (!Rondevu) {
     return null;
   }
 
   return <div ref={ref} {...restProps} />;
 };
-export default Cal;
+export default Rondevu;

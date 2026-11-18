@@ -2,7 +2,7 @@ import type { DailyCall } from "@daily-co/daily-js";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
 import { BUTTONS } from "../button-states";
-import { createCalVideoCallbacks } from "../cal-video-premium-features";
+import { createCalVideoCallbacks } from "../rondevu-video-premium-features";
 
 vi.mock("@rondevu/lib/constants", () => ({
   TRANSCRIPTION_STARTED_ICON: "/transcription-started-icon.svg",

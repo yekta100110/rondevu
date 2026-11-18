@@ -3,8 +3,8 @@
 @import "../../../config/theme/tokens.css";
 
 @font-face {
-  font-family: "Cal Sans";
-  src: url("https://rondevu.org/cal.ttf");
+  font-family: "Rondevu Sans";
+  src: url("https://rondevu.org/rondevu.ttf");
 }
 
 h1,
@@ -13,7 +13,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Cal Sans";
+  font-family: "Rondevu Sans";
   font-weight: normal;
   letter-spacing: normal;
 }

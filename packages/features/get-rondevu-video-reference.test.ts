@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
 
-import { getCalVideoReference } from "./get-cal-video-reference";
+import { getCalVideoReference } from "./get-rondevu-video-reference";
 
-describe("Cal Video", () => {
-  it("should load latest cal video reference", () => {
+describe("rOndevu Video", () => {
+  it("should load latest rOndevu video reference", () => {
     expect(
       getCalVideoReference([
         {

@@ -36,8 +36,8 @@ const TwoFactorAuthView = () => {
 
   if (isPending) return <SkeletonLoader />;
 
-  const isCalProvider = user?.identityProvider === "CAL";
-  const canSetupTwoFactor = !isCalProvider && !user?.twoFactorEnabled && !user?.passwordAdded;
+  const isRondevuProvider = user?.identityProvider === "CAL";
+  const canSetupTwoFactor = !isRondevuProvider && !user?.twoFactorEnabled && !user?.passwordAdded;
   return (
     <>
       {canSetupTwoFactor && <Alert severity="neutral" message={t("2fa_disabled")} />}
@@ -78,7 +78,7 @@ const TwoFactorAuthView = () => {
 
       <DisableTwoFactorModal
         open={disableModalOpen}
-        disablePassword={!isCalProvider}
+        disablePassword={!isRondevuProvider}
         onOpenChange={() => setDisableModalOpen(!disableModalOpen)}
         onDisable={() => {
           setDisableModalOpen(false);

@@ -29,24 +29,24 @@
   - SSS altındaki Framer divider/şekil kalıntısı scoped CSS ile gizlendi. Yerel sunucu başlatılmadı ve uzak depoya gönderim yapılmadı.
 
 - **Pricing Koyu Zemin Patlaması İçin Cerrahi CSS Düzeltmesi (2026-10-04):**
-  - `cal-pricing-framer.css` yeniden üretilmeden, yalnızca scoped kurallarla pricing canvası, plan kartları, karşılaştırma tablosu ve footer aynı antrasit yüzey ailesine bağlandı.
+  - `rondevu-pricing-framer.css` yeniden üretilmeden, yalnızca scoped kurallarla pricing canvası, plan kartları, karşılaştırma tablosu ve footer aynı antrasit yüzey ailesine bağlandı.
   - Framer satır içi beyaz/çok açık yüzeyleri (`.framer-6fxrby`, satır ve hücre `data-framer-name` seçicileri, durum rozeti) koyu yüzey ve yumuşak sınırlarla ezildi.
   - Yerel sunucu başlatılmadı; CSS ayrıştırması ve statik marketing doğrulaması geçti. Commit veya `git push` yapılmadı.
 
 - **Bento Takvim Rozeti ve Fiyatlandırma Kartları Düzeltmeleri Tamamlandı (2026-10-04):**
-  - **Bento "CONNECT YOUR CALENDAR" Merkez Rozeti:** Koyu modda beyaz hap zemin üzerinde beyaz yazıldığı için kaybolan "rOndevu" metni, `cal-framer.css` içerisinde `.framer-894vxg` kuralı koyu temaya (`background: #18181b !important; border: 1px solid rgba(255,255,255,0.15) !important; color: #ffffff !important;`) uyarlanarak yüksek kontrastlı hale getirildi. Ayrıca `cal-dom-tr.html` ve `cal-dom-en.html` dosyalarında `<h2>` içerisine marka logosu (`/logos/rondevu-icon.png`) entegre edildi.
+  - **Bento "CONNECT YOUR CALENDAR" Merkez Rozeti:** Koyu modda beyaz hap zemin üzerinde beyaz yazıldığı için kaybolan "rOndevu" metni, `rondevu-framer.css` içerisinde `.framer-894vxg` kuralı koyu temaya (`background: #18181b !important; border: 1px solid rgba(255,255,255,0.15) !important; color: #ffffff !important;`) uyarlanarak yüksek kontrastlı hale getirildi. Ayrıca `rondevu-dom-tr.html` ve `rondevu-dom-en.html` dosyalarında `<h2>` içerisine marka logosu (`/logos/rondevu-icon.png`) entegre edildi.
   - **Fiyatlandırma Kartları ve CTA Butonları:** rOndevu kalıntısı "Try for free >" ve "Get Started" / "Get Started Yearly" metinleri `pricing-dom-en.html` ve `pricing-dom-tr.html` dosyalarından tamamen kaldırıldı. Tüm butonlar `[data-plan-btn="true"]` özniteliğiyle şık ve tutarlı bir CTA ("Planı Seç" / "Choose Plan") olarak düzenlendi. `pricing-view.tsx` içerisine eklenen reaktif `useEffect` ile dil değişimlerinde dinamik senkronizasyon sağlandı; tıklamalar doğrudan `PlanContactModal` modalını tetikleyecek şekilde korundu.
-  - **Yıllık Plan Kartı Sağ Kenar Dikey Çizgisi:** "Yearly Plan" kartının sağ kenarında beliren dikey beyaz taşma çizgisi, `cal-pricing-framer.css` içerisindeki `.framer-6fxrby`, `.framer-o086nb` ve çevre taşıyıcılarına `overflow: hidden !important;`, `--border-color: rgba(255, 255, 255, 0.08) !important;` ve `border-right: none !important;` uygulanarak tamamen ortadan kaldırıldı.
+  - **Yıllık Plan Kartı Sağ Kenar Dikey Çizgisi:** "Yearly Plan" kartının sağ kenarında beliren dikey beyaz taşma çizgisi, `rondevu-pricing-framer.css` içerisindeki `.framer-6fxrby`, `.framer-o086nb` ve çevre taşıyıcılarına `overflow: hidden !important;`, `--border-color: rgba(255, 255, 255, 0.08) !important;` ve `border-right: none !important;` uygulanarak tamamen ortadan kaldırıldı.
   - **Yerel Sunucu Doğrulaması:** `http://localhost:3000` ve `http://localhost:3000/pricing` HTTP 200 OK ile doğrulanarak çalışır durumda teslim edildi. Sıfır yasaklı kelime kuralı korundu, kesinlikle `git push` yapılmadı.
 
 - **Fiyatlandırma Tablosu Metin Çöküşü (Overlap) ve Footer Hizalama Onarımı Tamamlandı (2026-10-04):**
   - **Sağ Kenara Sıkışan Footer Düzeltildi:** "© 2026 rOndevu. All rights reserved." / "Tüm hakları saklıdır." bloğu `#feature-breakdown` bölümünün ve tablo satır sarmalayıcısının (`framer-5bj5pn`) yatay `flex-flow: row` akışından tamamen çıkarıldı. Sayfa ana akışında (`#main-1`) bağımsız, tam genişlikli (`framer-pricing-footer-container`, `w-full max-w-[1200px] mx-auto text-center`) bir kapsayıcıya taşındı. Logo, telif metni ve sistem durumu rozeti dikey akışta (`flex-direction: column; gap: 16px`) merkezlendi.
-  - **Tablo Satırlarındaki Metin Çakışması (Overlap) Giderildi:** Alt satırlardaki ("Buffer time before & after events", "Minimum notice", "Time-slot intervals", "Limit booking frequency", "Limit total booking duration" vb.) başlık ve açıklama metinlerinin üst üste binmesi kökten çözüldü. `cal-pricing-framer.css` içinde uyuşmayan `.framer-3g2Zr` seçicileri `.framer-41gqb` ile eşitlendi; tüm satırların ilk sütununa (`Feature Text Wrapper`) açıkça `display: flex !important; flex-direction: column !important; gap: 6px !important;` tanımlandı.
+  - **Tablo Satırlarındaki Metin Çakışması (Overlap) Giderildi:** Alt satırlardaki ("Buffer time before & after events", "Minimum notice", "Time-slot intervals", "Limit booking frequency", "Limit total booking duration" vb.) başlık ve açıklama metinlerinin üst üste binmesi kökten çözüldü. `rondevu-pricing-framer.css` içinde uyuşmayan `.framer-3g2Zr` seçicileri `.framer-41gqb` ile eşitlendi; tüm satırların ilk sütununa (`Feature Text Wrapper`) açıkça `display: flex !important; flex-direction: column !important; gap: 6px !important;` tanımlandı.
   - **Koyu Mod Taban Boşluğu ve Şeffaflık:** `#feature-breakdown .framer-5bj5pn` koyu modda `background-color: transparent !important;` yapılarak tablonun altındaki beyaz kavisli alan temizlendi.
   - **Kritik Kurallar:** Sıfır "altyapı" kelimesi korundu, yerel sunucu çalıştırılmadı (`pnpm dev` yapılmadı), `git push` yapılmadı. HTML etiket dengesi (0 açık etiket) ve CSS kuralları doğrulandı.
 
 - **Dış Zemin Renk Bütünlüğü (#141414) ve CTA Banner Cerrahi Onarımı Tamamlandı (2026-10-04):**
-  - **Dış Zemin ve Renk Bütünlüğü (#141414):** Sayfanın tüm dış boşluklarında, `globals.css`, `layout.tsx`, `home-view.tsx`, `pricing-view.tsx`, `cal-framer.css`, `cal-pricing-framer.css` ile TR/EN HTML dosyalarındaki (`cal-dom-tr.html`, `cal-dom-en.html`, `pricing-dom-tr.html`, `pricing-dom-en.html`) zifiri siyah (`#000000`) zeminler temizlendi. Tüm taşıyıcı ve dış zeminler tasarımsal bütünlük için koyu antrasit (`#141414`) tonuna kavuşturuldu.
+  - **Dış Zemin ve Renk Bütünlüğü (#141414):** Sayfanın tüm dış boşluklarında, `globals.css`, `layout.tsx`, `home-view.tsx`, `pricing-view.tsx`, `rondevu-framer.css`, `rondevu-pricing-framer.css` ile TR/EN HTML dosyalarındaki (`rondevu-dom-tr.html`, `rondevu-dom-en.html`, `pricing-dom-tr.html`, `pricing-dom-en.html`) zifiri siyah (`#000000`) zeminler temizlendi. Tüm taşıyıcı ve dış zeminler tasarımsal bütünlük için koyu antrasit (`#141414`) tonuna kavuşturuldu.
   - **CTA Banner Izgara (Grid) İzolasyonu:** `.framer-12jqh3g` kartı `overflow: hidden !important;`, `border-radius: 24px !important;` ve `isolation: isolate !important;` ile sınırlandırıldı. Dışarıya ve siyah boşluğa kontrolsüzce taşan 2160px genişliğindeki `.framer-1x0adn6` ızgara çizgileri kart içine hapsedildi ve radial gradient maskesi ile sınırlandırıldı. Dış taşıyıcıdaki dikey sınır çizgileri (`--border-left-width: 0px`, `--border-right-width: 0px`) temizlendi.
   - **Pürüzsüz Degrade / Parlama Geçişi:** Kartın arkasındaki radyal parlama (`.framer-3gy7g1-container::before`), köşeli veya sert kesilmeyecek biçimde yumuşak bir degrade (`radial-gradient` + `blur(32px)`) ile `#141414` zeminine erir hale getirildi.
   - **Banner Buton Entegrasyonu:**
@@ -66,14 +66,14 @@
 
 - **Eksiksiz Çift Dil (TR / EN) Mimarisi ve Çeviri Temizliği Tamamlandı:**
   - **Sözlük ve Zemin Senkronizasyonu:** `home-translations.ts` merkezi sözlüğü üzerinden yönetilen çift dil mimarisi ana sayfa (`/`) ve fiyatlandırma sayfasında (`/pricing`) eksiksiz hale getirildi.
-  - **Türkçe Modunda Sıfır İngilizce:** `cal-dom-tr.html` ve `pricing-dom-tr.html` dosyalarındaki tüm yarım kalmış İngilizce açıklamalar (karşılaştırma tablosunun 40+ satır açıklaması, hero randevu seans metinleri, bento kart açıklamaları, mola süreleri, takvim rozetleri, danışan geri bildirimleri ve entegrasyon açıklamaları) akıcı, profesyonel ve doğal Türkçeye çevrildi.
-  - **İngilizce Modunda Sıfır Türkçe:** `cal-dom-en.html` ve `pricing-dom-en.html` dosyalarında kalan Türkçe ibareler (`Danışmanlık Seansı` -> `Consultation Session`, `Dr. Ayşe Yılmaz` -> `Dr. Ayse Yilmaz` vb.) profesyonel İngilizceye uyarlandı.
+  - **Türkçe Modunda Sıfır İngilizce:** `rondevu-dom-tr.html` ve `pricing-dom-tr.html` dosyalarındaki tüm yarım kalmış İngilizce açıklamalar (karşılaştırma tablosunun 40+ satır açıklaması, hero randevu seans metinleri, bento kart açıklamaları, mola süreleri, takvim rozetleri, danışan geri bildirimleri ve entegrasyon açıklamaları) akıcı, profesyonel ve doğal Türkçeye çevrildi.
+  - **İngilizce Modunda Sıfır Türkçe:** `rondevu-dom-en.html` ve `pricing-dom-en.html` dosyalarında kalan Türkçe ibareler (`Danışmanlık Seansı` -> `Consultation Session`, `Dr. Ayşe Yılmaz` -> `Dr. Ayse Yilmaz` vb.) profesyonel İngilizceye uyarlandı.
   - **Dinamik Sekme Başlığı (Document Title):** Dil değiştirildiğinde `document.title` anında güncellenir hale getirildi (TR: `rOndevu - Herkes İçin Randevu Sistemi`, EN: `rOndevu - Clear & Simple Appointment Scheduling`; Pricing TR: `Fiyatlandırma - rOndevu`, EN: `Pricing - rOndevu`).
   - **Yasaklı Kelime Kuralı:** Tüm Türkçe metinlerde ve çevirilerde "altyapı" kelimesi sıfır (0) adet olarak teyit edildi. "Randevu sistemi", "platform" ve fonksiyonel ifadeler kullanıldı.
   - **Yerel Sunucu Doğrulaması:** `http://localhost:3000` ve `http://localhost:3000/pricing` HTTP 200 OK ile sorunsuz yanıt veriyor; Biome kod kontrolleri 0 hata ile geçti; kesinlikle `git push` yapılmadı.
 
 - **Kök Seviye Karanlık Mod ve Tipografi Kontrast İyileştirmeleri Tamamlandı:**
-  - **Kök Zemin Bütünlüğü:** `cal-framer.css`, `cal-pricing-framer.css` ve `globals.css` seviyesinde `html.dark`, `body`, `#main`, `[data-framer-root]`, `#cal-1to1-root` ve `#cal-pricing-1to1-root` için saf obsidian siyah (`#000000 !important`) zemin kuruldu. Koyu modda sayfa zemininin beyaz veya açık gri kalması sorunu kökten çözüldü.
+  - **Kök Zemin Bütünlüğü:** `rondevu-framer.css`, `rondevu-pricing-framer.css` ve `globals.css` seviyesinde `html.dark`, `body`, `#main`, `[data-framer-root]`, `#rondevu-1to1-root` ve `#rondevu-pricing-1to1-root` için saf obsidian siyah (`#000000 !important`) zemin kuruldu. Koyu modda sayfa zemininin beyaz veya açık gri kalması sorunu kökten çözüldü.
   - **Metin Kontrastı ve Okunabilirlik:** Framer SSR'ın satır içine enjekte ettiği `--extracted-r6o4lv: rgb(16, 16, 16)` ve `--extracted-a0htzi: rgb(36, 36, 36)` değişkenleri `html.dark` altında `#e4e4e7` (gövde) ve `#ffffff` (başlıklar) olarak ezildi. Başlıklar (`h1`-`h4`), gövde metinleri, takvim günleri ve tablo metinleri yüksek okunabilirlik kontrastına kavuşturuldu.
   - **Fiyatlandırma Kartları ve Karşılaştırma Tablosu:**
     - Fiyatlandırma plan kartları (`.framer-mnipkf`, `.framer-6fxrby`): `#121214 !important` lüks koyu kart yüzeyi ve `rgba(255, 255, 255, 0.08)` zarif 1px kenarlıklar.
@@ -85,12 +85,12 @@
   - **Kritik Kurallara Uyum:** Sıfır "altyapı" kelimesi, kesinlikle `git push` yapılmadı, yerel geliştirme sunucusu kontrolü için token harcanmadan kullanıcı doğrulamasına devredildi.
 
 - **Cerrahi Arayüz ve Pricing Yerleşim Düzeltmeleri Tamamlandı:**
-  - **Sol Üst Logo Düzenlemesi:** `Navbar.tsx` içindeki ikon görseli (`<img>`) temizlenerek yalnızca net, şık ve orantılı `rOndevu` metin logosu (`font-cal text-2xl font-bold tracking-tight text-emphasis`) bırakıldı.
-  - **Ana Sayfa FAQ (SSS) Boşluğu Onarıldı:** `cal-dom-tr.html` ve `cal-dom-en.html` içindeki kapanmamış sözdizim hatası (`<div class="framer-1o2z9n8" data-border="true" <div id="rondevu-pricing-slot">...`) cerrahi olarak düzeltildi; akordiyon bileşeni eksiksiz render edilir hale getirildi.
+  - **Sol Üst Logo Düzenlemesi:** `Navbar.tsx` içindeki ikon görseli (`<img>`) temizlenerek yalnızca net, şık ve orantılı `rOndevu` metin logosu (`font-display text-2xl font-bold tracking-tight text-emphasis`) bırakıldı.
+  - **Ana Sayfa FAQ (SSS) Boşluğu Onarıldı:** `rondevu-dom-tr.html` ve `rondevu-dom-en.html` içindeki kapanmamış sözdizim hatası (`<div class="framer-1o2z9n8" data-border="true" <div id="rondevu-pricing-slot">...`) cerrahi olarak düzeltildi; akordiyon bileşeni eksiksiz render edilir hale getirildi.
   - **Ana Sayfa Eski Pricing Bloğu Silindi:** Slogan (`"Daha akıllı, daha sade randevu."`) ve telif (`"© 2026 rOndevu. Tüm hakları saklıdır."`) korunarak, footer altında kalan eski `<CalPricingSection>` bloğu `home-view.tsx` dosyasından tamamen kaldırıldı. `#pricing` tıklamaları `/pricing` sayfasına pürüzsüz yönlendirildi.
   - **Pricing Çift Başlık Hatası Giderildi:** `.framer-xw7bcr` içindeki mükerrer SSR breakpoint başlık varyantları temizlendi; tekil ve net `<h1>` + `<p>` yapısına dönüştürüldü.
-  - **Pricing Sayfa Sonu Sonsuz Boşluk Bug'ı (19.589px Yükseklik) Çözüldü:** `cal-pricing-framer.css` dosyasına eksik Framer breakpoint kuralları (`hidden-lanly2`, `hidden-zpr96j`, `hidden-1hydjgn`, `hidden-wcozae` vb.) eklendi. Cihaz varyantlarının üst üste binmesi engellendi, `</body></html>` kalıntıları temizlendi, `#cal-pricing-1to1-root` ve `.framer-41gqb` taban boşlukları normalize edildi.
-  - **Karşılaştırma Tablosu & Onay Tikleri:** `svg-templates.html` içine eksik `#svg8830033853` checkmark tanımı eklendi ve `cal-pricing-framer.css` ile zümrüt yeşili (`#10b981`, karanlık modda `#34d399`) renklendirildi.
+  - **Pricing Sayfa Sonu Sonsuz Boşluk Bug'ı (19.589px Yükseklik) Çözüldü:** `rondevu-pricing-framer.css` dosyasına eksik Framer breakpoint kuralları (`hidden-lanly2`, `hidden-zpr96j`, `hidden-1hydjgn`, `hidden-wcozae` vb.) eklendi. Cihaz varyantlarının üst üste binmesi engellendi, `</body></html>` kalıntıları temizlendi, `#rondevu-pricing-1to1-root` ve `.framer-41gqb` taban boşlukları normalize edildi.
+  - **Karşılaştırma Tablosu & Onay Tikleri:** `svg-templates.html` içine eksik `#svg8830033853` checkmark tanımı eklendi ve `rondevu-pricing-framer.css` ile zümrüt yeşili (`#10b981`, karanlık modda `#34d399`) renklendirildi.
   - **Ekip Yönetimi Kategorisi Kaldırıldı:** Karşılaştırma tablosundaki "Ekip Yönetimi" / "Teams" başlığı (`.framer-gxw577`) ve altındaki tüm 8 satır tablodan tamamen silindi.
   - **Kritik Kurallara Uyum:** Sıfır "altyapı" kelimesi, kesinlikle `git push` yapılmadı, yerel sunucu görsel doğrulaması için kullanıcıya devredildi.
 
@@ -105,7 +105,7 @@
     - Ana sayfadaki tüm "Fiyatlandırma", "Paketleri İncele" veya fiyat butonları `/pricing` route'una (veya `#pricing` bölümüne) pürüzsüzce yönlendirildi. İçi boş `onClick` veya ölü buton bırakılmadı.
   - **1:1 rOndevu Pricing Sayfası Zemin Kurulumu:**
     - Eski uydurma/özel fiyatlandırma tasarımı tamamen silindi.
-    - `/example/Pricing _ rOndevu.htm` dosyasından rOndevu'un orijinal minified Framer CSS'i `apps/web/public/cal_files/cal-pricing-framer.css` olarak çıkarıldı, karanlık mod tokenları (`#09090b` zemin, `#121214` kart yüzeyi, `#27272a` border) ve 2 kartlı grid düzeni eklendi.
+    - `/example/Pricing _ rOndevu.htm` dosyasından rOndevu'un orijinal minified Framer CSS'i `apps/web/public/rondevu_files/rondevu-pricing-framer.css` olarak çıkarıldı, karanlık mod tokenları (`#09090b` zemin, `#121214` kart yüzeyi, `#27272a` border) ve 2 kartlı grid düzeni eklendi.
     - `pricing-dom-tr.html` ve `pricing-dom-en.html` dosyaları cerrahi ayıklamalarla 1:1 oluşturuldu:
       1. Paketi sadece 2 plana indirme: "Aylık" (990 ₺/ay) ve "Yıllık" (9.900 ₺/yıl, "2 Ay Hediye" rozeti). "Organizations" ve "Enterprise" paketleri tamamen silindi.
       2. Karşılaştırma tablosu (Feature Matrix): "Organizations" ve "Enterprise" sütunları silindi; tablodan "Accept Payments" (Ödeme Alma) ve "Built-in Video" (Dahili Video) satırları tamamen çıkarıldı. Gerçek rOndevu yetenekleri korundu.
@@ -114,18 +114,18 @@
   - **Kritik Kurallara Uyum:** Yerel dev sunucusu başlatılmadı (`pnpm dev`, `next dev` çalıştırılmadı), `git push` yapılmadı. Biome format ve kontrolü hatasız tamamlandı.
 
 - **Ana Sayfa Cerrahi DOM Temizliği & rOndevu Markalama (DOM Purge):**
-  - Cerrahi DOM temizliği: Mevcut sayfa layout'u, CSS gridleri ve Framer Motion taşıyıcı sınıfları 100% korunarak `cal-dom-tr.html` ve `cal-dom-en.html` dosyalarından 650+ KB gereksiz DOM ve sahte içerik silindi.
+  - Cerrahi DOM temizliği: Mevcut sayfa layout'u, CSS gridleri ve Framer Motion taşıyıcı sınıfları 100% korunarak `rondevu-dom-tr.html` ve `rondevu-dom-en.html` dosyalarından 650+ KB gereksiz DOM ve sahte içerik silindi.
   - Sahte Sertifikalar (ISO 27001, SOC 2, CCPA, GDPR, HIPAA) tamamen elendi (0 kaldı).
   - Sahte İndirme Butonları (Android, iOS, Chrome, Safari, macOS, Windows, Linux) tamamen silindi (0 kaldı).
   - Sahte İnceleme Rozetleri (Hero Trustpilot, footer G2 ve alt CTA Product Hunt / G2 / Google Reviews şeritleri) tamamen kaldırıldı (0 kaldı).
-  - Alakasız footer link sütunları (Telehealth, Law, Hiring, Cal Fonts, Affiliate, vb.) tamamen silindi.
-  - Cal misyon metni ("Our mission is to connect a billion people...") kaldırıldı.
+  - Alakasız footer link sütunları (Telehealth, Law, Hiring, Rondevu Fonts, Affiliate, vb.) tamamen silindi.
+  - Rondevu misyon metni ("Our mission is to connect a billion people...") kaldırıldı.
   - Footer'da SADECE: rOndevu logosu, sade telif hakkı yazısı ("© 2026 rOndevu. Tüm hakları saklıdır." / "© 2026 rOndevu. All rights reserved.") ve sistem durum rozeti (Status Wrapper) kaldı.
   - Gövdeden sunulmayan özellikler: Accept payments ve Built-in video conferencing kartları silindi; harici Google Meet entegrasyonu korundu.
   - Sponsor ve yatırımcı logo şeritleri (Ticker Dark Logos & "Trusted by fast-growing companies") 3 kırılımda silindi.
   - Navbar Düzenlemesi: Enterprise, Developer, Kaynaklar açılır menüleri kaldırıldı; menüde sadece 3 bağlantı bırakıldı: "Özellikler", "Fiyatlandırma", "SSS".
   - Sağ tarafa "Giriş Yap" butonu ile yanına `#rondevu-theme-lang-slot` yer tutucusu eklendi; harici yüzen `.rondevu-top-controls` kutusu kaldırılarak Dil (TR/EN) ve Tema (Oto/Koyu/Açık) seçicileri React Portal ile navbar içine entegre edildi.
-  - Logo ve Markalama: Header ve Footer'da rOndevu SVG logosu ve `rondevu-icon.png` entegre edildi; kod ve metinlerde kalan tüm "Cal" / "rOndevu" ibareleri "rOndevu" yapıldı.
+  - Logo ve Markalama: Header ve Footer'da rOndevu SVG logosu ve `rondevu-icon.png` entegre edildi; kod ve metinlerde kalan tüm "Rondevu" / "rOndevu" ibareleri "rOndevu" yapıldı.
   - Doğrulama: `scripts/verify_dom_purge.js` ile tüm maddeler 100% PASS doğrulandı. Biome kontrolleri hatasız geçti. Yerel sunucu başlatılmadı, git push yapılmadı.
 
 -9. **Authentic Booker Interface, Real Phone Interface Showcase & Razor-Sharp Typography** —
@@ -134,14 +134,14 @@
      - Created a showcase presenting real features discovered in the app's settings screens: *Mola ve tampon süreler* (`IMG_5909`), *Minimum 2 saat öncesinden bildirim süresi*, *Google & Apple Takvim çakışma kalkanı* (`IMG_5911`), *SMS onay zorunluluğu* (`IMG_5915`), *Kişiye özel tek kullanımlık gizli linkler* (`IMG_5916`), and *İptal nedeni zorunluluğu* (`IMG_5914`).
      - Described every feature in natural, plain, everyday Turkish without complex jargon or AI slop.
    - **Authentic Booking Flow Restored (`HeroPrecisionConsole.tsx`):**
-     - Completely eliminated custom/generic templates in favor of a 100% faithful interactive implementation of Cal/rOndevu Booker screens (`IMG_5903`, `IMG_5904`, `IMG_5920`, `IMG_5921`, `IMG_5923`).
+     - Completely eliminated custom/generic templates in favor of a 100% faithful interactive implementation of Rondevu/rOndevu Booker screens (`IMG_5903`, `IMG_5904`, `IMG_5920`, `IMG_5921`, `IMG_5923`).
      - Step 1: Calendar view (Ekim 2026, month arrows, day columns, available days as dark rounded tiles, selected day as white tile, Pzt 05 indicator, 12 sa / 24 sa toggle, and time slot pills with green dots: `• 09:00`, `• 09:15`, `• 09:30`...).
      - Step 2: "Bilgilerinizi onaylayın" form (Date badge `📅 5 Ekim 2026 Pazartesi, 10:00`, duration `🕒 15dakika`, Name, Email, Notes, "+ Misafir ekle", "Geri" and "E-postayı doğrula" button).
      - Step 3: Verification modal (`IMG_5921`) with 6-digit code `[ 4 ][ 8 ][ 2 ][ 9 ][ 1 ][ 0 ]` and toast `✓ E-posta başarıyla gönderildi`.
      - Step 4: Authentic confirmation card (`IMG_5923`) with green check circle, "Randevu planlandı", details table, "Yeniden planla veya İptal et", and 4 calendar buttons (Google, Outlook, Office 365, Apple .ics).
    - **Elimination of Blurry/Pixelated Typography:**
      - Added `subsets: ["latin", "latin-ext"]` to `Inter` font in `apps/web/app/layout.tsx` to ensure all Turkish glyphs (`ş, ğ, ı, İ, ö, ü, ç`) render sharply without system font fallback.
-     - Added `interFont.variable` and `calFont.variable` to `html` className attribute, and added `--font-sans` fallback to `--font-cal`.
+     - Added `interFont.variable` and `calFont.variable` to `html` className attribute, and added `--font-sans` fallback to `--font-display`.
      - Added `text-rendering: optimizeLegibility`, `-webkit-font-smoothing: antialiased`, and `-moz-osx-font-smoothing: grayscale` to `html, body, input, textarea, select, button` in `apps/web/styles/globals.css`.
      - Removed heavy `backdrop-filter` and subpixel `transform: translateY(...)` on text containers that caused Chromium layer compositing blur.
    - **Anti-AI Slop & Plain Turkish:**
@@ -151,7 +151,7 @@
      - Biome formatting and linting executed cleanly.
      - Zero token-wasting browser recording loops executed, per user instruction.
 -8. **Radical & Minimalist Principal Design Engineer Homepage Architecture** —
-   - **Zero Text Clutter & Pure Typography:** Replaced generic marketing paragraphs and boilerplate copy with sculptural Cal Sans display typography (*"Zamanınıza hükmedin."*) and single-sentence precision subtexts.
+   - **Zero Text Clutter & Pure Typography:** Replaced generic marketing paragraphs and boilerplate copy with sculptural Rondevu Sans display typography (*"Zamanınıza hükmedin."*) and single-sentence precision subtexts.
    - **Living Precision Console (`HeroPrecisionConsole.tsx`):**
      - Replaced static/mockup concepts with a real-time, interactive dual-perspective console.
      - Booker perspective features live slot pills (`09:30`, `11:00`, `14:30`, `16:00`, `17:15`), instant simulated SMS OTP verification, and direct calendar reservation feedback (`0.4s` velocity).
@@ -331,7 +331,7 @@
 23. **User Feedback Implementation (Homepage Polish, Exact Mockup Fidelity, SMS Infrastructure Fixes)** —
     - **Admin Plan İletişim Bilgileri Homepage Sync**: Dynamically synchronized homepage (`/`) with `/settings/admin/plan-contact` via `trpc.publicViewer.getPlanContact`. Added live phone, WhatsApp, and email buttons in Block 4 of `AdminFeatureCards` and in a dedicated consultation bar right below the pricing cards on `home-view.tsx`, plus dynamic contact email in the footer.
     - **Hero Step 3 Exact Screenshot Fidelity**: Restored Step 3 confirmation card in `HeroBookingMockup.tsx` to match `Screenshot 2026-09-25 at 16-57-09` with top navigation `< Rezervasyonlara dön`, `Host` badge, and 4 authentic square calendar buttons (Google `G`, Microsoft Outlook, Microsoft 365, Apple Calendar `.ics`).
-    - **Monochrome Design Aesthetic Restored**: Toned down loud accent colors across homepage components (`HeroBookingMockup`, `AdminFeatureCards` Blocks 1-4, `home-view`, and `FaqSection`), adopting Cal/rOndevu's minimalist monochromatic tokens (`bg-default`, `border-subtle`, `bg-muted/20`, `text-emphasis`, `text-subtle`).
+    - **Monochrome Design Aesthetic Restored**: Toned down loud accent colors across homepage components (`HeroBookingMockup`, `AdminFeatureCards` Blocks 1-4, `home-view`, and `FaqSection`), adopting Rondevu/rOndevu's minimalist monochromatic tokens (`bg-default`, `border-subtle`, `bg-muted/20`, `text-emphasis`, `text-subtle`).
     - **Block 2 Layout & Spacing Overhaul**: Expanded container padding to `p-6 sm:p-8 space-y-6`, created a wide, comfortable segmented switcher control for "Randevular & No-Show" vs "Ofis Dışında", and cleanly decoupled the client preview ("Danışan randevu ekranı önizlemesi") into its own spacious, distinct card with clear border divider.
     - **Phone OTP Verification & Cancellation SMS Fix**:
       - Implemented SMS OTP dispatch in `sendEmailVerificationByCode` when `isSmsCalEmail(email)` is detected.
@@ -613,11 +613,11 @@
 - Another visual report showed the `/api/logo` plus theme-filter approach remained too small and color-inconsistent between marketing and legal routes. All four routes now use one static `rondevu-logo-white.svg` BrandLogo component with larger responsive widths and `mix-blend-mode: difference` for contrast on either neutral background.
 
 ## Brand Asset Details
-- Wordmark SVGs (`cal-logo-word*.svg`, `rondevu-logo-*.svg`): Scaled to fit original 84x26 box dimensions with 17px font, avoiding layout overflow.
-- Favicon & App Icons (`apple-touch-icon.png`, `android-chrome-*.png`, `favicon-*.png`, `favicon.ico`): Rendered in Cal Sans font, exact original dark rounded-rectangle gradient, silver metallic bevel, and "rOn" lettering with no red accent.
+- Wordmark SVGs (`rondevu-logo-word*.svg`, `rondevu-logo-*.svg`): Scaled to fit original 84x26 box dimensions with 17px font, avoiding layout overflow.
+- Favicon & App Icons (`apple-touch-icon.png`, `android-chrome-*.png`, `favicon-*.png`, `favicon.ico`): Rendered in Rondevu Sans font, exact original dark rounded-rectangle gradient, silver metallic bevel, and "rOn" lettering with no red accent.
 - Windows Metro Tiles (`mstile-*.png`): Pure black background with centered white "rOn".
 - Safari Pinned Tab (`safari-pinned-tab.svg`): Exact vector glyph paths of "rOn" centered in 700x700 viewBox.
-- Email Header Logos (`logo.png`, `CalLogo@2x.png`): "rOndevu" wordmark in dark #292929 matching original transparent header dimensions.
+- Email Header Logos (`logo.png`, `RondevuLogo@2x.png`): "rOndevu" wordmark in dark #292929 matching original transparent header dimensions.
 ## 2026-10-05 — Recurring appointment feature card
 
 - Home page's “...ve çok daha fazlası” feature grid now receives a localized recurring-appointment card after the static Framer markup hydrates.

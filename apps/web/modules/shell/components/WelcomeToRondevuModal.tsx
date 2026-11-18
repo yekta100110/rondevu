@@ -14,8 +14,8 @@ const features = [
   "integrate_with_favorite_apps",
   "accept_payments_via_stripe",
   "html_react_embed",
-  "cal_ai_phone_agent",
-  "cal_video",
+  "rondevu_ai_phone_agent",
+  "rondevu_video",
 ];
 
 export function WelcomeToRondevuModal() {
@@ -56,7 +56,7 @@ export function WelcomeToRondevuModal() {
                     left: `calc(50% - ${r}px)`,
                     top: `calc(50% - ${r}px)`,
                     borderWidth: RING_STROKE,
-                    borderColor: "var(--cal-border-subtle)",
+                    borderColor: "var(--rondevu-border-subtle)",
                   }}
                 />
               ))}
@@ -77,7 +77,7 @@ export function WelcomeToRondevuModal() {
           </div>
 
           <div className="mb-2 flex flex-col gap-2 text-center">
-            <h2 className="font-cal text-emphasis text-2xl leading-none">
+            <h2 className="font-display text-emphasis text-2xl leading-none">
               {t("welcome_to_rondevu", { appName: APP_NAME })}
             </h2>
             <p className="text-default text-sm leading-normal">{t("personal_welcome_description")}</p>

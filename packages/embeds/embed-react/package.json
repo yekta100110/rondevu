@@ -2,7 +2,7 @@
   "name": "@rondevu/embed-react",
   "sideEffects": false,
   "version": "1.5.3",
-  "description": "Embed Cal Link as a React Component",
+  "description": "Embed Rondevu Link as a React Component",
   "license": "SEE LICENSE IN LICENSE",
   "repository": {
     "type": "git",
@@ -11,7 +11,7 @@
   },
   "scripts": {
     "dev": "vite --port=3101 --open",
-    "build": "npx rimraf dist && vite build && npx shx cp ./dist/Cal.es.js ./dist/Cal.es.mjs && tsc --emitDeclarationOnly --declarationDir dist",
+    "build": "npx rimraf dist && vite build && npx shx cp ./dist/Rondevu.es.js ./dist/Rondevu.es.mjs && tsc --emitDeclarationOnly --declarationDir dist",
     "preview": "vite preview",
     "type-check": "tsc --pretty --noEmit",
     "type-check:ci": "tsc-absolute --pretty --noEmit",
@@ -26,8 +26,8 @@
     "embed-dev": "yarn workspace @rondevu/embed-react dev",
     "clean": "npx rimraf .turbo node_modules dist"
   },
-  "main": "./dist/Cal.umd.js",
-  "module": "./dist/Cal.es.mjs",
+  "main": "./dist/Rondevu.umd.js",
+  "module": "./dist/Rondevu.es.mjs",
   "types": "./dist/embed-react/src/index.d.ts",
   "peerDependencies": {
     "react": "^18.2.0 || ^19.0.0",
@@ -39,8 +39,8 @@
   "exports": {
     ".": {
       "types": "./dist/embed-react/src/index.d.ts",
-      "import": "./dist/Cal.es.mjs",
-      "require": "./dist/Cal.umd.js"
+      "import": "./dist/Rondevu.es.mjs",
+      "require": "./dist/Rondevu.umd.js"
     }
   },
   "devDependencies": {

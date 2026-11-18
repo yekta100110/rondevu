@@ -3,18 +3,18 @@
 import type { GlobalCal, GlobalCalWithoutNs } from "@rondevu/embed-core";
 import EmbedSnippet from "@rondevu/embed-snippet";
 
-import Cal from "./Cal";
+import Rondevu from "./Rondevu";
 
 // Exporting for consumption by @rondevu/embed-react user
 export type { EmbedEvent } from "@rondevu/embed-core";
 
-export function getCalApi(options?: {
+export function getRondevuApi(options?: {
   embedJsUrl?: string;
   namespace?: string;
 }): Promise<GlobalCal | GlobalCalWithoutNs>;
-export function getCalApi(embedJsUrl: string): Promise<GlobalCal | GlobalCalWithoutNs>;
+export function getRondevuApi(embedJsUrl: string): Promise<GlobalCal | GlobalCalWithoutNs>;
 
-export function getCalApi(
+export function getRondevuApi(
   optionsOrEmbedJsUrl?:
     | {
         embedJsUrl?: string;
@@ -40,4 +40,4 @@ export function getCalApi(
   });
 }
 
-export default Cal;
+export default Rondevu;

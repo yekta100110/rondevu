@@ -23,7 +23,7 @@ function Success() {
     <>
       <div className="stack-y-6">
         <div>
-          <h2 className="font-cal text-emphasis mt-6 text-center text-3xl font-extrabold">
+          <h2 className="font-display text-emphasis mt-6 text-center text-3xl font-extrabold">
             {t("password_updated")}
           </h2>
         </div>
@@ -41,7 +41,7 @@ function Expired() {
     <>
       <div className="stack-y-6">
         <div>
-          <h2 className="font-cal text-emphasis mt-6 text-center text-3xl font-extrabold">{t("whoops")}</h2>
+          <h2 className="font-display text-emphasis mt-6 text-center text-3xl font-extrabold">{t("whoops")}</h2>
           <h2 className="text-emphasis text-center text-3xl font-extrabold">{t("request_is_expired")}</h2>
         </div>
         <p>{t("request_is_expired_instructions")}</p>
@@ -116,10 +116,10 @@ function PasswordResetForm({
       form={formMethods}
       style={
         {
-          "--cal-brand": "#111827",
-          "--cal-brand-emphasis": "#101010",
-          "--cal-brand-text": "white",
-          "--cal-brand-subtle": "#9CA3AF",
+          "--rondevu-brand": "#111827",
+          "--rondevu-brand-emphasis": "#101010",
+          "--rondevu-brand-text": "white",
+          "--rondevu-brand-subtle": "#9CA3AF",
         } as CSSProperties
       }
       handleSubmit={async (values) => {

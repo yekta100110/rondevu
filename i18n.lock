@@ -16,8 +16,8 @@ checksums:
     min_characters: 49bf5be2c6ddbee3adef1352ea7125c8
     min_characters_required: ac3feddeb2843464010f6ff6766e7255
     max_characters_allowed: c5aafc8b481e84937abb4492aabea93f
-    calcom_explained: 1095d14f7bf834c343af9512e694b576
-    calcom_explained_new_user: ef3db8c2203b98529bc6ed59cc492483
+    rondevu_explained: 1095d14f7bf834c343af9512e694b576
+    rondevu_explained_new_user: ef3db8c2203b98529bc6ed59cc492483
     have_any_questions: 0b34c2b28d7b43d4b5bd7083cb490d37
     reset_password_subject: 6cb079319334bba4cf58623e2f8c944d
     verify_email_subject: 0ce3732deb20fb1d907488ace43ddc55
@@ -268,7 +268,7 @@ checksums:
     use_link_to_reset_password: 75eea563335b8773fa581c61307b4b22
     hey_there: abc179eec007507d2e54e5ef922c04d7
     there: 7d63e12738c8b7b3bea05fa04ca86552
-    forgot_your_password_calcom: e25822f11d138676f1151900a12be61f
+    forgot_your_password_rondevu: e25822f11d138676f1151900a12be61f
     delete_webhook_confirmation_message: 19d14e3101d04ea63cbf689c6da89ef6
     confirm_delete_webhook: f15f64622d956beb69dce8ec24f237ae
     edit_webhook: 145e9993fc334ea0718882c177928c01
@@ -368,7 +368,7 @@ checksums:
     org_banner_instructions: 3d1e6ab6ae5844ff11bfc012cf62de1b
     email_change: 7064fbed3979d2b93e80b8c3b72f1847
     create_your_account: 99ef5a3eeab6aa98f0b5577b013b5e76
-    create_your_calcom_account: 06e939953ea056809946a8214c525e4a
+    create_your_rondevu_account: 06e939953ea056809946a8214c525e4a
     sign_up: a6a0b995463f62ce6a12e37f1d05a9bd
     youve_been_logged_out: 9a86ae629ff892ba2e455698816e42a2
     hope_to_see_you_soon: 376d14816b4e2afad591f5f69101e9b1
@@ -426,7 +426,7 @@ checksums:
     welcome: 3180ad6b8de344b781637750259e0f53
     welcome_back: 4928884739ba559e6e4b960e80fe1452
     welcome_back_sign_in: 191b04f74deb8396f4c54d2987c3a02c
-    welcome_to_calcom: f6071d1cab61b56a4adf8ef813341264
+    welcome_to_rondevu: f6071d1cab61b56a4adf8ef813341264
     personal_welcome_description: d0f2f4da1dfc9fd0ec246ece86a113b6
     unlimited_calendars: d66cf4e8ed9255094f3395b02db0f04c
     unlimited_event_types: 062f31b386b3da1e3b04952154715d8c
@@ -442,7 +442,7 @@ checksums:
     connect_ics_feed: b947b289dd2a270f5905764467dfa1ca
     connect: 8778ee245078a8be4a2ce855c8c56edc
     try_for_free: f615a3b940c181229c620ffb55687382
-    create_booking_link_with_calcom: 00c16fda593f244b86e009327b1f1e53
+    create_booking_link_with_rondevu: 00c16fda593f244b86e009327b1f1e53
     who: f9add49e2056f1e0996c257350ff1d3f
     what: 00ba858b3bbf5f58fa37027bb7c73e23
     when: a40ad3eed1b75e76226290eeb9bb20cd
@@ -636,7 +636,7 @@ checksums:
     developer: 7a803617347f091e19a92d8579555af7
     manage_developer_settings: 7aa2cfd93a6c9ba9382868d7d526b0b0
     iframe_embed: a344321489515fde58ff11206d5626b6
-    embed_calcom: d596d6d83c91c442fb680380bbdd7663
+    embed_rondevu: d596d6d83c91c442fb680380bbdd7663
     integrate_using_embed_or_webhooks: 4c5f2211c48d0682418ed26ee4d1d61d
     schedule_a_meeting: 185a75777b713c6699dc823bc9c87c4f
     view_and_manage_billing_details: 0410cf2ffa43dd1acbf69588fcf03821
@@ -2286,8 +2286,8 @@ checksums:
     find_the_best_person: cddde4af1e1cf65e25238c64d51b83d7
     fixed_round_robin: ed66a915617997b484a8802f6250f0ab
     add_one_fixed_attendee: f6e0080c2ecec1758b8ca2525a5ceada
-    calcom_is_better_with_team: acdf5507f780dee5730fee3b85308dbd
-    the_calcom_team: f27321cd4a5593f07fdc08eefb7a99eb
+    rondevu_is_better_with_team: acdf5507f780dee5730fee3b85308dbd
+    the_rondevu_team: f27321cd4a5593f07fdc08eefb7a99eb
     add_your_team_members: 8304c40c36269f1c1c07744213ff65ff
     booking_limit_reached: 72ae3fbb994879f476bdfe071a4183da
     duration_limit_reached: 078ffb4e81d2d991ecd506142e3fb46c

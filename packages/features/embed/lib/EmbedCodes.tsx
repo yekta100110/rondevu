@@ -6,7 +6,7 @@ import { getApiNameForReactSnippet, getApiNameForVanillaJsSnippet } from "./getA
 import { getDimension } from "./getDimension";
 
 export const doWeNeedCalOriginProp = (embedCalOrigin: string) => {
-  // If we are self hosted, calOrigin won't be app.rondevu.org so we need to pass it
+  // If we are self hosted, rondevuOrigin won't be app.rondevu.org so we need to pass it
   // If we are not self hosted but it's still different from WEBAPP_URL and WEBSITE_URL, we need to pass it -> It happens for organization booking URL at the moment
   return IS_SELF_HOSTED || (embedCalOrigin !== WEBAPP_URL && embedCalOrigin !== WEBSITE_URL);
 };
@@ -15,13 +15,13 @@ export const doWeNeedCalOriginProp = (embedCalOrigin: string) => {
 export const Codes = {
   react: {
     inline: ({
-      calLink,
+      rondevuLink,
       uiInstructionCode,
       previewState,
       embedCalOrigin,
       namespace,
     }: {
-      calLink: string;
+      rondevuLink: string;
       uiInstructionCode: string;
       previewState: PreviewState["inline"];
       embedCalOrigin: string;
@@ -32,32 +32,32 @@ export const Codes = {
       const namespaceProp = `${namespace ? `namespace="${namespace}"` : ""}`;
       const argumentForGetCalApi = getArgumentForGetCalApi(namespace);
       return code`
-import Cal, { getCalApi } from "@rondevu/embed-react";
+import Rondevu, { getRondevuApi } from "@rondevu/embed-react";
 import { useEffect } from "react";
 export default function MyApp() {
   useEffect(() => {
     (async function () {
-      const cal = await getCalApi(${argumentForGetCalApi ? JSON.stringify(argumentForGetCalApi) : ""});
+      const cal = await getRondevuApi(${argumentForGetCalApi ? JSON.stringify(argumentForGetCalApi) : ""});
       ${uiInstructionCode}
     })();
   }, [])
-  return <Cal ${namespaceProp}
-    calLink="${calLink}"
+  return <Rondevu ${namespaceProp}
+    rondevuLink="${rondevuLink}"
     style={{width:"${width}",height:"${height}",overflow:"scroll"}}
     config={${JSON.stringify(previewState.config)}}
-    ${doWeNeedCalOriginProp(embedCalOrigin) ? `calOrigin="${embedCalOrigin}"` : ""}
+    ${doWeNeedCalOriginProp(embedCalOrigin) ? `rondevuOrigin="${embedCalOrigin}"` : ""}
     ${IS_SELF_HOSTED ? `embedJsUrl="${embedLibUrl}"` : ""}
   />;
 };`;
     },
     "floating-popup": ({
-      calLink,
+      rondevuLink,
       uiInstructionCode,
       previewState,
       embedCalOrigin,
       namespace,
     }: {
-      calLink: string;
+      rondevuLink: string;
       embedCalOrigin: string;
       uiInstructionCode: string;
       namespace: string;
@@ -65,31 +65,31 @@ export default function MyApp() {
     }) => {
       const argumentForGetCalApi = getArgumentForGetCalApi(namespace);
       const floatingButtonArg = JSON.stringify({
-        calLink,
-        ...(doWeNeedCalOriginProp(embedCalOrigin) ? { calOrigin: embedCalOrigin } : null),
+        rondevuLink,
+        ...(doWeNeedCalOriginProp(embedCalOrigin) ? { rondevuOrigin: embedCalOrigin } : null),
         ...previewState,
       });
       return code`
-import { getCalApi } from "@rondevu/embed-react";
+import { getRondevuApi } from "@rondevu/embed-react";
 import { useEffect } from "react";
 export default function MyApp() {
   useEffect(() => {
     (async function () {
-      const cal = await getCalApi(${argumentForGetCalApi ? JSON.stringify(argumentForGetCalApi) : ""});
-      ${getApiNameForReactSnippet({ mainApiName: "cal" })}("floatingButton", ${floatingButtonArg});
+      const cal = await getRondevuApi(${argumentForGetCalApi ? JSON.stringify(argumentForGetCalApi) : ""});
+      ${getApiNameForReactSnippet({ mainApiName: "rondevu" })}("floatingButton", ${floatingButtonArg});
       ${uiInstructionCode}
     })();
   }, [])
 };`;
     },
     "element-click": ({
-      calLink,
+      rondevuLink,
       uiInstructionCode,
       previewState,
       embedCalOrigin,
       namespace,
     }: {
-      calLink: string;
+      rondevuLink: string;
       uiInstructionCode: string;
       previewState: PreviewState["elementClick"];
       embedCalOrigin: string;
@@ -97,19 +97,19 @@ export default function MyApp() {
     }) => {
       const argumentForGetCalApi = getArgumentForGetCalApi(namespace);
       return code`
-import { getCalApi } from "@rondevu/embed-react";
+import { getRondevuApi } from "@rondevu/embed-react";
 import { useEffect } from "react";
 export default function MyApp() {
   useEffect(() => {
     (async function () {
-      const cal = await getCalApi(${argumentForGetCalApi ? JSON.stringify(argumentForGetCalApi) : ""});
+      const cal = await getRondevuApi(${argumentForGetCalApi ? JSON.stringify(argumentForGetCalApi) : ""});
       ${uiInstructionCode}
     })();
   }, [])
-  return <button data-cal-namespace="${namespace}"
-    data-cal-link="${calLink}"
-    ${doWeNeedCalOriginProp(embedCalOrigin) ? `data-cal-origin="${embedCalOrigin}"` : ""}
-    ${`data-cal-config='${JSON.stringify(previewState.config)}'`}
+  return <button data-rondevu-namespace="${namespace}"
+    data-rondevu-link="${rondevuLink}"
+    ${doWeNeedCalOriginProp(embedCalOrigin) ? `data-rondevu-origin="${embedCalOrigin}"` : ""}
+    ${`data-rondevu-config='${JSON.stringify(previewState.config)}'`}
   >Click me</button>;
 };`;
     },
@@ -119,13 +119,13 @@ export default function MyApp() {
   },
   "react-atom": {
     inline: ({
-      calLink,
+      rondevuLink,
       uiInstructionCode,
       previewState,
       embedCalOrigin,
       namespace,
     }: {
-      calLink: string;
+      rondevuLink: string;
       uiInstructionCode: string;
       previewState: PreviewState["inline"];
       embedCalOrigin: string;
@@ -140,7 +140,7 @@ export default function Booker( props : BookerProps ) {
   return (
     <>
       <BookerEmbed
-        // Use the parsed username and event slug from calLink
+        // Use the parsed username and event slug from rondevuLink
         eventSlug={eventSlug}
         // layout can be of three types: COLUMN_VIEW, MONTH_VIEW or WEEK_VIEW, 
         // you can choose whichever you prefer
@@ -158,13 +158,13 @@ export default function Booker( props : BookerProps ) {
 };`;
     },
     "floating-popup": ({
-      calLink,
+      rondevuLink,
       uiInstructionCode,
       previewState,
       embedCalOrigin,
       namespace,
     }: {
-      calLink: string;
+      rondevuLink: string;
       embedCalOrigin: string;
       uiInstructionCode: string;
       namespace: string;
@@ -178,7 +178,7 @@ export default function Booker( props : BookerProps ) {
   return (
     <>
       <BookerEmbed
-        // Use the parsed username and event slug from calLink
+        // Use the parsed username and event slug from rondevuLink
         eventSlug={eventSlug}
         // layout can be of three types: COLUMN_VIEW, MONTH_VIEW or WEEK_VIEW, 
         // you can choose whichever you prefer
@@ -196,13 +196,13 @@ export default function Booker( props : BookerProps ) {
 };`;
     },
     "element-click": ({
-      calLink,
+      rondevuLink,
       uiInstructionCode,
       previewState,
       embedCalOrigin,
       namespace,
     }: {
-      calLink: string;
+      rondevuLink: string;
       uiInstructionCode: string;
       previewState: PreviewState["elementClick"];
       embedCalOrigin: string;
@@ -216,7 +216,7 @@ export default function Booker( props : BookerProps ) {
   return (
     <>
       <BookerEmbed
-        // Use the parsed username and event slug from calLink
+        // Use the parsed username and event slug from rondevuLink
         eventSlug={eventSlug}
         // layout can be of three types: COLUMN_VIEW, MONTH_VIEW or WEEK_VIEW, 
         // you can choose whichever you prefer
@@ -239,57 +239,57 @@ export default function Booker( props : BookerProps ) {
   },
   HTML: {
     inline: ({
-      calLink,
+      rondevuLink,
       uiInstructionCode,
       previewState,
       embedCalOrigin,
       namespace,
     }: {
-      calLink: string;
+      rondevuLink: string;
       uiInstructionCode: string;
       previewState: PreviewState["inline"];
       embedCalOrigin: string;
       namespace: string;
     }) => {
-      return code`${getApiNameForVanillaJsSnippet({ namespace, mainApiName: "Cal" })}("inline", {
-    elementOrSelector:"#my-cal-inline-${namespace}",
+      return code`${getApiNameForVanillaJsSnippet({ namespace, mainApiName: "Rondevu" })}("inline", {
+    elementOrSelector:"#my-rondevu-inline-${namespace}",
     config: ${JSON.stringify(previewState.config)},
-    calLink: "${calLink}",
+    rondevuLink: "${rondevuLink}",
   });
 
   ${uiInstructionCode}`;
     },
     "floating-popup": ({
-      calLink,
+      rondevuLink,
       uiInstructionCode,
       previewState,
       embedCalOrigin,
       namespace,
     }: {
-      calLink: string;
+      rondevuLink: string;
       uiInstructionCode: string;
       previewState: PreviewState["floatingPopup"];
       embedCalOrigin: string;
       namespace: string;
     }) => {
       const floatingButtonArg = JSON.stringify({
-        calLink,
+        rondevuLink,
         ...previewState,
       });
       return code`${getApiNameForVanillaJsSnippet({
         namespace,
-        mainApiName: "Cal",
+        mainApiName: "Rondevu",
       })}("floatingButton", ${floatingButtonArg}); 
   ${uiInstructionCode}`;
     },
     "element-click": ({
-      calLink,
+      rondevuLink,
       uiInstructionCode,
       previewState,
       embedCalOrigin,
       namespace,
     }: {
-      calLink: string;
+      rondevuLink: string;
       uiInstructionCode: string;
       previewState: PreviewState["elementClick"];
       embedCalOrigin: string;
@@ -297,9 +297,9 @@ export default function Booker( props : BookerProps ) {
     }) => {
       return code`
   // Important: Please add the following attributes to the element that should trigger the calendar to open upon clicking.
-  // \`data-cal-link="${calLink}"\`
-  // data-cal-namespace="${namespace}"
-  // \`data-cal-config='${JSON.stringify(previewState.config)}'\`
+  // \`data-rondevu-link="${rondevuLink}"\`
+  // data-rondevu-namespace="${namespace}"
+  // \`data-rondevu-config='${JSON.stringify(previewState.config)}'\`
 
   ${uiInstructionCode}`;
     },

@@ -316,12 +316,12 @@ export class SdkActionManager {
       return null;
     }
     //FIXME: Ensure that any action if it has :, it is properly encoded.
-    const [cal, calNamespace, type] = fullType.split(":");
+    const [cal, rondevuNamespace, type] = fullType.split(":");
     if (cal !== "CAL") {
       return null;
     }
     return {
-      ns: calNamespace,
+      ns: rondevuNamespace,
       type,
     };
   }

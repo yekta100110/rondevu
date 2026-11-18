@@ -43,7 +43,7 @@ const mockUserData = {
   creationSource: CreationSource.WEBAPP,
 };
 
-vi.stubEnv("CALCOM_LICENSE_KEY", undefined);
+vi.stubEnv("RONDEVU_LICENSE_KEY", undefined);
 
 describe("UserCreationService", () => {
   beforeEach(() => {

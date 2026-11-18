@@ -5,8 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 import { useEffect } from "react";
 import http from "../lib/http";
-import type { BaseCalProviderProps } from "./BaseCalProvider";
-import { BaseCalProvider } from "./BaseCalProvider";
+import type { BaseRondevuProviderProps } from "./BaseRondevuProvider";
+import { BaseRondevuProvider } from "./BaseRondevuProvider";
 import type { translationKeys } from "./languages";
 
 function isRetryableError(error: unknown): boolean {
@@ -38,10 +38,10 @@ const queryClient: QueryClient = new QueryClient({
   },
 });
 
-type CalProviderProps = Omit<BaseCalProviderProps, "isOAuth2">;
+type RondevuProviderProps = Omit<BaseRondevuProviderProps, "isOAuth2">;
 
 /**
- * Renders a CalProvider component.
+ * Renders a RondevuProvider component.
  *
  * @component
  * @param {string} props.clientId - The platform oauth client ID.
@@ -55,9 +55,9 @@ type CalProviderProps = Omit<BaseCalProviderProps, "isOAuth2">;
  * @param {function} props.onTokenRefreshSuccess - The callback function called when token refresh succeeds. - Optional
  * @param {function} props.onTokenRefreshError - The callback function called when token refresh fails. - Optional
  * @param {ReactNode} props.children - The child components. - Optional
- * @returns {JSX.Element} The rendered CalProvider component.
+ * @returns {JSX.Element} The rendered RondevuProvider component.
  */
-export function CalProvider({
+export function RondevuProvider({
   clientId,
   accessToken,
   options,
@@ -72,7 +72,7 @@ export function CalProvider({
   version = VERSION_2024_06_14,
   organizationId,
   isEmbed = false,
-}: CalProviderProps): JSX.Element {
+}: RondevuProviderProps): JSX.Element {
   useEffect(() => {
     http.setVersionHeader(version);
   }, [version]);
@@ -89,7 +89,7 @@ export function CalProvider({
 
   return (
     <QueryClientProvider client={queryClient}>
-      <BaseCalProvider
+      <BaseRondevuProvider
         isEmbed={isEmbed}
         isOAuth2={false}
         autoUpdateTimezone={autoUpdateTimezone}
@@ -106,7 +106,7 @@ export function CalProvider({
         organizationId={organizationId}
       >
         {children}
-      </BaseCalProvider>
+      </BaseRondevuProvider>
     </QueryClientProvider>
   );
 }

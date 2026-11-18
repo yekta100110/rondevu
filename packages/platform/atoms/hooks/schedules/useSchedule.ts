@@ -4,7 +4,7 @@ import {
   V2_ENDPOINTS,
   SUCCESS_STATUS,
   VERSION_2024_06_11,
-  CAL_API_VERSION_HEADER,
+  RONDEVU_API_VERSION_HEADER,
 } from "@rondevu/platform-constants";
 import type { GetScheduleOutput_2024_06_11 } from "@rondevu/platform-types";
 
@@ -23,7 +23,7 @@ export const useSchedule = (id?: number | string) => {
     queryFn: () => {
       return http
         .get<GetScheduleOutput_2024_06_11>(pathname, {
-          headers: { [CAL_API_VERSION_HEADER]: VERSION_2024_06_11 },
+          headers: { [RONDEVU_API_VERSION_HEADER]: VERSION_2024_06_11 },
         })
         .then((res) => {
           if (res.data.status === SUCCESS_STATUS) {

@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import {
   V2_ENDPOINTS,
   SUCCESS_STATUS,
-  CAL_API_VERSION_HEADER,
+  RONDEVU_API_VERSION_HEADER,
   VERSION_2024_06_14,
 } from "@rondevu/platform-constants";
 import type { ApiResponse, ApiSuccessResponse } from "@rondevu/platform-types";
@@ -27,7 +27,7 @@ export const useCreateEventType = ({ onSuccess, onError, onSettled }: UseCreateE
       const pathname = `/${V2_ENDPOINTS.eventTypes}`;
       return http
         ?.post<ApiResponse<EventType>>(pathname, body, {
-          headers: { [CAL_API_VERSION_HEADER]: VERSION_2024_06_14 },
+          headers: { [RONDEVU_API_VERSION_HEADER]: VERSION_2024_06_14 },
         })
         .then((res) => {
           if (res.data.status === SUCCESS_STATUS) {

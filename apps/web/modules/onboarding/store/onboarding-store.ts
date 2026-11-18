@@ -203,7 +203,7 @@ export const useOnboardingStore = create<OnboardingState>()(
         })),
     }),
     {
-      name: "cal-onboarding-storage", // Storage key
+      name: "rondevu-onboarding-storage", // Storage key
       storage: onboardingIndexedDBStorage, // Use IndexedDB instead of localStorage for larger capacity
       // Version 0: Had issue with Image sizes being too large.
       // Version 1: We fixed that and also migrated to version-1 to facilitate one-time cleanup of all oversized images.

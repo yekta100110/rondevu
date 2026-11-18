@@ -23,7 +23,7 @@ import DailyIframe from "@daily-co/daily-js";
 import { DailyProvider, useDailyEvent } from "@daily-co/daily-react";
 import type { getServerSideProps } from "@lib/video/[uid]/getServerSideProps";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { CalVideoPremiumFeatures } from "../cal-video-premium-features";
+import { CalVideoPremiumFeatures } from "../rondevu-video-premium-features";
 
 export type PageProps = inferSSRProps<typeof getServerSideProps>;
 
@@ -547,7 +547,7 @@ export function VideoMeetingInfo(props: VideoMeetingInfo) {
         "no-scrollbar fixed top-0 left-0 z-30 flex h-full w-64 transform justify-between overflow-x-hidden overflow-y-scroll transition-all duration-300 ease-in-out",
         open ? "translate-x-0" : "-translate-x-[232px]"
       )}>
-      <main className="prose-sm prose scroll-bar scrollbar-track-w-20 overflow-x-hidden! w-full max-w-64 overflow-scroll border-subtle border-r bg-default p-4 prose-h3:font-cal prose-a:text-emphasis prose-h3:text-emphasis text-emphasis shadow-sm backdrop-blur-lg">
+      <main className="prose-sm prose scroll-bar scrollbar-track-w-20 overflow-x-hidden! w-full max-w-64 overflow-scroll border-subtle border-r bg-default p-4 prose-h3:font-display prose-a:text-emphasis prose-h3:text-emphasis text-emphasis shadow-sm backdrop-blur-lg">
         <h3>{t("what")}:</h3>
         <p>{booking.title}</p>
         <h3>{t("invitee_timezone")}:</h3>

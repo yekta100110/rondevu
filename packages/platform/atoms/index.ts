@@ -5,7 +5,7 @@ export type { AvailabilitySettingsFormRef } from "./availability/types";
 export type { AvailabilitySettingsPlatformWrapperProps as AvailabilitySettingsProps } from "./availability/wrappers/AvailabilitySettingsPlatformWrapper";
 export { BookerPlatformWrapper as Booker } from "./booker/BookerPlatformWrapper";
 export { BookerEmbed } from "./booker-embed";
-export { CalOAuthProvider, CalProvider } from "./cal-provider";
+export { RondevuOAuthProvider, RondevuProvider } from "./rondevu-provider";
 export { CalendarSettingsPlatformWrapper as CalendarSettings } from "./calendar-settings/index";
 export { CalendarViewPlatformWrapper as CalendarView } from "./calendar-view/index";
 export * as Connect from "./connect";

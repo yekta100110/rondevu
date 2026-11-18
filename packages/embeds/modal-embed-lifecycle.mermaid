@@ -6,13 +6,13 @@ sequenceDiagram
     
     Note over Parent: embed.js loads
     
-    alt CTA clicked or Cal.modal() called
+    alt CTA clicked or Rondevu.modal() called
         Parent->>Parent: Check for existing modal
         alt Modal exists & can reuse
             Parent->>Parent: Reopen modal (state: "reopened")
             Note over Parent: May use connect() or reload
         else Create new modal
-            Parent->>Parent: Create cal-modal-box
+            Parent->>Parent: Create rondevu-modal-box
             Parent->>Parent: Create iframe (hidden)
             Parent->>Parent: Set state="loading"
             Parent->>Parent: Show loader

@@ -5,7 +5,7 @@ import dayjs from "@rondevu/dayjs";
 import getCalendarsEvents, {
   getCalendarsEventsWithTimezones,
 } from "@rondevu/features/calendars/lib/getCalendarsEvents";
-import { getRichDescription, getUid } from "@rondevu/lib/CalEventParser";
+import { getRichDescription, getUid } from "@rondevu/lib/RondevuEventParser";
 import { CalendarAppDelegationCredentialError } from "@rondevu/lib/CalendarAppError";
 import { ORGANIZER_EMAIL_EXEMPT_DOMAINS } from "@rondevu/lib/constants";
 import { buildNonDelegationCredentials } from "@rondevu/lib/delegationCredential";

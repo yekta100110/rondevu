@@ -1,7 +1,7 @@
-import { WEBAPP_URL, IS_CALCOM } from "./constants";
+import { WEBAPP_URL, IS_RONDEVU } from "./constants";
 
 export const getRondevuUrl = () => {
-  if (IS_CALCOM) {
+  if (IS_RONDEVU) {
     return "https://rondevu.org";
   }
   return WEBAPP_URL;

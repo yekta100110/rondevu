@@ -132,7 +132,7 @@ export function DialogHeader(props: DialogHeaderProps) {
         <div>
           <h2
             data-testid="dialog-title"
-            className="text-semibold text-emphasis font-cal text-xl"
+            className="text-semibold text-emphasis font-display text-xl"
             id="modal-title">
             {props.title}
           </h2>
@@ -157,7 +157,7 @@ export function DialogFooter(props: DialogFooterProps) {
   return (
     <div
       className={classNames(
-        "bg-cal-muted border-muted bottom-0 -mx-8 mt-10 rounded-b-2xl border",
+        "bg-muted border-muted bottom-0 -mx-8 mt-10 rounded-b-2xl border",
         props?.noSticky ? "" : "sticky",
         props.className
       )}>

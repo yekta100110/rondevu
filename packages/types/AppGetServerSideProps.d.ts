@@ -1,9 +1,9 @@
 import type { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
-import type { CalendsoSessionUser } from "next-auth";
+import type { RondevuSessionUser } from "next-auth";
 
 import type prisma from "@rondevu/prisma";
 
-export type AppUser = CalendsoSessionUser | undefined;
+export type AppUser = RondevuSessionUser | undefined;
 export type AppPrisma = typeof prisma;
 export type AppGetServerSidePropsContext = GetServerSidePropsContext<{
   pages: string[];

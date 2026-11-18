@@ -9,8 +9,8 @@ import { cookies, headers } from "next/headers";
 import { PricingView } from "~/pricing/pricing-view";
 import type { Locale } from "~/home/i18n/home-translations";
 
-import "../../../public/cal_files/cal-framer.css";
-import "../../../public/cal_files/cal-pricing-framer.css";
+import "../../../public/rondevu_files/rondevu-framer.css";
+import "../../../public/rondevu_files/rondevu-pricing-framer.css";
 
 const SITE_URL = WEBSITE_URL.replace(/\/+$/, "");
 const PRICING_LANGUAGES = {

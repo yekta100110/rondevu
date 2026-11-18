@@ -24,7 +24,7 @@ The test suite is organized into the following directories:
 By default, tests will run against `http://localhost:3000`. To test against a different environment, set the `BASE_URL` environment variable:
 
 ```bash
-BASE_URL=https://your-cal-instance.com k6 run tests/performance/smoke/booking.js
+BASE_URL=https://your-rondevu-instance.com k6 run tests/performance/smoke/booking.js
 ```
 
 ### Running Smoke Tests

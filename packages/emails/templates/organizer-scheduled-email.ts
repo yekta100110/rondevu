@@ -1,7 +1,7 @@
 import type { TFunction } from "i18next";
 import { default as cloneDeep } from "lodash/cloneDeep";
 
-import { getRichDescription } from "@rondevu/lib/CalEventParser";
+import { getRichDescription } from "@rondevu/lib/RondevuEventParser";
 import { EMAIL_FROM_NAME } from "@rondevu/lib/constants";
 import { getReplyToHeader } from "@rondevu/lib/getReplyToHeader";
 import { TimeFormat } from "@rondevu/lib/timeFormat";

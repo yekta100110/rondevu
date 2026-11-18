@@ -26,7 +26,7 @@ vi.mock("@rondevu/app-store/locations", () => ({
   MeetLocationType: "integrations:google:meet",
 }));
 
-vi.mock("@rondevu/lib/CalEventParser", () => ({
+vi.mock("@rondevu/lib/RondevuEventParser", () => ({
   getRichDescription: vi.fn(() => "Test description"),
 }));
 

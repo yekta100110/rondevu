@@ -1,4 +1,4 @@
-import { getBookingUrl, getCancelLink, getRescheduleLink } from "@rondevu/lib/CalEventParser";
+import { getBookingUrl, getCancelLink, getRescheduleLink } from "@rondevu/lib/RondevuEventParser";
 import type { CalendarEvent, Person } from "@rondevu/types/Calendar";
 
 export function ManageLink(props: { calEvent: CalendarEvent; attendee: Person }) {

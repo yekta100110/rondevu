@@ -1,10 +1,10 @@
-import { AVATAR_FALLBACK, CAL_URL } from "@rondevu/lib/constants";
+import { AVATAR_FALLBACK, RONDEVU_URL } from "@rondevu/lib/constants";
 import type { User } from "@rondevu/prisma/client";
 import { z } from "zod";
 
 export const getAbsoluteAvatarUrl = (url: string): string => {
   const isAbsolute = z.string().url().safeParse(url).success;
-  return isAbsolute ? url : CAL_URL + url;
+  return isAbsolute ? url : RONDEVU_URL + url;
 };
 
 /**
@@ -16,5 +16,5 @@ export const getUserAvatarUrl = (user: Pick<User, "avatarUrl"> | undefined): str
   if (user?.avatarUrl) {
     return getAbsoluteAvatarUrl(user.avatarUrl);
   }
-  return CAL_URL + AVATAR_FALLBACK;
+  return RONDEVU_URL + AVATAR_FALLBACK;
 };

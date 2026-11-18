@@ -10,7 +10,7 @@ import type { SelectedCalendar } from "@rondevu/prisma/client";
 import { metrics } from "@sentry/nextjs";
 
 const log = logger.getSubLogger({ prefix: ["CalendarSyncService"] });
-const CAL_MANAGED_ICAL_UID_SUFFIXES: ReadonlySet<string> = new Set(
+const RONDEVU_MANAGED_ICAL_UID_SUFFIXES: ReadonlySet<string> = new Set(
   ["rondevu.org", "rondevu", APP_NAME].map((suffix) => suffix.toLowerCase())
 );
 
@@ -18,7 +18,7 @@ const isCalManagedICalUID = (iCalUID?: string | null): boolean => {
   const suffix = iCalUID?.split("@").at(-1)?.toLowerCase();
   if (!suffix) return false;
 
-  return CAL_MANAGED_ICAL_UID_SUFFIXES.has(suffix);
+  return RONDEVU_MANAGED_ICAL_UID_SUFFIXES.has(suffix);
 };
 
 /**

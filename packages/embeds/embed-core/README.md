@@ -1,6 +1,6 @@
 # embed-core
 
-This is the vanilla JS core script that embeds Cal Link.
+This is the vanilla JS core script that embeds Rondevu Link.
 
 ## How to use embed on any webpage no matter what framework
 

@@ -111,7 +111,7 @@ interface StaticPricingBodyProps {
 
 const StaticPricingBody = memo(function StaticPricingBody({ html, locale, onClick }: StaticPricingBodyProps) {
   const markup = useMemo(() => ({ __html: html }), [html]);
-  return <div id="cal-pricing-1to1-root" data-locale={locale} onClick={onClick} dangerouslySetInnerHTML={markup} />;
+  return <div id="rondevu-pricing-1to1-root" data-locale={locale} onClick={onClick} dangerouslySetInnerHTML={markup} />;
 });
 
 function PricingView({ html, svgTemplates, initialContact, initialLocale }: PricingViewProps) {
@@ -123,7 +123,7 @@ function PricingView({ html, svgTemplates, initialContact, initialLocale }: Pric
 
   // Fiyatlandırma CTA butonlarını aktif dile göre ("Planı Seç" / "Choose Plan") senkronize et
   useEffect(() => {
-    const root = document.getElementById("cal-pricing-1to1-root");
+    const root = document.getElementById("rondevu-pricing-1to1-root");
     if (!root) return;
     const planBtns = root.querySelectorAll<HTMLElement>("[data-plan-btn='true']");
     const label = locale === "tr" ? "Planı Seç" : "Choose Plan";
@@ -136,7 +136,7 @@ function PricingView({ html, svgTemplates, initialContact, initialLocale }: Pric
   }, [locale]);
 
   useEffect(() => {
-    const root = document.getElementById("cal-pricing-1to1-root");
+    const root = document.getElementById("rondevu-pricing-1to1-root");
     if (!root) return;
 
     root.querySelectorAll<HTMLElement>(".framer-text").forEach((text) => {
@@ -319,7 +319,7 @@ function PricingView({ html, svgTemplates, initialContact, initialLocale }: Pric
           <div className="mb-6">
             <h2
               id="rondevu-pricing-faq-title"
-              className="font-cal text-2xl font-semibold tracking-tight text-[#181818] dark:text-[#f4f4f5] sm:text-3xl">
+              className="font-display text-2xl font-semibold tracking-tight text-[#181818] dark:text-[#f4f4f5] sm:text-3xl">
               {faq.heading}
             </h2>
             <p className="mt-1.5 text-sm text-[#737373] dark:text-[#a3a3a3]">{faq.subheading}</p>

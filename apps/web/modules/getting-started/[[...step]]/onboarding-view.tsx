@@ -150,11 +150,11 @@ const OnboardingPage = (props: PageProps) => {
   return (
     <div
       className={classNames(
-        "text-emphasis min-h-screen [--cal-brand:#111827] dark:[--cal-brand:#FFFFFF]",
-        "[--cal-brand-emphasis:#101010] dark:[--cal-brand-emphasis:#e1e1e1]",
-        "[--cal-brand-subtle:#9CA3AF]",
-        "[--cal-brand-text:#FFFFFF]  dark:[--cal-brand-text:#000000]",
-        "[--cal-brand-accent:#FFFFFF] dark:[--cal-brand-accent:#000000]"
+        "text-emphasis min-h-screen [--rondevu-brand:#111827] dark:[--rondevu-brand:#FFFFFF]",
+        "[--rondevu-brand-emphasis:#101010] dark:[--rondevu-brand-emphasis:#e1e1e1]",
+        "[--rondevu-brand-subtle:#9CA3AF]",
+        "[--rondevu-brand-text:#FFFFFF]  dark:[--rondevu-brand-text:#000000]",
+        "[--rondevu-brand-accent:#FFFFFF] dark:[--rondevu-brand-accent:#000000]"
       )}
       data-testid="onboarding"
       key={pathname}>
@@ -163,7 +163,7 @@ const OnboardingPage = (props: PageProps) => {
           <div className="sm:mx-auto sm:w-full sm:max-w-[600px]">
             <div className="mx-auto px-4 sm:max-w-[520px]">
               <header>
-                <p className="font-cal mb-3 text-[28px] font-medium leading-7">
+                <p className="font-display mb-3 text-[28px] font-medium leading-7">
                   {headers[currentStepIndex]?.title || "Undefined title"}
                 </p>
 

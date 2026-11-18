@@ -18,14 +18,14 @@ import http from "../lib/http";
 import { Toaster } from "../src/components/ui/toaster";
 import type {
   translationKeys,
-  CalProviderLanguagesType,
+  RondevuProviderLanguagesType,
   enTranslationKeys,
   trTranslationKeys,
   i18nProps,
 } from "./languages";
 import { EN } from "./languages";
 
-export type BaseCalProviderProps = {
+export type BaseRondevuProviderProps = {
   children?: ReactNode;
   clientId: string;
   accessToken?: string;
@@ -41,7 +41,7 @@ export type BaseCalProviderProps = {
   isOAuth2?: boolean;
 } & i18nProps;
 
-export function BaseCalProvider({
+export function BaseRondevuProvider({
   clientId,
   accessToken,
   options,
@@ -56,7 +56,7 @@ export function BaseCalProvider({
   onTokenRefreshError,
   isEmbed,
   isOAuth2
-}: BaseCalProviderProps) {
+}: BaseRondevuProviderProps) {
   const [error, setError] = useState<string>("");
   const [stateOrgId, setOrganizationId] = useState<number>(0);
 
@@ -217,7 +217,7 @@ function replaceOccurrences(input: string, replacementMap: { [key: string]: stri
   });
 }
 
-function getTranslation(key: string, language: CalProviderLanguagesType) {
+function getTranslation(key: string, language: RondevuProviderLanguagesType) {
   switch (language) {
     case "en":
       return enTranslations[key as enTranslationKeys];

@@ -64,7 +64,7 @@ export const sendNotification = async ({
       },
       actions,
       requireInteraction,
-      tag: `cal-notification-${Date.now()}`,
+      tag: `rondevu-notification-${Date.now()}`,
     });
     await webpush.sendNotification(subscription, payload);
   } catch (error) {

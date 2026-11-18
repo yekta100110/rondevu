@@ -7,7 +7,7 @@ import { cookies, headers } from "next/headers";
 import { getLocale } from "@rondevu/features/auth/lib/getLocale";
 import type { AppImageProps, MeetingImageProps } from "@rondevu/lib/OgImages";
 import { constructAppImage, constructGenericImage, constructMeetingImage } from "@rondevu/lib/OgImages";
-import { IS_CALCOM, WEBAPP_URL, APP_NAME, SEO_IMG_OGIMG, CAL_URL } from "@rondevu/lib/constants";
+import { IS_RONDEVU, WEBAPP_URL, APP_NAME, SEO_IMG_OGIMG, RONDEVU_URL } from "@rondevu/lib/constants";
 import { getRondevuUrl } from "@rondevu/lib/getRondevuUrl";
 import { buildCanonical } from "@rondevu/lib/next-seo.config";
 import { getTranslation } from "@rondevu/i18n/server";
@@ -31,7 +31,7 @@ const _generateMetadataWithoutImage = async (
   locale?: "tr_TR" | "en_US"
 ) => {
   const _pathname = pathname ?? "";
-  const canonical = buildCanonical({ path: _pathname, origin: origin ?? CAL_URL });
+  const canonical = buildCanonical({ path: _pathname, origin: origin ?? RONDEVU_URL });
   const t = locale
     ? await getTranslation(locale === "en_US" ? "en" : "tr", "common")
     : await getTranslate();
@@ -40,7 +40,7 @@ const _generateMetadataWithoutImage = async (
   const description = getDescription(t);
   const titleSuffix = `| ${APP_NAME}`;
   const displayedTitle = title.includes(titleSuffix) || hideBranding ? title : `${title} ${titleSuffix}`;
-  const metadataBase = new URL(IS_CALCOM ? getRondevuUrl() : WEBAPP_URL);
+  const metadataBase = new URL(IS_RONDEVU ? getRondevuUrl() : WEBAPP_URL);
 
   return {
     title: title.length === 0 ? APP_NAME : displayedTitle,
@@ -111,10 +111,10 @@ export const _generateMetadataForStaticPage = async (
   locale?: "tr_TR" | "en_US"
 ) => {
   const _pathname = pathname ?? "";
-  const canonical = buildCanonical({ path: _pathname, origin: origin ?? CAL_URL });
+  const canonical = buildCanonical({ path: _pathname, origin: origin ?? RONDEVU_URL });
   const titleSuffix = `| ${APP_NAME}`;
   const displayedTitle = title.includes(titleSuffix) || hideBranding ? title : `${title} ${titleSuffix}`;
-  const metadataBase = new URL(IS_CALCOM ? getRondevuUrl() : WEBAPP_URL);
+  const metadataBase = new URL(IS_RONDEVU ? getRondevuUrl() : WEBAPP_URL);
 
   const metadata = {
     title: title.length === 0 ? APP_NAME : displayedTitle,
@@ -229,7 +229,7 @@ export const loadCalMarketingAssets = (
   domFilename: string,
   options?: { extractBody?: boolean }
 ): { html: string; svgTemplates: string } => {
-  const publicDir = path.join(process.cwd(), "public", "cal_files");
+  const publicDir = path.join(process.cwd(), "public", "rondevu_files");
   const rawHtml = fs.readFileSync(path.join(publicDir, domFilename), "utf8");
   const html = options?.extractBody ? getFramerBody(rawHtml) : rawHtml;
   const rawSvgTemplates = fs.readFileSync(path.join(publicDir, "svg-templates.html"), "utf8");

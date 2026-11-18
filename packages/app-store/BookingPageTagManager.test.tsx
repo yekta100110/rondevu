@@ -50,11 +50,11 @@ describe("BookingPageTagManager", () => {
         }}
       />
     );
-    const scripts = screen.getAllByTestId("cal-analytics-app-gtm");
+    const scripts = screen.getAllByTestId("rondevu-analytics-app-gtm");
     const trackingScript = scripts[0];
     const pushEventScript = scripts[1];
     expect(trackingScript.innerHTML).toContain(GTM_CONFIG.trackingId);
-    expect(pushEventScript.innerHTML).toContain("cal_analytics_app__gtm");
+    expect(pushEventScript.innerHTML).toContain("rondevu_analytics_app__gtm");
   });
 
   it("GTM App when disabled should not have its scripts added", () => {
@@ -76,7 +76,7 @@ describe("BookingPageTagManager", () => {
         }}
       />
     );
-    const scripts = screen.queryAllByTestId("cal-analytics-app-gtm");
+    const scripts = screen.queryAllByTestId("rondevu-analytics-app-gtm");
     expect(scripts.length).toBe(0);
   });
 
@@ -96,7 +96,7 @@ describe("BookingPageTagManager", () => {
         }}
       />
     );
-    const scripts = screen.queryAllByTestId("cal-analytics-app-zoomvideo");
+    const scripts = screen.queryAllByTestId("rondevu-analytics-app-zoomvideo");
     expect(scripts.length).toBe(0);
   });
 
@@ -117,7 +117,7 @@ describe("BookingPageTagManager", () => {
         }}
       />
     );
-    const scripts = screen.queryAllByTestId("cal-analytics-app-zoomvideo");
+    const scripts = screen.queryAllByTestId("rondevu-analytics-app-zoomvideo");
     expect(scripts.length).toBe(0);
   });
 });
@@ -149,10 +149,10 @@ describe("handleEvent", () => {
     const pushEventRandom = vi.fn();
     const pushEventNotme = vi.fn();
 
-    setOnWindow("cal_analytics_app__xyz", pushEventXyz);
-    setOnWindow("cal_analytics_app__anything", pushEventAnything);
-    setOnWindow("cal_analytics_app_random", pushEventRandom);
-    setOnWindow("cal_analytics_notme", pushEventNotme);
+    setOnWindow("rondevu_analytics_app__xyz", pushEventXyz);
+    setOnWindow("rondevu_analytics_app__anything", pushEventAnything);
+    setOnWindow("rondevu_analytics_app_random", pushEventRandom);
+    setOnWindow("rondevu_analytics_notme", pushEventNotme);
 
     handleEvent({
       detail: {
@@ -188,8 +188,8 @@ describe("handleEvent", () => {
   it("should not error if accidentally the value is not a function", () => {
     const pushEventNotAfunction = "abc";
     const pushEventAnything = vi.fn();
-    setOnWindow("cal_analytics_app__notafun", pushEventNotAfunction);
-    setOnWindow("cal_analytics_app__anything", pushEventAnything);
+    setOnWindow("rondevu_analytics_app__notafun", pushEventNotAfunction);
+    setOnWindow("rondevu_analytics_app__anything", pushEventAnything);
 
     handleEvent({
       detail: {

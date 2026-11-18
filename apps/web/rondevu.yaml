@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: Calendso API
+  title: Rondevu API
   description: The open source Calendly alternative.
   contact:
     name: Support
@@ -154,7 +154,7 @@ paths:
                     - selected: true
                       externalId: bailey@rondevu.org
                       integration: google_calendar
-                      name: Calendso
+                      name: Rondevu
                       primary: true
                     - selected: true
                       externalId: bpumfleet@gmail.com

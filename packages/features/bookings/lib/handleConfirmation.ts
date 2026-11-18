@@ -6,7 +6,7 @@ import getWebhooks from "@rondevu/features/webhooks/lib/getWebhooks";
 import { scheduleTrigger } from "@rondevu/features/webhooks/lib/scheduleTrigger";
 import sendPayload from "@rondevu/features/webhooks/lib/sendOrSchedulePayload";
 import type { EventPayloadType, EventTypeInfo } from "@rondevu/features/webhooks/lib/sendPayload";
-import { getVideoCallUrlFromCalEvent } from "@rondevu/lib/CalEventParser";
+import { getVideoCallUrlFromCalEvent } from "@rondevu/lib/RondevuEventParser";
 import { safeStringify } from "@rondevu/lib/safeStringify";
 import type { TraceContext } from "@rondevu/lib/tracing";
 import { distributedTracing } from "@rondevu/lib/tracing/factory";

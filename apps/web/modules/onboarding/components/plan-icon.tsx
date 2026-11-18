@@ -31,9 +31,9 @@ export function PlanIcon({
       <div
         className="bg-default absolute left-1/2 top-1/2 flex h-[80px] w-[80px] -translate-x-1/2 -translate-y-1/2 items-center justify-center overflow-clip rounded-full"
         style={{
-          background: "linear-gradient(to bottom, var(--cal-bg, #ffffff), var(--cal-bg-muted, #f7f7f7))",
+          background: "linear-gradient(to bottom, var(--rondevu-bg, #ffffff), var(--rondevu-bg-muted, #f7f7f7))",
           boxShadow:
-            "0px 2.818px 5.635px 0px var(--cal-border-subtle), 0px 0px 0px 0.704px var(--cal-border), 0px 0.704px 3.522px -2.818px rgba(0, 0, 0, 0.3)",
+            "0px 2.818px 5.635px 0px var(--rondevu-border-subtle), 0px 0px 0px 0.704px var(--rondevu-border), 0px 0.704px 3.522px -2.818px rgba(0, 0, 0, 0.3)",
         }}>
         {/* Icon */}
         <div className="size-12 flex items-center justify-center">
@@ -49,7 +49,7 @@ export function PlanIcon({
         <div
           className="pointer-events-none absolute inset-0 rounded-full"
           style={{
-            boxShadow: "0px 0.704px 0.423px 0px inset var(--cal-bg-inverted)",
+            boxShadow: "0px 0.704px 0.423px 0px inset var(--rondevu-bg-inverted)",
             opacity: 0.15,
           }}
         />
@@ -92,7 +92,7 @@ export function PlanIcon({
           x: x - iconHalfSize,
           left: "50%",
           top: "50%",
-          background: "linear-gradient(to bottom, var(--cal-bg, #ffffff), var(--cal-bg-muted, #f7f7f7))",
+          background: "linear-gradient(to bottom, var(--rondevu-bg, #ffffff), var(--rondevu-bg-muted, #f7f7f7))",
         }}>
         <div className="flex items-center justify-center opacity-70">
           <Icon name="user" size={24} strokeWidth={1.75} className="text-emphasis" />
@@ -100,7 +100,7 @@ export function PlanIcon({
         <div
           className="pointer-events-none absolute inset-0 rounded-full"
           style={{
-            boxShadow: "0px 0.519px 0.311px 0px inset var(--cal-bg-inverted)",
+            boxShadow: "0px 0.519px 0.311px 0px inset var(--rondevu-bg-inverted)",
             opacity: 0.15,
           }}
         />
@@ -121,7 +121,7 @@ export function PlanIcon({
               width: `${size}px`,
               height: `${size}px`,
               border: "0.5px solid",
-              borderColor: "var(--cal-border-default, #D3D3D3)",
+              borderColor: "var(--rondevu-border-default, #D3D3D3)",
               opacity: opacity,
             }}
           />

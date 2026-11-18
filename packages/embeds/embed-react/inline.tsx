@@ -1,5 +1,5 @@
 /**
- * @fileoverview This file is an example file and tells how to use the Cal component in a React application. This is also used by playwright e2e
+ * @fileoverview This file is an example file and tells how to use the Rondevu component in a React application. This is also used by playwright e2e
  */
 import * as React from "react";
 import { useEffect } from "react";
@@ -8,16 +8,16 @@ import ReactDom from "react-dom";
 
 // Because we don't import from @rondevu/embed-react, this file isn't able to test if the build is successful or not and thus npm package would work or not correctly.
 // There are tests in test/built which verify that the types from built package are correctly generated and exported correctly.
-import Cal, { getCalApi, type EmbedEvent } from "./src/index";
+import Rondevu, { getRondevuApi, type EmbedEvent } from "./src/index";
 
-const api = getCalApi({
+const api = getRondevuApi({
   namespace: "inline",
 });
 
 function App() {
   const [, setLoaded] = useState(false);
   useEffect(() => {
-    // Simulate state change causing config object to change, causing rerender of Cal
+    // Simulate state change causing config object to change, causing rerender of Rondevu
     setTimeout(setLoaded.bind(true), 1000);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const callback = (event: any) => {
@@ -32,12 +32,12 @@ function App() {
       api("ui", {
         cssVarsPerTheme: {
           light: {
-            "cal-border-booker": "red",
-            "cal-border-booker-width": "20px",
+            "rondevu-border-booker": "red",
+            "rondevu-border-booker-width": "20px",
           },
           dark: {
-            "cal-border-booker": "red",
-            "cal-border-booker-width": "5px",
+            "rondevu-border-booker": "red",
+            "rondevu-border-booker-width": "5px",
           },
         },
       });
@@ -96,14 +96,14 @@ function App() {
   return (
     <>
       <h1>
-        There is <code>Cal</code> component below me
+        There is <code>Rondevu</code> component below me
       </h1>
-      <Cal
-        calOrigin="http://localhost:3000"
+      <Rondevu
+        rondevuOrigin="http://localhost:3000"
         embedJsUrl="//localhost:3000/embed/embed.js"
         namespace="inline"
         style={{ width: "100%", height: "100%", overflow: "scroll" }}
-        calLink="pro"
+        rondevuLink="pro"
         config={{
           name: "John Doe",
           email: "johndoe@gmail.com",

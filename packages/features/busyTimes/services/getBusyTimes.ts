@@ -75,7 +75,7 @@ export class BusyTimesService {
     } = params;
 
     logger.silly(
-      `Checking Busy time from Cal Bookings in range ${startTime} to ${endTime} for input ${JSON.stringify({
+      `Checking Busy time from Rondevu Bookings in range ${startTime} to ${endTime} for input ${JSON.stringify({
         userId,
         eventTypeId,
         status: BookingStatus.ACCEPTED,
@@ -183,7 +183,7 @@ export class BusyTimesService {
     }, []);
 
     logger.debug(
-      `Busy Time from Cal Bookings ${JSON.stringify({
+      `Busy Time from Rondevu Bookings ${JSON.stringify({
         busyTimes,
         bookings: bookings?.map((booking) => getPiiFreeBooking(booking)),
         numCredentials: credentials?.length,

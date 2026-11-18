@@ -1,6 +1,6 @@
 import type { TFunction } from "i18next";
 
-import { getRichDescription } from "@rondevu/lib/CalEventParser";
+import { getRichDescription } from "@rondevu/lib/RondevuEventParser";
 import { EMAIL_FROM_NAME } from "@rondevu/lib/constants";
 import { TimeFormat } from "@rondevu/lib/timeFormat";
 import type { CalendarEvent } from "@rondevu/types/Calendar";

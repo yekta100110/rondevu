@@ -12,7 +12,7 @@ import type {
   WithContext,
 } from "schema-dts";
 
-import { APP_NAME, CAL_URL } from "@rondevu/lib/constants";
+import { APP_NAME, RONDEVU_URL } from "@rondevu/lib/constants";
 import { convertFromSmallestToPresentableCurrencyUnit } from "@rondevu/lib/currencyConversions";
 
 type ProfileEntityType = "Person" | "ProfessionalService" | "LocalBusiness";
@@ -53,7 +53,7 @@ interface EventTypeServiceSchemaProps {
 }
 
 function getBaseUrl(): string {
-  return (CAL_URL || "https://rondevu.org").replace(/\/+$/, "");
+  return (RONDEVU_URL || "https://rondevu.org").replace(/\/+$/, "");
 }
 
 function cleanText(value?: string | null): string | undefined {

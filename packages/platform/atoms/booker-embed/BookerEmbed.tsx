@@ -3,7 +3,7 @@ import type {
   BookerPlatformWrapperAtomPropsForIndividual,
   BookerPlatformWrapperAtomPropsForTeam,
 } from "../booker/types";
-import { CalProvider } from "../cal-provider/CalProvider";
+import { RondevuProvider } from "../rondevu-provider/RondevuProvider";
 
 type BookerEmbedProps =
   | (BookerPlatformWrapperAtomPropsForIndividual & {
@@ -19,7 +19,7 @@ export const BookerEmbed = (props: BookerEmbedProps) => {
   const { apiUrl, organizationId, ...restProps } = props;
 
   return (
-    <CalProvider
+    <RondevuProvider
       clientId={import.meta.env.VITE_BOOKER_EMBED_OAUTH_CLIENT_ID}
       isEmbed={true}
       organizationId={organizationId}
@@ -27,6 +27,6 @@ export const BookerEmbed = (props: BookerEmbedProps) => {
         apiUrl: apiUrl ?? import.meta.env.VITE_BOOKER_EMBED_API_URL,
       }}>
       <BookerPlatformWrapper {...restProps} />
-    </CalProvider>
+    </RondevuProvider>
   );
 };

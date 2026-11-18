@@ -2,8 +2,8 @@ import { useLocale } from "@rondevu/lib/hooks/useLocale";
 
 const UnAvailableMessage = ({ children, title }: { children: React.ReactNode; title: string }) => (
   <div className="mx-auto w-full max-w-2xl">
-    <div className="border-subtle bg-default dark:bg-cal-muted overflow-hidden rounded-lg border p-10">
-      <h2 className="font-cal mb-4 text-3xl">{title}</h2>
+    <div className="border-subtle bg-default dark:bg-muted overflow-hidden rounded-lg border p-10">
+      <h2 className="font-display mb-4 text-3xl">{title}</h2>
       {children}
     </div>
   </div>

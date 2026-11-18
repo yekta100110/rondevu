@@ -6,9 +6,9 @@ import {
 import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
 import { BookingRepository } from "@rondevu/features/bookings/repositories/BookingRepository";
 import { EventTypeRepository } from "@rondevu/features/eventtypes/repositories/eventTypeRepository";
-import { getCalVideoReference } from "@rondevu/features/get-cal-video-reference";
+import { getCalVideoReference } from "@rondevu/features/get-rondevu-video-reference";
 import { UserRepository } from "@rondevu/features/users/repositories/UserRepository";
-import { CAL_VIDEO_MEETING_LINK_FOR_TESTING } from "@rondevu/lib/constants";
+import { RONDEVU_VIDEO_MEETING_LINK_FOR_TESTING } from "@rondevu/lib/constants";
 import { isENVDev } from "@rondevu/lib/env";
 import prisma from "@rondevu/prisma";
 import MarkdownIt from "markdown-it";
@@ -128,9 +128,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   // Below if block is for local testing purposes only
   // STARTS------------------------------------------------------------------------------
-  if (booking?.references[0] && isENVDev && CAL_VIDEO_MEETING_LINK_FOR_TESTING) {
+  if (booking?.references[0] && isENVDev && RONDEVU_VIDEO_MEETING_LINK_FOR_TESTING) {
     // meetingUrl is `null` in dev env, so setting a dummy meetingUrl (it's a past but real meeting link in production env)
-    booking.references[0].meetingUrl = CAL_VIDEO_MEETING_LINK_FOR_TESTING;
+    booking.references[0].meetingUrl = RONDEVU_VIDEO_MEETING_LINK_FOR_TESTING;
   }
   // ENDS--------------------------------------------------------------------------------
 
@@ -177,7 +177,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   //find out if the meeting is in the past
   const isPast = booking?.endTime <= exitDate;
-  const testingUid = CAL_VIDEO_MEETING_LINK_FOR_TESTING?.split("/").pop();
+  const testingUid = RONDEVU_VIDEO_MEETING_LINK_FOR_TESTING?.split("/").pop();
   const isTestingLink = booking?.uid === testingUid;
 
   if (isPast && !isTestingLink) {

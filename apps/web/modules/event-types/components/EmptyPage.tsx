@@ -2,7 +2,7 @@ import { useLocale } from "@rondevu/lib/hooks/useLocale";
 
 const SkeletonEventType = () => {
   return (
-    <div className="bg-default dark:bg-cal-muted h-24 w-full">
+    <div className="bg-default dark:bg-muted h-24 w-full">
       <div className="p-5">
         <div className="flex space-x-2 rtl:space-x-reverse">
           <div className="bg-subtle dark:bg-default h-2 w-1/6 rounded-md" />

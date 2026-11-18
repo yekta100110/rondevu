@@ -11,7 +11,7 @@ const initialConstants = {
   CLOUDFLARE_USE_TURNSTILE_IN_BOOKER: "1",
   DEFAULT_LIGHT_BRAND_COLOR: "#292929",
   DEFAULT_DARK_BRAND_COLOR: "#fafafa",
-  CALCOM_VERSION: "0.0.0",
+  RONDEVU_VERSION: "0.0.0",
   IS_SELF_HOSTED: false,
   SEO_IMG_DEFAULT: "https://rondevu.org/og-image.png",
   SEO_IMG_OGIMG: "https://rondevu.org/og-image-wide.png",

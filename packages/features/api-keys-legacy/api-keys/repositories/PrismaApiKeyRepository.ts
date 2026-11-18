@@ -49,7 +49,7 @@ export class PrismaApiKeyRepository {
       orderBy: { createdAt: "desc" },
     });
     return apiKeys.filter((apiKey) => {
-      if (apiKey.note?.startsWith("Cal.ai Phone API Key")) {
+      if (apiKey.note?.startsWith("rOndevu AI Phone API Key")) {
         return false;
       }
       return true;
@@ -79,7 +79,7 @@ export class PrismaApiKeyRepository {
       },
     });
 
-    const apiKeyPrefix = process.env.API_KEY_PREFIX ?? "cal_";
+    const apiKeyPrefix = process.env.API_KEY_PREFIX ?? "rondevu_";
 
     const prefixedApiKey = `${apiKeyPrefix}${apiKey}`;
 

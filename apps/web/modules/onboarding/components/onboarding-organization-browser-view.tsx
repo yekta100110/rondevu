@@ -43,10 +43,10 @@ export const OnboardingOrganizationBrowserView = ({
   // Update CSS variables when brandColor changes
   useEffect(() => {
     if (brandColor && containerRef.current) {
-      containerRef.current.style.setProperty("--cal-brand", brandColor);
+      containerRef.current.style.setProperty("--rondevu-brand", brandColor);
       // Set brand-emphasis as a slightly darker version for hover states
       const darkerColor = darkenColor(brandColor, 0.1);
-      containerRef.current.style.setProperty("--cal-brand-emphasis", darkerColor);
+      containerRef.current.style.setProperty("--rondevu-brand-emphasis", darkerColor);
     }
   }, [brandColor]);
 
@@ -110,14 +110,14 @@ export const OnboardingOrganizationBrowserView = ({
           <Icon name="arrow-right" className="h-4 w-4 text-subtle" />
           <Icon name="rotate-cw" className="h-4 w-4 text-subtle" />
         </div>
-        <div className="flex w-full min-w-0 items-center gap-2 rounded-[32px] bg-cal-muted px-3 py-2">
+        <div className="flex w-full min-w-0 items-center gap-2 rounded-[32px] bg-muted px-3 py-2">
           <Icon name="lock" className="h-4 w-4 text-subtle" />
           <p className="truncate font-medium text-default text-sm leading-tight">{displayUrl}</p>
         </div>
         <Icon name="ellipsis-vertical" className="h-4 w-4 text-subtle" />
       </div>
       {/* Content */}
-      <div className="h-full bg-cal-muted pt-11 pl-11">
+      <div className="h-full bg-muted pt-11 pl-11">
         <AnimatePresence mode="wait">
           <motion.div
             key={pathname}

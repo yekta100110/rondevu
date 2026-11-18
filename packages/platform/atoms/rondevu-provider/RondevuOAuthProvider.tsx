@@ -6,16 +6,16 @@ import { useEffect } from "react";
 import { VERSION_2024_06_14 } from "@rondevu/platform-constants";
 
 import http from "../lib/http";
-import type { BaseCalProviderProps } from "./BaseCalProvider";
-import { BaseCalProvider } from "./BaseCalProvider";
+import type { BaseRondevuProviderProps } from "./BaseRondevuProvider";
+import { BaseRondevuProvider } from "./BaseRondevuProvider";
 import type { translationKeys } from "./languages";
 
 const queryClient = new QueryClient();
 
-type CalOAuthProviderProps = Omit<BaseCalProviderProps, "isOAuth2">;
+type RondevuOAuthProviderProps = Omit<BaseRondevuProviderProps, "isOAuth2">;
 
 /**
- * Renders a CalProvider component.
+ * Renders a RondevuProvider component.
  *
  * @component
  * @param {string} props.clientId - The platform oauth client ID.
@@ -26,9 +26,9 @@ type CalOAuthProviderProps = Omit<BaseCalProviderProps, "isOAuth2">;
  * @param {boolean} [autoUpdateTimezone=true] - Whether to automatically update the timezone. - Optional
  * @param {function} props.onTimezoneChange - The callback function for timezone change. - Optional
  * @param {ReactNode} props.children - The child components. - Optional
- * @returns {JSX.Element} The rendered CalProvider component.
+ * @returns {JSX.Element} The rendered RondevuProvider component.
  */
-export function CalOAuthProvider({
+export function RondevuOAuthProvider({
   clientId,
   accessToken,
   options,
@@ -40,7 +40,7 @@ export function CalOAuthProvider({
   version = VERSION_2024_06_14,
   organizationId,
   isEmbed = false,
-}: CalOAuthProviderProps) {
+}: RondevuOAuthProviderProps) {
   useEffect(() => {
     http.setVersionHeader(version);
   }, [version]);
@@ -57,7 +57,7 @@ export function CalOAuthProvider({
 
   return (
     <QueryClientProvider client={queryClient}>
-      <BaseCalProvider
+      <BaseRondevuProvider
         isEmbed={isEmbed}
         isOAuth2={true}
         autoUpdateTimezone={autoUpdateTimezone}
@@ -70,7 +70,7 @@ export function CalOAuthProvider({
         language={language}
         organizationId={organizationId}>
         {children}
-      </BaseCalProvider>
+      </BaseRondevuProvider>
     </QueryClientProvider>
   );
 }

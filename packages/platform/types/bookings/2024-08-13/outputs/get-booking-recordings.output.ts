@@ -34,7 +34,7 @@ export class RecordingItem {
   @IsString()
   shareToken!: string;
 
-  @ApiProperty({ example: "https://cal-video-recordings.s3.us-east-2.amazonaws.com/meetco/123s" })
+  @ApiProperty({ example: "https://rondevu-video-recordings.s3.us-east-2.amazonaws.com/meetco/123s" })
   @IsUrl()
   @IsOptional()
   downloadLink?: string | null;

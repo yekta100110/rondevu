@@ -18,13 +18,13 @@
   line-height: 20px;
   font-weight: 400;
   text-align: left;
-  border-color: var(--cal-border);
+  border-color: var(--rondevu-border);
   border-width: 1px;
   padding: 1px;
 }
 
 .editor-inner {
-  background: var(--cal-bg);
+  background: var(--rondevu-bg);
   position: relative;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
@@ -73,7 +73,7 @@ h6 a {
 .editor-paragraph {
   margin: 0;
   position: relative;
-  color: var(--cal-text);
+  color: var(--rondevu-text);
 }
 
 .editor-paragraph:last-child {
@@ -121,7 +121,7 @@ pre::-webkit-scrollbar-thumb {
 .toolbar {
   display: flex;
   margin-bottom: 1px;
-  background: var(--cal-bg);
+  background: var(--rondevu-bg);
   padding: 2px;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
@@ -145,8 +145,8 @@ pre::-webkit-scrollbar-thumb {
 }
 
 .toolbar button.toolbar-item.active {
-  background-color: var(--cal-bg-inverted);
-  color: var(--cal-text-inverted);
+  background-color: var(--rondevu-bg-inverted);
+  color: var(--rondevu-text-inverted);
 }
 
 .toolbar button.toolbar-item.active i {
@@ -154,13 +154,13 @@ pre::-webkit-scrollbar-thumb {
 }
 
 .toolbar button.toolbar-item:not(.active):not([disabled]) {
-  background-color: var(--cal-bg);
-  color: var(--cal-text);
+  background-color: var(--rondevu-bg);
+  color: var(--rondevu-text);
 }
 
 .toolbar button.toolbar-item:not(.active):hover {
-  color: var(--cal-text-default);
-  background-color: var(--cal-bg-inverted);
+  color: var(--rondevu-text-default);
+  background-color: var(--rondevu-bg-inverted);
 }
 
 .toolbar select.toolbar-item {
@@ -193,7 +193,7 @@ pre::-webkit-scrollbar-thumb {
 
 .toolbar .toolbar-item .icon {
   display: flex;
-  color: var(--cal-text);
+  color: var(--rondevu-text);
 }
 
 #block-controls button:hover {

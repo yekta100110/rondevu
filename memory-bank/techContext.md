@@ -6,7 +6,7 @@
 - **Database**: PostgreSQL + Prisma ORM (Client, Zod, Kysely, and Enum generators)
 - **API**: tRPC (internal type-safe routers) + NestJS REST API v2 + Next.js Internal/Cron Route Handlers
 - **Auth**: NextAuth.js (session anchored to immutable user ID; supports password-reset claim flow for outreach demos)
-- **Styling & UI**: Tailwind CSS, dark-first theme (`#141414` / `#121214` surfaces), `Inter` (`latin`, `latin-ext`) + `Cal Sans` typography, scoped Framer SSR DOM/CSS (`apps/web/public/cal_files/`) for `/` and `/pricing`
+- **Styling & UI**: Tailwind CSS, dark-first theme (`#141414` / `#121214` surfaces), `Inter` (`latin`, `latin-ext`) + `Rondevu Sans` typography, scoped Framer SSR DOM/CSS (`apps/web/public/rondevu_files/`) for `/` and `/pricing`
 - **Messaging & Verification**:
   - **SMS OTP**: Twilio Verify v2 REST API (`TWILIO_VERIFY_SID`) + bounded `verifiedPhoneCache`
   - **Transactional SMS**: Provider-agnostic transport (`Twilio` Programmable Messaging, `Netgsm`, `Webhook`, `Simulation`) with GSM 7-bit ASCII transliteration (`sanitizeSmsText.ts`)
@@ -26,7 +26,7 @@
 - `packages/features` — Self-contained domain modules (`auth`, `bookings`, `availability`, `webhooks`, `tasker`, etc.)
 - `packages/lib` — Shared utilities (`smsTransport.ts`, `sanitizeSmsText.ts`, `normalizePhoneNumber.ts`, `planContactConfig.ts`, `rateLimit.ts`, `validateCronAuth.ts`)
 - `packages/sms` — `@rondevu/sms` workspace package (`SMSManager`, 1-segment GSM 7-bit attendee/organizer SMS templates, unit tests)
-- `packages/app-store` — External calendar integrations (Google Calendar, Apple Calendar; unused rOndevu bloat targeted for De-Cal'ification)
+- `packages/app-store` — External calendar integrations (Google Calendar, Apple Calendar; unused rOndevu bloat targeted for De-Rondevu'ification)
 - `packages/i18n` — Turkish (`tr`) and English (`en`) translation catalogs (`common.json` with 0 missing Turkish keys)
 - `packages/emails` — Transactional email templates
 - `deploy/` — n8n workflow templates (`n8n-platform-webhook.workflow.json`, `n8n-evolution-optout.workflow.json`)
@@ -49,7 +49,7 @@
   - `RONDEVU_N8N_INGRESS_KEY` (`X-Rondevu-Ingress-Key` header auth)
   - `RONDEVU_N8N_ELIGIBILITY_TOKEN` (Bearer token for `/api/internal/whatsapp/{eligibility,opt-out}`)
   - `RONDEVU_WEBHOOK_REPLAY_KEY` (32-byte Base64 key for encrypting failed webhook payloads)
-- **Cron & Security**: `CRON_API_KEY`, `NEXTAUTH_SECRET`, `CALENDSO_ENCRYPTION_KEY`
+- **Cron & Security**: `CRON_API_KEY`, `NEXTAUTH_SECRET`, `RONDEVU_ENCRYPTION_KEY`
 
 ## Key Commands
 - `yarn dev` — Start development server

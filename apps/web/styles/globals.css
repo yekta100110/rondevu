@@ -5,13 +5,13 @@
 @import "./raqb.css";
 
 ::-moz-selection {
-  color: var(--cal-brand-text);
-  background: var(--cal-brand);
+  color: var(--rondevu-brand-text);
+  background: var(--rondevu-brand);
 }
 
 ::selection {
-  color: var(--cal-brand-text);
-  background: var(--cal-brand);
+  color: var(--rondevu-brand-text);
+  background: var(--rondevu-brand);
 }
 
 html,
@@ -77,11 +77,11 @@ html.todesktop-platform-darwin.light main.bg-default {
 }
 
 html.todesktop.light {
-  --cal-bg-emphasis: hsla(0, 0%, 11%, 0.1);
+  --rondevu-bg-emphasis: hsla(0, 0%, 11%, 0.1);
 }
 
 html.todesktop.dark {
-  --cal-bg-emphasis: hsla(220, 2%, 26%, 0.3);
+  --rondevu-bg-emphasis: hsla(220, 2%, 26%, 0.3);
 }
 
 /*
@@ -437,8 +437,8 @@ html.dark body,
 html.dark #main,
 html.dark main,
 html.dark [data-framer-root],
-html.dark #cal-1to1-root,
-html.dark #cal-pricing-1to1-root {
+html.dark #rondevu-1to1-root,
+html.dark #rondevu-pricing-1to1-root {
   background-color: #141414 !important;
   color: #f4f4f5 !important;
   color-scheme: dark;

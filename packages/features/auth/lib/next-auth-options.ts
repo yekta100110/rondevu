@@ -19,7 +19,7 @@ import {
   GOOGLE_CALENDAR_SCOPES,
   GOOGLE_OAUTH_SCOPES,
   HOSTED_CAL_FEATURES,
-  IS_CALCOM,
+  IS_RONDEVU,
   IS_TEAM_BILLING_ENABLED,
   MICROSOFT_CALENDAR_SCOPES,
   WEBAPP_URL,
@@ -187,14 +187,14 @@ export async function authorizeCredentials(
   }
 
   if (user.twoFactorEnabled && credentials.backupCode) {
-    if (!process.env.CALENDSO_ENCRYPTION_KEY) {
+    if (!process.env.RONDEVU_ENCRYPTION_KEY) {
       console.error("Missing encryption key; cannot proceed with backup code login.");
       throw new Error(ErrorCode.InternalServerError);
     }
 
     if (!user.backupCodes) throw new Error(ErrorCode.MissingBackupCodes);
 
-    const backupCodes = JSON.parse(symmetricDecrypt(user.backupCodes, process.env.CALENDSO_ENCRYPTION_KEY));
+    const backupCodes = JSON.parse(symmetricDecrypt(user.backupCodes, process.env.RONDEVU_ENCRYPTION_KEY));
 
     // check if user-supplied code matches one
     const index = backupCodes.indexOf(credentials.backupCode.replaceAll("-", ""));
@@ -207,7 +207,7 @@ export async function authorizeCredentials(
         id: user.id,
       },
       data: {
-        backupCodes: symmetricEncrypt(JSON.stringify(backupCodes), process.env.CALENDSO_ENCRYPTION_KEY),
+        backupCodes: symmetricEncrypt(JSON.stringify(backupCodes), process.env.RONDEVU_ENCRYPTION_KEY),
       },
     });
   } else if (user.twoFactorEnabled) {
@@ -220,12 +220,12 @@ export async function authorizeCredentials(
       throw new Error(ErrorCode.InternalServerError);
     }
 
-    if (!process.env.CALENDSO_ENCRYPTION_KEY) {
+    if (!process.env.RONDEVU_ENCRYPTION_KEY) {
       console.error(`"Missing encryption key; cannot proceed with two factor login."`);
       throw new Error(ErrorCode.InternalServerError);
     }
 
-    const secret = symmetricDecrypt(user.twoFactorSecret, process.env.CALENDSO_ENCRYPTION_KEY);
+    const secret = symmetricDecrypt(user.twoFactorSecret, process.env.RONDEVU_ENCRYPTION_KEY);
     if (secret.length !== 32) {
       console.error(
         `Two factor secret decryption failed. Expected key with length 32 but got ${secret.length}`
@@ -775,7 +775,7 @@ export const getOptions = ({
       log.debug("callbacks:session - Session callback called", safeStringify({ session, token, user }));
       const hasValidLicense = false;
       const profileId = token.profileId;
-      const calendsoSession: Session = {
+      const rondevuSession: Session = {
         ...session,
         profileId,
         upId: token.upId || session.upId,
@@ -794,7 +794,7 @@ export const getOptions = ({
           inactiveAdminReason: token.inactiveAdminReason,
         },
       };
-      return calendsoSession;
+      return rondevuSession;
     },
     async signIn(params): Promise<boolean | string> {
       const {
@@ -1196,7 +1196,7 @@ export const getOptions = ({
       // this is a workaround – in the future once we move to use the Account model in the DB
       // we should use NextAuth's isNewUser flag instead: https://next-auth.js.org/configuration/events#signin
       const isNewUser = new Date(user.createdDate) > new Date(Date.now() - 10 * 60 * 1000);
-      if ((isENVDev || IS_CALCOM) && isNewUser) {
+      if ((isENVDev || IS_RONDEVU) && isNewUser) {
         if (process.env.DUB_API_KEY) {
           const clickId = getDubId();
           // check if there's a clickId (dub_id) cookie set by @dub/analytics

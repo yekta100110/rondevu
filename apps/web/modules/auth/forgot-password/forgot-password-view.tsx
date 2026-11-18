@@ -119,10 +119,10 @@ export default function ForgotPassword(props: PageProps) {
             action="#"
             style={
               {
-                "--cal-brand": "#111827",
-                "--cal-brand-emphasis": "#101010",
-                "--cal-brand-text": "Black",
-                "--cal-brand-subtle": "#9CA3AF",
+                "--rondevu-brand": "#111827",
+                "--rondevu-brand-emphasis": "#101010",
+                "--rondevu-brand-text": "Black",
+                "--rondevu-brand-subtle": "#9CA3AF",
               } as CSSProperties
             }>
             <input name="csrfToken" type="hidden" defaultValue={csrfToken} hidden />

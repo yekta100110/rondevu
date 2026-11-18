@@ -2,8 +2,8 @@ function _buildCssVarsPerTheme({
   light,
   dark,
 }: {
-  light: { "cal-brand": string | null };
-  dark: { "cal-brand": string | null };
+  light: { "rondevu-brand": string | null };
+  dark: { "rondevu-brand": string | null };
 }) {
   // Setting this value should remove it from the API
   const VALUE_WHEN_WE_DONT_WANT_IT_IN_API = undefined;
@@ -33,7 +33,7 @@ export function buildCssVarsPerTheme({
   darkBrandColor: string | null;
 }) {
   return _buildCssVarsPerTheme({
-    light: { "cal-brand": brandColor },
-    dark: { "cal-brand": darkBrandColor },
+    light: { "rondevu-brand": brandColor },
+    dark: { "rondevu-brand": darkBrandColor },
   });
 }

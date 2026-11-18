@@ -5,7 +5,7 @@ import { Controller, useForm } from "react-hook-form";
 import dayjs from "@rondevu/dayjs";
 import type { TApiKeys } from "~/api-keys/api-keys/components/ApiKeyListItem";
 import { API_NAME_LENGTH_MAX_LIMIT } from "@rondevu/lib/constants";
-import { IS_CALCOM } from "@rondevu/lib/constants";
+import { IS_RONDEVU } from "@rondevu/lib/constants";
 import { useLocale } from "@rondevu/lib/hooks/useLocale";
 import { trpc } from "@rondevu/trpc/react";
 import { Button } from "@rondevu/ui/components/button";
@@ -96,7 +96,7 @@ export default function ApiKeyDialogForm({
       {successfulNewApiKeyModal ? (
         <>
           <div className="mb-6">
-            <h2 className="font-semi-bold font-cal text-emphasis mb-2 text-xl tracking-wide">
+            <h2 className="font-semi-bold font-display text-emphasis mb-2 text-xl tracking-wide">
               {t("success_api_key_created")}
             </h2>
             <div className="text-emphasis text-sm">
@@ -152,10 +152,10 @@ export default function ApiKeyDialogForm({
           }}
           className="stack-y-4">
           <div className="mb-4 mt-1">
-            <h2 className="font-semi-bold font-cal text-emphasis text-xl tracking-wide">
+            <h2 className="font-semi-bold font-display text-emphasis text-xl tracking-wide">
               {defaultValues ? t("edit_api_key") : t("create_api_key")}
             </h2>
-            {IS_CALCOM ? (
+            {IS_RONDEVU ? (
               <div className="mt-4 flex flex-col gap-2 sm:flex-row">
                 <div className="border-emphasis relative flex w-full items-start rounded-[10px] border p-4 text-sm">
                   {t("api_key_modal_subtitle")}

@@ -3,7 +3,7 @@ import { SignJWT } from "jose";
 import { WEBSITE_URL } from "@rondevu/lib/constants";
 
 const signJwt = async (payload: { email: string }) => {
-  const secret = new TextEncoder().encode(process.env.CALENDSO_ENCRYPTION_KEY);
+  const secret = new TextEncoder().encode(process.env.RONDEVU_ENCRYPTION_KEY);
   return new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setSubject(payload.email)

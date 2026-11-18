@@ -5,15 +5,15 @@ import { useEffect } from "react";
 import * as React from "react";
 import ReactDom from "react-dom";
 
-import { getCalApi } from "./src/index";
+import { getRondevuApi } from "./src/index";
 
-const calNamespace = "element-click";
+const rondevuNamespace = "element-click";
 function App() {
   useEffect(() => {
     (async function () {
-      const cal = await getCalApi({
+      const cal = await getRondevuApi({
         embedJsUrl: "http://localhost:3000/embed/embed.js",
-        namespace: calNamespace,
+        namespace: rondevuNamespace,
       });
       cal("ui", {
         styles: { branding: { brandColor: "#000000" } },
@@ -23,9 +23,9 @@ function App() {
   }, []);
   return (
     <button
-      data-cal-namespace={calNamespace}
-      data-cal-link="pro"
-      data-cal-config='{"layout":"month_view", "theme":"dark", "useSlotsViewOnSmallScreen":"true"}'
+      data-rondevu-namespace={rondevuNamespace}
+      data-rondevu-link="pro"
+      data-rondevu-config='{"layout":"month_view", "theme":"dark", "useSlotsViewOnSmallScreen":"true"}'
     >
       Click me
     </button>

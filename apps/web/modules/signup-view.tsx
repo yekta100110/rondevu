@@ -13,7 +13,7 @@ import ServerTrans from "@rondevu/lib/components/ServerTrans";
 import {
   APP_NAME,
   CLOUDFLARE_SITE_ID,
-  IS_CALCOM,
+  IS_RONDEVU,
   URL_PROTOCOL_REGEX,
   WEBAPP_URL,
   WEBSITE_PRIVACY_POLICY_URL,
@@ -336,7 +336,7 @@ export default function Signup({
 
   return (
     <>
-      {IS_CALCOM && (!IS_EUROPE || userConsentToCookie) ? (
+      {IS_RONDEVU && (!IS_EUROPE || userConsentToCookie) ? (
         <>
           {process.env.NEXT_PUBLIC_GTM_ID && (
             <>
@@ -375,12 +375,12 @@ export default function Signup({
       ) : null}
       <div
         className={classNames(
-          "light flex min-h-screen w-full flex-col items-center justify-center bg-cal-muted [--cal-brand:#111827] 2xl:bg-default dark:[--cal-brand:#FFFFFF]",
-          "[--cal-brand-subtle:#9CA3AF]",
-          "[--cal-brand-text:#FFFFFF] dark:[--cal-brand-text:#000000]",
-          "[--cal-brand-emphasis:#101010] dark:[--cal-brand-emphasis:#e1e1e1]"
+          "light flex min-h-screen w-full flex-col items-center justify-center bg-muted [--rondevu-brand:#111827] 2xl:bg-default dark:[--rondevu-brand:#FFFFFF]",
+          "[--rondevu-brand-subtle:#9CA3AF]",
+          "[--rondevu-brand-text:#FFFFFF] dark:[--rondevu-brand-text:#000000]",
+          "[--rondevu-brand-emphasis:#101010] dark:[--rondevu-brand-emphasis:#e1e1e1]"
         )}>
-        <div className="grid w-full max-w-[1440px] grid-cols-1 grid-rows-1 overflow-hidden bg-cal-muted lg:grid-cols-2 2xl:rounded-[20px] 2xl:border 2xl:border-subtle 2xl:py-6">
+        <div className="grid w-full max-w-[1440px] grid-cols-1 grid-rows-1 overflow-hidden bg-muted lg:grid-cols-2 2xl:rounded-[20px] 2xl:border 2xl:border-subtle 2xl:py-6">
           {/* Left side */}
           <div className="mt-0 mr-auto ml-auto flex w-full max-w-xl flex-col px-4 pt-6 sm:px-16 md:px-20 lg:mt-24 2xl:px-28">
             {accountUnderReview ? (
@@ -390,7 +390,7 @@ export default function Signup({
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-subtle">
                   <ShieldCheckIcon className="h-6 w-6 text-default" />
                 </div>
-                <h1 className="font-cal text-[28px] leading-none">{t("account_under_review_title")}</h1>
+                <h1 className="font-display text-[28px] leading-none">{t("account_under_review_title")}</h1>
                 <p className="font-medium text-base text-subtle leading-5">
                   {t("account_under_review_description")}
                 </p>
@@ -415,12 +415,12 @@ export default function Signup({
                   </div>
                 )}
                 <div className="flex flex-col gap-2">
-                  <h1 className="font-cal text-[28px] leading-none">
-                    {IS_CALCOM ? t("create_your_rondevu_account") : t("create_your_account")}
+                  <h1 className="font-display text-[28px] leading-none">
+                    {IS_RONDEVU ? t("create_your_rondevu_account") : t("create_your_account")}
                   </h1>
-                  {IS_CALCOM ? (
+                  {IS_RONDEVU ? (
                     <p className="font-medium text-base text-subtle leading-5">
-                      {t("cal_signup_description")}
+                      {t("rondevu_signup_description")}
                     </p>
                   ) : (
                     <p className="font-medium text-base text-subtle leading-5">
@@ -429,7 +429,7 @@ export default function Signup({
                       })}
                     </p>
                   )}
-                  {IS_CALCOM && (
+                  {IS_RONDEVU && (
                     <div className="mt-12">
                       <SelectField
                         label={t("data_region")}
@@ -771,7 +771,7 @@ export default function Signup({
             )}
           </div>
           <div className="mx-auto mt-24 w-full max-w-2xl flex-col justify-between rounded-l-2xl border-subtle pl-4 lg:mt-0 lg:flex lg:max-w-full lg:border lg:bg-subtle lg:py-12 lg:pl-12 dark:bg-none">
-            {IS_CALCOM && (
+            {IS_RONDEVU && (
               <>
                 <div className="-mt-4 mr-12 mb-6 grid w-full grid-cols-3 gap-5 pr-4 sm:gap-3 lg:grid-cols-4">
                   <div>

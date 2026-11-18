@@ -108,7 +108,7 @@ export const sendEmailVerificationByCode = async ({
 
   const translation = await getTranslation(language ?? "en", "common");
   const secret = createHash("md5")
-    .update(email + process.env.CALENDSO_ENCRYPTION_KEY)
+    .update(email + process.env.RONDEVU_ENCRYPTION_KEY)
     .digest("hex");
 
   totp.options = { step: 900 };

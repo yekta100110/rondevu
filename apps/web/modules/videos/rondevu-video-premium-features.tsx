@@ -227,7 +227,7 @@ export const CalVideoPremiumFeatures = ({
 
   return transcript ? (
     <div
-      id="cal-ai-transcription"
+      id="rondevu-ai-transcription"
       style={{
         textShadow: "0 0 20px black, 0 0 20px black, 0 0 20px black",
         backgroundColor: "rgba(0,0,0,0.6)",

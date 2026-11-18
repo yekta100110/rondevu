@@ -8,7 +8,7 @@ import { updateMeeting } from "@rondevu/features/conferencing/lib/videoClient";
 import type { WebhookVersion } from "@rondevu/features/webhooks/lib/interface/IWebhookRepository";
 import sendPayload from "@rondevu/features/webhooks/lib/sendOrSchedulePayload";
 import type { EventPayloadType, EventTypeInfo } from "@rondevu/features/webhooks/lib/sendPayload";
-import { getRichDescription } from "@rondevu/lib/CalEventParser";
+import { getRichDescription } from "@rondevu/lib/RondevuEventParser";
 import { HttpError } from "@rondevu/lib/http-error";
 import logger from "@rondevu/lib/logger";
 import { safeStringify } from "@rondevu/lib/safeStringify";

@@ -47,7 +47,7 @@ function isSafeUrlToLoadResourceFrom(urlString: string) {
 
 const searchParams = new URL(document.URL).searchParams;
 const embedType = searchParams.get("embedType");
-const calLink = searchParams.get("calLink");
+const rondevuLink = searchParams.get("rondevuLink");
 const bookerUrl = searchParams.get("bookerUrl");
 const embedLibUrl = searchParams.get("embedLibUrl");
 
@@ -63,22 +63,22 @@ if (!isSafeUrlToLoadResourceFrom(bookerUrl)) {
   throw new Error('Invalid "bookerUrl".');
 }
 
-if (!calLink) {
-  throw new Error('Missing "calLink" query parameter');
+if (!rondevuLink) {
+  throw new Error('Missing "rondevuLink" query parameter');
 }
 
 // TODO: Reuse the embed code snippet from the embed-snippet package - Not able to use it because of circular dependency
-// Install Cal Embed Code Snippet
+// Install Rondevu Embed Code Snippet
 (function (C, A, L) {
   // @ts-expect-error
   const p = function (a, ar) {
     a.q.push(ar);
   };
   const d = C.document;
-  C.Cal =
-    C.Cal ||
+  C.Rondevu =
+    C.Rondevu ||
     function () {
-      const cal = C.Cal;
+      const cal = C.Rondevu;
 
       // eslint-disable-next-line prefer-rest-params
       const ar = arguments;
@@ -108,41 +108,41 @@ if (!calLink) {
     };
 })(window, embedLibUrl, "init");
 const previewWindow = window;
-previewWindow.Cal.fingerprint = process.env.EMBED_PUBLIC_EMBED_FINGER_PRINT as string;
-previewWindow.Cal.version = process.env.EMBED_PUBLIC_EMBED_VERSION as string;
+previewWindow.Rondevu.fingerprint = process.env.EMBED_PUBLIC_EMBED_FINGER_PRINT as string;
+previewWindow.Rondevu.version = process.env.EMBED_PUBLIC_EMBED_VERSION as string;
 
-previewWindow.Cal("init", {
+previewWindow.Rondevu("init", {
   origin: bookerUrl,
 });
 
 if (embedType === "inline") {
-  previewWindow.Cal("inline", {
+  previewWindow.Rondevu("inline", {
     elementOrSelector: "#my-embed",
-    calLink: calLink,
+    rondevuLink: rondevuLink,
   });
 } else if (embedType === "floating-popup") {
-  previewWindow.Cal("floatingButton", {
-    calLink: calLink,
+  previewWindow.Rondevu("floatingButton", {
+    rondevuLink: rondevuLink,
     attributes: {
       id: "my-floating-button",
     },
   });
 } else if (embedType === "element-click") {
   const button = document.createElement("button");
-  button.setAttribute("data-cal-link", calLink);
+  button.setAttribute("data-rondevu-link", rondevuLink);
   button.innerHTML = "I am a button that exists on your website";
   document.body.appendChild(button);
 }
 
 previewWindow.addEventListener("message", (e) => {
   const data = e.data;
-  if (data.mode !== "cal:preview") {
+  if (data.mode !== "rondevu:preview") {
     return;
   }
 
-  const globalCal = window.Cal;
+  const globalCal = window.Rondevu;
   if (!globalCal) {
-    throw new Error("Cal is not defined yet");
+    throw new Error("Rondevu is not defined yet");
   }
   if (data.type == "instruction") {
     globalCal(data.instruction.name, data.instruction.arg);

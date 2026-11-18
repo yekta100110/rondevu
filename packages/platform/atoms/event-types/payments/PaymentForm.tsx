@@ -66,7 +66,7 @@ export const PaymentForm = ({
                     aria-modal="true"
                     aria-labelledby="modal-headline">
                     <div>
-                      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-cal-success">
+                      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-rondevu-success">
                         <PayIcon currency={paymentAppData.currency} className="h-8 w-8 text-green-600" />
                       </div>
                       <div className="mt-3 text-center sm:mt-5">
