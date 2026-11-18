@@ -13,38 +13,38 @@ import {
 } from "react";
 import { Controller, useFieldArray, useForm, useFormContext, useWatch } from "react-hook-form";
 
-import dayjs from "@calcom/dayjs";
-import { BookerStoreProvider } from "@calcom/features/bookings/Booker/BookerStoreProvider";
-import { Dialog } from "@calcom/features/components/controlled-dialog";
-import { TimezoneSelect as WebTimezoneSelect } from "@calcom/web/modules/timezone/components/TimezoneSelect";
+import dayjs from "@rondevu/dayjs";
+import { BookerStoreProvider } from "@rondevu/features/bookings/Booker/BookerStoreProvider";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
+import { TimezoneSelect as WebTimezoneSelect } from "@rondevu/web/modules/timezone/components/TimezoneSelect";
 import type {
   BulkUpdatParams,
   EventTypes,
-} from "@calcom/features/eventtypes/components/BulkEditDefaultForEventsModal";
-import { BulkEditDefaultForEventsModal } from "@calcom/features/eventtypes/components/BulkEditDefaultForEventsModal";
-import DateOverrideInputDialog from "@calcom/features/schedules/components/DateOverrideInputDialog";
-import DateOverrideList from "@calcom/features/schedules/components/DateOverrideList";
+} from "@rondevu/features/eventtypes/components/BulkEditDefaultForEventsModal";
+import { BulkEditDefaultForEventsModal } from "@rondevu/features/eventtypes/components/BulkEditDefaultForEventsModal";
+import DateOverrideInputDialog from "@rondevu/features/schedules/components/DateOverrideInputDialog";
+import DateOverrideList from "@rondevu/features/schedules/components/DateOverrideList";
 import {
   ScheduleComponent as PlatformSchedule,
-} from "@calcom/features/schedules/components/ScheduleComponent";
-import WebSchedule from "@calcom/web/modules/schedules/components/Schedule";
-import { availabilityAsString } from "@calcom/lib/availability";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { sortAvailabilityStrings } from "@calcom/lib/weekstart";
-import type { TravelScheduleRepository } from "@calcom/features/travelSchedule/repositories/TravelScheduleRepository";
-import type { TimeRange, WorkingHours } from "@calcom/types/schedule";
-import classNames from "@calcom/ui/classNames";
-import { Button } from "@calcom/ui/components/button";
-import { DialogTrigger, ConfirmationDialogContent } from "@calcom/ui/components/dialog";
-import { VerticalDivider } from "@calcom/ui/components/divider";
-import { EditableHeading } from "@calcom/ui/components/editable-heading";
-import { Form } from "@calcom/ui/components/form";
-import { Label } from "@calcom/ui/components/form";
-import { Switch } from "@calcom/ui/components/form";
-import { Icon } from "@calcom/ui/components/icon";
-import { SkeletonText, SelectSkeletonLoader, Skeleton } from "@calcom/ui/components/skeleton";
-import { Tooltip } from "@calcom/ui/components/tooltip";
-import WebShell from "@calcom/web/modules/shell/Shell";
+} from "@rondevu/features/schedules/components/ScheduleComponent";
+import WebSchedule from "@rondevu/web/modules/schedules/components/Schedule";
+import { availabilityAsString } from "@rondevu/lib/availability";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { sortAvailabilityStrings } from "@rondevu/lib/weekstart";
+import type { TravelScheduleRepository } from "@rondevu/features/travelSchedule/repositories/TravelScheduleRepository";
+import type { TimeRange, WorkingHours } from "@rondevu/types/schedule";
+import classNames from "@rondevu/ui/classNames";
+import { Button } from "@rondevu/ui/components/button";
+import { DialogTrigger, ConfirmationDialogContent } from "@rondevu/ui/components/dialog";
+import { VerticalDivider } from "@rondevu/ui/components/divider";
+import { EditableHeading } from "@rondevu/ui/components/editable-heading";
+import { Form } from "@rondevu/ui/components/form";
+import { Label } from "@rondevu/ui/components/form";
+import { Switch } from "@rondevu/ui/components/form";
+import { Icon } from "@rondevu/ui/components/icon";
+import { SkeletonText, SelectSkeletonLoader, Skeleton } from "@rondevu/ui/components/skeleton";
+import { Tooltip } from "@rondevu/ui/components/tooltip";
+import WebShell from "@rondevu/web/modules/shell/Shell";
 
 import { Shell as PlatformShell } from "../src/components/ui/shell";
 import { cn } from "../src/lib/utils";

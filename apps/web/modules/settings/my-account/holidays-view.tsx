@@ -1,18 +1,18 @@
 "use client";
 
-import dayjs from "@calcom/dayjs";
-import SettingsHeader from "@calcom/features/settings/appDir/SettingsHeader";
-import { getHolidayEmoji } from "@calcom/lib/holidays/getHolidayEmoji";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import type { RouterOutputs } from "@calcom/trpc/react";
-import { trpc } from "@calcom/trpc/react";
-import { Alert } from "@calcom/ui/components/alert";
-import { Button } from "@calcom/ui/components/button";
-import { Select, Switch } from "@calcom/ui/components/form";
-import { Icon } from "@calcom/ui/components/icon";
-import { SkeletonContainer, SkeletonText } from "@calcom/ui/components/skeleton";
+import dayjs from "@rondevu/dayjs";
+import SettingsHeader from "@rondevu/features/settings/appDir/SettingsHeader";
+import { getHolidayEmoji } from "@rondevu/lib/holidays/getHolidayEmoji";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import type { RouterOutputs } from "@rondevu/trpc/react";
+import { trpc } from "@rondevu/trpc/react";
+import { Alert } from "@rondevu/ui/components/alert";
+import { Button } from "@rondevu/ui/components/button";
+import { Select, Switch } from "@rondevu/ui/components/form";
+import { Icon } from "@rondevu/ui/components/icon";
+import { SkeletonContainer, SkeletonText } from "@rondevu/ui/components/skeleton";
 import { TriangleAlertIcon } from "@coss/ui/icons";
-import { showToast } from "@calcom/ui/components/toast";
+import { showToast } from "@rondevu/ui/components/toast";
 import { memo, useCallback, useMemo } from "react";
 import { OutOfOfficeToggleGroup } from "~/settings/outOfOffice/OutOfOfficeToggleGroup";
 

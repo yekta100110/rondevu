@@ -7,9 +7,9 @@ import type {
 } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Alert } from "@calcom/ui/components/alert";
-import { Loader } from "@calcom/ui/components/skeleton";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { Alert } from "@rondevu/ui/components/alert";
+import { Loader } from "@rondevu/ui/components/skeleton";
 
 type ErrorLike = {
   message: string;

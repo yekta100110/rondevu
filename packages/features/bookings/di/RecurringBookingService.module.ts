@@ -1,6 +1,6 @@
-import { RecurringBookingService } from "@calcom/features/bookings/lib/service/RecurringBookingService";
-import { createModule, bindModuleToClassOnToken } from "@calcom/features/di/di";
-import { DI_TOKENS } from "@calcom/features/di/tokens";
+import { RecurringBookingService } from "@rondevu/features/bookings/lib/service/RecurringBookingService";
+import { createModule, bindModuleToClassOnToken } from "@rondevu/features/di/di";
+import { DI_TOKENS } from "@rondevu/features/di/tokens";
 
 import { moduleLoader as regularBookingServiceModuleLoader } from "./RegularBookingService.module";
 

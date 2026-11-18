@@ -1,6 +1,6 @@
 import { describe, expect, it, beforeAll, vi } from "vitest";
 
-import dayjs from "@calcom/dayjs";
+import dayjs from "@rondevu/dayjs";
 
 import { formatToLocalizedTimezone } from "./index";
 

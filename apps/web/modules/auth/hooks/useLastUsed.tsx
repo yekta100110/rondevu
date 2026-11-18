@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { localStorage } from "@calcom/lib/webstorage";
-import classNames from "@calcom/ui/classNames";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { localStorage } from "@rondevu/lib/webstorage";
+import classNames from "@rondevu/ui/classNames";
 
 type LoginType = "saml" | "google" | "microsoft" | "credentials";
 

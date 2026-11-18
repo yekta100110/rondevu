@@ -1,8 +1,8 @@
-import dayjs from "@calcom/dayjs";
-import { getWorkingHours } from "@calcom/lib/availability";
-import { sanitizeTimezone, yyyymmdd } from "@calcom/lib/dayjs";
-import type { Availability } from "@calcom/prisma/client";
-import type { Schedule, TimeRange } from "@calcom/types/schedule";
+import dayjs from "@rondevu/dayjs";
+import { getWorkingHours } from "@rondevu/lib/availability";
+import { sanitizeTimezone, yyyymmdd } from "@rondevu/lib/dayjs";
+import type { Availability } from "@rondevu/prisma/client";
+import type { Schedule, TimeRange } from "@rondevu/types/schedule";
 
 type ScheduleAvailability = Pick<Availability, "days" | "startTime" | "endTime">[];
 type ScheduleOverride = Pick<Availability, "date" | "startTime" | "endTime">[];

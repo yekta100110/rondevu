@@ -1,14 +1,14 @@
-import type { BookerProps } from "@calcom/features/bookings/Booker";
-import type { BookerStore, CountryCode } from "@calcom/features/bookings/Booker/store";
-import type { Timezone, VIEW_TYPE } from "@calcom/features/bookings/Booker/types";
-import type { BookingCreateBody } from "@calcom/features/bookings/lib/bookingCreateBodySchema";
-import type { BookingResponse } from "@calcom/platform-libraries";
+import type { BookerProps } from "@rondevu/features/bookings/Booker";
+import type { BookerStore, CountryCode } from "@rondevu/features/bookings/Booker/store";
+import type { Timezone, VIEW_TYPE } from "@rondevu/features/bookings/Booker/types";
+import type { BookingCreateBody } from "@rondevu/features/bookings/lib/bookingCreateBodySchema";
+import type { BookingResponse } from "@rondevu/platform-libraries";
 import type {
   ApiErrorResponse,
   ApiSuccessResponse,
   ApiSuccessResponseWithoutData,
   EmbedSearchParams,
-} from "@calcom/platform-types";
+} from "@rondevu/platform-types";
 import type React from "react";
 import type { UseCreateBookingInput } from "../hooks/bookings/useCreateBooking";
 

@@ -6,9 +6,9 @@ const { findUnique, sendSMS, sendReminder } = vi.hoisted(() => ({
   sendReminder: vi.fn(),
 }));
 
-vi.mock("@calcom/prisma", () => ({ prisma: { booking: { findUnique } } }));
-vi.mock("@calcom/lib/smsTransport", () => ({ sendSMS }));
-vi.mock("@calcom/sms/attendee/event-reminder-sms", () => ({
+vi.mock("@rondevu/prisma", () => ({ prisma: { booking: { findUnique } } }));
+vi.mock("@rondevu/lib/smsTransport", () => ({ sendSMS }));
+vi.mock("@rondevu/sms/attendee/event-reminder-sms", () => ({
   default: class {
     sendSMSToAttendees = sendReminder;
   },

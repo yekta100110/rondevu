@@ -23,10 +23,10 @@ Documentation on how to get started with platform solution is [here](https://cal
 
 ### Versioning
 We use a tool called changesets that helps documenting changes related to your development branch and then manages
-atoms versioning and publishing to [npm](https://www.npmjs.com/package/@calcom/atoms). We need to add a log documenting changes and then letting changesets to gather the changes, update Changelog and update version in `package.json`.
+atoms versioning and publishing to [npm](https://www.npmjs.com/package/@rondevu/atoms). We need to add a log documenting changes and then letting changesets to gather the changes, update Changelog and update version in `package.json`.
 
 1. Let's say you are on a development branch and just finished adding a new feature to atoms. While on the development branch, you have to add a log documenting this feature so that it later ends up in the atoms [CHANGELOG.md](https://github.com/calcom/cal.diy/blob/main/packages/platform/atoms/CHANGELOG.md).
-- Run `yarn changesets-add` from monorepo root and then select `@calcom/atoms` using space bar and press enter to go to the next step.
+- Run `yarn changesets-add` from monorepo root and then select `@rondevu/atoms` using space bar and press enter to go to the next step.
 - Then, you have to select whether this is a major, minor or patch update following semantic versioning. Since it is a feature skip major by pressing enter and then select minor by pressing space bar and press enter to go to the next step.
 - Then, you have to write a description of the change and press enter. This will generate a log file in the `.changeset` directory e.g. `.changeset/hungry-donuts-cross.md`. 
 - Commit this log file to your development branch and push it.

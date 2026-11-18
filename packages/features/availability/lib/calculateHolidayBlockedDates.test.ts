@@ -1,11 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import dayjs from "@calcom/dayjs";
-import { getHolidayService } from "@calcom/lib/holidays";
+import dayjs from "@rondevu/dayjs";
+import { getHolidayService } from "@rondevu/lib/holidays";
 
 import { UserAvailabilityService } from "./getUserAvailability";
 
-vi.mock("@calcom/lib/holidays", () => ({
+vi.mock("@rondevu/lib/holidays", () => ({
   getHolidayService: vi.fn(() => ({
     getHolidayDatesInRange: vi.fn(),
   })),

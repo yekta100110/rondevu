@@ -1,7 +1,7 @@
-import type { DialogProps as ControlledDialogProps } from "@calcom/features/components/controlled-dialog";
-import { Dialog } from "@calcom/features/components/controlled-dialog";
-import { Button } from "@calcom/ui/components/button";
-import { DialogContent, DialogFooter, DialogClose } from "@calcom/ui/components/dialog";
+import type { DialogProps as ControlledDialogProps } from "@rondevu/features/components/controlled-dialog";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
+import { Button } from "@rondevu/ui/components/button";
+import { DialogContent, DialogFooter, DialogClose } from "@rondevu/ui/components/dialog";
 
 export function AccountDialog(
   props: ControlledDialogProps & {

@@ -1,4 +1,4 @@
-import { useLocale } from "@calcom/lib/hooks/useLocale";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
 
 import Shell from "~/shell/Shell";
 

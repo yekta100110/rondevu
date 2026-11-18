@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
-import { WebhookTriggerEvents } from "@calcom/prisma/enums";
+import { WebhookTriggerEvents } from "@rondevu/prisma/enums";
 
 import type { WebhookSubscriber } from "./dto/types";
 import { WebhookService } from "./WebhookService";
@@ -14,8 +14,8 @@ vi.mock("./sendOrSchedulePayload", () => ({
   default: vi.fn(),
 }));
 
-vi.mock("@calcom/lib/logger", async () => {
-  const actual = await vi.importActual<typeof import("@calcom/lib/logger")>("@calcom/lib/logger");
+vi.mock("@rondevu/lib/logger", async () => {
+  const actual = await vi.importActual<typeof import("@rondevu/lib/logger")>("@rondevu/lib/logger");
   return {
     ...actual,
     getSubLogger: vi.fn(() => ({
@@ -24,7 +24,7 @@ vi.mock("@calcom/lib/logger", async () => {
   };
 });
 
-vi.mock("@calcom/lib/safeStringify", () => ({
+vi.mock("@rondevu/lib/safeStringify", () => ({
   safeStringify: JSON.stringify,
 }));
 

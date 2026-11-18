@@ -1,5 +1,5 @@
-import type { AdditionalInformation } from "@calcom/types/Calendar";
-import type { EventResult } from "@calcom/types/EventManager";
+import type { AdditionalInformation } from "@rondevu/types/Calendar";
+import type { EventResult } from "@rondevu/types/EventManager";
 
 type ExtraAdditionalInfo = AdditionalInformation & {
   url?: string | undefined;

@@ -1,15 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
-import sendVerificationRequest from "@calcom/features/auth/lib/sendVerificationRequest";
-import { HttpError } from "@calcom/lib/http-error";
+import sendVerificationRequest from "@rondevu/features/auth/lib/sendVerificationRequest";
+import { HttpError } from "@rondevu/lib/http-error";
 import { VerificationTokenService } from "../../lib/VerificationTokenService";
-import { prisma } from "@calcom/prisma";
+import { prisma } from "@rondevu/prisma";
 
 import { getCustomerAndCheckoutSession } from "../../lib/getCustomerAndCheckoutSession";
 
 // Mock dependencies
-vi.mock("@calcom/prisma", () => ({
+vi.mock("@rondevu/prisma", () => ({
   prisma: {
     user: {
       findFirst: vi.fn(),
@@ -19,7 +19,7 @@ vi.mock("@calcom/prisma", () => ({
 }));
 
 vi.mock("../../lib/getCustomerAndCheckoutSession");
-vi.mock("@calcom/features/auth/lib/sendVerificationRequest");
+vi.mock("@rondevu/features/auth/lib/sendVerificationRequest");
 vi.mock("../../lib/VerificationTokenService", () => ({
   VerificationTokenService: {
     create: vi.fn(),

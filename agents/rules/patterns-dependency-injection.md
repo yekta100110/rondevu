@@ -84,7 +84,7 @@ Then import these tokens in the central tokens file:
 
 ```typescript
 // packages/features/di/tokens.ts
-import { MY_FEATURE_DI_TOKENS } from "@calcom/features/myfeature/di/tokens";
+import { MY_FEATURE_DI_TOKENS } from "@rondevu/features/myfeature/di/tokens";
 
 export const DI_TOKENS = {
   // ...existing tokens
@@ -130,8 +130,8 @@ export class MyRepository {
 
 ```typescript
 // packages/features/myfeature/di/MyService.module.ts
-import { bindModuleToClassOnToken, createModule, type ModuleLoader } from "@calcom/features/di/di";
-import { MyService } from "@calcom/features/myfeature/services/MyService";
+import { bindModuleToClassOnToken, createModule, type ModuleLoader } from "@rondevu/features/di/di";
+import { MyService } from "@rondevu/features/myfeature/services/MyService";
 
 import { moduleLoader as bookingRepositoryModuleLoader } from "./BookingRepository.module";
 import { moduleLoader as userRepositoryModuleLoader } from "./UserRepository.module";
@@ -177,7 +177,7 @@ const loadModule = bindModuleToClassOnToken({
 
 ```typescript
 // packages/features/myfeature/di/MyService.container.ts
-import { createContainer } from "@calcom/features/di/di";
+import { createContainer } from "@rondevu/features/di/di";
 import { type MyService, moduleLoader as myServiceModuleLoader } from "./MyService.module";
 
 const myServiceContainer = createContainer();
@@ -191,7 +191,7 @@ export function getMyService(): MyService {
 **Step 5: Use the service via the container's getter function**
 
 ```typescript
-import { getMyService } from "@calcom/features/myfeature/di/MyService.container";
+import { getMyService } from "@rondevu/features/myfeature/di/MyService.container";
 
 const myService = getMyService();
 await myService.doSomething();
@@ -227,7 +227,7 @@ const bookingRepo = new BookingRepository(prisma);
 const myService = new MyService({ bookingRepo });
 
 // Good - Use the DI container's getter function
-import { getMyService } from "@calcom/features/myfeature/di/MyService.container";
+import { getMyService } from "@rondevu/features/myfeature/di/MyService.container";
 const myService = getMyService();
 ```
 
@@ -235,7 +235,7 @@ const myService = getMyService();
 
 ```typescript
 // Bad - Service imports Prisma directly
-import prisma from "@calcom/prisma";
+import prisma from "@rondevu/prisma";
 
 export class MyService {
   async doSomething() {

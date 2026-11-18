@@ -2,40 +2,40 @@ import { cloneDeep, merge } from "lodash";
 import { v5 as uuidv5 } from "uuid";
 import type { z } from "zod";
 
-import { getCalendar } from "@calcom/app-store/_utils/getCalendar";
-import { FAKE_DAILY_CREDENTIAL } from "@calcom/app-store/dailyvideo/lib/VideoApiAdapter";
-import { appKeysSchema as calVideoKeysSchema } from "@calcom/app-store/dailyvideo/zod";
-import { getLocationFromApp, MeetLocationType, MSTeamsLocationType } from "@calcom/app-store/locations";
-import getApps from "@calcom/app-store/utils";
-import { createEvent, updateEvent, deleteEvent } from "@calcom/features/calendars/lib/CalendarManager";
-import { createMeeting, updateMeeting, deleteMeeting } from "@calcom/features/conferencing/lib/videoClient";
-import { CredentialRepository } from "@calcom/features/credentials/repositories/CredentialRepository";
-import CrmManager from "@calcom/features/crmManager/crmManager";
-import CRMScheduler from "@calcom/features/crmManager/crmScheduler";
-import { FeaturesRepository } from "@calcom/features/flags/features.repository";
-import { getUid } from "@calcom/lib/CalEventParser";
-import { symmetricDecrypt } from "@calcom/lib/crypto";
-import { isDelegationCredential } from "@calcom/lib/delegationCredential";
-import logger from "@calcom/lib/logger";
+import { getCalendar } from "@rondevu/app-store/_utils/getCalendar";
+import { FAKE_DAILY_CREDENTIAL } from "@rondevu/app-store/dailyvideo/lib/VideoApiAdapter";
+import { appKeysSchema as calVideoKeysSchema } from "@rondevu/app-store/dailyvideo/zod";
+import { getLocationFromApp, MeetLocationType, MSTeamsLocationType } from "@rondevu/app-store/locations";
+import getApps from "@rondevu/app-store/utils";
+import { createEvent, updateEvent, deleteEvent } from "@rondevu/features/calendars/lib/CalendarManager";
+import { createMeeting, updateMeeting, deleteMeeting } from "@rondevu/features/conferencing/lib/videoClient";
+import { CredentialRepository } from "@rondevu/features/credentials/repositories/CredentialRepository";
+import CrmManager from "@rondevu/features/crmManager/crmManager";
+import CRMScheduler from "@rondevu/features/crmManager/crmScheduler";
+import { FeaturesRepository } from "@rondevu/features/flags/features.repository";
+import { getUid } from "@rondevu/lib/CalEventParser";
+import { symmetricDecrypt } from "@rondevu/lib/crypto";
+import { isDelegationCredential } from "@rondevu/lib/delegationCredential";
+import logger from "@rondevu/lib/logger";
 import {
   getPiiFreeDestinationCalendar,
   getPiiFreeUser,
   getPiiFreeCredential,
   getPiiFreeCalendarEvent,
-} from "@calcom/lib/piiFreeData";
-import { safeStringify } from "@calcom/lib/safeStringify";
-import { prisma } from "@calcom/prisma";
-import type { DestinationCalendar, BookingReference } from "@calcom/prisma/client";
-import { createdEventSchema } from "@calcom/prisma/zod-utils";
-import type { AdditionalInformation, CalendarEvent, NewCalendarEventType } from "@calcom/types/Calendar";
-import type { CredentialForCalendarService } from "@calcom/types/Credential";
-import type { Event } from "@calcom/types/Event";
+} from "@rondevu/lib/piiFreeData";
+import { safeStringify } from "@rondevu/lib/safeStringify";
+import { prisma } from "@rondevu/prisma";
+import type { DestinationCalendar, BookingReference } from "@rondevu/prisma/client";
+import { createdEventSchema } from "@rondevu/prisma/zod-utils";
+import type { AdditionalInformation, CalendarEvent, NewCalendarEventType } from "@rondevu/types/Calendar";
+import type { CredentialForCalendarService } from "@rondevu/types/Credential";
+import type { Event } from "@rondevu/types/Event";
 import type {
   CreateUpdateResult,
   EventResult,
   PartialBooking,
   PartialReference,
-} from "@calcom/types/EventManager";
+} from "@rondevu/types/EventManager";
 
 const log = logger.getSubLogger({ prefix: ["EventManager"] });
 const CALENDSO_ENCRYPTION_KEY = process.env.CALENDSO_ENCRYPTION_KEY || "";

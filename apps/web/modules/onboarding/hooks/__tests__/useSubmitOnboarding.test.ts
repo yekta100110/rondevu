@@ -11,16 +11,16 @@ vi.mock("react", async () => {
   };
 });
 
-vi.mock("@calcom/features/flags/context/provider", () => ({
+vi.mock("@rondevu/features/flags/context/provider", () => ({
   useFlagMap: vi.fn(() => ({})),
 }));
 
 const mockShowToast = vi.fn();
-vi.mock("@calcom/ui/components/toast", () => ({
+vi.mock("@rondevu/ui/components/toast", () => ({
   showToast: (...args: unknown[]) => mockShowToast(...args),
 }));
 
-vi.mock("@calcom/trpc/react", () => ({
+vi.mock("@rondevu/trpc/react", () => ({
   trpc: {
     viewer: {
       organizations: {

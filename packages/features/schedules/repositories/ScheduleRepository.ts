@@ -1,12 +1,12 @@
-import { sanitizeTimezone } from "@calcom/lib/dayjs";
-import { hasReadPermissionsForUserId } from "@calcom/lib/hasEditPermissionForUser";
+import { sanitizeTimezone } from "@rondevu/lib/dayjs";
+import { hasReadPermissionsForUserId } from "@rondevu/lib/hasEditPermissionForUser";
 import {
   transformAvailabilityForAtom,
   transformDateOverridesForAtom,
   transformWorkingHoursForAtom,
-} from "@calcom/lib/schedules/transformers";
-import type { PrismaClient } from "@calcom/prisma";
-import type { User } from "@calcom/prisma/client";
+} from "@rondevu/lib/schedules/transformers";
+import type { PrismaClient } from "@rondevu/prisma";
+import type { User } from "@rondevu/prisma/client";
 
 export type FindDetailedScheduleByIdReturnType = Awaited<
   ReturnType<ScheduleRepository["findDetailedScheduleById"]>

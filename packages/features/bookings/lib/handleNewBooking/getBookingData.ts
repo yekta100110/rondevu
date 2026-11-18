@@ -1,9 +1,9 @@
-import { OrganizerDefaultConferencingAppType } from "@calcom/app-store/locations";
-import dayjs from "@calcom/dayjs";
-import { getCalEventResponses } from "@calcom/features/bookings/lib/getCalEventResponses";
-import { ErrorCode } from "@calcom/lib/errorCodes";
-import { withReporting } from "@calcom/lib/sentryWrapper";
-import type { EventTypeCustomInput } from "@calcom/prisma/client";
+import { OrganizerDefaultConferencingAppType } from "@rondevu/app-store/locations";
+import dayjs from "@rondevu/dayjs";
+import { getCalEventResponses } from "@rondevu/features/bookings/lib/getCalEventResponses";
+import { ErrorCode } from "@rondevu/lib/errorCodes";
+import { withReporting } from "@rondevu/lib/sentryWrapper";
+import type { EventTypeCustomInput } from "@rondevu/prisma/client";
 import type z from "zod";
 import { bookingCreateSchemaLegacyPropsForApi } from "../bookingCreateBodySchema";
 import type { TgetBookingDataSchema } from "../getBookingDataSchema";

@@ -1,6 +1,6 @@
-import { PaymentServiceMap } from "@calcom/app-store/payment.services.generated";
-import type { Payment, Prisma, AppCategories } from "@calcom/prisma/client";
-import type { IAbstractPaymentService } from "@calcom/types/PaymentService";
+import { PaymentServiceMap } from "@rondevu/app-store/payment.services.generated";
+import type { Payment, Prisma, AppCategories } from "@rondevu/prisma/client";
+import type { IAbstractPaymentService } from "@rondevu/types/PaymentService";
 
 const handlePaymentRefund = async (
   paymentId: Payment["id"],

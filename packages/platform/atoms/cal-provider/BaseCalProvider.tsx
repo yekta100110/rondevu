@@ -3,10 +3,10 @@ import type { ReactNode } from "react";
 import { useState } from "react";
 import { useCallback } from "react";
 
-import type { API_VERSIONS_ENUM } from "@calcom/platform-constants";
-import { IconSprites } from "@calcom/ui/components/icon";
-import enTranslations from "@calcom/i18n/locales/en/common.json";
-import trTranslations from "@calcom/i18n/locales/tr/common.json";
+import type { API_VERSIONS_ENUM } from "@rondevu/platform-constants";
+import { IconSprites } from "@rondevu/ui/components/icon";
+import enTranslations from "@rondevu/i18n/locales/en/common.json";
+import trTranslations from "@rondevu/i18n/locales/tr/common.json";
 
 import { AtomsContext } from "../hooks/useAtomsContext";
 import { useMe } from "../hooks/useMe";

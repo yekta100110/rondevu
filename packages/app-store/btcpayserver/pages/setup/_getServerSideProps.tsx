@@ -1,8 +1,8 @@
 import type { GetServerSidePropsContext } from "next";
 import { z } from "zod";
 
-import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
-import { CredentialRepository } from "@calcom/features/credentials/repositories/CredentialRepository";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
+import { CredentialRepository } from "@rondevu/features/credentials/repositories/CredentialRepository";
 
 import { btcpayCredentialKeysSchema } from "../../lib/btcpayCredentialKeysSchema";
 

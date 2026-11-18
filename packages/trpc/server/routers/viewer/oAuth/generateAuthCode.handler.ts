@@ -1,10 +1,10 @@
-import { getOAuthService } from "@calcom/features/oauth/di/OAuthService.container";
-import { OAuthErrorReason, OAUTH_ERROR_REASONS } from "@calcom/features/oauth/services/OAuthService";
-import { ErrorWithCode } from "@calcom/lib/errors";
-import { getHttpStatusCode } from "@calcom/lib/server/getServerErrorFromUnknown";
-import type { AccessScope } from "@calcom/prisma/enums";
-import { httpStatusToTrpcCode } from "@calcom/trpc/server/lib/toTRPCError";
-import type { TrpcSessionUser } from "@calcom/trpc/server/types";
+import { getOAuthService } from "@rondevu/features/oauth/di/OAuthService.container";
+import { OAuthErrorReason, OAUTH_ERROR_REASONS } from "@rondevu/features/oauth/services/OAuthService";
+import { ErrorWithCode } from "@rondevu/lib/errors";
+import { getHttpStatusCode } from "@rondevu/lib/server/getServerErrorFromUnknown";
+import type { AccessScope } from "@rondevu/prisma/enums";
+import { httpStatusToTrpcCode } from "@rondevu/trpc/server/lib/toTRPCError";
+import type { TrpcSessionUser } from "@rondevu/trpc/server/types";
 
 import { TRPCError } from "@trpc/server";
 

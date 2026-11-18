@@ -1,12 +1,12 @@
-import { getPaymentAppData } from "@calcom/app-store/_utils/payments/getPaymentAppData";
-import { useAtomsContext } from "@calcom/atoms/hooks/useAtomsContext";
-import { useIsPlatform } from "@calcom/atoms/hooks/useIsPlatform";
-import { Timezone as PlatformTimzoneSelect } from "@calcom/atoms/timezone";
-import getLocationsOptionsForSelect from "@calcom/features/bookings/lib/getLocationOptionsForSelect";
-import DestinationCalendarSelector from "@calcom/features/calendars/components/DestinationCalendarSelector";
-import { LearnMoreLink } from "@calcom/features/eventtypes/components/LearnMoreLink";
-import type { EventNameObjectType } from "@calcom/features/eventtypes/lib/eventNaming";
-import { getEventName } from "@calcom/features/eventtypes/lib/eventNaming";
+import { getPaymentAppData } from "@rondevu/app-store/_utils/payments/getPaymentAppData";
+import { useAtomsContext } from "@rondevu/atoms/hooks/useAtomsContext";
+import { useIsPlatform } from "@rondevu/atoms/hooks/useIsPlatform";
+import { Timezone as PlatformTimzoneSelect } from "@rondevu/atoms/timezone";
+import getLocationsOptionsForSelect from "@rondevu/features/bookings/lib/getLocationOptionsForSelect";
+import DestinationCalendarSelector from "@rondevu/features/calendars/components/DestinationCalendarSelector";
+import { LearnMoreLink } from "@rondevu/features/eventtypes/components/LearnMoreLink";
+import type { EventNameObjectType } from "@rondevu/features/eventtypes/lib/eventNaming";
+import { getEventName } from "@rondevu/features/eventtypes/lib/eventNaming";
 import type {
   CheckboxClassNames,
   EventTypeSetupProps,
@@ -14,25 +14,25 @@ import type {
   InputClassNames,
   SelectClassNames,
   SettingsToggleClassNames,
-} from "@calcom/features/eventtypes/lib/types";
+} from "@rondevu/features/eventtypes/lib/types";
 import {
   DEFAULT_DARK_BRAND_COLOR,
   DEFAULT_LIGHT_BRAND_COLOR,
   MAX_SEATS_PER_TIME_SLOT,
-} from "@calcom/lib/constants";
-import { generateHashedLink } from "@calcom/lib/generateHashedLink";
-import { checkWCAGContrastColor } from "@calcom/lib/getBrandColours";
-import { extractHostTimezone } from "@calcom/lib/hashedLinksUtils";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { isPhoneConfirmationEvent } from "@calcom/lib/isPhoneConfirmationEvent";
-import type { Prisma } from "@calcom/prisma/client";
-import { CancellationReasonRequirement, SchedulingType } from "@calcom/prisma/enums";
-import type { EditableSchema, fieldSchema } from "@calcom/prisma/zod-utils";
-import type { RouterOutputs } from "@calcom/trpc/react";
-import classNames from "@calcom/ui/classNames";
-import { Alert } from "@calcom/ui/components/alert";
-import { Badge } from "@calcom/ui/components/badge";
-import { Button } from "@calcom/ui/components/button";
+} from "@rondevu/lib/constants";
+import { generateHashedLink } from "@rondevu/lib/generateHashedLink";
+import { checkWCAGContrastColor } from "@rondevu/lib/getBrandColours";
+import { extractHostTimezone } from "@rondevu/lib/hashedLinksUtils";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { isPhoneConfirmationEvent } from "@rondevu/lib/isPhoneConfirmationEvent";
+import type { Prisma } from "@rondevu/prisma/client";
+import { CancellationReasonRequirement, SchedulingType } from "@rondevu/prisma/enums";
+import type { EditableSchema, fieldSchema } from "@rondevu/prisma/zod-utils";
+import type { RouterOutputs } from "@rondevu/trpc/react";
+import classNames from "@rondevu/ui/classNames";
+import { Alert } from "@rondevu/ui/components/alert";
+import { Badge } from "@rondevu/ui/components/badge";
+import { Button } from "@rondevu/ui/components/button";
 import {
   CheckboxField,
   ColorPicker,
@@ -42,16 +42,16 @@ import {
   SettingsToggle,
   Switch,
   TextField,
-} from "@calcom/ui/components/form";
+} from "@rondevu/ui/components/form";
 import {
   SelectedCalendarSettingsScope,
   SelectedCalendarsSettingsWebWrapper,
   SelectedCalendarsSettingsWebWrapperSkeleton,
-} from "@calcom/web/modules/calendars/components/SelectedCalendarsSettingsWebWrapper";
-import { MultiplePrivateLinksController } from "@calcom/web/modules/event-types/components";
-import AddVerifiedEmail from "@calcom/web/modules/event-types/components/AddVerifiedEmail";
-import { BookerLayoutSelector } from "@calcom/web/modules/settings/components/BookerLayoutSelector";
-import { TimezoneSelect as WebTimezoneSelect } from "@calcom/web/modules/timezone/components/TimezoneSelect";
+} from "@rondevu/web/modules/calendars/components/SelectedCalendarsSettingsWebWrapper";
+import { MultiplePrivateLinksController } from "@rondevu/web/modules/event-types/components";
+import AddVerifiedEmail from "@rondevu/web/modules/event-types/components/AddVerifiedEmail";
+import { BookerLayoutSelector } from "@rondevu/web/modules/settings/components/BookerLayoutSelector";
+import { TimezoneSelect as WebTimezoneSelect } from "@rondevu/web/modules/timezone/components/TimezoneSelect";
 import { InfoIcon, PencilIcon } from "@coss/ui/icons";
 import type { Dispatch, SetStateAction } from "react";
 import { Suspense, useEffect, useMemo, useState } from "react";

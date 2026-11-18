@@ -1,7 +1,7 @@
 "use client";
 
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Alert } from "@calcom/ui/components/alert";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { Alert } from "@rondevu/ui/components/alert";
 
 import Shell from "~/shell/Shell";
 

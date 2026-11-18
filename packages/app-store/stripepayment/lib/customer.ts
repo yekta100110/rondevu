@@ -1,6 +1,6 @@
-import { HttpError as HttpCode } from "@calcom/lib/http-error";
-import { prisma } from "@calcom/prisma";
-import type { Prisma } from "@calcom/prisma/client";
+import { HttpError as HttpCode } from "@rondevu/lib/http-error";
+import { prisma } from "@rondevu/prisma";
+import type { Prisma } from "@rondevu/prisma/client";
 
 import stripe from "./server";
 

@@ -1,11 +1,11 @@
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("@calcom/prisma", () => ({
+vi.mock("@rondevu/prisma", () => ({
   default: {},
   prisma: {},
 }));
 
-vi.mock("@calcom/app-store/_appRegistry", () => ({
+vi.mock("@rondevu/app-store/_appRegistry", () => ({
   getAppWithMetadata: vi.fn(),
 }));
 

@@ -11,7 +11,7 @@
 ## Build Commands
 
 - `yarn build` - Build all packages and apps
-- `yarn workspace @calcom/trpc run build` - Build tRPC workspace (run after modifying tRPC routers/procedures)
+- `yarn workspace @rondevu/trpc run build` - Build tRPC workspace (run after modifying tRPC routers/procedures)
 - `yarn prisma generate` - Regenerate Prisma client and TypeScript types after schema updates
 - `yarn build:ai` - Build AI package specifically
 - `yarn clean` - Remove build artifacts (node_modules, .next, .turbo, dist)
@@ -77,7 +77,7 @@
 ```bash
 # 1. Regenerate Prisma types (if schema changed) and build tRPC (if routers changed)
 yarn prisma generate
-yarn workspace @calcom/trpc run build
+yarn workspace @rondevu/trpc run build
 
 # 2. Targeted lint and format fix on changed files
 yarn biome check --write packages/lib/some-file.ts

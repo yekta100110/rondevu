@@ -1,13 +1,13 @@
 import { noop } from "@tanstack/react-table";
 import { formatInTimeZone } from "date-fns-tz";
 
-import { useIsPlatform } from "@calcom/atoms/hooks/useIsPlatform";
-import dayjs from "@calcom/dayjs";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import type { TimeRange, WorkingHours } from "@calcom/types/schedule";
-import { Button } from "@calcom/ui/components/button";
-import { DialogTrigger } from "@calcom/ui/components/dialog";
-import { Tooltip } from "@calcom/ui/components/tooltip";
+import { useIsPlatform } from "@rondevu/atoms/hooks/useIsPlatform";
+import dayjs from "@rondevu/dayjs";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import type { TimeRange, WorkingHours } from "@rondevu/types/schedule";
+import { Button } from "@rondevu/ui/components/button";
+import { DialogTrigger } from "@rondevu/ui/components/dialog";
+import { Tooltip } from "@rondevu/ui/components/tooltip";
 
 import DateOverrideInputDialog from "./DateOverrideInputDialog";
 

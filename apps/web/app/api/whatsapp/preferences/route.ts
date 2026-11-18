@@ -1,5 +1,5 @@
-import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
-import { prisma } from "@calcom/prisma";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
+import { prisma } from "@rondevu/prisma";
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 import { isSameOriginRequest } from "@lib/server/isSameOriginRequest";
 import { cookies, headers } from "next/headers";

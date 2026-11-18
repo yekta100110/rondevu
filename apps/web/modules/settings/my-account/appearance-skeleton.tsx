@@ -1,9 +1,9 @@
 "use client";
 
-import SectionBottomActions from "@calcom/features/settings/SectionBottomActions";
-import SettingsHeader from "@calcom/features/settings/appDir/SettingsHeader";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { SkeletonButton, SkeletonContainer, SkeletonText } from "@calcom/ui/components/skeleton";
+import SectionBottomActions from "@rondevu/features/settings/SectionBottomActions";
+import SettingsHeader from "@rondevu/features/settings/appDir/SettingsHeader";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { SkeletonButton, SkeletonContainer, SkeletonText } from "@rondevu/ui/components/skeleton";
 
 export const SkeletonLoader = () => {
   const { t } = useLocale();

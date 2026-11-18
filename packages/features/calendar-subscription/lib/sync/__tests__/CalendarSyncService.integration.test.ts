@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 
-import type { CalendarSubscriptionEventItem } from "@calcom/features/calendar-subscription/lib/CalendarSubscriptionPort.interface";
-import type { BookingRepository } from "@calcom/lib/server/repository/booking";
-import type { SelectedCalendar } from "@calcom/prisma/client";
+import type { CalendarSubscriptionEventItem } from "@rondevu/features/calendar-subscription/lib/CalendarSubscriptionPort.interface";
+import type { BookingRepository } from "@rondevu/lib/server/repository/booking";
+import type { SelectedCalendar } from "@rondevu/prisma/client";
 
 import {
   type BookingWithEventType,
@@ -19,17 +19,17 @@ const { mockHandleCancelBooking, mockCreateBooking } = vi.hoisted(() => ({
   mockCreateBooking: vi.fn().mockResolvedValue(undefined),
 }));
 
-vi.mock("@calcom/features/bookings/lib/handleCancelBooking", () => ({
+vi.mock("@rondevu/features/bookings/lib/handleCancelBooking", () => ({
   default: mockHandleCancelBooking,
 }));
 
-vi.mock("@calcom/features/bookings/di/RegularBookingService.container", () => ({
+vi.mock("@rondevu/features/bookings/di/RegularBookingService.container", () => ({
   getRegularBookingService: () => ({
     createBooking: mockCreateBooking,
   }),
 }));
 
-vi.mock("@calcom/lib/idempotencyKey/idempotencyKeyService", () => ({
+vi.mock("@rondevu/lib/idempotencyKey/idempotencyKeyService", () => ({
   IdempotencyKeyService: {
     generate: vi.fn(() => "test-idempotency-key"),
   },

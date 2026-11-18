@@ -1,10 +1,10 @@
-import { useInitalizeTroubleshooterStore } from "@calcom/features/troubleshooter/store";
-import useMediaQuery from "@calcom/lib/hooks/useMediaQuery";
-import classNames from "@calcom/ui/classNames";
+import { useInitalizeTroubleshooterStore } from "@rondevu/features/troubleshooter/store";
+import useMediaQuery from "@rondevu/lib/hooks/useMediaQuery";
+import classNames from "@rondevu/ui/classNames";
 import { AtomsWrapper } from "../../src/components/atoms-wrapper";
 import { TroubleshooterSidebar } from "../sidebar/TroubleshooterSidebar";
 import { LargeCalendar } from "../large-calendar/LargeCalendar";
-import { BookerStoreProvider } from "@calcom/features/bookings/Booker/BookerStoreProvider";
+import { BookerStoreProvider } from "@rondevu/features/bookings/Booker/BookerStoreProvider";
 
 interface TroubleshooterComponentProps {
   month?: string | null;

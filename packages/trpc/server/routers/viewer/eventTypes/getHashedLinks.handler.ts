@@ -1,7 +1,7 @@
-import { HashedLinkRepository } from "@calcom/features/hashedLink/lib/repository/HashedLinkRepository";
-import { HashedLinkService } from "@calcom/features/hashedLink/lib/service/HashedLinkService";
-import type { PrismaClient } from "@calcom/prisma";
-import type { TrpcSessionUser } from "@calcom/trpc/server/types";
+import { HashedLinkRepository } from "@rondevu/features/hashedLink/lib/repository/HashedLinkRepository";
+import { HashedLinkService } from "@rondevu/features/hashedLink/lib/service/HashedLinkService";
+import type { PrismaClient } from "@rondevu/prisma";
+import type { TrpcSessionUser } from "@rondevu/trpc/server/types";
 
 import type { TGetHashedLinksInputSchema } from "./getHashedLinks.schema";
 

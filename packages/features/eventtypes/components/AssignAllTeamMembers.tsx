@@ -1,10 +1,10 @@
 import type { Dispatch, SetStateAction } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
-import type { FormValues, SettingsToggleClassNames } from "@calcom/features/eventtypes/lib/types";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { SettingsToggle } from "@calcom/ui/components/form";
-import classNames from "@calcom/ui/classNames";
+import type { FormValues, SettingsToggleClassNames } from "@rondevu/features/eventtypes/lib/types";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { SettingsToggle } from "@rondevu/ui/components/form";
+import classNames from "@rondevu/ui/classNames";
 
 const AssignAllTeamMembers = ({
   assignAllTeamMembers,

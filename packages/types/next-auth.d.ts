@@ -1,7 +1,7 @@
 import type { DefaultUser } from "next-auth";
 
-import type { User as PrismaUser, UserPermissionRole } from "@calcom/prisma/client";
-import type { MembershipRole } from "@calcom/prisma/enums";
+import type { User as PrismaUser, UserPermissionRole } from "@rondevu/prisma/client";
+import type { MembershipRole } from "@rondevu/prisma/enums";
 
 import type { UserProfile } from "./UserProfile";
 

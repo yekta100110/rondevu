@@ -1,4 +1,4 @@
-export { ErrorCode } from "@calcom/lib/errorCodes";
-export { ErrorWithCode } from "@calcom/lib/errors";
-export { getHttpStatusCode } from "@calcom/lib/server/getServerErrorFromUnknown";
-export { HttpError } from "@calcom/lib/http-error";
+export { ErrorCode } from "@rondevu/lib/errorCodes";
+export { ErrorWithCode } from "@rondevu/lib/errors";
+export { getHttpStatusCode } from "@rondevu/lib/server/getServerErrorFromUnknown";
+export { HttpError } from "@rondevu/lib/http-error";

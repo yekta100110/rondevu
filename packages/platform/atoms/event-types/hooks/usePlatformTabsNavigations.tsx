@@ -1,11 +1,11 @@
 "use client";
 
-import { getPaymentAppData } from "@calcom/app-store/_utils/payments/getPaymentAppData";
-import type { EventTypeSetupProps, FormValues } from "@calcom/features/eventtypes/lib/types";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import type { VerticalTabItemProps } from "@calcom/ui/components/navigation";
-// eslint-disable-next-line @calcom/eslint/deprecated-imports-next-router
-// eslint-disable-next-line @calcom/eslint/deprecated-imports-next-router
+import { getPaymentAppData } from "@rondevu/app-store/_utils/payments/getPaymentAppData";
+import type { EventTypeSetupProps, FormValues } from "@rondevu/features/eventtypes/lib/types";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import type { VerticalTabItemProps } from "@rondevu/ui/components/navigation";
+// eslint-disable-next-line @rondevu/eslint/deprecated-imports-next-router
+// eslint-disable-next-line @rondevu/eslint/deprecated-imports-next-router
 import type { TFunction } from "i18next";
 import { useEffect, useMemo, useState } from "react";
 import type { UseFormReturn } from "react-hook-form";

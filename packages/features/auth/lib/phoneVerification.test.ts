@@ -8,7 +8,7 @@ import {
 } from "./phoneVerification";
 
 // Mock sendSMS
-vi.mock("@calcom/lib/smsTransport", () => ({
+vi.mock("@rondevu/lib/smsTransport", () => ({
   sendSMS: vi.fn().mockResolvedValue({ success: true }),
 }));
 
@@ -28,7 +28,7 @@ describe("phoneVerification caching and replay protection", () => {
     const sendResult = await sendPhoneVerification(phone);
     expect(sendResult.success).toBe(true);
 
-    const { sendSMS } = await import("@calcom/lib/smsTransport");
+    const { sendSMS } = await import("@rondevu/lib/smsTransport");
     const smsCalls = vi.mocked(sendSMS).mock.calls;
     expect(smsCalls.length).toBe(1);
     const smsBody = smsCalls[0][0].body;
@@ -54,7 +54,7 @@ describe("phoneVerification caching and replay protection", () => {
     const phone = "+905521191987";
     await sendPhoneVerification(phone);
 
-    const { sendSMS } = await import("@calcom/lib/smsTransport");
+    const { sendSMS } = await import("@rondevu/lib/smsTransport");
     const firstCode = vi.mocked(sendSMS).mock.calls[0][0].body.match(/\d{6}/)?.[0] ?? "";
 
     // Verify first code
@@ -132,7 +132,7 @@ describe("phoneVerification caching and replay protection", () => {
     const phone = "+905521191987";
     await sendPhoneVerification(phone);
 
-    const { sendSMS } = await import("@calcom/lib/smsTransport");
+    const { sendSMS } = await import("@rondevu/lib/smsTransport");
     const code = vi.mocked(sendSMS).mock.calls[0][0].body.match(/\d{6}/)?.[0] || "";
 
     // Verify code initially
@@ -151,7 +151,7 @@ describe("phoneVerification caching and replay protection", () => {
     const phone = "+905521191987";
     await sendPhoneVerification(phone);
 
-    const { sendSMS } = await import("@calcom/lib/smsTransport");
+    const { sendSMS } = await import("@rondevu/lib/smsTransport");
     const code = vi.mocked(sendSMS).mock.calls[0][0].body.match(/\d{6}/)?.[0] || "";
 
     // Verify code initially

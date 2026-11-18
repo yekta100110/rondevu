@@ -1,17 +1,17 @@
 "use client";
 
-import dayjs from "@calcom/dayjs";
-import { ColumnFilterType, ZDateRangeFilterValue } from "@calcom/features/data-table";
-import SettingsHeader from "@calcom/features/settings/appDir/SettingsHeader";
-import ServerTrans from "@calcom/lib/components/ServerTrans";
-import { useCompatSearchParams } from "@calcom/lib/hooks/useCompatSearchParams";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc } from "@calcom/trpc/react";
-import { Button } from "@calcom/ui/components/button";
-import { EmptyScreen } from "@calcom/ui/components/empty-screen";
-import { SkeletonText } from "@calcom/ui/components/skeleton";
-import { showToast } from "@calcom/ui/components/toast";
-import { Tooltip } from "@calcom/ui/components/tooltip";
+import dayjs from "@rondevu/dayjs";
+import { ColumnFilterType, ZDateRangeFilterValue } from "@rondevu/features/data-table";
+import SettingsHeader from "@rondevu/features/settings/appDir/SettingsHeader";
+import ServerTrans from "@rondevu/lib/components/ServerTrans";
+import { useCompatSearchParams } from "@rondevu/lib/hooks/useCompatSearchParams";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc } from "@rondevu/trpc/react";
+import { Button } from "@rondevu/ui/components/button";
+import { EmptyScreen } from "@rondevu/ui/components/empty-screen";
+import { SkeletonText } from "@rondevu/ui/components/skeleton";
+import { showToast } from "@rondevu/ui/components/toast";
+import { Tooltip } from "@rondevu/ui/components/tooltip";
 import { ClockIcon } from "@coss/ui/icons";
 import { keepPreviousData } from "@tanstack/react-query";
 import {

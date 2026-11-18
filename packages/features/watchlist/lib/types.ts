@@ -1,4 +1,4 @@
-import { WatchlistAction, WatchlistType, WatchlistSource } from "@calcom/prisma/enums";
+import { WatchlistAction, WatchlistType, WatchlistSource } from "@rondevu/prisma/enums";
 
 export { WatchlistAction, WatchlistType, WatchlistSource };
 

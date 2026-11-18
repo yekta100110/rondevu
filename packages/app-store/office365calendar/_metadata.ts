@@ -1,4 +1,4 @@
-import type { AppMeta } from "@calcom/types/App";
+import type { AppMeta } from "@rondevu/types/App";
 
 export const metadata = {
   name: "Outlook Calendar",

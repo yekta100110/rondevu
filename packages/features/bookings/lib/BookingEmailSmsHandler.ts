@@ -1,14 +1,14 @@
-import dayjs from "@calcom/dayjs";
-import type { BookingType } from "@calcom/features/bookings/lib/handleNewBooking/originalRescheduledBookingUtils";
-import type { EventNameObjectType } from "@calcom/features/eventtypes/lib/eventNaming";
-import { getTranslation } from "@calcom/i18n/server";
-import { getPiiFreeCalendarEvent } from "@calcom/lib/piiFreeData";
-import { safeStringify } from "@calcom/lib/safeStringify";
-import { getTimeFormatStringFromUserTimeFormat } from "@calcom/lib/timeFormat";
-import type { Prisma, User } from "@calcom/prisma/client";
-import type { SchedulingType } from "@calcom/prisma/enums";
-import type { EventTypeMetadata } from "@calcom/prisma/zod-utils";
-import type { AdditionalInformation, CalendarEvent, Person } from "@calcom/types/Calendar";
+import dayjs from "@rondevu/dayjs";
+import type { BookingType } from "@rondevu/features/bookings/lib/handleNewBooking/originalRescheduledBookingUtils";
+import type { EventNameObjectType } from "@rondevu/features/eventtypes/lib/eventNaming";
+import { getTranslation } from "@rondevu/i18n/server";
+import { getPiiFreeCalendarEvent } from "@rondevu/lib/piiFreeData";
+import { safeStringify } from "@rondevu/lib/safeStringify";
+import { getTimeFormatStringFromUserTimeFormat } from "@rondevu/lib/timeFormat";
+import type { Prisma, User } from "@rondevu/prisma/client";
+import type { SchedulingType } from "@rondevu/prisma/enums";
+import type { EventTypeMetadata } from "@rondevu/prisma/zod-utils";
+import type { AdditionalInformation, CalendarEvent, Person } from "@rondevu/types/Calendar";
 import { default as cloneDeep } from "lodash/cloneDeep";
 import type { Logger } from "tslog";
 
@@ -117,7 +117,7 @@ export class BookingEmailSmsHandler {
       additionalInformation,
     } = data;
 
-    const { sendRescheduledEmailsAndSMS } = await import("@calcom/emails/email-manager");
+    const { sendRescheduledEmailsAndSMS } = await import("@rondevu/emails/email-manager");
     await sendRescheduledEmailsAndSMS(
       {
         ...evt,
@@ -221,7 +221,7 @@ export class BookingEmailSmsHandler {
       sendRoundRobinRescheduledEmailsAndSMS,
       sendReassignedScheduledEmailsAndSMS,
       sendRoundRobinCancelledEmailsAndSMS,
-    } = await import("@calcom/emails/email-manager");
+    } = await import("@rondevu/emails/email-manager");
 
     try {
       await Promise.all([
@@ -270,7 +270,7 @@ export class BookingEmailSmsHandler {
     const isAttendeeConfirmationEmailDisabled =
       metadata?.disableStandardEmails?.confirmation?.attendee || false;
 
-    const { sendScheduledEmailsAndSMS } = await import("@calcom/emails/email-manager");
+    const { sendScheduledEmailsAndSMS } = await import("@rondevu/emails/email-manager");
 
     try {
       await sendScheduledEmailsAndSMS(
@@ -307,7 +307,7 @@ export class BookingEmailSmsHandler {
     const eventWithNotes = { ...evt, additionalNotes };
 
     const { sendOrganizerRequestEmail, sendAttendeeRequestEmailAndSMS } = await import(
-      "@calcom/emails/email-manager"
+      "@rondevu/emails/email-manager"
     );
 
     try {
@@ -335,7 +335,7 @@ export class BookingEmailSmsHandler {
       safeStringify({ calEvent: getPiiFreeCalendarEvent(evt) })
     );
 
-    const { sendAddGuestsEmailsAndSMS } = await import("@calcom/emails/email-manager");
+    const { sendAddGuestsEmailsAndSMS } = await import("@rondevu/emails/email-manager");
 
     try {
       await sendAddGuestsEmailsAndSMS({
@@ -363,7 +363,7 @@ export class BookingEmailSmsHandler {
       safeStringify({ calEvent: getPiiFreeCalendarEvent(evt) })
     );
 
-    const { sendAddGuestsEmailsAndSMS } = await import("@calcom/emails/email-manager");
+    const { sendAddGuestsEmailsAndSMS } = await import("@rondevu/emails/email-manager");
 
     try {
       await sendAddGuestsEmailsAndSMS({

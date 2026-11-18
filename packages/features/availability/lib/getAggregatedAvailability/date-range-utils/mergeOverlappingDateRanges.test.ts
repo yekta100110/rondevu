@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 
-import dayjs from "@calcom/dayjs";
-import type { DateRange } from "@calcom/features/schedules/lib/date-ranges";
+import dayjs from "@rondevu/dayjs";
+import type { DateRange } from "@rondevu/features/schedules/lib/date-ranges";
 
 import { mergeOverlappingDateRanges } from "./mergeOverlappingDateRanges";
 

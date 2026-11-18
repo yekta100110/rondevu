@@ -1,4 +1,4 @@
-import dayjs from "@calcom/dayjs";
+import dayjs from "@rondevu/dayjs";
 import type { ITimezoneOption } from "react-timezone-select";
 import { DEFAULT_APP_TIMEZONE, sanitizeTimezone } from "./dayjs";
 

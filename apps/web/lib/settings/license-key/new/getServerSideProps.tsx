@@ -1,8 +1,8 @@
 import type { GetServerSidePropsContext } from "next";
 
-import { getServerSession } from "@calcom/feature-auth/lib/getServerSession";
-import { getOptions } from "@calcom/feature-auth/lib/next-auth-options";
-import { getTrackingFromCookies } from "@calcom/lib/tracking";
+import { getServerSession } from "@rondevu/feature-auth/lib/getServerSession";
+import { getOptions } from "@rondevu/feature-auth/lib/next-auth-options";
+import { getTrackingFromCookies } from "@rondevu/lib/tracking";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const session = await getServerSession({

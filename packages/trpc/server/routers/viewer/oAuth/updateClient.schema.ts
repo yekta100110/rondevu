@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { OAuthClientStatus } from "@calcom/prisma/enums";
+import { OAuthClientStatus } from "@rondevu/prisma/enums";
 
 export const ZUpdateClientInputSchema = z.object({
     clientId: z.string(),

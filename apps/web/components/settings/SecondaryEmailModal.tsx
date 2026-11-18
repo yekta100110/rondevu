@@ -3,12 +3,12 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Dialog } from "@calcom/features/components/controlled-dialog";
-import { emailSchema } from "@calcom/lib/emailSchema";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Button } from "@calcom/ui/components/button";
-import { DialogContent, DialogFooter, DialogClose } from "@calcom/ui/components/dialog";
-import { Form, TextField, InputError } from "@calcom/ui/components/form";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
+import { emailSchema } from "@rondevu/lib/emailSchema";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { Button } from "@rondevu/ui/components/button";
+import { DialogContent, DialogFooter, DialogClose } from "@rondevu/ui/components/dialog";
+import { Form, TextField, InputError } from "@rondevu/ui/components/form";
 
 interface SecondaryEmailModalProps {
   isLoading: boolean;

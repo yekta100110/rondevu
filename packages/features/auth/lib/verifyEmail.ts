@@ -4,16 +4,16 @@ import {
   sendChangeOfEmailVerificationLink,
   sendEmailVerificationCode,
   sendEmailVerificationLink,
-} from "@calcom/emails/auth-email-service";
-import { FeaturesRepository } from "@calcom/features/flags/features.repository";
-import { sentrySpan } from "@calcom/features/watchlist/lib/telemetry";
-import { checkIfEmailIsBlockedInWatchlistController } from "@calcom/features/watchlist/operations/check-if-email-in-watchlist.controller";
-import { getTranslation } from "@calcom/i18n/server";
-import { checkRateLimitAndThrowError } from "@calcom/lib/checkRateLimitAndThrowError";
-import { WEBAPP_URL } from "@calcom/lib/constants";
-import logger from "@calcom/lib/logger";
-import { hashEmail } from "@calcom/lib/server/PiiHasher";
-import { prisma } from "@calcom/prisma";
+} from "@rondevu/emails/auth-email-service";
+import { FeaturesRepository } from "@rondevu/features/flags/features.repository";
+import { sentrySpan } from "@rondevu/features/watchlist/lib/telemetry";
+import { checkIfEmailIsBlockedInWatchlistController } from "@rondevu/features/watchlist/operations/check-if-email-in-watchlist.controller";
+import { getTranslation } from "@rondevu/i18n/server";
+import { checkRateLimitAndThrowError } from "@rondevu/lib/checkRateLimitAndThrowError";
+import { WEBAPP_URL } from "@rondevu/lib/constants";
+import logger from "@rondevu/lib/logger";
+import { hashEmail } from "@rondevu/lib/server/PiiHasher";
+import { prisma } from "@rondevu/prisma";
 import { totp } from "otplib";
 
 const log = logger.getSubLogger({ prefix: [`[[Auth] `] });
@@ -96,7 +96,7 @@ export const sendEmailVerificationByCode = async ({
   isVerifyingEmail,
   hideBranding,
 }: VerifyEmailType) => {
-  const { default: isSmsCalEmail } = await import("@calcom/lib/isSmsCalEmail");
+  const { default: isSmsCalEmail } = await import("@rondevu/lib/isSmsCalEmail");
   const isSms = isSmsCalEmail(email);
 
   if (!isSms) {

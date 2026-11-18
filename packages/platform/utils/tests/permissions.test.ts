@@ -5,7 +5,7 @@ import {
   EVENT_TYPE_WRITE,
   SCHEDULE_READ,
   SCHEDULE_WRITE,
-} from "@calcom/platform-constants";
+} from "@rondevu/platform-constants";
 import { hasPermission, hasPermissions, listPermissions } from "../permissions";
 
 describe("Permissions Function: hasPermission", () => {

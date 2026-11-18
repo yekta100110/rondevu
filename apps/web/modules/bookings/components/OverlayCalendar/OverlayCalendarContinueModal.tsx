@@ -1,8 +1,8 @@
-import { Dialog } from "@calcom/features/components/controlled-dialog";
-import { APP_NAME } from "@calcom/lib/constants";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Button } from "@calcom/ui/components/button";
-import { DialogContent, DialogFooter } from "@calcom/ui/components/dialog";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
+import { APP_NAME } from "@rondevu/lib/constants";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { Button } from "@rondevu/ui/components/button";
+import { DialogContent, DialogFooter } from "@rondevu/ui/components/dialog";
 import type { OverlaySocialLoginProvider } from "../../types";
 
 const SOCIAL_LOGIN_BUTTONS: Record<

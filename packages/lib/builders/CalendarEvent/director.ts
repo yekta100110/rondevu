@@ -1,6 +1,6 @@
-import logger from "@calcom/lib/logger";
-import { safeStringify } from "@calcom/lib/safeStringify";
-import type { Booking } from "@calcom/prisma/client";
+import logger from "@rondevu/lib/logger";
+import { safeStringify } from "@rondevu/lib/safeStringify";
+import type { Booking } from "@rondevu/prisma/client";
 
 import type { CalendarEventBuilder } from "./builder";
 

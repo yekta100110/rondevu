@@ -1,20 +1,20 @@
-import { getCredentialForSelectedCalendar } from "@calcom/app-store/delegationCredential";
+import { getCredentialForSelectedCalendar } from "@rondevu/app-store/delegationCredential";
 import type {
   AdapterFactory,
   CalendarSubscriptionProvider,
-} from "@calcom/features/calendar-subscription/adapters/AdaptersFactory";
+} from "@rondevu/features/calendar-subscription/adapters/AdaptersFactory";
 import type {
   CalendarCredential,
   CalendarSubscriptionEvent,
-} from "@calcom/features/calendar-subscription/lib/CalendarSubscriptionPort.interface";
-import type { CalendarCacheEventService } from "@calcom/features/calendar-subscription/lib/cache/CalendarCacheEventService";
-import type { CalendarSyncService } from "@calcom/features/calendar-subscription/lib/sync/CalendarSyncService";
-import type { IFeatureRepository } from "@calcom/features/flags/repositories/PrismaFeatureRepository";
-import type { ITeamFeatureRepository } from "@calcom/features/flags/repositories/PrismaTeamFeatureRepository";
-import type { IUserFeatureRepository } from "@calcom/features/flags/repositories/PrismaUserFeatureRepository";
-import type { ISelectedCalendarRepository } from "@calcom/features/selectedCalendar/repositories/SelectedCalendarRepository.interface";
-import logger from "@calcom/lib/logger";
-import type { SelectedCalendar } from "@calcom/prisma/client";
+} from "@rondevu/features/calendar-subscription/lib/CalendarSubscriptionPort.interface";
+import type { CalendarCacheEventService } from "@rondevu/features/calendar-subscription/lib/cache/CalendarCacheEventService";
+import type { CalendarSyncService } from "@rondevu/features/calendar-subscription/lib/sync/CalendarSyncService";
+import type { IFeatureRepository } from "@rondevu/features/flags/repositories/PrismaFeatureRepository";
+import type { ITeamFeatureRepository } from "@rondevu/features/flags/repositories/PrismaTeamFeatureRepository";
+import type { IUserFeatureRepository } from "@rondevu/features/flags/repositories/PrismaUserFeatureRepository";
+import type { ISelectedCalendarRepository } from "@rondevu/features/selectedCalendar/repositories/SelectedCalendarRepository.interface";
+import logger from "@rondevu/lib/logger";
+import type { SelectedCalendar } from "@rondevu/prisma/client";
 import { metrics } from "@sentry/nextjs";
 
 // biome-ignore lint/nursery/useExplicitType: logger type is inferred

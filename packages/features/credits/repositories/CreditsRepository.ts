@@ -1,7 +1,7 @@
-import dayjs from "@calcom/dayjs";
-import prisma, { type PrismaTransaction } from "@calcom/prisma";
-import { Prisma } from "@calcom/prisma/client";
-import type { CreditType } from "@calcom/prisma/enums";
+import dayjs from "@rondevu/dayjs";
+import prisma, { type PrismaTransaction } from "@rondevu/prisma";
+import { Prisma } from "@rondevu/prisma/client";
+import type { CreditType } from "@rondevu/prisma/enums";
 
 export class CreditsRepository {
   static async findCreditBalance(

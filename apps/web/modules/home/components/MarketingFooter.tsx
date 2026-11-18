@@ -1,6 +1,6 @@
 "use client";
 
-import { trpc } from "@calcom/trpc/react";
+import { trpc } from "@rondevu/trpc/react";
 import { Globe, Mail, Phone } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

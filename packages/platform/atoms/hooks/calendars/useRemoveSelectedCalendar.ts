@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { SUCCESS_STATUS } from "@calcom/platform-constants";
-import type { ApiErrorResponse, ApiResponse } from "@calcom/platform-types";
+import { SUCCESS_STATUS } from "@rondevu/platform-constants";
+import type { ApiErrorResponse, ApiResponse } from "@rondevu/platform-types";
 
 import http from "../../lib/http";
 

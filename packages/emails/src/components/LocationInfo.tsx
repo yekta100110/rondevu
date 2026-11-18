@@ -1,8 +1,8 @@
 import type { TFunction } from "i18next";
 
-import { guessEventLocationType } from "@calcom/app-store/locations";
-import { getVideoCallUrlFromCalEvent } from "@calcom/lib/CalEventParser";
-import type { CalendarEvent } from "@calcom/types/Calendar";
+import { guessEventLocationType } from "@rondevu/app-store/locations";
+import { getVideoCallUrlFromCalEvent } from "@rondevu/lib/CalEventParser";
+import type { CalendarEvent } from "@rondevu/types/Calendar";
 
 import { Info } from "./Info";
 

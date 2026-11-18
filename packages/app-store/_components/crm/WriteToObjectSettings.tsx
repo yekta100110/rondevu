@@ -1,13 +1,13 @@
 import { useState, useMemo } from "react";
 
-import { WhenToWrite } from "@calcom/app-store/_lib/crm-enums";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Button } from "@calcom/ui/components/button";
-import { Switch } from "@calcom/ui/components/form";
-import { InputField } from "@calcom/ui/components/form";
-import { Select } from "@calcom/ui/components/form";
-import { Section } from "@calcom/ui/components/section";
-import { showToast } from "@calcom/ui/components/toast";
+import { WhenToWrite } from "@rondevu/app-store/_lib/crm-enums";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { Button } from "@rondevu/ui/components/button";
+import { Switch } from "@rondevu/ui/components/form";
+import { InputField } from "@rondevu/ui/components/form";
+import { Select } from "@rondevu/ui/components/form";
+import { Section } from "@rondevu/ui/components/section";
+import { showToast } from "@rondevu/ui/components/toast";
 
 import type { WriteToRecordEntrySchema, WriteToObjectSettingsProps } from "./WriteToObjectSettings.types";
 import {

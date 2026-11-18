@@ -1,4 +1,4 @@
-import dayjs from "@calcom/dayjs";
+import dayjs from "@rondevu/dayjs";
 import { describe, expect, it } from "vitest";
 import { getEventSegmentForDay } from "./index";
 

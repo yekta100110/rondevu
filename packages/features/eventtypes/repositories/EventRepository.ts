@@ -1,5 +1,5 @@
-import { getPublicEvent } from "@calcom/features/eventtypes/lib/getPublicEvent";
-import prisma from "@calcom/prisma";
+import { getPublicEvent } from "@rondevu/features/eventtypes/lib/getPublicEvent";
+import prisma from "@rondevu/prisma";
 
 export type GetPublicEventInput = {
   username: string;

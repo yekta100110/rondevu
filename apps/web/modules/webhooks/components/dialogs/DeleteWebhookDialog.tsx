@@ -1,5 +1,5 @@
-import { APP_NAME } from "@calcom/lib/constants";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
+import { APP_NAME } from "@rondevu/lib/constants";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
 import {
   AlertDialog,
   AlertDialogClose,

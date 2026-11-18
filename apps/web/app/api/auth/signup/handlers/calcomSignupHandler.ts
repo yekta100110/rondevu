@@ -1,41 +1,41 @@
 import process from "node:process";
-import { getPremiumMonthlyPlanPriceId } from "@calcom/app-store/stripepayment/lib/utils";
-import { getLocaleFromRequest } from "@calcom/features/auth/lib/getLocaleFromRequest";
-import { sendEmailVerification } from "@calcom/features/auth/lib/verifyEmail";
-import { SIGNUP_ERROR_CODES } from "@calcom/features/auth/signup/constants";
-import { createOrUpdateMemberships } from "@calcom/features/auth/signup/utils/createOrUpdateMemberships";
-import { joinAnyChildTeamOnOrgInvite } from "@calcom/features/auth/signup/utils/organization";
-import { prefillAvatar } from "@calcom/features/auth/signup/utils/prefillAvatar";
+import { getPremiumMonthlyPlanPriceId } from "@rondevu/app-store/stripepayment/lib/utils";
+import { getLocaleFromRequest } from "@rondevu/features/auth/lib/getLocaleFromRequest";
+import { sendEmailVerification } from "@rondevu/features/auth/lib/verifyEmail";
+import { SIGNUP_ERROR_CODES } from "@rondevu/features/auth/signup/constants";
+import { createOrUpdateMemberships } from "@rondevu/features/auth/signup/utils/createOrUpdateMemberships";
+import { joinAnyChildTeamOnOrgInvite } from "@rondevu/features/auth/signup/utils/organization";
+import { prefillAvatar } from "@rondevu/features/auth/signup/utils/prefillAvatar";
 import {
   findTokenByToken,
   throwIfTokenExpired,
   validateAndGetCorrectedUsernameForTeam,
-} from "@calcom/features/auth/signup/utils/token";
-import { validateAndGetCorrectedUsernameAndEmail } from "@calcom/features/auth/signup/utils/validateUsername";
-import { getFeatureRepository } from "@calcom/features/di/containers/FeatureRepository";
-import { getUserRepository } from "@calcom/features/di/containers/UserRepository";
-import { GlobalWatchlistRepository } from "@calcom/features/watchlist/lib/repository/GlobalWatchlistRepository";
-import { sentrySpan } from "@calcom/features/watchlist/lib/telemetry";
-import { normalizeEmail } from "@calcom/features/watchlist/lib/utils/normalization";
-import { checkIfEmailIsBlockedInWatchlistController } from "@calcom/features/watchlist/operations/check-if-email-in-watchlist.controller";
-import { hashPassword } from "@calcom/lib/auth/hashPassword";
-import { WEBAPP_URL } from "@calcom/lib/constants";
-import { HttpError } from "@calcom/lib/http-error";
-import logger from "@calcom/lib/logger";
-import { isPrismaError } from "@calcom/lib/server/getServerErrorFromUnknown";
-import type { CustomNextApiHandler } from "@calcom/lib/server/username";
-import { usernameHandler } from "@calcom/lib/server/username";
-import { getTrackingFromCookies } from "@calcom/lib/tracking";
-import { prisma } from "@calcom/prisma";
+} from "@rondevu/features/auth/signup/utils/token";
+import { validateAndGetCorrectedUsernameAndEmail } from "@rondevu/features/auth/signup/utils/validateUsername";
+import { getFeatureRepository } from "@rondevu/features/di/containers/FeatureRepository";
+import { getUserRepository } from "@rondevu/features/di/containers/UserRepository";
+import { GlobalWatchlistRepository } from "@rondevu/features/watchlist/lib/repository/GlobalWatchlistRepository";
+import { sentrySpan } from "@rondevu/features/watchlist/lib/telemetry";
+import { normalizeEmail } from "@rondevu/features/watchlist/lib/utils/normalization";
+import { checkIfEmailIsBlockedInWatchlistController } from "@rondevu/features/watchlist/operations/check-if-email-in-watchlist.controller";
+import { hashPassword } from "@rondevu/lib/auth/hashPassword";
+import { WEBAPP_URL } from "@rondevu/lib/constants";
+import { HttpError } from "@rondevu/lib/http-error";
+import logger from "@rondevu/lib/logger";
+import { isPrismaError } from "@rondevu/lib/server/getServerErrorFromUnknown";
+import type { CustomNextApiHandler } from "@rondevu/lib/server/username";
+import { usernameHandler } from "@rondevu/lib/server/username";
+import { getTrackingFromCookies } from "@rondevu/lib/tracking";
+import { prisma } from "@rondevu/prisma";
 import {
   CreationSource,
   IdentityProvider,
   WatchlistAction,
   WatchlistSource,
   WatchlistType,
-} from "@calcom/prisma/enums";
-import { signupSchema } from "@calcom/prisma/zod-utils";
-import { buildLegacyRequest } from "@calcom/web/lib/buildLegacyCtx";
+} from "@rondevu/prisma/enums";
+import { signupSchema } from "@rondevu/prisma/zod-utils";
+import { buildLegacyRequest } from "@rondevu/web/lib/buildLegacyCtx";
 import { cookies, headers } from "next/headers";
 import { NextResponse } from "next/server";
 

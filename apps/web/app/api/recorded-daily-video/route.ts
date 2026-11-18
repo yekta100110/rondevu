@@ -4,36 +4,36 @@ import { headers } from "next/headers";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-import { getRoomNameFromRecordingId, getBatchProcessorJobAccessLink } from "@calcom/app-store/dailyvideo/lib";
-import { BookingRepository } from "@calcom/features/bookings/repositories/BookingRepository";
+import { getRoomNameFromRecordingId, getBatchProcessorJobAccessLink } from "@rondevu/app-store/dailyvideo/lib";
+import { BookingRepository } from "@rondevu/features/bookings/repositories/BookingRepository";
 import {
   sendDailyVideoRecordingEmails,
   sendDailyVideoTranscriptEmails,
-} from "@calcom/emails/daily-video-emails";
+} from "@rondevu/emails/daily-video-emails";
 import {
   getAllTranscriptsAccessLinkFromMeetingId,
   submitBatchProcessorTranscriptionJob,
-} from "@calcom/features/conferencing/lib/videoClient";
-import { WEBAPP_URL } from "@calcom/lib/constants";
-import { getTeamIdFromEventType } from "@calcom/lib/getTeamIdFromEventType";
-import { HttpError } from "@calcom/lib/http-error";
-import logger from "@calcom/lib/logger";
-import { safeStringify } from "@calcom/lib/safeStringify";
-import { generateVideoToken } from "@calcom/lib/videoTokens";
-import prisma from "@calcom/prisma";
-import { getBooking } from "@calcom/web/lib/daily-webhook/getBooking";
-import { getBookingReference } from "@calcom/web/lib/daily-webhook/getBookingReference";
-import { getCalendarEvent } from "@calcom/web/lib/daily-webhook/getCalendarEvent";
+} from "@rondevu/features/conferencing/lib/videoClient";
+import { WEBAPP_URL } from "@rondevu/lib/constants";
+import { getTeamIdFromEventType } from "@rondevu/lib/getTeamIdFromEventType";
+import { HttpError } from "@rondevu/lib/http-error";
+import logger from "@rondevu/lib/logger";
+import { safeStringify } from "@rondevu/lib/safeStringify";
+import { generateVideoToken } from "@rondevu/lib/videoTokens";
+import prisma from "@rondevu/prisma";
+import { getBooking } from "@rondevu/web/lib/daily-webhook/getBooking";
+import { getBookingReference } from "@rondevu/web/lib/daily-webhook/getBookingReference";
+import { getCalendarEvent } from "@rondevu/web/lib/daily-webhook/getCalendarEvent";
 import {
   meetingEndedSchema,
   recordingReadySchema,
   batchProcessorJobFinishedSchema,
   testRequestSchema,
-} from "@calcom/web/lib/daily-webhook/schema";
+} from "@rondevu/web/lib/daily-webhook/schema";
 import {
   triggerRecordingReadyWebhook,
   triggerTranscriptionGeneratedWebhook,
-} from "@calcom/web/lib/daily-webhook/triggerWebhooks";
+} from "@rondevu/web/lib/daily-webhook/triggerWebhooks";
 
 const log = logger.getSubLogger({ prefix: ["daily-video-webhook-handler"] });
 

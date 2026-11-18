@@ -1,9 +1,9 @@
-import type { CalendarSubscriptionProvider } from "@calcom/features/calendar-subscription/adapters/AdaptersFactory";
-import type { SelectedCalendar } from "@calcom/prisma/client";
+import type { CalendarSubscriptionProvider } from "@rondevu/features/calendar-subscription/adapters/AdaptersFactory";
+import type { SelectedCalendar } from "@rondevu/prisma/client";
 import type {
   CredentialForCalendarService,
   CredentialForCalendarServiceWithEmail,
-} from "@calcom/types/Credential";
+} from "@rondevu/types/Credential";
 
 export type CalendarSubscriptionResult = {
   provider: CalendarSubscriptionProvider;

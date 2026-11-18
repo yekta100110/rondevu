@@ -1,12 +1,12 @@
 import { describe, expect, vi } from "vitest";
 
-import { ORGANIZER_EMAIL_EXEMPT_DOMAINS } from "@calcom/lib/constants";
-import { ErrorCode } from "@calcom/lib/errorCodes";
-import { ErrorWithCode } from "@calcom/lib/errors";
-import { buildCalendarEvent, buildPerson } from "@calcom/lib/test/builder";
-import { buildVideoCallData } from "@calcom/lib/test/builder";
-import type { CalendarEvent } from "@calcom/types/Calendar";
-import { test } from "@calcom/testing/lib/fixtures/fixtures";
+import { ORGANIZER_EMAIL_EXEMPT_DOMAINS } from "@rondevu/lib/constants";
+import { ErrorCode } from "@rondevu/lib/errorCodes";
+import { ErrorWithCode } from "@rondevu/lib/errors";
+import { buildCalendarEvent, buildPerson } from "@rondevu/lib/test/builder";
+import { buildVideoCallData } from "@rondevu/lib/test/builder";
+import type { CalendarEvent } from "@rondevu/types/Calendar";
+import { test } from "@rondevu/testing/lib/fixtures/fixtures";
 
 import generateIcsString from "./generateIcsString";
 

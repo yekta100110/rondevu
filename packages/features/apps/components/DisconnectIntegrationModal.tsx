@@ -1,7 +1,7 @@
-import { Dialog } from "@calcom/features/components/controlled-dialog";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import type { App } from "@calcom/types/App";
-import { ConfirmationDialogContent } from "@calcom/ui/components/dialog";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import type { App } from "@rondevu/types/App";
+import { ConfirmationDialogContent } from "@rondevu/ui/components/dialog";
 
 export type RemoveAppParams = {
   credentialId: number;

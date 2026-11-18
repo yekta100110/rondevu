@@ -1,7 +1,7 @@
-import type { OutOfOfficeRenderProps } from "@calcom/features/calendars/weeklyview/types/state";
-import ServerTrans from "@calcom/lib/components/ServerTrans";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import classNames from "@calcom/ui/classNames";
+import type { OutOfOfficeRenderProps } from "@rondevu/features/calendars/weeklyview/types/state";
+import ServerTrans from "@rondevu/lib/components/ServerTrans";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import classNames from "@rondevu/ui/classNames";
 
 export function DefaultOutOfOfficeSlot(props: OutOfOfficeRenderProps) {
   const { t } = useLocale();

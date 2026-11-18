@@ -1,9 +1,9 @@
-import prismock from "@calcom/testing/lib/__mocks__/prisma";
+import prismock from "@rondevu/testing/lib/__mocks__/prisma";
 
 import { expect, it } from "vitest";
 
-import type { FeatureId } from "@calcom/features/flags/config";
-import { FeaturesRepository } from "@calcom/features/flags/features.repository";
+import type { FeatureId } from "@rondevu/features/flags/config";
+import { FeaturesRepository } from "@rondevu/features/flags/features.repository";
 
 import { checkIfUserHasFeatureUseCase } from "./check-if-user-has-feature.use-case";
 

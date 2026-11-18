@@ -1,7 +1,7 @@
 "use client";
 
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Button } from "@calcom/ui/components/button";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { Button } from "@rondevu/ui/components/button";
 import { useCallback, useEffect, useState } from "react";
 
 type Delivery = {

@@ -1,10 +1,10 @@
 "use client";
 
-import dayjs from "@calcom/dayjs";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { detectBrowserTimeFormat } from "@calcom/lib/timeFormat";
-import type { inferSSRProps } from "@calcom/types/inferSSRProps";
-import { Button } from "@calcom/ui/components/button";
+import dayjs from "@rondevu/dayjs";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { detectBrowserTimeFormat } from "@rondevu/lib/timeFormat";
+import type { inferSSRProps } from "@rondevu/types/inferSSRProps";
+import { Button } from "@rondevu/ui/components/button";
 import { CalendarIcon, XIcon } from "@coss/ui/icons";
 
 import type { getServerSideProps } from "@lib/video/meeting-ended/[uid]/getServerSideProps";

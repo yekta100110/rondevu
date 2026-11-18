@@ -1,21 +1,21 @@
 import short from "short-uuid";
 import { v5 as uuidv5 } from "uuid";
 
-import { DailyLocationType } from "@calcom/app-store/constants";
-import { getDailyAppKeys } from "@calcom/app-store/dailyvideo/lib/getDailyAppKeys";
-import { getVideoAdapters } from "@calcom/app-store/getVideoAdapters";
-import { sendBrokenIntegrationEmail } from "@calcom/emails/integration-email-service";
-import { getUid } from "@calcom/lib/CalEventParser";
-import { CAL_VIDEO, CAL_VIDEO_TYPE } from "@calcom/lib/constants";
-import logger from "@calcom/lib/logger";
-import { getPiiFreeCalendarEvent, getPiiFreeCredential } from "@calcom/lib/piiFreeData";
-import { safeStringify } from "@calcom/lib/safeStringify";
-import { prisma } from "@calcom/prisma";
-import type { GetRecordingsResponseSchema, GetAccessLinkResponseSchema } from "@calcom/prisma/zod-utils";
-import type { CalendarEvent, EventBusyDate } from "@calcom/types/Calendar";
-import type { CredentialPayload, CredentialForCalendarService } from "@calcom/types/Credential";
-import type { EventResult, PartialReference } from "@calcom/types/EventManager";
-import type { VideoCallData } from "@calcom/types/VideoApiAdapter";
+import { DailyLocationType } from "@rondevu/app-store/constants";
+import { getDailyAppKeys } from "@rondevu/app-store/dailyvideo/lib/getDailyAppKeys";
+import { getVideoAdapters } from "@rondevu/app-store/getVideoAdapters";
+import { sendBrokenIntegrationEmail } from "@rondevu/emails/integration-email-service";
+import { getUid } from "@rondevu/lib/CalEventParser";
+import { CAL_VIDEO, CAL_VIDEO_TYPE } from "@rondevu/lib/constants";
+import logger from "@rondevu/lib/logger";
+import { getPiiFreeCalendarEvent, getPiiFreeCredential } from "@rondevu/lib/piiFreeData";
+import { safeStringify } from "@rondevu/lib/safeStringify";
+import { prisma } from "@rondevu/prisma";
+import type { GetRecordingsResponseSchema, GetAccessLinkResponseSchema } from "@rondevu/prisma/zod-utils";
+import type { CalendarEvent, EventBusyDate } from "@rondevu/types/Calendar";
+import type { CredentialPayload, CredentialForCalendarService } from "@rondevu/types/Credential";
+import type { EventResult, PartialReference } from "@rondevu/types/EventManager";
+import type { VideoCallData } from "@rondevu/types/VideoApiAdapter";
 
 const log = logger.getSubLogger({ prefix: ["[features/conferencing/lib] videoClient"] });
 

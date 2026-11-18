@@ -4,24 +4,24 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Dialog } from "@calcom/features/components/controlled-dialog";
-import { EventTypeDuplicateInput } from "@calcom/features/eventtypes/lib/types";
-import { useCompatSearchParams } from "@calcom/lib/hooks/useCompatSearchParams";
-import { useDebounce } from "@calcom/lib/hooks/useDebounce";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { useTypedQuery } from "@calcom/lib/hooks/useTypedQuery";
-import { HttpError } from "@calcom/lib/http-error";
-import { md } from "@calcom/lib/markdownIt";
-import slugify from "@calcom/lib/slugify";
-import turndown from "@calcom/lib/turndownService";
-import { trpc } from "@calcom/trpc/react";
-import { Button } from "@calcom/ui/components/button";
-import { DialogContent, DialogFooter, DialogClose } from "@calcom/ui/components/dialog";
-import { Editor } from "@calcom/ui/components/editor";
-import { Form } from "@calcom/ui/components/form";
-import { TextField } from "@calcom/ui/components/form";
-import { showToast } from "@calcom/ui/components/toast";
-import { revalidateEventTypesList } from "@calcom/web/app/(use-page-wrapper)/(main-nav)/event-types/actions";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
+import { EventTypeDuplicateInput } from "@rondevu/features/eventtypes/lib/types";
+import { useCompatSearchParams } from "@rondevu/lib/hooks/useCompatSearchParams";
+import { useDebounce } from "@rondevu/lib/hooks/useDebounce";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { useTypedQuery } from "@rondevu/lib/hooks/useTypedQuery";
+import { HttpError } from "@rondevu/lib/http-error";
+import { md } from "@rondevu/lib/markdownIt";
+import slugify from "@rondevu/lib/slugify";
+import turndown from "@rondevu/lib/turndownService";
+import { trpc } from "@rondevu/trpc/react";
+import { Button } from "@rondevu/ui/components/button";
+import { DialogContent, DialogFooter, DialogClose } from "@rondevu/ui/components/dialog";
+import { Editor } from "@rondevu/ui/components/editor";
+import { Form } from "@rondevu/ui/components/form";
+import { TextField } from "@rondevu/ui/components/form";
+import { showToast } from "@rondevu/ui/components/toast";
+import { revalidateEventTypesList } from "@rondevu/web/app/(use-page-wrapper)/(main-nav)/event-types/actions";
 
 const querySchema = z.object({
   title: z.string().min(1),

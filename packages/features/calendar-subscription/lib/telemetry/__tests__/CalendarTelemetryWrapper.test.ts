@@ -1,4 +1,4 @@
-import type { Calendar, EventBusyDate, GetAvailabilityParams } from "@calcom/types/Calendar";
+import type { Calendar, EventBusyDate, GetAvailabilityParams } from "@rondevu/types/Calendar";
 import { describe, expect, test, vi } from "vitest";
 import { CalendarTelemetryWrapper } from "../CalendarTelemetryWrapper";
 

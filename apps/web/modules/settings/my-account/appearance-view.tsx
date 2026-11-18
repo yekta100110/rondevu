@@ -8,24 +8,24 @@ import { Controller, useForm } from "react-hook-form";
 import type { z } from "zod";
 
 import { BookerLayoutSelector } from "~/settings/components/BookerLayoutSelector";
-import SectionBottomActions from "@calcom/features/settings/SectionBottomActions";
-import ThemeLabel from "@calcom/features/settings/ThemeLabel";
-import SettingsHeader from "@calcom/features/settings/appDir/SettingsHeader";
-import { APP_NAME } from "@calcom/lib/constants";
-import { DEFAULT_LIGHT_BRAND_COLOR, DEFAULT_DARK_BRAND_COLOR } from "@calcom/lib/constants";
-import { checkWCAGContrastColor } from "@calcom/lib/getBrandColours";
-import useGetBrandingColours from "@calcom/lib/getBrandColours";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import useTheme from "@calcom/lib/hooks/useTheme";
-import { validateBookerLayouts } from "@calcom/lib/validateBookerLayouts";
-import type { userMetadata } from "@calcom/prisma/zod-utils";
-import { trpc } from "@calcom/trpc/react";
-import type { RouterOutputs } from "@calcom/trpc/react";
-import { Alert } from "@calcom/ui/components/alert";
-import { Button } from "@calcom/ui/components/button";
-import { SettingsToggle, ColorPicker, Form } from "@calcom/ui/components/form";
-import { showToast } from "@calcom/ui/components/toast";
-import { useCalcomTheme } from "@calcom/ui/styles";
+import SectionBottomActions from "@rondevu/features/settings/SectionBottomActions";
+import ThemeLabel from "@rondevu/features/settings/ThemeLabel";
+import SettingsHeader from "@rondevu/features/settings/appDir/SettingsHeader";
+import { APP_NAME } from "@rondevu/lib/constants";
+import { DEFAULT_LIGHT_BRAND_COLOR, DEFAULT_DARK_BRAND_COLOR } from "@rondevu/lib/constants";
+import { checkWCAGContrastColor } from "@rondevu/lib/getBrandColours";
+import useGetBrandingColours from "@rondevu/lib/getBrandColours";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import useTheme from "@rondevu/lib/hooks/useTheme";
+import { validateBookerLayouts } from "@rondevu/lib/validateBookerLayouts";
+import type { userMetadata } from "@rondevu/prisma/zod-utils";
+import { trpc } from "@rondevu/trpc/react";
+import type { RouterOutputs } from "@rondevu/trpc/react";
+import { Alert } from "@rondevu/ui/components/alert";
+import { Button } from "@rondevu/ui/components/button";
+import { SettingsToggle, ColorPicker, Form } from "@rondevu/ui/components/form";
+import { showToast } from "@rondevu/ui/components/toast";
+import { useCalcomTheme } from "@rondevu/ui/styles";
 
 
 const useBrandColors = (

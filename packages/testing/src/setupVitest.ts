@@ -1,5 +1,5 @@
 import process from "node:process";
-import type { CalendarService } from "@calcom/types/Calendar";
+import type { CalendarService } from "@rondevu/types/Calendar";
 import matchers from "@testing-library/jest-dom/matchers";
 import ResizeObserver from "resize-observer-polyfill";
 import { expect, vi } from "vitest";
@@ -61,7 +61,7 @@ class MockExchangeCalendarService implements CalendarService {
   }
 }
 
-vi.mock("@calcom/exchangecalendar/lib/CalendarService", () => ({
+vi.mock("@rondevu/exchangecalendar/lib/CalendarService", () => ({
   default: MockExchangeCalendarService,
 }));
 
@@ -81,7 +81,7 @@ function createMockPaymentService(_credentials?: unknown) {
       _selectedEventTypeTitle?: string,
       _eventTitle?: string
     ) {
-      const { default: prismaMock } = await import("@calcom/testing/lib/__mocks__/prisma");
+      const { default: prismaMock } = await import("@rondevu/testing/lib/__mocks__/prisma");
       const externalId = "mock_payment_external_id";
 
       const paymentCreateData = {
@@ -121,7 +121,7 @@ function createMockPaymentService(_credentials?: unknown) {
       _booking: Record<string, unknown>,
       paymentData: { paymentOption?: string; amount: number; currency: string }
     ) {
-      const { sendAwaitingPaymentEmailAndSMS } = await import("@calcom/emails/email-manager");
+      const { sendAwaitingPaymentEmailAndSMS } = await import("@rondevu/emails/email-manager");
       await sendAwaitingPaymentEmailAndSMS({
         ...event,
         paymentInfo: {
@@ -136,19 +136,19 @@ function createMockPaymentService(_credentials?: unknown) {
   };
 }
 
-vi.mock("@calcom/app-store/stripepayment/index", () => ({
+vi.mock("@rondevu/app-store/stripepayment/index", () => ({
   BuildPaymentService: createMockPaymentService,
 }));
 
-vi.mock("@calcom/app-store/paypal/index", () => ({
+vi.mock("@rondevu/app-store/paypal/index", () => ({
   BuildPaymentService: createMockPaymentService,
 }));
 
-vi.mock("@calcom/app-store/btcpayserver/index", () => ({
+vi.mock("@rondevu/app-store/btcpayserver/index", () => ({
   BuildPaymentService: createMockPaymentService,
 }));
 
-vi.mock("@calcom/app-store/payment.services.generated", () => ({
+vi.mock("@rondevu/app-store/payment.services.generated", () => ({
   PaymentServiceMap: {
     stripepayment: Promise.resolve({ BuildPaymentService: createMockPaymentService }),
     paypal: Promise.resolve({ BuildPaymentService: createMockPaymentService }),
@@ -172,7 +172,7 @@ class MockCrmService {
   }
 }
 
-vi.mock("@calcom/app-store/crm.apps.generated", () => ({
+vi.mock("@rondevu/app-store/crm.apps.generated", () => ({
   CrmServiceMap: {
     closecom: Promise.resolve({ default: MockCrmService }),
     hubspot: Promise.resolve({ default: MockCrmService }),

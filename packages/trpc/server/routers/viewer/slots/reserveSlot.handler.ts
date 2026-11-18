@@ -2,14 +2,14 @@ import { serialize } from "cookie";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { v4 as uuid } from "uuid";
 
-import dayjs from "@calcom/dayjs";
-import { PrismaSelectedSlotRepository } from "@calcom/features/selectedSlots/repositories/PrismaSelectedSlotRepository";
-import { checkRateLimitAndThrowError } from "@calcom/lib/checkRateLimitAndThrowError";
-import { MINUTES_TO_BOOK, WEBAPP_URL } from "@calcom/lib/constants";
-import getIP from "@calcom/lib/getIP";
-import { piiHasher } from "@calcom/lib/server/PiiHasher";
-import type { PrismaClient } from "@calcom/prisma";
-import { BookingStatus } from "@calcom/prisma/enums";
+import dayjs from "@rondevu/dayjs";
+import { PrismaSelectedSlotRepository } from "@rondevu/features/selectedSlots/repositories/PrismaSelectedSlotRepository";
+import { checkRateLimitAndThrowError } from "@rondevu/lib/checkRateLimitAndThrowError";
+import { MINUTES_TO_BOOK, WEBAPP_URL } from "@rondevu/lib/constants";
+import getIP from "@rondevu/lib/getIP";
+import { piiHasher } from "@rondevu/lib/server/PiiHasher";
+import type { PrismaClient } from "@rondevu/prisma";
+import { BookingStatus } from "@rondevu/prisma/enums";
 
 import { TRPCError } from "@trpc/server";
 

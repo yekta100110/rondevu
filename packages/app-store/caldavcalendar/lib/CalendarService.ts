@@ -1,6 +1,6 @@
-import BaseCalendarService from "@calcom/lib/CalendarService";
-import type { Calendar } from "@calcom/types/Calendar";
-import type { CredentialPayload } from "@calcom/types/Credential";
+import BaseCalendarService from "@rondevu/lib/CalendarService";
+import type { Calendar } from "@rondevu/types/Calendar";
+import type { CredentialPayload } from "@rondevu/types/Credential";
 
 class CalDavCalendarService extends BaseCalendarService {
   constructor(credential: CredentialPayload) {

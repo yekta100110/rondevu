@@ -1,8 +1,8 @@
 import Link from "next/link";
 
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { useUrlMatchesCurrentUrl } from "@calcom/lib/hooks/useUrlMatchesCurrentUrl";
-import classNames from "@calcom/ui/classNames";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { useUrlMatchesCurrentUrl } from "@rondevu/lib/hooks/useUrlMatchesCurrentUrl";
+import classNames from "@rondevu/ui/classNames";
 
 import { Avatar } from "../../avatar";
 import { Icon } from "../../icon";

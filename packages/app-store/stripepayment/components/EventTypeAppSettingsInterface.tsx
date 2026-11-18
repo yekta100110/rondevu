@@ -1,19 +1,19 @@
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import { useState, useEffect } from "react";
 
-import type { EventTypeAppSettingsComponent } from "@calcom/app-store/types";
+import type { EventTypeAppSettingsComponent } from "@rondevu/app-store/types";
 import {
   convertToSmallestCurrencyUnit,
   convertFromSmallestToPresentableCurrencyUnit,
-} from "@calcom/lib/currencyConversions";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { RefundPolicy } from "@calcom/lib/payment/types";
-import classNames from "@calcom/ui/classNames";
-import { Alert } from "@calcom/ui/components/alert";
-import { Select } from "@calcom/ui/components/form";
-import { CheckboxField } from "@calcom/ui/components/form";
-import { TextField } from "@calcom/ui/components/form";
-import { RadioField } from "@calcom/ui/components/radio";
+} from "@rondevu/lib/currencyConversions";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { RefundPolicy } from "@rondevu/lib/payment/types";
+import classNames from "@rondevu/ui/classNames";
+import { Alert } from "@rondevu/ui/components/alert";
+import { Select } from "@rondevu/ui/components/form";
+import { CheckboxField } from "@rondevu/ui/components/form";
+import { TextField } from "@rondevu/ui/components/form";
+import { RadioField } from "@rondevu/ui/components/radio";
 
 import { paymentOptions } from "../lib/constants";
 import { currencyOptions } from "../lib/currencyOptions";

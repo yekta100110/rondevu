@@ -1,31 +1,31 @@
-import { getCalendar } from "@calcom/app-store/_utils/getCalendar";
-import type { Dayjs } from "@calcom/dayjs";
-import dayjs from "@calcom/dayjs";
-import type { BookingRepository } from "@calcom/features/bookings/repositories/BookingRepository";
+import { getCalendar } from "@rondevu/app-store/_utils/getCalendar";
+import type { Dayjs } from "@rondevu/dayjs";
+import dayjs from "@rondevu/dayjs";
+import type { BookingRepository } from "@rondevu/features/bookings/repositories/BookingRepository";
 import {
   getBusyTimesFromLimits,
   getBusyTimesFromTeamLimits,
-} from "@calcom/features/busyTimes/lib/getBusyTimesFromLimits";
-import type { BusyTimesService } from "@calcom/features/busyTimes/services/getBusyTimes";
-import { getBusyTimesService } from "@calcom/features/di/containers/BusyTimes";
-import type { EventTypeRepository } from "@calcom/features/eventtypes/repositories/eventTypeRepository";
-import type { PrismaHolidayRepository } from "@calcom/features/holidays/repositories/PrismaHolidayRepository";
-import type { PrismaOOORepository } from "@calcom/features/ooo/repositories/PrismaOOORepository";
-import type { IRedisService } from "@calcom/features/redis/IRedisService";
-import type { DateOverride, WorkingHours } from "@calcom/features/schedules/lib/date-ranges";
-import { buildDateRanges, subtract } from "@calcom/features/schedules/lib/date-ranges";
-import { getWorkingHours } from "@calcom/lib/availability";
-import { sanitizeTimezone, stringToDayjsZod } from "@calcom/lib/dayjs";
-import { ErrorCode } from "@calcom/lib/errorCodes";
-import { getHolidayService } from "@calcom/lib/holidays";
-import { getHolidayEmoji } from "@calcom/lib/holidays/getHolidayEmoji";
-import { HttpError } from "@calcom/lib/http-error";
-import { parseBookingLimit } from "@calcom/lib/intervalLimits/isBookingLimits";
-import { parseDurationLimit } from "@calcom/lib/intervalLimits/isDurationLimits";
-import { getPeriodStartDatesBetween as getPeriodStartDatesBetweenUtil } from "@calcom/lib/intervalLimits/utils/getPeriodStartDatesBetween";
-import logger from "@calcom/lib/logger";
-import { safeStringify } from "@calcom/lib/safeStringify";
-import { withReporting } from "@calcom/lib/sentryWrapper";
+} from "@rondevu/features/busyTimes/lib/getBusyTimesFromLimits";
+import type { BusyTimesService } from "@rondevu/features/busyTimes/services/getBusyTimes";
+import { getBusyTimesService } from "@rondevu/features/di/containers/BusyTimes";
+import type { EventTypeRepository } from "@rondevu/features/eventtypes/repositories/eventTypeRepository";
+import type { PrismaHolidayRepository } from "@rondevu/features/holidays/repositories/PrismaHolidayRepository";
+import type { PrismaOOORepository } from "@rondevu/features/ooo/repositories/PrismaOOORepository";
+import type { IRedisService } from "@rondevu/features/redis/IRedisService";
+import type { DateOverride, WorkingHours } from "@rondevu/features/schedules/lib/date-ranges";
+import { buildDateRanges, subtract } from "@rondevu/features/schedules/lib/date-ranges";
+import { getWorkingHours } from "@rondevu/lib/availability";
+import { sanitizeTimezone, stringToDayjsZod } from "@rondevu/lib/dayjs";
+import { ErrorCode } from "@rondevu/lib/errorCodes";
+import { getHolidayService } from "@rondevu/lib/holidays";
+import { getHolidayEmoji } from "@rondevu/lib/holidays/getHolidayEmoji";
+import { HttpError } from "@rondevu/lib/http-error";
+import { parseBookingLimit } from "@rondevu/lib/intervalLimits/isBookingLimits";
+import { parseDurationLimit } from "@rondevu/lib/intervalLimits/isDurationLimits";
+import { getPeriodStartDatesBetween as getPeriodStartDatesBetweenUtil } from "@rondevu/lib/intervalLimits/utils/getPeriodStartDatesBetween";
+import logger from "@rondevu/lib/logger";
+import { safeStringify } from "@rondevu/lib/safeStringify";
+import { withReporting } from "@rondevu/lib/sentryWrapper";
 import type {
   Availability,
   Booking,
@@ -35,13 +35,13 @@ import type {
   SelectedCalendar,
   TravelSchedule,
   User,
-} from "@calcom/prisma/client";
-import { SchedulingType } from "@calcom/prisma/enums";
-import { EventTypeMetaDataSchema } from "@calcom/prisma/zod-utils";
-import type { CalendarFetchMode, EventBusyDetails, IntervalLimitUnit } from "@calcom/types/Calendar";
-import type { CredentialForCalendarService } from "@calcom/types/Credential";
-import type { TimeRange, WorkingHours as WorkingHoursWithUserId } from "@calcom/types/schedule";
-import type { Ensure, Optional } from "@calcom/types/utils";
+} from "@rondevu/prisma/client";
+import { SchedulingType } from "@rondevu/prisma/enums";
+import { EventTypeMetaDataSchema } from "@rondevu/prisma/zod-utils";
+import type { CalendarFetchMode, EventBusyDetails, IntervalLimitUnit } from "@rondevu/types/Calendar";
+import type { CredentialForCalendarService } from "@rondevu/types/Credential";
+import type { TimeRange, WorkingHours as WorkingHoursWithUserId } from "@rondevu/types/schedule";
+import type { Ensure, Optional } from "@rondevu/types/utils";
 import * as Sentry from "@sentry/nextjs";
 import { z } from "zod";
 import { detectEventTypeScheduleForUser } from "./detectEventTypeScheduleForUser";

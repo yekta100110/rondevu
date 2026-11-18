@@ -1,18 +1,18 @@
-import { getDownloadLinkOfCalVideoByRecordingId } from "@calcom/features/conferencing/lib/videoClient";
-import { verifyVideoToken } from "@calcom/lib/videoTokens";
+import { getDownloadLinkOfCalVideoByRecordingId } from "@rondevu/features/conferencing/lib/videoClient";
+import { verifyVideoToken } from "@rondevu/lib/videoTokens";
 import { NextResponse } from "next/server";
 import { afterEach, describe, expect, test, vi } from "vitest";
 import { GET } from "../route";
 
-vi.mock("@calcom/features/conferencing/lib/videoClient", () => ({
+vi.mock("@rondevu/features/conferencing/lib/videoClient", () => ({
   getDownloadLinkOfCalVideoByRecordingId: vi.fn(),
 }));
 
-vi.mock("@calcom/lib/videoTokens", () => ({
+vi.mock("@rondevu/lib/videoTokens", () => ({
   verifyVideoToken: vi.fn(),
 }));
 
-vi.mock("@calcom/prisma", () => ({
+vi.mock("@rondevu/prisma", () => ({
   default: {},
   prisma: {},
 }));

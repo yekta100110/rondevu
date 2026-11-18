@@ -1,18 +1,18 @@
 import type { ReactNode } from "react";
 import React from "react";
 
-import { useEventTypeById } from "@calcom/atoms/hooks/event-types/private/useEventTypeById";
-import { useIsPlatform } from "@calcom/atoms/hooks/useIsPlatform";
-import { useBookerStoreContext } from "@calcom/features/bookings/Booker/BookerStoreProvider";
-import { Dialog } from "@calcom/features/components/controlled-dialog";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Badge } from "@calcom/ui/components/badge";
-import { DialogContent } from "@calcom/ui/components/dialog";
+import { useEventTypeById } from "@rondevu/atoms/hooks/event-types/private/useEventTypeById";
+import { useIsPlatform } from "@rondevu/atoms/hooks/useIsPlatform";
+import { useBookerStoreContext } from "@rondevu/features/bookings/Booker/BookerStoreProvider";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { Badge } from "@rondevu/ui/components/badge";
+import { DialogContent } from "@rondevu/ui/components/dialog";
 
 import { getDurationFormatted } from "../event-meta/Duration";
-import { FromTime } from "@calcom/features/bookings/Booker/utils/dates";
-import { useEvent } from "@calcom/web/modules/schedules/hooks/useEvent";
-import { useBookerTime } from "@calcom/features/bookings/Booker/hooks/useBookerTime";
+import { FromTime } from "@rondevu/features/bookings/Booker/utils/dates";
+import { useEvent } from "@rondevu/web/modules/schedules/hooks/useEvent";
+import { useBookerTime } from "@rondevu/features/bookings/Booker/hooks/useBookerTime";
 
 const BookEventFormWrapper = ({ children, onCancel }: { onCancel: () => void; children: ReactNode }) => {
   const { data } = useEvent();

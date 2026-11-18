@@ -1,23 +1,23 @@
 import { useState } from "react";
 
-import dayjs from "@calcom/dayjs";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import type { RouterOutputs } from "@calcom/trpc/react";
-import { trpc } from "@calcom/trpc/react";
-import classNames from "@calcom/ui/classNames";
-import { Badge } from "@calcom/ui/components/badge";
-import { Button } from "@calcom/ui/components/button";
-import { Dialog } from "@calcom/ui/components/dialog";
-import { ConfirmationDialogContent } from "@calcom/ui/components/dialog";
+import dayjs from "@rondevu/dayjs";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import type { RouterOutputs } from "@rondevu/trpc/react";
+import { trpc } from "@rondevu/trpc/react";
+import classNames from "@rondevu/ui/classNames";
+import { Badge } from "@rondevu/ui/components/badge";
+import { Button } from "@rondevu/ui/components/button";
+import { Dialog } from "@rondevu/ui/components/dialog";
+import { ConfirmationDialogContent } from "@rondevu/ui/components/dialog";
 import {
   Dropdown,
   DropdownItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@calcom/ui/components/dropdown";
-import { showToast } from "@calcom/ui/components/toast";
-import { revalidateApiKeysList } from "@calcom/web/app/(use-page-wrapper)/settings/(settings-layout)/developer/api-keys/actions";
+} from "@rondevu/ui/components/dropdown";
+import { showToast } from "@rondevu/ui/components/toast";
+import { revalidateApiKeysList } from "@rondevu/web/app/(use-page-wrapper)/settings/(settings-layout)/developer/api-keys/actions";
 
 export type TApiKeys = RouterOutputs["viewer"]["apiKeys"]["list"][number];
 

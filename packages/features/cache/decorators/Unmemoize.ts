@@ -1,5 +1,5 @@
-import { getRedisService } from "@calcom/features/di/containers/Redis";
-import logger from "@calcom/lib/logger";
+import { getRedisService } from "@rondevu/features/di/containers/Redis";
+import logger from "@rondevu/lib/logger";
 
 const log = logger.getSubLogger({ prefix: ["@Unmemoize"] });
 

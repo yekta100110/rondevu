@@ -1,5 +1,5 @@
-import { sanitizeSmsText } from "@calcom/lib/smsTransport";
-import type { CalendarEvent, Person } from "@calcom/types/Calendar";
+import { sanitizeSmsText } from "@rondevu/lib/smsTransport";
+import type { CalendarEvent, Person } from "@rondevu/types/Calendar";
 import { describe, expect, test } from "vitest";
 
 import EventCancelledSMS from "../attendee/event-cancelled-sms";

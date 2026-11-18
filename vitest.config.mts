@@ -57,7 +57,7 @@ export default defineConfig({
     alias: [
       // Mock generated files that may not exist in CI (must come before general aliases)
       {
-        find: "@calcom/web/public/app-store/svg-hashes.json",
+        find: "@rondevu/web/public/app-store/svg-hashes.json",
         replacement: path.resolve(__dirname, "vitest-mocks/svg-hashes.json"),
       },
       {
@@ -74,24 +74,24 @@ export default defineConfig({
       // apps/web path aliases
       { find: "@lib", replacement: path.resolve(__dirname, "apps/web/lib") },
       { find: "app", replacement: path.resolve(__dirname, "apps/web/app") },
-      { find: "@calcom/web", replacement: path.resolve(__dirname, "apps/web") },
+      { find: "@rondevu/web", replacement: path.resolve(__dirname, "apps/web") },
       // Platform packages that need to be resolved from source in CI
       {
-        find: "@calcom/platform-constants",
+        find: "@rondevu/platform-constants",
         replacement: path.resolve(
           __dirname,
           "packages/platform/constants/index.ts"
         ),
       },
       {
-        find: "@calcom/embed-react",
+        find: "@rondevu/embed-react",
         replacement: path.resolve(
           __dirname,
           "packages/embeds/embed-react/src/index.ts"
         ),
       },
       {
-        find: "@calcom/embed-snippet",
+        find: "@rondevu/embed-snippet",
         replacement: path.resolve(
           __dirname,
           "packages/embeds/embed-snippet/src/index.ts"
@@ -109,7 +109,7 @@ export default defineConfig({
     pool: "forks",
     server: {
       deps: {
-        inline: [/@calcom\/.*/],
+        inline: [/@rondevu\/.*/],
       },
     },
     coverage: {

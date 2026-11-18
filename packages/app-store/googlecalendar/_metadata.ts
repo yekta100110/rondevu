@@ -1,6 +1,6 @@
 import process from "node:process";
-import { validJson } from "@calcom/lib/jsonUtils";
-import type { AppMeta } from "@calcom/types/App";
+import { validJson } from "@rondevu/lib/jsonUtils";
+import type { AppMeta } from "@rondevu/types/App";
 
 export const metadata = {
   name: "Google Calendar",

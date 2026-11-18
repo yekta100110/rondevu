@@ -1,5 +1,5 @@
-import logger from "@calcom/lib/logger";
-import type { CredentialPayload } from "@calcom/types/Credential";
+import logger from "@rondevu/lib/logger";
+import type { CredentialPayload } from "@rondevu/types/Credential";
 
 import { CrmServiceMap } from "../crm.apps.generated";
 

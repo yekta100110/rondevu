@@ -1,14 +1,14 @@
-import { Timezone as PlatformTimezoneSelect } from "@calcom/atoms/timezone";
-import dayjs from "@calcom/dayjs";
-import { useBookerStoreContext } from "@calcom/features/bookings/Booker/BookerStoreProvider";
-import type { Timezone } from "@calcom/features/bookings/Booker/types";
-import { useTimePreferences } from "@calcom/features/bookings/lib";
-import type { BookerEvent } from "@calcom/features/bookings/types";
-import { EventDetailBlocks } from "@calcom/features/bookings/types";
-import type { TimezoneSelectComponentProps } from "@calcom/features/timezone/components/TimezoneSelectComponent";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { CURRENT_TIMEZONE } from "@calcom/lib/timezoneConstants";
-import { Button } from "@calcom/ui/components/button";
+import { Timezone as PlatformTimezoneSelect } from "@rondevu/atoms/timezone";
+import dayjs from "@rondevu/dayjs";
+import { useBookerStoreContext } from "@rondevu/features/bookings/Booker/BookerStoreProvider";
+import type { Timezone } from "@rondevu/features/bookings/Booker/types";
+import { useTimePreferences } from "@rondevu/features/bookings/lib";
+import type { BookerEvent } from "@rondevu/features/bookings/types";
+import { EventDetailBlocks } from "@rondevu/features/bookings/types";
+import type { TimezoneSelectComponentProps } from "@rondevu/features/timezone/components/TimezoneSelectComponent";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { CURRENT_TIMEZONE } from "@rondevu/lib/timezoneConstants";
+import { Button } from "@rondevu/ui/components/button";
 import { GlobeIcon } from "@coss/ui/icons";
 import dynamic from "next/dynamic";
 import type { ComponentType } from "react";
@@ -29,7 +29,7 @@ type TimezoneSelectProps = Omit<
 };
 
 const WebTimezoneSelect: ComponentType<TimezoneSelectProps> = dynamic(
-  () => import("@calcom/web/modules/timezone/components/TimezoneSelect").then((mod) => mod.TimezoneSelect),
+  () => import("@rondevu/web/modules/timezone/components/TimezoneSelect").then((mod) => mod.TimezoneSelect),
   {
     ssr: false,
     loading: () => <LoadingState />,

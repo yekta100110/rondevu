@@ -1,5 +1,5 @@
 {
-  "name": "@calcom/features",
+  "name": "@rondevu/features",
   "sideEffects": false,
   "private": true,
   "description": "Cal.diy's main collocation of features",
@@ -14,15 +14,15 @@
     "deploy:trigger:staging": "npx trigger.dev@latest deploy --env staging --skip-promotion"
   },
   "dependencies": {
-    "@calcom/atoms": "workspace:*",
-    "@calcom/dayjs": "workspace:*",
-    "@calcom/i18n": "workspace:*",
-    "@calcom/lib": "workspace:*",
-    "@calcom/sms": "workspace:*",
-    "@calcom/trpc": "workspace:*",
-    "@calcom/ui": "workspace:*",
     "@coss/ui": "workspace:*",
     "@evyweb/ioctopus": "1.2.0",
+    "@rondevu/atoms": "workspace:*",
+    "@rondevu/dayjs": "workspace:*",
+    "@rondevu/i18n": "workspace:*",
+    "@rondevu/lib": "workspace:*",
+    "@rondevu/sms": "workspace:*",
+    "@rondevu/trpc": "workspace:*",
+    "@rondevu/ui": "workspace:*",
     "@tanstack/react-table": "8.20.6",
     "@tanstack/react-virtual": "3.10.9",
     "@trigger.dev/sdk": "4.5.4",
@@ -52,7 +52,7 @@
     "zod": "^3.0.0"
   },
   "devDependencies": {
-    "@calcom/testing": "workspace:*",
+    "@rondevu/testing": "workspace:*",
     "@testing-library/react-hooks": "8.0.1",
     "@types/deasync": "^0",
     "@types/jsonwebtoken": "9.0.5",

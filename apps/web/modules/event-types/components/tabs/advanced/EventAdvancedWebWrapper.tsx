@@ -1,5 +1,5 @@
-import { localeOptions } from "@calcom/lib/i18n";
-import { trpc } from "@calcom/trpc/react";
+import { localeOptions } from "@rondevu/lib/i18n";
+import { trpc } from "@rondevu/trpc/react";
 
 import type { EventAdvancedBaseProps } from "./EventAdvancedTab";
 import { EventAdvancedTab } from "./EventAdvancedTab";

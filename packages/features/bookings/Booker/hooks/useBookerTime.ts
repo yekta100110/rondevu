@@ -1,6 +1,6 @@
-import { useBookerStoreContext } from "@calcom/features/bookings/Booker/BookerStoreProvider";
-import { getBookerTimezone } from "@calcom/features/bookings/Booker/utils/getBookerTimezone";
-import { useTimePreferences } from "@calcom/features/bookings/lib/timePreferences";
+import { useBookerStoreContext } from "@rondevu/features/bookings/Booker/BookerStoreProvider";
+import { getBookerTimezone } from "@rondevu/features/bookings/Booker/utils/getBookerTimezone";
+import { useTimePreferences } from "@rondevu/features/bookings/lib/timePreferences";
 import { shallow } from "zustand/shallow";
 
 export const useBookerTime = () => {

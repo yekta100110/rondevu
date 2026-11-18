@@ -3,13 +3,13 @@ import { cookies, headers } from "next/headers";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
-import handleCancelBooking from "@calcom/features/bookings/lib/handleCancelBooking";
-import { checkRateLimitAndThrowError } from "@calcom/lib/checkRateLimitAndThrowError";
-import getIP from "@calcom/lib/getIP";
-import { piiHasher } from "@calcom/lib/server/PiiHasher";
-import { bookingCancelWithCsrfSchema } from "@calcom/prisma/zod-utils";
-import { validateCsrfToken } from "@calcom/web/lib/validateCsrfToken";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
+import handleCancelBooking from "@rondevu/features/bookings/lib/handleCancelBooking";
+import { checkRateLimitAndThrowError } from "@rondevu/lib/checkRateLimitAndThrowError";
+import getIP from "@rondevu/lib/getIP";
+import { piiHasher } from "@rondevu/lib/server/PiiHasher";
+import { bookingCancelWithCsrfSchema } from "@rondevu/prisma/zod-utils";
+import { validateCsrfToken } from "@rondevu/web/lib/validateCsrfToken";
 
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 

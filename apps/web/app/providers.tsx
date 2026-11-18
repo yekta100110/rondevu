@@ -1,7 +1,7 @@
 "use client";
 
-import { NotificationSoundHandler } from "@calcom/web/components/notification-sound-handler";
-import { WebPushProvider } from "@calcom/web/modules/notifications/components/WebPushContext";
+import { NotificationSoundHandler } from "@rondevu/web/components/notification-sound-handler";
+import { WebPushProvider } from "@rondevu/web/modules/notifications/components/WebPushContext";
 import { ToastProvider } from "@coss/ui/components/toast";
 import useIsBookingPage from "@lib/hooks/useIsBookingPage";
 import { TrpcProvider } from "app/_trpc/trpc-provider";

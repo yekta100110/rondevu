@@ -1,27 +1,27 @@
 import process from "node:process";
-import { sendEmailVerification } from "@calcom/features/auth/lib/verifyEmail";
-import { SIGNUP_ERROR_CODES } from "@calcom/features/auth/signup/constants";
-import { createOrUpdateMemberships } from "@calcom/features/auth/signup/utils/createOrUpdateMemberships";
-import { joinAnyChildTeamOnOrgInvite } from "@calcom/features/auth/signup/utils/organization";
-import { prefillAvatar } from "@calcom/features/auth/signup/utils/prefillAvatar";
+import { sendEmailVerification } from "@rondevu/features/auth/lib/verifyEmail";
+import { SIGNUP_ERROR_CODES } from "@rondevu/features/auth/signup/constants";
+import { createOrUpdateMemberships } from "@rondevu/features/auth/signup/utils/createOrUpdateMemberships";
+import { joinAnyChildTeamOnOrgInvite } from "@rondevu/features/auth/signup/utils/organization";
+import { prefillAvatar } from "@rondevu/features/auth/signup/utils/prefillAvatar";
 import {
   findTokenByToken,
   throwIfTokenExpired,
   validateAndGetCorrectedUsernameForTeam,
-} from "@calcom/features/auth/signup/utils/token";
-import { validateAndGetCorrectedUsernameAndEmail } from "@calcom/features/auth/signup/utils/validateUsername";
-import { hashPassword } from "@calcom/lib/auth/hashPassword";
+} from "@rondevu/features/auth/signup/utils/token";
+import { validateAndGetCorrectedUsernameAndEmail } from "@rondevu/features/auth/signup/utils/validateUsername";
+import { hashPassword } from "@rondevu/lib/auth/hashPassword";
 
-import logger from "@calcom/lib/logger";
-import { isPrismaError } from "@calcom/lib/server/getServerErrorFromUnknown";
-import { isUsernameReservedDueToMigration } from "@calcom/lib/server/username";
-import slugify from "@calcom/lib/slugify";
-import { prisma } from "@calcom/prisma";
-import { IdentityProvider } from "@calcom/prisma/enums";
-import { signupSchema } from "@calcom/prisma/zod-utils";
+import logger from "@rondevu/lib/logger";
+import { isPrismaError } from "@rondevu/lib/server/getServerErrorFromUnknown";
+import { isUsernameReservedDueToMigration } from "@rondevu/lib/server/username";
+import slugify from "@rondevu/lib/slugify";
+import { prisma } from "@rondevu/prisma";
+import { IdentityProvider } from "@rondevu/prisma/enums";
+import { signupSchema } from "@rondevu/prisma/zod-utils";
 import { NextResponse } from "next/server";
-import { getUserRepository } from "@calcom/features/di/containers/UserRepository";
-import { CreationSource } from "@calcom/prisma/enums";
+import { getUserRepository } from "@rondevu/features/di/containers/UserRepository";
+import { CreationSource } from "@rondevu/prisma/enums";
 
 export default async function handler(body: Record<string, string>) {
   const { email, password, language, token } = signupSchema.parse(body);

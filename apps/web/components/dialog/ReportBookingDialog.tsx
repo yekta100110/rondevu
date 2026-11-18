@@ -1,16 +1,16 @@
 import type { Dispatch, SetStateAction } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-import { Dialog } from "@calcom/features/components/controlled-dialog";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { BookingReportReason } from "@calcom/prisma/enums";
-import { trpc } from "@calcom/trpc/react";
-import { Alert } from "@calcom/ui/components/alert";
-import { Button } from "@calcom/ui/components/button";
-import { DialogContent, DialogFooter, DialogHeader } from "@calcom/ui/components/dialog";
-import { Select, Label } from "@calcom/ui/components/form";
-import { TextArea } from "@calcom/ui/components/form";
-import { showToast } from "@calcom/ui/components/toast";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { BookingReportReason } from "@rondevu/prisma/enums";
+import { trpc } from "@rondevu/trpc/react";
+import { Alert } from "@rondevu/ui/components/alert";
+import { Button } from "@rondevu/ui/components/button";
+import { DialogContent, DialogFooter, DialogHeader } from "@rondevu/ui/components/dialog";
+import { Select, Label } from "@rondevu/ui/components/form";
+import { TextArea } from "@rondevu/ui/components/form";
+import { showToast } from "@rondevu/ui/components/toast";
 
 type BookingReportStatus = "upcoming" | "past" | "cancelled" | "rejected";
 

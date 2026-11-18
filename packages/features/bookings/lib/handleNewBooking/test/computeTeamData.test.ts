@@ -1,21 +1,21 @@
 import { vi, describe, it, expect, beforeEach } from "vitest";
 
-import { SchedulingType } from "@calcom/prisma/enums";
+import { SchedulingType } from "@rondevu/prisma/enums";
 
 import { computeTeamData } from "../../service/RegularBookingService";
 
-vi.mock("@calcom/i18n/server", () => ({
+vi.mock("@rondevu/i18n/server", () => ({
   getTranslation: vi.fn().mockResolvedValue((key: string) => key),
 }));
 
-vi.mock("@calcom/prisma", () => {
+vi.mock("@rondevu/prisma", () => {
   return {
     default: vi.fn(),
     prisma: {},
   };
 });
 
-vi.mock("@calcom/app-store/_utils/calendars/processExternalId", () => ({
+vi.mock("@rondevu/app-store/_utils/calendars/processExternalId", () => ({
   default: vi.fn((dc) => `external-${dc?.externalId ?? "id"}`),
 }));
 

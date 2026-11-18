@@ -1,7 +1,7 @@
-import dayjs from "@calcom/dayjs";
-import { formatPrice } from "@calcom/lib/currencyConversions";
-import { TimeFormat } from "@calcom/lib/timeFormat";
-import type { CalendarEvent, Person } from "@calcom/types/Calendar";
+import dayjs from "@rondevu/dayjs";
+import { formatPrice } from "@rondevu/lib/currencyConversions";
+import { TimeFormat } from "@rondevu/lib/timeFormat";
+import type { CalendarEvent, Person } from "@rondevu/types/Calendar";
 import type { TFunction } from "i18next";
 import {
   AppsStatus,

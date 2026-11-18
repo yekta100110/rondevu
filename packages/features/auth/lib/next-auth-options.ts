@@ -1,19 +1,19 @@
 import process from "node:process";
-import { updateProfilePhotoGoogle } from "@calcom/app-store/_utils/oauth/updateProfilePhotoGoogle";
-import { updateProfilePhotoMicrosoft } from "@calcom/app-store/_utils/oauth/updateProfilePhotoMicrosoft";
-import { createGoogleCalendarServiceWithGoogleType } from "@calcom/app-store/googlecalendar/lib/CalendarService";
-import { getIdentityProvider } from "@calcom/features/auth/lib/identityProviders";
+import { updateProfilePhotoGoogle } from "@rondevu/app-store/_utils/oauth/updateProfilePhotoGoogle";
+import { updateProfilePhotoMicrosoft } from "@rondevu/app-store/_utils/oauth/updateProfilePhotoMicrosoft";
+import { createGoogleCalendarServiceWithGoogleType } from "@rondevu/app-store/googlecalendar/lib/CalendarService";
+import { getIdentityProvider } from "@rondevu/features/auth/lib/identityProviders";
 import {
   OUTLOOK_CLIENT_ID,
   OUTLOOK_CLIENT_SECRET,
   OUTLOOK_LOGIN_ENABLED,
-} from "@calcom/features/auth/lib/outlook";
-import { CredentialRepository } from "@calcom/features/credentials/repositories/CredentialRepository";
-import { buildCredentialCreateData } from "@calcom/features/credentials/services/CredentialDataService";
-import { ProfileRepository } from "@calcom/features/profile/repositories/ProfileRepository";
-import { UserRepository } from "@calcom/features/users/repositories/UserRepository";
-import { isPasswordValid } from "@calcom/lib/auth/isPasswordValid";
-import { checkRateLimitAndThrowError } from "@calcom/lib/checkRateLimitAndThrowError";
+} from "@rondevu/features/auth/lib/outlook";
+import { CredentialRepository } from "@rondevu/features/credentials/repositories/CredentialRepository";
+import { buildCredentialCreateData } from "@rondevu/features/credentials/services/CredentialDataService";
+import { ProfileRepository } from "@rondevu/features/profile/repositories/ProfileRepository";
+import { UserRepository } from "@rondevu/features/users/repositories/UserRepository";
+import { isPasswordValid } from "@rondevu/lib/auth/isPasswordValid";
+import { checkRateLimitAndThrowError } from "@rondevu/lib/checkRateLimitAndThrowError";
 import {
   ENABLE_PROFILE_SWITCHER,
   GOOGLE_CALENDAR_SCOPES,
@@ -23,21 +23,21 @@ import {
   IS_TEAM_BILLING_ENABLED,
   MICROSOFT_CALENDAR_SCOPES,
   WEBAPP_URL,
-} from "@calcom/lib/constants";
-import { symmetricDecrypt, symmetricEncrypt } from "@calcom/lib/crypto";
-import { defaultCookies } from "@calcom/lib/default-cookies";
-import { isENVDev } from "@calcom/lib/env";
-import logger from "@calcom/lib/logger";
-import { randomString } from "@calcom/lib/random";
-import { safeStringify } from "@calcom/lib/safeStringify";
-import { hashEmail } from "@calcom/lib/server/PiiHasher";
-import slugify from "@calcom/lib/slugify";
-import type { TrackingData } from "@calcom/lib/tracking";
-import prisma from "@calcom/prisma";
-import type { Membership, Team } from "@calcom/prisma/client";
-import { CreationSource, IdentityProvider, MembershipRole, UserPermissionRole } from "@calcom/prisma/enums";
-import { teamMetadataSchema, userMetadata } from "@calcom/prisma/zod-utils";
-import type { UserProfile } from "@calcom/types/UserProfile";
+} from "@rondevu/lib/constants";
+import { symmetricDecrypt, symmetricEncrypt } from "@rondevu/lib/crypto";
+import { defaultCookies } from "@rondevu/lib/default-cookies";
+import { isENVDev } from "@rondevu/lib/env";
+import logger from "@rondevu/lib/logger";
+import { randomString } from "@rondevu/lib/random";
+import { safeStringify } from "@rondevu/lib/safeStringify";
+import { hashEmail } from "@rondevu/lib/server/PiiHasher";
+import slugify from "@rondevu/lib/slugify";
+import type { TrackingData } from "@rondevu/lib/tracking";
+import prisma from "@rondevu/prisma";
+import type { Membership, Team } from "@rondevu/prisma/client";
+import { CreationSource, IdentityProvider, MembershipRole, UserPermissionRole } from "@rondevu/prisma/enums";
+import { teamMetadataSchema, userMetadata } from "@rondevu/prisma/zod-utils";
+import type { UserProfile } from "@rondevu/types/UserProfile";
 import { calendar_v3 } from "@googleapis/calendar";
 import { waitUntil } from "@vercel/functions";
 import { OAuth2Client } from "googleapis-common";
@@ -233,7 +233,7 @@ export async function authorizeCredentials(
       throw new Error(ErrorCode.InternalServerError);
     }
 
-    const isValidToken = (await import("@calcom/lib/totp")).totpAuthenticatorCheck(
+    const isValidToken = (await import("@rondevu/lib/totp")).totpAuthenticatorCheck(
       credentials.totpCode,
       secret
     );

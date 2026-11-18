@@ -12,20 +12,20 @@ import type {
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 import { createFilter, type GroupBase, type Props } from "react-select";
 
-import type { scheduleClassNames } from "@calcom/atoms/availability/types";
-import type { ConfigType } from "@calcom/dayjs";
-import dayjs from "@calcom/dayjs";
-import { defaultDayRange as DEFAULT_DAY_RANGE } from "@calcom/lib/availability";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { weekdayNames } from "@calcom/lib/weekday";
-import type { TimeRange } from "@calcom/types/schedule";
-import cn from "@calcom/ui/classNames";
-import { Button } from "@calcom/ui/components/button";
-import { Dropdown, DropdownMenuContent, DropdownMenuTrigger } from "@calcom/ui/components/dropdown";
-import { Select } from "@calcom/ui/components/form";
-import { CheckboxField } from "@calcom/ui/components/form";
-import { Switch } from "@calcom/ui/components/form";
-import { SkeletonText } from "@calcom/ui/components/skeleton";
+import type { scheduleClassNames } from "@rondevu/atoms/availability/types";
+import type { ConfigType } from "@rondevu/dayjs";
+import dayjs from "@rondevu/dayjs";
+import { defaultDayRange as DEFAULT_DAY_RANGE } from "@rondevu/lib/availability";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { weekdayNames } from "@rondevu/lib/weekday";
+import type { TimeRange } from "@rondevu/types/schedule";
+import cn from "@rondevu/ui/classNames";
+import { Button } from "@rondevu/ui/components/button";
+import { Dropdown, DropdownMenuContent, DropdownMenuTrigger } from "@rondevu/ui/components/dropdown";
+import { Select } from "@rondevu/ui/components/form";
+import { CheckboxField } from "@rondevu/ui/components/form";
+import { Switch } from "@rondevu/ui/components/form";
+import { SkeletonText } from "@rondevu/ui/components/skeleton";
 
 export type { TimeRange };
 

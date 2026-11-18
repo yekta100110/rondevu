@@ -1,4 +1,4 @@
-import type { ITranslationService } from "@calcom/features/translation/services/ITranslationService";
+import type { ITranslationService } from "@rondevu/features/translation/services/ITranslationService";
 import { createContainer } from "../di";
 import { moduleLoader as translationServiceModuleLoader } from "../modules/TranslationService";
 

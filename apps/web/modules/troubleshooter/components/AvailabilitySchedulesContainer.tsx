@@ -1,9 +1,9 @@
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Badge } from "@calcom/ui/components/badge";
-import { Button } from "@calcom/ui/components/button";
-import { Switch } from "@calcom/ui/components/form";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { Badge } from "@rondevu/ui/components/badge";
+import { Button } from "@rondevu/ui/components/button";
+import { Switch } from "@rondevu/ui/components/form";
 
-import { TroubleshooterListItemContainer } from "@calcom/features/troubleshooter/components/TroubleshooterListItemContainer";
+import { TroubleshooterListItemContainer } from "@rondevu/features/troubleshooter/components/TroubleshooterListItemContainer";
 
 function AvailabiltyItem() {
   const { t } = useLocale();

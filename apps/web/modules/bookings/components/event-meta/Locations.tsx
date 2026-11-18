@@ -1,8 +1,8 @@
-import { getLocationByType, getTranslatedLocation } from "@calcom/app-store/locations";
-import type { BookerEvent } from "@calcom/features/bookings/types";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Tooltip } from "@calcom/ui/components/tooltip";
-import classNames from "@calcom/ui/classNames";
+import { getLocationByType, getTranslatedLocation } from "@rondevu/app-store/locations";
+import type { BookerEvent } from "@rondevu/features/bookings/types";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { Tooltip } from "@rondevu/ui/components/tooltip";
+import classNames from "@rondevu/ui/classNames";
 
 import { EventMetaBlock } from "./Details";
 

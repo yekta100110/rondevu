@@ -1,5 +1,5 @@
-import { WEBAPP_URL } from "@calcom/lib/constants";
-import { loadTranslations } from "@calcom/i18n/server";
+import { WEBAPP_URL } from "@rondevu/lib/constants";
+import { loadTranslations } from "@rondevu/i18n/server";
 import { EventTypeServiceSchema } from "@components/schemas/ProfileSchema";
 import { buildLegacyCtx, decodeParams } from "@lib/buildLegacyCtx";
 import { getServerSideProps } from "@server/lib/[user]/[type]/getServerSideProps";

@@ -8,10 +8,10 @@ const { findUsersForAvailabilityCheckMock, getUserAvailabilityMock } = vi.hoiste
   getUserAvailabilityMock: vi.fn(),
 }));
 
-vi.mock("@calcom/features/availability/lib/findUsersForAvailabilityCheck", () => ({
+vi.mock("@rondevu/features/availability/lib/findUsersForAvailabilityCheck", () => ({
   findUsersForAvailabilityCheck: findUsersForAvailabilityCheckMock,
 }));
-vi.mock("@calcom/features/di/containers/GetUserAvailability", () => ({
+vi.mock("@rondevu/features/di/containers/GetUserAvailability", () => ({
   getUserAvailabilityService: () => ({
     getUserAvailabilityIncludingBusyTimesFromLimits: getUserAvailabilityMock,
   }),

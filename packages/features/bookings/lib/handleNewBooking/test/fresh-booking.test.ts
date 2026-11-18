@@ -7,7 +7,7 @@
  *
  * They don't intend to test what the apps logic should do, but rather test if the apps are called with the correct data. For testing that, once should write tests within each app.
  */
-import prismaMock from "@calcom/testing/lib/__mocks__/prisma";
+import prismaMock from "@rondevu/testing/lib/__mocks__/prisma";
 import {
   BookingLocations,
   createBookingScenario,
@@ -29,19 +29,19 @@ import {
   mockSuccessfulVideoMeetingCreation,
   mockVideoAppToCrashOnCreateMeeting,
   TestData,
-} from "@calcom/testing/lib/bookingScenario/bookingScenario";
+} from "@rondevu/testing/lib/bookingScenario/bookingScenario";
 import process from "node:process";
-import { appStoreMetadata } from "@calcom/app-store/appStoreMetaData";
-import { createWatchlistEntry } from "@calcom/features/watchlist/lib/testUtils";
-import { getTranslation } from "@calcom/i18n/server";
-import { WEBAPP_URL, WEBSITE_URL } from "@calcom/lib/constants";
-import { ErrorCode } from "@calcom/lib/errorCodes";
-import type { HttpError } from "@calcom/lib/http-error";
-import logger from "@calcom/lib/logger";
-import { resetTestEmails } from "@calcom/lib/testEmails";
-import { distributedTracing } from "@calcom/lib/tracing/factory";
-import type { PrismaClient } from "@calcom/prisma";
-import { BookingStatus, CreationSource, SchedulingType, WatchlistType } from "@calcom/prisma/enums";
+import { appStoreMetadata } from "@rondevu/app-store/appStoreMetaData";
+import { createWatchlistEntry } from "@rondevu/features/watchlist/lib/testUtils";
+import { getTranslation } from "@rondevu/i18n/server";
+import { WEBAPP_URL, WEBSITE_URL } from "@rondevu/lib/constants";
+import { ErrorCode } from "@rondevu/lib/errorCodes";
+import type { HttpError } from "@rondevu/lib/http-error";
+import logger from "@rondevu/lib/logger";
+import { resetTestEmails } from "@rondevu/lib/testEmails";
+import { distributedTracing } from "@rondevu/lib/tracing/factory";
+import type { PrismaClient } from "@rondevu/prisma";
+import { BookingStatus, CreationSource, SchedulingType, WatchlistType } from "@rondevu/prisma/enums";
 import {
   expectAwaitingPaymentEmails,
   expectBookingCreatedWebhookToHaveBeenFired,
@@ -54,12 +54,12 @@ import {
   expectICalUIDAsString,
   expectSuccessfulBookingCreationEmails,
   expectSuccessfulCalendarEventCreationInCalendar,
-} from "@calcom/testing/lib/bookingScenario/expects";
-import { getMockRequestDataForBooking } from "@calcom/testing/lib/bookingScenario/getMockRequestDataForBooking";
-import { setupAndTeardown } from "@calcom/testing/lib/bookingScenario/setupAndTeardown";
-import { testWithAndWithoutOrg } from "@calcom/testing/lib/bookingScenario/test";
-import { test } from "@calcom/testing/lib/fixtures/fixtures";
-import type { CalendarEvent } from "@calcom/types/Calendar";
+} from "@rondevu/testing/lib/bookingScenario/expects";
+import { getMockRequestDataForBooking } from "@rondevu/testing/lib/bookingScenario/getMockRequestDataForBooking";
+import { setupAndTeardown } from "@rondevu/testing/lib/bookingScenario/setupAndTeardown";
+import { testWithAndWithoutOrg } from "@rondevu/testing/lib/bookingScenario/test";
+import { test } from "@rondevu/testing/lib/fixtures/fixtures";
+import type { CalendarEvent } from "@rondevu/types/Calendar";
 import type { Request, Response } from "express";
 import type { NextApiRequest, NextApiResponse } from "next";
 import type Stripe from "stripe";
@@ -70,7 +70,7 @@ import { getNewBookingHandler } from "./getNewBookingHandler";
 const log = logger.getSubLogger({ prefix: ["[fresh-booking.test]"] });
 
 async function mockPaymentSuccessWebhookFromStripe({ externalId }: { externalId: string }) {
-  const { handlePaymentSuccess } = await import("@calcom/app-store/_utils/payments/handlePaymentSuccess");
+  const { handlePaymentSuccess } = await import("@rondevu/app-store/_utils/payments/handlePaymentSuccess");
   let webhookResponse = null;
   try {
     // Look up the payment by externalId (simulating what the old Stripe webhook handler did)

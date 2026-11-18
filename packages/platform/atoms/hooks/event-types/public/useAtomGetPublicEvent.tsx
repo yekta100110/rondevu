@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
-import { getUsernameList } from "@calcom/features/eventtypes/lib/defaultEvents";
-import { getAbsoluteAvatarUrl } from "@calcom/lib/getAvatarUrl";
-import { SUCCESS_STATUS, V2_ENDPOINTS } from "@calcom/platform-constants";
-import type { PublicEventType } from "@calcom/features/eventtypes/lib/getPublicEvent";
-import type { ApiResponse } from "@calcom/platform-types";
+import { getUsernameList } from "@rondevu/features/eventtypes/lib/defaultEvents";
+import { getAbsoluteAvatarUrl } from "@rondevu/lib/getAvatarUrl";
+import { SUCCESS_STATUS, V2_ENDPOINTS } from "@rondevu/platform-constants";
+import type { PublicEventType } from "@rondevu/features/eventtypes/lib/getPublicEvent";
+import type { ApiResponse } from "@rondevu/platform-types";
 
 import http from "../../../lib/http";
 import { useAtomsContext } from "../../../hooks/useAtomsContext";

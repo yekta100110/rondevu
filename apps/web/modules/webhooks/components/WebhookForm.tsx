@@ -3,21 +3,21 @@
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-import SectionBottomActions from "@calcom/features/settings/SectionBottomActions";
-import customTemplate, { hasTemplateIntegration } from "@calcom/features/webhooks/lib/integrationTemplate";
-import { WebhookVersion } from "@calcom/features/webhooks/lib/interface/IWebhookRepository";
-import { WEBAPP_URL } from "@calcom/lib/constants";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { TimeUnit, WebhookTriggerEvents } from "@calcom/prisma/enums";
-import type { RouterOutputs } from "@calcom/trpc/react";
-import { Button } from "@calcom/ui/components/button";
-import { Select } from "@calcom/ui/components/form";
-import { TextArea } from "@calcom/ui/components/form";
-import { ToggleGroup } from "@calcom/ui/components/form";
-import { Form } from "@calcom/ui/components/form";
-import { Label } from "@calcom/ui/components/form";
-import { TextField } from "@calcom/ui/components/form";
-import { Switch } from "@calcom/ui/components/form";
+import SectionBottomActions from "@rondevu/features/settings/SectionBottomActions";
+import customTemplate, { hasTemplateIntegration } from "@rondevu/features/webhooks/lib/integrationTemplate";
+import { WebhookVersion } from "@rondevu/features/webhooks/lib/interface/IWebhookRepository";
+import { WEBAPP_URL } from "@rondevu/lib/constants";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { TimeUnit, WebhookTriggerEvents } from "@rondevu/prisma/enums";
+import type { RouterOutputs } from "@rondevu/trpc/react";
+import { Button } from "@rondevu/ui/components/button";
+import { Select } from "@rondevu/ui/components/form";
+import { TextArea } from "@rondevu/ui/components/form";
+import { ToggleGroup } from "@rondevu/ui/components/form";
+import { Form } from "@rondevu/ui/components/form";
+import { Label } from "@rondevu/ui/components/form";
+import { TextField } from "@rondevu/ui/components/form";
+import { Switch } from "@rondevu/ui/components/form";
 
 
 import WebhookTestDisclosure from "./WebhookTestDisclosure";

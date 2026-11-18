@@ -1,6 +1,6 @@
-import { prisma } from "@calcom/prisma";
-import type { Prisma } from "@calcom/prisma/client";
-import { BookingStatus } from "@calcom/prisma/enums";
+import { prisma } from "@rondevu/prisma";
+import type { Prisma } from "@rondevu/prisma/client";
+import { BookingStatus } from "@rondevu/prisma/enums";
 
 const holidayCacheSelect = {
   id: true,

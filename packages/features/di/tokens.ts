@@ -1,9 +1,9 @@
-import { BOOKING_DI_TOKENS } from "@calcom/features/bookings/di/tokens";
-import { EVENT_TYPE_DI_TOKENS } from "@calcom/features/eventtypes/di/tokens";
-import { FLAGS_DI_TOKENS } from "@calcom/features/flags/di/tokens";
-import { HASHED_LINK_DI_TOKENS } from "@calcom/features/hashedLink/di/tokens";
-import { OAUTH_DI_TOKENS } from "@calcom/features/oauth/di/tokens";
-import { TRANSLATION_DI_TOKENS } from "@calcom/features/translation/di/tokens";
+import { BOOKING_DI_TOKENS } from "@rondevu/features/bookings/di/tokens";
+import { EVENT_TYPE_DI_TOKENS } from "@rondevu/features/eventtypes/di/tokens";
+import { FLAGS_DI_TOKENS } from "@rondevu/features/flags/di/tokens";
+import { HASHED_LINK_DI_TOKENS } from "@rondevu/features/hashedLink/di/tokens";
+import { OAUTH_DI_TOKENS } from "@rondevu/features/oauth/di/tokens";
+import { TRANSLATION_DI_TOKENS } from "@rondevu/features/translation/di/tokens";
 import { WATCHLIST_DI_TOKENS } from "./watchlist/Watchlist.tokens";
 import { WEBHOOK_TOKENS } from "./webhooks/Webhooks.tokens";
 

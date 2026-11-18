@@ -1,7 +1,7 @@
 "use client";
 
-import type { FilterableColumn } from "@calcom/features/data-table/lib/types";
-import { ColumnFilterType } from "@calcom/features/data-table/lib/types";
+import type { FilterableColumn } from "@rondevu/features/data-table/lib/types";
+import { ColumnFilterType } from "@rondevu/features/data-table/lib/types";
 import { MultiSelectFilterOptions } from "./MultiSelectFilterOptions";
 import { NumberFilterOptions } from "./NumberFilterOptions";
 import { SingleSelectFilterOptions } from "./SingleSelectFilterOptions";

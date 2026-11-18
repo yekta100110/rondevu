@@ -1,9 +1,9 @@
-import { bookingResponsesDbSchema } from "@calcom/features/bookings/lib/getBookingResponsesSchema";
-import slugify from "@calcom/lib/slugify";
-import type { PrismaClient } from "@calcom/prisma";
-import prisma from "@calcom/prisma";
-import type { Prisma } from "@calcom/prisma/client";
-import { MembershipRole } from "@calcom/prisma/enums";
+import { bookingResponsesDbSchema } from "@rondevu/features/bookings/lib/getBookingResponsesSchema";
+import slugify from "@rondevu/lib/slugify";
+import type { PrismaClient } from "@rondevu/prisma";
+import prisma from "@rondevu/prisma";
+import type { Prisma } from "@rondevu/prisma/client";
+import { MembershipRole } from "@rondevu/prisma/enums";
 
 type BookingSelect = {
   description: true;

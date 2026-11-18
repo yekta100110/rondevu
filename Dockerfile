@@ -40,14 +40,14 @@ COPY apps/web ./apps/web
 COPY packages ./packages
 
 RUN yarn config set httpTimeout 1200000
-RUN npx turbo prune --scope=@calcom/web --docker
-#RUN npx turbo prune --scope=@calcom/web --scope=@calcom/trpc --docker
+RUN npx turbo prune --scope=@rondevu/web --docker
+#RUN npx turbo prune --scope=@rondevu/web --scope=@rondevu/trpc --docker
 RUN --mount=type=cache,target=/rondevu/.yarn/cache yarn install
 # Build and make embed servable from web/public/embed folder
-RUN yarn workspace @calcom/trpc run build
-RUN yarn --cwd packages/embeds/embed-core workspace @calcom/embed-core run build
-RUN yarn --cwd apps/web workspace @calcom/web run copy-app-store-static
-RUN yarn --cwd apps/web workspace @calcom/web run build
+RUN yarn workspace @rondevu/trpc run build
+RUN yarn --cwd packages/embeds/embed-core workspace @rondevu/embed-core run build
+RUN yarn --cwd apps/web workspace @rondevu/web run copy-app-store-static
+RUN yarn --cwd apps/web workspace @rondevu/web run build
 RUN rm -rf node_modules/.cache .yarn/cache apps/web/.next/cache
 
 FROM node:22 AS builder-two

@@ -1,13 +1,13 @@
 import { randomBytes } from "node:crypto";
 import process from "node:process";
-import type { AccessCodeRepository } from "@calcom/features/oauth/repositories/AccessCodeRepository";
-import type { OAuthClientRepository } from "@calcom/features/oauth/repositories/OAuthClientRepository";
-import { generateSecret } from "@calcom/features/oauth/utils/generateSecret";
-import { ErrorCode } from "@calcom/lib/errorCodes";
-import { ErrorWithCode } from "@calcom/lib/errors";
-import { verifyCodeChallenge } from "@calcom/lib/pkce";
-import type { AccessScope, OAuthClientType } from "@calcom/prisma/enums";
-import { OAuthClientStatus } from "@calcom/prisma/enums";
+import type { AccessCodeRepository } from "@rondevu/features/oauth/repositories/AccessCodeRepository";
+import type { OAuthClientRepository } from "@rondevu/features/oauth/repositories/OAuthClientRepository";
+import { generateSecret } from "@rondevu/features/oauth/utils/generateSecret";
+import { ErrorCode } from "@rondevu/lib/errorCodes";
+import { ErrorWithCode } from "@rondevu/lib/errors";
+import { verifyCodeChallenge } from "@rondevu/lib/pkce";
+import type { AccessScope, OAuthClientType } from "@rondevu/prisma/enums";
+import { OAuthClientStatus } from "@rondevu/prisma/enums";
 import jwt from "jsonwebtoken";
 
 export interface OAuth2Client {

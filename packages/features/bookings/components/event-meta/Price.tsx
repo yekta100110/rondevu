@@ -1,7 +1,7 @@
-import { formatPrice } from "@calcom/lib/currencyConversions";
-import { SatSymbol } from "@calcom/ui/components/icon";
+import { formatPrice } from "@rondevu/lib/currencyConversions";
+import { SatSymbol } from "@rondevu/ui/components/icon";
 
-import type { EventPrice } from "@calcom/features/bookings/types";
+import type { EventPrice } from "@rondevu/features/bookings/types";
 
 export const Price = ({ price, currency, displayAlternateSymbol = true }: EventPrice) => {
   if (price === 0) return null;

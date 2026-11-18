@@ -1,14 +1,14 @@
-import type { IEventTypesRepository } from "@calcom/features/eventtypes/eventtypes.repository.interface";
-import { EventTypeRepository } from "@calcom/features/eventtypes/repositories/eventTypeRepository";
-import { UsersRepository } from "@calcom/features/users/users.repository";
-import type { IUsersRepository } from "@calcom/features/users/users.repository.interface";
-import { getPlaceholderAvatar } from "@calcom/lib/defaultAvatarImage";
-import { getUserAvatarUrl } from "@calcom/lib/getAvatarUrl";
-import type { PrismaClient } from "@calcom/prisma";
-import { prisma as defaultPrisma } from "@calcom/prisma";
-import type { Prisma } from "@calcom/prisma/client";
-import type { TimeUnit, WebhookTriggerEvents } from "@calcom/prisma/enums";
-import { MembershipRole, UserPermissionRole } from "@calcom/prisma/enums";
+import type { IEventTypesRepository } from "@rondevu/features/eventtypes/eventtypes.repository.interface";
+import { EventTypeRepository } from "@rondevu/features/eventtypes/repositories/eventTypeRepository";
+import { UsersRepository } from "@rondevu/features/users/users.repository";
+import type { IUsersRepository } from "@rondevu/features/users/users.repository.interface";
+import { getPlaceholderAvatar } from "@rondevu/lib/defaultAvatarImage";
+import { getUserAvatarUrl } from "@rondevu/lib/getAvatarUrl";
+import type { PrismaClient } from "@rondevu/prisma";
+import { prisma as defaultPrisma } from "@rondevu/prisma";
+import type { Prisma } from "@rondevu/prisma/client";
+import type { TimeUnit, WebhookTriggerEvents } from "@rondevu/prisma/enums";
+import { MembershipRole, UserPermissionRole } from "@rondevu/prisma/enums";
 import type { Webhook, WebhookGroup, WebhookSubscriber } from "../dto/types";
 import { WebhookOutputMapper } from "../infrastructure/mappers/WebhookOutputMapper";
 import type {
@@ -56,7 +56,7 @@ export class WebhookRepository implements IWebhookRepository {
    *
    * @deprecated Use DI container instead:
    * ```typescript
-   * import { getWebhookFeature } from "@calcom/features/di/webhooks/containers/webhook";
+   * import { getWebhookFeature } from "@rondevu/features/di/webhooks/containers/webhook";
    * const { repository } = getWebhookFeature();
    * ```
    *

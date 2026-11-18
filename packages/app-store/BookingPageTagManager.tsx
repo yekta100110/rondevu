@@ -1,10 +1,10 @@
 import Script from "next/script";
 
-import { getEventTypeAppData } from "@calcom/app-store/_utils/getEventTypeAppData";
-import { appStoreMetadata } from "@calcom/app-store/bookerAppsMetaData";
-import type { Tag } from "@calcom/app-store/types";
-import { sdkActionManager } from "@calcom/lib/sdk-event";
-import type { AppMeta } from "@calcom/types/App";
+import { getEventTypeAppData } from "@rondevu/app-store/_utils/getEventTypeAppData";
+import { appStoreMetadata } from "@rondevu/app-store/bookerAppsMetaData";
+import type { Tag } from "@rondevu/app-store/types";
+import { sdkActionManager } from "@rondevu/lib/sdk-event";
+import type { AppMeta } from "@rondevu/types/App";
 
 import type { appDataSchemas } from "./apps.schemas.generated";
 

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import "@calcom/dayjs/locales";
+import "@rondevu/dayjs/locales";
 
 import { nameOfDay, weekdayNames } from "./weekday";
 

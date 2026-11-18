@@ -1,9 +1,9 @@
-import { verifyCodeUnAuthenticated } from "@calcom/features/auth/lib/verifyCodeUnAuthenticated";
-import { ErrorCode } from "@calcom/lib/errorCodes";
-import { ErrorWithCode } from "@calcom/lib/errors";
-import { extractBaseEmail } from "@calcom/lib/extract-base-email";
-import { getBlacklistedGuestEmails } from "@calcom/lib/getBlacklistedGuestEmails";
-import prisma from "@calcom/prisma";
+import { verifyCodeUnAuthenticated } from "@rondevu/features/auth/lib/verifyCodeUnAuthenticated";
+import { ErrorCode } from "@rondevu/lib/errorCodes";
+import { ErrorWithCode } from "@rondevu/lib/errors";
+import { extractBaseEmail } from "@rondevu/lib/extract-base-email";
+import { getBlacklistedGuestEmails } from "@rondevu/lib/getBlacklistedGuestEmails";
+import prisma from "@rondevu/prisma";
 
 export const checkIfBookerEmailIsBlocked = async ({
   bookerEmail,

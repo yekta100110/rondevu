@@ -1,15 +1,15 @@
 import process from "node:process";
-import { ALL_APPS } from "@calcom/app-store/utils";
-import { getAssignmentReasonCategory } from "@calcom/features/bookings/lib/getAssignmentReasonCategory";
-import { getCalEventResponses } from "@calcom/features/bookings/lib/getCalEventResponses";
-import type { BookingRepository } from "@calcom/features/bookings/repositories/BookingRepository";
+import { ALL_APPS } from "@rondevu/app-store/utils";
+import { getAssignmentReasonCategory } from "@rondevu/features/bookings/lib/getAssignmentReasonCategory";
+import { getCalEventResponses } from "@rondevu/features/bookings/lib/getCalEventResponses";
+import type { BookingRepository } from "@rondevu/features/bookings/repositories/BookingRepository";
 import {
   type EventTypeBrandingData,
   getEventTypeService,
-} from "@calcom/features/eventtypes/di/EventTypeService.container";
-import { getTranslation } from "@calcom/i18n/server";
-import { parseRecurringEvent } from "@calcom/lib/isRecurringEvent";
-import { getTimeFormatStringFromUserTimeFormat } from "@calcom/lib/timeFormat";
+} from "@rondevu/features/eventtypes/di/EventTypeService.container";
+import { getTranslation } from "@rondevu/i18n/server";
+import { parseRecurringEvent } from "@rondevu/lib/isRecurringEvent";
+import { getTimeFormatStringFromUserTimeFormat } from "@rondevu/lib/timeFormat";
 import type {
   Attendee,
   BookingReference,
@@ -17,11 +17,11 @@ import type {
   DestinationCalendar,
   Prisma,
   User,
-} from "@calcom/prisma/client";
-import type { SchedulingType } from "@calcom/prisma/enums";
-import { bookingResponses as bookingResponsesSchema } from "@calcom/prisma/zod-utils";
-import type { AppsStatus, CalEventResponses, CalendarEvent, Person } from "@calcom/types/Calendar";
-import type { VideoCallData } from "@calcom/types/VideoApiAdapter";
+} from "@rondevu/prisma/client";
+import type { SchedulingType } from "@rondevu/prisma/enums";
+import { bookingResponses as bookingResponsesSchema } from "@rondevu/prisma/zod-utils";
+import type { AppsStatus, CalEventResponses, CalendarEvent, Person } from "@rondevu/types/Calendar";
+import type { VideoCallData } from "@rondevu/types/VideoApiAdapter";
 import type { TFunction } from "i18next";
 
 const getBookerBaseUrl = async (_orgSlug?: string | number | null): Promise<string> =>

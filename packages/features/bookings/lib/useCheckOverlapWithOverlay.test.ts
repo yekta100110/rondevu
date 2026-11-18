@@ -1,7 +1,7 @@
 /**
  * @vitest-environment jsdom
  */
-import dayjs from "@calcom/dayjs";
+import dayjs from "@rondevu/dayjs";
 import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 import { useOverlayCalendarStore } from "../Booker/components/OverlayCalendar/store";

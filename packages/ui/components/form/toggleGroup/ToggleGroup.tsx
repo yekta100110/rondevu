@@ -1,4 +1,4 @@
-import classNames from "@calcom/ui/classNames";
+import classNames from "@rondevu/ui/classNames";
 import * as RadixToggleGroup from "@radix-ui/react-toggle-group";
 import type { ReactNode } from "react";
 import { useState } from "react";

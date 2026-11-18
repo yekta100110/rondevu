@@ -1,4 +1,4 @@
-import { prisma } from "@calcom/prisma";
+import { prisma } from "@rondevu/prisma";
 import { getPublicEventSelect } from "./getPublicEvent";
 
 export async function getTeamEventType(teamSlug: string, meetingSlug: string, orgSlug: string | null) {

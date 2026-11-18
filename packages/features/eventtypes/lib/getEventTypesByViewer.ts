@@ -1,18 +1,18 @@
-import { EventTypeRepository } from "@calcom/features/eventtypes/repositories/eventTypeRepository";
-import { hasFilter } from "@calcom/features/filters/lib/hasFilter";
-import { MembershipRepository } from "@calcom/features/membership/repositories/MembershipRepository";
-import { ProfileRepository } from "@calcom/features/profile/repositories/ProfileRepository";
-import { UserRepository } from "@calcom/features/users/repositories/UserRepository";
-import { getPlaceholderAvatar } from "@calcom/lib/defaultAvatarImage";
-import { ErrorCode } from "@calcom/lib/errorCodes";
-import { ErrorWithCode } from "@calcom/lib/errors";
-import { getUserAvatarUrl } from "@calcom/lib/getAvatarUrl";
-import logger from "@calcom/lib/logger";
-import { markdownToSafeHTML } from "@calcom/lib/markdownToSafeHTML";
-import { safeStringify } from "@calcom/lib/safeStringify";
-import prisma from "@calcom/prisma";
-import { MembershipRole, SchedulingType } from "@calcom/prisma/enums";
-import { eventTypeMetaDataSchemaWithUntypedApps, teamMetadataSchema } from "@calcom/prisma/zod-utils";
+import { EventTypeRepository } from "@rondevu/features/eventtypes/repositories/eventTypeRepository";
+import { hasFilter } from "@rondevu/features/filters/lib/hasFilter";
+import { MembershipRepository } from "@rondevu/features/membership/repositories/MembershipRepository";
+import { ProfileRepository } from "@rondevu/features/profile/repositories/ProfileRepository";
+import { UserRepository } from "@rondevu/features/users/repositories/UserRepository";
+import { getPlaceholderAvatar } from "@rondevu/lib/defaultAvatarImage";
+import { ErrorCode } from "@rondevu/lib/errorCodes";
+import { ErrorWithCode } from "@rondevu/lib/errors";
+import { getUserAvatarUrl } from "@rondevu/lib/getAvatarUrl";
+import logger from "@rondevu/lib/logger";
+import { markdownToSafeHTML } from "@rondevu/lib/markdownToSafeHTML";
+import { safeStringify } from "@rondevu/lib/safeStringify";
+import prisma from "@rondevu/prisma";
+import { MembershipRole, SchedulingType } from "@rondevu/prisma/enums";
+import { eventTypeMetaDataSchemaWithUntypedApps, teamMetadataSchema } from "@rondevu/prisma/zod-utils";
 import { orderBy } from "lodash";
 
 class PermissionCheckService {

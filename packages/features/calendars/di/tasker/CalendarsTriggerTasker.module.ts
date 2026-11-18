@@ -1,6 +1,6 @@
-import { bindModuleToClassOnToken, createModule, type ModuleLoader } from "@calcom/features/di/di";
-import { moduleLoader as loggerServiceModule } from "@calcom/features/di/shared/services/logger.service";
-import { CalendarsTriggerTasker } from "@calcom/features/calendars/lib/tasker/CalendarsTriggerTasker";
+import { bindModuleToClassOnToken, createModule, type ModuleLoader } from "@rondevu/features/di/di";
+import { moduleLoader as loggerServiceModule } from "@rondevu/features/di/shared/services/logger.service";
+import { CalendarsTriggerTasker } from "@rondevu/features/calendars/lib/tasker/CalendarsTriggerTasker";
 
 import { CALENDARS_TASKER_DI_TOKENS } from "./tokens";
 

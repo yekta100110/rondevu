@@ -24,8 +24,8 @@
 ### Import Pattern
 - Import directly from source files, not barrel files
 - Use `import type { X }` for type-only imports
-- Respect `packages/ui/package.json` export maps (e.g. `@calcom/ui/components/logo`, `@calcom/ui/components/form`)
-- API v2 re-exports through `@calcom/platform-libraries`
+- Respect `packages/ui/package.json` export maps (e.g. `@rondevu/ui/components/logo`, `@rondevu/ui/components/form`)
+- API v2 re-exports through `@rondevu/platform-libraries`
 
 ### Error Handling & Security Patterns
 - `TRPCError` in tRPC routers only; `ErrorWithCode` everywhere else
@@ -43,7 +43,7 @@
 ## rOndevu Core Domain Patterns
 
 ### 1. SMS Transport, GSM 7-bit Sanitization & Phone-First Booking
-- **Provider Abstraction (`packages/lib/smsTransport.ts` & `@calcom/sms`)**: Decouples transactional SMS sending (`Twilio`, `Netgsm`, `Webhook`, `Simulation`) from OTP verification (`Twilio Verify v2`). SMS dispatch is isolated from SMTP email failures via `Promise.allSettled`.
+- **Provider Abstraction (`packages/lib/smsTransport.ts` & `@rondevu/sms`)**: Decouples transactional SMS sending (`Twilio`, `Netgsm`, `Webhook`, `Simulation`) from OTP verification (`Twilio Verify v2`). SMS dispatch is isolated from SMTP email failures via `Promise.allSettled`.
 - **GSM 7-bit ASCII Sanitization (`packages/lib/sanitizeSmsText.ts`)**: Automatically transliterates Turkish characters (`ç, ğ, ı, İ, ö, ş, ü`), circumflex vowels, and smart punctuation into standard GSM 7-bit ASCII prior to dispatch. All attendee templates (`packages/sms/attendee/`) are compressed to `<= 160` characters (single segment, using `/b/:uid` short links) to prevent UCS-2 fallback and Twilio Error 30044.
 - **Synthetic SMS Email (`<digits>@sms.rondevu.org`)**: Phone-only attendees without an email address receive a canonical synthetic email generated via `contructEmailFromPhoneNumber` after E.164 normalization (`normalizePhoneNumber.ts`). Supported end-to-end across booking creation, OTP bypass of email watchlist, historical no-show enrichment (`enrichHistoricalNoShow.ts`), and unauthenticated capability-URL cancellation (`handleCancelBooking.ts`).
 - **Single-Use OTP Cache (`verifiedPhoneCache` in `phoneVerification.ts`)**: Because Twilio Verify's `VerificationCheck` API is strictly single-use, approved phone verifications are cached in a bounded (`MAX_VERIFIED_PHONE_CACHE_SIZE = 10000`) in-memory store with a 15-minute sliding TTL, invalidated on OTP resend (`clearPhoneVerificationCache`), and immediately consumed upon booking completion (`consumePhoneVerification`) to prevent replay attacks.

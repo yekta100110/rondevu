@@ -1,7 +1,7 @@
-import { Dialog } from "@calcom/features/components/controlled-dialog";
-import ServerTrans from "@calcom/lib/components/ServerTrans";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { DialogContent, DialogFooter, DialogClose } from "@calcom/ui/components/dialog";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
+import ServerTrans from "@rondevu/lib/components/ServerTrans";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { DialogContent, DialogFooter, DialogClose } from "@rondevu/ui/components/dialog";
 
 interface SecondaryEmailConfirmModalProps {
   email: string;

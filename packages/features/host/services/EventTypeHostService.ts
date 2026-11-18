@@ -1,8 +1,8 @@
-import { EventTypeRepository } from "@calcom/features/eventtypes/repositories/eventTypeRepository";
-import { HostRepository } from "@calcom/features/host/repositories/HostRepository";
-import { MembershipRepository } from "@calcom/features/membership/repositories/MembershipRepository";
-import type { PrismaClient } from "@calcom/prisma/client";
-import { ErrorWithCode } from "@calcom/lib/errors";
+import { EventTypeRepository } from "@rondevu/features/eventtypes/repositories/eventTypeRepository";
+import { HostRepository } from "@rondevu/features/host/repositories/HostRepository";
+import { MembershipRepository } from "@rondevu/features/membership/repositories/MembershipRepository";
+import type { PrismaClient } from "@rondevu/prisma/client";
+import { ErrorWithCode } from "@rondevu/lib/errors";
 
 import type {
   AssignmentChild,

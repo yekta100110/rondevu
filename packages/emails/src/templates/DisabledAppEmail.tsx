@@ -1,6 +1,6 @@
 import type { TFunction } from "i18next";
 
-import { WEBAPP_URL } from "@calcom/lib/constants";
+import { WEBAPP_URL } from "@rondevu/lib/constants";
 
 import { BaseEmailHtml, CallToAction } from "../components";
 

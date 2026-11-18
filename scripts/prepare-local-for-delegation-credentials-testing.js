@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 
 async function main() {
   // Dynamic import for ES module
-  const { FeaturesRepository } = await import("@calcom/features/flags/features.repository");
+  const { FeaturesRepository } = await import("@rondevu/features/flags/features.repository");
   const featuresRepository = new FeaturesRepository(prisma);
   // Parse newEmail from args
   const newEmail = process.argv[2] || "hariom@cal.com";

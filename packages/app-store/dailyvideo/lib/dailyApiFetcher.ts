@@ -1,4 +1,4 @@
-import { handleErrorsJson } from "@calcom/lib/errors";
+import { handleErrorsJson } from "@rondevu/lib/errors";
 
 import { getDailyAppKeys } from "./getDailyAppKeys";
 

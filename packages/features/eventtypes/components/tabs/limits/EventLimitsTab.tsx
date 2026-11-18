@@ -1,24 +1,24 @@
-import { LearnMoreLink } from "@calcom/features/eventtypes/components/LearnMoreLink";
-import { getDefinedBufferTimes } from "@calcom/features/eventtypes/lib/getDefinedBufferTimes";
+import { LearnMoreLink } from "@rondevu/features/eventtypes/components/LearnMoreLink";
+import { getDefinedBufferTimes } from "@rondevu/features/eventtypes/lib/getDefinedBufferTimes";
 import type {
   EventTypeSetupProps,
   FormValues,
   InputClassNames,
   SelectClassNames,
   SettingsToggleClassNames,
-} from "@calcom/features/eventtypes/lib/types";
-import CheckboxField from "@calcom/features/form/components/CheckboxField";
-import { ROLLING_WINDOW_PERIOD_MAX_DAYS_TO_CHECK } from "@calcom/lib/constants";
-import type { DurationType } from "@calcom/lib/convertToNewDurationType";
-import convertToNewDurationType from "@calcom/lib/convertToNewDurationType";
-import findDurationType from "@calcom/lib/findDurationType";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { ascendingLimitKeys, intervalLimitKeyToUnit } from "@calcom/lib/intervalLimits/intervalLimit";
-import type { IntervalLimit } from "@calcom/lib/intervalLimits/intervalLimitSchema";
-import { PeriodType, SchedulingType } from "@calcom/prisma/enums";
-import classNames from "@calcom/ui/classNames";
-import { Badge } from "@calcom/ui/components/badge";
-import { Button } from "@calcom/ui/components/button";
+} from "@rondevu/features/eventtypes/lib/types";
+import CheckboxField from "@rondevu/features/form/components/CheckboxField";
+import { ROLLING_WINDOW_PERIOD_MAX_DAYS_TO_CHECK } from "@rondevu/lib/constants";
+import type { DurationType } from "@rondevu/lib/convertToNewDurationType";
+import convertToNewDurationType from "@rondevu/lib/convertToNewDurationType";
+import findDurationType from "@rondevu/lib/findDurationType";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { ascendingLimitKeys, intervalLimitKeyToUnit } from "@rondevu/lib/intervalLimits/intervalLimit";
+import type { IntervalLimit } from "@rondevu/lib/intervalLimits/intervalLimitSchema";
+import { PeriodType, SchedulingType } from "@rondevu/prisma/enums";
+import classNames from "@rondevu/ui/classNames";
+import { Badge } from "@rondevu/ui/components/badge";
+import { Button } from "@rondevu/ui/components/button";
 import {
   DateRangePicker,
   InputField,
@@ -26,9 +26,9 @@ import {
   Select,
   SettingsToggle,
   TextField,
-} from "@calcom/ui/components/form";
-import { Icon } from "@calcom/ui/components/icon";
-import { Tooltip } from "@calcom/ui/components/tooltip";
+} from "@rondevu/ui/components/form";
+import { Icon } from "@rondevu/ui/components/icon";
+import { Tooltip } from "@rondevu/ui/components/tooltip";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import Link from "next/link";

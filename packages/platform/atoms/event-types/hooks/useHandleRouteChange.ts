@@ -1,10 +1,10 @@
-// eslint-disable-next-line @calcom/eslint/deprecated-imports-next-router
+// eslint-disable-next-line @rondevu/eslint/deprecated-imports-next-router
 import { useEffect } from "react";
 
 import type {
   EventTypeAssignedUsers,
   EventTypeHosts,
-} from "@calcom/features/eventtypes/lib/types";
+} from "@rondevu/features/eventtypes/lib/types";
 
 function checkForEmptyAssignment({
   assignedUsers,

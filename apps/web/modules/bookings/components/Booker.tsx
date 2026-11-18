@@ -1,37 +1,37 @@
 import process from "node:process";
-import BookingPageTagManager from "@calcom/app-store/BookingPageTagManager";
-import { useIsPlatformBookerEmbed } from "@calcom/atoms/hooks/useIsPlatformBookerEmbed";
-import dayjs from "@calcom/dayjs";
-import { useEmbedUiConfig } from "@calcom/embed-core/embed-iframe";
-import { updateEmbedBookerState } from "@calcom/embed-core/src/embed-iframe";
-import { useBookerStoreContext } from "@calcom/features/bookings/Booker/BookerStoreProvider";
+import BookingPageTagManager from "@rondevu/app-store/BookingPageTagManager";
+import { useIsPlatformBookerEmbed } from "@rondevu/atoms/hooks/useIsPlatformBookerEmbed";
+import dayjs from "@rondevu/dayjs";
+import { useEmbedUiConfig } from "@rondevu/embed-core/embed-iframe";
+import { updateEmbedBookerState } from "@rondevu/embed-core/src/embed-iframe";
+import { useBookerStoreContext } from "@rondevu/features/bookings/Booker/BookerStoreProvider";
 import {
   fadeInLeft,
   getBookerSizeClassNames,
   useBookerResizeAnimation,
-} from "@calcom/features/bookings/Booker/config";
-import framerFeatures from "@calcom/features/bookings/Booker/framer-features";
-import type { BookerProps } from "@calcom/features/bookings/Booker/types";
-import { isBookingDryRun } from "@calcom/features/bookings/Booker/utils/isBookingDryRun";
-import { isTimeSlotAvailable } from "@calcom/features/bookings/Booker/utils/isTimeslotAvailable";
-import { getQueryParam } from "@calcom/features/bookings/Booker/utils/query-param";
-import { Header } from "@calcom/features/bookings/components/Header";
-import { BookerSection } from "@calcom/features/bookings/components/Section";
-import { Dialog } from "@calcom/features/components/controlled-dialog";
-import { scrollIntoViewSmooth } from "@calcom/lib/browser/browser.utils";
+} from "@rondevu/features/bookings/Booker/config";
+import framerFeatures from "@rondevu/features/bookings/Booker/framer-features";
+import type { BookerProps } from "@rondevu/features/bookings/Booker/types";
+import { isBookingDryRun } from "@rondevu/features/bookings/Booker/utils/isBookingDryRun";
+import { isTimeSlotAvailable } from "@rondevu/features/bookings/Booker/utils/isTimeslotAvailable";
+import { getQueryParam } from "@rondevu/features/bookings/Booker/utils/query-param";
+import { Header } from "@rondevu/features/bookings/components/Header";
+import { BookerSection } from "@rondevu/features/bookings/components/Section";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
+import { scrollIntoViewSmooth } from "@rondevu/lib/browser/browser.utils";
 import {
   CLOUDFLARE_SITE_ID,
   CLOUDFLARE_USE_TURNSTILE_IN_BOOKER,
   PUBLIC_INVALIDATE_AVAILABLE_SLOTS_ON_BOOKING_FORM,
-} from "@calcom/lib/constants";
-import { useCompatSearchParams } from "@calcom/lib/hooks/useCompatSearchParams";
-import { BookerLayouts } from "@calcom/prisma/zod-utils";
-import classNames from "@calcom/ui/classNames";
-import { DialogContent } from "@calcom/ui/components/dialog";
-import { UnpublishedEntity } from "@calcom/ui/components/unpublished-entity";
-import TurnstileCaptcha from "@calcom/web/modules/auth/components/Turnstile";
-import { useSkipConfirmStep } from "@calcom/web/modules/bookings/hooks/useSkipConfirmStep";
-import { useNonEmptyScheduleDays } from "@calcom/web/modules/schedules/hooks/useNonEmptyScheduleDays";
+} from "@rondevu/lib/constants";
+import { useCompatSearchParams } from "@rondevu/lib/hooks/useCompatSearchParams";
+import { BookerLayouts } from "@rondevu/prisma/zod-utils";
+import classNames from "@rondevu/ui/classNames";
+import { DialogContent } from "@rondevu/ui/components/dialog";
+import { UnpublishedEntity } from "@rondevu/ui/components/unpublished-entity";
+import TurnstileCaptcha from "@rondevu/web/modules/auth/components/Turnstile";
+import { useSkipConfirmStep } from "@rondevu/web/modules/bookings/hooks/useSkipConfirmStep";
+import { useNonEmptyScheduleDays } from "@rondevu/web/modules/schedules/hooks/useNonEmptyScheduleDays";
 import { AnimatePresence, LazyMotion, m } from "framer-motion";
 import { useEffect, useMemo, useRef } from "react";
 import StickyBox from "react-sticky-box";
@@ -185,7 +185,7 @@ const BookerComponent = ({
       timeslotsRef.current &&
       !embedUiConfig.disableAutoScroll
     ) {
-      // eslint-disable-next-line @calcom/eslint/no-scroll-into-view-embed -- We are allowing it here because scrollToTimeSlots is called on explicit user action where it makes sense to scroll, remember that the goal is to not do auto-scroll on embed load because that ends up scrolling the embedding webpage too
+      // eslint-disable-next-line @rondevu/eslint/no-scroll-into-view-embed -- We are allowing it here because scrollToTimeSlots is called on explicit user action where it makes sense to scroll, remember that the goal is to not do auto-scroll on embed load because that ends up scrolling the embedding webpage too
       scrollIntoViewSmooth(timeslotsRef.current, isEmbed);
       scrolledToTimeslotsOnce.current = true;
     }

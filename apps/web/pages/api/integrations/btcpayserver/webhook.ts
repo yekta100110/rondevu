@@ -1,4 +1,4 @@
-export { default } from "@calcom/app-store/btcpayserver/api/webhook";
+export { default } from "@rondevu/app-store/btcpayserver/api/webhook";
 
 export const config = {
   api: {

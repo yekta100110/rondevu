@@ -15,7 +15,7 @@ Technology choices must not seep through the application. The Prisma problem ill
 
 ```typescript
 // In a service file
-import { prisma } from "@calcom/prisma";
+import { prisma } from "@rondevu/prisma";
 
 async function getBooking(id: number) {
   // Direct Prisma usage in service
@@ -30,7 +30,7 @@ async function getBooking(id: number) {
 
 ```typescript
 // In repository file
-import { prisma } from "@calcom/prisma";
+import { prisma } from "@rondevu/prisma";
 
 export class BookingRepository {
   async findById(id: number): Promise<BookingDTO | null> {

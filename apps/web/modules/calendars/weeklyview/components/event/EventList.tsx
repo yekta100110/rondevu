@@ -1,8 +1,8 @@
-import type { Dayjs } from "@calcom/dayjs";
-import { useCalendarStore } from "@calcom/features/calendars/weeklyview/state/store";
-import { getEventSegmentForDay } from "@calcom/features/calendars/weeklyview/utils";
-import { calculateEventLayouts, createLayoutMap } from "@calcom/features/calendars/weeklyview/utils/overlap";
-import classNames from "@calcom/ui/classNames";
+import type { Dayjs } from "@rondevu/dayjs";
+import { useCalendarStore } from "@rondevu/features/calendars/weeklyview/state/store";
+import { getEventSegmentForDay } from "@rondevu/features/calendars/weeklyview/utils";
+import { calculateEventLayouts, createLayoutMap } from "@rondevu/features/calendars/weeklyview/utils/overlap";
+import classNames from "@rondevu/ui/classNames";
 import { useEffect, useMemo, useState } from "react";
 import { shallow } from "zustand/shallow";
 import { Event } from "./Event";

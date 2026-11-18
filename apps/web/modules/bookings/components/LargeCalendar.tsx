@@ -1,15 +1,15 @@
-import dayjs from "@calcom/dayjs";
-import { useBookerStoreContext } from "@calcom/features/bookings/Booker/BookerStoreProvider";
-import { useOverlayCalendarStore } from "@calcom/features/bookings/Booker/components/OverlayCalendar/store";
-import { useAvailableTimeSlots } from "@calcom/features/bookings/Booker/hooks/useAvailableTimeSlots";
-import { useBookerTime } from "@calcom/features/bookings/Booker/hooks/useBookerTime";
-import { getQueryParam } from "@calcom/features/bookings/Booker/utils/query-param";
-import type { BookerEvent } from "@calcom/features/bookings/types";
-import type { CalendarEvent } from "@calcom/features/calendars/weeklyview/types/events";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { localStorage } from "@calcom/lib/webstorage";
-import { Calendar } from "@calcom/web/modules/calendars/weeklyview/components/Calendar";
-import type { useScheduleForEventReturnType } from "@calcom/web/modules/schedules/hooks/useEvent";
+import dayjs from "@rondevu/dayjs";
+import { useBookerStoreContext } from "@rondevu/features/bookings/Booker/BookerStoreProvider";
+import { useOverlayCalendarStore } from "@rondevu/features/bookings/Booker/components/OverlayCalendar/store";
+import { useAvailableTimeSlots } from "@rondevu/features/bookings/Booker/hooks/useAvailableTimeSlots";
+import { useBookerTime } from "@rondevu/features/bookings/Booker/hooks/useBookerTime";
+import { getQueryParam } from "@rondevu/features/bookings/Booker/utils/query-param";
+import type { BookerEvent } from "@rondevu/features/bookings/types";
+import type { CalendarEvent } from "@rondevu/features/calendars/weeklyview/types/events";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { localStorage } from "@rondevu/lib/webstorage";
+import { Calendar } from "@rondevu/web/modules/calendars/weeklyview/components/Calendar";
+import type { useScheduleForEventReturnType } from "@rondevu/web/modules/schedules/hooks/useEvent";
 import { useEffect, useMemo } from "react";
 
 export const LargeCalendar = ({

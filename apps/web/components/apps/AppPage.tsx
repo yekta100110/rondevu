@@ -3,22 +3,22 @@ import { useRouter } from "next/navigation";
 import type { IframeHTMLAttributes } from "react";
 import React, { useEffect, useState } from "react";
 
-import { AppDependencyComponent } from "@calcom/app-store/AppDependencyComponent";
-import { InstallAppButton } from "@calcom/app-store/InstallAppButton";
-import { isRedirectApp } from "@calcom/app-store/_utils/redirectApps";
-import useAddAppMutation from "@calcom/app-store/_utils/useAddAppMutation";
-import { doesAppSupportTeamInstall, isConferencing } from "@calcom/app-store/utils";
-import DisconnectIntegration from "@calcom/web/modules/apps/components/DisconnectIntegration";
-import { AppOnboardingSteps } from "@calcom/lib/apps/appOnboardingSteps";
-import { getAppOnboardingUrl } from "@calcom/lib/apps/getAppOnboardingUrl";
-import { APP_NAME, COMPANY_NAME, SUPPORT_MAIL_ADDRESS, WEBAPP_URL } from "@calcom/lib/constants";
-import { useCompatSearchParams } from "@calcom/lib/hooks/useCompatSearchParams";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc, type RouterOutputs } from "@calcom/trpc/react";
-import type { App as AppType } from "@calcom/types/App";
-import classNames from "@calcom/ui/classNames";
-import { Badge } from "@calcom/ui/components/badge";
-import { Button } from "@calcom/ui/components/button";
+import { AppDependencyComponent } from "@rondevu/app-store/AppDependencyComponent";
+import { InstallAppButton } from "@rondevu/app-store/InstallAppButton";
+import { isRedirectApp } from "@rondevu/app-store/_utils/redirectApps";
+import useAddAppMutation from "@rondevu/app-store/_utils/useAddAppMutation";
+import { doesAppSupportTeamInstall, isConferencing } from "@rondevu/app-store/utils";
+import DisconnectIntegration from "@rondevu/web/modules/apps/components/DisconnectIntegration";
+import { AppOnboardingSteps } from "@rondevu/lib/apps/appOnboardingSteps";
+import { getAppOnboardingUrl } from "@rondevu/lib/apps/getAppOnboardingUrl";
+import { APP_NAME, COMPANY_NAME, SUPPORT_MAIL_ADDRESS, WEBAPP_URL } from "@rondevu/lib/constants";
+import { useCompatSearchParams } from "@rondevu/lib/hooks/useCompatSearchParams";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc, type RouterOutputs } from "@rondevu/trpc/react";
+import type { App as AppType } from "@rondevu/types/App";
+import classNames from "@rondevu/ui/classNames";
+import { Badge } from "@rondevu/ui/components/badge";
+import { Button } from "@rondevu/ui/components/button";
 import {
   BookOpenIcon,
   CircleAlertIcon,
@@ -28,8 +28,8 @@ import {
   MailIcon,
   ShieldIcon,
 } from "@coss/ui/icons";
-import { SkeletonButton, SkeletonText } from "@calcom/ui/components/skeleton";
-import { showToast } from "@calcom/ui/components/toast";
+import { SkeletonButton, SkeletonText } from "@rondevu/ui/components/skeleton";
+import { showToast } from "@rondevu/ui/components/toast";
 
 import { InstallAppButtonChild } from "./InstallAppButtonChild";
 import { MultiDisconnectIntegration } from "./MultiDisconnectIntegration";

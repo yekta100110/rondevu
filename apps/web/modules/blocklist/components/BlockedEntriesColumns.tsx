@@ -3,18 +3,18 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 
-import { Badge } from "@calcom/ui/components/badge";
-import { Button } from "@calcom/ui/components/button";
+import { Badge } from "@rondevu/ui/components/badge";
+import { Button } from "@rondevu/ui/components/button";
 import {
   Dropdown,
   DropdownItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@calcom/ui/components/dropdown";
-import { Checkbox } from "@calcom/ui/components/form";
+} from "@rondevu/ui/components/dropdown";
+import { Checkbox } from "@rondevu/ui/components/form";
 
-import type { BlocklistEntry, BlocklistScope } from "@calcom/features/blocklist/types";
+import type { BlocklistEntry, BlocklistScope } from "@rondevu/features/blocklist/types";
 
 interface UseBlockedEntriesColumnsProps<T extends BlocklistEntry> {
   t: (key: string) => string;

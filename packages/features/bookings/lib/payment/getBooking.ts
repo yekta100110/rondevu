@@ -1,19 +1,19 @@
 import process from "node:process";
-import { enrichUserWithDelegationCredentials } from "@calcom/app-store/delegationCredential";
-import { getCalEventResponses } from "@calcom/features/bookings/lib/getCalEventResponses";
+import { enrichUserWithDelegationCredentials } from "@rondevu/app-store/delegationCredential";
+import { getCalEventResponses } from "@rondevu/features/bookings/lib/getCalEventResponses";
 import {
   type EventTypeBrandingData,
   getEventTypeService,
-} from "@calcom/features/eventtypes/di/EventTypeService.container";
-import { getTranslation } from "@calcom/i18n/server";
-import { HttpError as HttpCode } from "@calcom/lib/http-error";
-import { isPrismaObjOrUndefined } from "@calcom/lib/isPrismaObj";
-import { parseRecurringEvent } from "@calcom/lib/isRecurringEvent";
-import { getTimeFormatStringFromUserTimeFormat } from "@calcom/lib/timeFormat";
-import { bookingMinimalSelect, prisma } from "@calcom/prisma";
-import { credentialForCalendarServiceSelect } from "@calcom/prisma/selects/credential";
-import { EventTypeMetaDataSchema } from "@calcom/prisma/zod-utils";
-import type { CalendarEvent } from "@calcom/types/Calendar";
+} from "@rondevu/features/eventtypes/di/EventTypeService.container";
+import { getTranslation } from "@rondevu/i18n/server";
+import { HttpError as HttpCode } from "@rondevu/lib/http-error";
+import { isPrismaObjOrUndefined } from "@rondevu/lib/isPrismaObj";
+import { parseRecurringEvent } from "@rondevu/lib/isRecurringEvent";
+import { getTimeFormatStringFromUserTimeFormat } from "@rondevu/lib/timeFormat";
+import { bookingMinimalSelect, prisma } from "@rondevu/prisma";
+import { credentialForCalendarServiceSelect } from "@rondevu/prisma/selects/credential";
+import { EventTypeMetaDataSchema } from "@rondevu/prisma/zod-utils";
+import type { CalendarEvent } from "@rondevu/types/Calendar";
 
 const getBookerBaseUrl = async (_orgSlug?: string | number | null): Promise<string> =>
   process.env.NEXT_PUBLIC_WEBAPP_URL || "https://rondevu.org";

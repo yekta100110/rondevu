@@ -1,8 +1,8 @@
 "use client";
 
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Button } from "@calcom/ui/components/button";
-import { showToast } from "@calcom/ui/components/toast";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { Button } from "@rondevu/ui/components/button";
+import { showToast } from "@rondevu/ui/components/toast";
 import { useEffect, useState } from "react";
 
 export function WhatsAppPreferences() {

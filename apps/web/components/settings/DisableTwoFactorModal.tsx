@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { ErrorCode } from "@calcom/features/auth/lib/ErrorCode";
-import { Dialog } from "@calcom/features/components/controlled-dialog";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Button } from "@calcom/ui/components/button";
-import { DialogContent, DialogFooter } from "@calcom/ui/components/dialog";
-import { Form, PasswordField } from "@calcom/ui/components/form";
+import { ErrorCode } from "@rondevu/features/auth/lib/ErrorCode";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { Button } from "@rondevu/ui/components/button";
+import { DialogContent, DialogFooter } from "@rondevu/ui/components/dialog";
+import { Form, PasswordField } from "@rondevu/ui/components/form";
 
 import BackupCode from "@components/auth/BackupCode";
 import TwoFactor from "@components/auth/TwoFactor";

@@ -1,14 +1,14 @@
 {
   "private": true,
-  "name": "@calcom/dailyvideo",
+  "name": "@rondevu/dailyvideo",
   "version": "0.0.0",
   "main": "./index.ts",
   "description": "rOndevu Video is the in-house web-based video conferencing platform powered by Daily.co, which is minimalistic and lightweight, but has most of the features you need.",
   "dependencies": {
-    "@calcom/lib": "workspace:*",
-    "@calcom/prisma": "workspace:*"
+    "@rondevu/lib": "workspace:*",
+    "@rondevu/prisma": "workspace:*"
   },
   "devDependencies": {
-    "@calcom/types": "workspace:*"
+    "@rondevu/types": "workspace:*"
   }
 }

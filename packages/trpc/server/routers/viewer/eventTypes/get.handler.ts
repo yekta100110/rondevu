@@ -1,5 +1,5 @@
-import getEventTypeById from "@calcom/features/eventtypes/lib/getEventTypeById";
-import type { PrismaClient } from "@calcom/prisma";
+import getEventTypeById from "@rondevu/features/eventtypes/lib/getEventTypeById";
+import type { PrismaClient } from "@rondevu/prisma";
 
 import type { TrpcSessionUser } from "../../../types";
 import type { TGetInputSchema } from "./get.schema";

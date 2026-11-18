@@ -1,14 +1,14 @@
 "use client";
 
-import SettingsHeader from "@calcom/features/settings/appDir/SettingsHeader";
-import { APP_NAME } from "@calcom/lib/constants";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
+import SettingsHeader from "@rondevu/features/settings/appDir/SettingsHeader";
+import { APP_NAME } from "@rondevu/lib/constants";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
 import {
   SkeletonButton,
   SkeletonAvatar,
   SkeletonContainer,
   SkeletonText,
-} from "@calcom/ui/components/skeleton";
+} from "@rondevu/ui/components/skeleton";
 
 export const SkeletonLoader = () => {
   const { t } = useLocale();

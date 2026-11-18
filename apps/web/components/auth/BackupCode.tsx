@@ -1,8 +1,8 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
 
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Label, TextField } from "@calcom/ui/components/form";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { Label, TextField } from "@rondevu/ui/components/form";
 
 export default function TwoFactor({ center = true }) {
   const { t } = useLocale();

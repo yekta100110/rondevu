@@ -277,9 +277,9 @@
    - Added `BackgroundGrid` consistent with the login view, feature highlights, and minimal footer.
    - Fixed login flow default redirect from `/` to `/event-types` so logged-in users go straight to their dashboard.
 10. **Build Error Fix (`module-not-found`)** —
-    - Resolved Next.js production build failure in Docker (`yarn --cwd apps/web workspace @calcom/web run build`).
-    - Cause: `apps/web/modules/home/home-view.tsx` had an invalid deep import `@calcom/ui/components/logo/Logo`.
-    - Fix: Changed import to `@calcom/ui/components/logo` to conform to `packages/ui/package.json` exports map.
+    - Resolved Next.js production build failure in Docker (`yarn --cwd apps/web workspace @rondevu/web run build`).
+    - Cause: `apps/web/modules/home/home-view.tsx` had an invalid deep import `@rondevu/ui/components/logo/Logo`.
+    - Fix: Changed import to `@rondevu/ui/components/logo` to conform to `packages/ui/package.json` exports map.
 11. **System Theme Persistence & Initial Dark Mode Support** —
     - Added synchronous blocking script in `apps/web/app/layout.tsx` to detect system prefers-color-scheme immediately before paint and apply `.dark`.
     - Configured `defaultTheme: "system"` in `getThemeProviderProps.ts`.
@@ -339,11 +339,11 @@
       - Updated `VerifyCodeDialog.tsx` to show "Telefon Numaranızı Doğrulayın".
       - Fixed `handleCancelBooking.ts` and `event-cancelled-sms.ts` so organizers cancelling bookings triggers Turkish cancellation SMS to attendee phone numbers.
     - **FAQ Calendar Answer Simplified**: Updated Question 5 in `FaqSection.tsx` to concisely state that bookings are automatically exported to Google Takvim and Apple Calendar.
-24. **Docker Deploy Build Fix (`TS2307: Cannot find module '@calcom/sms/sms-manager'`)** —
-    - Resolved Docker build step `RUN yarn workspace @calcom/trpc run build` failure.
-    - Cause: `packages/features/auth/lib/verifyEmail.ts` was importing `@calcom/sms/sms-manager`, which was not a mapped workspace package in the yarn monorepo.
-    - Fix: Updated line 117 to `await import("@calcom/lib/smsTransport")` where `sendSMS` is exported from the official `@calcom/lib` package.
-    - Verified: `yarn workspace @calcom/trpc run build` completed successfully (exit code 0).
+24. **Docker Deploy Build Fix (`TS2307: Cannot find module '@rondevu/sms/sms-manager'`)** —
+    - Resolved Docker build step `RUN yarn workspace @rondevu/trpc run build` failure.
+    - Cause: `packages/features/auth/lib/verifyEmail.ts` was importing `@rondevu/sms/sms-manager`, which was not a mapped workspace package in the yarn monorepo.
+    - Fix: Updated line 117 to `await import("@rondevu/lib/smsTransport")` where `sendSMS` is exported from the official `@rondevu/lib` package.
+    - Verified: `yarn workspace @rondevu/trpc run build` completed successfully (exit code 0).
 25. **SMS Verification & Notification Infrastructure Overhaul** —
     - Fixed phone-constructed email normalization in `packages/lib/contructEmailFromPhoneNumber.ts` to strictly strip non-digits (`\D/g`), eliminating space-induced format exceptions (`90 552 ...` -> `905521191987@sms.rondevu.org`).
     - Fixed phone number normalization in `packages/lib/smsTransport.ts` for Twilio and Netgsm, eliminating spaces in `normalizePhoneNumber`.
@@ -352,7 +352,7 @@
     - Fixed `getBookingData.ts` to support both `responses.attendeePhoneNumber` and `responses.phone`.
     - Fixed `email-manager.ts`: filters out `@sms.rondevu.org` pseudo-emails from SMTP queues, decouples SMS dispatch via `Promise.allSettled` and isolated try/catch so SMTP errors never block SMS notifications.
     - Fixed `event-scheduled-sms.ts` and `event-rescheduled-sms.ts` with crash-proof Turkish default messages and multi-locale fallback.
-    - Created `packages/sms/package.json` declaring `@calcom/sms` as a monorepo workspace package.
+    - Created `packages/sms/package.json` declaring `@rondevu/sms` as a monorepo workspace package.
     - Updated `BookEventForm.tsx` to display "Telefonu Doğrula" when verifying phone number.
     - Updated `EventAdvancedTab.tsx` so `requiresBookerEmailVerification` toggle title/description dynamically changes to "Telefon (SMS) Doğrulaması" when "Phone" confirmation is active.
     - All 8 SMSManager unit tests passed and lifecycle notifications verified.
@@ -364,7 +364,7 @@
     - Integrated Server-Side Rendering (SSR) in `apps/web/app/(use-page-wrapper)/page.tsx` and `plan-bilgi/page.tsx`: pre-fetches `getPlanContactConfig()` and passes `initialContact` to `HomeView` and `PlanBilgiView` to eliminate initial default flash and seed React Query's `initialData`.
     - Synchronized `AdminFeatureCards.tsx` with `HomeView`: passes `contactConfig` prop down so all contact touchpoints on `/` (Consultation Bar, Feature Card 4, and Footer) are 100% unified.
     - Added Next.js route revalidation in `updatePlanContact.handler.ts` (`revalidatePath("/")`, `revalidatePath("/plan-bilgi")`).
-    - Overhauled `packages/lib/planContactConfig.ts` with named Prisma client import (`import { prisma } from "@calcom/prisma"`), multi-path directory resolution for JSON backups (`apps/web`, root, cwd), resilient `Deployment.theme` parsing, and non-blocking database fallback.
+    - Overhauled `packages/lib/planContactConfig.ts` with named Prisma client import (`import { prisma } from "@rondevu/prisma"`), multi-path directory resolution for JSON backups (`apps/web`, root, cwd), resilient `Deployment.theme` parsing, and non-blocking database fallback.
     - Verified all 5 test scenarios in `test_plan_contact_sync.ts` and confirmed zero TypeScript errors on changed files.
 27. **Homepage Terminology, "Tek Fiyata Premium Erişim" & Mobile Booking Flow Overhaul** —
     - **Hero Title Alignment**: Updated the main headline on `/` (`home-view.tsx`) from *"Herkes için randevu altyapısı"* to *"Herkes için randevu sistemi"*, and aligned `site.webmanifest`.
@@ -397,10 +397,10 @@
       - Created `scheduleReminderSmsTrigger.ts` in booking creation pipeline to enqueue reminders 24h or 2h prior to booking start time.
       - Added cancellation cleanup in `handleCancelBooking.ts` via `tasker.cancelWithReference(booking.uid, "sendSms")`.
       - Updated SMS unit tests in `packages/sms/test/sms-manager.test.ts` (all 8 tests passing).
-29. **Docker Deploy Build Fix (`@calcom/trpc` TS2353 & TS2339)** —
+29. **Docker Deploy Build Fix (`@rondevu/trpc` TS2353 & TS2339)** —
     - Added `smsReminderNumber?: string | null;` to the `CalendarEvent` interface in `packages/types/Calendar.d.ts`.
-    - Added `"@calcom/sms": "workspace:*"` to `dependencies` in `packages/features/package.json` and updated `yarn.lock`.
-    - Verified locally with `yarn workspace @calcom/trpc run build` (both `build:server` and `build:react` compile cleanly with exit code 0).
+    - Added `"@rondevu/sms": "workspace:*"` to `dependencies` in `packages/features/package.json` and updated `yarn.lock`.
+    - Verified locally with `yarn workspace @rondevu/trpc run build` (both `build:server` and `build:react` compile cleanly with exit code 0).
     - Verified with `yarn vitest run packages/sms/test/sms-manager.test.ts` (all 8 tests pass) and Biome check (0 errors).
 30. **Frontend Phone OTP Gate Fix, Legal Pages (/privacy & /tos) and Dynamic SEO Sitemap** —
     - **Phone OTP Verification Gate Interception**:
@@ -420,7 +420,7 @@
     - **Dynamic Sitemap and Robots.txt**:
       - Created `apps/web/app/sitemap.ts` generating `/sitemap.xml` for `/`, `/plan-bilgi`, `/privacy`, `/tos`, `/gizlilik-politikasi`, `/kullanim-kosullari`.
       - Created `apps/web/app/robots.ts` generating `/robots.txt` allowing public routes, disallowing private paths (`/api/`, `/booking/`, `/settings/`, `/event-types/`), and linking the sitemap.
-    - **Verification**: Biome formatting & lint check clean (0 errors), `@calcom/trpc` build passing (0 errors), Vitest tests passing (5/5).
+    - **Verification**: Biome formatting & lint check clean (0 errors), `@rondevu/trpc` build passing (0 errors), Vitest tests passing (5/5).
 31. **Resolution of 6 Critical Gaps in SMS OTP Booking Flow, Legal Pages, and SEO Sitemap** —
     - **Defect 1: State Race Condition on Booking Dispatch Resolved**:
       - Updated `packages/platform/atoms/hooks/bookings/useHandleBookEvent.ts` to support `overrideVerificationCode?: string` and read synchronously from `bookerStoreApi?.getState().verificationCode`.
@@ -448,7 +448,7 @@
       - Upgraded `apps/web/modules/bookings/components/VerifyCodeDialog.tsx` with a 60-second cooldown timer (`resendCooldown`), an active "Tekrar Kod Gönder" resend action, and Turkish UI copy.
       - Implemented thorough dismissal cleanup (`onOpenChange` and `DialogClose`) resetting input `value`, `hasVerified`, `isPending`, `resetErrors()`, and firing `onDismiss?.()`.
       - Connected `onResendCode={handleVerifyEmail}` and `onDismiss` in `apps/web/modules/bookings/components/Booker.tsx`, ensuring the booking form button remains responsive without requiring a page refresh.
-    - **Verification**: All 15 Vitest tests passed, `@calcom/trpc` built cleanly with code 0, Biome checks clean.
+    - **Verification**: All 15 Vitest tests passed, `@rondevu/trpc` built cleanly with code 0, Biome checks clean.
 32. **System-Wide Architectural, Logical, and Security Audit Remediation (CRIT-01 through LOW-02)** —
     - **CRIT-01 (NextAuth Session Privilege Escalation)**: Stripped client-controlled email updates from NextAuth `trigger === "update"`. Anchored session user lookup to immutable user ID (`token.sub`/`token.id`) in `packages/features/auth/lib/next-auth-options.ts`.
     - **CRIT-02 & LOW-01 (Cron Auth Bypass & Timing Attacks)**: Implemented centralized, constant-time `validateCronAuth.ts` rejecting requests if secrets are unconfigured and eliminating the `"Bearer undefined"` vulnerability across tasker and web cron routes (`cron.ts`, `cleanup.ts`, `calendar-subscriptions`, `selected-calendars`, `calendar-subscriptions-cleanup`, `bookingReminder`, `webhookTriggers`).
@@ -460,16 +460,16 @@
     - **MED-01 (Seated Event Concurrency Protection)**: Verified transaction row-level locking (`SELECT ... FOR UPDATE`) is active on the parent booking row in `createNewSeat.ts`.
     - **MED-02 (Plan Contact Configuration Single Source of Truth)**: Made PostgreSQL database persistence authoritative in `planContactConfig.ts`: throws explicit errors on DB failures rather than silently masking them with ephemeral container file backups.
     - **MED-03 (Outgoing Webhook HTTP Timeout Guard)**: Attached `AbortSignal.timeout(10000)` (10 seconds) to outgoing webhook HTTP POST dispatches in `sendPayload.ts` to prevent worker socket starvation.
-    - **Verification**: 25 Vitest tests passed across all 4 suites (100%), `@calcom/trpc` compiles cleanly (0 errors), and Biome code check verified (0 errors).
+    - **Verification**: 25 Vitest tests passed across all 4 suites (100%), `@rondevu/trpc` compiles cleanly (0 errors), and Biome code check verified (0 errors).
 33. **Resolution of SMS OTP Twilio Single-Use Rejection and Stale State Loop** —
     - **Twilio Verify Single-Use Invalidation**: Twilio Verify deletes/consumes the pending verification upon the initial check in `VerifyCodeDialog`, causing `RegularBookingService` during booking creation to receive 404/not approved and throw `invalid_verification_code` ("Geçersiz doğrulama kodu girildi"). Implemented `verifiedPhoneCache` with a 15-minute sliding TTL in `packages/features/auth/lib/phoneVerification.ts` so `RegularBookingService` can verify previously approved phone codes without double-calling Twilio.
     - **Stale State Loop & Lock**: When booking creation failed, `BookerStore.verificationCode` and `verifiedEmail` remained stored, leaving `isVerified: true` and the form button in "Onayla" mode. Clicking it resent the stale code directly to `/api/book/event`. Added state cleanup in `createBookingMutation.onError` and `createRecurringBookingMutation.onError` in `useBookings.ts` to reset `setVerificationCode(null)` and `setVerifiedEmail(null)`, switching the button back to verification mode.
     - **Premature State Set**: Removed premature `setVerificationCode(value)` from `VerifyCodeDialog.tsx` line 121, ensuring only verified codes from `useVerifyCode.onSuccess` enter `BookerStore`.
     - **Resend Invalidation**: Added `clearPhoneVerificationCache(phoneNumber)` when dispatching a new SMS verification in `sendPhoneVerification` and resetting code state on modal dismissal.
 34. **Critical Build Fix: Broken Import in CancelBooking.tsx & Web Build Verification** —
-    - **Broken Module Import Fixed**: In `apps/web/components/booking/CancelBooking.tsx`, fixed line 13 import from non-exported path `@calcom/ui/components/form/inputs/TextField` to valid export `@calcom/ui/components/form` (`import { CheckboxField, Input, Label, Select, TextArea } from "@calcom/ui/components/form"`).
+    - **Broken Module Import Fixed**: In `apps/web/components/booking/CancelBooking.tsx`, fixed line 13 import from non-exported path `@rondevu/ui/components/form/inputs/TextField` to valid export `@rondevu/ui/components/form` (`import { CheckboxField, Input, Label, Select, TextArea } from "@rondevu/ui/components/form"`).
     - **Build Icons Unmatched Files Fix**: In `packages/ui/scripts/build-icons.mjs`, added `--no-errors-on-unmatched` to the Biome format command (`node ${biomeBin} format --write --no-errors-on-unmatched ${filepath}`) so files in `public/` (ignored by `biome.json`) do not throw exit code 1 during build.
-    - **Full Next.js Web Production Build Verified**: Ran `corepack.cmd yarn workspace @calcom/web run build`, successfully compiling and generating all 98 static pages and dynamic routes with Turbopack (`✓ Compiled successfully in 5.2min`, `✓ Generating static pages using 7 workers (98/98) in 6.1s`, exit code 0).
+    - **Full Next.js Web Production Build Verified**: Ran `corepack.cmd yarn workspace @rondevu/web run build`, successfully compiling and generating all 98 static pages and dynamic routes with Turbopack (`✓ Compiled successfully in 5.2min`, `✓ Generating static pages using 7 workers (98/98) in 6.1s`, exit code 0).
     - **Validation**: Biome lint check passed (0 errors), all route pages compiled cleanly.
 35. **SMS Template Compression & GSM 7-bit Sanitization (Twilio Error 30044 Fix)** —
     - **GSM 7-bit Transliteration Helper**: Created `packages/lib/sanitizeSmsText.ts` and re-exported it in `packages/lib/smsTransport.ts` and `packages/sms/sms-transport.ts`. Automatically maps Turkish characters (`ç, Ç, ğ, Ğ, ı, İ, ö, Ö, ş, Ş, ü, Ü`), circumflex vowels (`â, Â, î, Î, û, Û`), smart quotes (`“”, ‘’`), dashes (`–, —`), ellipsis, and diacritics into standard GSM 7-bit ASCII before dispatch in `sendSMS`, preventing UCS-2 Unicode fallback and preserving 160-character per segment capacity.
@@ -570,7 +570,7 @@
     - Overrode Framer's `width: 1px` flex basis on answer text so responses occupy the full FAQ row width and wrap normally.
 
 ## What Was NOT Changed (by design)
-- `@calcom/*` package namespace — internal implementation detail, changing would break 1000s of imports
+- `@rondevu/*` package namespace — internal implementation detail, changing would break 1000s of imports
 - App store config.json files — 3rd party integration descriptions, non-critical
 - Test mock data with cal.com URLs — non-functional
 - README.md — needs full rewrite for rOndevu

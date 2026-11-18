@@ -2,8 +2,8 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 const { findUnique, sendPayload } = vi.hoisted(() => ({ findUnique: vi.fn(), sendPayload: vi.fn() }));
 
-vi.mock("@calcom/prisma", () => ({ prisma: { webhook: { findUnique } } }));
-vi.mock("@calcom/features/webhooks/lib/sendPayload", () => ({ default: sendPayload }));
+vi.mock("@rondevu/prisma", () => ({ prisma: { webhook: { findUnique } } }));
+vi.mock("@rondevu/features/webhooks/lib/sendPayload", () => ({ default: sendPayload }));
 
 import { sendWebhook } from "./sendWebook";
 

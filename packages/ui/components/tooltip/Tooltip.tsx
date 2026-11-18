@@ -1,6 +1,6 @@
 "use client";
 
-import classNames from "@calcom/ui/classNames";
+import classNames from "@rondevu/ui/classNames";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import React from "react";
 

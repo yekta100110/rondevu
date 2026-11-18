@@ -1,1 +1,1 @@
-export * from "@calcom/lib/smsTransport";
+export * from "@rondevu/lib/smsTransport";

@@ -1,7 +1,7 @@
-import type { ConfigType } from "@calcom/dayjs";
-import dayjs from "@calcom/dayjs";
-import type { Availability } from "@calcom/prisma/client";
-import type { Schedule, TimeRange, WorkingHours } from "@calcom/types/schedule";
+import type { ConfigType } from "@rondevu/dayjs";
+import dayjs from "@rondevu/dayjs";
+import type { Availability } from "@rondevu/prisma/client";
+import type { Schedule, TimeRange, WorkingHours } from "@rondevu/types/schedule";
 
 import { nameOfDay } from "./weekday";
 

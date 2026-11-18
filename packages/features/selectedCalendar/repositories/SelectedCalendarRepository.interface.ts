@@ -1,4 +1,4 @@
-import type { Prisma, SelectedCalendar } from "@calcom/prisma/client";
+import type { Prisma, SelectedCalendar } from "@rondevu/prisma/client";
 
 export interface ISelectedCalendarRepository {
   /**

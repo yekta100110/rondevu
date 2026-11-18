@@ -1,9 +1,9 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 
-import { EventTypeRepository } from "@calcom/features/eventtypes/repositories/eventTypeRepository";
-import { readonlyPrisma } from "@calcom/prisma";
+import { EventTypeRepository } from "@rondevu/features/eventtypes/repositories/eventTypeRepository";
+import { readonlyPrisma } from "@rondevu/prisma";
 
-vi.mock("@calcom/prisma", () => ({
+vi.mock("@rondevu/prisma", () => ({
   readonlyPrisma: {
     eventType: {
       findMany: vi.fn(),

@@ -1,5 +1,5 @@
 {
-  "name": "@calcom/prisma",
+  "name": "@rondevu/prisma",
   "version": "0.0.0",
   "private": true,
   "bin": {

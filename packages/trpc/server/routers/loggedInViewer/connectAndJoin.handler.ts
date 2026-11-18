@@ -1,19 +1,19 @@
-import { sendScheduledEmailsAndSMS } from "@calcom/emails/email-manager";
-import { getCalEventResponses } from "@calcom/features/bookings/lib/getCalEventResponses";
-import { scheduleNoShowTriggers } from "@calcom/features/bookings/lib/handleNewBooking/scheduleNoShowTriggers";
+import { sendScheduledEmailsAndSMS } from "@rondevu/emails/email-manager";
+import { getCalEventResponses } from "@rondevu/features/bookings/lib/getCalEventResponses";
+import { scheduleNoShowTriggers } from "@rondevu/features/bookings/lib/handleNewBooking/scheduleNoShowTriggers";
 import {
   type EventTypeBrandingData,
   getEventTypeService,
-} from "@calcom/features/eventtypes/di/EventTypeService.container";
-import { getTranslation } from "@calcom/i18n/server";
-import { isPrismaObjOrUndefined } from "@calcom/lib/isPrismaObj";
-import logger from "@calcom/lib/logger";
-import { getTimeFormatStringFromUserTimeFormat } from "@calcom/lib/timeFormat";
-import { prisma } from "@calcom/prisma";
-import { BookingStatus } from "@calcom/prisma/enums";
-import { bookingMetadataSchema, EventTypeMetaDataSchema } from "@calcom/prisma/zod-utils";
-import type { TrpcSessionUser } from "@calcom/trpc/server/types";
-import type { CalendarEvent } from "@calcom/types/Calendar";
+} from "@rondevu/features/eventtypes/di/EventTypeService.container";
+import { getTranslation } from "@rondevu/i18n/server";
+import { isPrismaObjOrUndefined } from "@rondevu/lib/isPrismaObj";
+import logger from "@rondevu/lib/logger";
+import { getTimeFormatStringFromUserTimeFormat } from "@rondevu/lib/timeFormat";
+import { prisma } from "@rondevu/prisma";
+import { BookingStatus } from "@rondevu/prisma/enums";
+import { bookingMetadataSchema, EventTypeMetaDataSchema } from "@rondevu/prisma/zod-utils";
+import type { TrpcSessionUser } from "@rondevu/trpc/server/types";
+import type { CalendarEvent } from "@rondevu/types/Calendar";
 import { TRPCError } from "@trpc/server";
 import type { TConnectAndJoinInputSchema } from "./connectAndJoin.schema";
 

@@ -1,11 +1,11 @@
 "use client";
 
-import { trpc } from "@calcom/trpc/react";
-import { Badge } from "@calcom/ui/components/badge";
-import { Button } from "@calcom/ui/components/button";
-import { TextField } from "@calcom/ui/components/form";
-import { Icon } from "@calcom/ui/components/icon";
-import { showToast } from "@calcom/ui/components/toast";
+import { trpc } from "@rondevu/trpc/react";
+import { Badge } from "@rondevu/ui/components/badge";
+import { Button } from "@rondevu/ui/components/button";
+import { TextField } from "@rondevu/ui/components/form";
+import { Icon } from "@rondevu/ui/components/icon";
+import { showToast } from "@rondevu/ui/components/toast";
 import { useState } from "react";
 import UsersTable from "./components/UsersTable";
 

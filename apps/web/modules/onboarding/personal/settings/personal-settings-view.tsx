@@ -1,13 +1,13 @@
 "use client";
 
-import { FULL_NAME_LENGTH_MAX_LIMIT } from "@calcom/lib/constants";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc } from "@calcom/trpc/react";
-import { UserAvatar } from "@calcom/ui/components/avatar";
-import { Button } from "@calcom/ui/components/button";
-import { Label, TextArea, TextField } from "@calcom/ui/components/form";
-import { ImageUploader } from "@calcom/ui/components/image-uploader";
-import { showToast } from "@calcom/ui/components/toast";
+import { FULL_NAME_LENGTH_MAX_LIMIT } from "@rondevu/lib/constants";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc } from "@rondevu/trpc/react";
+import { UserAvatar } from "@rondevu/ui/components/avatar";
+import { Button } from "@rondevu/ui/components/button";
+import { Label, TextArea, TextField } from "@rondevu/ui/components/form";
+import { ImageUploader } from "@rondevu/ui/components/image-uploader";
+import { showToast } from "@rondevu/ui/components/toast";
 import { UsernameAvailabilityField } from "@components/ui/UsernameAvailability";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";

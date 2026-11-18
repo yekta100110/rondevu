@@ -3,18 +3,18 @@ import {
   type FilterableColumn,
   type FilterValue,
   ZFilterValue,
-} from "@calcom/features/data-table/lib/types";
+} from "@rondevu/features/data-table/lib/types";
 import {
   isMultiSelectFilterValue,
   isNumberFilterValue,
   isSingleSelectFilterValue,
   isTextFilterValue,
-} from "@calcom/features/data-table/lib/utils";
-import type { FilterType } from "@calcom/types/data-table";
-import { Badge } from "@calcom/ui/components/badge";
-import { Button } from "@calcom/ui/components/button";
-import type { IconName } from "@calcom/ui/components/icon";
-import { Popover, PopoverContent, PopoverTrigger } from "@calcom/ui/components/popover";
+} from "@rondevu/features/data-table/lib/utils";
+import type { FilterType } from "@rondevu/types/data-table";
+import { Badge } from "@rondevu/ui/components/badge";
+import { Button } from "@rondevu/ui/components/button";
+import type { IconName } from "@rondevu/ui/components/icon";
+import { Popover, PopoverContent, PopoverTrigger } from "@rondevu/ui/components/popover";
 import startCase from "lodash/startCase";
 import { useFilterValue } from "~/data-table/hooks";
 import { FilterOptions } from "./FilterOptions";

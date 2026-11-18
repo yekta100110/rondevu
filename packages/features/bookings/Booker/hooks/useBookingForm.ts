@@ -1,10 +1,10 @@
-import type { EventLocationType } from "@calcom/app-store/locations";
-import { useBookerStore } from "@calcom/features/bookings/Booker/store";
-import getBookingResponsesSchema from "@calcom/features/bookings/lib/getBookingResponsesSchema";
-import type { BookerEvent } from "@calcom/features/bookings/types";
-import { contructEmailFromPhoneNumber } from "@calcom/lib/contructEmailFromPhoneNumber";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { isPhoneConfirmationEvent } from "@calcom/lib/isPhoneConfirmationEvent";
+import type { EventLocationType } from "@rondevu/app-store/locations";
+import { useBookerStore } from "@rondevu/features/bookings/Booker/store";
+import getBookingResponsesSchema from "@rondevu/features/bookings/lib/getBookingResponsesSchema";
+import type { BookerEvent } from "@rondevu/features/bookings/types";
+import { contructEmailFromPhoneNumber } from "@rondevu/lib/contructEmailFromPhoneNumber";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { isPhoneConfirmationEvent } from "@rondevu/lib/isPhoneConfirmationEvent";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";

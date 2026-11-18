@@ -1,8 +1,8 @@
 import { describe, expect } from "vitest";
 
-import { APP_NAME } from "@calcom/lib/constants";
-import { buildCalendarEvent } from "@calcom/lib/test/builder";
-import { test } from "@calcom/testing/lib/fixtures/fixtures";
+import { APP_NAME } from "@rondevu/lib/constants";
+import { buildCalendarEvent } from "@rondevu/lib/test/builder";
+import { test } from "@rondevu/testing/lib/fixtures/fixtures";
 
 import getICalUID from "./getICalUID";
 

@@ -1,4 +1,4 @@
-import { createNextApiHandler } from "@calcom/trpc/server/createNextApiHandler";
-import { apiKeysRouter } from "@calcom/trpc/server/routers/viewer/apiKeys/_router";
+import { createNextApiHandler } from "@rondevu/trpc/server/createNextApiHandler";
+import { apiKeysRouter } from "@rondevu/trpc/server/routers/viewer/apiKeys/_router";
 
 export default createNextApiHandler(apiKeysRouter);

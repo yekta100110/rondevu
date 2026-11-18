@@ -1,9 +1,9 @@
-import { getPremiumMonthlyPlanPriceId } from "@calcom/app-store/stripepayment/lib/utils";
-import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
-import { WEBAPP_URL } from "@calcom/lib/constants";
-import { usernameCheck } from "@calcom/lib/server/username";
-import prisma from "@calcom/prisma";
-import type { Prisma } from "@calcom/prisma/client";
+import { getPremiumMonthlyPlanPriceId } from "@rondevu/app-store/stripepayment/lib/utils";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
+import { WEBAPP_URL } from "@rondevu/lib/constants";
+import { usernameCheck } from "@rondevu/lib/server/username";
+import prisma from "@rondevu/prisma";
+import type { Prisma } from "@rondevu/prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import type Stripe from "stripe";
 import { getStripeCustomerIdFromUserId } from "../lib/customer";

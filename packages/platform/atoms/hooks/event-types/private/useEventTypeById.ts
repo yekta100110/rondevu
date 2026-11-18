@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { V2_ENDPOINTS, SUCCESS_STATUS } from "@calcom/platform-constants";
-import type { EventTypeOutput_2024_06_14 } from "@calcom/platform-types";
-import type { ApiResponse, ApiSuccessResponse } from "@calcom/platform-types";
+import { V2_ENDPOINTS, SUCCESS_STATUS } from "@rondevu/platform-constants";
+import type { EventTypeOutput_2024_06_14 } from "@rondevu/platform-types";
+import type { ApiResponse, ApiSuccessResponse } from "@rondevu/platform-types";
 
 import http from "../../../lib/http";
 

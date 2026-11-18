@@ -1,8 +1,8 @@
-import { UserRepository } from "@calcom/features/users/repositories/UserRepository";
-import { extractBaseEmail } from "@calcom/lib/extract-base-email";
-import { getBlacklistedGuestEmails } from "@calcom/lib/getBlacklistedGuestEmails";
-import logger from "@calcom/lib/logger";
-import { prisma } from "@calcom/prisma";
+import { UserRepository } from "@rondevu/features/users/repositories/UserRepository";
+import { extractBaseEmail } from "@rondevu/lib/extract-base-email";
+import { getBlacklistedGuestEmails } from "@rondevu/lib/getBlacklistedGuestEmails";
+import logger from "@rondevu/lib/logger";
+import { prisma } from "@rondevu/prisma";
 import type { TUserEmailVerificationRequiredSchema } from "./checkIfUserEmailVerificationRequired.schema";
 
 const log = logger.getSubLogger({ prefix: ["checkIfUserEmailVerificationRequired"] });

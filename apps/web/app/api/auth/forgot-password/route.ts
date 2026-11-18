@@ -1,9 +1,9 @@
-import { passwordResetRequest } from "@calcom/features/auth/lib/passwordResetRequest";
-import { checkRateLimitAndThrowError } from "@calcom/lib/checkRateLimitAndThrowError";
-import { emailSchema } from "@calcom/lib/emailSchema";
-import getIP from "@calcom/lib/getIP";
-import { piiHasher } from "@calcom/lib/server/PiiHasher";
-import prisma from "@calcom/prisma";
+import { passwordResetRequest } from "@rondevu/features/auth/lib/passwordResetRequest";
+import { checkRateLimitAndThrowError } from "@rondevu/lib/checkRateLimitAndThrowError";
+import { emailSchema } from "@rondevu/lib/emailSchema";
+import getIP from "@rondevu/lib/getIP";
+import { piiHasher } from "@rondevu/lib/server/PiiHasher";
+import prisma from "@rondevu/prisma";
 import { defaultResponderForAppDir } from "app/api/defaultResponderForAppDir";
 import { parseRequestData } from "app/api/parseRequestData";
 import type { NextRequest } from "next/server";

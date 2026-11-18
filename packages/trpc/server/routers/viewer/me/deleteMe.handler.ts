@@ -1,13 +1,13 @@
-import { ErrorCode } from "@calcom/features/auth/lib/ErrorCode";
-import { verifyPassword } from "@calcom/features/auth/lib/verifyPassword";
-import { deleteUser } from "@calcom/features/users/lib/deleteUser";
-import { symmetricDecrypt } from "@calcom/lib/crypto";
-import { isPasswordValid } from "@calcom/lib/auth/isPasswordValid";
-import { HttpError } from "@calcom/lib/http-error";
-import { totpAuthenticatorCheck } from "@calcom/lib/totp";
-import { prisma } from "@calcom/prisma";
-import { IdentityProvider } from "@calcom/prisma/enums";
-import type { TrpcSessionUser } from "@calcom/trpc/server/types";
+import { ErrorCode } from "@rondevu/features/auth/lib/ErrorCode";
+import { verifyPassword } from "@rondevu/features/auth/lib/verifyPassword";
+import { deleteUser } from "@rondevu/features/users/lib/deleteUser";
+import { symmetricDecrypt } from "@rondevu/lib/crypto";
+import { isPasswordValid } from "@rondevu/lib/auth/isPasswordValid";
+import { HttpError } from "@rondevu/lib/http-error";
+import { totpAuthenticatorCheck } from "@rondevu/lib/totp";
+import { prisma } from "@rondevu/prisma";
+import { IdentityProvider } from "@rondevu/prisma/enums";
+import type { TrpcSessionUser } from "@rondevu/trpc/server/types";
 
 import type { TDeleteMeInputSchema } from "./deleteMe.schema";
 

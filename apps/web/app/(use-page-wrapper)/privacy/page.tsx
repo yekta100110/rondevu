@@ -1,5 +1,5 @@
-import { APP_NAME } from "@calcom/lib/constants";
-import { getPlanContactConfig } from "@calcom/lib/planContactConfig";
+import { APP_NAME } from "@rondevu/lib/constants";
+import { getPlanContactConfig } from "@rondevu/lib/planContactConfig";
 import { _generateMetadata } from "app/_utils";
 import type { Metadata } from "next";
 import { PrivacyView } from "~/legal/privacy-view";

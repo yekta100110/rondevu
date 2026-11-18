@@ -1,5 +1,5 @@
-import type { Dayjs } from "@calcom/dayjs";
-import dayjs from "@calcom/dayjs";
+import type { Dayjs } from "@rondevu/dayjs";
+import dayjs from "@rondevu/dayjs";
 import { useOverlayCalendarStore } from "../Booker/components/OverlayCalendar/store";
 
 export function useCheckOverlapWithOverlay({

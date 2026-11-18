@@ -1,23 +1,23 @@
-import dayjs from "@calcom/dayjs";
-import type { EventBusyDetails } from "@calcom/types/Calendar";
+import dayjs from "@rondevu/dayjs";
+import type { EventBusyDetails } from "@rondevu/types/Calendar";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { EventType, GetUserAvailabilityInitialData } from "./getUserAvailability";
 import { UserAvailabilityService } from "./getUserAvailability";
 
-vi.mock("@calcom/features/di/containers/BusyTimes", () => ({
+vi.mock("@rondevu/features/di/containers/BusyTimes", () => ({
   getBusyTimesService: vi.fn(() => mockBusyTimesService),
 }));
 
-vi.mock("@calcom/features/busyTimes/lib/getBusyTimesFromLimits", () => ({
+vi.mock("@rondevu/features/busyTimes/lib/getBusyTimesFromLimits", () => ({
   getBusyTimesFromLimits: vi.fn().mockResolvedValue([]),
   getBusyTimesFromTeamLimits: vi.fn().mockResolvedValue([]),
 }));
 
-vi.mock("@calcom/app-store/_utils/getCalendar", () => ({
+vi.mock("@rondevu/app-store/_utils/getCalendar", () => ({
   getCalendar: vi.fn(),
 }));
 
-vi.mock("@calcom/lib/holidays", () => ({
+vi.mock("@rondevu/lib/holidays", () => ({
   getHolidayService: vi.fn(() => ({
     getHolidayDatesInRange: vi.fn().mockResolvedValue([]),
   })),

@@ -1,6 +1,6 @@
 import dns from "node:dns/promises";
 import process from "node:process";
-import { isBlockedHostname, isPrivateIP } from "@calcom/lib/ssrfProtection";
+import { isBlockedHostname, isPrivateIP } from "@rondevu/lib/ssrfProtection";
 import ipaddr from "ipaddr.js";
 
 export async function validateWebhookDestination(urlString: string, platform = false): Promise<boolean> {

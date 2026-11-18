@@ -2,21 +2,21 @@ import Link from "next/link";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-import dayjs from "@calcom/dayjs";
+import dayjs from "@rondevu/dayjs";
 import type { TApiKeys } from "~/api-keys/api-keys/components/ApiKeyListItem";
-import { API_NAME_LENGTH_MAX_LIMIT } from "@calcom/lib/constants";
-import { IS_CALCOM } from "@calcom/lib/constants";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc } from "@calcom/trpc/react";
-import { Button } from "@calcom/ui/components/button";
-import { DialogFooter } from "@calcom/ui/components/dialog";
-import { Form } from "@calcom/ui/components/form";
-import { TextField } from "@calcom/ui/components/form";
-import { SelectField } from "@calcom/ui/components/form";
-import { Switch } from "@calcom/ui/components/form";
-import { showToast } from "@calcom/ui/components/toast";
-import { Tooltip } from "@calcom/ui/components/tooltip";
-import { revalidateApiKeysList } from "@calcom/web/app/(use-page-wrapper)/settings/(settings-layout)/developer/api-keys/actions";
+import { API_NAME_LENGTH_MAX_LIMIT } from "@rondevu/lib/constants";
+import { IS_CALCOM } from "@rondevu/lib/constants";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc } from "@rondevu/trpc/react";
+import { Button } from "@rondevu/ui/components/button";
+import { DialogFooter } from "@rondevu/ui/components/dialog";
+import { Form } from "@rondevu/ui/components/form";
+import { TextField } from "@rondevu/ui/components/form";
+import { SelectField } from "@rondevu/ui/components/form";
+import { Switch } from "@rondevu/ui/components/form";
+import { showToast } from "@rondevu/ui/components/toast";
+import { Tooltip } from "@rondevu/ui/components/tooltip";
+import { revalidateApiKeysList } from "@rondevu/web/app/(use-page-wrapper)/settings/(settings-layout)/developer/api-keys/actions";
 
 export default function ApiKeyDialogForm({
   defaultValues,

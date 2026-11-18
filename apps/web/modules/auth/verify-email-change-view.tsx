@@ -6,9 +6,9 @@ import { useEffect } from "react";
 import React from "react";
 import { Toaster } from "sonner";
 
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import type { inferSSRProps } from "@calcom/types/inferSSRProps";
-import { showToast } from "@calcom/ui/components/toast";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import type { inferSSRProps } from "@rondevu/types/inferSSRProps";
+import { showToast } from "@rondevu/ui/components/toast";
 
 import type { getServerSideProps } from "@server/lib/auth/verify-email-change/getServerSideProps";
 

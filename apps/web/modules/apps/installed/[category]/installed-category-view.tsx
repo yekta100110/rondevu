@@ -1,26 +1,26 @@
 "use client";
 
-import getAppCategoryTitle from "@calcom/app-store/_utils/getAppCategoryTitle";
-import { AppList, type HandleDisconnect } from "@calcom/features/apps/components/AppList";
-import type { UpdateUsersDefaultConferencingAppParams } from "@calcom/features/apps/components/AppSetDefaultLinkDialog";
-import type { RemoveAppParams } from "@calcom/features/apps/components/DisconnectIntegrationModal";
-import DisconnectIntegrationModal from "@calcom/features/apps/components/DisconnectIntegrationModal";
-import type { BulkUpdatParams } from "@calcom/features/eventtypes/components/BulkEditDefaultForEventsModal";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { AppCategories } from "@calcom/prisma/enums";
-import type { RouterOutputs } from "@calcom/trpc/react";
-import { trpc } from "@calcom/trpc/react";
-import { Button } from "@calcom/ui/components/button";
-import { EmptyScreen } from "@calcom/ui/components/empty-screen";
-import { ShellSubHeading } from "@calcom/ui/components/layout";
-import { showToast } from "@calcom/ui/components/toast";
-import AppListCardWebWrapper from "@calcom/web/modules/apps/components/AppListCardWebWrapper";
-import { SkeletonLoader } from "@calcom/web/modules/apps/components/SkeletonLoader";
+import getAppCategoryTitle from "@rondevu/app-store/_utils/getAppCategoryTitle";
+import { AppList, type HandleDisconnect } from "@rondevu/features/apps/components/AppList";
+import type { UpdateUsersDefaultConferencingAppParams } from "@rondevu/features/apps/components/AppSetDefaultLinkDialog";
+import type { RemoveAppParams } from "@rondevu/features/apps/components/DisconnectIntegrationModal";
+import DisconnectIntegrationModal from "@rondevu/features/apps/components/DisconnectIntegrationModal";
+import type { BulkUpdatParams } from "@rondevu/features/eventtypes/components/BulkEditDefaultForEventsModal";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { AppCategories } from "@rondevu/prisma/enums";
+import type { RouterOutputs } from "@rondevu/trpc/react";
+import { trpc } from "@rondevu/trpc/react";
+import { Button } from "@rondevu/ui/components/button";
+import { EmptyScreen } from "@rondevu/ui/components/empty-screen";
+import { ShellSubHeading } from "@rondevu/ui/components/layout";
+import { showToast } from "@rondevu/ui/components/toast";
+import AppListCardWebWrapper from "@rondevu/web/modules/apps/components/AppListCardWebWrapper";
+import { SkeletonLoader } from "@rondevu/web/modules/apps/components/SkeletonLoader";
 import { CalendarListContainer } from "@components/apps/CalendarListContainer";
 import InstalledAppsLayout from "@components/apps/layouts/InstalledAppsLayout";
 import { QueryCell } from "@lib/QueryCell";
 import { useReducer } from "react";
-import { APP_CATEGORY_ENTRIES, ActiveAppCategoryKeys } from "@calcom/app-store/_utils/getAppCategories";
+import { APP_CATEGORY_ENTRIES, ActiveAppCategoryKeys } from "@rondevu/app-store/_utils/getAppCategories";
 
 interface IntegrationsContainerProps {
   variant?: AppCategories;

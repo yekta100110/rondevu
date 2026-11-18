@@ -1,10 +1,10 @@
-import dayjs from "@calcom/dayjs";
-import { checkDurationLimit, checkDurationLimits } from "@calcom/features/bookings/lib/checkDurationLimits";
-import { validateIntervalLimitOrder } from "@calcom/lib/intervalLimits/validateIntervalLimitOrder";
+import dayjs from "@rondevu/dayjs";
+import { checkDurationLimit, checkDurationLimits } from "@rondevu/features/bookings/lib/checkDurationLimits";
+import { validateIntervalLimitOrder } from "@rondevu/lib/intervalLimits/validateIntervalLimitOrder";
 import { describe, expect, it, vi } from "vitest";
 
 const mockGetTotalBookingDuration = vi.fn();
-vi.mock("@calcom/features/bookings/repositories/BookingRepository", () => ({
+vi.mock("@rondevu/features/bookings/repositories/BookingRepository", () => ({
   BookingRepository: vi.fn().mockImplementation(function () {
     return {
       getTotalBookingDuration: mockGetTotalBookingDuration,
@@ -12,7 +12,7 @@ vi.mock("@calcom/features/bookings/repositories/BookingRepository", () => ({
   }),
 }));
 
-vi.mock("@calcom/prisma", () => ({
+vi.mock("@rondevu/prisma", () => ({
   default: {},
   prisma: {},
 }));

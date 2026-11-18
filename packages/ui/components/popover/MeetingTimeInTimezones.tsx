@@ -4,7 +4,7 @@ import {
   isPreviousDayInTimezone,
   isSupportedTimeZone,
   sortByTimezone,
-} from "@calcom/lib/dayjs";
+} from "@rondevu/lib/dayjs";
 import { GlobeIcon } from "@coss/ui/icons";
 import * as Popover from "@radix-ui/react-popover";
 

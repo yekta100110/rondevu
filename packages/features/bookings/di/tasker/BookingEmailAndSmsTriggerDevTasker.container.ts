@@ -1,5 +1,5 @@
-import { BookingEmailAndSmsTriggerDevTasker } from "@calcom/features/bookings/lib/tasker/BookingEmailAndSmsTriggerTasker";
-import { createContainer } from "@calcom/features/di/di";
+import { BookingEmailAndSmsTriggerDevTasker } from "@rondevu/features/bookings/lib/tasker/BookingEmailAndSmsTriggerTasker";
+import { createContainer } from "@rondevu/features/di/di";
 
 import { moduleLoader as BookingEmailAndSmsTriggerDevTaskerModule } from "./BookingEmailAndSmsTriggerDevTasker.module";
 

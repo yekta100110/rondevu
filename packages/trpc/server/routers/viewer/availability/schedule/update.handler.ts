@@ -1,6 +1,6 @@
-import { updateSchedule } from "@calcom/features/schedules/services/ScheduleService";
-import { prisma } from "@calcom/prisma";
-import type { TrpcSessionUser } from "@calcom/trpc/server/types";
+import { updateSchedule } from "@rondevu/features/schedules/services/ScheduleService";
+import { prisma } from "@rondevu/prisma";
+import type { TrpcSessionUser } from "@rondevu/trpc/server/types";
 
 import type { TUpdateInputSchema } from "./update.schema";
 

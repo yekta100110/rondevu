@@ -1,4 +1,4 @@
-import type { CredentialForCalendarServiceWithTenantId } from "@calcom/types/Credential";
+import type { CredentialForCalendarServiceWithTenantId } from "@rondevu/types/Credential";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import BuildCalendarService from "../CalendarService";
 
@@ -13,7 +13,7 @@ vi.mock("../../../_utils/oauth/oAuthManagerHelper", () => ({
   oAuthManagerHelper: { credentialSyncVariables: {} },
 }));
 vi.mock("../getOfficeAppKeys", () => ({ getOfficeAppKeys: vi.fn() }));
-vi.mock("@calcom/features/webhooks/lib/triggerDelegationCredentialErrorWebhook", () => ({
+vi.mock("@rondevu/features/webhooks/lib/triggerDelegationCredentialErrorWebhook", () => ({
   triggerDelegationCredentialErrorWebhook: vi.fn(),
 }));
 

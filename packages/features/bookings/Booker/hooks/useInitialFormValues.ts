@@ -1,8 +1,8 @@
-import { useBookerStore } from "@calcom/features/bookings/Booker/store";
-import type getBookingResponsesSchema from "@calcom/features/bookings/lib/getBookingResponsesSchema";
-import { getBookingResponsesPartialSchema } from "@calcom/features/bookings/lib/getBookingResponsesSchema";
-import type { BookerEvent } from "@calcom/features/bookings/types";
-import { isPhoneConfirmationEvent } from "@calcom/lib/isPhoneConfirmationEvent";
+import { useBookerStore } from "@rondevu/features/bookings/Booker/store";
+import type getBookingResponsesSchema from "@rondevu/features/bookings/lib/getBookingResponsesSchema";
+import { getBookingResponsesPartialSchema } from "@rondevu/features/bookings/lib/getBookingResponsesSchema";
+import type { BookerEvent } from "@rondevu/features/bookings/types";
+import { isPhoneConfirmationEvent } from "@rondevu/lib/isPhoneConfirmationEvent";
 import { useEffect, useState } from "react";
 import type { z } from "zod";
 

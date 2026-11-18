@@ -5,16 +5,16 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
-import { APP_NAME } from "@calcom/lib/constants";
-import { useCompatSearchParams } from "@calcom/lib/hooks/useCompatSearchParams";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc } from "@calcom/trpc/react";
-import useMeQuery from "@calcom/trpc/react/hooks/useMeQuery";
-import { Avatar } from "@calcom/ui/components/avatar";
-import { Button } from "@calcom/ui/components/button";
-import { Select } from "@calcom/ui/components/form";
+import { APP_NAME } from "@rondevu/lib/constants";
+import { useCompatSearchParams } from "@rondevu/lib/hooks/useCompatSearchParams";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc } from "@rondevu/trpc/react";
+import useMeQuery from "@rondevu/trpc/react/hooks/useMeQuery";
+import { Avatar } from "@rondevu/ui/components/avatar";
+import { Button } from "@rondevu/ui/components/button";
+import { Select } from "@rondevu/ui/components/form";
 import { InfoIcon, PlusIcon } from "@coss/ui/icons";
-import { Tooltip } from "@calcom/ui/components/tooltip";
+import { Tooltip } from "@rondevu/ui/components/tooltip";
 
 export function Authorize() {
   const { t } = useLocale();

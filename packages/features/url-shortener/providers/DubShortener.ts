@@ -1,5 +1,5 @@
-import { dub } from "@calcom/features/auth/lib/dub";
-import logger from "@calcom/lib/logger";
+import { dub } from "@rondevu/features/auth/lib/dub";
+import logger from "@rondevu/lib/logger";
 import type { IUrlShortenerProvider, ShortenOptions, ShortenResult } from "../IUrlShortenerProvider";
 
 const log = logger.getSubLogger({ prefix: ["dub-shortener"] });

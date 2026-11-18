@@ -1,9 +1,9 @@
 "use client";
 
-import { trpc } from "@calcom/trpc/react";
-import { Button } from "@calcom/ui/components/button";
-import { TextField } from "@calcom/ui/components/form";
-import { showToast } from "@calcom/ui/components/toast";
+import { trpc } from "@rondevu/trpc/react";
+import { Button } from "@rondevu/ui/components/button";
+import { TextField } from "@rondevu/ui/components/form";
+import { showToast } from "@rondevu/ui/components/toast";
 import { Mail, MessageCircle, Phone, ShieldCheck } from "lucide-react";
 import { useEffect, useState } from "react";
 

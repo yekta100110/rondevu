@@ -4,16 +4,16 @@ import {
   currencyOptions,
   currencySymbols,
   isAcceptedCurrencyCode,
-} from "@calcom/app-store/paypal/lib/currencyOptions";
-import type { EventTypeAppSettingsComponent } from "@calcom/app-store/types";
+} from "@rondevu/app-store/paypal/lib/currencyOptions";
+import type { EventTypeAppSettingsComponent } from "@rondevu/app-store/types";
 import {
   convertToSmallestCurrencyUnit,
   convertFromSmallestToPresentableCurrencyUnit,
-} from "@calcom/lib/currencyConversions";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Alert } from "@calcom/ui/components/alert";
-import { Select } from "@calcom/ui/components/form";
-import { TextField } from "@calcom/ui/components/form";
+} from "@rondevu/lib/currencyConversions";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { Alert } from "@rondevu/ui/components/alert";
+import { Select } from "@rondevu/ui/components/form";
+import { TextField } from "@rondevu/ui/components/form";
 
 import { PaypalPaymentOptions as paymentOptions } from "../zod";
 

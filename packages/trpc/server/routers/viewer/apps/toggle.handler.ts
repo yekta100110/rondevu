@@ -1,8 +1,8 @@
-import { getLocalAppMetadata } from "@calcom/app-store/utils";
-import { sendDisabledAppEmail } from "@calcom/emails/integration-email-service";
-import { getTranslation } from "@calcom/i18n/server";
-import type { PrismaClient } from "@calcom/prisma";
-import { AppCategories } from "@calcom/prisma/enums";
+import { getLocalAppMetadata } from "@rondevu/app-store/utils";
+import { sendDisabledAppEmail } from "@rondevu/emails/integration-email-service";
+import { getTranslation } from "@rondevu/i18n/server";
+import type { PrismaClient } from "@rondevu/prisma";
+import { AppCategories } from "@rondevu/prisma/enums";
 
 import { TRPCError } from "@trpc/server";
 

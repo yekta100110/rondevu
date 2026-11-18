@@ -1,6 +1,6 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 
-import type { ICalendarCacheEventRepository } from "@calcom/features/calendar-subscription/lib/cache/CalendarCacheEventRepository.interface";
+import type { ICalendarCacheEventRepository } from "@rondevu/features/calendar-subscription/lib/cache/CalendarCacheEventRepository.interface";
 import type {
   Calendar,
   CalendarEvent,
@@ -8,7 +8,7 @@ import type {
   EventBusyDate,
   IntegrationCalendar,
   NewCalendarEventType,
-} from "@calcom/types/Calendar";
+} from "@rondevu/types/Calendar";
 
 import { CalendarCacheWrapper } from "../CalendarCacheWrapper";
 

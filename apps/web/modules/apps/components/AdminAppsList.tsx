@@ -1,27 +1,27 @@
 "use client";
 
-import AppCategoryNavigation from "@calcom/app-store/_components/AppCategoryNavigation";
-import { appKeysSchemas } from "@calcom/app-store/apps.keys-schemas.generated";
-import { Dialog } from "@calcom/features/components/controlled-dialog";
-import { useCompatSearchParams } from "@calcom/lib/hooks/useCompatSearchParams";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { AppCategories } from "@calcom/prisma/enums";
-import type { RouterOutputs } from "@calcom/trpc/react";
-import { trpc } from "@calcom/trpc/react";
-import cs from "@calcom/ui/classNames";
-import { Button } from "@calcom/ui/components/button";
+import AppCategoryNavigation from "@rondevu/app-store/_components/AppCategoryNavigation";
+import { appKeysSchemas } from "@rondevu/app-store/apps.keys-schemas.generated";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
+import { useCompatSearchParams } from "@rondevu/lib/hooks/useCompatSearchParams";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { AppCategories } from "@rondevu/prisma/enums";
+import type { RouterOutputs } from "@rondevu/trpc/react";
+import { trpc } from "@rondevu/trpc/react";
+import cs from "@rondevu/ui/classNames";
+import { Button } from "@rondevu/ui/components/button";
 import {
   ConfirmationDialogContent,
   DialogClose,
   DialogContent,
   DialogFooter,
-} from "@calcom/ui/components/dialog";
-import { EmptyScreen } from "@calcom/ui/components/empty-screen";
-import { Form, Switch, TextField } from "@calcom/ui/components/form";
-import { List } from "@calcom/ui/components/list";
-import { SkeletonButton, SkeletonContainer, SkeletonText } from "@calcom/ui/components/skeleton";
-import { showToast } from "@calcom/ui/components/toast";
-import AppListCardWebWrapper from "@calcom/web/modules/apps/components/AppListCardWebWrapper";
+} from "@rondevu/ui/components/dialog";
+import { EmptyScreen } from "@rondevu/ui/components/empty-screen";
+import { Form, Switch, TextField } from "@rondevu/ui/components/form";
+import { List } from "@rondevu/ui/components/list";
+import { SkeletonButton, SkeletonContainer, SkeletonText } from "@rondevu/ui/components/skeleton";
+import { showToast } from "@rondevu/ui/components/toast";
+import AppListCardWebWrapper from "@rondevu/web/modules/apps/components/AppListCardWebWrapper";
 import { PencilIcon } from "@coss/ui/icons";
 import { zodResolver } from "@hookform/resolvers/zod";
 // eslint-disable-next-line no-restricted-imports

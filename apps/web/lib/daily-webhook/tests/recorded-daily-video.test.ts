@@ -6,15 +6,15 @@ import {
   getOrganizer,
   getScenarioData,
   TestData,
-} from "@calcom/testing/lib/bookingScenario/bookingScenario";
+} from "@rondevu/testing/lib/bookingScenario/bookingScenario";
 import process from "node:process";
-import { appStoreMetadata } from "@calcom/app-store/apps.metadata.generated";
-import { getBatchProcessorJobAccessLink, getRoomNameFromRecordingId } from "@calcom/app-store/dailyvideo/lib";
-import { WEBAPP_URL } from "@calcom/lib/constants";
-import prisma from "@calcom/prisma";
-import { BookingStatus, WebhookTriggerEvents } from "@calcom/prisma/enums";
-import { expectWebhookToHaveBeenCalledWith } from "@calcom/testing/lib/bookingScenario/expects";
-import * as recordedDailyVideoRoute from "@calcom/web/app/api/recorded-daily-video/route";
+import { appStoreMetadata } from "@rondevu/app-store/apps.metadata.generated";
+import { getBatchProcessorJobAccessLink, getRoomNameFromRecordingId } from "@rondevu/app-store/dailyvideo/lib";
+import { WEBAPP_URL } from "@rondevu/lib/constants";
+import prisma from "@rondevu/prisma";
+import { BookingStatus, WebhookTriggerEvents } from "@rondevu/prisma/enums";
+import { expectWebhookToHaveBeenCalledWith } from "@rondevu/testing/lib/bookingScenario/expects";
+import * as recordedDailyVideoRoute from "@rondevu/web/app/api/recorded-daily-video/route";
 import { NextRequest } from "next/server";
 import { createMocks } from "node-mocks-http";
 import { afterEach, beforeAll, beforeEach, describe, expect, test, vi } from "vitest";
@@ -61,14 +61,14 @@ beforeAll(() => {
   vi.stubEnv("SENDGRID_EMAIL", "FAKE_SENDGRID_EMAIL");
 });
 
-vi.mock("@calcom/app-store/dailyvideo/lib", () => {
+vi.mock("@rondevu/app-store/dailyvideo/lib", () => {
   return {
     getRoomNameFromRecordingId: vi.fn(),
     getBatchProcessorJobAccessLink: vi.fn(),
   };
 });
 
-vi.mock("@calcom/lib/videoTokens", () => {
+vi.mock("@rondevu/lib/videoTokens", () => {
   return {
     generateVideoToken: vi.fn().mockReturnValue("MOCK_TOKEN"),
   };

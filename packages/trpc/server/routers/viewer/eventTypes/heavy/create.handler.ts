@@ -1,10 +1,10 @@
-import { getDefaultLocations } from "@calcom/app-store/_utils/getDefaultLocations";
-import { DailyLocationType } from "@calcom/app-store/constants";
-import { EventTypeRepository } from "@calcom/features/eventtypes/repositories/eventTypeRepository";
-import type { PrismaClient } from "@calcom/prisma";
-import { Prisma } from "@calcom/prisma/client";
-import { MembershipRole, SchedulingType } from "@calcom/prisma/enums";
-import type { eventTypeLocations } from "@calcom/prisma/zod-utils";
+import { getDefaultLocations } from "@rondevu/app-store/_utils/getDefaultLocations";
+import { DailyLocationType } from "@rondevu/app-store/constants";
+import { EventTypeRepository } from "@rondevu/features/eventtypes/repositories/eventTypeRepository";
+import type { PrismaClient } from "@rondevu/prisma";
+import { Prisma } from "@rondevu/prisma/client";
+import { MembershipRole, SchedulingType } from "@rondevu/prisma/enums";
+import type { eventTypeLocations } from "@rondevu/prisma/zod-utils";
 import { TRPCError } from "@trpc/server";
 import type { z } from "zod";
 import type { TrpcSessionUser } from "../../../../types";

@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 
-import { BookingEmailAndSmsTaskService } from "@calcom/features/bookings/lib/tasker/BookingEmailAndSmsTaskService";
-import type { ITaskerDependencies } from "@calcom/lib/tasker/types";
+import { BookingEmailAndSmsTaskService } from "@rondevu/features/bookings/lib/tasker/BookingEmailAndSmsTaskService";
+import type { ITaskerDependencies } from "@rondevu/lib/tasker/types";
 
 import { IBookingEmailAndSmsTasker } from "./types";
 

@@ -2,13 +2,13 @@ import type {
   DefaultEventLocationType,
   EventLocationTypeFromApp,
   LocationObject,
-} from "@calcom/app-store/locations";
-import { getLocationByType, getTranslatedLocation } from "@calcom/app-store/locations";
-import { useIsPlatform } from "@calcom/atoms/hooks/useIsPlatform";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import invertLogoOnDark from "@calcom/lib/invertLogoOnDark";
-import classNames from "@calcom/ui/classNames";
-import { Tooltip } from "@calcom/ui/components/tooltip";
+} from "@rondevu/app-store/locations";
+import { getLocationByType, getTranslatedLocation } from "@rondevu/app-store/locations";
+import { useIsPlatform } from "@rondevu/atoms/hooks/useIsPlatform";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import invertLogoOnDark from "@rondevu/lib/invertLogoOnDark";
+import classNames from "@rondevu/ui/classNames";
+import { Tooltip } from "@rondevu/ui/components/tooltip";
 import { LinkIcon, MapPinIcon } from "@coss/ui/icons";
 
 const excludeNullValues = (value: unknown) => !!value;

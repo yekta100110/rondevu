@@ -1,10 +1,10 @@
 import process from "node:process";
-import { DEFAULT_WEBHOOK_VERSION } from "@calcom/features/webhooks/lib/interface/IWebhookRepository";
-import type { EventPayloadType } from "@calcom/features/webhooks/lib/sendPayload";
-import sendPayload from "@calcom/features/webhooks/lib/sendPayload";
-import { validateWebhookDestination } from "@calcom/features/webhooks/lib/validateWebhookDestination";
-import { getTranslation } from "@calcom/i18n/server";
-import type { TrpcSessionUser } from "@calcom/trpc/server/types";
+import { DEFAULT_WEBHOOK_VERSION } from "@rondevu/features/webhooks/lib/interface/IWebhookRepository";
+import type { EventPayloadType } from "@rondevu/features/webhooks/lib/sendPayload";
+import sendPayload from "@rondevu/features/webhooks/lib/sendPayload";
+import { validateWebhookDestination } from "@rondevu/features/webhooks/lib/validateWebhookDestination";
+import { getTranslation } from "@rondevu/i18n/server";
+import type { TrpcSessionUser } from "@rondevu/trpc/server/types";
 import type { TTestTriggerInputSchema } from "./testTrigger.schema";
 
 type TestTriggerOptions = {

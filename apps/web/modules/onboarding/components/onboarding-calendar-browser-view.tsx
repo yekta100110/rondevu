@@ -4,11 +4,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 
-import dayjs from "@calcom/dayjs";
-import { Calendar } from "@calcom/web/modules/calendars/weeklyview/components/Calendar";
-import type { CalendarComponentProps, Hours } from "@calcom/features/calendars/weeklyview/types/state";
-import { weekdayDates } from "@calcom/features/calendars/weeklyview/utils";
-import { CURRENT_TIMEZONE } from "@calcom/lib/timezoneConstants";
+import dayjs from "@rondevu/dayjs";
+import { Calendar } from "@rondevu/web/modules/calendars/weeklyview/components/Calendar";
+import type { CalendarComponentProps, Hours } from "@rondevu/features/calendars/weeklyview/types/state";
+import { weekdayDates } from "@rondevu/features/calendars/weeklyview/utils";
+import { CURRENT_TIMEZONE } from "@rondevu/lib/timezoneConstants";
 
 import { useOnboardingCalendarEvents } from "../hooks/useOnboardingCalendarEvents";
 

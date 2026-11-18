@@ -1,4 +1,4 @@
-import { WEBAPP_URL } from "@calcom/lib/constants";
+import { WEBAPP_URL } from "@rondevu/lib/constants";
 
 export function isSameOriginRequest(request: Request): boolean {
   const origin = request.headers.get("origin");

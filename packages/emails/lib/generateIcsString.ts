@@ -3,12 +3,12 @@ import type { DateArray, ParticipationRole, EventStatus, ParticipationStatus } f
 import { createEvent } from "ics";
 import { RRule } from "rrule";
 
-import { getRichDescription } from "@calcom/lib/CalEventParser";
-import { getVideoCallUrlFromCalEvent } from "@calcom/lib/CalEventParser";
-import { ORGANIZER_EMAIL_EXEMPT_DOMAINS } from "@calcom/lib/constants";
-import { ErrorCode } from "@calcom/lib/errorCodes";
-import { ErrorWithCode } from "@calcom/lib/errors";
-import type { CalendarEvent, Person } from "@calcom/types/Calendar";
+import { getRichDescription } from "@rondevu/lib/CalEventParser";
+import { getVideoCallUrlFromCalEvent } from "@rondevu/lib/CalEventParser";
+import { ORGANIZER_EMAIL_EXEMPT_DOMAINS } from "@rondevu/lib/constants";
+import { ErrorCode } from "@rondevu/lib/errorCodes";
+import { ErrorWithCode } from "@rondevu/lib/errors";
+import type { CalendarEvent, Person } from "@rondevu/types/Calendar";
 
 export enum BookingAction {
   Create = "create",

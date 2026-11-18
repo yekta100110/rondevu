@@ -1,46 +1,46 @@
 import process from "node:process";
-import { DailyLocationType } from "@calcom/app-store/constants";
-import { FAKE_DAILY_CREDENTIAL } from "@calcom/app-store/dailyvideo/lib/VideoApiAdapter";
-import { eventTypeMetaDataSchemaWithTypedApps } from "@calcom/app-store/zod-utils";
-import dayjs from "@calcom/dayjs";
-import { sendCancelledEmailsAndSMS } from "@calcom/emails/email-manager";
-import { BookingReferenceRepository } from "@calcom/features/bookingReference/repositories/BookingReferenceRepository";
-import EventManager from "@calcom/features/bookings/lib/EventManager";
-import { getCalEventResponses } from "@calcom/features/bookings/lib/getCalEventResponses";
-import { processNoShowFeeOnCancellation } from "@calcom/features/bookings/lib/payment/processNoShowFeeOnCancellation";
-import { processPaymentRefund } from "@calcom/features/bookings/lib/payment/processPaymentRefund";
+import { DailyLocationType } from "@rondevu/app-store/constants";
+import { FAKE_DAILY_CREDENTIAL } from "@rondevu/app-store/dailyvideo/lib/VideoApiAdapter";
+import { eventTypeMetaDataSchemaWithTypedApps } from "@rondevu/app-store/zod-utils";
+import dayjs from "@rondevu/dayjs";
+import { sendCancelledEmailsAndSMS } from "@rondevu/emails/email-manager";
+import { BookingReferenceRepository } from "@rondevu/features/bookingReference/repositories/BookingReferenceRepository";
+import EventManager from "@rondevu/features/bookings/lib/EventManager";
+import { getCalEventResponses } from "@rondevu/features/bookings/lib/getCalEventResponses";
+import { processNoShowFeeOnCancellation } from "@rondevu/features/bookings/lib/payment/processNoShowFeeOnCancellation";
+import { processPaymentRefund } from "@rondevu/features/bookings/lib/payment/processPaymentRefund";
 import {
   type EventTypeBrandingData,
   getEventTypeService,
-} from "@calcom/features/eventtypes/di/EventTypeService.container";
-import tasker from "@calcom/features/tasker";
-import { UserRepository } from "@calcom/features/users/repositories/UserRepository";
-import type { GetSubscriberOptions } from "@calcom/features/webhooks/lib/getWebhooks";
-import getWebhooks from "@calcom/features/webhooks/lib/getWebhooks";
+} from "@rondevu/features/eventtypes/di/EventTypeService.container";
+import tasker from "@rondevu/features/tasker";
+import { UserRepository } from "@rondevu/features/users/repositories/UserRepository";
+import type { GetSubscriberOptions } from "@rondevu/features/webhooks/lib/getWebhooks";
+import getWebhooks from "@rondevu/features/webhooks/lib/getWebhooks";
 import {
   cancelNoShowTasksForBooking,
   deleteWebhookScheduledTriggers,
-} from "@calcom/features/webhooks/lib/scheduleTrigger";
-import sendPayload from "@calcom/features/webhooks/lib/sendOrSchedulePayload";
-import type { EventTypeInfo } from "@calcom/features/webhooks/lib/sendPayload";
-import { getTranslation } from "@calcom/i18n/server";
-import { contructEmailFromPhoneNumber } from "@calcom/lib/contructEmailFromPhoneNumber";
-import { HttpError } from "@calcom/lib/http-error";
-import { isPrismaObjOrUndefined } from "@calcom/lib/isPrismaObj";
-import { parseRecurringEvent } from "@calcom/lib/isRecurringEvent";
-import isSmsCalEmail from "@calcom/lib/isSmsCalEmail";
-import logger from "@calcom/lib/logger";
-import { normalizePhoneNumber } from "@calcom/lib/normalizePhoneNumber";
-import { safeStringify } from "@calcom/lib/safeStringify";
-import { isPrismaError } from "@calcom/lib/server/getServerErrorFromUnknown";
-import { getTimeFormatStringFromUserTimeFormat } from "@calcom/lib/timeFormat";
+} from "@rondevu/features/webhooks/lib/scheduleTrigger";
+import sendPayload from "@rondevu/features/webhooks/lib/sendOrSchedulePayload";
+import type { EventTypeInfo } from "@rondevu/features/webhooks/lib/sendPayload";
+import { getTranslation } from "@rondevu/i18n/server";
+import { contructEmailFromPhoneNumber } from "@rondevu/lib/contructEmailFromPhoneNumber";
+import { HttpError } from "@rondevu/lib/http-error";
+import { isPrismaObjOrUndefined } from "@rondevu/lib/isPrismaObj";
+import { parseRecurringEvent } from "@rondevu/lib/isRecurringEvent";
+import isSmsCalEmail from "@rondevu/lib/isSmsCalEmail";
+import logger from "@rondevu/lib/logger";
+import { normalizePhoneNumber } from "@rondevu/lib/normalizePhoneNumber";
+import { safeStringify } from "@rondevu/lib/safeStringify";
+import { isPrismaError } from "@rondevu/lib/server/getServerErrorFromUnknown";
+import { getTimeFormatStringFromUserTimeFormat } from "@rondevu/lib/timeFormat";
 // TODO: Prisma import would be used from DI in a followup PR when we remove `handler` export
-import prisma from "@calcom/prisma";
-import type { WebhookTriggerEvents } from "@calcom/prisma/enums";
-import { BookingStatus } from "@calcom/prisma/enums";
-import type { EventTypeMetadata } from "@calcom/prisma/zod-utils";
-import { bookingCancelInput } from "@calcom/prisma/zod-utils";
-import type { CalendarEvent } from "@calcom/types/Calendar";
+import prisma from "@rondevu/prisma";
+import type { WebhookTriggerEvents } from "@rondevu/prisma/enums";
+import { BookingStatus } from "@rondevu/prisma/enums";
+import type { EventTypeMetadata } from "@rondevu/prisma/zod-utils";
+import { bookingCancelInput } from "@rondevu/prisma/zod-utils";
+import type { CalendarEvent } from "@rondevu/types/Calendar";
 import type { z } from "zod";
 import { BookingRepository } from "../repositories/BookingRepository";
 import { PrismaBookingAttendeeRepository } from "../repositories/PrismaBookingAttendeeRepository";

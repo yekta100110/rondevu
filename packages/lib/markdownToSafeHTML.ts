@@ -1,4 +1,4 @@
-import { md } from "@calcom/lib/markdownIt";
+import { md } from "@rondevu/lib/markdownIt";
 import sanitizeHtml from "sanitize-html";
 
 if (typeof window !== "undefined") {

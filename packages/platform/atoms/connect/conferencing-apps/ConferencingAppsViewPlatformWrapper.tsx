@@ -1,24 +1,24 @@
 "use client";
 
-import AccountDialog from "@calcom/app-store/office365video/components/AccountDialog";
-import { AppList } from "@calcom/features/apps/components/AppList";
-import type { UpdateUsersDefaultConferencingAppParams } from "@calcom/features/apps/components/AppSetDefaultLinkDialog";
-import DisconnectIntegrationModal from "@calcom/features/apps/components/DisconnectIntegrationModal";
-import type { BulkUpdatParams } from "@calcom/features/eventtypes/components/BulkEditDefaultForEventsModal";
-import SettingsHeader from "@calcom/features/settings/appDir/SettingsHeader";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { GOOGLE_MEET, OFFICE_365_VIDEO, ZOOM } from "@calcom/platform-constants";
-import type { App } from "@calcom/types/App";
-import { Button } from "@calcom/ui/components/button";
+import AccountDialog from "@rondevu/app-store/office365video/components/AccountDialog";
+import { AppList } from "@rondevu/features/apps/components/AppList";
+import type { UpdateUsersDefaultConferencingAppParams } from "@rondevu/features/apps/components/AppSetDefaultLinkDialog";
+import DisconnectIntegrationModal from "@rondevu/features/apps/components/DisconnectIntegrationModal";
+import type { BulkUpdatParams } from "@rondevu/features/eventtypes/components/BulkEditDefaultForEventsModal";
+import SettingsHeader from "@rondevu/features/settings/appDir/SettingsHeader";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { GOOGLE_MEET, OFFICE_365_VIDEO, ZOOM } from "@rondevu/platform-constants";
+import type { App } from "@rondevu/types/App";
+import { Button } from "@rondevu/ui/components/button";
 import {
   Dropdown,
   DropdownItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@calcom/ui/components/dropdown";
-import { EmptyScreen } from "@calcom/ui/components/empty-screen";
-import { SkeletonContainer, SkeletonText } from "@calcom/ui/components/skeleton";
+} from "@rondevu/ui/components/dropdown";
+import { EmptyScreen } from "@rondevu/ui/components/empty-screen";
+import { SkeletonContainer, SkeletonText } from "@rondevu/ui/components/skeleton";
 import { useQueryClient } from "@tanstack/react-query";
 import { useReducer, useState } from "react";
 import { AtomsWrapper } from "../../src/components/atoms-wrapper";

@@ -1,11 +1,11 @@
 import React from "react";
 
-import dayjs from "@calcom/dayjs";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import classNames from "@calcom/ui/classNames";
+import dayjs from "@rondevu/dayjs";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import classNames from "@rondevu/ui/classNames";
 
-import { useCalendarStore } from "@calcom/features/calendars/weeklyview/state/store";
-import type { BorderColor } from "@calcom/features/calendars/weeklyview/types/common";
+import { useCalendarStore } from "@rondevu/features/calendars/weeklyview/state/store";
+import type { BorderColor } from "@rondevu/features/calendars/weeklyview/types/common";
 
 type Props = {
   showBorder: boolean;

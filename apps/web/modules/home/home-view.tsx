@@ -1,7 +1,7 @@
 "use client";
 
-import type { PlanContactConfig } from "@calcom/lib/planContactConfig";
-import { trpc } from "@calcom/trpc/react";
+import type { PlanContactConfig } from "@rondevu/lib/planContactConfig";
+import { trpc } from "@rondevu/trpc/react";
 import { useRouter } from "next/navigation";
 import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { MarketingFooter } from "./components/MarketingFooter";

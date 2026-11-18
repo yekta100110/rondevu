@@ -1,4 +1,4 @@
-import { ColumnFilterType } from "@calcom/features/data-table";
+import { ColumnFilterType } from "@rondevu/features/data-table";
 import type { VisibilityState } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 

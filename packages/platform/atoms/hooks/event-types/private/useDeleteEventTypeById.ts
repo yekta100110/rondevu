@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { V2_ENDPOINTS, SUCCESS_STATUS } from "@calcom/platform-constants";
-import type { ApiResponse, ApiSuccessResponse } from "@calcom/platform-types";
-import type { EventType } from "@calcom/prisma/client";
+import { V2_ENDPOINTS, SUCCESS_STATUS } from "@rondevu/platform-constants";
+import type { ApiResponse, ApiSuccessResponse } from "@rondevu/platform-types";
+import type { EventType } from "@rondevu/prisma/client";
 
 import http from "../../../lib/http";
 

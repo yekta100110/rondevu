@@ -1,4 +1,4 @@
-import { mockCrmApp } from "@calcom/testing/lib/bookingScenario/bookingScenario";
+import { mockCrmApp } from "@rondevu/testing/lib/bookingScenario/bookingScenario";
 
 import type { TFunction } from "i18next";
 import { describe, expect, test, vi, afterEach } from "vitest";
@@ -12,11 +12,11 @@ vi.mock("@urql/exchange-retry", () => ({
   retryExchange: vi.fn(),
 }));
 
-import { getCrm } from "@calcom/app-store/_utils/getCrm";
+import { getCrm } from "@rondevu/app-store/_utils/getCrm";
 
 import CrmManager from "./crmManager";
 
-// vi.mock("@calcom/app-store/_utils/getCrm");
+// vi.mock("@rondevu/app-store/_utils/getCrm");
 
 describe.skip("crmManager tests", () => {
   test("Set crmService if not set", async () => {

@@ -1,4 +1,4 @@
-import { post } from "@calcom/lib/fetch-wrapper";
+import { post } from "@rondevu/lib/fetch-wrapper";
 
 import type { RecurringBookingCreateBody, BookingResponse } from "../types";
 

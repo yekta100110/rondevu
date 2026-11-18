@@ -1,4 +1,4 @@
-import { updatePlanContactConfig } from "@calcom/lib/planContactConfig";
+import { updatePlanContactConfig } from "@rondevu/lib/planContactConfig";
 import type { z } from "zod";
 import type { TrpcSessionUser } from "../../../types";
 import type { ZUpdatePlanContactSchema } from "./updatePlanContact.schema";

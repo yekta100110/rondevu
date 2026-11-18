@@ -1,6 +1,6 @@
-import dayjs from "@calcom/dayjs";
-import tasker from "@calcom/features/tasker";
-import logger from "@calcom/lib/logger";
+import dayjs from "@rondevu/dayjs";
+import tasker from "@rondevu/features/tasker";
+import logger from "@rondevu/lib/logger";
 
 const log = logger.getSubLogger({ prefix: ["[scheduleReminderSmsTrigger]"] });
 

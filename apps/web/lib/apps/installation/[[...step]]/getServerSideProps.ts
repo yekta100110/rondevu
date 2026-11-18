@@ -1,19 +1,19 @@
 import type { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import { z } from "zod";
 
-import { createDefaultInstallation } from "@calcom/app-store/_utils/installation";
-import { filterEventTypesWhereLocationUpdateIsAllowed } from "@calcom/app-store/_utils/getBulkEventTypes";
-import { appStoreMetadata } from "@calcom/app-store/appStoreMetaData";
-import type { LocationObject } from "@calcom/app-store/locations";
-import { isConferencing as isConferencingApp } from "@calcom/app-store/utils";
-import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
-import { UserRepository } from "@calcom/features/users/repositories/UserRepository";
-import { AppOnboardingSteps } from "@calcom/lib/apps/appOnboardingSteps";
-import { CAL_URL } from "@calcom/lib/constants";
-import { getPlaceholderAvatar } from "@calcom/lib/defaultAvatarImage";
-import prisma from "@calcom/prisma";
-import { Prisma } from "@calcom/prisma/client";
-import { eventTypeBookingFields } from "@calcom/prisma/zod-utils";
+import { createDefaultInstallation } from "@rondevu/app-store/_utils/installation";
+import { filterEventTypesWhereLocationUpdateIsAllowed } from "@rondevu/app-store/_utils/getBulkEventTypes";
+import { appStoreMetadata } from "@rondevu/app-store/appStoreMetaData";
+import type { LocationObject } from "@rondevu/app-store/locations";
+import { isConferencing as isConferencingApp } from "@rondevu/app-store/utils";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
+import { UserRepository } from "@rondevu/features/users/repositories/UserRepository";
+import { AppOnboardingSteps } from "@rondevu/lib/apps/appOnboardingSteps";
+import { CAL_URL } from "@rondevu/lib/constants";
+import { getPlaceholderAvatar } from "@rondevu/lib/defaultAvatarImage";
+import prisma from "@rondevu/prisma";
+import { Prisma } from "@rondevu/prisma/client";
+import { eventTypeBookingFields } from "@rondevu/prisma/zod-utils";
 
 import { STEPS } from "../../../../modules/apps/installation/[[...step]]/constants";
 import type {
@@ -293,7 +293,7 @@ const getAppInstallsBySlug = async (
 
 const handleAutoInstall = async (
   user: MinimalUser,
-  appMetadata: import("@calcom/types/App").AppMeta,
+  appMetadata: import("@rondevu/types/App").AppMeta,
   parsedAppSlug: string
 ): Promise<number | null> => {
   try {
@@ -384,7 +384,7 @@ const getAppAndMetadata = async (
   parsedAppSlug: string
 ): Promise<{
   app: { slug: string; keys: Prisma.JsonValue; enabled: boolean; dirName: string } | null;
-  appMetadata: import("@calcom/types/App").AppMeta | null;
+  appMetadata: import("@rondevu/types/App").AppMeta | null;
   redirect?: RedirectResult;
 }> => {
   const app = await getAppBySlug(parsedAppSlug);
@@ -442,7 +442,7 @@ const getCredential = async (
   appInstalls: Prisma.CredentialGetPayload<Record<string, never>>[],
   user: MinimalUser & { teams: MinimalTeam[] },
   initialStep: string,
-  appMetadata: import("@calcom/types/App").AppMeta,
+  appMetadata: import("@rondevu/types/App").AppMeta,
   parsedAppSlug: string
 ): Promise<{ credentialId: number | null; redirect?: RedirectResult }> => {
   let credentialId = getCredentialId(parsedTeamIdParam, appInstalls, user.id);

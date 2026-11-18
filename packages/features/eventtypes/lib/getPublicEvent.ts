@@ -1,20 +1,20 @@
 import process from "node:process";
-import type { LocationObject } from "@calcom/app-store/locations";
-import { privacyFilteredLocations } from "@calcom/app-store/locations";
-import { getAppFromSlug } from "@calcom/app-store/utils";
-import { eventTypeMetaDataSchemaWithTypedApps } from "@calcom/app-store/zod-utils";
-import dayjs from "@calcom/dayjs";
-import { getBookingFieldsWithSystemFields } from "@calcom/features/bookings/lib/getBookingFields";
-import { getDefaultEvent, getUsernameList } from "@calcom/features/eventtypes/lib/defaultEvents";
-import { UserRepository } from "@calcom/features/users/repositories/UserRepository";
-import { getOrgOrTeamAvatar, getPlaceholderAvatar } from "@calcom/lib/defaultAvatarImage";
-import { getUserAvatarUrl } from "@calcom/lib/getAvatarUrl";
-import { isRecurringEvent, parseRecurringEvent } from "@calcom/lib/isRecurringEvent";
-import { markdownToSafeHTML } from "@calcom/lib/markdownToSafeHTML";
-import type { PrismaClient } from "@calcom/prisma";
-import type { Prisma, Team, User as UserType } from "@calcom/prisma/client";
-import { MembershipRole } from "@calcom/prisma/enums";
-import type { BookerLayoutSettings } from "@calcom/prisma/zod-utils";
+import type { LocationObject } from "@rondevu/app-store/locations";
+import { privacyFilteredLocations } from "@rondevu/app-store/locations";
+import { getAppFromSlug } from "@rondevu/app-store/utils";
+import { eventTypeMetaDataSchemaWithTypedApps } from "@rondevu/app-store/zod-utils";
+import dayjs from "@rondevu/dayjs";
+import { getBookingFieldsWithSystemFields } from "@rondevu/features/bookings/lib/getBookingFields";
+import { getDefaultEvent, getUsernameList } from "@rondevu/features/eventtypes/lib/defaultEvents";
+import { UserRepository } from "@rondevu/features/users/repositories/UserRepository";
+import { getOrgOrTeamAvatar, getPlaceholderAvatar } from "@rondevu/lib/defaultAvatarImage";
+import { getUserAvatarUrl } from "@rondevu/lib/getAvatarUrl";
+import { isRecurringEvent, parseRecurringEvent } from "@rondevu/lib/isRecurringEvent";
+import { markdownToSafeHTML } from "@rondevu/lib/markdownToSafeHTML";
+import type { PrismaClient } from "@rondevu/prisma";
+import type { Prisma, Team, User as UserType } from "@rondevu/prisma/client";
+import { MembershipRole } from "@rondevu/prisma/enums";
+import type { BookerLayoutSettings } from "@rondevu/prisma/zod-utils";
 import {
   BookerLayouts,
   bookerLayoutOptions,
@@ -22,8 +22,8 @@ import {
   customInputSchema,
   teamMetadataSchema,
   userMetadata as userMetadataSchema,
-} from "@calcom/prisma/zod-utils";
-import type { UserProfile } from "@calcom/types/UserProfile";
+} from "@rondevu/prisma/zod-utils";
+import type { UserProfile } from "@rondevu/types/UserProfile";
 
 class PermissionCheckService {
   constructor(_prisma?: unknown) {}

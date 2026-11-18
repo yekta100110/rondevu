@@ -1,18 +1,18 @@
 {
-  "extends": "@calcom/tsconfig/react-library.json",
+  "extends": "@rondevu/tsconfig/react-library.json",
   "exclude": ["dist", "types", "build", "**/node_modules/**"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@prisma/client/*": ["@calcom/prisma/client/*"],
-      "@calcom/testing/*": ["../testing/src/*"]
+      "@prisma/client/*": ["@rondevu/prisma/client/*"],
+      "@rondevu/testing/*": ["../testing/src/*"]
     },
     "resolveJsonModule": true,
     "experimentalDecorators": true
   },
   "include": [
     "next-env.d.ts",
-    "@calcom/types",
+    "@rondevu/types",
     "../types/*.d.ts",
     "../types/next-auth.d.ts",
     "*.ts",

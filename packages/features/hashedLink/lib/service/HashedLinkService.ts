@@ -1,8 +1,8 @@
-import { MembershipService } from "@calcom/features/membership/services/membershipService";
-import { ErrorCode } from "@calcom/lib/errorCodes";
-import { validateHashedLinkData } from "@calcom/lib/hashedLinksUtils";
-import logger from "@calcom/lib/logger";
-import { safeStringify } from "@calcom/lib/safeStringify";
+import { MembershipService } from "@rondevu/features/membership/services/membershipService";
+import { ErrorCode } from "@rondevu/lib/errorCodes";
+import { validateHashedLinkData } from "@rondevu/lib/hashedLinksUtils";
+import logger from "@rondevu/lib/logger";
+import { safeStringify } from "@rondevu/lib/safeStringify";
 
 import { HashedLinkRepository } from "../repository/HashedLinkRepository";
 import { type HashedLinkInputType } from "../repository/HashedLinkRepository";

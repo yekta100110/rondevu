@@ -1,4 +1,4 @@
-import type { Dayjs } from "@calcom/dayjs";
+import type { Dayjs } from "@rondevu/dayjs";
 
 /**
  * Gets the start of the week for a given date based on the user's preferred week start day.

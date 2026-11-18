@@ -3,7 +3,7 @@ import "vitest-fetch-mock";
 
 import Paypal from "./Paypal";
 
-vi.mock("@calcom/prisma", () => ({
+vi.mock("@rondevu/prisma", () => ({
   default: {},
   prisma: {},
 }));

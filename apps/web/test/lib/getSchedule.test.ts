@@ -1,5 +1,5 @@
-import CalendarManagerMock from "@calcom/features/calendars/lib/__mocks__/CalendarManager";
-import { constantsScenarios } from "@calcom/lib/__mocks__/constants";
+import CalendarManagerMock from "@rondevu/features/calendars/lib/__mocks__/CalendarManager";
+import { constantsScenarios } from "@rondevu/lib/__mocks__/constants";
 
 import {
   getDate,
@@ -12,13 +12,13 @@ import {
   TestData,
   createCredentials,
   mockCrmApp,
-} from "@calcom/testing/lib/bookingScenario/bookingScenario";
+} from "@rondevu/testing/lib/bookingScenario/bookingScenario";
 
 import { describe, vi, test } from "vitest";
 
-import dayjs from "@calcom/dayjs";
-import { getAvailableSlotsService } from "@calcom/features/di/containers/AvailableSlots";
-import { SchedulingType, type BookingStatus } from "@calcom/prisma/enums";
+import dayjs from "@rondevu/dayjs";
+import { getAvailableSlotsService } from "@rondevu/features/di/containers/AvailableSlots";
+import { SchedulingType, type BookingStatus } from "@rondevu/prisma/enums";
 
 import { expect, expectedSlotsForSchedule } from "./getSchedule/expects";
 import { setupAndTeardown } from "./getSchedule/setupAndTeardown";

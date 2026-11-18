@@ -1,13 +1,13 @@
 import React from "react";
 import { vi, afterEach } from "vitest";
 
-import dayjs from "@calcom/dayjs";
-import { DatePicker as DatePickerComponent } from "@calcom/features/calendars/components/DatePicker";
+import dayjs from "@rondevu/dayjs";
+import { DatePicker as DatePickerComponent } from "@rondevu/features/calendars/components/DatePicker";
 
-import { render } from "@calcom/features/bookings/Booker/__tests__/test-utils";
+import { render } from "@rondevu/features/bookings/Booker/__tests__/test-utils";
 import { DatePicker } from "./DatePicker";
 
-vi.mock("@calcom/features/calendars/components/DatePicker", () => {
+vi.mock("@rondevu/features/calendars/components/DatePicker", () => {
   return {
     DatePicker: vi.fn(() => <div data-testid="mock-date-picker" />),
   };

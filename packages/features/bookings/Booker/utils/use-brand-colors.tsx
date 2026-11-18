@@ -1,6 +1,6 @@
-import useGetBrandingColours from "@calcom/lib/getBrandColours";
-import useTheme from "@calcom/lib/hooks/useTheme";
-import { useCalcomTheme } from "@calcom/ui/styles";
+import useGetBrandingColours from "@rondevu/lib/getBrandColours";
+import useTheme from "@rondevu/lib/hooks/useTheme";
+import { useCalcomTheme } from "@rondevu/ui/styles";
 
 export const useBrandColors = ({
   brandColor,

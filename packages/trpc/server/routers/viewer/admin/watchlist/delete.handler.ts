@@ -1,6 +1,6 @@
-import { getAdminWatchlistOperationsService } from "@calcom/features/di/watchlist/containers/watchlist";
-import { WatchlistError, WatchlistErrorCode } from "@calcom/features/watchlist/lib/errors/WatchlistErrors";
-import logger from "@calcom/lib/logger";
+import { getAdminWatchlistOperationsService } from "@rondevu/features/di/watchlist/containers/watchlist";
+import { WatchlistError, WatchlistErrorCode } from "@rondevu/features/watchlist/lib/errors/WatchlistErrors";
+import logger from "@rondevu/lib/logger";
 
 import { TRPCError } from "@trpc/server";
 

@@ -6,21 +6,21 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-import { findUniqueDelegationCalendarCredential } from "@calcom/app-store/delegationCredential";
+import { findUniqueDelegationCalendarCredential } from "@rondevu/app-store/delegationCredential";
 import {
   createGoogleCalendarServiceWithGoogleType,
   type GoogleCalendar,
-} from "@calcom/app-store/googlecalendar/lib/CalendarService";
-import { CredentialRepository } from "@calcom/features/credentials/repositories/CredentialRepository";
-import { CalendarAppDelegationCredentialInvalidGrantError } from "@calcom/lib/CalendarAppError";
-import { HttpError } from "@calcom/lib/http-error";
-import logger from "@calcom/lib/logger";
-import { safeStringify } from "@calcom/lib/safeStringify";
-import { SelectedCalendarRepository } from "@calcom/features/selectedCalendar/repositories/SelectedCalendarRepository";
-import type { CredentialForCalendarServiceWithEmail } from "@calcom/types/Credential";
-import type { Ensure } from "@calcom/types/utils";
+} from "@rondevu/app-store/googlecalendar/lib/CalendarService";
+import { CredentialRepository } from "@rondevu/features/credentials/repositories/CredentialRepository";
+import { CalendarAppDelegationCredentialInvalidGrantError } from "@rondevu/lib/CalendarAppError";
+import { HttpError } from "@rondevu/lib/http-error";
+import logger from "@rondevu/lib/logger";
+import { safeStringify } from "@rondevu/lib/safeStringify";
+import { SelectedCalendarRepository } from "@rondevu/features/selectedCalendar/repositories/SelectedCalendarRepository";
+import type { CredentialForCalendarServiceWithEmail } from "@rondevu/types/Credential";
+import type { Ensure } from "@rondevu/types/utils";
 
-import { validateCronAuth } from "@calcom/lib/validateCronAuth";
+import { validateCronAuth } from "@rondevu/lib/validateCronAuth";
 import { defaultResponderForAppDir } from "../../defaultResponderForAppDir";
 
 const limitOnQueryingGoogleCalendar = 50;

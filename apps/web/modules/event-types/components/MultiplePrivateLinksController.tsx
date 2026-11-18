@@ -2,24 +2,24 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
-import dayjs from "@calcom/dayjs";
-import type { EventTypeSetupProps } from "@calcom/features/eventtypes/lib/types";
-import type { FormValues, PrivateLinkWithOptions } from "@calcom/features/eventtypes/lib/types";
-import { generateHashedLink } from "@calcom/lib/generateHashedLink";
-import { isLinkExpired as utilsIsLinkExpired } from "@calcom/lib/hashedLinksUtils";
-import { useCopy } from "@calcom/lib/hooks/useCopy";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc } from "@calcom/trpc/react";
-import classNames from "@calcom/ui/classNames";
-import { Badge } from "@calcom/ui/components/badge";
-import { Button } from "@calcom/ui/components/button";
-import { Dialog, DialogContent } from "@calcom/ui/components/dialog";
-import { TextField } from "@calcom/ui/components/form";
-import { DatePicker } from "@calcom/ui/components/form";
-import { NumberInput } from "@calcom/ui/components/form";
-import { RadioAreaGroup as RadioArea } from "@calcom/ui/components/radio";
-import { showToast } from "@calcom/ui/components/toast";
-import { Tooltip } from "@calcom/ui/components/tooltip";
+import dayjs from "@rondevu/dayjs";
+import type { EventTypeSetupProps } from "@rondevu/features/eventtypes/lib/types";
+import type { FormValues, PrivateLinkWithOptions } from "@rondevu/features/eventtypes/lib/types";
+import { generateHashedLink } from "@rondevu/lib/generateHashedLink";
+import { isLinkExpired as utilsIsLinkExpired } from "@rondevu/lib/hashedLinksUtils";
+import { useCopy } from "@rondevu/lib/hooks/useCopy";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc } from "@rondevu/trpc/react";
+import classNames from "@rondevu/ui/classNames";
+import { Badge } from "@rondevu/ui/components/badge";
+import { Button } from "@rondevu/ui/components/button";
+import { Dialog, DialogContent } from "@rondevu/ui/components/dialog";
+import { TextField } from "@rondevu/ui/components/form";
+import { DatePicker } from "@rondevu/ui/components/form";
+import { NumberInput } from "@rondevu/ui/components/form";
+import { RadioAreaGroup as RadioArea } from "@rondevu/ui/components/radio";
+import { showToast } from "@rondevu/ui/components/toast";
+import { Tooltip } from "@rondevu/ui/components/tooltip";
 
 export const MultiplePrivateLinksController = ({
   team,

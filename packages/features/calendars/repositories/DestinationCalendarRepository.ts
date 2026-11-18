@@ -1,8 +1,8 @@
-import logger from "@calcom/lib/logger";
-import { buildCredentialPayloadForPrisma } from "@calcom/lib/server/buildCredentialPayloadForCalendar";
-import type { PrismaClient } from "@calcom/prisma";
-import { prisma } from "@calcom/prisma";
-import type { Prisma } from "@calcom/prisma/client";
+import logger from "@rondevu/lib/logger";
+import { buildCredentialPayloadForPrisma } from "@rondevu/lib/server/buildCredentialPayloadForCalendar";
+import type { PrismaClient } from "@rondevu/prisma";
+import { prisma } from "@rondevu/prisma";
+import type { Prisma } from "@rondevu/prisma/client";
 
 const log = logger.getSubLogger({ prefix: ["DestinationCalendarRepository"] });
 

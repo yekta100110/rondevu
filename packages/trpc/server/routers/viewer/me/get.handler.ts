@@ -1,10 +1,10 @@
-import { ProfileRepository } from "@calcom/features/profile/repositories/ProfileRepository";
-import { UserRepository } from "@calcom/features/users/repositories/UserRepository";
-import { getUserAvatarUrl } from "@calcom/lib/getAvatarUrl";
-import prisma from "@calcom/prisma";
-import { IdentityProvider, MembershipRole } from "@calcom/prisma/enums";
-import { userMetadata } from "@calcom/prisma/zod-utils";
-import type { TrpcSessionUser } from "@calcom/trpc/server/types";
+import { ProfileRepository } from "@rondevu/features/profile/repositories/ProfileRepository";
+import { UserRepository } from "@rondevu/features/users/repositories/UserRepository";
+import { getUserAvatarUrl } from "@rondevu/lib/getAvatarUrl";
+import prisma from "@rondevu/prisma";
+import { IdentityProvider, MembershipRole } from "@rondevu/prisma/enums";
+import { userMetadata } from "@rondevu/prisma/zod-utils";
+import type { TrpcSessionUser } from "@rondevu/trpc/server/types";
 import type { Session } from "next-auth";
 import type { TGetInputSchema } from "./get.schema";
 

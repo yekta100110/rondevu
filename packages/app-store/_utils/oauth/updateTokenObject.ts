@@ -1,9 +1,9 @@
 import type z from "zod";
 
-import { CredentialRepository } from "@calcom/features/credentials/repositories/CredentialRepository";
-import logger from "@calcom/lib/logger";
-import { prisma } from "@calcom/prisma";
-import type { Prisma } from "@calcom/prisma/client";
+import { CredentialRepository } from "@rondevu/features/credentials/repositories/CredentialRepository";
+import logger from "@rondevu/lib/logger";
+import { prisma } from "@rondevu/prisma";
+import type { Prisma } from "@rondevu/prisma/client";
 
 import type { OAuth2UniversalSchemaWithCalcomBackwardCompatibility } from "./universalSchema";
 

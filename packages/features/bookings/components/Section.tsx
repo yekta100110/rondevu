@@ -2,10 +2,10 @@ import type { MotionProps } from "framer-motion";
 import { m } from "framer-motion";
 import { forwardRef } from "react";
 
-import { useBookerStoreContext } from "@calcom/features/bookings/Booker/BookerStoreProvider";
-import classNames from "@calcom/ui/classNames";
+import { useBookerStoreContext } from "@rondevu/features/bookings/Booker/BookerStoreProvider";
+import classNames from "@rondevu/ui/classNames";
 
-import type { BookerAreas, BookerLayout } from "@calcom/features/bookings/Booker/types";
+import type { BookerAreas, BookerLayout } from "@rondevu/features/bookings/Booker/types";
 
 /**
  * Define what grid area a section should be in.

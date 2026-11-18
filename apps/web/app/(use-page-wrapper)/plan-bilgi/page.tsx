@@ -1,5 +1,5 @@
-import { APP_NAME, WEBSITE_URL } from "@calcom/lib/constants";
-import { getPlanContactConfig } from "@calcom/lib/planContactConfig";
+import { APP_NAME, WEBSITE_URL } from "@rondevu/lib/constants";
+import { getPlanContactConfig } from "@rondevu/lib/planContactConfig";
 import { PlanBilgiSchema } from "@components/schemas/MarketingSchemas";
 import { _generateMetadata } from "app/_utils";
 import type { Metadata } from "next";

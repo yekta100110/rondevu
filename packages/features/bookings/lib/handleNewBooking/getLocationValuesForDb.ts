@@ -1,8 +1,8 @@
-import { getFirstDelegationConferencingCredentialAppLocation } from "@calcom/app-store/delegationCredential";
-import { withReporting } from "@calcom/lib/sentryWrapper";
-import type { Prisma } from "@calcom/prisma/client";
-import { userMetadata as userMetadataSchema } from "@calcom/prisma/zod-utils";
-import type { CredentialForCalendarService } from "@calcom/types/Credential";
+import { getFirstDelegationConferencingCredentialAppLocation } from "@rondevu/app-store/delegationCredential";
+import { withReporting } from "@rondevu/lib/sentryWrapper";
+import type { Prisma } from "@rondevu/prisma/client";
+import { userMetadata as userMetadataSchema } from "@rondevu/prisma/zod-utils";
+import type { CredentialForCalendarService } from "@rondevu/types/Credential";
 
 const sortUsersByDynamicList = <TUser extends { username: string | null }>(
   users: TUser[],

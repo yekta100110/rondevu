@@ -1,18 +1,18 @@
-import type { ChildrenEventType } from "@calcom/features/eventtypes/lib/childrenEventType";
-import type { SelectClassNames } from "@calcom/features/eventtypes/lib/types";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { MembershipRole } from "@calcom/prisma/enums";
-import classNames from "@calcom/ui/classNames";
-import { Avatar } from "@calcom/ui/components/avatar";
-import { Badge } from "@calcom/ui/components/badge";
-import { Button } from "@calcom/ui/components/button";
-import { ButtonGroup } from "@calcom/ui/components/buttonGroup";
-import { Select, Switch } from "@calcom/ui/components/form";
-import { Tooltip } from "@calcom/ui/components/tooltip";
+import type { ChildrenEventType } from "@rondevu/features/eventtypes/lib/childrenEventType";
+import type { SelectClassNames } from "@rondevu/features/eventtypes/lib/types";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { MembershipRole } from "@rondevu/prisma/enums";
+import classNames from "@rondevu/ui/classNames";
+import { Avatar } from "@rondevu/ui/components/avatar";
+import { Badge } from "@rondevu/ui/components/badge";
+import { Button } from "@rondevu/ui/components/button";
+import { ButtonGroup } from "@rondevu/ui/components/buttonGroup";
+import { Select, Switch } from "@rondevu/ui/components/form";
+import { Tooltip } from "@rondevu/ui/components/tooltip";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import type { Props } from "react-select";
 
-export type { ChildrenEventType } from "@calcom/features/eventtypes/lib/childrenEventType";
+export type { ChildrenEventType } from "@rondevu/features/eventtypes/lib/childrenEventType";
 
 export type ChildrenEventTypeSelectCustomClassNames = {
   assignToSelect?: SelectClassNames;

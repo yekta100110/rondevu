@@ -1,4 +1,4 @@
-import type { NumberFilterOperator, TextFilterOperator } from "@calcom/features/data-table/lib/types";
+import type { NumberFilterOperator, TextFilterOperator } from "@rondevu/features/data-table/lib/types";
 
 export type NumberFilterOperatorOption = {
   label: string;

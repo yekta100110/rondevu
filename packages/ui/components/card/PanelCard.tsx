@@ -4,11 +4,11 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import type { ReactNode } from "react";
 import { useId, useState } from "react";
 
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import classNames from "@calcom/ui/classNames";
-import { InfoBadge } from "@calcom/ui/components/badge";
-import { Button } from "@calcom/ui/components/button";
-import { Icon } from "@calcom/ui/components/icon";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import classNames from "@rondevu/ui/classNames";
+import { InfoBadge } from "@rondevu/ui/components/badge";
+import { Button } from "@rondevu/ui/components/button";
+import { Icon } from "@rondevu/ui/components/icon";
 
 export function PanelCard({
   title,

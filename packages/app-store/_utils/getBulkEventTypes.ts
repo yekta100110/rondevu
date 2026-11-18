@@ -1,8 +1,8 @@
-import { prisma } from "@calcom/prisma";
+import { prisma } from "@rondevu/prisma";
 import {
   eventTypeLocations as eventTypeLocationsSchema,
   eventTypeMetaDataSchemaWithoutApps,
-} from "@calcom/prisma/zod-utils";
+} from "@rondevu/prisma/zod-utils";
 
 import { getAppFromLocationValue } from "../utils";
 

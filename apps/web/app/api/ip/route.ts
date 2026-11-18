@@ -1,4 +1,4 @@
-import getIP from "@calcom/lib/getIP";
+import getIP from "@rondevu/lib/getIP";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {

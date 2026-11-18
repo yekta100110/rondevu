@@ -1,17 +1,17 @@
-import AppCard from "@calcom/app-store/_components/AppCard";
+import AppCard from "@rondevu/app-store/_components/AppCard";
 import WriteToObjectSettings, {
   BookingActionEnum,
-} from "@calcom/app-store/_components/crm/WriteToObjectSettings";
-import { CrmFieldType } from "@calcom/app-store/_lib/crm-enums";
-import useIsAppEnabled from "@calcom/app-store/_utils/useIsAppEnabled";
-import { useAppContextWithSchema } from "@calcom/app-store/EventTypeAppContext";
-import type { EventTypeAppCardComponent } from "@calcom/app-store/types";
-import { WEBAPP_URL } from "@calcom/lib/constants";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { SchedulingType } from "@calcom/prisma/enums";
-import { Alert } from "@calcom/ui/components/alert";
-import { Switch } from "@calcom/ui/components/form";
-import { Section } from "@calcom/ui/components/section";
+} from "@rondevu/app-store/_components/crm/WriteToObjectSettings";
+import { CrmFieldType } from "@rondevu/app-store/_lib/crm-enums";
+import useIsAppEnabled from "@rondevu/app-store/_utils/useIsAppEnabled";
+import { useAppContextWithSchema } from "@rondevu/app-store/EventTypeAppContext";
+import type { EventTypeAppCardComponent } from "@rondevu/app-store/types";
+import { WEBAPP_URL } from "@rondevu/lib/constants";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { SchedulingType } from "@rondevu/prisma/enums";
+import { Alert } from "@rondevu/ui/components/alert";
+import { Switch } from "@rondevu/ui/components/form";
+import { Section } from "@rondevu/ui/components/section";
 import { usePathname } from "next/navigation";
 import type { appDataSchema } from "../zod";
 import { WhenToWrite } from "../zod";

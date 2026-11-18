@@ -1,12 +1,12 @@
 "use client";
 
-import { WEBHOOK_TRIGGER_EVENTS } from "@calcom/features/webhooks/lib/constants";
-import type { WebhookVersion } from "@calcom/features/webhooks/lib/interface/IWebhookRepository";
-import { subscriberUrlReserved } from "@calcom/features/webhooks/lib/subscriberUrlReserved";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import type { WebhookTriggerEvents } from "@calcom/prisma/enums";
-import { trpc } from "@calcom/trpc/react";
-import { revalidateWebhooksList } from "@calcom/web/app/(use-page-wrapper)/settings/(settings-layout)/developer/webhooks/(with-loader)/actions";
+import { WEBHOOK_TRIGGER_EVENTS } from "@rondevu/features/webhooks/lib/constants";
+import type { WebhookVersion } from "@rondevu/features/webhooks/lib/interface/IWebhookRepository";
+import { subscriberUrlReserved } from "@rondevu/features/webhooks/lib/subscriberUrlReserved";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import type { WebhookTriggerEvents } from "@rondevu/prisma/enums";
+import { trpc } from "@rondevu/trpc/react";
+import { revalidateWebhooksList } from "@rondevu/web/app/(use-page-wrapper)/settings/(settings-layout)/developer/webhooks/(with-loader)/actions";
 import { toastManager } from "@coss/ui/components/toast";
 import { useRouter } from "next/navigation";
 import type { WebhookFormSubmitData } from "../components/WebhookForm";

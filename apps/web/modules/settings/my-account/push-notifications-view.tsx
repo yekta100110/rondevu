@@ -1,9 +1,9 @@
 "use client";
 
-import { useWebPush } from "@calcom/web/modules/notifications/hooks/useWebPush";
-import SettingsHeader from "@calcom/features/settings/appDir/SettingsHeader";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Button } from "@calcom/ui/components/button";
+import { useWebPush } from "@rondevu/web/modules/notifications/hooks/useWebPush";
+import SettingsHeader from "@rondevu/features/settings/appDir/SettingsHeader";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { Button } from "@rondevu/ui/components/button";
 
 const PushNotificationsView = () => {
   const { t } = useLocale();

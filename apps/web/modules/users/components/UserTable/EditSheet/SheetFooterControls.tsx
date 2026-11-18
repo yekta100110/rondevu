@@ -1,6 +1,6 @@
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Button } from "@calcom/ui/components/button";
-import { SheetClose } from "@calcom/ui/components/sheet";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { Button } from "@rondevu/ui/components/button";
+import { SheetClose } from "@rondevu/ui/components/sheet";
 
 import { useEditMode } from "./store";
 

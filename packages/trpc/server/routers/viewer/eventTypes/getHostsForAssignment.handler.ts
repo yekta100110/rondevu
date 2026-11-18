@@ -1,6 +1,6 @@
-import { EventTypeHostService } from "@calcom/features/host/services/EventTypeHostService";
-import type { PaginatedAssignmentHostsResponse } from "@calcom/features/host/services/IEventTypeHostService";
-import type { PrismaClient } from "@calcom/prisma/client";
+import { EventTypeHostService } from "@rondevu/features/host/services/EventTypeHostService";
+import type { PaginatedAssignmentHostsResponse } from "@rondevu/features/host/services/IEventTypeHostService";
+import type { PrismaClient } from "@rondevu/prisma/client";
 
 import type { TrpcSessionUser } from "../../../types";
 import type { TGetHostsForAssignmentInputSchema } from "./getHostsForAssignment.schema";
@@ -14,7 +14,7 @@ type GetHostsForAssignmentInput = {
 };
 
 export type { PaginatedAssignmentHostsResponse as GetHostsForAssignmentResponse };
-export type { AssignmentHost } from "@calcom/features/host/services/IEventTypeHostService";
+export type { AssignmentHost } from "@rondevu/features/host/services/IEventTypeHostService";
 
 export const getHostsForAssignmentHandler = async ({
   ctx,

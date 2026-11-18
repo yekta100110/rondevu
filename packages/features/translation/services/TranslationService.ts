@@ -1,11 +1,11 @@
-import type { EventTypeTranslationRepository } from "@calcom/features/eventTypeTranslation/repositories/EventTypeTranslationRepository";
-import { locales as i18nLocales } from "@calcom/lib/i18n";
-import logger from "@calcom/lib/logger";
+import type { EventTypeTranslationRepository } from "@rondevu/features/eventTypeTranslation/repositories/EventTypeTranslationRepository";
+import { locales as i18nLocales } from "@rondevu/lib/i18n";
+import logger from "@rondevu/lib/logger";
 import {
   TRANSLATION_SUPPORTED_LOCALES,
   type TranslationSupportedLocale,
-} from "@calcom/lib/translationConstants";
-import { EventTypeAutoTranslatedField } from "@calcom/prisma/enums";
+} from "@rondevu/lib/translationConstants";
+import { EventTypeAutoTranslatedField } from "@rondevu/prisma/enums";
 import type {
   EventTypeTranslationLookupOptions,
   EventTypeTranslationLookupResult,

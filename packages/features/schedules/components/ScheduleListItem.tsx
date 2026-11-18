@@ -3,21 +3,21 @@
 import Link from "next/link";
 import { Fragment, useState } from "react";
 
-import { availabilityAsString } from "@calcom/lib/availability";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { sortAvailabilityStrings } from "@calcom/lib/weekstart";
-import { Dialog } from "@calcom/features/components/controlled-dialog";
-import { Badge } from "@calcom/ui/components/badge";
-import { Button } from "@calcom/ui/components/button";
+import { availabilityAsString } from "@rondevu/lib/availability";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { sortAvailabilityStrings } from "@rondevu/lib/weekstart";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
+import { Badge } from "@rondevu/ui/components/badge";
+import { Button } from "@rondevu/ui/components/button";
 import {
   Dropdown,
   DropdownItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@calcom/ui/components/dropdown";
-import { ConfirmationDialogContent } from "@calcom/ui/components/dialog";
-import { showToast } from "@calcom/ui/components/toast";
+} from "@rondevu/ui/components/dropdown";
+import { ConfirmationDialogContent } from "@rondevu/ui/components/dialog";
+import { showToast } from "@rondevu/ui/components/toast";
 import { GlobeIcon } from "@coss/ui/icons";
 
 interface Schedule {

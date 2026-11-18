@@ -1,10 +1,10 @@
 import type { NextResponse } from "next/server";
 
-import { ErrorCode } from "@calcom/lib/errorCodes";
-import { ErrorWithCode } from "@calcom/lib/errors";
-import slugify from "@calcom/lib/slugify";
-import prisma from "@calcom/prisma";
-import { RedirectType } from "@calcom/prisma/enums";
+import { ErrorCode } from "@rondevu/lib/errorCodes";
+import { ErrorWithCode } from "@rondevu/lib/errors";
+import slugify from "@rondevu/lib/slugify";
+import prisma from "@rondevu/prisma";
+import { RedirectType } from "@rondevu/prisma/enums";
 
 import { IS_PREMIUM_USERNAME_ENABLED } from "../constants";
 import logger from "../logger";

@@ -1,10 +1,10 @@
-import { getUsersCredentialsIncludeServiceAccountKey } from "@calcom/app-store/delegationCredential";
-import { checkAdminOrOwner } from "@calcom/features/auth/lib/checkAdminOrOwner";
-import getInstallCountPerApp from "@calcom/lib/apps/getInstallCountPerApp";
-import { buildNonDelegationCredentials } from "@calcom/lib/delegationCredential";
-import type { PrismaClient } from "@calcom/prisma";
-import type { Prisma, User, AppCategories } from "@calcom/prisma/client";
-import { credentialForCalendarServiceSelect } from "@calcom/prisma/selects/credential";
+import { getUsersCredentialsIncludeServiceAccountKey } from "@rondevu/app-store/delegationCredential";
+import { checkAdminOrOwner } from "@rondevu/features/auth/lib/checkAdminOrOwner";
+import getInstallCountPerApp from "@rondevu/lib/apps/getInstallCountPerApp";
+import { buildNonDelegationCredentials } from "@rondevu/lib/delegationCredential";
+import type { PrismaClient } from "@rondevu/prisma";
+import type { Prisma, User, AppCategories } from "@rondevu/prisma/client";
+import { credentialForCalendarServiceSelect } from "@rondevu/prisma/selects/credential";
 
 import type { TDependencyData } from "../_appRegistry";
 import { PaymentServiceMap } from "../payment.services.generated";
@@ -30,7 +30,7 @@ export type TeamQuery = Prisma.TeamGetPayload<{
   select: {
     id: true;
     credentials: {
-      select: typeof import("@calcom/prisma/selects/credential").credentialForCalendarServiceSelect;
+      select: typeof import("@rondevu/prisma/selects/credential").credentialForCalendarServiceSelect;
     };
     name: true;
     logoUrl: true;

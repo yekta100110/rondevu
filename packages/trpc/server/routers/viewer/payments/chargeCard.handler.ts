@@ -1,8 +1,8 @@
-import { handleNoShowFee } from "@calcom/features/bookings/lib/payment/handleNoShowFee";
-import { BookingRepository } from "@calcom/features/bookings/repositories/BookingRepository";
-import { ErrorCode } from "@calcom/lib/errorCodes";
-import { ErrorWithCode } from "@calcom/lib/errors";
-import type { PrismaClient } from "@calcom/prisma";
+import { handleNoShowFee } from "@rondevu/features/bookings/lib/payment/handleNoShowFee";
+import { BookingRepository } from "@rondevu/features/bookings/repositories/BookingRepository";
+import { ErrorCode } from "@rondevu/lib/errorCodes";
+import { ErrorWithCode } from "@rondevu/lib/errors";
+import type { PrismaClient } from "@rondevu/prisma";
 
 import { TRPCError } from "@trpc/server";
 

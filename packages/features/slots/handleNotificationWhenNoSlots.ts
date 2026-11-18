@@ -1,6 +1,6 @@
-import type { Dayjs } from "@calcom/dayjs";
-import type { MembershipRepository } from "@calcom/features/membership/repositories/MembershipRepository";
-import type { IRedisService } from "@calcom/features/redis/IRedisService";
+import type { Dayjs } from "@rondevu/dayjs";
+import type { MembershipRepository } from "@rondevu/features/membership/repositories/MembershipRepository";
+import type { IRedisService } from "@rondevu/features/redis/IRedisService";
 
 type EventDetails = {
   username: string;

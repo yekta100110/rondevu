@@ -1,12 +1,12 @@
 import type { Dispatch, SetStateAction } from "react";
 
-import { Dialog } from "@calcom/features/components/controlled-dialog";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import type { CancellationReasonRequirement } from "@calcom/prisma/enums";
-import { trpc } from "@calcom/trpc/react";
-import type { RecurringEvent } from "@calcom/types/Calendar";
-import { DialogContent, DialogHeader } from "@calcom/ui/components/dialog";
-import { showToast } from "@calcom/ui/components/toast";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import type { CancellationReasonRequirement } from "@rondevu/prisma/enums";
+import { trpc } from "@rondevu/trpc/react";
+import type { RecurringEvent } from "@rondevu/types/Calendar";
+import { DialogContent, DialogHeader } from "@rondevu/ui/components/dialog";
+import { showToast } from "@rondevu/ui/components/toast";
 
 import CancelBooking from "@components/booking/CancelBooking";
 

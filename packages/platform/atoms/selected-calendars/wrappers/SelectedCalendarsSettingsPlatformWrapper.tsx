@@ -1,18 +1,18 @@
 import { useState } from "react";
 
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import type { CALENDARS } from "@calcom/platform-constants";
-import { QueryCell } from "@calcom/trpc/components/QueryCell";
-import cn from "@calcom/ui/classNames";
-import { Alert } from "@calcom/ui/components/alert";
-import { AppListCard } from "@calcom/ui/components/app-list-card";
-import type { ButtonProps } from "@calcom/ui/components/button";
-import { Button } from "@calcom/ui/components/button";
-import { CalendarSwitchComponent, type ICalendarSwitchProps } from "@calcom/ui/components/calendar-switch";
-import { DisconnectIntegrationComponent } from "@calcom/ui/components/disconnect-calendar-integration";
-import { Dropdown, DropdownMenuContent, DropdownMenuTrigger } from "@calcom/ui/components/dropdown";
-import { Switch } from "@calcom/ui/components/form";
-import { List } from "@calcom/ui/components/list";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import type { CALENDARS } from "@rondevu/platform-constants";
+import { QueryCell } from "@rondevu/trpc/components/QueryCell";
+import cn from "@rondevu/ui/classNames";
+import { Alert } from "@rondevu/ui/components/alert";
+import { AppListCard } from "@rondevu/ui/components/app-list-card";
+import type { ButtonProps } from "@rondevu/ui/components/button";
+import { Button } from "@rondevu/ui/components/button";
+import { CalendarSwitchComponent, type ICalendarSwitchProps } from "@rondevu/ui/components/calendar-switch";
+import { DisconnectIntegrationComponent } from "@rondevu/ui/components/disconnect-calendar-integration";
+import { Dropdown, DropdownMenuContent, DropdownMenuTrigger } from "@rondevu/ui/components/dropdown";
+import { Switch } from "@rondevu/ui/components/form";
+import { List } from "@rondevu/ui/components/list";
 
 import * as Connect from "../../connect";
 import { AppleConnect } from "../../connect/apple/AppleConnect";

@@ -5,15 +5,15 @@ import {
   useEmbedNonStylesConfig,
   useEmbedStyles,
   useIsEmbed,
-} from "@calcom/embed-core/embed-iframe";
-import { useRouterQuery } from "@calcom/lib/hooks/useRouterQuery";
-import useTheme from "@calcom/lib/hooks/useTheme";
-import { UserAvatar } from "@calcom/ui/components/avatar";
-import { Icon } from "@calcom/ui/components/icon";
-import { OrgBanner } from "@calcom/ui/components/organization-banner";
-import { UnpublishedEntity } from "@calcom/ui/components/unpublished-entity";
-import { EventTypeDescriptionLazy as EventTypeDescription } from "@calcom/web/modules/event-types/components";
-import EmptyPage from "@calcom/web/modules/event-types/components/EmptyPage";
+} from "@rondevu/embed-core/embed-iframe";
+import { useRouterQuery } from "@rondevu/lib/hooks/useRouterQuery";
+import useTheme from "@rondevu/lib/hooks/useTheme";
+import { UserAvatar } from "@rondevu/ui/components/avatar";
+import { Icon } from "@rondevu/ui/components/icon";
+import { OrgBanner } from "@rondevu/ui/components/organization-banner";
+import { UnpublishedEntity } from "@rondevu/ui/components/unpublished-entity";
+import { EventTypeDescriptionLazy as EventTypeDescription } from "@rondevu/web/modules/event-types/components";
+import EmptyPage from "@rondevu/web/modules/event-types/components/EmptyPage";
 import type { getServerSideProps } from "@server/lib/[user]/getServerSideProps";
 import classNames from "classnames";
 import type { InferGetServerSidePropsType } from "next";

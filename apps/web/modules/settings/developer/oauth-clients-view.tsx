@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc } from "@calcom/trpc/react";
-import { EmptyScreen } from "@calcom/ui/components/empty-screen";
-import { showToast } from "@calcom/ui/components/toast";
-import SettingsHeader from "@calcom/features/settings/appDir/SettingsHeader";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc } from "@rondevu/trpc/react";
+import { EmptyScreen } from "@rondevu/ui/components/empty-screen";
+import { showToast } from "@rondevu/ui/components/toast";
+import SettingsHeader from "@rondevu/features/settings/appDir/SettingsHeader";
 
 import type { OAuthClientCreateFormValues } from "../oauth/create/OAuthClientCreateModal";
 import { OAuthClientCreateDialog } from "../oauth/create/OAuthClientCreateModal";

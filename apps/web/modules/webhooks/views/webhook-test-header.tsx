@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale } from "@calcom/lib/hooks/useLocale";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
 import {
   CardFrameDescription,
   CardFrameHeader,

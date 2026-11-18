@@ -1,6 +1,6 @@
 import { _generateMetadata, getTranslate } from "app/_utils";
 
-import SettingsHeader from "@calcom/features/settings/appDir/SettingsHeader";
+import SettingsHeader from "@rondevu/features/settings/appDir/SettingsHeader";
 
 import PlanContactAdminView from "~/settings/admin/plan-contact-view";
 

@@ -1,7 +1,7 @@
 import { createHash, createHmac } from "node:crypto";
 import process from "node:process";
-import { prisma } from "@calcom/prisma";
-import { WebhookTriggerEvents } from "@calcom/prisma/enums";
+import { prisma } from "@rondevu/prisma";
+import { WebhookTriggerEvents } from "@rondevu/prisma/enums";
 import type { WebhookDeliveryResult, WebhookSubscriber } from "../dto/types";
 import { encryptReplayBody } from "../encryptReplayBody";
 import type { WebhookPayload } from "../factory/types";

@@ -1,7 +1,7 @@
-import type { CreateBookingMeta, CreateRecurringBookingData } from "@calcom/features/bookings/lib/dto/types";
-import type { BookingResponse } from "@calcom/features/bookings/types";
-import { type CreationSource, SchedulingType } from "@calcom/prisma/enums";
-import type { AppsStatus } from "@calcom/types/Calendar";
+import type { CreateBookingMeta, CreateRecurringBookingData } from "@rondevu/features/bookings/lib/dto/types";
+import type { BookingResponse } from "@rondevu/features/bookings/types";
+import { type CreationSource, SchedulingType } from "@rondevu/prisma/enums";
+import type { AppsStatus } from "@rondevu/types/Calendar";
 import type { IBookingService } from "../interfaces/IBookingService";
 import type { RegularBookingService } from "./RegularBookingService";
 export type BookingHandlerInput = {

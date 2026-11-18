@@ -1,15 +1,15 @@
-import type { CredentialForCalendarService } from "@calcom/types/Credential";
+import type { CredentialForCalendarService } from "@rondevu/types/Credential";
 import { TRPCError } from "@trpc/server";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { appByIdHandler } from "./appById.handler";
 import type { TAppByIdInputSchema } from "./appById.schema";
 
 // Mock the dependencies
-vi.mock("@calcom/app-store/delegationCredential", () => ({
+vi.mock("@rondevu/app-store/delegationCredential", () => ({
   getUsersCredentialsIncludeServiceAccountKey: vi.fn(),
 }));
 
-vi.mock("@calcom/app-store/utils", () => ({
+vi.mock("@rondevu/app-store/utils", () => ({
   default: vi.fn(),
   sanitizeAppForViewer: vi.fn((app) => {
     const { key: _, credential: _1, credentials: _2, ...sanitized } = app;
@@ -17,19 +17,19 @@ vi.mock("@calcom/app-store/utils", () => ({
   }),
 }));
 
-vi.mock("@calcom/app-store/_utils/getCalendar", () => ({
+vi.mock("@rondevu/app-store/_utils/getCalendar", () => ({
   getCalendar: vi.fn().mockReturnValue(null),
 }));
 
-vi.mock("@calcom/prisma", () => ({
+vi.mock("@rondevu/prisma", () => ({
   default: {},
   prisma: {},
 }));
 
-import { getUsersCredentialsIncludeServiceAccountKey } from "@calcom/app-store/delegationCredential";
-import type { CredentialDataWithTeamName, LocationOption } from "@calcom/app-store/utils";
-import getApps, { sanitizeAppForViewer } from "@calcom/app-store/utils";
-import type { App } from "@calcom/types/App";
+import { getUsersCredentialsIncludeServiceAccountKey } from "@rondevu/app-store/delegationCredential";
+import type { CredentialDataWithTeamName, LocationOption } from "@rondevu/app-store/utils";
+import getApps, { sanitizeAppForViewer } from "@rondevu/app-store/utils";
+import type { App } from "@rondevu/types/App";
 
 describe("appByIdHandler", () => {
   const mockUser = {

@@ -1,16 +1,16 @@
-import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
-import type { GetBookingType } from "@calcom/features/bookings/lib/get-booking";
-import { getBookingForReschedule, getMultipleDurationValue } from "@calcom/features/bookings/lib/get-booking";
-import { EventRepository } from "@calcom/features/eventtypes/repositories/EventRepository";
-import { HashedLinkService } from "@calcom/features/hashedLink/lib/service/HashedLinkService";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
+import type { GetBookingType } from "@rondevu/features/bookings/lib/get-booking";
+import { getBookingForReschedule, getMultipleDurationValue } from "@rondevu/features/bookings/lib/get-booking";
+import { EventRepository } from "@rondevu/features/eventtypes/repositories/EventRepository";
+import { HashedLinkService } from "@rondevu/features/hashedLink/lib/service/HashedLinkService";
 import {
   shouldHideBrandingForTeamEvent,
   shouldHideBrandingForUserEvent,
-} from "@calcom/features/profile/lib/hideBranding";
-import { UserRepository } from "@calcom/features/users/repositories/UserRepository";
-import slugify from "@calcom/lib/slugify";
-import prisma from "@calcom/prisma";
-import { RedirectType } from "@calcom/prisma/enums";
+} from "@rondevu/features/profile/lib/hideBranding";
+import { UserRepository } from "@rondevu/features/users/repositories/UserRepository";
+import slugify from "@rondevu/lib/slugify";
+import prisma from "@rondevu/prisma";
+import { RedirectType } from "@rondevu/prisma/enums";
 import { getRedirectWithOriginAndSearchString } from "@lib/handleOrgRedirect";
 import type { inferSSRProps } from "@lib/types/inferSSRProps";
 import type { EmbedProps } from "app/WithEmbedSSR";

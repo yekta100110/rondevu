@@ -1,4 +1,4 @@
-import { hasFilter } from "@calcom/features/filters/lib/hasFilter";
+import { hasFilter } from "@rondevu/features/filters/lib/hasFilter";
 
 import type { TEventTypeInputSchema } from "../getByViewer.schema";
 

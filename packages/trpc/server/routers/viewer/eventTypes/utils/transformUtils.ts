@@ -1,7 +1,7 @@
-import { getPlaceholderAvatar } from "@calcom/lib/defaultAvatarImage";
-import { getUserAvatarUrl } from "@calcom/lib/getAvatarUrl";
-import type { MembershipRole } from "@calcom/prisma/enums";
-import { teamMetadataSchema } from "@calcom/prisma/zod-utils";
+import { getPlaceholderAvatar } from "@rondevu/lib/defaultAvatarImage";
+import { getUserAvatarUrl } from "@rondevu/lib/getAvatarUrl";
+import type { MembershipRole } from "@rondevu/prisma/enums";
+import { teamMetadataSchema } from "@rondevu/prisma/zod-utils";
 import type { TeamPermissions } from "./permissionUtils";
 
 const getBookerBaseUrlSync = (_orgSlug?: string | number | null): string =>

@@ -101,8 +101,8 @@ DataTableProvider (Context)
 ### Basic Setup
 
 ```tsx
-// Types and utilities stay in @calcom/features/data-table
-import { ColumnFilterType } from "@calcom/features/data-table";
+// Types and utilities stay in @rondevu/features/data-table
+import { ColumnFilterType } from "@rondevu/features/data-table";
 
 // Hooks, contexts, and providers are in apps/web/modules/data-table
 // (use ~/data-table/... imports within apps/web)

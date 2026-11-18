@@ -1,6 +1,6 @@
-import type { BookingForCalEventBuilder } from "@calcom/features/CalendarEventBuilder";
-import type { Booking } from "@calcom/prisma/client";
-import type { BookingStatus } from "@calcom/prisma/enums";
+import type { BookingForCalEventBuilder } from "@rondevu/features/CalendarEventBuilder";
+import type { Booking } from "@rondevu/prisma/client";
+import type { BookingStatus } from "@rondevu/prisma/enums";
 
 export interface BookingWhereInput {
   id?: number;

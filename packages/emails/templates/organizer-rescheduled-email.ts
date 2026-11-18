@@ -1,6 +1,6 @@
-import { EMAIL_FROM_NAME } from "@calcom/lib/constants";
-import { getReplyToHeader } from "@calcom/lib/getReplyToHeader";
-import type { CalendarEvent, Person } from "@calcom/types/Calendar";
+import { EMAIL_FROM_NAME } from "@rondevu/lib/constants";
+import { getReplyToHeader } from "@rondevu/lib/getReplyToHeader";
+import type { CalendarEvent, Person } from "@rondevu/types/Calendar";
 
 import generateIcsFile, { GenerateIcsRole } from "../lib/generateIcsFile";
 import renderEmail from "../src/renderEmail";

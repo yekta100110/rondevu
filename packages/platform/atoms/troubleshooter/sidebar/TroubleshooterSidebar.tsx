@@ -1,5 +1,5 @@
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Skeleton } from "@calcom/ui/components/skeleton";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { Skeleton } from "@rondevu/ui/components/skeleton";
 import { CalendarToggleContainer } from "./CalendarToggleContainer";
 import { EventScheduleItem } from "./EventScheduleItem";
 import { EventTypeSelect } from "./EventTypeSelect";

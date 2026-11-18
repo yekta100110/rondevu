@@ -1,4 +1,4 @@
-import { Prisma } from "@calcom/prisma/client";
+import { Prisma } from "@rondevu/prisma/client";
 
 import type { FilterValue, SortingState } from "./types";
 import {

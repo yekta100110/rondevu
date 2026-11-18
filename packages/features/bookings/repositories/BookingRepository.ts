@@ -1,9 +1,9 @@
-import { withReporting } from "@calcom/lib/sentryWrapper";
-import type { PrismaClient } from "@calcom/prisma";
-import type { Booking, Prisma } from "@calcom/prisma/client";
-import { BookingStatus, RRTimestampBasis } from "@calcom/prisma/enums";
-import { bookingDetailsSelect, bookingMinimalSelect } from "@calcom/prisma/selects/booking";
-import { credentialForCalendarServiceSelect } from "@calcom/prisma/selects/credential";
+import { withReporting } from "@rondevu/lib/sentryWrapper";
+import type { PrismaClient } from "@rondevu/prisma";
+import type { Booking, Prisma } from "@rondevu/prisma/client";
+import { BookingStatus, RRTimestampBasis } from "@rondevu/prisma/enums";
+import { bookingDetailsSelect, bookingMinimalSelect } from "@rondevu/prisma/selects/booking";
+import { credentialForCalendarServiceSelect } from "@rondevu/prisma/selects/credential";
 import type {
   BookingUpdateData,
   BookingWhereInput,

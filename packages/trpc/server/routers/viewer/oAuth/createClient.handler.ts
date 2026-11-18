@@ -1,6 +1,6 @@
-import { OAuthClientRepository } from "@calcom/features/oauth/repositories/OAuthClientRepository";
-import type { PrismaClient } from "@calcom/prisma";
-import { generateSecret } from "@calcom/features/oauth/utils/generateSecret";
+import { OAuthClientRepository } from "@rondevu/features/oauth/repositories/OAuthClientRepository";
+import type { PrismaClient } from "@rondevu/prisma";
+import { generateSecret } from "@rondevu/features/oauth/utils/generateSecret";
 import type { TCreateClientInputSchema } from "./createClient.schema";
 
 type AddClientOptions = {

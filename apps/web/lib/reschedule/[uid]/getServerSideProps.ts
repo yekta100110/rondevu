@@ -3,13 +3,13 @@ import type { GetServerSidePropsContext } from "next";
 import { URLSearchParams } from "node:url";
 import { z } from "zod";
 
-import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
-import { buildEventUrlFromBooking } from "@calcom/features/bookings/lib/buildEventUrlFromBooking";
-import { determineReschedulePreventionRedirect } from "@calcom/features/bookings/lib/reschedule/determineReschedulePreventionRedirect";
-import { getDefaultEvent } from "@calcom/features/eventtypes/lib/defaultEvents";
-import { UserRepository } from "@calcom/features/users/repositories/UserRepository";
-import { maybeGetBookingUidFromSeat } from "@calcom/lib/server/maybeGetBookingUidFromSeat";
-import prisma, { bookingMinimalSelect } from "@calcom/prisma";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
+import { buildEventUrlFromBooking } from "@rondevu/features/bookings/lib/buildEventUrlFromBooking";
+import { determineReschedulePreventionRedirect } from "@rondevu/features/bookings/lib/reschedule/determineReschedulePreventionRedirect";
+import { getDefaultEvent } from "@rondevu/features/eventtypes/lib/defaultEvents";
+import { UserRepository } from "@rondevu/features/users/repositories/UserRepository";
+import { maybeGetBookingUidFromSeat } from "@rondevu/lib/server/maybeGetBookingUidFromSeat";
+import prisma, { bookingMinimalSelect } from "@rondevu/prisma";
 
 const querySchema = z.object({
   uid: z.string(),

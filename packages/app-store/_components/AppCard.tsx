@@ -2,14 +2,14 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import Link from "next/link";
 import posthog from "posthog-js";
 
-import { useAppContextWithSchema } from "@calcom/app-store/EventTypeAppContext";
-import { useIsPlatform } from "@calcom/atoms/hooks/useIsPlatform";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import classNames from "@calcom/ui/classNames";
-import { Button } from "@calcom/ui/components/button";
-import { Switch } from "@calcom/ui/components/form";
-import { Icon } from "@calcom/ui/components/icon";
-import { Section } from "@calcom/ui/components/section";
+import { useAppContextWithSchema } from "@rondevu/app-store/EventTypeAppContext";
+import { useIsPlatform } from "@rondevu/atoms/hooks/useIsPlatform";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import classNames from "@rondevu/ui/classNames";
+import { Button } from "@rondevu/ui/components/button";
+import { Switch } from "@rondevu/ui/components/form";
+import { Icon } from "@rondevu/ui/components/icon";
+import { Section } from "@rondevu/ui/components/section";
 
 import type { AppCardApp } from "../types";
 import OmniInstallAppButton from "./OmniInstallAppButton";

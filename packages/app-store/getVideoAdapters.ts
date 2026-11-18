@@ -1,9 +1,9 @@
-import { VideoApiAdapterMap } from "@calcom/app-store/video.adapters.generated";
-import logger from "@calcom/lib/logger";
-import { getPiiFreeCredential } from "@calcom/lib/piiFreeData";
-import { safeStringify } from "@calcom/lib/safeStringify";
-import type { CredentialPayload } from "@calcom/types/Credential";
-import type { VideoApiAdapter, VideoApiAdapterFactory } from "@calcom/types/VideoApiAdapter";
+import { VideoApiAdapterMap } from "@rondevu/app-store/video.adapters.generated";
+import logger from "@rondevu/lib/logger";
+import { getPiiFreeCredential } from "@rondevu/lib/piiFreeData";
+import { safeStringify } from "@rondevu/lib/safeStringify";
+import type { CredentialPayload } from "@rondevu/types/Credential";
+import type { VideoApiAdapter, VideoApiAdapterFactory } from "@rondevu/types/VideoApiAdapter";
 
 const log = logger.getSubLogger({ prefix: ["[app-store] getVideoAdapters"] });
 

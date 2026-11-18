@@ -1,11 +1,11 @@
 import { useMemo } from "react";
 
-import dayjs from "@calcom/dayjs";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Button } from "@calcom/ui/components/button";
-import { ButtonGroup } from "@calcom/ui/components/buttonGroup";
+import dayjs from "@rondevu/dayjs";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { Button } from "@rondevu/ui/components/button";
+import { ButtonGroup } from "@rondevu/ui/components/buttonGroup";
 
-import { useTroubleshooterStore } from "@calcom/features/troubleshooter/store";
+import { useTroubleshooterStore } from "@rondevu/features/troubleshooter/store";
 
 export function TroubleshooterHeader({ extraDays, isMobile }: { extraDays: number; isMobile: boolean }) {
   const { t, i18n } = useLocale();

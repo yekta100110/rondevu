@@ -19,7 +19,7 @@ type TaskPayloads = {
     typeof import("./tasks/sendAwaitingPaymentEmail").sendAwaitingPaymentEmailPayloadSchema
   >;
   webhookDelivery: z.infer<
-    typeof import("@calcom/features/webhooks/lib/types/webhookTask").webhookTaskPayloadSchema
+    typeof import("@rondevu/features/webhooks/lib/types/webhookTask").webhookTaskPayloadSchema
   >;
 };
 export type TaskTypes = keyof TaskPayloads;

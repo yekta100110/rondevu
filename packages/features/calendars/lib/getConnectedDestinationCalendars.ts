@@ -1,20 +1,20 @@
-import { enrichUserWithDelegationCredentialsIncludeServiceAccountKey } from "@calcom/app-store/delegationCredential";
-import type { CredentialDataWithTeamName } from "@calcom/app-store/utils";
+import { enrichUserWithDelegationCredentialsIncludeServiceAccountKey } from "@rondevu/app-store/delegationCredential";
+import type { CredentialDataWithTeamName } from "@rondevu/app-store/utils";
 import {
   cleanIntegrationKeys,
   getCalendarCredentials,
   getConnectedCalendars,
-} from "@calcom/features/calendars/lib/CalendarManager";
-import { DestinationCalendarRepository } from "@calcom/features/calendars/repositories/DestinationCalendarRepository";
-import { isDelegationCredential } from "@calcom/lib/delegationCredential";
-import logger from "@calcom/lib/logger";
-import { SelectedCalendarRepository } from "@calcom/features/selectedCalendar/repositories/SelectedCalendarRepository";
-import type { PrismaClient } from "@calcom/prisma";
-import prisma from "@calcom/prisma";
-import type { DestinationCalendar, SelectedCalendar, User } from "@calcom/prisma/client";
-import { AppCategories } from "@calcom/prisma/enums";
-import { credentialForCalendarServiceSelect } from "@calcom/prisma/selects/credential";
-import type { IntegrationCalendar } from "@calcom/types/Calendar";
+} from "@rondevu/features/calendars/lib/CalendarManager";
+import { DestinationCalendarRepository } from "@rondevu/features/calendars/repositories/DestinationCalendarRepository";
+import { isDelegationCredential } from "@rondevu/lib/delegationCredential";
+import logger from "@rondevu/lib/logger";
+import { SelectedCalendarRepository } from "@rondevu/features/selectedCalendar/repositories/SelectedCalendarRepository";
+import type { PrismaClient } from "@rondevu/prisma";
+import prisma from "@rondevu/prisma";
+import type { DestinationCalendar, SelectedCalendar, User } from "@rondevu/prisma/client";
+import { AppCategories } from "@rondevu/prisma/enums";
+import { credentialForCalendarServiceSelect } from "@rondevu/prisma/selects/credential";
+import type { IntegrationCalendar } from "@rondevu/types/Calendar";
 
 const log = logger.getSubLogger({ prefix: ["getConnectedDestinationCalendarsAndEnsureDefaultsInDb"] });
 
@@ -437,5 +437,5 @@ export async function getConnectedDestinationCalendarsAndEnsureDefaultsInDb({
   };
 }
 
-// Legacy export for @calcom/platform-libraries
+// Legacy export for @rondevu/platform-libraries
 export const getConnectedDestinationCalendars = getConnectedDestinationCalendarsAndEnsureDefaultsInDb;

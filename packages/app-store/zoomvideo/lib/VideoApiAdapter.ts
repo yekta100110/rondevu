@@ -1,22 +1,22 @@
 import { z } from "zod";
 
-import dayjs from "@calcom/dayjs";
+import dayjs from "@rondevu/dayjs";
 import {
   APP_CREDENTIAL_SHARING_ENABLED,
   CREDENTIAL_SYNC_ENDPOINT,
   CREDENTIAL_SYNC_SECRET,
   CREDENTIAL_SYNC_SECRET_HEADER_NAME,
-} from "@calcom/lib/constants";
-import logger from "@calcom/lib/logger";
-import { getPiiFreeCalendarEvent } from "@calcom/lib/piiFreeData";
-import { safeStringify } from "@calcom/lib/safeStringify";
-import { prisma } from "@calcom/prisma";
-import type { Prisma } from "@calcom/prisma/client";
-import { Frequency } from "@calcom/prisma/zod-utils";
-import type { CalendarEvent } from "@calcom/types/Calendar";
-import type { CredentialPayload } from "@calcom/types/Credential";
-import type { PartialReference } from "@calcom/types/EventManager";
-import type { VideoApiAdapter, VideoCallData } from "@calcom/types/VideoApiAdapter";
+} from "@rondevu/lib/constants";
+import logger from "@rondevu/lib/logger";
+import { getPiiFreeCalendarEvent } from "@rondevu/lib/piiFreeData";
+import { safeStringify } from "@rondevu/lib/safeStringify";
+import { prisma } from "@rondevu/prisma";
+import type { Prisma } from "@rondevu/prisma/client";
+import { Frequency } from "@rondevu/prisma/zod-utils";
+import type { CalendarEvent } from "@rondevu/types/Calendar";
+import type { CredentialPayload } from "@rondevu/types/Credential";
+import type { PartialReference } from "@rondevu/types/EventManager";
+import type { VideoApiAdapter, VideoCallData } from "@rondevu/types/VideoApiAdapter";
 
 import { invalidateCredential } from "../../_utils/invalidateCredential";
 import { OAuthManager } from "../../_utils/oauth/OAuthManager";

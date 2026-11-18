@@ -1,8 +1,8 @@
-import { sendAdminOAuthClientNotification } from "@calcom/emails/oauth-email-service";
-import { getTranslation } from "@calcom/i18n/server";
-import { OAuthClientRepository } from "@calcom/features/oauth/repositories/OAuthClientRepository";
-import { generateSecret } from "@calcom/features/oauth/utils/generateSecret";
-import type { PrismaClient } from "@calcom/prisma";
+import { sendAdminOAuthClientNotification } from "@rondevu/emails/oauth-email-service";
+import { getTranslation } from "@rondevu/i18n/server";
+import { OAuthClientRepository } from "@rondevu/features/oauth/repositories/OAuthClientRepository";
+import { generateSecret } from "@rondevu/features/oauth/utils/generateSecret";
+import type { PrismaClient } from "@rondevu/prisma";
 
 import type { TSubmitClientInputSchema } from "./submitClientForReview.schema";
 

@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { useState } from "react";
 
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Badge } from "@calcom/ui/components/badge";
-import { Button } from "@calcom/ui/components/button";
-import { Dialog, ConfirmationDialogContent } from "@calcom/ui/components/dialog";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { Badge } from "@rondevu/ui/components/badge";
+import { Button } from "@rondevu/ui/components/button";
+import { Dialog, ConfirmationDialogContent } from "@rondevu/ui/components/dialog";
 import {
   Dropdown,
   DropdownItem,
@@ -14,8 +14,8 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@calcom/ui/components/dropdown";
-import { showToast } from "@calcom/ui/components/toast";
+} from "@rondevu/ui/components/dropdown";
+import { showToast } from "@rondevu/ui/components/toast";
 
 import type { AtomEventTypeListItem } from "../types";
 import { formatEventTypeDuration } from "../lib/formatEventTypeDuration";

@@ -1,4 +1,4 @@
-import type { PrismaClient } from "@calcom/prisma";
+import type { PrismaClient } from "@rondevu/prisma";
 
 export class HostLocationRepository {
   constructor(private prismaClient: PrismaClient) {}

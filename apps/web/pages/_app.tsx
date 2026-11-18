@@ -1,6 +1,6 @@
 import type { IncomingMessage } from "node:http";
-import { trpc } from "@calcom/trpc/react";
-import { WebPushProvider } from "@calcom/web/modules/notifications/components/WebPushContext";
+import { trpc } from "@rondevu/trpc/react";
+import { WebPushProvider } from "@rondevu/web/modules/notifications/components/WebPushContext";
 import type { AppProps } from "@lib/app-providers";
 import type { NextPageContext } from "next";
 import { SessionProvider } from "next-auth/react";
@@ -36,7 +36,7 @@ MyApp.getInitialProps = async ({ ctx }: { ctx: NextPageContext }) => {
   let newLocale = "en";
 
   if (req) {
-    const { getLocale } = await import("@calcom/features/auth/lib/getLocale");
+    const { getLocale } = await import("@rondevu/features/auth/lib/getLocale");
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     newLocale = await getLocale(req as IncomingMessage & { cookies: Record<string, any> });
   } else if (typeof window !== "undefined" && window.calNewLocale) {

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Controller, useForm, useWatch, useFormContext } from "react-hook-form";
 import { z } from "zod";
 
-import type { EventLocationType, LocationObject } from "@calcom/app-store/locations";
+import type { EventLocationType, LocationObject } from "@rondevu/app-store/locations";
 import {
   getLocationByType,
   getHumanReadableLocationValue,
@@ -13,16 +13,16 @@ import {
   isAttendeeInputRequired,
   LocationType,
   OrganizerDefaultConferencingAppType,
-} from "@calcom/app-store/locations";
-import { Dialog } from "@calcom/features/components/controlled-dialog";
-import PhoneInput from "@calcom/web/components/phone-input";
-import type { LocationOption } from "@calcom/features/form/components/LocationSelect";
-import LocationSelect from "@calcom/features/form/components/LocationSelect";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc } from "@calcom/trpc/react";
-import { Button } from "@calcom/ui/components/button";
-import { DialogContent, DialogFooter, DialogHeader } from "@calcom/ui/components/dialog";
-import { Form, Input } from "@calcom/ui/components/form";
+} from "@rondevu/app-store/locations";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
+import PhoneInput from "@rondevu/web/components/phone-input";
+import type { LocationOption } from "@rondevu/features/form/components/LocationSelect";
+import LocationSelect from "@rondevu/features/form/components/LocationSelect";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc } from "@rondevu/trpc/react";
+import { Button } from "@rondevu/ui/components/button";
+import { DialogContent, DialogFooter, DialogHeader } from "@rondevu/ui/components/dialog";
+import { Form, Input } from "@rondevu/ui/components/form";
 import { MapPinIcon } from "@coss/ui/icons";
 
 import { QueryCell } from "../../lib/QueryCell";

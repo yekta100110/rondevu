@@ -1,4 +1,4 @@
-import { sendSMS } from "@calcom/lib/smsTransport";
+import { sendSMS } from "@rondevu/lib/smsTransport";
 import type { TrpcSessionUser } from "../../../types";
 import type { TSendTestSMSSchema } from "./sendTestSMS.schema";
 

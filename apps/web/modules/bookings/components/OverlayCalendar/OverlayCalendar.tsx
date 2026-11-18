@@ -1,5 +1,5 @@
-import { useIsPlatform } from "@calcom/atoms/hooks/useIsPlatform";
-import { useOverlayCalendar } from "@calcom/web/modules/bookings/hooks/useOverlayCalendar";
+import { useIsPlatform } from "@rondevu/atoms/hooks/useIsPlatform";
+import { useOverlayCalendar } from "@rondevu/web/modules/bookings/hooks/useOverlayCalendar";
 import { useEffect } from "react";
 import type { WrappedBookerPropsMain } from "../../types";
 import { OverlayCalendarContinueModal } from "./OverlayCalendarContinueModal";

@@ -3,7 +3,7 @@
  *
  * These tests focus specifically on testing what happens after a successful booking or rescheduling.
  */
-import prismaMock from "@calcom/testing/lib/__mocks__/prisma";
+import prismaMock from "@rondevu/testing/lib/__mocks__/prisma";
 
 import {
   createBookingScenario,
@@ -15,17 +15,17 @@ import {
   getScenarioData,
   mockCalendarToHaveNoBusySlots,
   BookingLocations,
-} from "@calcom/testing/lib/bookingScenario/bookingScenario";
-import { expectBookingToBeInDatabase } from "@calcom/testing/lib/bookingScenario/expects";
-import { getMockRequestDataForBooking } from "@calcom/testing/lib/bookingScenario/getMockRequestDataForBooking";
-import { setupAndTeardown } from "@calcom/testing/lib/bookingScenario/setupAndTeardown";
+} from "@rondevu/testing/lib/bookingScenario/bookingScenario";
+import { expectBookingToBeInDatabase } from "@rondevu/testing/lib/bookingScenario/expects";
+import { getMockRequestDataForBooking } from "@rondevu/testing/lib/bookingScenario/getMockRequestDataForBooking";
+import { setupAndTeardown } from "@rondevu/testing/lib/bookingScenario/setupAndTeardown";
 
 import type { Request, Response } from "express";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { describe, expect, beforeEach, vi, test } from "vitest";
 
-import { resetTestEmails } from "@calcom/lib/testEmails";
-import { BookingStatus } from "@calcom/prisma/enums";
+import { resetTestEmails } from "@rondevu/lib/testEmails";
+import { BookingStatus } from "@rondevu/prisma/enums";
 
 import { getNewBookingHandler } from "./getNewBookingHandler";
 

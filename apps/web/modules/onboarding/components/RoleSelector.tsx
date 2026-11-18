@@ -1,8 +1,8 @@
 "use client";
 
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { ToggleGroup } from "@calcom/ui/components/form";
-import { InfoBadge } from "@calcom/ui/components/badge";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { ToggleGroup } from "@rondevu/ui/components/form";
+import { InfoBadge } from "@rondevu/ui/components/badge";
 
 import type { InviteRole } from "../store/onboarding-store";
 

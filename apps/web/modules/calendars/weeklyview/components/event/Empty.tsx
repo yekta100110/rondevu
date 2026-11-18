@@ -1,16 +1,16 @@
 import { useMemo } from "react";
 import { shallow } from "zustand/shallow";
 
-import type { Dayjs } from "@calcom/dayjs";
-import dayjs from "@calcom/dayjs";
-import { useTimePreferences } from "@calcom/features/bookings/lib";
-import classNames from "@calcom/ui/classNames";
+import type { Dayjs } from "@rondevu/dayjs";
+import dayjs from "@rondevu/dayjs";
+import { useTimePreferences } from "@rondevu/features/bookings/lib";
+import classNames from "@rondevu/ui/classNames";
 
-import { OutOfOfficeInSlots } from "@calcom/web/modules/bookings/components/OutOfOfficeInSlots";
-import { useCalendarStore } from "@calcom/features/calendars/weeklyview/state/store";
-import type { CalendarAvailableTimeslots } from "@calcom/features/calendars/weeklyview/types/state";
-import type { GridCellToDateProps } from "@calcom/features/calendars/weeklyview/utils";
-import { gridCellToDateTime } from "@calcom/features/calendars/weeklyview/utils";
+import { OutOfOfficeInSlots } from "@rondevu/web/modules/bookings/components/OutOfOfficeInSlots";
+import { useCalendarStore } from "@rondevu/features/calendars/weeklyview/state/store";
+import type { CalendarAvailableTimeslots } from "@rondevu/features/calendars/weeklyview/types/state";
+import type { GridCellToDateProps } from "@rondevu/features/calendars/weeklyview/utils";
+import { gridCellToDateTime } from "@rondevu/features/calendars/weeklyview/utils";
 
 type EmptyCellProps = GridCellToDateProps & {
   isDisabled?: boolean;

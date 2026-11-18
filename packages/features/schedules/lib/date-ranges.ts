@@ -1,8 +1,8 @@
-import type { Dayjs } from "@calcom/dayjs";
-import dayjs from "@calcom/dayjs";
-import type { IOutOfOfficeData } from "@calcom/features/availability/lib/getUserAvailability";
-import { sanitizeTimezone } from "@calcom/lib/dayjs";
-import type { Availability } from "@calcom/prisma/client";
+import type { Dayjs } from "@rondevu/dayjs";
+import dayjs from "@rondevu/dayjs";
+import type { IOutOfOfficeData } from "@rondevu/features/availability/lib/getUserAvailability";
+import { sanitizeTimezone } from "@rondevu/lib/dayjs";
+import type { Availability } from "@rondevu/prisma/client";
 
 export type DateRange = {
   start: Dayjs;

@@ -1,9 +1,9 @@
-import logger from "@calcom/lib/logger";
-import { markdownToSafeHTML } from "@calcom/lib/markdownToSafeHTML";
-import prisma from "@calcom/prisma";
-import type { Prisma } from "@calcom/prisma/client";
-import type { baseEventTypeSelect } from "@calcom/prisma/selects";
-import { EventTypeMetaDataSchema } from "@calcom/prisma/zod-utils";
+import logger from "@rondevu/lib/logger";
+import { markdownToSafeHTML } from "@rondevu/lib/markdownToSafeHTML";
+import prisma from "@rondevu/prisma";
+import type { Prisma } from "@rondevu/prisma/client";
+import type { baseEventTypeSelect } from "@rondevu/prisma/selects";
+import { EventTypeMetaDataSchema } from "@rondevu/prisma/zod-utils";
 
 const log = logger.getSubLogger({ prefix: ["getEventTypesPublic"] });
 

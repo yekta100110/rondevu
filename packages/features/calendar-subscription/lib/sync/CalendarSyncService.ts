@@ -1,12 +1,12 @@
-import type { CreateRegularBookingData } from "@calcom/features/bookings/lib/dto/types";
-import handleCancelBooking from "@calcom/features/bookings/lib/handleCancelBooking";
-import type { BookingRepository } from "@calcom/features/bookings/repositories/BookingRepository";
-import type { CalendarSubscriptionEventItem } from "@calcom/features/calendar-subscription/lib/CalendarSubscriptionPort.interface";
-import { APP_NAME } from "@calcom/lib/constants";
-import { IdempotencyKeyService } from "@calcom/lib/idempotencyKey/idempotencyKeyService";
-import logger from "@calcom/lib/logger";
-import { safeStringify } from "@calcom/lib/safeStringify";
-import type { SelectedCalendar } from "@calcom/prisma/client";
+import type { CreateRegularBookingData } from "@rondevu/features/bookings/lib/dto/types";
+import handleCancelBooking from "@rondevu/features/bookings/lib/handleCancelBooking";
+import type { BookingRepository } from "@rondevu/features/bookings/repositories/BookingRepository";
+import type { CalendarSubscriptionEventItem } from "@rondevu/features/calendar-subscription/lib/CalendarSubscriptionPort.interface";
+import { APP_NAME } from "@rondevu/lib/constants";
+import { IdempotencyKeyService } from "@rondevu/lib/idempotencyKey/idempotencyKeyService";
+import logger from "@rondevu/lib/logger";
+import { safeStringify } from "@rondevu/lib/safeStringify";
+import type { SelectedCalendar } from "@rondevu/prisma/client";
 import { metrics } from "@sentry/nextjs";
 
 const log = logger.getSubLogger({ prefix: ["CalendarSyncService"] });
@@ -206,7 +206,7 @@ export class CalendarSyncService {
       // Dynamic import to avoid loading the entire booking service chain at module evaluation time
       // This prevents react-awesome-query-builder from being loaded in server-side contexts
       const { getRegularBookingService } = await import(
-        "@calcom/features/bookings/di/RegularBookingService.container"
+        "@rondevu/features/bookings/di/RegularBookingService.container"
       );
       const regularBookingService = getRegularBookingService();
       await regularBookingService.createBooking({

@@ -1,14 +1,14 @@
-import { MSTeamsLocationType } from "@calcom/app-store/constants";
-import dayjs from "@calcom/dayjs";
-import { triggerDelegationCredentialErrorWebhook } from "@calcom/features/webhooks/lib/triggerDelegationCredentialErrorWebhook";
-import { getLocation, getRichDescriptionHTML } from "@calcom/lib/CalEventParser";
+import { MSTeamsLocationType } from "@rondevu/app-store/constants";
+import dayjs from "@rondevu/dayjs";
+import { triggerDelegationCredentialErrorWebhook } from "@rondevu/features/webhooks/lib/triggerDelegationCredentialErrorWebhook";
+import { getLocation, getRichDescriptionHTML } from "@rondevu/lib/CalEventParser";
 import {
   CalendarAppDelegationCredentialConfigurationError,
   CalendarAppDelegationCredentialInvalidGrantError,
-} from "@calcom/lib/CalendarAppError";
-import { handleErrorsJson, handleErrorsRaw } from "@calcom/lib/errors";
-import logger from "@calcom/lib/logger";
-import type { BufferedBusyTime } from "@calcom/types/BufferedBusyTime";
+} from "@rondevu/lib/CalendarAppError";
+import { handleErrorsJson, handleErrorsRaw } from "@rondevu/lib/errors";
+import logger from "@rondevu/lib/logger";
+import type { BufferedBusyTime } from "@rondevu/types/BufferedBusyTime";
 import type {
   Calendar,
   CalendarServiceEvent,
@@ -16,8 +16,8 @@ import type {
   GetAvailabilityParams,
   IntegrationCalendar,
   NewCalendarEventType,
-} from "@calcom/types/Calendar";
-import type { CredentialForCalendarServiceWithTenantId } from "@calcom/types/Credential";
+} from "@rondevu/types/Calendar";
+import type { CredentialForCalendarServiceWithTenantId } from "@rondevu/types/Credential";
 import type { Event, Calendar as OfficeCalendar, User } from "@microsoft/microsoft-graph-types-beta";
 import type { DefaultBodyType } from "msw";
 import { findIana } from "windows-iana";

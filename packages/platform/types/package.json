@@ -1,5 +1,5 @@
 {
-  "name": "@calcom/platform-types",
+  "name": "@rondevu/platform-types",
   "version": "0.0.0",
   "main": "./dist/index.js",
   "types": "./dist/index.js",
@@ -11,10 +11,10 @@
     "post-install": "yarn build"
   },
   "dependencies": {
-    "@calcom/platform-constants": "workspace:*",
-    "@calcom/platform-enums": "workspace:*",
     "@nestjs/common": "10.4.20",
     "@nestjs/swagger": "7.4.2",
+    "@rondevu/platform-constants": "workspace:*",
+    "@rondevu/platform-enums": "workspace:*",
     "class-transformer": "0.5.1",
     "class-validator": "0.14.3",
     "libphonenumber-js": "1.12.38",

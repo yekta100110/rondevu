@@ -1,14 +1,14 @@
 import process from "node:process";
-import { getCalendar } from "@calcom/app-store/_utils/getCalendar";
-import { symmetricDecrypt } from "@calcom/lib/crypto";
-import { decryptSecret } from "@calcom/lib/crypto/keyring";
-import { isDelegationCredential } from "@calcom/lib/delegationCredential";
-import logger from "@calcom/lib/logger";
-import { getPiiFreeCredential, getPiiFreeSelectedCalendar } from "@calcom/lib/piiFreeData";
-import { safeStringify } from "@calcom/lib/safeStringify";
-import { performance } from "@calcom/lib/server/perfObserver";
-import type { CalendarFetchMode, EventBusyDate, SelectedCalendar } from "@calcom/types/Calendar";
-import type { CredentialForCalendarService } from "@calcom/types/Credential";
+import { getCalendar } from "@rondevu/app-store/_utils/getCalendar";
+import { symmetricDecrypt } from "@rondevu/lib/crypto";
+import { decryptSecret } from "@rondevu/lib/crypto/keyring";
+import { isDelegationCredential } from "@rondevu/lib/delegationCredential";
+import logger from "@rondevu/lib/logger";
+import { getPiiFreeCredential, getPiiFreeSelectedCalendar } from "@rondevu/lib/piiFreeData";
+import { safeStringify } from "@rondevu/lib/safeStringify";
+import { performance } from "@rondevu/lib/server/perfObserver";
+import type { CalendarFetchMode, EventBusyDate, SelectedCalendar } from "@rondevu/types/Calendar";
+import type { CredentialForCalendarService } from "@rondevu/types/Credential";
 import { normalizeTimezone } from "./timezone-conversion";
 
 const log = logger.getSubLogger({ prefix: ["getCalendarsEvents"] });

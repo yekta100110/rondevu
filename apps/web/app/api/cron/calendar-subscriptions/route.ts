@@ -1,20 +1,20 @@
 import process from "node:process";
-import { BookingRepository } from "@calcom/features/bookings/repositories/BookingRepository";
-import { DefaultAdapterFactory } from "@calcom/features/calendar-subscription/adapters/AdaptersFactory";
-import { CalendarSubscriptionService } from "@calcom/features/calendar-subscription/lib/CalendarSubscriptionService";
-import { CalendarCacheEventRepository } from "@calcom/features/calendar-subscription/lib/cache/CalendarCacheEventRepository";
-import { CalendarCacheEventService } from "@calcom/features/calendar-subscription/lib/cache/CalendarCacheEventService";
-import { CalendarSyncService } from "@calcom/features/calendar-subscription/lib/sync/CalendarSyncService";
-import { getFeatureRepository } from "@calcom/features/di/containers/FeatureRepository";
-import { getTeamFeatureRepository } from "@calcom/features/di/containers/TeamFeatureRepository";
-import { getUserFeatureRepository } from "@calcom/features/di/containers/UserFeatureRepository";
-import { SelectedCalendarRepository } from "@calcom/features/selectedCalendar/repositories/SelectedCalendarRepository";
-import { prisma } from "@calcom/prisma";
-import { defaultResponderForAppDir } from "@calcom/web/app/api/defaultResponderForAppDir";
+import { BookingRepository } from "@rondevu/features/bookings/repositories/BookingRepository";
+import { DefaultAdapterFactory } from "@rondevu/features/calendar-subscription/adapters/AdaptersFactory";
+import { CalendarSubscriptionService } from "@rondevu/features/calendar-subscription/lib/CalendarSubscriptionService";
+import { CalendarCacheEventRepository } from "@rondevu/features/calendar-subscription/lib/cache/CalendarCacheEventRepository";
+import { CalendarCacheEventService } from "@rondevu/features/calendar-subscription/lib/cache/CalendarCacheEventService";
+import { CalendarSyncService } from "@rondevu/features/calendar-subscription/lib/sync/CalendarSyncService";
+import { getFeatureRepository } from "@rondevu/features/di/containers/FeatureRepository";
+import { getTeamFeatureRepository } from "@rondevu/features/di/containers/TeamFeatureRepository";
+import { getUserFeatureRepository } from "@rondevu/features/di/containers/UserFeatureRepository";
+import { SelectedCalendarRepository } from "@rondevu/features/selectedCalendar/repositories/SelectedCalendarRepository";
+import { prisma } from "@rondevu/prisma";
+import { defaultResponderForAppDir } from "@rondevu/web/app/api/defaultResponderForAppDir";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-import { validateCronAuth } from "@calcom/lib/validateCronAuth";
+import { validateCronAuth } from "@rondevu/lib/validateCronAuth";
 
 /**
  * Cron webhook

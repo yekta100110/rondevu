@@ -1,11 +1,11 @@
 import type { z } from "zod";
 
-import type { eventTypeAppCardZod } from "@calcom/app-store/eventTypeAppCardZod";
-import { eventTypeAppMetadataOptionalSchema } from "@calcom/app-store/zod-utils";
-import CrmManager from "@calcom/features/crmManager/crmManager";
-import logger from "@calcom/lib/logger";
-import prisma from "@calcom/prisma";
-import { EventTypeMetaDataSchema } from "@calcom/prisma/zod-utils";
+import type { eventTypeAppCardZod } from "@rondevu/app-store/eventTypeAppCardZod";
+import { eventTypeAppMetadataOptionalSchema } from "@rondevu/app-store/zod-utils";
+import CrmManager from "@rondevu/features/crmManager/crmManager";
+import logger from "@rondevu/lib/logger";
+import prisma from "@rondevu/prisma";
+import { EventTypeMetaDataSchema } from "@rondevu/prisma/zod-utils";
 
 import type { NoShowAttendees } from "../handleMarkNoShow";
 import { noShowEnabledApps } from "./noShowEnabledApps";

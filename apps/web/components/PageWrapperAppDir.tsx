@@ -1,6 +1,6 @@
 "use client";
 
-import "@calcom/embed-core/src/embed-iframe";
+import "@rondevu/embed-core/src/embed-iframe";
 
 import AppProviders from "@lib/app-providers-app-dir";
 

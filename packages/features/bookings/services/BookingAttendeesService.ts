@@ -1,11 +1,11 @@
-import { eventTypeMetaDataSchemaWithTypedApps } from "@calcom/app-store/zod-utils";
-import { BookingEmailSmsHandler } from "@calcom/features/bookings/lib/BookingEmailSmsHandler";
-import type { BookingRepository } from "@calcom/features/bookings/repositories/BookingRepository";
-import type { BookingAttendeesRemoveService } from "@calcom/features/bookings/services/BookingAttendeesRemoveService";
-import { ErrorCode } from "@calcom/lib/errorCodes";
-import { ErrorWithCode } from "@calcom/lib/errors";
-import logger from "@calcom/lib/logger";
-import type { Booking, TUser } from "@calcom/trpc/server/routers/viewer/bookings/addGuests.handler";
+import { eventTypeMetaDataSchemaWithTypedApps } from "@rondevu/app-store/zod-utils";
+import { BookingEmailSmsHandler } from "@rondevu/features/bookings/lib/BookingEmailSmsHandler";
+import type { BookingRepository } from "@rondevu/features/bookings/repositories/BookingRepository";
+import type { BookingAttendeesRemoveService } from "@rondevu/features/bookings/services/BookingAttendeesRemoveService";
+import { ErrorCode } from "@rondevu/lib/errorCodes";
+import { ErrorWithCode } from "@rondevu/lib/errors";
+import logger from "@rondevu/lib/logger";
+import type { Booking, TUser } from "@rondevu/trpc/server/routers/viewer/bookings/addGuests.handler";
 import {
   buildCalendarEvent,
   getBooking,
@@ -16,9 +16,9 @@ import {
   updateCalendarEvent,
   validateGuestsFieldEnabled,
   validateUserPermissions,
-} from "@calcom/trpc/server/routers/viewer/bookings/addGuests.handler";
-import type { TAddGuestsInputSchema } from "@calcom/trpc/server/routers/viewer/bookings/addGuests.schema";
-import type { CalendarEvent } from "@calcom/types/Calendar";
+} from "@rondevu/trpc/server/routers/viewer/bookings/addGuests.handler";
+import type { TAddGuestsInputSchema } from "@rondevu/trpc/server/routers/viewer/bookings/addGuests.schema";
+import type { CalendarEvent } from "@rondevu/types/Calendar";
 
 type Attendee = TAddGuestsInputSchema["guests"][number];
 
@@ -172,4 +172,4 @@ export class BookingAttendeesService {
   }
 }
 
-export type { RemovedAttendee } from "@calcom/features/bookings/services/BookingAttendeesRemoveService";
+export type { RemovedAttendee } from "@rondevu/features/bookings/services/BookingAttendeesRemoveService";

@@ -1,6 +1,6 @@
-import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
-import { getScheduleListItemData } from "@calcom/lib/schedules/transformers/getScheduleListItemData";
-import { availabilityRouter } from "@calcom/trpc/server/routers/viewer/availability/_router";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
+import { getScheduleListItemData } from "@rondevu/lib/schedules/transformers/getScheduleListItemData";
+import { availabilityRouter } from "@rondevu/trpc/server/routers/viewer/availability/_router";
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 import { createRouterCaller, getTRPCContext } from "app/_trpc/context";
 import type { PageProps, ReadonlyHeaders, ReadonlyRequestCookies } from "app/_types";

@@ -1,18 +1,18 @@
-import { getCalendar } from "@calcom/app-store/_utils/getCalendar";
-import { MeetLocationType } from "@calcom/app-store/locations";
-import getApps from "@calcom/app-store/utils";
-import dayjs from "@calcom/dayjs";
+import { getCalendar } from "@rondevu/app-store/_utils/getCalendar";
+import { MeetLocationType } from "@rondevu/app-store/locations";
+import getApps from "@rondevu/app-store/utils";
+import dayjs from "@rondevu/dayjs";
 import getCalendarsEvents, {
   getCalendarsEventsWithTimezones,
-} from "@calcom/features/calendars/lib/getCalendarsEvents";
-import { getRichDescription, getUid } from "@calcom/lib/CalEventParser";
-import { CalendarAppDelegationCredentialError } from "@calcom/lib/CalendarAppError";
-import { ORGANIZER_EMAIL_EXEMPT_DOMAINS } from "@calcom/lib/constants";
-import { buildNonDelegationCredentials } from "@calcom/lib/delegationCredential";
-import { formatCalEvent } from "@calcom/lib/formatCalendarEvent";
-import logger from "@calcom/lib/logger";
-import { getPiiFreeCalendarEvent, getPiiFreeCredential } from "@calcom/lib/piiFreeData";
-import { safeStringify } from "@calcom/lib/safeStringify";
+} from "@rondevu/features/calendars/lib/getCalendarsEvents";
+import { getRichDescription, getUid } from "@rondevu/lib/CalEventParser";
+import { CalendarAppDelegationCredentialError } from "@rondevu/lib/CalendarAppError";
+import { ORGANIZER_EMAIL_EXEMPT_DOMAINS } from "@rondevu/lib/constants";
+import { buildNonDelegationCredentials } from "@rondevu/lib/delegationCredential";
+import { formatCalEvent } from "@rondevu/lib/formatCalendarEvent";
+import logger from "@rondevu/lib/logger";
+import { getPiiFreeCalendarEvent, getPiiFreeCredential } from "@rondevu/lib/piiFreeData";
+import { safeStringify } from "@rondevu/lib/safeStringify";
 import type {
   CalendarEvent,
   CalendarFetchMode,
@@ -21,9 +21,9 @@ import type {
   IntegrationCalendar,
   NewCalendarEventType,
   SelectedCalendar,
-} from "@calcom/types/Calendar";
-import type { CredentialForCalendarService, CredentialPayload } from "@calcom/types/Credential";
-import type { EventResult } from "@calcom/types/EventManager";
+} from "@rondevu/types/Calendar";
+import type { CredentialForCalendarService, CredentialPayload } from "@rondevu/types/Credential";
+import type { EventResult } from "@rondevu/types/EventManager";
 import { sortBy } from "lodash";
 
 const log = logger.getSubLogger({ prefix: ["CalendarManager"] });

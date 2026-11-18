@@ -1,6 +1,6 @@
 import { timingSafeEqual } from "node:crypto";
 import process from "node:process";
-import { prisma } from "@calcom/prisma";
+import { prisma } from "@rondevu/prisma";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 

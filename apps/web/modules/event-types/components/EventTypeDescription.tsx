@@ -1,17 +1,17 @@
 import { useMemo } from "react";
 
-import { getPaymentAppData } from "@calcom/app-store/_utils/payments/getPaymentAppData";
-import { eventTypeMetaDataSchemaWithTypedApps } from "@calcom/app-store/zod-utils";
-import { Price } from "@calcom/features/bookings/components/event-meta/Price";
-import { PriceIcon } from "@calcom/web/modules/bookings/components/event-meta/PriceIcon";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { parseRecurringEvent } from "@calcom/lib/isRecurringEvent";
-import { markdownToSafeHTML } from "@calcom/lib/markdownToSafeHTML";
-import type { baseEventTypeSelect } from "@calcom/prisma";
-import type { Prisma, EventType } from "@calcom/prisma/client";
-import { SchedulingType } from "@calcom/prisma/enums";
-import classNames from "@calcom/ui/classNames";
-import { Badge } from "@calcom/ui/components/badge";
+import { getPaymentAppData } from "@rondevu/app-store/_utils/payments/getPaymentAppData";
+import { eventTypeMetaDataSchemaWithTypedApps } from "@rondevu/app-store/zod-utils";
+import { Price } from "@rondevu/features/bookings/components/event-meta/Price";
+import { PriceIcon } from "@rondevu/web/modules/bookings/components/event-meta/PriceIcon";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { parseRecurringEvent } from "@rondevu/lib/isRecurringEvent";
+import { markdownToSafeHTML } from "@rondevu/lib/markdownToSafeHTML";
+import type { baseEventTypeSelect } from "@rondevu/prisma";
+import type { Prisma, EventType } from "@rondevu/prisma/client";
+import { SchedulingType } from "@rondevu/prisma/enums";
+import classNames from "@rondevu/ui/classNames";
+import { Badge } from "@rondevu/ui/components/badge";
 
 export type EventTypeDescriptionProps = {
   eventType: Pick<

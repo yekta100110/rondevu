@@ -2,13 +2,13 @@
 
 import { useState, useEffect } from "react";
 
-import { useDebounce } from "@calcom/lib/hooks/useDebounce";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc } from "@calcom/trpc/react";
-import type { RouterOutputs } from "@calcom/trpc/react";
-import { Avatar } from "@calcom/ui/components/avatar";
-import { Button } from "@calcom/ui/components/button";
-import { Checkbox, TextField } from "@calcom/ui/components/form";
+import { useDebounce } from "@rondevu/lib/hooks/useDebounce";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc } from "@rondevu/trpc/react";
+import type { RouterOutputs } from "@rondevu/trpc/react";
+import { Avatar } from "@rondevu/ui/components/avatar";
+import { Button } from "@rondevu/ui/components/button";
+import { Checkbox, TextField } from "@rondevu/ui/components/form";
 import {
   Sheet,
   SheetContent,
@@ -16,9 +16,9 @@ import {
   SheetTitle,
   SheetBody,
   SheetFooter,
-} from "@calcom/ui/components/sheet";
-import { SkeletonContainer, SkeletonText } from "@calcom/ui/components/skeleton";
-import { showToast } from "@calcom/ui/components/toast";
+} from "@rondevu/ui/components/sheet";
+import { SkeletonContainer, SkeletonText } from "@rondevu/ui/components/skeleton";
+import { showToast } from "@rondevu/ui/components/toast";
 
 type Flag = RouterOutputs["viewer"]["features"]["list"][number];
 

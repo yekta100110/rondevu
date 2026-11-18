@@ -4,16 +4,16 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
 import {
   getCalendarCredentials,
   getConnectedCalendars,
-} from "@calcom/features/calendars/lib/CalendarManager";
-import { UserRepository } from "@calcom/features/users/repositories/UserRepository";
-import { HttpError } from "@calcom/lib/http-error";
-import notEmpty from "@calcom/lib/notEmpty";
-import { SelectedCalendarRepository } from "@calcom/features/selectedCalendar/repositories/SelectedCalendarRepository";
-import prisma from "@calcom/prisma";
+} from "@rondevu/features/calendars/lib/CalendarManager";
+import { UserRepository } from "@rondevu/features/users/repositories/UserRepository";
+import { HttpError } from "@rondevu/lib/http-error";
+import notEmpty from "@rondevu/lib/notEmpty";
+import { SelectedCalendarRepository } from "@rondevu/features/selectedCalendar/repositories/SelectedCalendarRepository";
+import prisma from "@rondevu/prisma";
 
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 

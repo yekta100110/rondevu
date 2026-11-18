@@ -1,7 +1,7 @@
 import { afterEach, beforeAll, describe, expect, it } from "vitest";
 import { UserRepository } from "./UserRepository";
-import { getUserRepository } from "@calcom/features/di/containers/UserRepository";
-import { IdentityProvider } from "@calcom/prisma/enums";
+import { getUserRepository } from "@rondevu/features/di/containers/UserRepository";
+import { IdentityProvider } from "@rondevu/prisma/enums";
 import bcrypt from "bcryptjs";
 
 const testRunId = `${Date.now()}-${Math.random().toString(36).substring(2, 8)}`;

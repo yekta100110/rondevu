@@ -1,16 +1,16 @@
 "use client";
 
-import { AppList } from "@calcom/features/apps/components/AppList";
-import DisconnectIntegrationModal from "@calcom/features/apps/components/DisconnectIntegrationModal";
-import SettingsHeader from "@calcom/features/settings/appDir/SettingsHeader";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import type { RouterOutputs } from "@calcom/trpc/react";
-import { trpc } from "@calcom/trpc/react";
-import { Button } from "@calcom/ui/components/button";
-import { EmptyScreen } from "@calcom/ui/components/empty-screen";
-import { SkeletonContainer, SkeletonText } from "@calcom/ui/components/skeleton";
-import { showToast } from "@calcom/ui/components/toast";
-import AppListCardWebWrapper from "@calcom/web/modules/apps/components/AppListCardWebWrapper";
+import { AppList } from "@rondevu/features/apps/components/AppList";
+import DisconnectIntegrationModal from "@rondevu/features/apps/components/DisconnectIntegrationModal";
+import SettingsHeader from "@rondevu/features/settings/appDir/SettingsHeader";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import type { RouterOutputs } from "@rondevu/trpc/react";
+import { trpc } from "@rondevu/trpc/react";
+import { Button } from "@rondevu/ui/components/button";
+import { EmptyScreen } from "@rondevu/ui/components/empty-screen";
+import { SkeletonContainer, SkeletonText } from "@rondevu/ui/components/skeleton";
+import { showToast } from "@rondevu/ui/components/toast";
+import AppListCardWebWrapper from "@rondevu/web/modules/apps/components/AppListCardWebWrapper";
 import { useReducer } from "react";
 
 export type UpdateUsersDefaultConferencingAppParams = {

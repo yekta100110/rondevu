@@ -3,16 +3,16 @@
 import { useEffect, useState } from "react";
 
 import type { TApiKeys } from "~/api-keys/api-keys/components/ApiKeyListItem";
-import { Dialog } from "@calcom/features/components/controlled-dialog";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
 import ApiKeyDialogForm from "~/api-keys/api-keys/components/ApiKeyDialogForm";
 import ApiKeyListItem from "~/api-keys/api-keys/components/ApiKeyListItem";
-import SettingsHeader from "@calcom/features/settings/appDir/SettingsHeader";
-import { APP_NAME } from "@calcom/lib/constants";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import type { RouterOutputs } from "@calcom/trpc/react";
-import { Button } from "@calcom/ui/components/button";
-import { DialogContent } from "@calcom/ui/components/dialog";
-import { EmptyScreen } from "@calcom/ui/components/empty-screen";
+import SettingsHeader from "@rondevu/features/settings/appDir/SettingsHeader";
+import { APP_NAME } from "@rondevu/lib/constants";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import type { RouterOutputs } from "@rondevu/trpc/react";
+import { Button } from "@rondevu/ui/components/button";
+import { DialogContent } from "@rondevu/ui/components/dialog";
+import { EmptyScreen } from "@rondevu/ui/components/empty-screen";
 
 export const apiKeyModalRef = {
   current: null as null | ((show: boolean) => void),

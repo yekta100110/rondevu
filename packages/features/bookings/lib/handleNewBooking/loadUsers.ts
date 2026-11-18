@@ -2,14 +2,14 @@ import {
   findMatchingHostsWithEventSegment,
   getNormalizedHosts,
   getRoutedUsersWithContactOwnerAndFixedUsers,
-} from "@calcom/features/users/lib/getRoutedUsers";
-import { UserRepository, withSelectedCalendars } from "@calcom/features/users/repositories/UserRepository";
-import { HttpError } from "@calcom/lib/http-error";
-import logger from "@calcom/lib/logger";
-import { safeStringify } from "@calcom/lib/safeStringify";
-import prisma, { userSelect } from "@calcom/prisma";
-import { Prisma } from "@calcom/prisma/client";
-import { credentialForCalendarServiceSelect } from "@calcom/prisma/selects/credential";
+} from "@rondevu/features/users/lib/getRoutedUsers";
+import { UserRepository, withSelectedCalendars } from "@rondevu/features/users/repositories/UserRepository";
+import { HttpError } from "@rondevu/lib/http-error";
+import logger from "@rondevu/lib/logger";
+import { safeStringify } from "@rondevu/lib/safeStringify";
+import prisma, { userSelect } from "@rondevu/prisma";
+import { Prisma } from "@rondevu/prisma/client";
+import { credentialForCalendarServiceSelect } from "@rondevu/prisma/selects/credential";
 import type { NewBookingEventType } from "./getEventTypesFromDB";
 
 const getOrgDomainConfig = (..._args: unknown[]) => ({ currentOrgDomain: null as string | null, isValidOrgDomain: false });

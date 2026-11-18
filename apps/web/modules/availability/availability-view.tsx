@@ -1,16 +1,16 @@
 "use client";
 
-import type { BulkUpdatParams } from "@calcom/features/eventtypes/components/BulkEditDefaultForEventsModal";
-import { BulkEditDefaultForEventsModal } from "@calcom/features/eventtypes/components/BulkEditDefaultForEventsModal";
-import { ScheduleListItem } from "@calcom/features/schedules/components/ScheduleListItem";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { HttpError } from "@calcom/lib/http-error";
-import type { RouterOutputs } from "@calcom/trpc/react";
-import { trpc } from "@calcom/trpc/react";
-import useMeQuery from "@calcom/trpc/react/hooks/useMeQuery";
-import { EmptyScreen } from "@calcom/ui/components/empty-screen";
-import { showToast } from "@calcom/ui/components/toast";
-import { NewScheduleButton } from "@calcom/web/modules/schedules/components/NewScheduleButton";
+import type { BulkUpdatParams } from "@rondevu/features/eventtypes/components/BulkEditDefaultForEventsModal";
+import { BulkEditDefaultForEventsModal } from "@rondevu/features/eventtypes/components/BulkEditDefaultForEventsModal";
+import { ScheduleListItem } from "@rondevu/features/schedules/components/ScheduleListItem";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { HttpError } from "@rondevu/lib/http-error";
+import type { RouterOutputs } from "@rondevu/trpc/react";
+import { trpc } from "@rondevu/trpc/react";
+import useMeQuery from "@rondevu/trpc/react/hooks/useMeQuery";
+import { EmptyScreen } from "@rondevu/ui/components/empty-screen";
+import { showToast } from "@rondevu/ui/components/toast";
+import { NewScheduleButton } from "@rondevu/web/modules/schedules/components/NewScheduleButton";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { revalidateAvailabilityList } from "app/(use-page-wrapper)/(main-nav)/availability/actions";
 import Link from "next/link";

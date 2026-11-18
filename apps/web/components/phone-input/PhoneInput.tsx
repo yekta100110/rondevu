@@ -6,10 +6,10 @@ import { useEffect, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
-import { useIsPlatform } from "@calcom/atoms/hooks/useIsPlatform";
-import { type CountryCode, useBookerStore } from "@calcom/features/bookings/Booker/store";
-import { trpc } from "@calcom/trpc/react";
-import classNames from "@calcom/ui/classNames";
+import { useIsPlatform } from "@rondevu/atoms/hooks/useIsPlatform";
+import { type CountryCode, useBookerStore } from "@rondevu/features/bookings/Booker/store";
+import { trpc } from "@rondevu/trpc/react";
+import classNames from "@rondevu/ui/classNames";
 import { CUSTOM_PHONE_MASKS } from "./phone-masks";
 
 export type PhoneInputProps = {

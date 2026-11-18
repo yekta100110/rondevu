@@ -1,5 +1,5 @@
-import { FLAGS_DI_TOKENS } from "@calcom/features/flags/di/tokens";
-import { FeaturesRepository } from "@calcom/features/flags/features.repository";
+import { FLAGS_DI_TOKENS } from "@rondevu/features/flags/di/tokens";
+import { FeaturesRepository } from "@rondevu/features/flags/features.repository";
 
 import { bindModuleToClassOnToken, createModule, type ModuleLoader } from "../di";
 import { moduleLoader as prismaModuleLoader } from "./Prisma";

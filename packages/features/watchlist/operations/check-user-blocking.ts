@@ -1,5 +1,5 @@
-import { getWatchlistFeature } from "@calcom/features/di/watchlist/containers/watchlist";
-import logger from "@calcom/lib/logger";
+import { getWatchlistFeature } from "@rondevu/features/di/watchlist/containers/watchlist";
+import logger from "@rondevu/lib/logger";
 
 const log: ReturnType<typeof logger.getSubLogger> = logger.getSubLogger({
   prefix: ["watchlist", "check-user-blocking"],

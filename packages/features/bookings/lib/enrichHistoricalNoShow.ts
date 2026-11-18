@@ -1,6 +1,6 @@
-import isSmsCalEmail from "@calcom/lib/isSmsCalEmail";
-import type { PrismaClient } from "@calcom/prisma";
-import { BookingStatus } from "@calcom/prisma/enums";
+import isSmsCalEmail from "@rondevu/lib/isSmsCalEmail";
+import type { PrismaClient } from "@rondevu/prisma";
+import { BookingStatus } from "@rondevu/prisma/enums";
 
 /**
  * Extracts digit characters from a string.

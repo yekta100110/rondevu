@@ -1,9 +1,9 @@
-import { useBookerStore } from "@calcom/features/bookings/Booker/store";
-import { useDebounce } from "@calcom/lib/hooks/useDebounce";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import isSmsCalEmail from "@calcom/lib/isSmsCalEmail";
-import { trpc } from "@calcom/trpc/react";
-import { showToast } from "@calcom/ui/components/toast";
+import { useBookerStore } from "@rondevu/features/bookings/Booker/store";
+import { useDebounce } from "@rondevu/lib/hooks/useDebounce";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import isSmsCalEmail from "@rondevu/lib/isSmsCalEmail";
+import { trpc } from "@rondevu/trpc/react";
+import { showToast } from "@rondevu/ui/components/toast";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 

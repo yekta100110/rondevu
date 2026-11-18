@@ -1,7 +1,7 @@
-import { WEBAPP_URL } from "@calcom/lib/constants";
-import { distributedTracing } from "@calcom/lib/tracing/factory";
-import prisma from "@calcom/prisma";
-import { confirmHandler } from "@calcom/trpc/server/routers/viewer/bookings/confirm.handler";
+import { WEBAPP_URL } from "@rondevu/lib/constants";
+import { distributedTracing } from "@rondevu/lib/tracing/factory";
+import prisma from "@rondevu/prisma";
+import { confirmHandler } from "@rondevu/trpc/server/routers/viewer/bookings/confirm.handler";
 import { TRPCError } from "@trpc/server";
 import { defaultResponderForAppDir } from "app/api/defaultResponderForAppDir";
 import { parseRequestData } from "app/api/parseRequestData";

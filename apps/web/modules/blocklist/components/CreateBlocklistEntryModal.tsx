@@ -3,16 +3,16 @@
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-import { domainRegex, emailRegex } from "@calcom/lib/emailSchema";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { WatchlistType } from "@calcom/prisma/enums";
-import { Alert } from "@calcom/ui/components/alert";
-import { Button } from "@calcom/ui/components/button";
-import { Dialog, DialogContent, DialogFooter, DialogHeader } from "@calcom/ui/components/dialog";
-import { Input, Label, TextArea, ToggleGroup } from "@calcom/ui/components/form";
+import { domainRegex, emailRegex } from "@rondevu/lib/emailSchema";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { WatchlistType } from "@rondevu/prisma/enums";
+import { Alert } from "@rondevu/ui/components/alert";
+import { Button } from "@rondevu/ui/components/button";
+import { Dialog, DialogContent, DialogFooter, DialogHeader } from "@rondevu/ui/components/dialog";
+import { Input, Label, TextArea, ToggleGroup } from "@rondevu/ui/components/form";
 import { GlobeIcon, MailIcon } from "@coss/ui/icons";
 
-import type { BlocklistScope, CreateBlocklistEntryFormData } from "@calcom/features/blocklist/types";
+import type { BlocklistScope, CreateBlocklistEntryFormData } from "@rondevu/features/blocklist/types";
 
 export interface CreateBlocklistEntryModalProps {
   isOpen: boolean;

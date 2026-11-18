@@ -1,10 +1,10 @@
 import { createHmac } from "node:crypto";
 import process from "node:process";
-import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
-import { decryptReplayBody } from "@calcom/features/webhooks/lib/encryptReplayBody";
-import { postWebhookSafely } from "@calcom/features/webhooks/lib/postWebhookSafely";
-import { validateWebhookDestination } from "@calcom/features/webhooks/lib/validateWebhookDestination";
-import { prisma } from "@calcom/prisma";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
+import { decryptReplayBody } from "@rondevu/features/webhooks/lib/encryptReplayBody";
+import { postWebhookSafely } from "@rondevu/features/webhooks/lib/postWebhookSafely";
+import { validateWebhookDestination } from "@rondevu/features/webhooks/lib/validateWebhookDestination";
+import { prisma } from "@rondevu/prisma";
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 import { isSameOriginRequest } from "@lib/server/isSameOriginRequest";
 import { cookies, headers } from "next/headers";

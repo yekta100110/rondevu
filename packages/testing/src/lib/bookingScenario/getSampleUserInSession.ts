@@ -1,4 +1,4 @@
-import { IdentityProvider, UserPermissionRole } from "@calcom/prisma/enums";
+import { IdentityProvider, UserPermissionRole } from "@rondevu/prisma/enums";
 
 export const getSampleUserInSession = () => ({
   locale: "",

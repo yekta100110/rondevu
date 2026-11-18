@@ -1,32 +1,32 @@
-import { AppSettings } from "@calcom/app-store/_components/AppSettings";
-import type { ConnectedApps } from "@calcom/app-store/_utils/getConnectedApps";
-import { InstallAppButton } from "@calcom/app-store/InstallAppButton";
-import { type EventLocationType, getLocationFromApp } from "@calcom/app-store/locations";
-import type { AppCardApp } from "@calcom/app-store/types";
-import type { UpdateUsersDefaultConferencingAppParams } from "@calcom/features/apps/components/AppSetDefaultLinkDialog";
-import { AppSetDefaultLinkDialog } from "@calcom/features/apps/components/AppSetDefaultLinkDialog";
+import { AppSettings } from "@rondevu/app-store/_components/AppSettings";
+import type { ConnectedApps } from "@rondevu/app-store/_utils/getConnectedApps";
+import { InstallAppButton } from "@rondevu/app-store/InstallAppButton";
+import { type EventLocationType, getLocationFromApp } from "@rondevu/app-store/locations";
+import type { AppCardApp } from "@rondevu/app-store/types";
+import type { UpdateUsersDefaultConferencingAppParams } from "@rondevu/features/apps/components/AppSetDefaultLinkDialog";
+import { AppSetDefaultLinkDialog } from "@rondevu/features/apps/components/AppSetDefaultLinkDialog";
 import type {
   BulkUpdatParams,
   EventTypes,
-} from "@calcom/features/eventtypes/components/BulkEditDefaultForEventsModal";
-import { BulkEditDefaultForEventsModal } from "@calcom/features/eventtypes/components/BulkEditDefaultForEventsModal";
-import { isDelegationCredential } from "@calcom/lib/delegationCredential";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import type { AppCategories } from "@calcom/prisma/enums";
-import type { DefaultConferencingApp } from "@calcom/prisma/zod-utils";
-import type { App } from "@calcom/types/App";
-import { Alert } from "@calcom/ui/components/alert";
-import type { AppListCardProps } from "@calcom/ui/components/app-list-card";
-import { Button } from "@calcom/ui/components/button";
+} from "@rondevu/features/eventtypes/components/BulkEditDefaultForEventsModal";
+import { BulkEditDefaultForEventsModal } from "@rondevu/features/eventtypes/components/BulkEditDefaultForEventsModal";
+import { isDelegationCredential } from "@rondevu/lib/delegationCredential";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import type { AppCategories } from "@rondevu/prisma/enums";
+import type { DefaultConferencingApp } from "@rondevu/prisma/zod-utils";
+import type { App } from "@rondevu/types/App";
+import { Alert } from "@rondevu/ui/components/alert";
+import type { AppListCardProps } from "@rondevu/ui/components/app-list-card";
+import { Button } from "@rondevu/ui/components/button";
 import {
   Dropdown,
   DropdownItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@calcom/ui/components/dropdown";
-import { List } from "@calcom/ui/components/list";
-import { showToast } from "@calcom/ui/components/toast";
+} from "@rondevu/ui/components/dropdown";
+import { List } from "@rondevu/ui/components/list";
+import { showToast } from "@rondevu/ui/components/toast";
 import type { ComponentType, ReactNode } from "react";
 import { useCallback, useState } from "react";
 

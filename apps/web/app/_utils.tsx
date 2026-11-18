@@ -4,14 +4,14 @@ import process from "node:process";
 import { type TFunction } from "i18next";
 import { cookies, headers } from "next/headers";
 
-import { getLocale } from "@calcom/features/auth/lib/getLocale";
-import type { AppImageProps, MeetingImageProps } from "@calcom/lib/OgImages";
-import { constructAppImage, constructGenericImage, constructMeetingImage } from "@calcom/lib/OgImages";
-import { IS_CALCOM, WEBAPP_URL, APP_NAME, SEO_IMG_OGIMG, CAL_URL } from "@calcom/lib/constants";
-import { getCalcomUrl } from "@calcom/lib/getCalcomUrl";
-import { buildCanonical } from "@calcom/lib/next-seo.config";
-import { getTranslation } from "@calcom/i18n/server";
-import { truncateOnWord } from "@calcom/lib/text";
+import { getLocale } from "@rondevu/features/auth/lib/getLocale";
+import type { AppImageProps, MeetingImageProps } from "@rondevu/lib/OgImages";
+import { constructAppImage, constructGenericImage, constructMeetingImage } from "@rondevu/lib/OgImages";
+import { IS_CALCOM, WEBAPP_URL, APP_NAME, SEO_IMG_OGIMG, CAL_URL } from "@rondevu/lib/constants";
+import { getCalcomUrl } from "@rondevu/lib/getCalcomUrl";
+import { buildCanonical } from "@rondevu/lib/next-seo.config";
+import { getTranslation } from "@rondevu/i18n/server";
+import { truncateOnWord } from "@rondevu/lib/text";
 
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 

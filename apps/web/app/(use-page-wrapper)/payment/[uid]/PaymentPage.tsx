@@ -1,17 +1,17 @@
 "use client";
 
-import { getPaymentAppData } from "@calcom/app-store/_utils/payments/getPaymentAppData";
-import { getSuccessPageLocationMessage } from "@calcom/app-store/locations";
-import dayjs from "@calcom/dayjs";
-import { sdkActionManager, useIsEmbed } from "@calcom/embed-core/embed-iframe";
-import { PayIcon } from "@calcom/features/bookings/components/event-meta/PayIcon";
-import { Price } from "@calcom/features/bookings/components/event-meta/Price";
-import { APP_NAME, WEBSITE_URL } from "@calcom/lib/constants";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import useTheme from "@calcom/lib/hooks/useTheme";
-import { getIs24hClockFromLocalStorage, isBrowserLocale24h } from "@calcom/lib/timeFormat";
-import { CURRENT_TIMEZONE } from "@calcom/lib/timezoneConstants";
-import { localStorage } from "@calcom/lib/webstorage";
+import { getPaymentAppData } from "@rondevu/app-store/_utils/payments/getPaymentAppData";
+import { getSuccessPageLocationMessage } from "@rondevu/app-store/locations";
+import dayjs from "@rondevu/dayjs";
+import { sdkActionManager, useIsEmbed } from "@rondevu/embed-core/embed-iframe";
+import { PayIcon } from "@rondevu/features/bookings/components/event-meta/PayIcon";
+import { Price } from "@rondevu/features/bookings/components/event-meta/Price";
+import { APP_NAME, WEBSITE_URL } from "@rondevu/lib/constants";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import useTheme from "@rondevu/lib/hooks/useTheme";
+import { getIs24hClockFromLocalStorage, isBrowserLocale24h } from "@rondevu/lib/timeFormat";
+import { CURRENT_TIMEZONE } from "@rondevu/lib/timezoneConstants";
+import { localStorage } from "@rondevu/lib/webstorage";
 import classNames from "classnames";
 import dynamic from "next/dynamic";
 import type { FC } from "react";
@@ -29,7 +29,7 @@ type PaymentPageProps = {
 
 const PaypalPaymentComponent = dynamic(
   () =>
-    import("@calcom/web/components/apps/paypal/PaypalPaymentComponent").then((m) => m.PaypalPaymentComponent),
+    import("@rondevu/web/components/apps/paypal/PaypalPaymentComponent").then((m) => m.PaypalPaymentComponent),
   {
     ssr: false,
   }
@@ -37,7 +37,7 @@ const PaypalPaymentComponent = dynamic(
 
 const BtcpayPaymentComponent = dynamic(
   () =>
-    import("@calcom/web/components/apps/btcpayserver/BtcpayPaymentComponent").then(
+    import("@rondevu/web/components/apps/btcpayserver/BtcpayPaymentComponent").then(
       (m) => m.BtcpayPaymentComponent
     ),
   {

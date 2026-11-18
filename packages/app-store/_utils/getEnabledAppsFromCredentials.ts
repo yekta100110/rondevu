@@ -1,7 +1,7 @@
-import type { CredentialDataWithTeamName } from "@calcom/app-store/utils";
-import { isDelegationCredential } from "@calcom/lib/delegationCredential";
-import { prisma } from "@calcom/prisma";
-import type { Prisma } from "@calcom/prisma/client";
+import type { CredentialDataWithTeamName } from "@rondevu/app-store/utils";
+import { isDelegationCredential } from "@rondevu/lib/delegationCredential";
+import { prisma } from "@rondevu/prisma";
+import type { Prisma } from "@rondevu/prisma/client";
 
 import getApps from "../utils";
 

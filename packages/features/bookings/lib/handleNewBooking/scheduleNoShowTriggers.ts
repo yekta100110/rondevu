@@ -1,9 +1,9 @@
-import { DailyLocationType } from "@calcom/app-store/constants";
-import dayjs from "@calcom/dayjs";
-import tasker from "@calcom/features/tasker";
-import getWebhooks from "@calcom/features/webhooks/lib/getWebhooks";
-import { withReporting } from "@calcom/lib/sentryWrapper";
-import { WebhookTriggerEvents } from "@calcom/prisma/enums";
+import { DailyLocationType } from "@rondevu/app-store/constants";
+import dayjs from "@rondevu/dayjs";
+import tasker from "@rondevu/features/tasker";
+import getWebhooks from "@rondevu/features/webhooks/lib/getWebhooks";
+import { withReporting } from "@rondevu/lib/sentryWrapper";
+import { WebhookTriggerEvents } from "@rondevu/prisma/enums";
 
 type ScheduleNoShowTriggersArgs = {
   booking: {

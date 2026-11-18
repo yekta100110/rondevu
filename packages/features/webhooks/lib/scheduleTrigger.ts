@@ -1,17 +1,17 @@
 import { v4 } from "uuid";
 
-import { DailyLocationType, getHumanReadableLocationValue } from "@calcom/app-store/locations";
-import dayjs from "@calcom/dayjs";
-import { getCalEventResponses } from "@calcom/features/bookings/lib/getCalEventResponses";
-import tasker from "@calcom/features/tasker";
-import logger from "@calcom/lib/logger";
-import { safeStringify } from "@calcom/lib/safeStringify";
-import { withReporting } from "@calcom/lib/sentryWrapper";
-import { getTranslation } from "@calcom/i18n/server";
-import { prisma } from "@calcom/prisma";
-import type { Prisma, Webhook, Booking, ApiKey } from "@calcom/prisma/client";
-import { BookingStatus, WebhookTriggerEvents } from "@calcom/prisma/enums";
-import { bookingMetadataSchema } from "@calcom/prisma/zod-utils";
+import { DailyLocationType, getHumanReadableLocationValue } from "@rondevu/app-store/locations";
+import dayjs from "@rondevu/dayjs";
+import { getCalEventResponses } from "@rondevu/features/bookings/lib/getCalEventResponses";
+import tasker from "@rondevu/features/tasker";
+import logger from "@rondevu/lib/logger";
+import { safeStringify } from "@rondevu/lib/safeStringify";
+import { withReporting } from "@rondevu/lib/sentryWrapper";
+import { getTranslation } from "@rondevu/i18n/server";
+import { prisma } from "@rondevu/prisma";
+import type { Prisma, Webhook, Booking, ApiKey } from "@rondevu/prisma/client";
+import { BookingStatus, WebhookTriggerEvents } from "@rondevu/prisma/enums";
+import { bookingMetadataSchema } from "@rondevu/prisma/zod-utils";
 import { DEFAULT_WEBHOOK_VERSION, type WebhookVersion } from "./interface/IWebhookRepository";
 
 export const selectOOOEntries = {

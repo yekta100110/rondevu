@@ -1,16 +1,16 @@
 "use client";
 
-import { sdkActionManager } from "@calcom/embed-core/embed-iframe";
-import { isCancellationReasonRequired } from "@calcom/features/bookings/lib/cancellationReason";
-import { shouldChargeNoShowCancellationFee } from "@calcom/features/bookings/lib/payment/shouldChargeNoShowCancellationFee";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { useRefreshData } from "@calcom/lib/hooks/useRefreshData";
-import type { CancellationReasonRequirement } from "@calcom/prisma/enums";
-import type { RecurringEvent } from "@calcom/types/Calendar";
-import classNames from "@calcom/ui/classNames";
-import { Button } from "@calcom/ui/components/button";
-import { CheckboxField, Input, Label, Select, TextArea } from "@calcom/ui/components/form";
-import { showToast } from "@calcom/ui/components/toast";
+import { sdkActionManager } from "@rondevu/embed-core/embed-iframe";
+import { isCancellationReasonRequired } from "@rondevu/features/bookings/lib/cancellationReason";
+import { shouldChargeNoShowCancellationFee } from "@rondevu/features/bookings/lib/payment/shouldChargeNoShowCancellationFee";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { useRefreshData } from "@rondevu/lib/hooks/useRefreshData";
+import type { CancellationReasonRequirement } from "@rondevu/prisma/enums";
+import type { RecurringEvent } from "@rondevu/types/Calendar";
+import classNames from "@rondevu/ui/classNames";
+import { Button } from "@rondevu/ui/components/button";
+import { CheckboxField, Input, Label, Select, TextArea } from "@rondevu/ui/components/form";
+import { showToast } from "@rondevu/ui/components/toast";
 import { InfoIcon, XIcon } from "@coss/ui/icons";
 import { useCallback, useState } from "react";
 
@@ -184,7 +184,7 @@ export default function CancelBooking(props: Props) {
     !missingCancelledBy;
   const cancelBookingRef = useCallback((node: HTMLTextAreaElement) => {
     if (node !== null) {
-      // eslint-disable-next-line @calcom/eslint/no-scroll-into-view-embed -- CancelBooking is not usually used in embed mode
+      // eslint-disable-next-line @rondevu/eslint/no-scroll-into-view-embed -- CancelBooking is not usually used in embed mode
       node.scrollIntoView({ behavior: "smooth" });
       node.focus();
     }

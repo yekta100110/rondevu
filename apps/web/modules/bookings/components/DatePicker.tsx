@@ -1,18 +1,18 @@
 import { shallow } from "zustand/shallow";
 
-import type { Dayjs } from "@calcom/dayjs";
-import dayjs from "@calcom/dayjs";
-import { useBookerStoreContext } from "@calcom/features/bookings/Booker/BookerStoreProvider";
-import type { DatePickerClassNames } from "@calcom/features/bookings/Booker/types";
-import { DatePicker as DatePickerComponent } from "@calcom/features/calendars/components/DatePicker";
-import { useNonEmptyScheduleDays } from "@calcom/web/modules/schedules/hooks/useNonEmptyScheduleDays";
-import { weekdayToWeekIndex } from "@calcom/lib/dayjs";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import type { User } from "@calcom/prisma/client";
-import type { PeriodData } from "@calcom/types/Event";
-import { useSlotsViewOnSmallScreen } from "@calcom/embed-core/embed-iframe";
+import type { Dayjs } from "@rondevu/dayjs";
+import dayjs from "@rondevu/dayjs";
+import { useBookerStoreContext } from "@rondevu/features/bookings/Booker/BookerStoreProvider";
+import type { DatePickerClassNames } from "@rondevu/features/bookings/Booker/types";
+import { DatePicker as DatePickerComponent } from "@rondevu/features/calendars/components/DatePicker";
+import { useNonEmptyScheduleDays } from "@rondevu/web/modules/schedules/hooks/useNonEmptyScheduleDays";
+import { weekdayToWeekIndex } from "@rondevu/lib/dayjs";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import type { User } from "@rondevu/prisma/client";
+import type { PeriodData } from "@rondevu/types/Event";
+import { useSlotsViewOnSmallScreen } from "@rondevu/embed-core/embed-iframe";
 
-import type { Slots } from "@calcom/features/bookings/types";
+import type { Slots } from "@rondevu/features/bookings/types";
 
 const useMoveToNextMonthOnNoAvailability = ({
   browsingDate,

@@ -1,5 +1,5 @@
-import type { Dayjs } from "@calcom/dayjs";
-import dayjs from "@calcom/dayjs";
+import type { Dayjs } from "@rondevu/dayjs";
+import dayjs from "@rondevu/dayjs";
 import { describe, expect, it } from "vitest";
 import { getAggregatedAvailability } from "./getAggregatedAvailability";
 

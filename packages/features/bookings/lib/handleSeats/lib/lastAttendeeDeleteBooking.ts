@@ -1,11 +1,11 @@
-import { getCalendar } from "@calcom/app-store/_utils/getCalendar";
-import { getAllDelegationCredentialsForUserIncludeServiceAccountKey } from "@calcom/app-store/delegationCredential";
-import { getDelegationCredentialOrFindRegularCredential } from "@calcom/app-store/delegationCredential";
-import { deleteMeeting } from "@calcom/features/conferencing/lib/videoClient";
-import prisma from "@calcom/prisma";
-import type { Attendee } from "@calcom/prisma/client";
-import { BookingStatus } from "@calcom/prisma/enums";
-import type { CalendarEvent } from "@calcom/types/Calendar";
+import { getCalendar } from "@rondevu/app-store/_utils/getCalendar";
+import { getAllDelegationCredentialsForUserIncludeServiceAccountKey } from "@rondevu/app-store/delegationCredential";
+import { getDelegationCredentialOrFindRegularCredential } from "@rondevu/app-store/delegationCredential";
+import { deleteMeeting } from "@rondevu/features/conferencing/lib/videoClient";
+import prisma from "@rondevu/prisma";
+import type { Attendee } from "@rondevu/prisma/client";
+import { BookingStatus } from "@rondevu/prisma/enums";
+import type { CalendarEvent } from "@rondevu/types/Calendar";
 
 import type { OriginalRescheduledBooking } from "../../handleNewBooking/originalRescheduledBookingUtils";
 

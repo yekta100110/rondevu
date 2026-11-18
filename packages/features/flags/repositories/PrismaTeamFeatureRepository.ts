@@ -1,6 +1,6 @@
-import type { TeamFeaturesDto } from "@calcom/lib/dto/TeamFeaturesDto";
-import type { PrismaClient } from "@calcom/prisma/client";
-import { Prisma } from "@calcom/prisma/client";
+import type { TeamFeaturesDto } from "@rondevu/lib/dto/TeamFeaturesDto";
+import type { PrismaClient } from "@rondevu/prisma/client";
+import { Prisma } from "@rondevu/prisma/client";
 import { captureException } from "@sentry/nextjs";
 import type { FeatureId, TeamFeatures } from "../config";
 

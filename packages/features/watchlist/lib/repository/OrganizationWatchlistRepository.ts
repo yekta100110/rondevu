@@ -1,5 +1,5 @@
-import type { PrismaClient, Watchlist } from "@calcom/prisma/client";
-import { WatchlistAction, WatchlistType, WatchlistSource } from "@calcom/prisma/enums";
+import type { PrismaClient, Watchlist } from "@rondevu/prisma/client";
+import { WatchlistAction, WatchlistType, WatchlistSource } from "@rondevu/prisma/enums";
 
 import type { IOrganizationWatchlistRepository } from "../interface/IWatchlistRepositories";
 

@@ -1,12 +1,12 @@
-import { updateEmbedBookerState } from "@calcom/embed-core/src/embed-iframe";
-import { sdkActionManager } from "@calcom/embed-core/src/sdk-event";
-import { useBookerStore } from "@calcom/features/bookings/Booker/store";
-import { isBookingDryRun } from "@calcom/features/bookings/Booker/utils/isBookingDryRun";
-import { getUsernameList } from "@calcom/features/eventtypes/lib/defaultEvents";
-import { useTimesForSchedule } from "@calcom/features/schedules/hooks/useTimesForSchedule";
-import { getRoutedTeamMemberIdsFromSearchParams } from "@calcom/lib/bookings/getRoutedTeamMemberIdsFromSearchParams";
-import { PUBLIC_QUERY_AVAILABLE_SLOTS_INTERVAL_SECONDS } from "@calcom/lib/constants";
-import { trpc } from "@calcom/trpc/react";
+import { updateEmbedBookerState } from "@rondevu/embed-core/src/embed-iframe";
+import { sdkActionManager } from "@rondevu/embed-core/src/sdk-event";
+import { useBookerStore } from "@rondevu/features/bookings/Booker/store";
+import { isBookingDryRun } from "@rondevu/features/bookings/Booker/utils/isBookingDryRun";
+import { getUsernameList } from "@rondevu/features/eventtypes/lib/defaultEvents";
+import { useTimesForSchedule } from "@rondevu/features/schedules/hooks/useTimesForSchedule";
+import { getRoutedTeamMemberIdsFromSearchParams } from "@rondevu/lib/bookings/getRoutedTeamMemberIdsFromSearchParams";
+import { PUBLIC_QUERY_AVAILABLE_SLOTS_INTERVAL_SECONDS } from "@rondevu/lib/constants";
+import { trpc } from "@rondevu/trpc/react";
 import { useSearchParams } from "next/navigation";
 import { useApiV2AvailableSlots } from "./useApiV2AvailableSlots";
 

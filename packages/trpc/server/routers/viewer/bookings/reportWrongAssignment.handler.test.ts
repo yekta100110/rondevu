@@ -1,7 +1,7 @@
-import getWebhooks from "@calcom/features/webhooks/lib/getWebhooks";
-import { sendGenericWebhookPayload } from "@calcom/features/webhooks/lib/sendPayload";
-import { ErrorWithCode } from "@calcom/lib/errors";
-import { BookingStatus, WebhookTriggerEvents } from "@calcom/prisma/enums";
+import getWebhooks from "@rondevu/features/webhooks/lib/getWebhooks";
+import { sendGenericWebhookPayload } from "@rondevu/features/webhooks/lib/sendPayload";
+import { ErrorWithCode } from "@rondevu/lib/errors";
+import { BookingStatus, WebhookTriggerEvents } from "@rondevu/prisma/enums";
 import { TRPCError } from "@trpc/server";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { reportWrongAssignmentHandler } from "./reportWrongAssignment.handler";
@@ -11,7 +11,7 @@ const mockDoesUserIdHaveAccessToBooking = vi.fn();
 const mockExistsByBookingUid = vi.fn();
 const mockCreateReport = vi.fn();
 
-vi.mock("@calcom/features/bookings/repositories/BookingRepository", () => {
+vi.mock("@rondevu/features/bookings/repositories/BookingRepository", () => {
   return {
     BookingRepository: class MockBookingRepository {
       findByUidIncludeUserAndEventTypeTeamAndAttendeesAndAssignmentReason =
@@ -19,7 +19,7 @@ vi.mock("@calcom/features/bookings/repositories/BookingRepository", () => {
     },
   };
 });
-vi.mock("@calcom/features/bookings/repositories/WrongAssignmentReportRepository", () => {
+vi.mock("@rondevu/features/bookings/repositories/WrongAssignmentReportRepository", () => {
   return {
     WrongAssignmentReportRepository: class MockWrongAssignmentReportRepository {
       existsByBookingUid = mockExistsByBookingUid;
@@ -27,19 +27,19 @@ vi.mock("@calcom/features/bookings/repositories/WrongAssignmentReportRepository"
     },
   };
 });
-vi.mock("@calcom/features/bookings/services/BookingAccessService", () => {
+vi.mock("@rondevu/features/bookings/services/BookingAccessService", () => {
   return {
     BookingAccessService: class MockBookingAccessService {
       doesUserIdHaveAccessToBooking = mockDoesUserIdHaveAccessToBooking;
     },
   };
 });
-vi.mock("@calcom/features/webhooks/lib/getWebhooks");
-vi.mock("@calcom/features/webhooks/lib/sendPayload");
-vi.mock("@calcom/prisma", () => ({
+vi.mock("@rondevu/features/webhooks/lib/getWebhooks");
+vi.mock("@rondevu/features/webhooks/lib/sendPayload");
+vi.mock("@rondevu/prisma", () => ({
   default: {},
 }));
-vi.mock("@calcom/i18n/server", () => ({
+vi.mock("@rondevu/i18n/server", () => ({
   getTranslation: vi.fn().mockResolvedValue((key: string) => {
     const translations: Record<string, string> = {
       wrong_assignment_already_reported:
@@ -49,7 +49,7 @@ vi.mock("@calcom/i18n/server", () => ({
     return translations[key] || key;
   }),
 }));
-vi.mock("@calcom/lib/logger", () => ({
+vi.mock("@rondevu/lib/logger", () => ({
   default: {
     getSubLogger: () => ({
       info: vi.fn(),

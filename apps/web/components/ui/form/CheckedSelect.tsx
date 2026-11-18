@@ -1,10 +1,10 @@
 import React from "react";
 import type { Props } from "react-select";
 
-import Select from "@calcom/features/form/components/Select";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Avatar } from "@calcom/ui/components/avatar";
-import { Icon } from "@calcom/ui/components/icon";
+import Select from "@rondevu/features/form/components/Select";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { Avatar } from "@rondevu/ui/components/avatar";
+import { Icon } from "@rondevu/ui/components/icon";
 
 type CheckedSelectOption = {
   avatar: string;

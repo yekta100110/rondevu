@@ -1,6 +1,6 @@
-import dayjs from "@calcom/dayjs";
-import logger from "@calcom/lib/logger";
-import type { PrismaClient } from "@calcom/prisma";
+import dayjs from "@rondevu/dayjs";
+import logger from "@rondevu/lib/logger";
+import type { PrismaClient } from "@rondevu/prisma";
 
 import { DEFAULT_WEBHOOK_VERSION } from "./interface/IWebhookRepository";
 import { createWebhookSignature, jsonParse } from "./sendPayload";

@@ -1,4 +1,4 @@
-import prisma from "@calcom/prisma";
+import prisma from "@rondevu/prisma";
 
 export class VerificationTokenRepository {
   static async updateTeamInviteTokenExpirationDate({

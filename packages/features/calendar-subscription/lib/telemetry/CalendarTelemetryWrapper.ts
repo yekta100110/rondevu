@@ -1,4 +1,4 @@
-import logger from "@calcom/lib/logger";
+import logger from "@rondevu/lib/logger";
 import type {
   Calendar,
   CalendarEvent,
@@ -8,7 +8,7 @@ import type {
   GetAvailabilityParams,
   IntegrationCalendar,
   NewCalendarEventType,
-} from "@calcom/types/Calendar";
+} from "@rondevu/types/Calendar";
 import { metrics } from "@sentry/nextjs";
 
 const log = logger.getSubLogger({ prefix: ["CalendarTelemetryWrapper"] });

@@ -1,10 +1,10 @@
 import type z from "zod";
 
-import type { GetAppData, SetAppData } from "@calcom/app-store/EventTypeAppContext";
-import EventTypeAppContext from "@calcom/app-store/EventTypeAppContext";
-import { EventTypeAddonMap } from "@calcom/app-store/apps.browser.generated";
-import type { EventTypeMetaDataSchema } from "@calcom/prisma/zod-utils";
-import { ErrorBoundary } from "@calcom/ui/components/errorBoundary";
+import type { GetAppData, SetAppData } from "@rondevu/app-store/EventTypeAppContext";
+import EventTypeAppContext from "@rondevu/app-store/EventTypeAppContext";
+import { EventTypeAddonMap } from "@rondevu/app-store/apps.browser.generated";
+import type { EventTypeMetaDataSchema } from "@rondevu/prisma/zod-utils";
+import { ErrorBoundary } from "@rondevu/ui/components/errorBoundary";
 
 import type { EventTypeAppCardComponentProps, AppCardApp } from "../types";
 import { DynamicComponent } from "./DynamicComponent";

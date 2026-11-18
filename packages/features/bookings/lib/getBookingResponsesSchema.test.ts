@@ -1,5 +1,5 @@
-import type { eventTypeBookingFields } from "@calcom/prisma/zod-utils";
-import { test } from "@calcom/testing/lib/fixtures/fixtures";
+import type { eventTypeBookingFields } from "@rondevu/prisma/zod-utils";
+import { test } from "@rondevu/testing/lib/fixtures/fixtures";
 import { describe, expect } from "vitest";
 import type { z } from "zod";
 import getBookingResponsesSchema, { getBookingResponsesPartialSchema } from "./getBookingResponsesSchema";

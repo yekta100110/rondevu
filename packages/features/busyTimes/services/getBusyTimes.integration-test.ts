@@ -1,7 +1,7 @@
-import dayjs from "@calcom/dayjs";
-import { getBusyTimesService } from "@calcom/features/di/containers/BusyTimes";
-import { prisma } from "@calcom/prisma";
-import { BookingStatus } from "@calcom/prisma/enums";
+import dayjs from "@rondevu/dayjs";
+import { getBusyTimesService } from "@rondevu/features/di/containers/BusyTimes";
+import { prisma } from "@rondevu/prisma";
+import { BookingStatus } from "@rondevu/prisma/enums";
 import { afterEach, describe, expect, it } from "vitest";
 
 type CreatedResources = {

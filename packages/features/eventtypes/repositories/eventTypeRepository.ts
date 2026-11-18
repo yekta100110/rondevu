@@ -1,20 +1,20 @@
-import type { IEventTypesRepository } from "@calcom/features/eventtypes/eventtypes.repository.interface";
-import { MembershipRepository } from "@calcom/features/membership/repositories/MembershipRepository";
-import { LookupTarget, ProfileRepository } from "@calcom/features/profile/repositories/ProfileRepository";
-import type { UserWithLegacySelectedCalendars } from "@calcom/features/users/repositories/UserRepository";
-import { withSelectedCalendars } from "@calcom/features/users/repositories/UserRepository";
-import { ErrorCode } from "@calcom/lib/errorCodes";
-import { ErrorWithCode } from "@calcom/lib/errors";
-import logger from "@calcom/lib/logger";
-import { safeStringify } from "@calcom/lib/safeStringify";
-import { eventTypeSelect } from "@calcom/lib/server/eventTypeSelect";
-import type { PrismaClient } from "@calcom/prisma";
-import { availabilityUserSelect, userSelect as userSelectWithSelectedCalendars } from "@calcom/prisma";
-import type { Prisma, EventType as PrismaEventType } from "@calcom/prisma/client";
-import { MembershipRole } from "@calcom/prisma/enums";
-import { credentialForCalendarServiceSelect } from "@calcom/prisma/selects/credential";
-import { EventTypeMetaDataSchema, rrSegmentQueryValueSchema } from "@calcom/prisma/zod-utils";
-import type { Ensure } from "@calcom/types/utils";
+import type { IEventTypesRepository } from "@rondevu/features/eventtypes/eventtypes.repository.interface";
+import { MembershipRepository } from "@rondevu/features/membership/repositories/MembershipRepository";
+import { LookupTarget, ProfileRepository } from "@rondevu/features/profile/repositories/ProfileRepository";
+import type { UserWithLegacySelectedCalendars } from "@rondevu/features/users/repositories/UserRepository";
+import { withSelectedCalendars } from "@rondevu/features/users/repositories/UserRepository";
+import { ErrorCode } from "@rondevu/lib/errorCodes";
+import { ErrorWithCode } from "@rondevu/lib/errors";
+import logger from "@rondevu/lib/logger";
+import { safeStringify } from "@rondevu/lib/safeStringify";
+import { eventTypeSelect } from "@rondevu/lib/server/eventTypeSelect";
+import type { PrismaClient } from "@rondevu/prisma";
+import { availabilityUserSelect, userSelect as userSelectWithSelectedCalendars } from "@rondevu/prisma";
+import type { Prisma, EventType as PrismaEventType } from "@rondevu/prisma/client";
+import { MembershipRole } from "@rondevu/prisma/enums";
+import { credentialForCalendarServiceSelect } from "@rondevu/prisma/selects/credential";
+import { EventTypeMetaDataSchema, rrSegmentQueryValueSchema } from "@rondevu/prisma/zod-utils";
+import type { Ensure } from "@rondevu/types/utils";
 
 const log = logger.getSubLogger({ prefix: ["repository/eventType"] });
 

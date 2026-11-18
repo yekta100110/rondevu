@@ -3,11 +3,11 @@ import { _generateMetadata } from "app/_utils";
 import { cookies, headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 
-import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
-import { WebhookRepository } from "@calcom/features/webhooks/lib/repository/WebhookRepository";
-import prisma from "@calcom/prisma";
-import { APP_NAME } from "@calcom/lib/constants";
-import { MembershipRole } from "@calcom/prisma/enums";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
+import { WebhookRepository } from "@rondevu/features/webhooks/lib/repository/WebhookRepository";
+import prisma from "@rondevu/prisma";
+import { APP_NAME } from "@rondevu/lib/constants";
+import { MembershipRole } from "@rondevu/prisma/enums";
 
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 

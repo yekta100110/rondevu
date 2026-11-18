@@ -1,6 +1,6 @@
-import { UserRepository } from "@calcom/features/users/repositories/UserRepository";
-import { HttpError } from "@calcom/lib/http-error";
-import prisma from "@calcom/prisma";
+import { UserRepository } from "@rondevu/features/users/repositories/UserRepository";
+import { HttpError } from "@rondevu/lib/http-error";
+import prisma from "@rondevu/prisma";
 
 export const throwIfNotHaveAdminAccessToTeam = async ({
   teamId,

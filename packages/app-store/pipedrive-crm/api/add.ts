@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { createDefaultInstallation } from "@calcom/app-store/_utils/installation";
-import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
-import { WEBAPP_URL_FOR_OAUTH } from "@calcom/lib/constants";
-import { HttpError } from "@calcom/lib/http-error";
+import { createDefaultInstallation } from "@rondevu/app-store/_utils/installation";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
+import { WEBAPP_URL_FOR_OAUTH } from "@rondevu/lib/constants";
+import { HttpError } from "@rondevu/lib/http-error";
 
 import getAppKeysFromSlug from "../../_utils/getAppKeysFromSlug";
 import { encodeOAuthState } from "../../_utils/oauth/encodeOAuthState";

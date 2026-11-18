@@ -1,11 +1,11 @@
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-import { useAppContextWithSchema } from "@calcom/app-store/EventTypeAppContext";
-import AppCard from "@calcom/app-store/_components/AppCard";
-import type { EventTypeAppCardComponent } from "@calcom/app-store/types";
-import { WEBAPP_URL } from "@calcom/lib/constants";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
+import { useAppContextWithSchema } from "@rondevu/app-store/EventTypeAppContext";
+import AppCard from "@rondevu/app-store/_components/AppCard";
+import type { EventTypeAppCardComponent } from "@rondevu/app-store/types";
+import { WEBAPP_URL } from "@rondevu/lib/constants";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
 
 import checkForMultiplePaymentApps from "../../_utils/payments/checkForMultiplePaymentApps";
 import type { appDataSchema } from "../zod";

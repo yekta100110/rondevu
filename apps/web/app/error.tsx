@@ -3,10 +3,10 @@
 import { captureException } from "@sentry/nextjs";
 import React from "react";
 
-import { getErrorFromUnknown } from "@calcom/lib/errors";
-import { HttpError } from "@calcom/lib/http-error";
-import logger from "@calcom/lib/logger";
-import { redactError } from "@calcom/lib/redactError";
+import { getErrorFromUnknown } from "@rondevu/lib/errors";
+import { HttpError } from "@rondevu/lib/http-error";
+import logger from "@rondevu/lib/logger";
+import { redactError } from "@rondevu/lib/redactError";
 
 import { ErrorPage } from "@components/error/error-page";
 

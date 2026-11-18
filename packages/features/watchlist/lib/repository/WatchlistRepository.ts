@@ -1,5 +1,5 @@
-import type { PrismaClient } from "@calcom/prisma";
-import { WatchlistAction, WatchlistSource } from "@calcom/prisma/enums";
+import type { PrismaClient } from "@rondevu/prisma";
+import { WatchlistAction, WatchlistSource } from "@rondevu/prisma/enums";
 import type {
   CheckWatchlistInput,
   CreateWatchlistInput,

@@ -1,13 +1,13 @@
 "use client";
 
-import dayjs from "@calcom/dayjs";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc } from "@calcom/trpc/react";
-import useMeQuery from "@calcom/trpc/react/hooks/useMeQuery";
-import { Alert } from "@calcom/ui/components/alert";
-import { Badge } from "@calcom/ui/components/badge";
-import { Button } from "@calcom/ui/components/button";
-import { ToggleGroup } from "@calcom/ui/components/form";
+import dayjs from "@rondevu/dayjs";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc } from "@rondevu/trpc/react";
+import useMeQuery from "@rondevu/trpc/react/hooks/useMeQuery";
+import { Alert } from "@rondevu/ui/components/alert";
+import { Badge } from "@rondevu/ui/components/badge";
+import { Button } from "@rondevu/ui/components/button";
+import { ToggleGroup } from "@rondevu/ui/components/form";
 import { getCoreRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useMemo, useState } from "react";

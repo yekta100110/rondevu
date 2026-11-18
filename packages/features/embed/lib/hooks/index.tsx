@@ -1,5 +1,5 @@
-import { useEmbedBookerUrl } from "@calcom/features/bookings/hooks/useBookerUrl";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
+import { useEmbedBookerUrl } from "@rondevu/features/bookings/hooks/useBookerUrl";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
 
 export const useEmbedTypes = () => {
   const { t } = useLocale();

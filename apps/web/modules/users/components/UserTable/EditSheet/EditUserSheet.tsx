@@ -1,9 +1,9 @@
-import { WEBAPP_URL } from "@calcom/lib/constants";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc } from "@calcom/trpc/react";
-import { Avatar } from "@calcom/ui/components/avatar";
-import { Sheet, SheetBody, SheetContent, SheetFooter, SheetHeader } from "@calcom/ui/components/sheet";
-import { Loader } from "@calcom/ui/components/skeleton";
+import { WEBAPP_URL } from "@rondevu/lib/constants";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc } from "@rondevu/trpc/react";
+import { Avatar } from "@rondevu/ui/components/avatar";
+import { Sheet, SheetBody, SheetContent, SheetFooter, SheetHeader } from "@rondevu/ui/components/sheet";
+import { Loader } from "@rondevu/ui/components/skeleton";
 import type { Dispatch } from "react";
 import { shallow } from "zustand/shallow";
 import type { UserTableAction, UserTableState } from "../types";

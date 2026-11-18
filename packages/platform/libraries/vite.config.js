@@ -55,7 +55,7 @@ export default defineConfig({
     },
     rollupOptions: {
       external: [
-        "@calcom/i18n",
+        "@rondevu/i18n",
         "react",
         "fs",
         "path",
@@ -200,7 +200,7 @@ export default defineConfig({
           "@prisma/extension-accelerate": "@prisma/extension-accelerate",
           "@ewsjs/xhr": "@ewsjs/xhr",
           "next-i18next/serverSideTranslations": "next-i18next/serverSideTranslations",
-          "@calcom/prisma/client": "@calcom/prisma/client",
+          "@rondevu/prisma/client": "@rondevu/prisma/client",
         },
       },
     },
@@ -210,13 +210,13 @@ export default defineConfig({
     conditions: ["node", "import", "require", "default"],
     alias: {
       "@": path.resolve(__dirname, "./src"),
-      "@calcom/lib": path.resolve(__dirname, "../../lib"),
-      "@calcom/trpc": resolve("../../trpc"),
+      "@rondevu/lib": path.resolve(__dirname, "../../lib"),
+      "@rondevu/trpc": resolve("../../trpc"),
       "lru-cache": resolve("../../../node_modules/lru-cache/dist/cjs/index.js"),
-      "@calcom/prisma/client/runtime/library": resolve("../../prisma/client/runtime/library"),
-      "@calcom/prisma/client": resolve("../../prisma/client"),
-      "@calcom/platform-constants": path.resolve(__dirname, "../constants/index.ts"),
-      "@calcom/platform-types": path.resolve(__dirname, "../types/index.ts"),
+      "@rondevu/prisma/client/runtime/library": resolve("../../prisma/client/runtime/library"),
+      "@rondevu/prisma/client": resolve("../../prisma/client"),
+      "@rondevu/platform-constants": path.resolve(__dirname, "../constants/index.ts"),
+      "@rondevu/platform-types": path.resolve(__dirname, "../types/index.ts"),
     },
   },
 });

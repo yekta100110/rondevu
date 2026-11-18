@@ -5,14 +5,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import { getQueryParam } from "@calcom/features/bookings/Booker/utils/query-param";
-import ServerTrans from "@calcom/lib/components/ServerTrans";
-import { WEBAPP_URL } from "@calcom/lib/constants";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc } from "@calcom/trpc/react";
-import { Alert } from "@calcom/ui/components/alert";
-import { Button } from "@calcom/ui/components/button";
-import { EmptyScreen } from "@calcom/ui/components/empty-screen";
+import { getQueryParam } from "@rondevu/features/bookings/Booker/utils/query-param";
+import ServerTrans from "@rondevu/lib/components/ServerTrans";
+import { WEBAPP_URL } from "@rondevu/lib/constants";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc } from "@rondevu/trpc/react";
+import { Alert } from "@rondevu/ui/components/alert";
+import { Button } from "@rondevu/ui/components/button";
+import { EmptyScreen } from "@rondevu/ui/components/empty-screen";
 
 import { TRPCClientError } from "@trpc/client";
 

@@ -1,9 +1,9 @@
 import async from "async";
 
-import { buildAllCredentials } from "@calcom/app-store/delegationCredential";
-import { isDelegationCredential } from "@calcom/lib/delegationCredential";
-import { withReporting } from "@calcom/lib/sentryWrapper";
-import type { CredentialForCalendarService } from "@calcom/types/Credential";
+import { buildAllCredentials } from "@rondevu/app-store/delegationCredential";
+import { isDelegationCredential } from "@rondevu/lib/delegationCredential";
+import { withReporting } from "@rondevu/lib/sentryWrapper";
+import type { CredentialForCalendarService } from "@rondevu/types/Credential";
 
 import { refreshCredential } from "./refreshCredential";
 

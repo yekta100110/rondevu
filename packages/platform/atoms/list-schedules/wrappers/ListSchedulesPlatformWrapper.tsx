@@ -1,10 +1,10 @@
 import { AtomsWrapper } from "@/components/atoms-wrapper";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
-import { ScheduleListItem } from "@calcom/features/schedules/components/ScheduleListItem";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { getScheduleListItemData } from "@calcom/lib/schedules/transformers/getScheduleListItemData";
-import { EmptyScreen } from "@calcom/ui/components/empty-screen";
+import { ScheduleListItem } from "@rondevu/features/schedules/components/ScheduleListItem";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { getScheduleListItemData } from "@rondevu/lib/schedules/transformers/getScheduleListItemData";
+import { EmptyScreen } from "@rondevu/ui/components/empty-screen";
 
 import { useAtomDuplicateSchedule } from "../../hooks/schedules/useAtomDuplicateSchedule";
 import { useAtomGetAllSchedules } from "../../hooks/schedules/useAtomGetAllSchedules";

@@ -1,17 +1,17 @@
 import { z } from "zod";
 
-import { getDailyAppKeys } from "@calcom/app-store/dailyvideo/lib/getDailyAppKeys";
-import { prisma } from "@calcom/prisma";
-import type { GetRecordingsResponseSchema, GetAccessLinkResponseSchema } from "@calcom/prisma/zod-utils";
+import { getDailyAppKeys } from "@rondevu/app-store/dailyvideo/lib/getDailyAppKeys";
+import { prisma } from "@rondevu/prisma";
+import type { GetRecordingsResponseSchema, GetAccessLinkResponseSchema } from "@rondevu/prisma/zod-utils";
 import {
   getRecordingsResponseSchema,
   getAccessLinkResponseSchema,
   recordingItemSchema,
-} from "@calcom/prisma/zod-utils";
-import type { CalendarEvent } from "@calcom/types/Calendar";
-import type { CredentialForCalendarService } from "@calcom/types/Credential";
-import type { PartialReference } from "@calcom/types/EventManager";
-import type { VideoApiAdapter, VideoCallData } from "@calcom/types/VideoApiAdapter";
+} from "@rondevu/prisma/zod-utils";
+import type { CalendarEvent } from "@rondevu/types/Calendar";
+import type { CredentialForCalendarService } from "@rondevu/types/Credential";
+import type { PartialReference } from "@rondevu/types/EventManager";
+import type { VideoApiAdapter, VideoCallData } from "@rondevu/types/VideoApiAdapter";
 
 import {
   ZSubmitBatchProcessorJobRes,

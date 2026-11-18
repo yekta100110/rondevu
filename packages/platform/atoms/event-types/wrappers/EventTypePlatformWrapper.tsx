@@ -3,23 +3,23 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useRef, useState, useEffect, forwardRef, useImperativeHandle, useCallback } from "react";
 
-import { BookerStoreProvider } from "@calcom/features/bookings/Booker/BookerStoreProvider";
-import type { ChildrenEventType } from "@calcom/web/modules/event-types/components/ChildrenEventTypeSelect";
-import { EventType as EventTypeComponent } from "@calcom/web/modules/event-types/components/EventType";
-import ManagedEventTypeDialog from "@calcom/features/eventtypes/components/dialogs/ManagedEventDialog";
+import { BookerStoreProvider } from "@rondevu/features/bookings/Booker/BookerStoreProvider";
+import type { ChildrenEventType } from "@rondevu/web/modules/event-types/components/ChildrenEventTypeSelect";
+import { EventType as EventTypeComponent } from "@rondevu/web/modules/event-types/components/EventType";
+import ManagedEventTypeDialog from "@rondevu/features/eventtypes/components/dialogs/ManagedEventDialog";
 import type {
   EventTypeSetupProps,
   FormValues,
   EventTypePlatformWrapperRef,
-} from "@calcom/features/eventtypes/lib/types";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { SchedulingType } from "@calcom/prisma/enums";
-import type { EventAdvancedTabCustomClassNames } from "@calcom/web/modules/event-types/components/tabs/advanced/EventAdvancedTab";
-import type { EventTeamAssignmentTabCustomClassNames } from "@calcom/web/modules/event-types/components/tabs/assignment/EventTeamAssignmentTab";
-import type { EventAvailabilityTabCustomClassNames } from "@calcom/web/modules/event-types/components/tabs/availability/EventAvailabilityTab";
-import type { EventLimitsTabCustomClassNames } from "@calcom/web/modules/event-types/components/tabs/limits/EventLimitsTab";
-import type { EventRecurringTabCustomClassNames } from "@calcom/web/modules/event-types/components/tabs/recurring/RecurringEventController";
-import type { EventSetupTabCustomClassNames } from "@calcom/web/modules/event-types/components/tabs/setup/EventSetupTab";
+} from "@rondevu/features/eventtypes/lib/types";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { SchedulingType } from "@rondevu/prisma/enums";
+import type { EventAdvancedTabCustomClassNames } from "@rondevu/web/modules/event-types/components/tabs/advanced/EventAdvancedTab";
+import type { EventTeamAssignmentTabCustomClassNames } from "@rondevu/web/modules/event-types/components/tabs/assignment/EventTeamAssignmentTab";
+import type { EventAvailabilityTabCustomClassNames } from "@rondevu/web/modules/event-types/components/tabs/availability/EventAvailabilityTab";
+import type { EventLimitsTabCustomClassNames } from "@rondevu/web/modules/event-types/components/tabs/limits/EventLimitsTab";
+import type { EventRecurringTabCustomClassNames } from "@rondevu/web/modules/event-types/components/tabs/recurring/RecurringEventController";
+import type { EventSetupTabCustomClassNames } from "@rondevu/web/modules/event-types/components/tabs/setup/EventSetupTab";
 
 import { useDeleteEventTypeById } from "../../hooks/event-types/private/useDeleteEventTypeById";
 import { useAtomsContext } from "../../hooks/useAtomsContext";

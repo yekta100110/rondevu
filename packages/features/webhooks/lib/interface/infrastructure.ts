@@ -1,4 +1,4 @@
-import type { Tasker } from "@calcom/features/tasker/tasker";
+import type { Tasker } from "@rondevu/features/tasker/tasker";
 
 export type ITasker = Tasker;
 

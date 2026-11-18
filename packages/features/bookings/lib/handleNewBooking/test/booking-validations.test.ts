@@ -2,7 +2,7 @@
  * Booking Validation Specifications
  * These specifications verify the business rules and validation behavior for booking creation
  */
-import prismaMock from "@calcom/testing/lib/__mocks__/prisma";
+import prismaMock from "@rondevu/testing/lib/__mocks__/prisma";
 import {
   createBookingScenario,
   getBooker,
@@ -12,16 +12,16 @@ import {
   getScenarioData,
   mockCalendarToHaveNoBusySlots,
   TestData,
-} from "@calcom/testing/lib/bookingScenario/bookingScenario";
+} from "@rondevu/testing/lib/bookingScenario/bookingScenario";
 import process from "node:process";
-import { BookingStatus } from "@calcom/prisma/enums";
-import { getMockRequestDataForBooking } from "@calcom/testing/lib/bookingScenario/getMockRequestDataForBooking";
-import { setupAndTeardown } from "@calcom/testing/lib/bookingScenario/setupAndTeardown";
-import { test } from "@calcom/testing/lib/fixtures/fixtures";
+import { BookingStatus } from "@rondevu/prisma/enums";
+import { getMockRequestDataForBooking } from "@rondevu/testing/lib/bookingScenario/getMockRequestDataForBooking";
+import { setupAndTeardown } from "@rondevu/testing/lib/bookingScenario/setupAndTeardown";
+import { test } from "@rondevu/testing/lib/fixtures/fixtures";
 import { afterEach, beforeEach, describe, expect, vi } from "vitest";
 import { getNewBookingHandler } from "./getNewBookingHandler";
 
-vi.mock("@calcom/features/auth/lib/verifyCodeUnAuthenticated", () => ({
+vi.mock("@rondevu/features/auth/lib/verifyCodeUnAuthenticated", () => ({
   verifyCodeUnAuthenticated: vi.fn(),
 }));
 
@@ -29,7 +29,7 @@ const { mockFindManyByEmailsWithEmailVerificationSettings } = vi.hoisted(() => (
   mockFindManyByEmailsWithEmailVerificationSettings: vi.fn(),
 }));
 
-vi.mock("@calcom/features/users/repositories/UserRepository", async (importOriginal) => {
+vi.mock("@rondevu/features/users/repositories/UserRepository", async (importOriginal) => {
   const actual = await importOriginal();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const OriginalUserRepository = (actual as any).UserRepository;
@@ -728,7 +728,7 @@ describe("Booking Validation Specifications", () => {
     test("should create booking when main booker provides valid verification code", async () => {
       const handleNewBooking = getNewBookingHandler();
       const { verifyCodeUnAuthenticated } = await import(
-        "@calcom/features/auth/lib/verifyCodeUnAuthenticated"
+        "@rondevu/features/auth/lib/verifyCodeUnAuthenticated"
       );
 
       vi.mocked(verifyCodeUnAuthenticated).mockResolvedValue(true);
@@ -1243,7 +1243,7 @@ describe("Booking Validation Specifications", () => {
     test("should throw error when invalid verification code is provided", async () => {
       const handleNewBooking = getNewBookingHandler();
       const { verifyCodeUnAuthenticated } = await import(
-        "@calcom/features/auth/lib/verifyCodeUnAuthenticated"
+        "@rondevu/features/auth/lib/verifyCodeUnAuthenticated"
       );
 
       vi.mocked(verifyCodeUnAuthenticated).mockResolvedValue(false);

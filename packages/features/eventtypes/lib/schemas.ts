@@ -1,8 +1,8 @@
 import { z } from "zod";
 
-import { eventTypeLocations, eventTypeSlug } from "@calcom/lib/zod/eventType";
-import { SchedulingType } from "@calcom/prisma/enums";
-import { EventTypeMetaDataSchema } from "@calcom/prisma/zod-utils";
+import { eventTypeLocations, eventTypeSlug } from "@rondevu/lib/zod/eventType";
+import { SchedulingType } from "@rondevu/prisma/enums";
+import { EventTypeMetaDataSchema } from "@rondevu/prisma/zod-utils";
 
 type CalVideoSettings =
   | {

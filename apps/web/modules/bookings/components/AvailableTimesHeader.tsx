@@ -1,14 +1,14 @@
 import { shallow } from "zustand/shallow";
 
-import type { Dayjs } from "@calcom/dayjs";
-import dayjs from "@calcom/dayjs";
-import { useBookerStoreContext } from "@calcom/features/bookings/Booker/BookerStoreProvider";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { nameOfDay } from "@calcom/lib/weekday";
-import { BookerLayouts } from "@calcom/prisma/zod-utils";
-import classNames from "@calcom/ui/classNames";
+import type { Dayjs } from "@rondevu/dayjs";
+import dayjs from "@rondevu/dayjs";
+import { useBookerStoreContext } from "@rondevu/features/bookings/Booker/BookerStoreProvider";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { nameOfDay } from "@rondevu/lib/weekday";
+import { BookerLayouts } from "@rondevu/prisma/zod-utils";
+import classNames from "@rondevu/ui/classNames";
 
-import { TimeFormatToggle } from "@calcom/features/bookings/components/TimeFormatToggle";
+import { TimeFormatToggle } from "@rondevu/features/bookings/components/TimeFormatToggle";
 
 type AvailableTimesHeaderProps = {
   date: Dayjs;

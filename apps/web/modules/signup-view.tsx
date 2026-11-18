@@ -1,15 +1,15 @@
 "use client";
 
-import getStripe from "@calcom/app-store/stripepayment/lib/client";
-import { getPremiumPlanPriceValue } from "@calcom/app-store/stripepayment/lib/utils";
+import getStripe from "@rondevu/app-store/stripepayment/lib/client";
+import { getPremiumPlanPriceValue } from "@rondevu/app-store/stripepayment/lib/utils";
 import {
   fetchSignup,
   hasCheckoutSession,
   isAccountUnderReview,
   isUserAlreadyExistsError,
-} from "@calcom/features/auth/signup/lib/fetchSignup";
-import { getOrgUsernameFromEmail } from "@calcom/features/auth/signup/utils/getOrgUsernameFromEmail";
-import ServerTrans from "@calcom/lib/components/ServerTrans";
+} from "@rondevu/features/auth/signup/lib/fetchSignup";
+import { getOrgUsernameFromEmail } from "@rondevu/features/auth/signup/utils/getOrgUsernameFromEmail";
+import ServerTrans from "@rondevu/lib/components/ServerTrans";
 import {
   APP_NAME,
   CLOUDFLARE_SITE_ID,
@@ -19,23 +19,23 @@ import {
   WEBSITE_PRIVACY_POLICY_URL,
   WEBSITE_TERMS_URL,
   WEBSITE_URL,
-} from "@calcom/lib/constants";
-import { isENVDev } from "@calcom/lib/env";
-import { fetchUsername } from "@calcom/lib/fetchUsername";
-import { pushGTMEvent } from "@calcom/lib/gtm";
-import { useCompatSearchParams } from "@calcom/lib/hooks/useCompatSearchParams";
-import { useDebounce } from "@calcom/lib/hooks/useDebounce";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { INVALID_CLOUDFLARE_TOKEN_ERROR } from "@calcom/lib/server/checkCfTurnstileToken";
-import { IS_EUROPE } from "@calcom/lib/timezoneConstants";
-import { signupSchema as apiSignupSchema } from "@calcom/prisma/zod-utils";
-import type { inferSSRProps } from "@calcom/types/inferSSRProps";
-import classNames from "@calcom/ui/classNames";
-import { Alert } from "@calcom/ui/components/alert";
-import { Button } from "@calcom/ui/components/button";
-import { CheckboxField, Form, PasswordField, SelectField, TextField } from "@calcom/ui/components/form";
-import { Icon } from "@calcom/ui/components/icon";
-import { showToast } from "@calcom/ui/components/toast";
+} from "@rondevu/lib/constants";
+import { isENVDev } from "@rondevu/lib/env";
+import { fetchUsername } from "@rondevu/lib/fetchUsername";
+import { pushGTMEvent } from "@rondevu/lib/gtm";
+import { useCompatSearchParams } from "@rondevu/lib/hooks/useCompatSearchParams";
+import { useDebounce } from "@rondevu/lib/hooks/useDebounce";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { INVALID_CLOUDFLARE_TOKEN_ERROR } from "@rondevu/lib/server/checkCfTurnstileToken";
+import { IS_EUROPE } from "@rondevu/lib/timezoneConstants";
+import { signupSchema as apiSignupSchema } from "@rondevu/prisma/zod-utils";
+import type { inferSSRProps } from "@rondevu/types/inferSSRProps";
+import classNames from "@rondevu/ui/classNames";
+import { Alert } from "@rondevu/ui/components/alert";
+import { Button } from "@rondevu/ui/components/button";
+import { CheckboxField, Form, PasswordField, SelectField, TextField } from "@rondevu/ui/components/form";
+import { Icon } from "@rondevu/ui/components/icon";
+import { showToast } from "@rondevu/ui/components/toast";
 import { InfoIcon, ShieldCheckIcon, StarIcon } from "@coss/ui/icons";
 import { Analytics as DubAnalytics } from "@dub/analytics/react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -57,7 +57,7 @@ const signupSchema = apiSignupSchema.extend({
   cfToken: z.string().optional(),
 });
 
-const TurnstileCaptcha = dynamic(() => import("@calcom/web/modules/auth/components/Turnstile"), {
+const TurnstileCaptcha = dynamic(() => import("@rondevu/web/modules/auth/components/Turnstile"), {
   ssr: false,
 });
 

@@ -1,6 +1,6 @@
-import type { Dayjs } from "@calcom/dayjs";
-import dayjs from "@calcom/dayjs";
-import { withReporting } from "@calcom/lib/sentryWrapper";
+import type { Dayjs } from "@rondevu/dayjs";
+import dayjs from "@rondevu/dayjs";
+import { withReporting } from "@rondevu/lib/sentryWrapper";
 
 import type { IntervalLimitUnit } from "../intervalLimitSchema";
 

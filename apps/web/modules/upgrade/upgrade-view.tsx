@@ -2,12 +2,12 @@
 
 import { useRouter } from "next/navigation";
 
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import type { RouterOutputs } from "@calcom/trpc/react";
-import { trpc } from "@calcom/trpc/react";
-import { Button } from "@calcom/ui/components/button";
-import { EmptyScreen } from "@calcom/ui/components/empty-screen";
-import { showToast } from "@calcom/ui/components/toast";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import type { RouterOutputs } from "@rondevu/trpc/react";
+import { trpc } from "@rondevu/trpc/react";
+import { Button } from "@rondevu/ui/components/button";
+import { EmptyScreen } from "@rondevu/ui/components/empty-screen";
+import { showToast } from "@rondevu/ui/components/toast";
 
 import Shell from "~/shell/Shell";
 

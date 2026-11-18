@@ -1,5 +1,5 @@
 {
-  "name": "@calcom/emails",
+  "name": "@rondevu/emails",
   "sideEffects": false,
   "version": "0.0.0",
   "private": true,
@@ -7,9 +7,9 @@
     "dx": "docker compose up -d || docker-compose up -d"
   },
   "dependencies": {
-    "@calcom/dayjs": "workspace:*",
-    "@calcom/lib": "workspace:*",
-    "@calcom/sms": "workspace:*",
+    "@rondevu/dayjs": "workspace:*",
+    "@rondevu/lib": "workspace:*",
+    "@rondevu/sms": "workspace:*",
     "rrule": "2.7.1"
   },
   "peerDependencies": {
@@ -17,8 +17,8 @@
     "react-dom": "^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
-    "@calcom/testing": "workspace:*",
-    "@calcom/tsconfig": "workspace:*",
-    "@calcom/types": "workspace:*"
+    "@rondevu/testing": "workspace:*",
+    "@rondevu/tsconfig": "workspace:*",
+    "@rondevu/types": "workspace:*"
   }
 }

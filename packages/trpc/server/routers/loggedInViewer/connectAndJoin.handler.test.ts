@@ -1,35 +1,35 @@
-import { prisma } from "@calcom/prisma/__mocks__/prisma";
+import { prisma } from "@rondevu/prisma/__mocks__/prisma";
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
-import { BookingStatus } from "@calcom/prisma/enums";
-import type { TrpcSessionUser } from "@calcom/trpc/server/types";
+import { BookingStatus } from "@rondevu/prisma/enums";
+import type { TrpcSessionUser } from "@rondevu/trpc/server/types";
 
 import { Handler } from "./connectAndJoin.handler";
 
-vi.mock("@calcom/prisma", () => ({
+vi.mock("@rondevu/prisma", () => ({
   prisma,
 }));
 
-vi.mock("@calcom/emails/email-manager", () => ({
+vi.mock("@rondevu/emails/email-manager", () => ({
   sendScheduledEmailsAndSMS: vi.fn().mockResolvedValue(undefined),
 }));
 
-vi.mock("@calcom/features/bookings/lib/handleNewBooking/scheduleNoShowTriggers", () => ({
+vi.mock("@rondevu/features/bookings/lib/handleNewBooking/scheduleNoShowTriggers", () => ({
   scheduleNoShowTriggers: vi.fn().mockResolvedValue(undefined),
 }));
 
-vi.mock("@calcom/i18n/server", () => ({
+vi.mock("@rondevu/i18n/server", () => ({
   getTranslation: vi.fn().mockResolvedValue((key: string) => key),
 }));
 
-vi.mock("@calcom/features/eventtypes/di/EventTypeService.container", () => ({
+vi.mock("@rondevu/features/eventtypes/di/EventTypeService.container", () => ({
   getEventTypeService: vi.fn(() => ({
     shouldHideBrandingForEventType: vi.fn().mockResolvedValue(false),
   })),
 }));
 
-vi.mock("@calcom/features/bookings/lib/getCalEventResponses", () => ({
+vi.mock("@rondevu/features/bookings/lib/getCalEventResponses", () => ({
   getCalEventResponses: vi.fn().mockReturnValue({}),
 }));
 

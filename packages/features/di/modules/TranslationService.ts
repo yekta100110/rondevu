@@ -1,7 +1,7 @@
-import { moduleLoader as eventTypeTranslationRepositoryModuleLoader } from "@calcom/features/eventTypeTranslation/di/EventTypeTranslationRepository.module";
-import type { EventTypeTranslationRepository } from "@calcom/features/eventTypeTranslation/repositories/EventTypeTranslationRepository";
-import { TRANSLATION_DI_TOKENS } from "@calcom/features/translation/di/tokens";
-import { TranslationService } from "@calcom/features/translation/services/TranslationService";
+import { moduleLoader as eventTypeTranslationRepositoryModuleLoader } from "@rondevu/features/eventTypeTranslation/di/EventTypeTranslationRepository.module";
+import type { EventTypeTranslationRepository } from "@rondevu/features/eventTypeTranslation/repositories/EventTypeTranslationRepository";
+import { TRANSLATION_DI_TOKENS } from "@rondevu/features/translation/di/tokens";
+import { TranslationService } from "@rondevu/features/translation/services/TranslationService";
 import type { Container } from "@evyweb/ioctopus";
 import { createModule, type ModuleLoader } from "../di";
 
@@ -17,7 +17,7 @@ const loadModule = (container: Container) => {
 
   const thisModule = createModule();
   thisModule.bind(token).toFactory(async () => {
-    const { LingoDotDevService } = await import("@calcom/lib/server/service/lingoDotDev");
+    const { LingoDotDevService } = await import("@rondevu/lib/server/service/lingoDotDev");
     return new TranslationService({
       localizeText: (text, sourceLocale, targetLocale) =>
         LingoDotDevService.localizeText(text, sourceLocale, targetLocale),

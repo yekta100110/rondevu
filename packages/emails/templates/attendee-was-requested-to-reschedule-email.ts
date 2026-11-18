@@ -1,6 +1,6 @@
-import { getManageLink } from "@calcom/lib/CalEventParser";
-import { EMAIL_FROM_NAME } from "@calcom/lib/constants";
-import type { CalendarEvent } from "@calcom/types/Calendar";
+import { getManageLink } from "@rondevu/lib/CalEventParser";
+import { EMAIL_FROM_NAME } from "@rondevu/lib/constants";
+import type { CalendarEvent } from "@rondevu/types/Calendar";
 
 import generateIcsFile, { GenerateIcsRole } from "../lib/generateIcsFile";
 import renderEmail from "../src/renderEmail";

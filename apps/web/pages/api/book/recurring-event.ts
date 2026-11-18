@@ -1,12 +1,12 @@
 import process from "node:process";
-import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
-import { getRecurringBookingService } from "@calcom/features/bookings/di/RecurringBookingService.container";
-import type { BookingResponse } from "@calcom/features/bookings/types";
-import { checkRateLimitAndThrowError } from "@calcom/lib/checkRateLimitAndThrowError";
-import getIP from "@calcom/lib/getIP";
-import { checkCfTurnstileToken } from "@calcom/lib/server/checkCfTurnstileToken";
-import { defaultResponder } from "@calcom/lib/server/defaultResponder";
-import { piiHasher } from "@calcom/lib/server/PiiHasher";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
+import { getRecurringBookingService } from "@rondevu/features/bookings/di/RecurringBookingService.container";
+import type { BookingResponse } from "@rondevu/features/bookings/types";
+import { checkRateLimitAndThrowError } from "@rondevu/lib/checkRateLimitAndThrowError";
+import getIP from "@rondevu/lib/getIP";
+import { checkCfTurnstileToken } from "@rondevu/lib/server/checkCfTurnstileToken";
+import { defaultResponder } from "@rondevu/lib/server/defaultResponder";
+import { piiHasher } from "@rondevu/lib/server/PiiHasher";
 import type { NextApiRequest } from "next";
 
 // @TODO: Didn't look at the contents of this function in order to not break old booking page.

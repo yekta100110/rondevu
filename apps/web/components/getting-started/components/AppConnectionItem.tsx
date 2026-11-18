@@ -2,15 +2,15 @@ import Link from "next/link";
 import { useState } from "react";
 import posthog from "posthog-js";
 
-import { InstallAppButtonWithoutPlanCheck } from "@calcom/app-store/InstallAppButtonWithoutPlanCheck";
-import type { TDependencyData } from "@calcom/app-store/_appRegistry";
-import { WEBAPP_URL } from "@calcom/lib/constants";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc } from "@calcom/trpc/react";
-import type { App } from "@calcom/types/App";
-import { Badge } from "@calcom/ui/components/badge";
-import { Button } from "@calcom/ui/components/button";
-import { showToast } from "@calcom/ui/components/toast";
+import { InstallAppButtonWithoutPlanCheck } from "@rondevu/app-store/InstallAppButtonWithoutPlanCheck";
+import type { TDependencyData } from "@rondevu/app-store/_appRegistry";
+import { WEBAPP_URL } from "@rondevu/lib/constants";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc } from "@rondevu/trpc/react";
+import type { App } from "@rondevu/types/App";
+import { Badge } from "@rondevu/ui/components/badge";
+import { Button } from "@rondevu/ui/components/button";
+import { showToast } from "@rondevu/ui/components/toast";
 import { ArrowRightIcon, CircleAlertIcon } from "@coss/ui/icons";
 
 interface IAppConnectionItem {

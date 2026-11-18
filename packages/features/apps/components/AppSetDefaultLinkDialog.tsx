@@ -3,15 +3,15 @@ import type { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import type { EventLocationType } from "@calcom/app-store/locations";
-import { getLocationByType } from "@calcom/app-store/locations";
-import { Dialog } from "@calcom/features/components/controlled-dialog";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Button } from "@calcom/ui/components/button";
-import { DialogContent, DialogFooter, DialogClose } from "@calcom/ui/components/dialog";
-import { Form } from "@calcom/ui/components/form";
-import { TextField } from "@calcom/ui/components/form";
-import { showToast } from "@calcom/ui/components/toast";
+import type { EventLocationType } from "@rondevu/app-store/locations";
+import { getLocationByType } from "@rondevu/app-store/locations";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { Button } from "@rondevu/ui/components/button";
+import { DialogContent, DialogFooter, DialogClose } from "@rondevu/ui/components/dialog";
+import { Form } from "@rondevu/ui/components/form";
+import { TextField } from "@rondevu/ui/components/form";
+import { showToast } from "@rondevu/ui/components/toast";
 
 export type UpdateUsersDefaultConferencingAppParams = {
   appSlug: string;

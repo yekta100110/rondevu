@@ -315,39 +315,39 @@
     "B2_BUCKET_NAME"
   ],
   "tasks": {
-    "@calcom/web#copy-app-store-static": {
+    "@rondevu/web#copy-app-store-static": {
       "inputs": ["../../packages/app-store/**/static/**/*"],
       "outputLogs": "new-only",
       "outputs": ["public/app-store/**"]
     },
-    "@calcom/prisma#build": {
+    "@rondevu/prisma#build": {
       "cache": false,
       "dependsOn": ["post-install"]
     },
-    "@calcom/prisma#db-migrate": {
+    "@rondevu/prisma#db-migrate": {
       "cache": false,
-      "dependsOn": ["@calcom/prisma#db-up"],
+      "dependsOn": ["@rondevu/prisma#db-up"],
       "inputs": ["./schema.prisma", "./migrations/**/*.sql"]
     },
-    "@calcom/prisma#db-seed": {
+    "@rondevu/prisma#db-seed": {
       "cache": false,
-      "dependsOn": ["@calcom/prisma#db-deploy"]
+      "dependsOn": ["@rondevu/prisma#db-deploy"]
     },
-    "@calcom/prisma#db-up": {
+    "@rondevu/prisma#db-up": {
       "cache": false
     },
-    "@calcom/prisma#dx": {
+    "@rondevu/prisma#dx": {
       "cache": false,
-      "dependsOn": ["@calcom/prisma#db-up"]
+      "dependsOn": ["@rondevu/prisma#db-up"]
     },
-    "@calcom/app-store#build:types": {
+    "@rondevu/app-store#build:types": {
       "outputs": ["types/**"]
     },
-    "@calcom/trpc#build": {
-      "dependsOn": ["@calcom/prisma#post-install"],
+    "@rondevu/trpc#build": {
+      "dependsOn": ["@rondevu/prisma#post-install"],
       "outputs": ["./types"]
     },
-    "@calcom/web#build": {
+    "@rondevu/web#build": {
       "dependsOn": ["^build", "copy-app-store-static"],
       "outputs": [".next/**"],
       "env": [
@@ -392,11 +392,11 @@
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env.production"]
     },
-    "@calcom/web#dx": {
+    "@rondevu/web#dx": {
       "cache": false,
-      "dependsOn": ["@calcom/prisma#dx"]
+      "dependsOn": ["@rondevu/prisma#dx"]
     },
-    "@calcom/web#start": {
+    "@rondevu/web#start": {
       "cache": false,
       "dependsOn": [],
       "env": [
@@ -408,10 +408,10 @@
         "RONDEVU_PLATFORM_WEBHOOK_ENABLE"
       ]
     },
-    "@calcom/atoms#build-npm": {
+    "@rondevu/atoms#build-npm": {
       "outputs": ["dist/**", "globals.min.css"]
     },
-    "@calcom/ai#build": {
+    "@rondevu/ai#build": {
       "env": [
         "FRONTEND_URL",
         "BACKEND_URL",
@@ -425,7 +425,7 @@
         "DATABASE_URL"
       ]
     },
-    "@calcom/website#build": {
+    "@rondevu/website#build": {
       "dependsOn": ["^build"],
       "outputs": [".next/**"],
       "env": [
@@ -463,13 +463,13 @@
     "db-seed": {},
     "deploy": {
       "cache": false,
-      "dependsOn": ["@calcom/web#build"]
+      "dependsOn": ["@rondevu/web#build"]
     },
     "clean": {
       "cache": false,
       "outputs": ["dist/**", "build/**"]
     },
-    "@calcom/web#dev": {
+    "@rondevu/web#dev": {
       "dependsOn": ["//#env-check:common", "//#env-check:app-store"],
       "cache": false
     },
@@ -525,7 +525,7 @@
       "inputs": ["./schema.prisma", "./prisma/schema.prisma"],
       "env": ["PRISMA_GENERATE_DATAPROXY"]
     },
-    "@calcom/prisma#post-install": {
+    "@rondevu/prisma#post-install": {
       "cache": false,
       "outputs": ["dist/**", "build/**"]
     },
@@ -542,17 +542,17 @@
     },
     "type-check": {
       "cache": false,
-      "dependsOn": ["@calcom/trpc#build"]
+      "dependsOn": ["@rondevu/trpc#build"]
     },
     "type-check:ci": {
       "cache": false,
-      "dependsOn": ["@calcom/trpc#build"]
+      "dependsOn": ["@rondevu/trpc#build"]
     },
-    "@calcom/prisma#db-reset": {
+    "@rondevu/prisma#db-reset": {
       "cache": false,
       "outputs": ["dist/**", "build/**"]
     },
-    "@calcom/app-store-cli#build": {
+    "@rondevu/app-store-cli#build": {
       "inputs": [
         "../../packages/app-store/**/package.json",
         "../../packages/app-store/**/config.json",
@@ -564,11 +564,11 @@
       ],
       "outputs": ["../../packages/app-store/*.generated.ts", "../../packages/app-store/*.generated.tsx"]
     },
-    "@calcom/embed-react#type-check": {
-      "dependsOn": ["@calcom/embed-core#build", "@calcom/embed-snippet#build"],
+    "@rondevu/embed-react#type-check": {
+      "dependsOn": ["@rondevu/embed-core#build", "@rondevu/embed-snippet#build"],
       "outputs": ["dist/**", "build/**"]
     },
-    "@calcom/embed-core#build": {
+    "@rondevu/embed-core#build": {
       "cache": false,
       "outputs": ["../../../apps/web/public/embed/**"],
       "env": [
@@ -581,8 +581,8 @@
     "embed-tests-update-snapshots:ci": {
       "cache": false,
       "dependsOn": [
-        "@calcom/prisma#db-seed",
-        "@calcom/web#build",
+        "@rondevu/prisma#db-seed",
+        "@rondevu/web#build",
         "^build",
         "^embed-tests-update-snapshots:ci"
       ],

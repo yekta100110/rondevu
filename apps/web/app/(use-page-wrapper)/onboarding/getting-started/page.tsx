@@ -1,6 +1,6 @@
-import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
-import { MembershipRepository } from "@calcom/features/membership/repositories/MembershipRepository";
-import { APP_NAME } from "@calcom/lib/constants";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
+import { MembershipRepository } from "@rondevu/features/membership/repositories/MembershipRepository";
+import { APP_NAME } from "@rondevu/lib/constants";
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 import { _generateMetadata } from "app/_utils";
 import { cookies, headers } from "next/headers";

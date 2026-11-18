@@ -1,18 +1,18 @@
-import type { LocationObject } from "@calcom/app-store/locations";
-import { getBookingFieldsWithSystemFields } from "@calcom/features/bookings/lib/getBookingFields";
-import type { DefaultEvent } from "@calcom/features/eventtypes/lib/defaultEvents";
-import { withSelectedCalendars } from "@calcom/features/users/repositories/UserRepository";
-import { ErrorCode } from "@calcom/lib/errorCodes";
-import { parseRecurringEvent } from "@calcom/lib/isRecurringEvent";
-import { prisma } from "@calcom/prisma";
-import type { Prisma } from "@calcom/prisma/client";
-import { credentialForCalendarServiceSelect } from "@calcom/prisma/selects/credential";
-import { userSelect } from "@calcom/prisma/selects/user";
+import type { LocationObject } from "@rondevu/app-store/locations";
+import { getBookingFieldsWithSystemFields } from "@rondevu/features/bookings/lib/getBookingFields";
+import type { DefaultEvent } from "@rondevu/features/eventtypes/lib/defaultEvents";
+import { withSelectedCalendars } from "@rondevu/features/users/repositories/UserRepository";
+import { ErrorCode } from "@rondevu/lib/errorCodes";
+import { parseRecurringEvent } from "@rondevu/lib/isRecurringEvent";
+import { prisma } from "@rondevu/prisma";
+import type { Prisma } from "@rondevu/prisma/client";
+import { credentialForCalendarServiceSelect } from "@rondevu/prisma/selects/credential";
+import { userSelect } from "@rondevu/prisma/selects/user";
 import {
   customInputSchema,
   EventTypeMetaDataSchema,
   rrSegmentQueryValueSchema,
-} from "@calcom/prisma/zod-utils";
+} from "@rondevu/prisma/zod-utils";
 
 const getEventTypesFromDBSelect = {
   id: true,

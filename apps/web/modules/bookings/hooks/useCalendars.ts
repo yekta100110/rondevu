@@ -1,10 +1,10 @@
-import dayjs from "@calcom/dayjs";
-import { useBookerStoreContext } from "@calcom/features/bookings/Booker/BookerStoreProvider";
-import { useOverlayCalendarStore } from "@calcom/features/bookings/Booker/components/OverlayCalendar/store";
-import type { ToggledConnectedCalendars } from "@calcom/features/bookings/Booker/types";
-import { useTimePreferences } from "@calcom/features/bookings/lib";
-import { localStorage } from "@calcom/lib/webstorage";
-import { trpc } from "@calcom/trpc/react";
+import dayjs from "@rondevu/dayjs";
+import { useBookerStoreContext } from "@rondevu/features/bookings/Booker/BookerStoreProvider";
+import { useOverlayCalendarStore } from "@rondevu/features/bookings/Booker/components/OverlayCalendar/store";
+import type { ToggledConnectedCalendars } from "@rondevu/features/bookings/Booker/types";
+import { useTimePreferences } from "@rondevu/features/bookings/lib";
+import { localStorage } from "@rondevu/lib/webstorage";
+import { trpc } from "@rondevu/trpc/react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { shallow } from "zustand/shallow";

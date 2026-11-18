@@ -1,6 +1,6 @@
-import type { UserFeaturesDto } from "@calcom/lib/dto/UserFeaturesDto";
-import type { PrismaClient } from "@calcom/prisma/client";
-import { Prisma } from "@calcom/prisma/client";
+import type { UserFeaturesDto } from "@rondevu/lib/dto/UserFeaturesDto";
+import type { PrismaClient } from "@rondevu/prisma/client";
+import { Prisma } from "@rondevu/prisma/client";
 import { captureException } from "@sentry/nextjs";
 import type { FeatureId } from "../config";
 

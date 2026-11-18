@@ -4,53 +4,53 @@ import { vi } from "vitest";
 import {
   prismaMock,
   resetPrismaMock,
-} from "@calcom/features/auth/signup/handlers/__tests__/mocks/prisma.mocks";
+} from "@rondevu/features/auth/signup/handlers/__tests__/mocks/prisma.mocks";
 import {
   createMockTeam,
   createMockFoundToken,
-} from "@calcom/features/auth/signup/handlers/__tests__/mocks/signup.factories";
-import type { SignupBody } from "@calcom/features/auth/signup/handlers/__tests__/mocks/signup.factories";
+} from "@rondevu/features/auth/signup/handlers/__tests__/mocks/signup.factories";
+import type { SignupBody } from "@rondevu/features/auth/signup/handlers/__tests__/mocks/signup.factories";
 
 const mockFindTokenByToken: Mock = vi.fn();
 const mockValidateAndGetCorrectedUsernameForTeam: Mock = vi.fn();
 
 vi.mock("next/server", async () => {
   const { createNextServerMock } = await import(
-    "@calcom/features/auth/signup/handlers/__tests__/mocks/next.mocks"
+    "@rondevu/features/auth/signup/handlers/__tests__/mocks/next.mocks"
   );
   return createNextServerMock();
 });
-vi.mock("@calcom/prisma", async () => {
+vi.mock("@rondevu/prisma", async () => {
   const { createPrismaMock } = await import(
-    "@calcom/features/auth/signup/handlers/__tests__/mocks/prisma.mocks"
+    "@rondevu/features/auth/signup/handlers/__tests__/mocks/prisma.mocks"
   );
   return createPrismaMock();
 });
-vi.mock("@calcom/prisma/client", async () => {
+vi.mock("@rondevu/prisma/client", async () => {
   const { createPrismaMock } = await import(
-    "@calcom/features/auth/signup/handlers/__tests__/mocks/prisma.mocks"
+    "@rondevu/features/auth/signup/handlers/__tests__/mocks/prisma.mocks"
   );
   return createPrismaMock();
 });
-vi.mock("@calcom/lib/logger", () => ({
+vi.mock("@rondevu/lib/logger", () => ({
   default: { getSubLogger: () => ({ warn: vi.fn(), error: vi.fn(), debug: vi.fn(), info: vi.fn() }) },
 }));
-vi.mock("@calcom/lib/auth/hashPassword", () => ({ hashPassword: vi.fn().mockResolvedValue("hashed") }));
-vi.mock("@calcom/lib/slugify", () => ({ default: vi.fn((s: string) => s.toLowerCase()) }));
-vi.mock("@calcom/lib/constants", () => ({ IS_PREMIUM_USERNAME_ENABLED: false }));
-vi.mock("@calcom/lib/server/username", () => ({
+vi.mock("@rondevu/lib/auth/hashPassword", () => ({ hashPassword: vi.fn().mockResolvedValue("hashed") }));
+vi.mock("@rondevu/lib/slugify", () => ({ default: vi.fn((s: string) => s.toLowerCase()) }));
+vi.mock("@rondevu/lib/constants", () => ({ IS_PREMIUM_USERNAME_ENABLED: false }));
+vi.mock("@rondevu/lib/server/username", () => ({
   isUsernameReservedDueToMigration: vi.fn().mockResolvedValue(false),
 }));
-vi.mock("@calcom/features/auth/lib/verifyEmail", () => ({ sendEmailVerification: vi.fn() }));
-vi.mock("@calcom/features/auth/signup/utils/createOrUpdateMemberships", () => ({
+vi.mock("@rondevu/features/auth/lib/verifyEmail", () => ({ sendEmailVerification: vi.fn() }));
+vi.mock("@rondevu/features/auth/signup/utils/createOrUpdateMemberships", () => ({
   createOrUpdateMemberships: vi.fn(),
 }));
-vi.mock("@calcom/features/auth/signup/utils/validateUsername", () => ({
+vi.mock("@rondevu/features/auth/signup/utils/validateUsername", () => ({
   validateAndGetCorrectedUsernameAndEmail: vi.fn().mockResolvedValue({ isValid: true, username: "testuser" }),
 }));
-vi.mock("@calcom/features/auth/signup/utils/organization", () => ({ joinAnyChildTeamOnOrgInvite: vi.fn() }));
-vi.mock("@calcom/features/auth/signup/utils/prefillAvatar", () => ({ prefillAvatar: vi.fn() }));
-vi.mock("@calcom/features/auth/signup/utils/token", () => ({
+vi.mock("@rondevu/features/auth/signup/utils/organization", () => ({ joinAnyChildTeamOnOrgInvite: vi.fn() }));
+vi.mock("@rondevu/features/auth/signup/utils/prefillAvatar", () => ({ prefillAvatar: vi.fn() }));
+vi.mock("@rondevu/features/auth/signup/utils/token", () => ({
   findTokenByToken: (...args: unknown[]) => mockFindTokenByToken(...args),
   throwIfTokenExpired: vi.fn(),
   validateAndGetCorrectedUsernameForTeam: (...args: unknown[]) =>
@@ -59,7 +59,7 @@ vi.mock("@calcom/features/auth/signup/utils/token", () => ({
 
 // Import after mocks
 import handler from "./selfHostedHandler";
-import { runP2002TestSuite } from "@calcom/features/auth/signup/handlers/__tests__/p2002.test-suite";
+import { runP2002TestSuite } from "@rondevu/features/auth/signup/handlers/__tests__/p2002.test-suite";
 
 function callHandler(body: SignupBody): ReturnType<typeof handler> {
   return handler(body as unknown as Record<string, string>);

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { emailSchema } from "@calcom/lib/emailSchema";
+import { emailSchema } from "@rondevu/lib/emailSchema";
 
 export const ZResendVerifyEmailSchema = z
   .object({

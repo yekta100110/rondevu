@@ -1,8 +1,8 @@
 "use client";
 
-import { WEBSITE_URL } from "@calcom/lib/constants";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Button } from "@calcom/ui/components/button";
+import { WEBSITE_URL } from "@rondevu/lib/constants";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { Button } from "@rondevu/ui/components/button";
 
 export default function MaintenancePage() {
   const { t } = useLocale();

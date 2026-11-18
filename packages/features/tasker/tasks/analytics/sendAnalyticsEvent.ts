@@ -1,6 +1,6 @@
-import { CredentialRepository } from "@calcom/features/credentials/repositories/CredentialRepository";
-import logger from "@calcom/lib/logger";
-import { safeStringify } from "@calcom/lib/safeStringify";
+import { CredentialRepository } from "@rondevu/features/credentials/repositories/CredentialRepository";
+import logger from "@rondevu/lib/logger";
+import { safeStringify } from "@rondevu/lib/safeStringify";
 
 import AnalyticsManager from "./analyticsManager";
 import { sendAnalyticsEventSchema } from "./schema";

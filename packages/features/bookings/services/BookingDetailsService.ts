@@ -1,5 +1,5 @@
-import { ErrorWithCode } from "@calcom/lib/errors";
-import type { PrismaClient } from "@calcom/prisma";
+import { ErrorWithCode } from "@rondevu/lib/errors";
+import type { PrismaClient } from "@rondevu/prisma";
 import { BookingRepository } from "../repositories/BookingRepository";
 import { BookingAccessService } from "./BookingAccessService";
 

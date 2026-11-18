@@ -1,8 +1,8 @@
-import { InstallAppButtonWithoutPlanCheck } from "@calcom/app-store/InstallAppButtonWithoutPlanCheck";
-import type { UseAddAppMutationOptions } from "@calcom/app-store/_utils/useAddAppMutation";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import type { App } from "@calcom/types/App";
-import { Button } from "@calcom/ui/components/button";
+import { InstallAppButtonWithoutPlanCheck } from "@rondevu/app-store/InstallAppButtonWithoutPlanCheck";
+import type { UseAddAppMutationOptions } from "@rondevu/app-store/_utils/useAddAppMutation";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import type { App } from "@rondevu/types/App";
+import { Button } from "@rondevu/ui/components/button";
 
 type AppData = {
   slug: string;

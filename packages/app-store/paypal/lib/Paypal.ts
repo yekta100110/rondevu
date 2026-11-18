@@ -1,11 +1,11 @@
 import { v4 as uuidv4 } from "uuid";
 import z from "zod";
 
-import { IS_PRODUCTION, WEBAPP_URL } from "@calcom/lib/constants";
-import { convertFromSmallestToPresentableCurrencyUnit } from "@calcom/lib/currencyConversions";
-import logger from "@calcom/lib/logger";
-import prisma from "@calcom/prisma";
-import type { Prisma } from "@calcom/prisma/client";
+import { IS_PRODUCTION, WEBAPP_URL } from "@rondevu/lib/constants";
+import { convertFromSmallestToPresentableCurrencyUnit } from "@rondevu/lib/currencyConversions";
+import logger from "@rondevu/lib/logger";
+import prisma from "@rondevu/prisma";
+import type { Prisma } from "@rondevu/prisma/client";
 
 class Paypal {
   url: string;

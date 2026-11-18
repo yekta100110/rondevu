@@ -1,11 +1,11 @@
-import { getAvailabilityFromSchedule } from "@calcom/lib/availability";
-import { timeZoneSchema } from "@calcom/lib/dayjs/timeZone.schema";
-import { hasEditPermissionForUserID } from "@calcom/lib/hasEditPermissionForUser";
-import { HttpError } from "@calcom/lib/http-error";
-import { transformScheduleToAvailabilityForAtom } from "@calcom/lib/schedules/transformers/for-atom";
-import type { PrismaClient } from "@calcom/prisma";
+import { getAvailabilityFromSchedule } from "@rondevu/lib/availability";
+import { timeZoneSchema } from "@rondevu/lib/dayjs/timeZone.schema";
+import { hasEditPermissionForUserID } from "@rondevu/lib/hasEditPermissionForUser";
+import { HttpError } from "@rondevu/lib/http-error";
+import { transformScheduleToAvailabilityForAtom } from "@rondevu/lib/schedules/transformers/for-atom";
+import type { PrismaClient } from "@rondevu/prisma";
 import { z } from "zod";
-import type { UserFromSession } from "@calcom/features/auth/lib/userFromSessionUtils";
+import type { UserFromSession } from "@rondevu/features/auth/lib/userFromSessionUtils";
 import { ScheduleRepository } from "../repositories/ScheduleRepository";
 
 export const ZUpdateInputSchema = z.object({

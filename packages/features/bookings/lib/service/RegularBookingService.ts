@@ -1,90 +1,90 @@
 import process from "node:process";
-import processExternalId from "@calcom/app-store/_utils/calendars/processExternalId";
-import { getPaymentAppData } from "@calcom/app-store/_utils/payments/getPaymentAppData";
-import { metadata as GoogleMeetMetadata } from "@calcom/app-store/googlevideo/_metadata";
+import processExternalId from "@rondevu/app-store/_utils/calendars/processExternalId";
+import { getPaymentAppData } from "@rondevu/app-store/_utils/payments/getPaymentAppData";
+import { metadata as GoogleMeetMetadata } from "@rondevu/app-store/googlevideo/_metadata";
 import {
   getLocationValueForDB,
   MeetLocationType,
   OrganizerDefaultConferencingAppType,
-} from "@calcom/app-store/locations";
-import { getAppFromSlug } from "@calcom/app-store/utils";
+} from "@rondevu/app-store/locations";
+import { getAppFromSlug } from "@rondevu/app-store/utils";
 import {
   eventTypeAppMetadataOptionalSchema,
   eventTypeMetaDataSchemaWithTypedApps,
-} from "@calcom/app-store/zod-utils";
-import dayjs from "@calcom/dayjs";
-import getICalUID from "@calcom/emails/lib/getICalUID";
-import { consumePhoneVerification } from "@calcom/features/auth/lib/phoneVerification";
-import { verifyCodeUnAuthenticated } from "@calcom/features/auth/lib/verifyCodeUnAuthenticated";
+} from "@rondevu/app-store/zod-utils";
+import dayjs from "@rondevu/dayjs";
+import getICalUID from "@rondevu/emails/lib/getICalUID";
+import { consumePhoneVerification } from "@rondevu/features/auth/lib/phoneVerification";
+import { verifyCodeUnAuthenticated } from "@rondevu/features/auth/lib/verifyCodeUnAuthenticated";
 import type {
   BookingDataSchemaGetter,
   BookingHandlerInput,
   CreateBookingMeta,
   CreateRegularBookingData,
-} from "@calcom/features/bookings/lib/dto/types";
-import EventManager, { placeholderCreatedEvent } from "@calcom/features/bookings/lib/EventManager";
-import { getAssignmentReasonCategory } from "@calcom/features/bookings/lib/getAssignmentReasonCategory";
-import type { CheckBookingAndDurationLimitsService } from "@calcom/features/bookings/lib/handleNewBooking/checkBookingAndDurationLimits";
-import { handlePayment } from "@calcom/features/bookings/lib/handlePayment";
-import { handleWebhookTrigger } from "@calcom/features/bookings/lib/handleWebhookTrigger";
-import { isEventTypeLoggingEnabled } from "@calcom/features/bookings/lib/isEventTypeLoggingEnabled";
-import type { BookingEmailAndSmsTasker } from "@calcom/features/bookings/lib/tasker/BookingEmailAndSmsTasker";
-import type { BuiltCalendarEvent } from "@calcom/features/CalendarEventBuilder";
-import { CalendarEventBuilder } from "@calcom/features/CalendarEventBuilder";
-import { getSpamCheckService } from "@calcom/features/di/watchlist/containers/SpamCheckService.container";
+} from "@rondevu/features/bookings/lib/dto/types";
+import EventManager, { placeholderCreatedEvent } from "@rondevu/features/bookings/lib/EventManager";
+import { getAssignmentReasonCategory } from "@rondevu/features/bookings/lib/getAssignmentReasonCategory";
+import type { CheckBookingAndDurationLimitsService } from "@rondevu/features/bookings/lib/handleNewBooking/checkBookingAndDurationLimits";
+import { handlePayment } from "@rondevu/features/bookings/lib/handlePayment";
+import { handleWebhookTrigger } from "@rondevu/features/bookings/lib/handleWebhookTrigger";
+import { isEventTypeLoggingEnabled } from "@rondevu/features/bookings/lib/isEventTypeLoggingEnabled";
+import type { BookingEmailAndSmsTasker } from "@rondevu/features/bookings/lib/tasker/BookingEmailAndSmsTasker";
+import type { BuiltCalendarEvent } from "@rondevu/features/CalendarEventBuilder";
+import { CalendarEventBuilder } from "@rondevu/features/CalendarEventBuilder";
+import { getSpamCheckService } from "@rondevu/features/di/watchlist/containers/SpamCheckService.container";
 import {
   type EventTypeBrandingData,
   getEventTypeService,
-} from "@calcom/features/eventtypes/di/EventTypeService.container";
-import { getUsernameList } from "@calcom/features/eventtypes/lib/defaultEvents";
-import { getEventName, updateHostInEventName } from "@calcom/features/eventtypes/lib/eventNaming";
-import { getFullName } from "@calcom/features/form-builder/utils";
-import type { HashedLinkService } from "@calcom/features/hashedLink/lib/service/HashedLinkService";
-import { ProfileRepository } from "@calcom/features/profile/repositories/ProfileRepository";
-import tasker from "@calcom/features/tasker";
-import { handleAnalyticsEvents } from "@calcom/features/tasker/tasks/analytics/handleAnalyticsEvents";
-import type { UserRepository } from "@calcom/features/users/repositories/UserRepository";
-import { UsersRepository } from "@calcom/features/users/users.repository";
-import type { GetSubscriberOptions } from "@calcom/features/webhooks/lib/getWebhooks";
-import getWebhooks from "@calcom/features/webhooks/lib/getWebhooks";
-import type { IWebhookProducerService } from "@calcom/features/webhooks/lib/interface/WebhookProducerService";
+} from "@rondevu/features/eventtypes/di/EventTypeService.container";
+import { getUsernameList } from "@rondevu/features/eventtypes/lib/defaultEvents";
+import { getEventName, updateHostInEventName } from "@rondevu/features/eventtypes/lib/eventNaming";
+import { getFullName } from "@rondevu/features/form-builder/utils";
+import type { HashedLinkService } from "@rondevu/features/hashedLink/lib/service/HashedLinkService";
+import { ProfileRepository } from "@rondevu/features/profile/repositories/ProfileRepository";
+import tasker from "@rondevu/features/tasker";
+import { handleAnalyticsEvents } from "@rondevu/features/tasker/tasks/analytics/handleAnalyticsEvents";
+import type { UserRepository } from "@rondevu/features/users/repositories/UserRepository";
+import { UsersRepository } from "@rondevu/features/users/users.repository";
+import type { GetSubscriberOptions } from "@rondevu/features/webhooks/lib/getWebhooks";
+import getWebhooks from "@rondevu/features/webhooks/lib/getWebhooks";
+import type { IWebhookProducerService } from "@rondevu/features/webhooks/lib/interface/WebhookProducerService";
 import {
   cancelNoShowTasksForBooking,
   deleteWebhookScheduledTriggers,
   scheduleTrigger,
-} from "@calcom/features/webhooks/lib/scheduleTrigger";
-import type { EventPayloadType, EventTypeInfo } from "@calcom/features/webhooks/lib/sendPayload";
-import { getTranslation } from "@calcom/i18n/server";
-import { groupHostsByGroupId } from "@calcom/lib/bookings/hostGroupUtils";
-import { shouldIgnoreContactOwner } from "@calcom/lib/bookings/routing/utils";
-import { getVideoCallUrlFromCalEvent } from "@calcom/lib/CalEventParser";
-import { DEFAULT_GROUP_ID, ENABLE_ASYNC_TASKER } from "@calcom/lib/constants";
-import { contructEmailFromPhoneNumber } from "@calcom/lib/contructEmailFromPhoneNumber";
-import { ErrorCode } from "@calcom/lib/errorCodes";
-import { ErrorWithCode } from "@calcom/lib/errors";
-import { extractBaseEmail } from "@calcom/lib/extract-base-email";
-import { getBlacklistedGuestEmails } from "@calcom/lib/getBlacklistedGuestEmails";
-import { HttpError } from "@calcom/lib/http-error";
-import { isPhoneConfirmationEvent } from "@calcom/lib/isPhoneConfirmationEvent";
-import isSmsCalEmail from "@calcom/lib/isSmsCalEmail";
-import { criticalLogger } from "@calcom/lib/logger.server";
-import { getPiiFreeCalendarEvent, getPiiFreeEventType } from "@calcom/lib/piiFreeData";
-import { safeStringify } from "@calcom/lib/safeStringify";
-import { getServerErrorFromUnknown } from "@calcom/lib/server/getServerErrorFromUnknown";
-import { getTimeFormatStringFromUserTimeFormat } from "@calcom/lib/timeFormat";
-import { distributedTracing } from "@calcom/lib/tracing/factory";
-import type { PrismaClient } from "@calcom/prisma";
-import type { AssignmentReasonEnum, DestinationCalendar, Prisma, User } from "@calcom/prisma/client";
-import { BookingStatus, CreationSource, SchedulingType, WebhookTriggerEvents } from "@calcom/prisma/enums";
-import { userMetadata as userMetadataSchema } from "@calcom/prisma/zod-utils";
+} from "@rondevu/features/webhooks/lib/scheduleTrigger";
+import type { EventPayloadType, EventTypeInfo } from "@rondevu/features/webhooks/lib/sendPayload";
+import { getTranslation } from "@rondevu/i18n/server";
+import { groupHostsByGroupId } from "@rondevu/lib/bookings/hostGroupUtils";
+import { shouldIgnoreContactOwner } from "@rondevu/lib/bookings/routing/utils";
+import { getVideoCallUrlFromCalEvent } from "@rondevu/lib/CalEventParser";
+import { DEFAULT_GROUP_ID, ENABLE_ASYNC_TASKER } from "@rondevu/lib/constants";
+import { contructEmailFromPhoneNumber } from "@rondevu/lib/contructEmailFromPhoneNumber";
+import { ErrorCode } from "@rondevu/lib/errorCodes";
+import { ErrorWithCode } from "@rondevu/lib/errors";
+import { extractBaseEmail } from "@rondevu/lib/extract-base-email";
+import { getBlacklistedGuestEmails } from "@rondevu/lib/getBlacklistedGuestEmails";
+import { HttpError } from "@rondevu/lib/http-error";
+import { isPhoneConfirmationEvent } from "@rondevu/lib/isPhoneConfirmationEvent";
+import isSmsCalEmail from "@rondevu/lib/isSmsCalEmail";
+import { criticalLogger } from "@rondevu/lib/logger.server";
+import { getPiiFreeCalendarEvent, getPiiFreeEventType } from "@rondevu/lib/piiFreeData";
+import { safeStringify } from "@rondevu/lib/safeStringify";
+import { getServerErrorFromUnknown } from "@rondevu/lib/server/getServerErrorFromUnknown";
+import { getTimeFormatStringFromUserTimeFormat } from "@rondevu/lib/timeFormat";
+import { distributedTracing } from "@rondevu/lib/tracing/factory";
+import type { PrismaClient } from "@rondevu/prisma";
+import type { AssignmentReasonEnum, DestinationCalendar, Prisma, User } from "@rondevu/prisma/client";
+import { BookingStatus, CreationSource, SchedulingType, WebhookTriggerEvents } from "@rondevu/prisma/enums";
+import { userMetadata as userMetadataSchema } from "@rondevu/prisma/zod-utils";
 import type {
   AdditionalInformation,
   AppsStatus,
   CalEventResponses,
   CalendarEvent,
-} from "@calcom/types/Calendar";
-import type { CredentialForCalendarService } from "@calcom/types/Credential";
-import type { EventResult, PartialReference } from "@calcom/types/EventManager";
+} from "@rondevu/types/Calendar";
+import type { CredentialForCalendarService } from "@rondevu/types/Credential";
+import type { EventResult, PartialReference } from "@rondevu/types/EventManager";
 import short, { uuid } from "short-uuid";
 import { v5 as uuidv5 } from "uuid";
 import type { BookingRepository } from "../../repositories/BookingRepository";

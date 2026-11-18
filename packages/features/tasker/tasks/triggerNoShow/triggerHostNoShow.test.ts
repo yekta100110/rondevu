@@ -5,13 +5,13 @@ import {
   getOrganizer,
   getScenarioData,
   TestData,
-} from "@calcom/testing/lib/bookingScenario/bookingScenario";
+} from "@rondevu/testing/lib/bookingScenario/bookingScenario";
 import process from "node:process";
-import { appStoreMetadata } from "@calcom/app-store/apps.metadata.generated";
-import dayjs from "@calcom/dayjs";
-import { BookingStatus, TimeUnit, WebhookTriggerEvents } from "@calcom/prisma/enums";
-import { expectWebhookToHaveBeenCalledWith } from "@calcom/testing/lib/bookingScenario/expects";
-import { setupAndTeardown } from "@calcom/testing/lib/bookingScenario/setupAndTeardown";
+import { appStoreMetadata } from "@rondevu/app-store/apps.metadata.generated";
+import dayjs from "@rondevu/dayjs";
+import { BookingStatus, TimeUnit, WebhookTriggerEvents } from "@rondevu/prisma/enums";
+import { expectWebhookToHaveBeenCalledWith } from "@rondevu/testing/lib/bookingScenario/expects";
+import { setupAndTeardown } from "@rondevu/testing/lib/bookingScenario/setupAndTeardown";
 import { describe, expect, test, vi } from "vitest";
 import { WebhookVersion } from "../../../webhooks/lib/interface/IWebhookRepository";
 import { calculateMaxStartTime } from "./common";
@@ -19,11 +19,11 @@ import { getMeetingSessionsFromRoomName } from "./getMeetingSessionsFromRoomName
 import type { TSendNoShowWebhookPayloadSchema } from "./schema";
 import { triggerHostNoShow } from "./triggerHostNoShow";
 
-vi.mock("@calcom/features/tasker/tasks/triggerNoShow/getMeetingSessionsFromRoomName", () => ({
+vi.mock("@rondevu/features/tasker/tasks/triggerNoShow/getMeetingSessionsFromRoomName", () => ({
   getMeetingSessionsFromRoomName: vi.fn(),
 }));
 
-vi.mock("@calcom/features/di/containers/FeaturesRepository", () => ({
+vi.mock("@rondevu/features/di/containers/FeaturesRepository", () => ({
   getFeaturesRepository: vi.fn().mockReturnValue({
     checkIfTeamHasFeature: vi.fn().mockResolvedValue(false),
   }),

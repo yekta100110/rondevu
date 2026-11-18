@@ -1,7 +1,7 @@
 import dns from "node:dns/promises";
 import ipaddr from "ipaddr.js";
-import { IS_SELF_HOSTED } from "@calcom/lib/constants";
-import logger from "@calcom/lib/logger";
+import { IS_SELF_HOSTED } from "@rondevu/lib/constants";
+import logger from "@rondevu/lib/logger";
 
 const log: ReturnType<typeof logger.getSubLogger> = logger.getSubLogger({ prefix: ["ssrf-protection"] });
 

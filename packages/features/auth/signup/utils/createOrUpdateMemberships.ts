@@ -1,7 +1,7 @@
-import { ProfileRepository } from "@calcom/features/profile/repositories/ProfileRepository";
-import { prisma } from "@calcom/prisma";
-import type { OrganizationSettings, Team, User } from "@calcom/prisma/client";
-import { MembershipRole } from "@calcom/prisma/enums";
+import { ProfileRepository } from "@rondevu/features/profile/repositories/ProfileRepository";
+import { prisma } from "@rondevu/prisma";
+import type { OrganizationSettings, Team, User } from "@rondevu/prisma/client";
+import { MembershipRole } from "@rondevu/prisma/enums";
 import { getOrgUsernameFromEmail } from "./getOrgUsernameFromEmail";
 
 type ParentTeamData = {

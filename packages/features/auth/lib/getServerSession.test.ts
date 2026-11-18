@@ -19,11 +19,11 @@ const {
   async () => await import("../__mocks__/getServerSession.mocks")
 );
 
-vi.mock("@calcom/lib/logger", createLoggerMock);
-vi.mock("@calcom/prisma", createPrismaMock);
-vi.mock("@calcom/features/users/repositories/UserRepository", createUserRepositoryMock);
-vi.mock("@calcom/lib/getAvatarUrl", createAvatarUrlMock);
-vi.mock("@calcom/lib/safeStringify", createSafeStringifyMock);
+vi.mock("@rondevu/lib/logger", createLoggerMock);
+vi.mock("@rondevu/prisma", createPrismaMock);
+vi.mock("@rondevu/features/users/repositories/UserRepository", createUserRepositoryMock);
+vi.mock("@rondevu/lib/getAvatarUrl", createAvatarUrlMock);
+vi.mock("@rondevu/lib/safeStringify", createSafeStringifyMock);
 vi.mock("next-auth/jwt", createGetTokenMock);
 
 import { getToken } from "next-auth/jwt";

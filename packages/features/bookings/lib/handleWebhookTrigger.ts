@@ -1,11 +1,11 @@
-import getWebhooks from "@calcom/features/webhooks/lib/getWebhooks";
-import type { GetSubscriberOptions } from "@calcom/features/webhooks/lib/getWebhooks";
-import sendPayload from "@calcom/features/webhooks/lib/sendOrSchedulePayload";
-import { isEventPayload, type WebhookPayloadType } from "@calcom/features/webhooks/lib/sendPayload";
-import { safeStringify } from "@calcom/lib/safeStringify";
-import { withReporting } from "@calcom/lib/sentryWrapper";
-import type { TraceContext } from "@calcom/lib/tracing";
-import { distributedTracing } from "@calcom/lib/tracing/factory";
+import getWebhooks from "@rondevu/features/webhooks/lib/getWebhooks";
+import type { GetSubscriberOptions } from "@rondevu/features/webhooks/lib/getWebhooks";
+import sendPayload from "@rondevu/features/webhooks/lib/sendOrSchedulePayload";
+import { isEventPayload, type WebhookPayloadType } from "@rondevu/features/webhooks/lib/sendPayload";
+import { safeStringify } from "@rondevu/lib/safeStringify";
+import { withReporting } from "@rondevu/lib/sentryWrapper";
+import type { TraceContext } from "@rondevu/lib/tracing";
+import { distributedTracing } from "@rondevu/lib/tracing/factory";
 
 async function _handleWebhookTrigger(args: {
   subscriberOptions: GetSubscriberOptions;

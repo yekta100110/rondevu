@@ -25,7 +25,7 @@
 - `packages/ui` — Shared UI components and icon sprites
 - `packages/features` — Self-contained domain modules (`auth`, `bookings`, `availability`, `webhooks`, `tasker`, etc.)
 - `packages/lib` — Shared utilities (`smsTransport.ts`, `sanitizeSmsText.ts`, `normalizePhoneNumber.ts`, `planContactConfig.ts`, `rateLimit.ts`, `validateCronAuth.ts`)
-- `packages/sms` — `@calcom/sms` workspace package (`SMSManager`, 1-segment GSM 7-bit attendee/organizer SMS templates, unit tests)
+- `packages/sms` — `@rondevu/sms` workspace package (`SMSManager`, 1-segment GSM 7-bit attendee/organizer SMS templates, unit tests)
 - `packages/app-store` — External calendar integrations (Google Calendar, Apple Calendar; unused Cal.com bloat targeted for De-Cal'ification)
 - `packages/i18n` — Turkish (`tr`) and English (`en`) translation catalogs (`common.json` with 0 missing Turkish keys)
 - `packages/emails` — Transactional email templates
@@ -53,8 +53,8 @@
 
 ## Key Commands
 - `yarn dev` — Start development server
-- `yarn --cwd apps/web workspace @calcom/web run build` — Production Next.js build for web app
-- `yarn workspace @calcom/trpc run build` — Build and type-check tRPC server/client packages
+- `yarn --cwd apps/web workspace @rondevu/web run build` — Production Next.js build for web app
+- `yarn workspace @rondevu/trpc run build` — Build and type-check tRPC server/client packages
 - `npx tsc --project packages/trpc/tsconfig.server.json --noEmit` — Fast server-side TypeScript verification
 - `yarn biome check --write .` — Lint and format with Biome
 - `TZ=UTC yarn vitest run` — Run unit test suites

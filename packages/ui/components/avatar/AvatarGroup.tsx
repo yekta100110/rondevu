@@ -1,4 +1,4 @@
-import classNames from "@calcom/ui/classNames";
+import classNames from "@rondevu/ui/classNames";
 
 import { Avatar } from "./Avatar";
 

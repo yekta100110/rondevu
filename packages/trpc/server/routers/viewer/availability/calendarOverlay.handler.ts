@@ -1,8 +1,8 @@
-import { enrichUserWithDelegationCredentialsIncludeServiceAccountKey } from "@calcom/app-store/delegationCredential";
-import dayjs from "@calcom/dayjs";
-import { getBusyCalendarTimes } from "@calcom/features/calendars/lib/CalendarManager";
-import { prisma } from "@calcom/prisma";
-import type { EventBusyDate } from "@calcom/types/Calendar";
+import { enrichUserWithDelegationCredentialsIncludeServiceAccountKey } from "@rondevu/app-store/delegationCredential";
+import dayjs from "@rondevu/dayjs";
+import { getBusyCalendarTimes } from "@rondevu/features/calendars/lib/CalendarManager";
+import { prisma } from "@rondevu/prisma";
+import type { EventBusyDate } from "@rondevu/types/Calendar";
 
 import { TRPCError } from "@trpc/server";
 

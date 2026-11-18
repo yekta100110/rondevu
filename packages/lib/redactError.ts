@@ -1,4 +1,4 @@
-import logger from "@calcom/lib/logger";
+import logger from "@rondevu/lib/logger";
 
 import { IS_PRODUCTION } from "./constants";
 

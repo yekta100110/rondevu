@@ -1,8 +1,8 @@
 import { createHash } from "node:crypto";
 import process from "node:process";
-import { normalizePhoneNumber } from "@calcom/lib/normalizePhoneNumber";
-import { sendSMS } from "@calcom/lib/smsTransport";
-import { totpRawCheck } from "@calcom/lib/totp";
+import { normalizePhoneNumber } from "@rondevu/lib/normalizePhoneNumber";
+import { sendSMS } from "@rondevu/lib/smsTransport";
+import { totpRawCheck } from "@rondevu/lib/totp";
 import { totp } from "otplib";
 
 export interface PhoneVerificationResult {

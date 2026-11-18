@@ -1,7 +1,7 @@
-import { WEBAPP_URL } from "@calcom/lib/constants";
-import { getUserAvatarUrl } from "@calcom/lib/getAvatarUrl";
-import type { User } from "@calcom/prisma/client";
-import type { UserProfile } from "@calcom/types/UserProfile";
+import { WEBAPP_URL } from "@rondevu/lib/constants";
+import { getUserAvatarUrl } from "@rondevu/lib/getAvatarUrl";
+import type { User } from "@rondevu/prisma/client";
+import type { UserProfile } from "@rondevu/types/UserProfile";
 import { useEffect, useState } from "react";
 import { AvatarGroup } from "./AvatarGroup";
 

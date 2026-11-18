@@ -1,9 +1,9 @@
 "use client";
 
-import type { Timezones } from "@calcom/lib/timezone";
-import { addTimezonesToDropdown, filterBySearchText, handleOptionLabel } from "@calcom/lib/timezone";
-import classNames from "@calcom/ui/classNames";
-import { getReactSelectProps, inputStyles } from "@calcom/ui/components/form";
+import type { Timezones } from "@rondevu/lib/timezone";
+import { addTimezonesToDropdown, filterBySearchText, handleOptionLabel } from "@rondevu/lib/timezone";
+import classNames from "@rondevu/ui/classNames";
+import { getReactSelectProps, inputStyles } from "@rondevu/ui/components/form";
 import { useCallback, useMemo, useState } from "react";
 import type { ITimezone, ITimezoneOption, Props as SelectProps } from "react-timezone-select";
 import BaseSelect from "react-timezone-select";

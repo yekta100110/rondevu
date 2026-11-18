@@ -1,10 +1,10 @@
-import type { FilterSegmentOutput } from "@calcom/features/data-table/lib/types";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc } from "@calcom/trpc/react";
-import { Button } from "@calcom/ui/components/button";
-import { Dialog, DialogContent, DialogFooter, DialogHeader } from "@calcom/ui/components/dialog";
-import { Form, TextField } from "@calcom/ui/components/form";
-import { showToast } from "@calcom/ui/components/toast";
+import type { FilterSegmentOutput } from "@rondevu/features/data-table/lib/types";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc } from "@rondevu/trpc/react";
+import { Button } from "@rondevu/ui/components/button";
+import { Dialog, DialogContent, DialogFooter, DialogHeader } from "@rondevu/ui/components/dialog";
+import { Form, TextField } from "@rondevu/ui/components/form";
+import { showToast } from "@rondevu/ui/components/toast";
 import { useForm } from "react-hook-form";
 
 type FormValues = {

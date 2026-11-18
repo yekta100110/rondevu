@@ -1,19 +1,19 @@
 // We do not need to worry about importing framer-motion here as it is lazy imported in Booker.
 
-import { getPaymentAppData } from "@calcom/app-store/_utils/payments/getPaymentAppData";
-import { useIsPlatform } from "@calcom/atoms/hooks/useIsPlatform";
-import dayjs from "@calcom/dayjs";
-import type { IOutOfOfficeData } from "@calcom/features/availability/lib/getUserAvailability";
-import { useBookerStoreContext } from "@calcom/features/bookings/Booker/BookerStoreProvider";
-import { useBookerTime } from "@calcom/features/bookings/Booker/hooks/useBookerTime";
-import { getQueryParam } from "@calcom/features/bookings/Booker/utils/query-param";
-import { useCheckOverlapWithOverlay } from "@calcom/features/bookings/lib/useCheckOverlapWithOverlay";
-import type { BookerEvent, Slots } from "@calcom/features/bookings/types";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { localStorage } from "@calcom/lib/webstorage";
-import classNames from "@calcom/ui/classNames";
-import { Button } from "@calcom/ui/components/button";
-import { SkeletonText } from "@calcom/ui/components/skeleton";
+import { getPaymentAppData } from "@rondevu/app-store/_utils/payments/getPaymentAppData";
+import { useIsPlatform } from "@rondevu/atoms/hooks/useIsPlatform";
+import dayjs from "@rondevu/dayjs";
+import type { IOutOfOfficeData } from "@rondevu/features/availability/lib/getUserAvailability";
+import { useBookerStoreContext } from "@rondevu/features/bookings/Booker/BookerStoreProvider";
+import { useBookerTime } from "@rondevu/features/bookings/Booker/hooks/useBookerTime";
+import { getQueryParam } from "@rondevu/features/bookings/Booker/utils/query-param";
+import { useCheckOverlapWithOverlay } from "@rondevu/features/bookings/lib/useCheckOverlapWithOverlay";
+import type { BookerEvent, Slots } from "@rondevu/features/bookings/types";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { localStorage } from "@rondevu/lib/webstorage";
+import classNames from "@rondevu/ui/classNames";
+import { Button } from "@rondevu/ui/components/button";
+import { SkeletonText } from "@rondevu/ui/components/skeleton";
 import { CalendarX2Icon } from "@coss/ui/icons";
 import * as HoverCard from "@radix-ui/react-hover-card";
 import { AnimatePresence, m } from "framer-motion";

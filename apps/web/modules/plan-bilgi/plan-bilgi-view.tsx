@@ -1,9 +1,9 @@
 "use client";
 
-import { APP_NAME } from "@calcom/lib/constants";
-import { trpc } from "@calcom/trpc/react";
-import { Button } from "@calcom/ui/components/button";
-import { Logo } from "@calcom/ui/components/logo";
+import { APP_NAME } from "@rondevu/lib/constants";
+import { trpc } from "@rondevu/trpc/react";
+import { Button } from "@rondevu/ui/components/button";
+import { Logo } from "@rondevu/ui/components/logo";
 import { motion } from "framer-motion";
 import { ArrowLeft, Check, Globe, Mail, MessageCircle, Phone, Sparkles } from "lucide-react";
 import Link from "next/link";

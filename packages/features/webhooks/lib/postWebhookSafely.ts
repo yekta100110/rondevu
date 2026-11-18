@@ -1,7 +1,7 @@
 import dns from "node:dns/promises";
 import http from "node:http";
 import https from "node:https";
-import { isPrivateIP } from "@calcom/lib/ssrfProtection";
+import { isPrivateIP } from "@rondevu/lib/ssrfProtection";
 import ipaddr from "ipaddr.js";
 import { validateWebhookDestination } from "./validateWebhookDestination";
 

@@ -1,6 +1,6 @@
-import { getUTCOffsetByTimezone } from "@calcom/lib/dayjs";
-import { BookingStatus, WebhookTriggerEvents } from "@calcom/prisma/enums";
-import type { CalEventResponses } from "@calcom/types/Calendar";
+import { getUTCOffsetByTimezone } from "@rondevu/lib/dayjs";
+import { BookingStatus, WebhookTriggerEvents } from "@rondevu/prisma/enums";
+import type { CalEventResponses } from "@rondevu/types/Calendar";
 import type { BookingWebhookEventDTO } from "../../../dto/types";
 import {
   BaseBookingPayloadBuilder,

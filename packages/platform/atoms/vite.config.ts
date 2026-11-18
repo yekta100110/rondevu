@@ -12,13 +12,13 @@ export default defineConfig(({ mode }) => {
   return {
     optimizeDeps: {
       include: [
-        "@calcom/lib",
-        "@calcom/features",
-        "@calcom/prisma",
-        "@calcom/dayjs",
-        "@calcom/platform-constants",
-        "@calcom/platform-types",
-        "@calcom/platform-utils",
+        "@rondevu/lib",
+        "@rondevu/features",
+        "@rondevu/prisma",
+        "@rondevu/dayjs",
+        "@rondevu/platform-constants",
+        "@rondevu/platform-types",
+        "@rondevu/platform-utils",
       ],
     },
     plugins: [
@@ -85,17 +85,17 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
-        "@calcom/lib/markdownToSafeHTML": path.resolve(__dirname, "./lib/markdownToSafeHTML"),
-        "@calcom/lib/hooks/useLocale": path.resolve(__dirname, "./lib/useLocale"),
+        "@rondevu/lib/markdownToSafeHTML": path.resolve(__dirname, "./lib/markdownToSafeHTML"),
+        "@rondevu/lib/hooks/useLocale": path.resolve(__dirname, "./lib/useLocale"),
         "@radix-ui/react-tooltip": path.resolve(__dirname, "./src/components/ui/tooltip.tsx"),
         "@radix-ui/react-dialog": path.resolve(__dirname, "./src/components/ui/dialog.tsx"),
-        "@calcom/prisma/client/runtime/library": resolve("./prisma-types/index.ts"),
-        "@calcom/prisma/client": path.resolve(__dirname, "../../kysely/types.ts"),
+        "@rondevu/prisma/client/runtime/library": resolve("./prisma-types/index.ts"),
+        "@rondevu/prisma/client": path.resolve(__dirname, "../../kysely/types.ts"),
         kysely: path.resolve(__dirname, "./kysely-types/index.ts"),
-        "@calcom/dayjs": path.resolve(__dirname, "../../dayjs"),
-        "@calcom/platform-constants": path.resolve(__dirname, "../constants/index.ts"),
-        "@calcom/platform-types": path.resolve(__dirname, "../types/index.ts"),
-        "@calcom/platform-utils": path.resolve(__dirname, "../constants/index.ts"),
+        "@rondevu/dayjs": path.resolve(__dirname, "../../dayjs"),
+        "@rondevu/platform-constants": path.resolve(__dirname, "../constants/index.ts"),
+        "@rondevu/platform-types": path.resolve(__dirname, "../types/index.ts"),
+        "@rondevu/platform-utils": path.resolve(__dirname, "../constants/index.ts"),
       },
     },
   };

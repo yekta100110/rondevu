@@ -3,9 +3,9 @@ import { render } from "@testing-library/react";
 import React from "react";
 import { vi } from "vitest";
 
-import dayjs from "@calcom/dayjs";
-import { BookerStoreProvider } from "@calcom/features/bookings/Booker/BookerStoreProvider";
-import { PeriodType } from "@calcom/prisma/enums";
+import dayjs from "@rondevu/dayjs";
+import { BookerStoreProvider } from "@rondevu/features/bookings/Booker/BookerStoreProvider";
+import { PeriodType } from "@rondevu/prisma/enums";
 
 import { DatePicker } from "../components/DatePicker";
 

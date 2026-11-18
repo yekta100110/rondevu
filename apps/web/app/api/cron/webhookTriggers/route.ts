@@ -2,9 +2,9 @@ import { defaultResponderForAppDir } from "app/api/defaultResponderForAppDir";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-import { handleWebhookScheduledTriggers } from "@calcom/features/webhooks/lib/handleWebhookScheduledTriggers";
-import { validateCronAuth } from "@calcom/lib/validateCronAuth";
-import prisma from "@calcom/prisma";
+import { handleWebhookScheduledTriggers } from "@rondevu/features/webhooks/lib/handleWebhookScheduledTriggers";
+import { validateCronAuth } from "@rondevu/lib/validateCronAuth";
+import prisma from "@rondevu/prisma";
 
 async function postHandler(req: NextRequest) {
   if (!validateCronAuth(req)) {

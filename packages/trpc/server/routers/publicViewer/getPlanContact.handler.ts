@@ -1,4 +1,4 @@
-import { getPlanContactConfig } from "@calcom/lib/planContactConfig";
+import { getPlanContactConfig } from "@rondevu/lib/planContactConfig";
 
 export async function getPlanContactHandler() {
   return getPlanContactConfig();

@@ -1,8 +1,8 @@
-import { CredentialRepository } from "@calcom/features/credentials/repositories/CredentialRepository";
-import { prisma } from "@calcom/prisma";
-import type { SelectedCalendar } from "@calcom/prisma/client";
-import { credentialForCalendarServiceSelect } from "@calcom/prisma/selects/credential";
-import type { CredentialForCalendarService, CredentialPayload } from "@calcom/types/Credential";
+import { CredentialRepository } from "@rondevu/features/credentials/repositories/CredentialRepository";
+import { prisma } from "@rondevu/prisma";
+import type { SelectedCalendar } from "@rondevu/prisma/client";
+import { credentialForCalendarServiceSelect } from "@rondevu/prisma/selects/credential";
+import type { CredentialForCalendarService, CredentialPayload } from "@rondevu/types/Credential";
 
 type Host<TUser extends { id: number; email: string; credentials: CredentialPayload[] }> = {
   user: TUser;

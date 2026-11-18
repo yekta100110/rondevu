@@ -1,15 +1,15 @@
 import { v4 as uuidv4 } from "uuid";
 import type z from "zod";
 
-import { ErrorCode } from "@calcom/lib/errorCodes";
-import logger from "@calcom/lib/logger";
-import { safeStringify } from "@calcom/lib/safeStringify";
-import type { IBookingPaymentRepository } from "@calcom/features/bookings/repositories/BookingPaymentRepository.interface";
-import { PrismaBookingPaymentRepository } from "@calcom/features/bookings/repositories/PrismaBookingPaymentRepository";
-import type { Booking, Payment, PaymentOption } from "@calcom/prisma/client";
-import type { Prisma } from "@calcom/prisma/client";
-import type { CalendarEvent } from "@calcom/types/Calendar";
-import type { IAbstractPaymentService } from "@calcom/types/PaymentService";
+import { ErrorCode } from "@rondevu/lib/errorCodes";
+import logger from "@rondevu/lib/logger";
+import { safeStringify } from "@rondevu/lib/safeStringify";
+import type { IBookingPaymentRepository } from "@rondevu/features/bookings/repositories/BookingPaymentRepository.interface";
+import { PrismaBookingPaymentRepository } from "@rondevu/features/bookings/repositories/PrismaBookingPaymentRepository";
+import type { Booking, Payment, PaymentOption } from "@rondevu/prisma/client";
+import type { Prisma } from "@rondevu/prisma/client";
+import type { CalendarEvent } from "@rondevu/types/Calendar";
+import type { IAbstractPaymentService } from "@rondevu/types/PaymentService";
 
 import appConfig from "../config.json";
 import { btcpayCredentialKeysSchema } from "./btcpayCredentialKeysSchema";

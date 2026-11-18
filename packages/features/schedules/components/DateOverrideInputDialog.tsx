@@ -1,21 +1,21 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import type { Dayjs } from "@calcom/dayjs";
-import dayjs from "@calcom/dayjs";
-import { BookerStoreProvider } from "@calcom/features/bookings/Booker/BookerStoreProvider";
-import { Dialog } from "@calcom/features/components/controlled-dialog";
-import { yyyymmdd } from "@calcom/lib/dayjs";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import type { WorkingHours } from "@calcom/types/schedule";
-import cs from "@calcom/ui/classNames";
-import { Button } from "@calcom/ui/components/button";
-import { DialogContent, DialogHeader, DialogTrigger, DialogClose } from "@calcom/ui/components/dialog";
-import { Switch } from "@calcom/ui/components/form";
-import { Form } from "@calcom/ui/components/form";
-import { showToast } from "@calcom/ui/components/toast";
+import type { Dayjs } from "@rondevu/dayjs";
+import dayjs from "@rondevu/dayjs";
+import { BookerStoreProvider } from "@rondevu/features/bookings/Booker/BookerStoreProvider";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
+import { yyyymmdd } from "@rondevu/lib/dayjs";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import type { WorkingHours } from "@rondevu/types/schedule";
+import cs from "@rondevu/ui/classNames";
+import { Button } from "@rondevu/ui/components/button";
+import { DialogContent, DialogHeader, DialogTrigger, DialogClose } from "@rondevu/ui/components/dialog";
+import { Switch } from "@rondevu/ui/components/form";
+import { Form } from "@rondevu/ui/components/form";
+import { showToast } from "@rondevu/ui/components/toast";
 
-import DatePicker from "@calcom/features/calendars/components/DatePicker";
+import DatePicker from "@rondevu/features/calendars/components/DatePicker";
 import type { TimeRange } from "./ScheduleComponent";
 import { DayRanges } from "./ScheduleComponent";
 

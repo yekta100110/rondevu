@@ -1,4 +1,4 @@
-import { EmbedTheme } from "@calcom/features/embed/lib/constants";
+import { EmbedTheme } from "@rondevu/features/embed/lib/constants";
 import type { ReadonlyURLSearchParams } from "next/navigation";
 import { describe, expect, it } from "vitest";
 import { getThemeProviderProps, getUniqueIdentifierForBookingPage } from "../getThemeProviderProps";

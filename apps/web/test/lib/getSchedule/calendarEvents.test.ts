@@ -5,11 +5,11 @@ import {
   Timezones,
   TestData,
   mockCalendar,
-} from "@calcom/testing/lib/bookingScenario/bookingScenario";
+} from "@rondevu/testing/lib/bookingScenario/bookingScenario";
 
 import { describe, test } from "vitest";
 
-import { getAvailableSlotsService } from "@calcom/features/di/containers/AvailableSlots";
+import { getAvailableSlotsService } from "@rondevu/features/di/containers/AvailableSlots";
 
 import { expect, expectedSlotsForSchedule } from "./expects";
 import { setupAndTeardown } from "./setupAndTeardown";

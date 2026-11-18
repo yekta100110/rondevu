@@ -1,9 +1,9 @@
-import dayjs from "@calcom/dayjs";
-import { piiHasher } from "@calcom/lib/server/PiiHasher";
-import { checkSMSRateLimit } from "@calcom/lib/smsLockState";
-import { TimeFormat } from "@calcom/lib/timeFormat";
-import type { CalendarEvent, Person } from "@calcom/types/Calendar";
-import { WEBAPP_URL } from "@calcom/lib/constants";
+import dayjs from "@rondevu/dayjs";
+import { piiHasher } from "@rondevu/lib/server/PiiHasher";
+import { checkSMSRateLimit } from "@rondevu/lib/smsLockState";
+import { TimeFormat } from "@rondevu/lib/timeFormat";
+import type { CalendarEvent, Person } from "@rondevu/types/Calendar";
+import { WEBAPP_URL } from "@rondevu/lib/constants";
 import { getSMSConfig, sendSMS } from "./sms-transport";
 
 export { sendSMS, getSMSConfig };

@@ -1,51 +1,51 @@
-import { prisma } from "@calcom/prisma/__mocks__/prisma";
+import { prisma } from "@rondevu/prisma/__mocks__/prisma";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@calcom/features/watchlist/lib/utils/normalization", () => ({
+vi.mock("@rondevu/features/watchlist/lib/utils/normalization", () => ({
   normalizeEmail: vi.fn(),
   extractDomainFromEmail: vi.fn(),
   normalizeDomain: vi.fn(),
 }));
-vi.mock("@calcom/features/watchlist/lib/service/GlobalBlockingService", () => ({
+vi.mock("@rondevu/features/watchlist/lib/service/GlobalBlockingService", () => ({
   GlobalBlockingService: vi.fn(),
 }));
-vi.mock("@calcom/features/watchlist/lib/freeEmailDomainCheck/checkIfFreeEmailDomain", () => ({
+vi.mock("@rondevu/features/watchlist/lib/freeEmailDomainCheck/checkIfFreeEmailDomain", () => ({
   checkIfFreeEmailDomain: vi.fn(),
 }));
-vi.mock("@calcom/features/watchlist/operations/check-if-users-are-blocked.controller", () => ({
+vi.mock("@rondevu/features/watchlist/operations/check-if-users-are-blocked.controller", () => ({
   checkIfUsersAreBlocked: vi.fn(),
 }));
-vi.mock("@calcom/features/watchlist/lib/telemetry", () => ({
+vi.mock("@rondevu/features/watchlist/lib/telemetry", () => ({
   sentrySpan: vi.fn(),
 }));
-vi.mock("@calcom/lib/i18n", () => ({
+vi.mock("@rondevu/lib/i18n", () => ({
   locales: ["en"],
   localeOptions: [{ value: "en", label: "English" }],
   defaultLocaleOption: { value: "en", label: "English" },
 }));
 
 import process from "node:process";
-import { CredentialRepository } from "@calcom/features/credentials/repositories/CredentialRepository";
-import { symmetricDecrypt } from "@calcom/lib/crypto";
-import type { DestinationCalendar } from "@calcom/prisma/client";
-import type { CredentialForCalendarService } from "@calcom/types/Credential";
+import { CredentialRepository } from "@rondevu/features/credentials/repositories/CredentialRepository";
+import { symmetricDecrypt } from "@rondevu/lib/crypto";
+import type { DestinationCalendar } from "@rondevu/prisma/client";
+import type { CredentialForCalendarService } from "@rondevu/types/Credential";
 import EventManager from "./EventManager";
 
-vi.mock("@calcom/prisma", () => ({
+vi.mock("@rondevu/prisma", () => ({
   prisma,
 }));
 
-vi.mock("@calcom/lib/crypto", () => ({
+vi.mock("@rondevu/lib/crypto", () => ({
   symmetricDecrypt: vi.fn(),
 }));
 
-vi.mock("@calcom/features/credentials/repositories/CredentialRepository", () => ({
+vi.mock("@rondevu/features/credentials/repositories/CredentialRepository", () => ({
   CredentialRepository: {
     findCredentialForCalendarServiceById: vi.fn(),
   },
 }));
 
-vi.mock("@calcom/app-store/delegationCredential", () => ({
+vi.mock("@rondevu/app-store/delegationCredential", () => ({
   enrichHostsWithDelegationCredentials: vi.fn(),
   getUsersCredentialsIncludeServiceAccountKey: vi.fn(),
   getCredentialForSelectedCalendar: vi.fn(),

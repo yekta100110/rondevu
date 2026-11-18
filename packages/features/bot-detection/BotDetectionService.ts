@@ -1,12 +1,12 @@
 import { checkBotId } from "botid/server";
 import type { IncomingHttpHeaders } from "node:http";
 
-import type { EventTypeRepository } from "@calcom/features/eventtypes/repositories/eventTypeRepository";
-import type { FeaturesRepository } from "@calcom/features/flags/features.repository";
-import { ErrorCode } from "@calcom/lib/errorCodes";
-import { ErrorWithCode } from "@calcom/lib/errors";
-import { HttpError } from "@calcom/lib/http-error";
-import logger from "@calcom/lib/logger";
+import type { EventTypeRepository } from "@rondevu/features/eventtypes/repositories/eventTypeRepository";
+import type { FeaturesRepository } from "@rondevu/features/flags/features.repository";
+import { ErrorCode } from "@rondevu/lib/errorCodes";
+import { ErrorWithCode } from "@rondevu/lib/errors";
+import { HttpError } from "@rondevu/lib/http-error";
+import logger from "@rondevu/lib/logger";
 
 interface BotDetectionConfig {
   eventTypeId?: number;

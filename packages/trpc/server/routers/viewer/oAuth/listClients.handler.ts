@@ -1,5 +1,5 @@
-import { OAuthClientRepository } from "@calcom/features/oauth/repositories/OAuthClientRepository";
-import type { PrismaClient } from "@calcom/prisma";
+import { OAuthClientRepository } from "@rondevu/features/oauth/repositories/OAuthClientRepository";
+import type { PrismaClient } from "@rondevu/prisma";
 
 import type { TListClientsInputSchema } from "./listClients.schema";
 

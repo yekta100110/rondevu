@@ -5,17 +5,17 @@ import { useSession } from "next-auth/react";
 import type { RefCallback } from "react";
 import { useEffect, useState } from "react";
 
-import { Dialog } from "@calcom/features/components/controlled-dialog";
-import { fetchUsername } from "@calcom/lib/fetchUsername";
-import { useDebounce } from "@calcom/lib/hooks/useDebounce";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc } from "@calcom/trpc/react";
-import type { AppRouter } from "@calcom/trpc/types/server/routers/_app";
-import { Button } from "@calcom/ui/components/button";
-import { DialogContent, DialogFooter, DialogClose } from "@calcom/ui/components/dialog";
-import { TextField } from "@calcom/ui/components/form";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
+import { fetchUsername } from "@rondevu/lib/fetchUsername";
+import { useDebounce } from "@rondevu/lib/hooks/useDebounce";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc } from "@rondevu/trpc/react";
+import type { AppRouter } from "@rondevu/trpc/types/server/routers/_app";
+import { Button } from "@rondevu/ui/components/button";
+import { DialogContent, DialogFooter, DialogClose } from "@rondevu/ui/components/dialog";
+import { TextField } from "@rondevu/ui/components/form";
 import { CheckIcon } from "@coss/ui/icons";
-import { Tooltip } from "@calcom/ui/components/tooltip";
+import { Tooltip } from "@rondevu/ui/components/tooltip";
 
 import type { TRPCClientErrorLike } from "@trpc/client";
 

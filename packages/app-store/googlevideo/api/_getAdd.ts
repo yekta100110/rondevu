@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { getServerErrorFromUnknown } from "@calcom/lib/server/getServerErrorFromUnknown";
-import prisma from "@calcom/prisma";
+import { getServerErrorFromUnknown } from "@rondevu/lib/server/getServerErrorFromUnknown";
+import prisma from "@rondevu/prisma";
 
 import getInstalledAppPath from "../../_utils/getInstalledAppPath";
 

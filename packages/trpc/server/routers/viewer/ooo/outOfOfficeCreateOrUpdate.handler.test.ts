@@ -1,11 +1,11 @@
 import { describe, expect, it, beforeEach, afterEach } from "vitest";
 import { vi } from "vitest";
 
-import prisma from "@calcom/prisma";
+import prisma from "@rondevu/prisma";
 
 import { outOfOfficeCreateOrUpdate } from "./outOfOfficeCreateOrUpdate.handler";
 
-vi.mock("@calcom/prisma", () => {
+vi.mock("@rondevu/prisma", () => {
   const mockObj = {
     outOfOfficeEntry: {
       findFirst: vi.fn(),

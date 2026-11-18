@@ -58,7 +58,7 @@ yarn dev
 yarn prisma generate
 
 # Şema veya tRPC router değişikliği sonrası tRPC paketini derle
-yarn workspace @calcom/trpc run build
+yarn workspace @rondevu/trpc run build
 
 # Tam tip kontrolü (commit/push öncesi zorunlu)
 yarn type-check:ci --force

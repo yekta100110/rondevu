@@ -1,7 +1,7 @@
-import { useFlagMap } from "@calcom/features/flags/context/provider";
-import { CreationSource } from "@calcom/prisma/enums";
-import { trpc } from "@calcom/trpc/react";
-import { showToast } from "@calcom/ui/components/toast";
+import { useFlagMap } from "@rondevu/features/flags/context/provider";
+import { CreationSource } from "@rondevu/prisma/enums";
+import { trpc } from "@rondevu/trpc/react";
+import { showToast } from "@rondevu/ui/components/toast";
 import { useState } from "react";
 import type { OnboardingState } from "../store/onboarding-store";
 

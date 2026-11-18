@@ -2,7 +2,7 @@
 
 import Head from "next/head";
 
-import { markdownToSafeHTML } from "@calcom/lib/markdownToSafeHTML";
+import { markdownToSafeHTML } from "@rondevu/lib/markdownToSafeHTML";
 
 import PageWrapper from "@components/PageWrapper";
 

@@ -1,11 +1,11 @@
-import dayjs from "@calcom/dayjs";
-import { getCheckBookingLimitsService } from "@calcom/features/di/containers/BookingLimits";
-import type { IntervalLimit } from "@calcom/lib/intervalLimits/intervalLimitSchema";
-import { validateIntervalLimitOrder } from "@calcom/lib/intervalLimits/validateIntervalLimitOrder";
+import dayjs from "@rondevu/dayjs";
+import { getCheckBookingLimitsService } from "@rondevu/features/di/containers/BookingLimits";
+import type { IntervalLimit } from "@rondevu/lib/intervalLimits/intervalLimitSchema";
+import { validateIntervalLimitOrder } from "@rondevu/lib/intervalLimits/validateIntervalLimitOrder";
 import { describe, expect, it, vi } from "vitest";
 
 const mockCountBookingsByEventTypeAndDateRange = vi.fn();
-vi.mock("@calcom/features/bookings/repositories/BookingRepository", () => ({
+vi.mock("@rondevu/features/bookings/repositories/BookingRepository", () => ({
   BookingRepository: vi.fn().mockImplementation(function () {
     return {
       countBookingsByEventTypeAndDateRange: mockCountBookingsByEventTypeAndDateRange,
@@ -13,7 +13,7 @@ vi.mock("@calcom/features/bookings/repositories/BookingRepository", () => ({
   }),
 }));
 
-vi.mock("@calcom/prisma", () => ({
+vi.mock("@rondevu/prisma", () => ({
   default: {},
   prisma: {},
 }));

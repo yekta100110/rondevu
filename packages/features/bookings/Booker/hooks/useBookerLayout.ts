@@ -6,16 +6,16 @@ import {
   useEmbedUiConfig,
   useIsEmbed,
   useSlotsViewOnSmallScreen,
-} from "@calcom/embed-core/embed-iframe";
-import { useBookerStoreContext } from "@calcom/features/bookings/Booker/BookerStoreProvider";
-import { extraDaysConfig } from "@calcom/features/bookings/Booker/config";
-import type { BookerLayout } from "@calcom/features/bookings/Booker/types";
-import { validateLayout } from "@calcom/features/bookings/Booker/utils/layout";
-import { getQueryParam } from "@calcom/features/bookings/Booker/utils/query-param";
-import type { BookerEvent } from "@calcom/features/bookings/types";
-import useMediaQuery from "@calcom/lib/hooks/useMediaQuery";
-import type { BookerLayouts } from "@calcom/prisma/zod-utils";
-import { defaultBookerLayoutSettings } from "@calcom/prisma/zod-utils";
+} from "@rondevu/embed-core/embed-iframe";
+import { useBookerStoreContext } from "@rondevu/features/bookings/Booker/BookerStoreProvider";
+import { extraDaysConfig } from "@rondevu/features/bookings/Booker/config";
+import type { BookerLayout } from "@rondevu/features/bookings/Booker/types";
+import { validateLayout } from "@rondevu/features/bookings/Booker/utils/layout";
+import { getQueryParam } from "@rondevu/features/bookings/Booker/utils/query-param";
+import type { BookerEvent } from "@rondevu/features/bookings/types";
+import useMediaQuery from "@rondevu/lib/hooks/useMediaQuery";
+import type { BookerLayouts } from "@rondevu/prisma/zod-utils";
+import { defaultBookerLayoutSettings } from "@rondevu/prisma/zod-utils";
 
 export type UseBookerLayoutType = ReturnType<typeof useBookerLayout>;
 

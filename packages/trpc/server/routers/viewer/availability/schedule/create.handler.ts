@@ -1,7 +1,7 @@
-import { DEFAULT_SCHEDULE, getAvailabilityFromSchedule } from "@calcom/lib/availability";
-import { sanitizeTimezone } from "@calcom/lib/dayjs";
-import { prisma } from "@calcom/prisma";
-import type { Prisma } from "@calcom/prisma/client";
+import { DEFAULT_SCHEDULE, getAvailabilityFromSchedule } from "@rondevu/lib/availability";
+import { sanitizeTimezone } from "@rondevu/lib/dayjs";
+import { prisma } from "@rondevu/prisma";
+import type { Prisma } from "@rondevu/prisma/client";
 import { TRPCError } from "@trpc/server";
 import type { TrpcSessionUser } from "../../../../types";
 import type { TCreateInputSchema } from "./create.schema";

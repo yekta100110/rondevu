@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 
-import { IS_PRODUCTION } from "@calcom/lib/constants";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { markdownToSafeHTML } from "@calcom/lib/markdownToSafeHTML";
-import { showToast } from "@calcom/ui/components/toast";
+import { IS_PRODUCTION } from "@rondevu/lib/constants";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { markdownToSafeHTML } from "@rondevu/lib/markdownToSafeHTML";
+import { showToast } from "@rondevu/ui/components/toast";
 
 import type { AppDataProps } from "@lib/apps/[slug]/getStaticProps";
 import useRouterQuery from "@lib/hooks/useRouterQuery";

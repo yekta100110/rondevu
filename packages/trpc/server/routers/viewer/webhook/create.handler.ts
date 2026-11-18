@@ -1,10 +1,10 @@
 import process from "node:process";
-import { updateTriggerForExistingBookings } from "@calcom/features/webhooks/lib/scheduleTrigger";
-import { validateWebhookDestination } from "@calcom/features/webhooks/lib/validateWebhookDestination";
-import { prisma } from "@calcom/prisma";
-import type { Prisma, Webhook } from "@calcom/prisma/client";
-import { EventTypeMetaDataSchema } from "@calcom/prisma/zod-utils";
-import type { TrpcSessionUser } from "@calcom/trpc/server/types";
+import { updateTriggerForExistingBookings } from "@rondevu/features/webhooks/lib/scheduleTrigger";
+import { validateWebhookDestination } from "@rondevu/features/webhooks/lib/validateWebhookDestination";
+import { prisma } from "@rondevu/prisma";
+import type { Prisma, Webhook } from "@rondevu/prisma/client";
+import { EventTypeMetaDataSchema } from "@rondevu/prisma/zod-utils";
+import type { TrpcSessionUser } from "@rondevu/trpc/server/types";
 import { TRPCError } from "@trpc/server";
 import { v4 } from "uuid";
 import type { TCreateInputSchema } from "./create.schema";

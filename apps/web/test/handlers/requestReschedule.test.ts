@@ -7,14 +7,14 @@ import {
   getOrganizer,
   getScenarioData,
   TestData,
-} from "@calcom/testing/lib/bookingScenario/bookingScenario";
-import { BookingStatus, MembershipRole, SchedulingType } from "@calcom/prisma/enums";
-import { expectBookingRequestRescheduledEmails } from "@calcom/testing/lib/bookingScenario/expects";
-import { getSampleUserInSession } from "@calcom/testing/lib/bookingScenario/getSampleUserInSession";
-import { setupAndTeardown } from "@calcom/testing/lib/bookingScenario/setupAndTeardown";
-import { test } from "@calcom/testing/lib/fixtures/fixtures";
-import type { TRequestRescheduleInputSchema } from "@calcom/trpc/server/routers/viewer/bookings/requestReschedule.schema";
-import type { TrpcSessionUser } from "@calcom/trpc/server/types";
+} from "@rondevu/testing/lib/bookingScenario/bookingScenario";
+import { BookingStatus, MembershipRole, SchedulingType } from "@rondevu/prisma/enums";
+import { expectBookingRequestRescheduledEmails } from "@rondevu/testing/lib/bookingScenario/expects";
+import { getSampleUserInSession } from "@rondevu/testing/lib/bookingScenario/getSampleUserInSession";
+import { setupAndTeardown } from "@rondevu/testing/lib/bookingScenario/setupAndTeardown";
+import { test } from "@rondevu/testing/lib/fixtures/fixtures";
+import type { TRequestRescheduleInputSchema } from "@rondevu/trpc/server/routers/viewer/bookings/requestReschedule.schema";
+import type { TrpcSessionUser } from "@rondevu/trpc/server/types";
 import type { Request, Response } from "express";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { describe, expect } from "vitest";
@@ -32,7 +32,7 @@ describe("Handler: requestReschedule", () => {
       emails,
     }) => {
       const { requestRescheduleHandler } = await import(
-        "@calcom/trpc/server/routers/viewer/bookings/requestReschedule.handler"
+        "@rondevu/trpc/server/routers/viewer/bookings/requestReschedule.handler"
       );
       const booker = getBooker({
         email: "booker@example.com",
@@ -138,7 +138,7 @@ describe("Handler: requestReschedule", () => {
       emails,
     }) => {
       const { requestRescheduleHandler } = await import(
-        "@calcom/trpc/server/routers/viewer/bookings/requestReschedule.handler"
+        "@rondevu/trpc/server/routers/viewer/bookings/requestReschedule.handler"
       );
       const booker = getBooker({
         email: "booker@example.com",
@@ -253,7 +253,7 @@ describe("Handler: requestReschedule", () => {
 
     test(`should reject request-reschedule from team member without proper permissions`, async () => {
       const { requestRescheduleHandler } = await import(
-        "@calcom/trpc/server/routers/viewer/bookings/requestReschedule.handler"
+        "@rondevu/trpc/server/routers/viewer/bookings/requestReschedule.handler"
       );
 
       const booker = getBooker({

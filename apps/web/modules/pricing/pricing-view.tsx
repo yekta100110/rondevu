@@ -1,6 +1,6 @@
 "use client";
 
-import { trpc } from "@calcom/trpc/react";
+import { trpc } from "@rondevu/trpc/react";
 import { CheckCircle2, Clock, MessageCircle, Plus } from "lucide-react";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { MarketingFooter } from "../home/components/MarketingFooter";

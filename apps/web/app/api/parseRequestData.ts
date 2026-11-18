@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 
-import { HttpError } from "@calcom/lib/http-error";
-import logger from "@calcom/lib/logger";
+import { HttpError } from "@rondevu/lib/http-error";
+import logger from "@rondevu/lib/logger";
 
 const log = logger.getSubLogger({ prefix: ["[parseRequestData]"] });
 

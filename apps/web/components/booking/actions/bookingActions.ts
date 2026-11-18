@@ -1,6 +1,6 @@
-import { isWithinMinimumRescheduleNotice } from "@calcom/features/bookings/lib/reschedule/isWithinMinimumRescheduleNotice";
-import { BookingStatus, SchedulingType } from "@calcom/prisma/enums";
-import type { ActionType } from "@calcom/ui/components/table";
+import { isWithinMinimumRescheduleNotice } from "@rondevu/features/bookings/lib/reschedule/isWithinMinimumRescheduleNotice";
+import { BookingStatus, SchedulingType } from "@rondevu/prisma/enums";
+import type { ActionType } from "@rondevu/ui/components/table";
 
 import type { BookingItemProps } from "../types";
 

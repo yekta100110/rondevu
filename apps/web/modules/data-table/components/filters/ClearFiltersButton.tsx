@@ -1,6 +1,6 @@
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Button } from "@calcom/ui/components/button";
-import { Tooltip } from "@calcom/ui/components/tooltip";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { Button } from "@rondevu/ui/components/button";
+import { Tooltip } from "@rondevu/ui/components/tooltip";
 
 import { useDataTable } from "~/data-table/hooks/useDataTable";
 

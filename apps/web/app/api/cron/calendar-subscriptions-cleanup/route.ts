@@ -1,12 +1,12 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-import { CalendarCacheEventRepository } from "@calcom/features/calendar-subscription/lib/cache/CalendarCacheEventRepository";
-import { CalendarCacheEventService } from "@calcom/features/calendar-subscription/lib/cache/CalendarCacheEventService";
-import { PrismaSelectedSlotRepository } from "@calcom/features/selectedSlots/repositories/PrismaSelectedSlotRepository";
-import { validateCronAuth } from "@calcom/lib/validateCronAuth";
-import { prisma } from "@calcom/prisma";
-import { defaultResponderForAppDir } from "@calcom/web/app/api/defaultResponderForAppDir";
+import { CalendarCacheEventRepository } from "@rondevu/features/calendar-subscription/lib/cache/CalendarCacheEventRepository";
+import { CalendarCacheEventService } from "@rondevu/features/calendar-subscription/lib/cache/CalendarCacheEventService";
+import { PrismaSelectedSlotRepository } from "@rondevu/features/selectedSlots/repositories/PrismaSelectedSlotRepository";
+import { validateCronAuth } from "@rondevu/lib/validateCronAuth";
+import { prisma } from "@rondevu/prisma";
+import { defaultResponderForAppDir } from "@rondevu/web/app/api/defaultResponderForAppDir";
 
 /**
  * Cron webhook

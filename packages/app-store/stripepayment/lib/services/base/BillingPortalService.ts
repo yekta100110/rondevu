@@ -1,9 +1,9 @@
-import { WEBAPP_URL } from "@calcom/lib/constants";
-import { getSafeRedirectUrl } from "@calcom/lib/getSafeRedirectUrl";
-import logger from "@calcom/lib/logger";
-import prisma from "@calcom/prisma";
-import type { Prisma } from "@calcom/prisma/client";
-import { teamMetadataSchema } from "@calcom/prisma/zod-utils";
+import { WEBAPP_URL } from "@rondevu/lib/constants";
+import { getSafeRedirectUrl } from "@rondevu/lib/getSafeRedirectUrl";
+import logger from "@rondevu/lib/logger";
+import prisma from "@rondevu/prisma";
+import type { Prisma } from "@rondevu/prisma/client";
+import { teamMetadataSchema } from "@rondevu/prisma/zod-utils";
 import type { NextApiResponse } from "next";
 import stripe from "../../server";
 

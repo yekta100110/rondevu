@@ -1,16 +1,16 @@
 "use client";
 
-import type { ChildrenEventType } from "@calcom/features/eventtypes/components/ChildrenEventTypeSelect";
+import type { ChildrenEventType } from "@rondevu/features/eventtypes/components/ChildrenEventTypeSelect";
 import type {
   EventTypeApps,
   EventTypeSetupProps,
   FormValues,
   TabMap,
-} from "@calcom/features/eventtypes/lib/types";
-import type { customInputSchema } from "@calcom/prisma/zod-utils";
-import type { RouterOutputs } from "@calcom/trpc/react";
-import { Form } from "@calcom/ui/components/form";
-import type { VerticalTabItemProps } from "@calcom/ui/components/navigation";
+} from "@rondevu/features/eventtypes/lib/types";
+import type { customInputSchema } from "@rondevu/prisma/zod-utils";
+import type { RouterOutputs } from "@rondevu/trpc/react";
+import { Form } from "@rondevu/ui/components/form";
+import type { VerticalTabItemProps } from "@rondevu/ui/components/navigation";
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import type { UseFormReturn } from "react-hook-form";

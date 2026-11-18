@@ -1,6 +1,6 @@
-import { prisma } from "@calcom/prisma";
-import type { Prisma, PrismaClient } from "@calcom/prisma/client";
-import type { PartialReference } from "@calcom/types/EventManager";
+import { prisma } from "@rondevu/prisma";
+import type { Prisma, PrismaClient } from "@rondevu/prisma/client";
+import type { PartialReference } from "@rondevu/types/EventManager";
 
 import type { IBookingReferenceRepository } from "./IBookingReferenceRepository";
 

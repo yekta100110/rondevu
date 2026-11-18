@@ -1,4 +1,4 @@
-import { Prisma } from "@calcom/prisma/client";
+import { Prisma } from "@rondevu/prisma/client";
 
 export function getRequestedSlugError(error: unknown, requestedSlug: string) {
   let message = `Unknown error`;

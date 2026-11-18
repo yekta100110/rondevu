@@ -1,4 +1,4 @@
-import type { App } from "@calcom/types/App";
+import type { App } from "@rondevu/types/App";
 
 export const metadata = {
   name: "CalDav (Beta)",

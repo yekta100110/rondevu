@@ -2,19 +2,19 @@ import type { ReactNode } from "react";
 import { useState } from "react";
 import type { UseFormReturn } from "react-hook-form";
 
-import { useIsPlatform } from "@calcom/atoms/hooks/useIsPlatform";
-import { MAX_EVENT_DURATION_MINUTES, MIN_EVENT_DURATION_MINUTES } from "@calcom/lib/constants";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { md } from "@calcom/lib/markdownIt";
-import slugify from "@calcom/lib/slugify";
-import turndown from "@calcom/lib/turndownService";
-import { Editor } from "@calcom/ui/components/editor";
-import { Form } from "@calcom/ui/components/form";
-import { TextAreaField } from "@calcom/ui/components/form";
-import { TextField } from "@calcom/ui/components/form";
-import { Tooltip } from "@calcom/ui/components/tooltip";
+import { useIsPlatform } from "@rondevu/atoms/hooks/useIsPlatform";
+import { MAX_EVENT_DURATION_MINUTES, MIN_EVENT_DURATION_MINUTES } from "@rondevu/lib/constants";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { md } from "@rondevu/lib/markdownIt";
+import slugify from "@rondevu/lib/slugify";
+import turndown from "@rondevu/lib/turndownService";
+import { Editor } from "@rondevu/ui/components/editor";
+import { Form } from "@rondevu/ui/components/form";
+import { TextAreaField } from "@rondevu/ui/components/form";
+import { TextField } from "@rondevu/ui/components/form";
+import { Tooltip } from "@rondevu/ui/components/tooltip";
 import type { z } from "zod";
-import { createEventTypeInput } from "@calcom/features/eventtypes/lib/types";
+import { createEventTypeInput } from "@rondevu/features/eventtypes/lib/types";
 
 type CreateEventTypeFormValues = z.infer<typeof createEventTypeInput>;
 

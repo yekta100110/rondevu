@@ -1,20 +1,20 @@
 "use client";
 
-import { useEventTypeForm } from "@calcom/atoms/event-types/hooks/useEventTypeForm";
-import { useHandleRouteChange } from "@calcom/atoms/event-types/hooks/useHandleRouteChange";
-import { useTabsNavigations } from "@calcom/atoms/event-types/hooks/useTabsNavigations";
-import type { ChildrenEventType } from "@calcom/features/eventtypes/components/ChildrenEventTypeSelect";
-import type { EventTypeSetupProps } from "@calcom/features/eventtypes/lib/types";
-import { WEBSITE_URL } from "@calcom/lib/constants";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { useTypedQuery } from "@calcom/lib/hooks/useTypedQuery";
-import { HttpError } from "@calcom/lib/http-error";
-import { SchedulingType } from "@calcom/prisma/enums";
-import type { RouterOutputs } from "@calcom/trpc/react";
-import { trpc } from "@calcom/trpc/react";
-import useMeQuery from "@calcom/trpc/react/hooks/useMeQuery";
-import { showToast } from "@calcom/ui/components/toast";
-import { revalidateEventTypeEditPage } from "@calcom/web/app/(use-page-wrapper)/event-types/[type]/actions";
+import { useEventTypeForm } from "@rondevu/atoms/event-types/hooks/useEventTypeForm";
+import { useHandleRouteChange } from "@rondevu/atoms/event-types/hooks/useHandleRouteChange";
+import { useTabsNavigations } from "@rondevu/atoms/event-types/hooks/useTabsNavigations";
+import type { ChildrenEventType } from "@rondevu/features/eventtypes/components/ChildrenEventTypeSelect";
+import type { EventTypeSetupProps } from "@rondevu/features/eventtypes/lib/types";
+import { WEBSITE_URL } from "@rondevu/lib/constants";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { useTypedQuery } from "@rondevu/lib/hooks/useTypedQuery";
+import { HttpError } from "@rondevu/lib/http-error";
+import { SchedulingType } from "@rondevu/prisma/enums";
+import type { RouterOutputs } from "@rondevu/trpc/react";
+import { trpc } from "@rondevu/trpc/react";
+import useMeQuery from "@rondevu/trpc/react/hooks/useMeQuery";
+import { showToast } from "@rondevu/ui/components/toast";
+import { revalidateEventTypeEditPage } from "@rondevu/web/app/(use-page-wrapper)/event-types/[type]/actions";
 import { TRPCClientError } from "@trpc/react-query";
 import dynamic from "next/dynamic";
 import { useRouter as useAppRouter, usePathname } from "next/navigation";
@@ -32,7 +32,7 @@ type EventPermissions = {
 };
 
 const ManagedEventTypeDialog = dynamic(
-  () => import("@calcom/features/eventtypes/components/dialogs/ManagedEventDialog")
+  () => import("@rondevu/features/eventtypes/components/dialogs/ManagedEventDialog")
 );
 
 const AssignmentWarningDialog = dynamic(() => import("./dialogs/AssignmentWarningDialog"));

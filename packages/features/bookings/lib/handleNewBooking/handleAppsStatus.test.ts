@@ -1,5 +1,5 @@
-import type { AdditionalInformation, AppsStatus, CalendarEvent } from "@calcom/types/Calendar";
-import type { EventResult } from "@calcom/types/EventManager";
+import type { AdditionalInformation, AppsStatus, CalendarEvent } from "@rondevu/types/Calendar";
+import type { EventResult } from "@rondevu/types/EventManager";
 import { describe, expect, it } from "vitest";
 import { handleAppsStatus } from "./handleAppsStatus";
 

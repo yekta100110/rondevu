@@ -2,8 +2,8 @@
 /// <reference path="../types/ical.d.ts"/>
 
 import process from "node:process";
-import dayjs from "@calcom/dayjs";
-import sanitizeCalendarObject from "@calcom/lib/sanitizeCalendarObject";
+import dayjs from "@rondevu/dayjs";
+import sanitizeCalendarObject from "@rondevu/lib/sanitizeCalendarObject";
 import type {
   Person as AttendeeInCalendarEvent,
   Calendar,
@@ -15,8 +15,8 @@ import type {
   IntegrationCalendar,
   NewCalendarEventType,
   TeamMember,
-} from "@calcom/types/Calendar";
-import type { CredentialPayload } from "@calcom/types/Credential";
+} from "@rondevu/types/Calendar";
+import type { CredentialPayload } from "@rondevu/types/Credential";
 import ICAL from "ical.js";
 import type { Attendee, DateArray, DurationObject } from "ics";
 import { createEvent } from "ics";
@@ -617,7 +617,7 @@ export default abstract class BaseCalendarService implements Calendar {
    * @returns {Promise<string | undefined>} - A Promise that resolves to the user's timezone or "Europe/London" as a default value if the timezone is not found.
    */
   getUserTimezoneFromDB = async (id: number): Promise<string | undefined> => {
-    const prisma = await import("@calcom/prisma").then((mod) => mod.default);
+    const prisma = await import("@rondevu/prisma").then((mod) => mod.default);
     const user = await prisma.user.findUnique({
       where: {
         id,

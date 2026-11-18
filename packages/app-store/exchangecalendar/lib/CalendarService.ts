@@ -26,8 +26,8 @@ import {
   WellKnownFolderName,
 } from "ews-javascript-api";
 
-import { symmetricDecrypt } from "@calcom/lib/crypto";
-import logger from "@calcom/lib/logger";
+import { symmetricDecrypt } from "@rondevu/lib/crypto";
+import logger from "@rondevu/lib/logger";
 import type {
   Calendar,
   CalendarEvent,
@@ -36,8 +36,8 @@ import type {
   IntegrationCalendar,
   NewCalendarEventType,
   Person,
-} from "@calcom/types/Calendar";
-import type { CredentialPayload } from "@calcom/types/Credential";
+} from "@rondevu/types/Calendar";
+import type { CredentialPayload } from "@rondevu/types/Credential";
 
 import { ExchangeAuthentication } from "../enums";
 

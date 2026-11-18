@@ -1,18 +1,18 @@
-import type { Dayjs } from "@calcom/dayjs";
-import dayjs from "@calcom/dayjs";
-import type { EventType } from "@calcom/features/availability/lib/getUserAvailability";
-import { BookingRepository } from "@calcom/features/bookings/repositories/BookingRepository";
-import { getCheckBookingLimitsService } from "@calcom/features/di/containers/BookingLimits";
-import { getBusyTimesService } from "@calcom/features/di/containers/BusyTimes";
-import { descendingLimitKeys, intervalLimitKeyToUnit } from "@calcom/lib/intervalLimits/intervalLimit";
-import type { IntervalLimit } from "@calcom/lib/intervalLimits/intervalLimitSchema";
-import LimitManager, { LimitSources } from "@calcom/lib/intervalLimits/limitManager";
-import { isBookingWithinPeriod } from "@calcom/lib/intervalLimits/utils";
-import { getPeriodStartDatesBetween } from "@calcom/lib/intervalLimits/utils/getPeriodStartDatesBetween";
-import { withReporting } from "@calcom/lib/sentryWrapper";
-import { performance } from "@calcom/lib/server/perfObserver";
-import prisma from "@calcom/prisma";
-import type { EventBusyDetails } from "@calcom/types/Calendar";
+import type { Dayjs } from "@rondevu/dayjs";
+import dayjs from "@rondevu/dayjs";
+import type { EventType } from "@rondevu/features/availability/lib/getUserAvailability";
+import { BookingRepository } from "@rondevu/features/bookings/repositories/BookingRepository";
+import { getCheckBookingLimitsService } from "@rondevu/features/di/containers/BookingLimits";
+import { getBusyTimesService } from "@rondevu/features/di/containers/BusyTimes";
+import { descendingLimitKeys, intervalLimitKeyToUnit } from "@rondevu/lib/intervalLimits/intervalLimit";
+import type { IntervalLimit } from "@rondevu/lib/intervalLimits/intervalLimitSchema";
+import LimitManager, { LimitSources } from "@rondevu/lib/intervalLimits/limitManager";
+import { isBookingWithinPeriod } from "@rondevu/lib/intervalLimits/utils";
+import { getPeriodStartDatesBetween } from "@rondevu/lib/intervalLimits/utils/getPeriodStartDatesBetween";
+import { withReporting } from "@rondevu/lib/sentryWrapper";
+import { performance } from "@rondevu/lib/server/perfObserver";
+import prisma from "@rondevu/prisma";
+import type { EventBusyDetails } from "@rondevu/types/Calendar";
 
 const _getBusyTimesFromLimits = async (
   bookingLimits: IntervalLimit | null,

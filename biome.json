@@ -10,7 +10,7 @@
             "groups": [
               ["**/__mocks__/**", "**/bookingScenario*"],
               [":PACKAGE_WITH_PROTOCOL:", ":PACKAGE:"],
-              ["@calcom/**", "@ee/**"],
+              ["@rondevu/**", "@ee/**"],
               ["@lib/**", "@components/**", "@server/**", "@trpc/**"],
               "~/**",
               ":PATH:"
@@ -291,8 +291,8 @@
                     "message": "features package should not import from trpc to avoid circular dependencies."
                   },
                   {
-                    "group": ["@calcom/web", "@calcom/web/**"],
-                    "message": "features package should not import from @calcom/web to avoid circular dependencies."
+                    "group": ["@rondevu/web", "@rondevu/web/**"],
+                    "message": "features package should not import from @rondevu/web to avoid circular dependencies."
                   },
                   {
                     "group": ["../../apps/web/**"],
@@ -335,12 +335,12 @@
               "options": {
                 "patterns": [
                   {
-                    "group": ["@calcom/web", "@calcom/web/**"],
-                    "message": "testing package should not import from @calcom/web to avoid circular dependencies."
+                    "group": ["@rondevu/web", "@rondevu/web/**"],
+                    "message": "testing package should not import from @rondevu/web to avoid circular dependencies."
                   },
                   {
-                    "group": ["@calcom/features", "@calcom/features/**"],
-                    "message": "testing package should not import from @calcom/features to avoid circular dependencies."
+                    "group": ["@rondevu/features", "@rondevu/features/**"],
+                    "message": "testing package should not import from @rondevu/features to avoid circular dependencies."
                   },
                   {
                     "group": ["../../apps/web/**"],
@@ -370,8 +370,8 @@
               "options": {
                 "patterns": [
                   {
-                    "group": ["@calcom/trpc", "@calcom/trpc/**"],
-                    "message": "atoms package should not import from @calcom/trpc."
+                    "group": ["@rondevu/trpc", "@rondevu/trpc/**"],
+                    "message": "atoms package should not import from @rondevu/trpc."
                   },
                   {
                     "group": ["../../trpc", "../../trpc/**"],

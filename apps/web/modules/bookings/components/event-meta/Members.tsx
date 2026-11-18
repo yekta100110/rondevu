@@ -1,11 +1,11 @@
-import { useIsPlatform } from "@calcom/atoms/hooks/useIsPlatform";
-import { useIsEmbed } from "@calcom/embed-core/embed-iframe";
-import { useBookerStore } from "@calcom/features/bookings/Booker/store";
-import type { BookerEvent } from "@calcom/features/bookings/types";
-import { WEBAPP_URL } from "@calcom/lib/constants";
-import { getUserAvatarUrl } from "@calcom/lib/getAvatarUrl";
-import { SchedulingType } from "@calcom/prisma/enums";
-import { AvatarGroup } from "@calcom/ui/components/avatar";
+import { useIsPlatform } from "@rondevu/atoms/hooks/useIsPlatform";
+import { useIsEmbed } from "@rondevu/embed-core/embed-iframe";
+import { useBookerStore } from "@rondevu/features/bookings/Booker/store";
+import type { BookerEvent } from "@rondevu/features/bookings/types";
+import { WEBAPP_URL } from "@rondevu/lib/constants";
+import { getUserAvatarUrl } from "@rondevu/lib/getAvatarUrl";
+import { SchedulingType } from "@rondevu/prisma/enums";
+import { AvatarGroup } from "@rondevu/ui/components/avatar";
 
 export interface EventMembersProps {
   /**

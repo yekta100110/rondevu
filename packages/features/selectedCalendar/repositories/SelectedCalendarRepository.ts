@@ -1,10 +1,10 @@
-import type { ISelectedCalendarRepository } from "@calcom/features/selectedCalendar/repositories/SelectedCalendarRepository.interface";
-import { buildCredentialPayloadForPrisma } from "@calcom/lib/server/buildCredentialPayloadForCalendar";
-import type { PrismaClient } from "@calcom/prisma";
-import { prisma } from "@calcom/prisma";
-import type { Prisma } from "@calcom/prisma/client";
-import { credentialForCalendarServiceSelect } from "@calcom/prisma/selects/credential";
-import type { SelectedCalendarEventTypeIds } from "@calcom/types/Calendar";
+import type { ISelectedCalendarRepository } from "@rondevu/features/selectedCalendar/repositories/SelectedCalendarRepository.interface";
+import { buildCredentialPayloadForPrisma } from "@rondevu/lib/server/buildCredentialPayloadForCalendar";
+import type { PrismaClient } from "@rondevu/prisma";
+import { prisma } from "@rondevu/prisma";
+import type { Prisma } from "@rondevu/prisma/client";
+import { credentialForCalendarServiceSelect } from "@rondevu/prisma/selects/credential";
+import type { SelectedCalendarEventTypeIds } from "@rondevu/types/Calendar";
 
 export type UpdateArguments = {
   where: FindManyArgs["where"];

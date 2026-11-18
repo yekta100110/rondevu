@@ -1,20 +1,20 @@
 import { afterAll, beforeAll, describe, expect, test, vi } from "vitest";
 
-import { DailyLocationType } from "@calcom/app-store/constants";
-import { getMeetingSessionsFromRoomName } from "@calcom/features/tasker/tasks/triggerNoShow/getMeetingSessionsFromRoomName";
-import { triggerHostNoShow } from "@calcom/features/tasker/tasks/triggerNoShow/triggerHostNoShow";
-import { sendGenericWebhookPayload } from "@calcom/features/webhooks/lib/sendPayload";
-import { prisma } from "@calcom/prisma";
-import type { Booking, User, Webhook } from "@calcom/prisma/client";
-import { TimeUnit, WebhookTriggerEvents } from "@calcom/prisma/enums";
+import { DailyLocationType } from "@rondevu/app-store/constants";
+import { getMeetingSessionsFromRoomName } from "@rondevu/features/tasker/tasks/triggerNoShow/getMeetingSessionsFromRoomName";
+import { triggerHostNoShow } from "@rondevu/features/tasker/tasks/triggerNoShow/triggerHostNoShow";
+import { sendGenericWebhookPayload } from "@rondevu/features/webhooks/lib/sendPayload";
+import { prisma } from "@rondevu/prisma";
+import type { Booking, User, Webhook } from "@rondevu/prisma/client";
+import { TimeUnit, WebhookTriggerEvents } from "@rondevu/prisma/enums";
 
 import { scheduleNoShowTriggers } from "./scheduleNoShowTriggers";
 
-vi.mock("@calcom/features/tasker/tasks/triggerNoShow/getMeetingSessionsFromRoomName", () => ({
+vi.mock("@rondevu/features/tasker/tasks/triggerNoShow/getMeetingSessionsFromRoomName", () => ({
   getMeetingSessionsFromRoomName: vi.fn(),
 }));
 
-vi.mock("@calcom/features/webhooks/lib/sendPayload", () => ({
+vi.mock("@rondevu/features/webhooks/lib/sendPayload", () => ({
   sendGenericWebhookPayload: vi.fn().mockResolvedValue({}),
 }));
 

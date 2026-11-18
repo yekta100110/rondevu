@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 
-import { ErrorCode } from "@calcom/features/auth/lib/ErrorCode";
-import { HttpError } from "@calcom/lib/http-error";
+import { ErrorCode } from "@rondevu/features/auth/lib/ErrorCode";
+import { HttpError } from "@rondevu/lib/http-error";
 
 import { deleteMeHandler } from "./deleteMe.handler";
 import type { DeleteMeOptions } from "./deleteMe.handler";

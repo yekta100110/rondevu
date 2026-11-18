@@ -1,18 +1,18 @@
-import { triggerDelegationCredentialErrorWebhook } from "@calcom/features/webhooks/lib/triggerDelegationCredentialErrorWebhook";
+import { triggerDelegationCredentialErrorWebhook } from "@rondevu/features/webhooks/lib/triggerDelegationCredentialErrorWebhook";
 import {
   CalendarAppDelegationCredentialClientIdNotAuthorizedError,
   CalendarAppDelegationCredentialError,
   CalendarAppDelegationCredentialInvalidGrantError,
-} from "@calcom/lib/CalendarAppError";
+} from "@rondevu/lib/CalendarAppError";
 import {
   APP_CREDENTIAL_SHARING_ENABLED,
   CREDENTIAL_SYNC_ENDPOINT,
   CREDENTIAL_SYNC_SECRET,
   CREDENTIAL_SYNC_SECRET_HEADER_NAME,
-} from "@calcom/lib/constants";
-import logger from "@calcom/lib/logger";
-import type { Prisma } from "@calcom/prisma/client";
-import type { CredentialForCalendarServiceWithEmail } from "@calcom/types/Credential";
+} from "@rondevu/lib/constants";
+import logger from "@rondevu/lib/logger";
+import type { Prisma } from "@rondevu/prisma/client";
+import type { CredentialForCalendarServiceWithEmail } from "@rondevu/types/Credential";
 import { calendar_v3 } from "@googleapis/calendar";
 import { JWT, OAuth2Client } from "googleapis-common";
 import { invalidateCredential } from "../../_utils/invalidateCredential";

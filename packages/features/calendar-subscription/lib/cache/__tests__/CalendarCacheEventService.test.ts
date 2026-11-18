@@ -1,8 +1,8 @@
 import { describe, test, expect, vi, beforeEach } from "vitest";
 
-import type { CalendarSubscriptionEventItem } from "@calcom/features/calendar-subscription/lib/CalendarSubscriptionPort.interface";
-import type { ICalendarCacheEventRepository } from "@calcom/features/calendar-subscription/lib/cache/CalendarCacheEventRepository.interface";
-import type { SelectedCalendar } from "@calcom/prisma/client";
+import type { CalendarSubscriptionEventItem } from "@rondevu/features/calendar-subscription/lib/CalendarSubscriptionPort.interface";
+import type { ICalendarCacheEventRepository } from "@rondevu/features/calendar-subscription/lib/cache/CalendarCacheEventRepository.interface";
+import type { SelectedCalendar } from "@rondevu/prisma/client";
 
 import { CalendarCacheEventService } from "../CalendarCacheEventService";
 

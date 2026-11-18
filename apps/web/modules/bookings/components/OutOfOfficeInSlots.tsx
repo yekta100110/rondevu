@@ -1,11 +1,11 @@
 import { useRouter } from "next/navigation";
 
-import type { IOutOfOfficeData } from "@calcom/features/availability/lib/getUserAvailability";
-import ServerTrans from "@calcom/lib/components/ServerTrans";
-import { useCompatSearchParams } from "@calcom/lib/hooks/useCompatSearchParams";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import classNames from "@calcom/ui/classNames";
-import { Button } from "@calcom/ui/components/button";
+import type { IOutOfOfficeData } from "@rondevu/features/availability/lib/getUserAvailability";
+import ServerTrans from "@rondevu/lib/components/ServerTrans";
+import { useCompatSearchParams } from "@rondevu/lib/hooks/useCompatSearchParams";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import classNames from "@rondevu/ui/classNames";
+import { Button } from "@rondevu/ui/components/button";
 
 interface IOutOfOfficeInSlotsProps {
   date: string;

@@ -1,4 +1,4 @@
-import { CancellationReasonRequirement } from "@calcom/prisma/enums";
+import { CancellationReasonRequirement } from "@rondevu/prisma/enums";
 
 export function isCancellationReasonRequired(
   setting: CancellationReasonRequirement | null | undefined,

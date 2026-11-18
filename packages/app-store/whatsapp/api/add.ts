@@ -1,4 +1,4 @@
-import type { AppDeclarativeHandler } from "@calcom/types/AppHandler";
+import type { AppDeclarativeHandler } from "@rondevu/types/AppHandler";
 
 import { createDefaultInstallation } from "../../_utils/installation";
 import appConfig from "../config.json";

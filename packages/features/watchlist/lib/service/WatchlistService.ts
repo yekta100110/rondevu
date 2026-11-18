@@ -1,5 +1,5 @@
-import type logger from "@calcom/lib/logger";
-import { WatchlistType } from "@calcom/prisma/enums";
+import type logger from "@rondevu/lib/logger";
+import { WatchlistType } from "@rondevu/prisma/enums";
 
 import type {
   IGlobalWatchlistRepository,

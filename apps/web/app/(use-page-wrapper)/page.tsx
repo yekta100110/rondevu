@@ -1,6 +1,6 @@
-import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
-import { APP_NAME, WEBSITE_URL } from "@calcom/lib/constants";
-import { getPlanContactConfig } from "@calcom/lib/planContactConfig";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
+import { APP_NAME, WEBSITE_URL } from "@rondevu/lib/constants";
+import { getPlanContactConfig } from "@rondevu/lib/planContactConfig";
 import { HomeSchema } from "@components/schemas/MarketingSchemas";
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 import { _generateMetadata, loadCalMarketingAssets } from "app/_utils";

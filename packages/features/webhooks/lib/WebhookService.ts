@@ -1,5 +1,5 @@
-import logger from "@calcom/lib/logger";
-import { safeStringify } from "@calcom/lib/safeStringify";
+import logger from "@rondevu/lib/logger";
+import { safeStringify } from "@rondevu/lib/safeStringify";
 
 import type { WebhookSubscriber } from "./dto/types";
 import getWebhooks from "./getWebhooks";

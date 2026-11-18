@@ -1,4 +1,4 @@
-import type { UserPermissionRole, WebhookTriggerEvents } from "@calcom/prisma/enums";
+import type { UserPermissionRole, WebhookTriggerEvents } from "@rondevu/prisma/enums";
 import type { Webhook, WebhookGroup, WebhookSubscriber } from "../dto/types";
 
 /**

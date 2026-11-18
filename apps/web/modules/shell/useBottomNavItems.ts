@@ -1,7 +1,7 @@
-import { IS_DUB_REFERRALS_ENABLED } from "@calcom/lib/constants";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc } from "@calcom/trpc/react";
-import { showToast } from "@calcom/ui/components/toast";
+import { IS_DUB_REFERRALS_ENABLED } from "@rondevu/lib/constants";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc } from "@rondevu/trpc/react";
+import { showToast } from "@rondevu/ui/components/toast";
 import posthog from "posthog-js";
 import type { NavigationItemType } from "./navigation/NavigationItem";
 

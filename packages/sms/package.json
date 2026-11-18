@@ -1,5 +1,5 @@
 {
-  "name": "@calcom/sms",
+  "name": "@rondevu/sms",
   "version": "0.0.0",
   "private": true,
   "main": "./sms-manager.ts",
@@ -8,11 +8,11 @@
     "./*": "./*"
   },
   "dependencies": {
-    "@calcom/dayjs": "workspace:*",
-    "@calcom/lib": "workspace:*",
-    "@calcom/types": "workspace:*"
+    "@rondevu/dayjs": "workspace:*",
+    "@rondevu/lib": "workspace:*",
+    "@rondevu/types": "workspace:*"
   },
   "devDependencies": {
-    "@calcom/tsconfig": "workspace:*"
+    "@rondevu/tsconfig": "workspace:*"
   }
 }

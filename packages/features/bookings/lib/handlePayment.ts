@@ -1,12 +1,12 @@
-import { PaymentServiceMap } from "@calcom/app-store/payment.services.generated";
-import type { EventTypeAppsList } from "@calcom/app-store/utils";
-import { eventTypeMetaDataSchemaWithTypedApps } from "@calcom/app-store/zod-utils";
-import type { Fields } from "@calcom/features/bookings/lib/getBookingFields";
-import { fieldTypesConfigMap } from "@calcom/features/form-builder/fieldTypes";
-import { convertToSmallestCurrencyUnit } from "@calcom/lib/currencyConversions";
-import type { AppCategories, Prisma, EventType, PaymentOption } from "@calcom/prisma/client";
-import type { CalendarEvent } from "@calcom/types/Calendar";
-import type { IAbstractPaymentService } from "@calcom/types/PaymentService";
+import { PaymentServiceMap } from "@rondevu/app-store/payment.services.generated";
+import type { EventTypeAppsList } from "@rondevu/app-store/utils";
+import { eventTypeMetaDataSchemaWithTypedApps } from "@rondevu/app-store/zod-utils";
+import type { Fields } from "@rondevu/features/bookings/lib/getBookingFields";
+import { fieldTypesConfigMap } from "@rondevu/features/form-builder/fieldTypes";
+import { convertToSmallestCurrencyUnit } from "@rondevu/lib/currencyConversions";
+import type { AppCategories, Prisma, EventType, PaymentOption } from "@rondevu/prisma/client";
+import type { CalendarEvent } from "@rondevu/types/Calendar";
+import type { IAbstractPaymentService } from "@rondevu/types/PaymentService";
 
 const isPaymentService = (
   x: unknown

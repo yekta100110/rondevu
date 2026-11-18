@@ -1,8 +1,8 @@
-import { ENABLE_PROFILE_SWITCHER } from "@calcom/lib/constants";
-import { useRefreshData } from "@calcom/lib/hooks/useRefreshData";
-import { trpc } from "@calcom/trpc/react";
-import classNames from "@calcom/ui/classNames";
-import { Avatar } from "@calcom/ui/components/avatar";
+import { ENABLE_PROFILE_SWITCHER } from "@rondevu/lib/constants";
+import { useRefreshData } from "@rondevu/lib/hooks/useRefreshData";
+import { trpc } from "@rondevu/trpc/react";
+import classNames from "@rondevu/ui/classNames";
+import { Avatar } from "@rondevu/ui/components/avatar";
 import {
   Dropdown,
   DropdownItem,
@@ -10,7 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuPortal,
   DropdownMenuTrigger,
-} from "@calcom/ui/components/dropdown";
+} from "@rondevu/ui/components/dropdown";
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "@coss/ui/icons";
 import { useSession } from "next-auth/react";
 import { useState } from "react";

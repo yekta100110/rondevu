@@ -165,7 +165,7 @@
 7. Centered "rOn" lettering precisely in the middle of all favicons, app icons, and metro tiles (top/bottom margins now mathematically equal)
 8. Set system default language to Turkish (`tr`), automated Turkish start for all users, added all 41 missing keys to `tr/common.json` (0 missing keys remaining), cleaned up legacy brand strings, and refined home page localization
 9. Disabled "Ekibimle birlikte" onboarding plan with "Geliştirme aşamasında" badge; created dedicated minimal homepage at root route with top-right "Giriş Yap" button; added minimal pricing section with 1.000 ₺ monthly and 10.000 ₺ yearly (instead of 12.000 ₺) tiers.
-10. Fixed Docker / Next.js production build `module-not-found` failure by correcting deep import of `@calcom/ui/components/logo/Logo` to `@calcom/ui/components/logo` in `apps/web/modules/home/home-view.tsx`.
+10. Fixed Docker / Next.js production build `module-not-found` failure by correcting deep import of `@rondevu/ui/components/logo/Logo` to `@rondevu/ui/components/logo` in `apps/web/modules/home/home-view.tsx`.
 11. Initial visit system theme persistence, simplified homepage pricing (990 ₺ / 9.900 ₺), framer-motion login entrance animation, minimal `/plan-bilgi` contact page, "Randevu" terminology alignment, email dark mode redesign with Turkish default fallback, and complete SMS transport engine + Admin SMS control menu (`/settings/admin/sms`).
 12. Homepage revamp: Set Hero title to "Herkes için randevu altyapısı"; added interactive 3-step booking flow widget (HeroBookingMockup) inspired by interface screenshots with 100% dummy data; positioned 12 core features across 4 operational blocks with UI mockups (Müsaitlik, Out of Office toggle, No-Show listesi, Yinelenen abonelikler); added FaqSection accordion.
 13. Cal.diy rebranding sweep across app-store, copyright and footers; domain normalization to `rondevu.org`; aligned calendar sync truth (one-way export of booked appointments to Google/Apple calendar without closing rOndevu availability from personal calendar events).
@@ -178,15 +178,15 @@
     - Overhauled Block 2 layout with wide switcher tabs and cleanly decoupled the client preview ("Danışan randevu ekranı önizlemesi") into its own spacious distinct card.
     - Implemented phone OTP SMS verification for phone bookings and fixed cancellation SMS dispatch when organizer cancels appointments.
     - Simplified SSS calendar synchronization explanation to state direct export to Google/Apple calendar.
-17. Docker deployment error fix (`TS2307` module not found `@calcom/sms/sms-manager`):
-    - Corrected dynamic import in `packages/features/auth/lib/verifyEmail.ts` to `@calcom/lib/smsTransport`.
-    - Verified `yarn workspace @calcom/trpc run build` passes with exit code 0.
+17. Docker deployment error fix (`TS2307` module not found `@rondevu/sms/sms-manager`):
+    - Corrected dynamic import in `packages/features/auth/lib/verifyEmail.ts` to `@rondevu/lib/smsTransport`.
+    - Verified `yarn workspace @rondevu/trpc run build` passes with exit code 0.
 18. End-to-end SMS Verification and Notification Infrastructure:
     - Fixed phone email construction (`contructEmailFromPhoneNumber`) to strictly strip non-digits, eliminating format crashes in auth and booking flows.
     - Resolved phone verification OTP delivery by bypassing email watchlist check for SMS-based virtual emails in `sendEmailVerificationByCode`.
     - Updated `RegularBookingService` to validate verification code against the effective booker email/phone, preventing booking failures on phone-only events.
     - Decoupled SMS notifications from SMTP email failures in `email-manager.ts` using `Promise.allSettled` and isolated try/catch for creation, rescheduling, and cancellation.
-    - Enhanced SMS templates with resilient Turkish defaults, registered `@calcom/sms` as a workspace package, and dynamically adjusted UI copy on the booking form and event settings.
+    - Enhanced SMS templates with resilient Turkish defaults, registered `@rondevu/sms` as a workspace package, and dynamically adjusted UI copy on the booking form and event settings.
     - All unit tests and notification flows validated with exit code 0.
 19. Plan Contact Information Synchronization & Admin Usability Fix:
     - Resolved tRPC path discrepancy (`trpc.publicViewer` -> `trpc.viewer.public.getPlanContact`).
@@ -209,10 +209,10 @@
     - **Complete End-to-End SMS Lifecycle**: Removed artificial `isSmsCalEmail` constraint in `sms-manager.ts` so all booking lifecycle events (confirmation, reschedule, cancellation) dispatch SMS to attendees with phone numbers.
     - **Scheduled Reminders**: Implemented appointment reminder SMS via Tasker queue (`EventReminderSMS`, `tasks/sendSms.ts`, `scheduleReminderSmsTrigger.ts`) and cancellation cleanup (`handleCancelBooking.ts`).
     - **Validation**: All 8 SMSManager unit tests passed and Biome check clean (0 errors).
-22. Docker Deploy Build Fix (@calcom/trpc TS2353 & TS2339):
+22. Docker Deploy Build Fix (@rondevu/trpc TS2353 & TS2339):
     - Added `smsReminderNumber?: string | null;` to `CalendarEvent` in `packages/types/Calendar.d.ts`.
-    - Declared `@calcom/sms` workspace dependency in `packages/features/package.json` and updated `yarn.lock`.
-    - Verified locally with `yarn workspace @calcom/trpc run build` (build:server and build:react compile with 0 errors).
+    - Declared `@rondevu/sms` workspace dependency in `packages/features/package.json` and updated `yarn.lock`.
+    - Verified locally with `yarn workspace @rondevu/trpc run build` (build:server and build:react compile with 0 errors).
     - Verified SMSManager test suite (8 tests passed) and Biome formatting.
 23. Frontend Phone Verification Gate Fix, Legal Pages (/privacy & /tos) and Dynamic SEO Sitemap:
     - Fixed Booker frontend to detect phone confirmation mode (`isPhoneConfirmationEvent`), switch action button to "Telefonu Doğrula", dispatch `sendPhoneVerification` via Twilio Verify, open 6-digit `VerifyCodeDialog`, and store `verificationCode` in `BookerStore` before sending booking mutation.
@@ -226,7 +226,7 @@
     - **Defect 4 (Dynamic Legal Contact Info)**: Removed all hardcoded personal contact info from `privacy-view.tsx` and `tos-view.tsx`. Connected SSR `getPlanContactConfig()` and dynamic `trpc.viewer.public.getPlanContact` query.
     - **Defect 5 (Duplicate Sitemap Aliases)**: Removed `/gizlilik-politikasi` and `/kullanim-kosullari` from `sitemap.ts`, exposing strictly canonical URLs to search crawlers.
     - **Defect 6 (OTP Resend & Modal Dismissal)**: Upgraded `VerifyCodeDialog.tsx` with a 60-second cooldown timer, resend button, and complete state cleanup on dismissal, keeping booking form buttons active and responsive without a page reload.
-    - **Validation**: 15 Vitest unit tests passed, `@calcom/trpc` built cleanly (code 0), and Biome check verified.
+    - **Validation**: 15 Vitest unit tests passed, `@rondevu/trpc` built cleanly (code 0), and Biome check verified.
 25. System-Wide Architectural, Logical, and Security Audit Remediation (CRIT-01 through LOW-02):
     - **CRIT-01 (NextAuth Session Privilege Escalation)**: Stripped client-controlled email updates from NextAuth `trigger === "update"`. Anchored session user lookup to immutable user ID (`token.sub`/`token.id`), preventing account takeover via session updates.
     - **CRIT-02 & LOW-01 (Cron Authentication Bypass & Timing Attacks)**: Implemented centralized, constant-time `validateCronAuth.ts` rejecting requests if secrets are unconfigured and eliminating the `"Bearer undefined"` vulnerability across tasker and web cron routes (`cron.ts`, `cleanup.ts`, `calendar-subscriptions`, `selected-calendars`, `calendar-subscriptions-cleanup`, `bookingReminder`, `webhookTriggers`).
@@ -239,7 +239,7 @@
     - **MED-02 (Plan Contact Configuration Single Source of Truth)**: Made PostgreSQL database persistence authoritative in `planContactConfig.ts`: throws explicit errors on DB failures rather than silently masking them with ephemeral container file backups.
     - **MED-03 (Outgoing Webhook HTTP Timeout Guard)**: Attached `AbortSignal.timeout(10000)` (10 seconds) to outgoing webhook HTTP POST dispatches in `sendPayload.ts` to prevent worker socket starvation.
     - **LOW-02 (Global Expired Selected Slots Sweeper)**: Added `deleteManyExpiredSlotsAcrossAllEvents` in `PrismaSelectedSlotRepository.ts` and wired it into `calendar-subscriptions-cleanup` cron route.
-    - **Validation**: 25 Vitest tests passed across all 4 suites (100%), `@calcom/trpc` compiles cleanly (0 errors), and Biome code check verified (0 errors).
+    - **Validation**: 25 Vitest tests passed across all 4 suites (100%), `@rondevu/trpc` compiles cleanly (0 errors), and Biome code check verified (0 errors).
 26. Resolution of SMS OTP Twilio Single-Use Rejection and Stale State Loop:
     - **Root Cause 1 (Twilio Verify Single-Use Invalidation)**: Twilio Verify's `VerificationCheck` API is strictly single-use. Once approved in the modal dialog, subsequent calls from `RegularBookingService` fail because Twilio deletes/consumes the pending verification. Resolved by introducing `verifiedPhoneCache` in `packages/features/auth/lib/phoneVerification.ts` with a 15-minute sliding TTL, caching approved statuses across the booking pipeline.
     - **Root Cause 2 (Stale Verification Loop & State Lock)**: If booking creation was rejected, `BookerStore.verificationCode` and `verifiedEmail` remained stored, leaving `isVerified: true` and keeping the form button in "Onayla" (Submit) mode. Submitting immediately resent the rejected code without prompting for a new OTP. Resolved by clearing `verificationCode` and `verifiedEmail` on verification errors in `useBookings.ts`, removing premature `setVerificationCode` from `VerifyCodeDialog.tsx`, and passing exact mutation variables in `useVerifyCode.ts`.
@@ -252,9 +252,9 @@
     - **Edge Case 4 (In-Memory Cache Boundaries & Eviction)**: Resolved heap leak potential in `phoneVerification.ts` and `rateLimit.ts` by introducing bounded capacities (`MAX_VERIFIED_PHONE_CACHE_SIZE = 10000`, `MAX_MEMORY_STORE_SIZE = 10000`) and downlevel-safe FIFO eviction using iterator `next().value`.
     - **Validation**: 100% of Vitest unit tests passed (including new replay protection and cache boundary tests), server type-check passed with 0 errors (`tsc --project packages/trpc/tsconfig.server.json --noEmit` exit 0), and clean code verification completed.
 28. Critical Build Fix: Broken Import in CancelBooking.tsx & Web Build Verification:
-    - **Broken Module Import Fixed**: Fixed broken import `@calcom/ui/components/form/inputs/TextField` in `apps/web/components/booking/CancelBooking.tsx` by importing `Input` from canonical `@calcom/ui/components/form` export map.
+    - **Broken Module Import Fixed**: Fixed broken import `@rondevu/ui/components/form/inputs/TextField` in `apps/web/components/booking/CancelBooking.tsx` by importing `Input` from canonical `@rondevu/ui/components/form` export map.
     - **Build Icons Unmatched Files Fix**: Updated `packages/ui/scripts/build-icons.mjs` to add `--no-errors-on-unmatched` flag to Biome format, avoiding exit code 1 when formatting sprite files in ignored `public/` directories.
-    - **Full Next.js Web Production Build Verified**: Executed and validated full Next.js 16 (Turbopack) production build for `@calcom/web` locally with exit code 0 (`✓ Compiled successfully in 5.2min`, `✓ Generating static pages using 7 workers (98/98) in 6.1s`).
+    - **Full Next.js Web Production Build Verified**: Executed and validated full Next.js 16 (Turbopack) production build for `@rondevu/web` locally with exit code 0 (`✓ Compiled successfully in 5.2min`, `✓ Generating static pages using 7 workers (98/98) in 6.1s`).
     - **Validation**: Biome checks clean (0 errors) and production build verified.
 29. SMS Template Compression & GSM 7-bit Sanitization (Twilio Error 30044 Fix):
     - **GSM 7-bit ASCII Transliteration Helper**: Created `packages/lib/sanitizeSmsText.ts` and re-exported it in `packages/lib/smsTransport.ts` and `packages/sms/sms-transport.ts`. Automatically maps Turkish characters (`ç, Ç, ğ, Ğ, ı, İ, ö, Ö, ş, Ş, ü, Ü`), circumflex vowels (`â, Â, î, Î, û, Û`), smart quotes (`“”, ‘’`), dashes (`–, —`), ellipsis, and diacritics into standard GSM 7-bit ASCII before dispatch in `sendSMS`, preventing UCS-2 Unicode fallback and preserving 160-character per segment capacity.
@@ -423,7 +423,7 @@
 
 ## 2026-10-28 — WhatsApp runtime activation
 
-- Added the `RONDEVU_*` and `PLATFORM_N8N_*` runtime variables to the `@calcom/web#start` Turbo task; commits `bc4abdb03d` and `452410dd77` are on `main`. The current Swarm task uses matching Docker config `rondevu-turbo-env-452410dd77`; Dokploy's environment gate is saved and enabled.
+- Added the `RONDEVU_*` and `PLATFORM_N8N_*` runtime variables to the `@rondevu/web#start` Turbo task; commits `bc4abdb03d` and `452410dd77` are on `main`. The current Swarm task uses matching Docker config `rondevu-turbo-env-452410dd77`; Dokploy's environment gate is saved and enabled.
 - n8n's platform-delivery and Evolution opt-out workflows are active. Evolution `rondevu` is open with `MESSAGES_UPSERT` inbound webhook. Public health probes for site, n8n, and Evolution returned HTTP 200; an authenticated eligibility probe returned the expected 404 for a nonexistent UID.
 - A no-cache Dokploy build destabilized Docker Desktop during Yarn dependency installation and was cancelled. WSL/Docker restart restored all services. A direct, user-authorized Evolution test send was accepted (HTTP 201); it is not an end-to-end platform webhook test.
 - No platform webhook record exists and no opt-in is recorded for the test number. An administrator still needs to create the platform webhook with its HMAC secret aligned to n8n and the recipient needs an app-recorded opt-in before booking notifications can send.

@@ -1,26 +1,26 @@
-import { getPaymentAppData } from "@calcom/app-store/_utils/payments/getPaymentAppData";
-import type { getEventLocationValue } from "@calcom/app-store/locations";
-import { getSuccessPageLocationMessage, guessEventLocationType } from "@calcom/app-store/locations";
-import dayjs from "@calcom/dayjs";
+import { getPaymentAppData } from "@rondevu/app-store/_utils/payments/getPaymentAppData";
+import type { getEventLocationValue } from "@rondevu/app-store/locations";
+import { getSuccessPageLocationMessage, guessEventLocationType } from "@rondevu/app-store/locations";
+import dayjs from "@rondevu/dayjs";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 // TODO: Use browser locale, implement Intl in Dayjs maybe?
-import "@calcom/dayjs/locales";
-import { formatTime } from "@calcom/lib/dayjs";
-import { useCopy } from "@calcom/lib/hooks/useCopy";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { useGetTheme } from "@calcom/lib/hooks/useTheme";
-import isSmsCalEmail from "@calcom/lib/isSmsCalEmail";
-import { getEveryFreqFor } from "@calcom/lib/recurringStrings";
-import type { AssignmentReason } from "@calcom/prisma/client";
-import { BookingStatus } from "@calcom/prisma/enums";
-import { bookingMetadataSchema } from "@calcom/prisma/zod-utils";
-import { trpc } from "@calcom/trpc/react";
-import type { Ensure } from "@calcom/types/utils";
-import classNames from "@calcom/ui/classNames";
-import { Badge } from "@calcom/ui/components/badge";
-import { Button } from "@calcom/ui/components/button";
+import "@rondevu/dayjs/locales";
+import { formatTime } from "@rondevu/lib/dayjs";
+import { useCopy } from "@rondevu/lib/hooks/useCopy";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { useGetTheme } from "@rondevu/lib/hooks/useTheme";
+import isSmsCalEmail from "@rondevu/lib/isSmsCalEmail";
+import { getEveryFreqFor } from "@rondevu/lib/recurringStrings";
+import type { AssignmentReason } from "@rondevu/prisma/client";
+import { BookingStatus } from "@rondevu/prisma/enums";
+import { bookingMetadataSchema } from "@rondevu/prisma/zod-utils";
+import { trpc } from "@rondevu/trpc/react";
+import type { Ensure } from "@rondevu/types/utils";
+import classNames from "@rondevu/ui/classNames";
+import { Badge } from "@rondevu/ui/components/badge";
+import { Button } from "@rondevu/ui/components/button";
 import {
   Dropdown,
   DropdownItem,
@@ -31,11 +31,11 @@ import {
   DropdownMenuPortal,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@calcom/ui/components/dropdown";
-import { Icon } from "@calcom/ui/components/icon";
-import { MeetingTimeInTimezones } from "@calcom/ui/components/popover";
-import { showToast } from "@calcom/ui/components/toast";
-import { Tooltip } from "@calcom/ui/components/tooltip";
+} from "@rondevu/ui/components/dropdown";
+import { Icon } from "@rondevu/ui/components/icon";
+import { MeetingTimeInTimezones } from "@rondevu/ui/components/popover";
+import { showToast } from "@rondevu/ui/components/toast";
+import { Tooltip } from "@rondevu/ui/components/tooltip";
 import assignmentReasonBadgeTitleMap from "@lib/booking/assignmentReasonBadgeTitleMap";
 import { buildBookingLink } from "../../modules/bookings/lib/buildBookingLink";
 import { useBookingDetailsSheetStore } from "../../modules/bookings/store/bookingDetailsSheetStore";

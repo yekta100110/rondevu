@@ -1,8 +1,8 @@
 "use client";
 
-import { APP_NAME } from "@calcom/lib/constants";
-import type { PlanContactConfig } from "@calcom/lib/planContactConfig";
-import { trpc } from "@calcom/trpc/react";
+import { APP_NAME } from "@rondevu/lib/constants";
+import type { PlanContactConfig } from "@rondevu/lib/planContactConfig";
+import { trpc } from "@rondevu/trpc/react";
 import {
   AlertTriangle,
   ArrowLeft,

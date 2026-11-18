@@ -1,5 +1,5 @@
-import dayjs from "@calcom/dayjs";
-import { HolidayRepository } from "@calcom/features/holidays/repositories/HolidayRepository";
+import dayjs from "@rondevu/dayjs";
+import { HolidayRepository } from "@rondevu/features/holidays/repositories/HolidayRepository";
 
 import {
   getHolidayServiceCachingProxy,

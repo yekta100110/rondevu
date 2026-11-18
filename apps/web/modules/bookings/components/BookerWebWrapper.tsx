@@ -1,24 +1,24 @@
 "use client";
 
-import { sdkActionManager, useIsEmbed } from "@calcom/embed-core/embed-iframe";
-import { useBookerEmbedEvents } from "@calcom/embed-core/src/embed-iframe/react-hooks";
-import type { BookerProps } from "@calcom/features/bookings/Booker";
+import { sdkActionManager, useIsEmbed } from "@rondevu/embed-core/embed-iframe";
+import { useBookerEmbedEvents } from "@rondevu/embed-core/src/embed-iframe/react-hooks";
+import type { BookerProps } from "@rondevu/features/bookings/Booker";
 import {
   BookerStoreProvider,
   useBookerStoreContext,
   useInitializeBookerStoreContext,
-} from "@calcom/features/bookings/Booker/BookerStoreProvider";
-import { useOverlayCalendarStore } from "@calcom/features/bookings/Booker/components/OverlayCalendar/store";
-import { useBookerLayout } from "@calcom/features/bookings/Booker/hooks/useBookerLayout";
-import { useBookingForm } from "@calcom/features/bookings/Booker/hooks/useBookingForm";
-import { useInitializeBookerStore } from "@calcom/features/bookings/Booker/store";
-import { useBrandColors } from "@calcom/features/bookings/Booker/utils/use-brand-colors";
-import type { getPublicEvent } from "@calcom/features/eventtypes/lib/getPublicEvent";
-import { DEFAULT_DARK_BRAND_COLOR, DEFAULT_LIGHT_BRAND_COLOR, WEBAPP_URL } from "@calcom/lib/constants";
-import { useRouterQuery } from "@calcom/lib/hooks/useRouterQuery";
-import { localStorage } from "@calcom/lib/webstorage";
-import { useEvent, useScheduleForEvent } from "@calcom/web/modules/schedules/hooks/useEvent";
-import { useNonEmptyScheduleDays } from "@calcom/web/modules/schedules/hooks/useNonEmptyScheduleDays";
+} from "@rondevu/features/bookings/Booker/BookerStoreProvider";
+import { useOverlayCalendarStore } from "@rondevu/features/bookings/Booker/components/OverlayCalendar/store";
+import { useBookerLayout } from "@rondevu/features/bookings/Booker/hooks/useBookerLayout";
+import { useBookingForm } from "@rondevu/features/bookings/Booker/hooks/useBookingForm";
+import { useInitializeBookerStore } from "@rondevu/features/bookings/Booker/store";
+import { useBrandColors } from "@rondevu/features/bookings/Booker/utils/use-brand-colors";
+import type { getPublicEvent } from "@rondevu/features/eventtypes/lib/getPublicEvent";
+import { DEFAULT_DARK_BRAND_COLOR, DEFAULT_LIGHT_BRAND_COLOR, WEBAPP_URL } from "@rondevu/lib/constants";
+import { useRouterQuery } from "@rondevu/lib/hooks/useRouterQuery";
+import { localStorage } from "@rondevu/lib/webstorage";
+import { useEvent, useScheduleForEvent } from "@rondevu/web/modules/schedules/hooks/useEvent";
+import { useNonEmptyScheduleDays } from "@rondevu/web/modules/schedules/hooks/useNonEmptyScheduleDays";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { getProviders, signIn, useSession } from "next-auth/react";

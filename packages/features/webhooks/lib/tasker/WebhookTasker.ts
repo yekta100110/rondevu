@@ -1,5 +1,5 @@
-import { Tasker } from "@calcom/lib/tasker/Tasker";
-import type { ILogger } from "@calcom/lib/tasker/types";
+import { Tasker } from "@rondevu/lib/tasker/Tasker";
+import type { ILogger } from "@rondevu/lib/tasker/types";
 
 import type { WebhookTaskPayload } from "../types/webhookTask";
 import type { WebhookSyncTasker } from "./WebhookSyncTasker";

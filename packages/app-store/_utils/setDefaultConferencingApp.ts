@@ -1,5 +1,5 @@
-import prisma from "@calcom/prisma";
-import { userMetadata } from "@calcom/prisma/zod-utils";
+import prisma from "@rondevu/prisma";
+import { userMetadata } from "@rondevu/prisma/zod-utils";
 
 import type { LocationObject } from "../locations";
 import { getAppFromSlug } from "../utils";

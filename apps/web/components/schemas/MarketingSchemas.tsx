@@ -11,7 +11,7 @@ import type {
   WithContext,
 } from "schema-dts";
 
-import { APP_NAME, CAL_URL } from "@calcom/lib/constants";
+import { APP_NAME, CAL_URL } from "@rondevu/lib/constants";
 
 interface MarketingContactInfo {
   phone?: string;

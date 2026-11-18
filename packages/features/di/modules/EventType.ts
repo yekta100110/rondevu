@@ -1,5 +1,5 @@
-import { DI_TOKENS } from "@calcom/features/di/tokens";
-import { EventTypeRepository } from "@calcom/features/eventtypes/repositories/eventTypeRepository";
+import { DI_TOKENS } from "@rondevu/features/di/tokens";
+import { EventTypeRepository } from "@rondevu/features/eventtypes/repositories/eventTypeRepository";
 
 import { type Container, createModule, type ModuleLoader } from "../di";
 

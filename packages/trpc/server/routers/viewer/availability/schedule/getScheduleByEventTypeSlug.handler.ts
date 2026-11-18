@@ -1,6 +1,6 @@
-import type { PrismaClient } from "@calcom/prisma";
+import type { PrismaClient } from "@rondevu/prisma";
 
-import logger from "@calcom/lib/logger";
+import logger from "@rondevu/lib/logger";
 import type { TrpcSessionUser } from "../../../../types";
 import { getHandler } from "./get.handler";
 import type { TGetByEventSlugInputSchema } from "./getScheduleByEventTypeSlug.schema";

@@ -1,4 +1,4 @@
-import classNames from "@calcom/ui/classNames";
+import classNames from "@rondevu/ui/classNames";
 
 interface EventTitleProps {
   children: React.ReactNode;

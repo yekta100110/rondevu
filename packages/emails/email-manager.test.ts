@@ -1,12 +1,12 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 
-import type { EventTypeMetadata } from "@calcom/prisma/zod-utils";
-import type { CalendarEvent, Person } from "@calcom/types/Calendar";
+import type { EventTypeMetadata } from "@rondevu/prisma/zod-utils";
+import type { CalendarEvent, Person } from "@rondevu/types/Calendar";
 
 import { shouldSkipAttendeeEmailWithSettings } from "./email-manager";
 import AttendeeScheduledEmail from "./templates/attendee-scheduled-email";
 
-vi.mock("@calcom/prisma", () => ({
+vi.mock("@rondevu/prisma", () => ({
   prisma: {},
 }));
 
@@ -22,11 +22,11 @@ vi.mock("./src/renderEmail", () => ({
   default: vi.fn(() => Promise.resolve("<html>mock-email</html>")),
 }));
 
-vi.mock("@calcom/lib/getReplyToHeader", () => ({
+vi.mock("@rondevu/lib/getReplyToHeader", () => ({
   getReplyToHeader: vi.fn(() => ({})),
 }));
 
-vi.mock("@calcom/lib/CalEventParser", () => ({
+vi.mock("@rondevu/lib/CalEventParser", () => ({
   getRichDescription: vi.fn(() => "mock-description"),
 }));
 

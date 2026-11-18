@@ -5,23 +5,23 @@ import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Dialog } from "@calcom/features/components/controlled-dialog";
-import { ErrorCode } from "@calcom/lib/errorCodes";
-import { useDebounce } from "@calcom/lib/hooks/useDebounce";
-import { useInViewObserver } from "@calcom/lib/hooks/useInViewObserver";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc } from "@calcom/trpc/react";
-import classNames from "@calcom/ui/classNames";
-import { Button } from "@calcom/ui/components/button";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
+import { ErrorCode } from "@rondevu/lib/errorCodes";
+import { useDebounce } from "@rondevu/lib/hooks/useDebounce";
+import { useInViewObserver } from "@rondevu/lib/hooks/useInViewObserver";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc } from "@rondevu/trpc/react";
+import classNames from "@rondevu/ui/classNames";
+import { Button } from "@rondevu/ui/components/button";
 import {
   DialogContent,
   DialogFooter,
   DialogClose,
   ConfirmationDialogContent,
-} from "@calcom/ui/components/dialog";
-import { TextAreaField, Form, Label, Input } from "@calcom/ui/components/form";
-import { RadioAreaGroup as RadioArea } from "@calcom/ui/components/radio";
-import { showToast } from "@calcom/ui/components/toast";
+} from "@rondevu/ui/components/dialog";
+import { TextAreaField, Form, Label, Input } from "@rondevu/ui/components/form";
+import { RadioAreaGroup as RadioArea } from "@rondevu/ui/components/radio";
+import { showToast } from "@rondevu/ui/components/toast";
 import { CheckIcon, LoaderIcon } from "@coss/ui/icons";
 
 enum ReassignType {

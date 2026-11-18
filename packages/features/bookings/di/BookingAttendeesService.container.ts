@@ -1,4 +1,4 @@
-import { createContainer } from "@calcom/features/di/di";
+import { createContainer } from "@rondevu/features/di/di";
 import {
   type BookingAttendeesService,
   moduleLoader as bookingAttendeesServiceModule,

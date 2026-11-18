@@ -2,18 +2,18 @@ import { defaultResponderForAppDir } from "app/api/defaultResponderForAppDir";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-import dayjs from "@calcom/dayjs";
-import { sendOrganizerRequestReminderEmail } from "@calcom/emails/email-manager";
-import { getCalEventResponses } from "@calcom/features/bookings/lib/getCalEventResponses";
-import { isPrismaObjOrUndefined } from "@calcom/lib/isPrismaObj";
-import { parseRecurringEvent } from "@calcom/lib/isRecurringEvent";
-import { getTranslation } from "@calcom/i18n/server";
-import prisma, { bookingMinimalSelect } from "@calcom/prisma";
-import { BookingStatus, ReminderType } from "@calcom/prisma/enums";
-import type { EventTypeMetadata } from "@calcom/prisma/zod-utils";
-import type { CalendarEvent } from "@calcom/types/Calendar";
+import dayjs from "@rondevu/dayjs";
+import { sendOrganizerRequestReminderEmail } from "@rondevu/emails/email-manager";
+import { getCalEventResponses } from "@rondevu/features/bookings/lib/getCalEventResponses";
+import { isPrismaObjOrUndefined } from "@rondevu/lib/isPrismaObj";
+import { parseRecurringEvent } from "@rondevu/lib/isRecurringEvent";
+import { getTranslation } from "@rondevu/i18n/server";
+import prisma, { bookingMinimalSelect } from "@rondevu/prisma";
+import { BookingStatus, ReminderType } from "@rondevu/prisma/enums";
+import type { EventTypeMetadata } from "@rondevu/prisma/zod-utils";
+import type { CalendarEvent } from "@rondevu/types/Calendar";
 
-import { validateCronAuth } from "@calcom/lib/validateCronAuth";
+import { validateCronAuth } from "@rondevu/lib/validateCronAuth";
 
 async function postHandler(request: NextRequest) {
   if (!validateCronAuth(request)) {

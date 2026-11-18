@@ -1,10 +1,10 @@
 import { describe, test, expect, vi, beforeEach } from "vitest";
 
-import type { SpanFn } from "@calcom/features/watchlist/lib/telemetry";
+import type { SpanFn } from "@rondevu/features/watchlist/lib/telemetry";
 
 import { filterBlockedUsers, type UserWithEmail } from "./filter-blocked-users.controller";
 
-vi.mock("@calcom/features/di/watchlist/containers/watchlist", () => ({
+vi.mock("@rondevu/features/di/watchlist/containers/watchlist", () => ({
   getWatchlistFeature: vi.fn(),
 }));
 
@@ -41,7 +41,7 @@ function createUser(email: string, locked: boolean, id?: number, username?: stri
 describe("filterBlockedUsers", () => {
   beforeEach(async () => {
     vi.clearAllMocks();
-    const { getWatchlistFeature } = await import("@calcom/features/di/watchlist/containers/watchlist");
+    const { getWatchlistFeature } = await import("@rondevu/features/di/watchlist/containers/watchlist");
     vi.mocked(getWatchlistFeature).mockResolvedValue(mockWatchlistFeature as never);
   });
 

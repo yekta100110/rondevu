@@ -5,12 +5,12 @@ import { getCoreRowModel, getSortedRowModel, useReactTable } from "@tanstack/rea
 import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
 
-import { DataTableSelectionBar, DataTableWrapper } from "@calcom/web/modules/data-table/components";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import type { WatchlistType } from "@calcom/prisma/enums";
-import { EmptyScreen } from "@calcom/ui/components/empty-screen";
+import { DataTableSelectionBar, DataTableWrapper } from "@rondevu/web/modules/data-table/components";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import type { WatchlistType } from "@rondevu/prisma/enums";
+import { EmptyScreen } from "@rondevu/ui/components/empty-screen";
 
-import type { GroupedBookingReport, BlocklistScope } from "@calcom/features/blocklist/types";
+import type { GroupedBookingReport, BlocklistScope } from "@rondevu/features/blocklist/types";
 import { BookingReportDetailsModal } from "./BookingReportDetailsModal";
 import { usePendingReportsColumns } from "./PendingReportsColumns";
 

@@ -1,8 +1,8 @@
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc } from "@calcom/trpc/react";
-import classNames from "@calcom/ui/classNames";
-import { Button } from "@calcom/ui/components/button";
-import { List } from "@calcom/ui/components/list";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc } from "@rondevu/trpc/react";
+import classNames from "@rondevu/ui/classNames";
+import { Button } from "@rondevu/ui/components/button";
+import { List } from "@rondevu/ui/components/list";
 
 import { AppConnectionItem } from "../components/AppConnectionItem";
 import { ConnectedCalendarItem } from "../components/ConnectedCalendarItem";

@@ -1,6 +1,6 @@
-import { prisma } from "@calcom/prisma/__mocks__/prisma";
-import { getCalendar } from "@calcom/app-store/_utils/getCalendar";
-import type { CalendarEvent } from "@calcom/types/Calendar";
+import { prisma } from "@rondevu/prisma/__mocks__/prisma";
+import { getCalendar } from "@rondevu/app-store/_utils/getCalendar";
+import type { CalendarEvent } from "@rondevu/types/Calendar";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   deduplicateCredentialsBasedOnSelectedCalendars,
@@ -9,28 +9,28 @@ import {
   processEvent,
 } from "./CalendarManager";
 
-vi.mock("@calcom/prisma", () => ({
+vi.mock("@rondevu/prisma", () => ({
   prisma,
 }));
 
-vi.mock("@calcom/app-store/_utils/getCalendar", () => ({
+vi.mock("@rondevu/app-store/_utils/getCalendar", () => ({
   getCalendar: vi.fn(),
 }));
 
-vi.mock("@calcom/lib/constants", () => ({
+vi.mock("@rondevu/lib/constants", () => ({
   ORGANIZER_EMAIL_EXEMPT_DOMAINS: "",
   IS_PRODUCTION: false,
 }));
 
-vi.mock("@calcom/app-store/locations", () => ({
+vi.mock("@rondevu/app-store/locations", () => ({
   MeetLocationType: "integrations:google:meet",
 }));
 
-vi.mock("@calcom/lib/CalEventParser", () => ({
+vi.mock("@rondevu/lib/CalEventParser", () => ({
   getRichDescription: vi.fn(() => "Test description"),
 }));
 
-vi.mock("@calcom/app-store/delegationCredential", () => ({
+vi.mock("@rondevu/app-store/delegationCredential", () => ({
   enrichHostsWithDelegationCredentials: vi.fn(),
   getUsersCredentialsIncludeServiceAccountKey: vi.fn(),
   getCredentialForSelectedCalendar: vi.fn(),

@@ -1,9 +1,9 @@
 "use client";
 
-import { getPlaceholderAvatar } from "@calcom/lib/defaultAvatarImage";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import type { CredentialOwner } from "@calcom/types/CredentialOwner";
-import classNames from "@calcom/ui/classNames";
+import { getPlaceholderAvatar } from "@rondevu/lib/defaultAvatarImage";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import type { CredentialOwner } from "@rondevu/types/CredentialOwner";
+import classNames from "@rondevu/ui/classNames";
 import { CircleAlertIcon } from "@coss/ui/icons";
 import type { ReactNode } from "react";
 import { Avatar } from "../avatar/Avatar";

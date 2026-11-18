@@ -1,17 +1,17 @@
-import { LearnMoreLink } from "@calcom/features/eventtypes/components/LearnMoreLink";
+import { LearnMoreLink } from "@rondevu/features/eventtypes/components/LearnMoreLink";
 import type {
   EventTypeSetup,
   FormValues,
   InputClassNames,
   SelectClassNames,
   SettingsToggleClassNames,
-} from "@calcom/features/eventtypes/lib/types";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Frequency } from "@calcom/prisma/zod-utils";
-import type { RecurringEvent } from "@calcom/types/Calendar";
-import classNames from "@calcom/ui/classNames";
-import { Alert } from "@calcom/ui/components/alert";
-import { Select, SettingsToggle, TextField } from "@calcom/ui/components/form";
+} from "@rondevu/features/eventtypes/lib/types";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { Frequency } from "@rondevu/prisma/zod-utils";
+import type { RecurringEvent } from "@rondevu/types/Calendar";
+import classNames from "@rondevu/ui/classNames";
+import { Alert } from "@rondevu/ui/components/alert";
+import { Select, SettingsToggle, TextField } from "@rondevu/ui/components/form";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 

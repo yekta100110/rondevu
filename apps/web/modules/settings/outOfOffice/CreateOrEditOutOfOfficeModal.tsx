@@ -1,14 +1,14 @@
-import dayjs from "@calcom/dayjs";
-import { Dialog } from "@calcom/features/components/controlled-dialog";
-import { useCompatSearchParams } from "@calcom/lib/hooks/useCompatSearchParams";
-import { useDebounce } from "@calcom/lib/hooks/useDebounce";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc } from "@calcom/trpc/react";
-import useMeQuery from "@calcom/trpc/react/hooks/useMeQuery";
-import classNames from "@calcom/ui/classNames";
-import { Alert } from "@calcom/ui/components/alert";
-import { Button } from "@calcom/ui/components/button";
-import { DialogContent, DialogFooter, DialogHeader } from "@calcom/ui/components/dialog";
+import dayjs from "@rondevu/dayjs";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
+import { useCompatSearchParams } from "@rondevu/lib/hooks/useCompatSearchParams";
+import { useDebounce } from "@rondevu/lib/hooks/useDebounce";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc } from "@rondevu/trpc/react";
+import useMeQuery from "@rondevu/trpc/react/hooks/useMeQuery";
+import classNames from "@rondevu/ui/classNames";
+import { Alert } from "@rondevu/ui/components/alert";
+import { Button } from "@rondevu/ui/components/button";
+import { DialogContent, DialogFooter, DialogHeader } from "@rondevu/ui/components/dialog";
 import {
   Checkbox,
   DateRangePicker,
@@ -17,8 +17,8 @@ import {
   Select,
   Switch,
   TextArea,
-} from "@calcom/ui/components/form";
-import { showToast } from "@calcom/ui/components/toast";
+} from "@rondevu/ui/components/form";
+import { showToast } from "@rondevu/ui/components/toast";
 import { useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { OutOfOfficeTab } from "~/settings/outOfOffice/OutOfOfficeToggleGroup";

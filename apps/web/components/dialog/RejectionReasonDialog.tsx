@@ -1,11 +1,11 @@
 import type { Dispatch, SetStateAction } from "react";
 import { useState, useEffect } from "react";
 
-import { Dialog } from "@calcom/features/components/controlled-dialog";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Button } from "@calcom/ui/components/button";
-import { DialogContent, DialogFooter, DialogClose } from "@calcom/ui/components/dialog";
-import { TextAreaField } from "@calcom/ui/components/form";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { Button } from "@rondevu/ui/components/button";
+import { DialogContent, DialogFooter, DialogClose } from "@rondevu/ui/components/dialog";
+import { TextAreaField } from "@rondevu/ui/components/form";
 
 interface RejectionReasonDialogProps {
   isOpenDialog: boolean;

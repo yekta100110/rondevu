@@ -5,18 +5,18 @@ import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import posthog from "posthog-js";
 
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { md } from "@calcom/lib/markdownIt";
-import turndown from "@calcom/lib/turndownService";
-import { localStorage } from "@calcom/lib/webstorage";
-import { trpc } from "@calcom/trpc/react";
-import type { RouterOutputs } from "@calcom/trpc/react";
-import { UserAvatar } from "@calcom/ui/components/avatar";
-import { Button } from "@calcom/ui/components/button";
-import { Editor } from "@calcom/ui/components/editor";
-import { Label } from "@calcom/ui/components/form";
-import { ImageUploader } from "@calcom/ui/components/image-uploader";
-import { showToast } from "@calcom/ui/components/toast";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { md } from "@rondevu/lib/markdownIt";
+import turndown from "@rondevu/lib/turndownService";
+import { localStorage } from "@rondevu/lib/webstorage";
+import { trpc } from "@rondevu/trpc/react";
+import type { RouterOutputs } from "@rondevu/trpc/react";
+import { UserAvatar } from "@rondevu/ui/components/avatar";
+import { Button } from "@rondevu/ui/components/button";
+import { Editor } from "@rondevu/ui/components/editor";
+import { Label } from "@rondevu/ui/components/form";
+import { ImageUploader } from "@rondevu/ui/components/image-uploader";
+import { showToast } from "@rondevu/ui/components/toast";
 
 type FormData = {
   bio: string;

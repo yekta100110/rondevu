@@ -2,11 +2,11 @@ import type { GetServerSidePropsContext } from "next";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
 // Mock dependencies before imports
-vi.mock("@calcom/features/auth/lib/getServerSession", () => ({
+vi.mock("@rondevu/features/auth/lib/getServerSession", () => ({
   getServerSession: vi.fn(),
 }));
 
-vi.mock("@calcom/prisma", () => ({
+vi.mock("@rondevu/prisma", () => ({
   default: {
     user: {
       findUnique: vi.fn(),
@@ -18,12 +18,12 @@ vi.mock("../../../lib/getStripeAppKeys", () => ({
   getStripeAppKeys: vi.fn(),
 }));
 
-vi.mock("@calcom/lib/constants", () => ({
+vi.mock("@rondevu/lib/constants", () => ({
   WEBAPP_URL: "https://app.cal.com",
 }));
 
-import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
-import prisma from "@calcom/prisma";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
+import prisma from "@rondevu/prisma";
 
 import { getStripeAppKeys } from "../../../lib/getStripeAppKeys";
 import { getServerSideProps } from "../_getServerSideProps";

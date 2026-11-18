@@ -1,12 +1,12 @@
-import type { TGetTranscriptAccessLink } from "@calcom/app-store/dailyvideo/zod";
-import getWebhooks from "@calcom/features/webhooks/lib/getWebhooks";
-import sendPayload from "@calcom/features/webhooks/lib/sendOrSchedulePayload";
-import type { EventPayloadType } from "@calcom/features/webhooks/lib/sendPayload";
-import getOrgIdFromMemberOrTeamId from "@calcom/lib/getOrgIdFromMemberOrTeamId";
-import logger from "@calcom/lib/logger";
-import { safeStringify } from "@calcom/lib/safeStringify";
-import { WebhookTriggerEvents } from "@calcom/prisma/enums";
-import type { CalendarEvent } from "@calcom/types/Calendar";
+import type { TGetTranscriptAccessLink } from "@rondevu/app-store/dailyvideo/zod";
+import getWebhooks from "@rondevu/features/webhooks/lib/getWebhooks";
+import sendPayload from "@rondevu/features/webhooks/lib/sendOrSchedulePayload";
+import type { EventPayloadType } from "@rondevu/features/webhooks/lib/sendPayload";
+import getOrgIdFromMemberOrTeamId from "@rondevu/lib/getOrgIdFromMemberOrTeamId";
+import logger from "@rondevu/lib/logger";
+import { safeStringify } from "@rondevu/lib/safeStringify";
+import { WebhookTriggerEvents } from "@rondevu/prisma/enums";
+import type { CalendarEvent } from "@rondevu/types/Calendar";
 
 const log = logger.getSubLogger({ prefix: ["daily-video-webhook-handler:triggerRecordingReadyWebhook"] });
 

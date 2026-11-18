@@ -1,16 +1,16 @@
-import dayjs from "@calcom/dayjs";
-import type { BookingRepository } from "@calcom/features/bookings/repositories/BookingRepository";
-import { getBusyCalendarTimes } from "@calcom/features/calendars/lib/CalendarManager";
-import type { HostRepository } from "@calcom/features/host/repositories/HostRepository";
-import type { PrismaOOORepository } from "@calcom/features/ooo/repositories/PrismaOOORepository";
-import { mergeOverlappingRanges } from "@calcom/features/schedules/lib/date-ranges";
-import type { UserRepository } from "@calcom/features/users/repositories/UserRepository";
-import logger from "@calcom/lib/logger";
-import { safeStringify } from "@calcom/lib/safeStringify";
-import type { Booking, SelectedCalendar, User } from "@calcom/prisma/client";
-import { RRResetInterval, RRTimestampBasis } from "@calcom/prisma/enums";
-import type { EventBusyDate } from "@calcom/types/Calendar";
-import type { CredentialForCalendarService } from "@calcom/types/Credential";
+import dayjs from "@rondevu/dayjs";
+import type { BookingRepository } from "@rondevu/features/bookings/repositories/BookingRepository";
+import { getBusyCalendarTimes } from "@rondevu/features/calendars/lib/CalendarManager";
+import type { HostRepository } from "@rondevu/features/host/repositories/HostRepository";
+import type { PrismaOOORepository } from "@rondevu/features/ooo/repositories/PrismaOOORepository";
+import { mergeOverlappingRanges } from "@rondevu/features/schedules/lib/date-ranges";
+import type { UserRepository } from "@rondevu/features/users/repositories/UserRepository";
+import logger from "@rondevu/lib/logger";
+import { safeStringify } from "@rondevu/lib/safeStringify";
+import type { Booking, SelectedCalendar, User } from "@rondevu/prisma/client";
+import { RRResetInterval, RRTimestampBasis } from "@rondevu/prisma/enums";
+import type { EventBusyDate } from "@rondevu/types/Calendar";
+import type { CredentialForCalendarService } from "@rondevu/types/Credential";
 
 const log = logger.getSubLogger({ prefix: ["getLuckyUser"] });
 

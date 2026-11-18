@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 
-import { WebhookTriggerEvents } from "@calcom/prisma/enums";
+import { WebhookTriggerEvents } from "@rondevu/prisma/enums";
 
 import type { WebhookSubscriber } from "../dto/types";
 import { IWebhookRepository, WebhookVersion } from "../interface/IWebhookRepository";

@@ -1,9 +1,9 @@
-import { WEBAPP_URL } from "@calcom/lib/constants";
-import { sanitizeTimezone } from "@calcom/lib/dayjs";
-import { CreationSource, RedirectType } from "@calcom/prisma/enums";
-import { UserSchema } from "@calcom/prisma/zod/modelSchema/UserSchema";
-import { authedAdminProcedure } from "@calcom/trpc/server/procedures/authedProcedure";
-import { router } from "@calcom/trpc/server/trpc";
+import { WEBAPP_URL } from "@rondevu/lib/constants";
+import { sanitizeTimezone } from "@rondevu/lib/dayjs";
+import { CreationSource, RedirectType } from "@rondevu/prisma/enums";
+import { UserSchema } from "@rondevu/prisma/zod/modelSchema/UserSchema";
+import { authedAdminProcedure } from "@rondevu/trpc/server/procedures/authedProcedure";
+import { router } from "@rondevu/trpc/server/trpc";
 import type { inferRouterOutputs } from "@trpc/server";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";

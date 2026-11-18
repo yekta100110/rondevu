@@ -1,7 +1,7 @@
-import { updateTriggerForExistingBookings } from "@calcom/features/webhooks/lib/scheduleTrigger";
-import { prisma } from "@calcom/prisma";
-import type { Prisma } from "@calcom/prisma/client";
-import type { TrpcSessionUser } from "@calcom/trpc/server/types";
+import { updateTriggerForExistingBookings } from "@rondevu/features/webhooks/lib/scheduleTrigger";
+import { prisma } from "@rondevu/prisma";
+import type { Prisma } from "@rondevu/prisma/client";
+import type { TrpcSessionUser } from "@rondevu/trpc/server/types";
 import type { TDeleteInputSchema } from "./delete.schema";
 
 type DeleteOptions = {

@@ -1,5 +1,5 @@
-import { LuckyUserService } from "@calcom/features/bookings/lib/getLuckyUser";
-import { DI_TOKENS } from "@calcom/features/di/tokens";
+import { LuckyUserService } from "@rondevu/features/bookings/lib/getLuckyUser";
+import { DI_TOKENS } from "@rondevu/features/di/tokens";
 import { bindModuleToClassOnToken, createModule, type ModuleLoader } from "../di";
 import { moduleLoader as bookingRepositoryModuleLoader } from "./Booking";
 import { moduleLoader as hostRepositoryModuleLoader } from "./Host";

@@ -1,6 +1,6 @@
-import { bindModuleToClassOnToken, createModule, type ModuleLoader } from "@calcom/features/di/di";
-import { moduleLoader as prismaModuleLoader } from "@calcom/features/di/modules/Prisma";
-import { TRANSLATION_DI_TOKENS } from "@calcom/features/translation/di/tokens";
+import { bindModuleToClassOnToken, createModule, type ModuleLoader } from "@rondevu/features/di/di";
+import { moduleLoader as prismaModuleLoader } from "@rondevu/features/di/modules/Prisma";
+import { TRANSLATION_DI_TOKENS } from "@rondevu/features/translation/di/tokens";
 
 import { EventTypeTranslationRepository } from "../repositories/EventTypeTranslationRepository";
 

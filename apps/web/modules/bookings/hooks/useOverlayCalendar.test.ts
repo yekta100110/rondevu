@@ -6,7 +6,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { WrappedBookerPropsMain } from "../types";
 import { useOverlayCalendar } from "./useOverlayCalendar";
 
-vi.mock("@calcom/features/bookings/lib", () => ({
+vi.mock("@rondevu/features/bookings/lib", () => ({
   useTimePreferences: () => ({ timezone: "UTC" }),
 }));
 

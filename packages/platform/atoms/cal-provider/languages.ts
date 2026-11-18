@@ -1,5 +1,5 @@
-import type enTranslations from "@calcom/i18n/locales/en/common.json";
-import type trTranslations from "@calcom/i18n/locales/tr/common.json";
+import type enTranslations from "@rondevu/i18n/locales/en/common.json";
+import type trTranslations from "@rondevu/i18n/locales/tr/common.json";
 
 export type enTranslationKeys = keyof typeof enTranslations;
 export type trTranslationKeys = keyof typeof trTranslations;

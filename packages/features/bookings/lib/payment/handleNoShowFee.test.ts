@@ -1,13 +1,13 @@
-import { PaymentServiceMap } from "@calcom/app-store/payment.services.generated";
-import { sendNoShowFeeChargedEmail } from "@calcom/emails/billing-email-service";
-import { CredentialRepository } from "@calcom/features/credentials/repositories/CredentialRepository";
-import { ErrorCode } from "@calcom/lib/errorCodes";
-import { ErrorWithCode } from "@calcom/lib/errors";
-import { getTranslation } from "@calcom/i18n/server";
+import { PaymentServiceMap } from "@rondevu/app-store/payment.services.generated";
+import { sendNoShowFeeChargedEmail } from "@rondevu/emails/billing-email-service";
+import { CredentialRepository } from "@rondevu/features/credentials/repositories/CredentialRepository";
+import { ErrorCode } from "@rondevu/lib/errorCodes";
+import { ErrorWithCode } from "@rondevu/lib/errors";
+import { getTranslation } from "@rondevu/i18n/server";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { handleNoShowFee } from "./handleNoShowFee";
 
-vi.mock("@calcom/app-store/payment.services.generated", () => ({
+vi.mock("@rondevu/app-store/payment.services.generated", () => ({
   PaymentServiceMap: {
     stripepayment: Promise.resolve({
       BuildPaymentService: vi.fn().mockImplementation(function () {
@@ -19,15 +19,15 @@ vi.mock("@calcom/app-store/payment.services.generated", () => ({
   },
 }));
 
-vi.mock("@calcom/emails/billing-email-service", () => ({
+vi.mock("@rondevu/emails/billing-email-service", () => ({
   sendNoShowFeeChargedEmail: vi.fn(),
 }));
 
-vi.mock("@calcom/i18n/server", () => ({
+vi.mock("@rondevu/i18n/server", () => ({
   getTranslation: vi.fn().mockResolvedValue((key: string) => key),
 }));
 
-vi.mock("@calcom/features/credentials/repositories/CredentialRepository", () => ({
+vi.mock("@rondevu/features/credentials/repositories/CredentialRepository", () => ({
   CredentialRepository: {
     findPaymentCredentialByAppIdAndUserIdOrTeamId: vi.fn(),
     findPaymentCredentialByAppIdAndTeamId: vi.fn(),
@@ -35,7 +35,7 @@ vi.mock("@calcom/features/credentials/repositories/CredentialRepository", () => 
 }));
 
 
-vi.mock("@calcom/prisma", () => ({
+vi.mock("@rondevu/prisma", () => ({
   default: {},
   prisma: {},
 }));

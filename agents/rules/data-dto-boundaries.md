@@ -81,7 +81,7 @@ function UserProfile({ user }: { user: UserDTO }) {
 export type BookingStatusDto = "CANCELLED" | "ACCEPTED" | "REJECTED" | "PENDING";
 
 // Bad - importing Prisma enum
-import { BookingStatus } from "@calcom/prisma/client";
+import { BookingStatus } from "@rondevu/prisma/client";
 ```
 
 **Type safety** - never use `as any` in DTO mapping functions. If types don't align, fix the mapping explicitly.

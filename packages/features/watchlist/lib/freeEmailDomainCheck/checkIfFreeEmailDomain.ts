@@ -1,5 +1,5 @@
-import { getWatchlistFeature } from "@calcom/features/di/watchlist/containers/watchlist";
-import type logger from "@calcom/lib/logger";
+import { getWatchlistFeature } from "@rondevu/features/di/watchlist/containers/watchlist";
+import type logger from "@rondevu/lib/logger";
 
 import { extractDomainFromEmail } from "../utils/normalization";
 

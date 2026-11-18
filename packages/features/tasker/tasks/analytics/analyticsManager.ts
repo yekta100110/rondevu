@@ -1,7 +1,7 @@
-import { getAnalyticsService } from "@calcom/app-store/_utils/getAnalytics";
-import logger from "@calcom/lib/logger";
-import type { AnalyticsService, SendEventProps } from "@calcom/types/AnalyticsService";
-import type { CredentialPayload } from "@calcom/types/Credential";
+import { getAnalyticsService } from "@rondevu/app-store/_utils/getAnalytics";
+import logger from "@rondevu/lib/logger";
+import type { AnalyticsService, SendEventProps } from "@rondevu/types/AnalyticsService";
+import type { CredentialPayload } from "@rondevu/types/Credential";
 
 const log = logger.getSubLogger({ prefix: ["AnalyticsManager"] });
 export default class AnalyticsManager {

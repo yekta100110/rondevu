@@ -1,4 +1,4 @@
-import { getBookingWithResponses } from "@calcom/features/bookings/lib/get-booking";
+import { getBookingWithResponses } from "@rondevu/features/bookings/lib/get-booking";
 
 import getUserBooking from "./getUserBooking";
 

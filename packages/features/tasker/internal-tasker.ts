@@ -1,4 +1,4 @@
-import logger from "@calcom/lib/logger";
+import logger from "@rondevu/lib/logger";
 
 import { Task } from "./repository";
 import type { TaskTypes } from "./tasker";

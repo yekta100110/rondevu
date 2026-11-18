@@ -1,7 +1,7 @@
 import type { TFunction } from "i18next";
 
-import ServerTrans from "@calcom/lib/components/ServerTrans";
-import { APP_NAME, WEBAPP_URL } from "@calcom/lib/constants";
+import ServerTrans from "@rondevu/lib/components/ServerTrans";
+import { APP_NAME, WEBAPP_URL } from "@rondevu/lib/constants";
 
 import { BaseEmailHtml, CallToAction } from "../components";
 

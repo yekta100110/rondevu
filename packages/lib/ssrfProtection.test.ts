@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Default mock for Cal.diy SaaS (IS_SELF_HOSTED = false)
-vi.mock("@calcom/lib/constants", () => ({
+vi.mock("@rondevu/lib/constants", () => ({
   IS_SELF_HOSTED: false,
   IS_PRODUCTION: false,
 }));
@@ -169,14 +169,14 @@ describe("HTTP webhook exceptions", () => {
 describe("Self-hosted environment behavior", () => {
   beforeEach(async () => {
     vi.resetModules();
-    vi.doMock("@calcom/lib/constants", () => ({
+    vi.doMock("@rondevu/lib/constants", () => ({
       IS_SELF_HOSTED: true,
       IS_PRODUCTION: false,
     }));
   });
 
   afterEach(() => {
-    vi.doUnmock("@calcom/lib/constants");
+    vi.doUnmock("@rondevu/lib/constants");
   });
 
   it("allows private IPs for self-hosted (internal webhooks)", async () => {

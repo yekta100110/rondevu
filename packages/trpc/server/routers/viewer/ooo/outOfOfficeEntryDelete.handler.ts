@@ -1,7 +1,7 @@
-import { sendBookingRedirectNotification } from "@calcom/emails/workflow-email-service";
-import { getTranslation } from "@calcom/i18n/server";
-import prisma from "@calcom/prisma";
-import type { TrpcSessionUser } from "@calcom/trpc/server/types";
+import { sendBookingRedirectNotification } from "@rondevu/emails/workflow-email-service";
+import { getTranslation } from "@rondevu/i18n/server";
+import prisma from "@rondevu/prisma";
+import type { TrpcSessionUser } from "@rondevu/trpc/server/types";
 
 import { TRPCError } from "@trpc/server";
 

@@ -3,7 +3,7 @@ import type { PageProps } from "app/_types";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
-import { AppCategories } from "@calcom/prisma/enums";
+import { AppCategories } from "@rondevu/prisma/enums";
 
 import { getStaticProps } from "@lib/apps/categories/[category]/getStaticProps";
 

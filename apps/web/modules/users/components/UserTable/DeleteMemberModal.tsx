@@ -1,8 +1,8 @@
-import { Dialog } from "@calcom/features/components/controlled-dialog";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc } from "@calcom/trpc/react";
-import { ConfirmationDialogContent } from "@calcom/ui/components/dialog";
-import { showToast } from "@calcom/ui/components/toast";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc } from "@rondevu/trpc/react";
+import { ConfirmationDialogContent } from "@rondevu/ui/components/dialog";
+import { showToast } from "@rondevu/ui/components/toast";
 import { useSession } from "next-auth/react";
 import type { Dispatch } from "react";
 import type { UserTableAction, UserTableState } from "./types";

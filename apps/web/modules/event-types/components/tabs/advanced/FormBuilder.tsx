@@ -1,22 +1,22 @@
-import { useIsPlatform } from "@calcom/atoms/hooks/useIsPlatform";
-import { Dialog } from "@calcom/features/components/controlled-dialog";
-import { LearnMoreLink } from "@calcom/features/eventtypes/components/LearnMoreLink";
-import { fieldsThatSupportLabelAsSafeHtml } from "@calcom/features/form-builder/fieldsThatSupportLabelAsSafeHtml";
-import { fieldTypesConfigMap } from "@calcom/features/form-builder/fieldTypes";
-import type { fieldsSchema } from "@calcom/features/form-builder/schema";
-import { getFieldIdentifier } from "@calcom/features/form-builder/utils/getFieldIdentifier";
-import { getConfig as getVariantsConfig } from "@calcom/features/form-builder/utils/variantsConfig";
-import { getCurrencySymbol } from "@calcom/lib/currencyConversions";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { md } from "@calcom/lib/markdownIt";
-import { markdownToSafeHTMLClient } from "@calcom/lib/markdownToSafeHTMLClient";
-import turndown from "@calcom/lib/turndownService";
-import { excludeOrRequireEmailSchema } from "@calcom/prisma/zod-utils";
-import classNames from "@calcom/ui/classNames";
-import { Badge } from "@calcom/ui/components/badge";
-import { Button } from "@calcom/ui/components/button";
-import { DialogClose, DialogContent, DialogFooter, DialogHeader } from "@calcom/ui/components/dialog";
-import { Editor } from "@calcom/ui/components/editor";
+import { useIsPlatform } from "@rondevu/atoms/hooks/useIsPlatform";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
+import { LearnMoreLink } from "@rondevu/features/eventtypes/components/LearnMoreLink";
+import { fieldsThatSupportLabelAsSafeHtml } from "@rondevu/features/form-builder/fieldsThatSupportLabelAsSafeHtml";
+import { fieldTypesConfigMap } from "@rondevu/features/form-builder/fieldTypes";
+import type { fieldsSchema } from "@rondevu/features/form-builder/schema";
+import { getFieldIdentifier } from "@rondevu/features/form-builder/utils/getFieldIdentifier";
+import { getConfig as getVariantsConfig } from "@rondevu/features/form-builder/utils/variantsConfig";
+import { getCurrencySymbol } from "@rondevu/lib/currencyConversions";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { md } from "@rondevu/lib/markdownIt";
+import { markdownToSafeHTMLClient } from "@rondevu/lib/markdownToSafeHTMLClient";
+import turndown from "@rondevu/lib/turndownService";
+import { excludeOrRequireEmailSchema } from "@rondevu/prisma/zod-utils";
+import classNames from "@rondevu/ui/classNames";
+import { Badge } from "@rondevu/ui/components/badge";
+import { Button } from "@rondevu/ui/components/button";
+import { DialogClose, DialogContent, DialogFooter, DialogHeader } from "@rondevu/ui/components/dialog";
+import { Editor } from "@rondevu/ui/components/editor";
 import {
   CheckboxField,
   Form,
@@ -26,8 +26,8 @@ import {
   SelectField,
   Switch,
   ToggleGroup,
-} from "@calcom/ui/components/form";
-import { showToast } from "@calcom/ui/components/toast";
+} from "@rondevu/ui/components/form";
+import { showToast } from "@rondevu/ui/components/toast";
 import { ArrowDownIcon, ArrowUpIcon, MailIcon, PhoneIcon } from "@coss/ui/icons";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useEffect, useState } from "react";

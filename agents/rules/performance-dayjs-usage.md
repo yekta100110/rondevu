@@ -9,7 +9,7 @@ tags: performance, dates, dayjs
 
 **Impact: HIGH (Significant performance improvement in date-heavy operations)**
 
-Day.js with the `@calcom/dayjs` wrapper is heavy because it pre-loads all plugins including locale handling. Use alternatives when strict timezone awareness isn't required.
+Day.js with the `@rondevu/dayjs` wrapper is heavy because it pre-loads all plugins including locale handling. Use alternatives when strict timezone awareness isn't required.
 
 **Incorrect (using Day.js unnecessarily):**
 

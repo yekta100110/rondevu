@@ -1,6 +1,6 @@
-import { Memoize, Unmemoize } from "@calcom/features/cache";
-import type { UserFeaturesDto } from "@calcom/lib/dto/UserFeaturesDto";
-import { UserFeaturesDtoSchema } from "@calcom/lib/dto/UserFeaturesDto";
+import { Memoize, Unmemoize } from "@rondevu/features/cache";
+import type { UserFeaturesDto } from "@rondevu/lib/dto/UserFeaturesDto";
+import { UserFeaturesDtoSchema } from "@rondevu/lib/dto/UserFeaturesDto";
 import type { FeatureId } from "../config";
 import type { IUserFeatureRepository } from "./PrismaUserFeatureRepository";
 import { booleanSchema } from "./schemas";

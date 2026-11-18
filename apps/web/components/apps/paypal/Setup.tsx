@@ -1,9 +1,9 @@
-import AppNotInstalledMessage from "@calcom/app-store/_components/AppNotInstalledMessage";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc } from "@calcom/trpc/react";
-import { Button } from "@calcom/ui/components/button";
-import { TextField } from "@calcom/ui/components/form";
-import { showToast } from "@calcom/ui/components/toast";
+import AppNotInstalledMessage from "@rondevu/app-store/_components/AppNotInstalledMessage";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc } from "@rondevu/trpc/react";
+import { Button } from "@rondevu/ui/components/button";
+import { TextField } from "@rondevu/ui/components/form";
+import { showToast } from "@rondevu/ui/components/toast";
 import { CircleAlertIcon } from "@coss/ui/icons";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import type { inferSSRProps } from "@calcom/types/inferSSRProps";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import type { inferSSRProps } from "@rondevu/types/inferSSRProps";
 import { ArrowLeftIcon, ArrowRightIcon } from "@coss/ui/icons";
-import { SkeletonText } from "@calcom/ui/components/skeleton";
+import { SkeletonText } from "@rondevu/ui/components/skeleton";
 
 import type { getServerSideProps } from "@lib/apps/categories/getServerSideProps";
 

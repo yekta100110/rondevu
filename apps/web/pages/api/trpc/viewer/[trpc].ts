@@ -1,4 +1,4 @@
-import { createNextApiHandler } from "@calcom/trpc/server/createNextApiHandler";
-import { loggedInViewerRouter } from "@calcom/trpc/server/routers/loggedInViewer/_router";
+import { createNextApiHandler } from "@rondevu/trpc/server/createNextApiHandler";
+import { loggedInViewerRouter } from "@rondevu/trpc/server/routers/loggedInViewer/_router";
 
 export default createNextApiHandler(loggedInViewerRouter);

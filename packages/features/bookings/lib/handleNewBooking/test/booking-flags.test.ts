@@ -1,4 +1,4 @@
-import prismaMock from "@calcom/testing/lib/__mocks__/prisma";
+import prismaMock from "@rondevu/testing/lib/__mocks__/prisma";
 
 import {
   createBookingScenario,
@@ -10,14 +10,14 @@ import {
   getScenarioData,
   mockCalendarToHaveNoBusySlots,
   mockCalendar,
-} from "@calcom/testing/lib/bookingScenario/bookingScenario";
-import { expectBookingToBeInDatabase } from "@calcom/testing/lib/bookingScenario/expects";
-import { getMockRequestDataForBooking } from "@calcom/testing/lib/bookingScenario/getMockRequestDataForBooking";
-import { setupAndTeardown } from "@calcom/testing/lib/bookingScenario/setupAndTeardown";
+} from "@rondevu/testing/lib/bookingScenario/bookingScenario";
+import { expectBookingToBeInDatabase } from "@rondevu/testing/lib/bookingScenario/expects";
+import { getMockRequestDataForBooking } from "@rondevu/testing/lib/bookingScenario/getMockRequestDataForBooking";
+import { setupAndTeardown } from "@rondevu/testing/lib/bookingScenario/setupAndTeardown";
 
 import { describe, expect, test } from "vitest";
 
-import { BookingStatus } from "@calcom/prisma/enums";
+import { BookingStatus } from "@rondevu/prisma/enums";
 
 import { getNewBookingHandler } from "./getNewBookingHandler";
 

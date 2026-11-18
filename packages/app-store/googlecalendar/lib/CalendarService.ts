@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { MeetLocationType } from "@calcom/app-store/constants";
-import dayjs from "@calcom/dayjs";
-import { getDestinationCalendarRepository } from "@calcom/features/di/containers/DestinationCalendar";
-import { SelectedCalendarRepository } from "@calcom/features/selectedCalendar/repositories/SelectedCalendarRepository";
-import { getLocation, getRichDescription } from "@calcom/lib/CalEventParser";
-import { ORGANIZER_EMAIL_EXEMPT_DOMAINS } from "@calcom/lib/constants";
-import logger from "@calcom/lib/logger";
-import { safeStringify } from "@calcom/lib/safeStringify";
-import type { Prisma } from "@calcom/prisma/client";
+import { MeetLocationType } from "@rondevu/app-store/constants";
+import dayjs from "@rondevu/dayjs";
+import { getDestinationCalendarRepository } from "@rondevu/features/di/containers/DestinationCalendar";
+import { SelectedCalendarRepository } from "@rondevu/features/selectedCalendar/repositories/SelectedCalendarRepository";
+import { getLocation, getRichDescription } from "@rondevu/lib/CalEventParser";
+import { ORGANIZER_EMAIL_EXEMPT_DOMAINS } from "@rondevu/lib/constants";
+import logger from "@rondevu/lib/logger";
+import { safeStringify } from "@rondevu/lib/safeStringify";
+import type { Prisma } from "@rondevu/prisma/client";
 import type {
   Calendar,
   CalendarEvent,
@@ -18,8 +18,8 @@ import type {
   IntegrationCalendar,
   NewCalendarEventType,
   SelectedCalendarEventTypeIds,
-} from "@calcom/types/Calendar";
-import type { CredentialForCalendarServiceWithEmail } from "@calcom/types/Credential";
+} from "@rondevu/types/Calendar";
+import type { CredentialForCalendarServiceWithEmail } from "@rondevu/types/Credential";
 import type { calendar_v3 } from "@googleapis/calendar";
 import type { GaxiosResponse } from "googleapis-common";
 import { RRule } from "rrule";

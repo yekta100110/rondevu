@@ -1,12 +1,12 @@
-import { appStoreMetadata } from "@calcom/app-store/appStoreMetaData";
-import { getAllDelegationCredentialsForUser } from "@calcom/app-store/delegationCredential";
-import { getAppFromSlug } from "@calcom/app-store/utils";
-import type { UserAdminTeams } from "@calcom/features/users/repositories/UserRepository";
-import getInstallCountPerApp from "@calcom/lib/apps/getInstallCountPerApp";
-import prisma, { safeAppSelect, safeCredentialSelect } from "@calcom/prisma";
-import { userMetadata } from "@calcom/prisma/zod-utils";
-import type { AppFrontendPayload as App } from "@calcom/types/App";
-import type { CredentialFrontendPayload as Credential } from "@calcom/types/Credential";
+import { appStoreMetadata } from "@rondevu/app-store/appStoreMetaData";
+import { getAllDelegationCredentialsForUser } from "@rondevu/app-store/delegationCredential";
+import { getAppFromSlug } from "@rondevu/app-store/utils";
+import type { UserAdminTeams } from "@rondevu/features/users/repositories/UserRepository";
+import getInstallCountPerApp from "@rondevu/lib/apps/getInstallCountPerApp";
+import prisma, { safeAppSelect, safeCredentialSelect } from "@rondevu/prisma";
+import { userMetadata } from "@rondevu/prisma/zod-utils";
+import type { AppFrontendPayload as App } from "@rondevu/types/App";
+import type { CredentialFrontendPayload as Credential } from "@rondevu/types/Credential";
 
 export type TDependencyData = {
   name?: string;

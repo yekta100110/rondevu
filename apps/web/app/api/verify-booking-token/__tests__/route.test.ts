@@ -1,4 +1,4 @@
-import { confirmHandler } from "@calcom/trpc/server/routers/viewer/bookings/confirm.handler";
+import { confirmHandler } from "@rondevu/trpc/server/routers/viewer/bookings/confirm.handler";
 import type { NextRequest } from "next/server";
 import type { Mock } from "vitest";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -31,7 +31,7 @@ vi.mock("next/server", () => ({
   },
 }));
 
-vi.mock("@calcom/prisma", () => ({
+vi.mock("@rondevu/prisma", () => ({
   default: {
     booking: {
       findUnique: vi.fn().mockImplementation(({ where }: { where: { oneTimePassword: string } }) => {
@@ -56,11 +56,11 @@ vi.mock("@calcom/prisma", () => ({
   },
 }));
 
-vi.mock("@calcom/trpc/server/routers/viewer/bookings/confirm.handler", () => ({
+vi.mock("@rondevu/trpc/server/routers/viewer/bookings/confirm.handler", () => ({
   confirmHandler: vi.fn(),
 }));
 
-vi.mock("@calcom/lib/tracing/factory", () => ({
+vi.mock("@rondevu/lib/tracing/factory", () => ({
   distributedTracing: {
     createTrace: vi.fn().mockReturnValue({}),
   },

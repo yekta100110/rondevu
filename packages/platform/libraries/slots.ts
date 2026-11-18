@@ -1,8 +1,8 @@
-import { BusyTimesService } from "@calcom/features/busyTimes/services/getBusyTimes";
-import { NoSlotsNotificationService } from "@calcom/features/slots/handleNotificationWhenNoSlots";
-import { AvailableSlotsService } from "@calcom/trpc/server/routers/viewer/slots/util";
+import { BusyTimesService } from "@rondevu/features/busyTimes/services/getBusyTimes";
+import { NoSlotsNotificationService } from "@rondevu/features/slots/handleNotificationWhenNoSlots";
+import { AvailableSlotsService } from "@rondevu/trpc/server/routers/viewer/slots/util";
 
-export type { GetScheduleOptions } from "@calcom/trpc/server/routers/viewer/slots/types";
+export type { GetScheduleOptions } from "@rondevu/trpc/server/routers/viewer/slots/types";
 
 export { AvailableSlotsService };
 

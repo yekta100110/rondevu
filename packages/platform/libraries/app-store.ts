@@ -1,25 +1,25 @@
-import getEnabledAppsFromCredentials from "@calcom/app-store/_utils/getEnabledAppsFromCredentials";
-import getApps, { type CredentialDataWithTeamName } from "@calcom/app-store/utils";
-import handleDeleteCredential from "@calcom/features/credentials/handleDeleteCredential";
+import getEnabledAppsFromCredentials from "@rondevu/app-store/_utils/getEnabledAppsFromCredentials";
+import getApps, { type CredentialDataWithTeamName } from "@rondevu/app-store/utils";
+import handleDeleteCredential from "@rondevu/features/credentials/handleDeleteCredential";
 
-export type { TDependencyData } from "@calcom/app-store/_appRegistry";
-export { BuildCalendarService } from "@calcom/app-store/applecalendar/lib";
-export { BuildCalendarService as BuildIcsFeedCalendarService } from "@calcom/app-store/ics-feedcalendar/lib";
-export type { CredentialOwner } from "@calcom/app-store/types";
-export type { CredentialDataWithTeamName, LocationOption } from "@calcom/app-store/utils";
-export { getAppFromSlug } from "@calcom/app-store/utils";
+export type { TDependencyData } from "@rondevu/app-store/_appRegistry";
+export { BuildCalendarService } from "@rondevu/app-store/applecalendar/lib";
+export { BuildCalendarService as BuildIcsFeedCalendarService } from "@rondevu/app-store/ics-feedcalendar/lib";
+export type { CredentialOwner } from "@rondevu/app-store/types";
+export type { CredentialDataWithTeamName, LocationOption } from "@rondevu/app-store/utils";
+export { getAppFromSlug } from "@rondevu/app-store/utils";
 
 export { getApps };
 
 export { handleDeleteCredential };
 
-export type { App } from "@calcom/types/App";
+export type { App } from "@rondevu/types/App";
 
 export { getEnabledAppsFromCredentials };
 
-export type { ConnectedApps } from "@calcom/app-store/_utils/getConnectedApps";
-export { getConnectedApps } from "@calcom/app-store/_utils/getConnectedApps";
-export { OAuth2UniversalSchema } from "@calcom/app-store/_utils/oauth/universalSchema";
+export type { ConnectedApps } from "@rondevu/app-store/_utils/getConnectedApps";
+export { getConnectedApps } from "@rondevu/app-store/_utils/getConnectedApps";
+export { OAuth2UniversalSchema } from "@rondevu/app-store/_utils/oauth/universalSchema";
 export {
   CalendarAppDelegationCredentialClientIdNotAuthorizedError,
   CalendarAppDelegationCredentialConfigurationError,
@@ -27,10 +27,10 @@ export {
   CalendarAppDelegationCredentialInvalidGrantError,
   CalendarAppDelegationCredentialNotSetupError,
   CalendarAppError,
-} from "@calcom/lib/CalendarAppError";
-export type { TServiceAccountKeySchema } from "@calcom/prisma/zod-utils";
-export type { AppsStatus } from "@calcom/types/Calendar";
-export type { CredentialPayload } from "@calcom/types/Credential";
+} from "@rondevu/lib/CalendarAppError";
+export type { TServiceAccountKeySchema } from "@rondevu/prisma/zod-utils";
+export type { AppsStatus } from "@rondevu/types/Calendar";
+export type { CredentialPayload } from "@rondevu/types/Credential";
 
 // Delegation credentials removed (EE feature) — stub for API v2
 export const DelegationCredentialRepository = {
@@ -41,7 +41,7 @@ export const DelegationCredentialRepository = {
   },
 };
 
-export { getUsersCredentialsIncludeServiceAccountKey } from "@calcom/app-store/delegationCredential";
+export { getUsersCredentialsIncludeServiceAccountKey } from "@rondevu/app-store/delegationCredential";
 
 // enrichUserWithDelegationConferencingCredentialsWithoutOrgId removed (EE feature) — stub for API v2
 export async function enrichUserWithDelegationConferencingCredentialsWithoutOrgId(_args: {

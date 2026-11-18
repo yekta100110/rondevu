@@ -1,5 +1,5 @@
-import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
-import SettingsHeader from "@calcom/features/settings/appDir/SettingsHeader";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
+import SettingsHeader from "@rondevu/features/settings/appDir/SettingsHeader";
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 import { getTranslate } from "app/_utils";
 import { cookies, headers } from "next/headers";

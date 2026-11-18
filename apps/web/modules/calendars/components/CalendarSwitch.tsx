@@ -3,13 +3,13 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc } from "@calcom/trpc/react";
-import classNames from "@calcom/ui/classNames";
-import { Switch } from "@calcom/ui/components/form";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc } from "@rondevu/trpc/react";
+import classNames from "@rondevu/ui/classNames";
+import { Switch } from "@rondevu/ui/components/form";
 import { ArrowLeftIcon, RotateCwIcon } from "@coss/ui/icons";
-import { showToast } from "@calcom/ui/components/toast";
-import type { ICalendarSwitchProps } from "@calcom/ui/components/calendar-switch";
+import { showToast } from "@rondevu/ui/components/toast";
+import type { ICalendarSwitchProps } from "@rondevu/ui/components/calendar-switch";
 
 type UserCalendarSwitchProps = Omit<ICalendarSwitchProps, "eventTypeId">;
 

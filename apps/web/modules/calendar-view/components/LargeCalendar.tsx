@@ -1,18 +1,18 @@
 import { useEffect, useMemo } from "react";
 
-import dayjs from "@calcom/dayjs";
-import { useBookerStoreContext } from "@calcom/features/bookings/Booker/BookerStoreProvider";
-import { useBookerTime } from "@calcom/features/bookings/Booker/hooks/useBookerTime";
-import type { BookerEvent } from "@calcom/features/bookings/types";
-import { Calendar } from "@calcom/web/modules/calendars/weeklyview/components/Calendar";
-import type { CalendarAvailableTimeslots } from "@calcom/features/calendars/weeklyview/types/state";
-import { localStorage } from "@calcom/lib/webstorage";
-import type { BookingStatus } from "@calcom/prisma/enums";
+import dayjs from "@rondevu/dayjs";
+import { useBookerStoreContext } from "@rondevu/features/bookings/Booker/BookerStoreProvider";
+import { useBookerTime } from "@rondevu/features/bookings/Booker/hooks/useBookerTime";
+import type { BookerEvent } from "@rondevu/features/bookings/types";
+import { Calendar } from "@rondevu/web/modules/calendars/weeklyview/components/Calendar";
+import type { CalendarAvailableTimeslots } from "@rondevu/features/calendars/weeklyview/types/state";
+import { localStorage } from "@rondevu/lib/webstorage";
+import type { BookingStatus } from "@rondevu/prisma/enums";
 
-import { useBookings } from "@calcom/atoms/hooks/bookings/useBookings";
-import { useCalendarsBusyTimes } from "@calcom/atoms/hooks/useCalendarsBusyTimes";
-import { useConnectedCalendars } from "@calcom/atoms/hooks/useConnectedCalendars";
-import { getQueryParam } from "@calcom/features/bookings/Booker/utils/query-param";
+import { useBookings } from "@rondevu/atoms/hooks/bookings/useBookings";
+import { useCalendarsBusyTimes } from "@rondevu/atoms/hooks/useCalendarsBusyTimes";
+import { useConnectedCalendars } from "@rondevu/atoms/hooks/useConnectedCalendars";
+import { getQueryParam } from "@rondevu/features/bookings/Booker/utils/query-param";
 
 export const LargeCalendar = ({
   extraDays,

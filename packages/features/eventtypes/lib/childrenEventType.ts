@@ -1,5 +1,5 @@
-import type { MembershipRole } from "@calcom/prisma/enums";
-import type { UserProfile } from "@calcom/types/UserProfile";
+import type { MembershipRole } from "@rondevu/prisma/enums";
+import type { UserProfile } from "@rondevu/types/UserProfile";
 
 export type ChildrenEventType = {
   value: string;

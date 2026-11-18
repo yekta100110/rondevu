@@ -9,7 +9,7 @@ vi.mock("@sentry/nextjs", () => ({
   },
 }));
 
-vi.mock("@calcom/app-store/delegationCredential", async () => {
+vi.mock("@rondevu/app-store/delegationCredential", async () => {
   const { getCredentialForSelectedCalendar } = await import("../__mocks__/delegationCredential");
   return {
     enrichHostsWithDelegationCredentials: vi.fn(),
@@ -18,14 +18,14 @@ vi.mock("@calcom/app-store/delegationCredential", async () => {
   };
 });
 
-import type { AdapterFactory } from "@calcom/features/calendar-subscription/adapters/AdaptersFactory";
-import type { CalendarCacheEventService } from "@calcom/features/calendar-subscription/lib/cache/CalendarCacheEventService";
-import type { CalendarSyncService } from "@calcom/features/calendar-subscription/lib/sync/CalendarSyncService";
-import type { IFeatureRepository } from "@calcom/features/flags/repositories/PrismaFeatureRepository";
-import type { ITeamFeatureRepository } from "@calcom/features/flags/repositories/PrismaTeamFeatureRepository";
-import type { IUserFeatureRepository } from "@calcom/features/flags/repositories/PrismaUserFeatureRepository";
-import type { ISelectedCalendarRepository } from "@calcom/features/selectedCalendar/repositories/SelectedCalendarRepository.interface";
-import type { SelectedCalendar } from "@calcom/prisma/client";
+import type { AdapterFactory } from "@rondevu/features/calendar-subscription/adapters/AdaptersFactory";
+import type { CalendarCacheEventService } from "@rondevu/features/calendar-subscription/lib/cache/CalendarCacheEventService";
+import type { CalendarSyncService } from "@rondevu/features/calendar-subscription/lib/sync/CalendarSyncService";
+import type { IFeatureRepository } from "@rondevu/features/flags/repositories/PrismaFeatureRepository";
+import type { ITeamFeatureRepository } from "@rondevu/features/flags/repositories/PrismaTeamFeatureRepository";
+import type { IUserFeatureRepository } from "@rondevu/features/flags/repositories/PrismaUserFeatureRepository";
+import type { ISelectedCalendarRepository } from "@rondevu/features/selectedCalendar/repositories/SelectedCalendarRepository.interface";
+import type { SelectedCalendar } from "@rondevu/prisma/client";
 import { CalendarSubscriptionService } from "../CalendarSubscriptionService";
 
 const mockSelectedCalendar: SelectedCalendar = {

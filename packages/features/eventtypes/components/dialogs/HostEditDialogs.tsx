@@ -3,24 +3,24 @@ import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import type { Options } from "react-select";
 
-import { Dialog } from "@calcom/features/components/controlled-dialog";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
 import type {
   FormValues,
   Host,
   InputClassNames,
   SelectClassNames,
-} from "@calcom/features/eventtypes/lib/types";
-import { groupHostsByGroupId, getHostsFromOtherGroups, sortHosts } from "@calcom/lib/bookings/hostGroupUtils";
-import { DEFAULT_GROUP_ID } from "@calcom/lib/constants";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import classNames from "@calcom/ui/classNames";
-import { Button } from "@calcom/ui/components/button";
-import { DialogContent, DialogFooter, DialogClose } from "@calcom/ui/components/dialog";
-import { Label } from "@calcom/ui/components/form";
-import { Select } from "@calcom/ui/components/form";
-import { TextField } from "@calcom/ui/components/form";
+} from "@rondevu/features/eventtypes/lib/types";
+import { groupHostsByGroupId, getHostsFromOtherGroups, sortHosts } from "@rondevu/lib/bookings/hostGroupUtils";
+import { DEFAULT_GROUP_ID } from "@rondevu/lib/constants";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import classNames from "@rondevu/ui/classNames";
+import { Button } from "@rondevu/ui/components/button";
+import { DialogContent, DialogFooter, DialogClose } from "@rondevu/ui/components/dialog";
+import { Label } from "@rondevu/ui/components/form";
+import { Select } from "@rondevu/ui/components/form";
+import { TextField } from "@rondevu/ui/components/form";
 
-import type { CheckedSelectOption } from "@calcom/features/eventtypes/components/CheckedTeamSelect";
+import type { CheckedSelectOption } from "@rondevu/features/eventtypes/components/CheckedTeamSelect";
 
 interface IDialog {
   isOpenDialog: boolean;

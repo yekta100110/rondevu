@@ -1,6 +1,6 @@
-import dayjs from "@calcom/dayjs";
-import { useTimePreferences } from "@calcom/features/bookings/lib";
-import { useCalendarStore } from "@calcom/features/calendars/weeklyview/state/store";
+import dayjs from "@rondevu/dayjs";
+import { useTimePreferences } from "@rondevu/features/bookings/lib";
+import { useCalendarStore } from "@rondevu/features/calendars/weeklyview/state/store";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 function calculateMinutesFromStart(startHour: number, currentHour: number, currentMinute: number) {

@@ -1,4 +1,4 @@
-import type { CalendarEvent, Person } from "@calcom/types/Calendar";
+import type { CalendarEvent, Person } from "@rondevu/types/Calendar";
 import SMSManager from "../sms-manager";
 
 export default class CancelledSeatSMS extends SMSManager {

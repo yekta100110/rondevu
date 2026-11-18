@@ -1,5 +1,5 @@
-import { WebhookTriggerEvents } from "@calcom/prisma/enums";
-import type { CalendarEvent } from "@calcom/types/Calendar";
+import { WebhookTriggerEvents } from "@rondevu/prisma/enums";
+import type { CalendarEvent } from "@rondevu/types/Calendar";
 
 /**
  * Test Fixtures for Webhook Payload Compatibility Testing

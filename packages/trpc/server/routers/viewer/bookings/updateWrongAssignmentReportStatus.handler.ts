@@ -1,7 +1,7 @@
-import { WrongAssignmentReportRepository } from "@calcom/features/bookings/repositories/WrongAssignmentReportRepository";
-import prisma from "@calcom/prisma";
-import { MembershipRole } from "@calcom/prisma/enums";
-import type { TrpcSessionUser } from "@calcom/trpc/server/types";
+import { WrongAssignmentReportRepository } from "@rondevu/features/bookings/repositories/WrongAssignmentReportRepository";
+import prisma from "@rondevu/prisma";
+import { MembershipRole } from "@rondevu/prisma/enums";
+import type { TrpcSessionUser } from "@rondevu/trpc/server/types";
 import { TRPCError } from "@trpc/server";
 import type { TUpdateWrongAssignmentReportStatusInputSchema } from "./updateWrongAssignmentReportStatus.schema";
 

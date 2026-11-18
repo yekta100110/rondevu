@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { OverlayCalendarContinueModal } from "./OverlayCalendarContinueModal";
 
-vi.mock("@calcom/lib/hooks/useLocale", () => ({
+vi.mock("@rondevu/lib/hooks/useLocale", () => ({
   useLocale: () => ({
     t: (key: string, options?: { appName?: string }) =>
       options?.appName ? `${key} ${options.appName}` : key,
@@ -10,10 +10,10 @@ vi.mock("@calcom/lib/hooks/useLocale", () => ({
 }));
 
 // The dialog itself depends on the app router, only its content matters here
-vi.mock("@calcom/features/components/controlled-dialog", () => ({
+vi.mock("@rondevu/features/components/controlled-dialog", () => ({
   Dialog: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
 }));
-vi.mock("@calcom/ui/components/dialog", () => ({
+vi.mock("@rondevu/ui/components/dialog", () => ({
   DialogContent: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
   DialogFooter: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
 }));

@@ -1,12 +1,12 @@
 import { describe, test, expect, vi, beforeEach } from "vitest";
 
-import { checkIfEmailIsBlockedInWatchlistController } from "@calcom/features/watchlist/operations/check-if-email-in-watchlist.controller";
-import { hashPassword } from "@calcom/lib/auth/hashPassword";
-import { CreationSource } from "@calcom/prisma/enums";
+import { checkIfEmailIsBlockedInWatchlistController } from "@rondevu/features/watchlist/operations/check-if-email-in-watchlist.controller";
+import { hashPassword } from "@rondevu/lib/auth/hashPassword";
+import { CreationSource } from "@rondevu/prisma/enums";
 
 import { UserCreationService } from "./userCreationService";
 
-vi.mock("@calcom/i18n/server", () => {
+vi.mock("@rondevu/i18n/server", () => {
   return {
     getTranslation: async (locale: string, namespace: string) => {
       const t = (key: string) => key;
@@ -17,7 +17,7 @@ vi.mock("@calcom/i18n/server", () => {
   };
 });
 
-vi.mock("@calcom/lib/auth/hashPassword", () => ({
+vi.mock("@rondevu/lib/auth/hashPassword", () => ({
   hashPassword: vi.fn().mockResolvedValue("hashed-password"),
 }));
 
@@ -25,7 +25,7 @@ const mockUserRepository = {
   create: vi.fn(),
 };
 
-vi.mock("@calcom/features/users/repositories/UserRepository", () => {
+vi.mock("@rondevu/features/users/repositories/UserRepository", () => {
   return {
     UserRepository: vi.fn(function () {
       return mockUserRepository;
@@ -33,7 +33,7 @@ vi.mock("@calcom/features/users/repositories/UserRepository", () => {
   };
 });
 
-vi.mock("@calcom/features/watchlist/operations/check-if-email-in-watchlist.controller", () => ({
+vi.mock("@rondevu/features/watchlist/operations/check-if-email-in-watchlist.controller", () => ({
   checkIfEmailIsBlockedInWatchlistController: vi.fn().mockResolvedValue(false),
 }));
 

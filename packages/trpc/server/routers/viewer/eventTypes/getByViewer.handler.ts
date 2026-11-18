@@ -1,6 +1,6 @@
-import { getEventTypesByViewer } from "@calcom/features/eventtypes/lib/getEventTypesByViewer";
-import { checkRateLimitAndThrowError } from "@calcom/lib/checkRateLimitAndThrowError";
-import type { PrismaClient } from "@calcom/prisma";
+import { getEventTypesByViewer } from "@rondevu/features/eventtypes/lib/getEventTypesByViewer";
+import { checkRateLimitAndThrowError } from "@rondevu/lib/checkRateLimitAndThrowError";
+import type { PrismaClient } from "@rondevu/prisma";
 
 import type { TrpcSessionUser } from "../../../types";
 import type { TEventTypeInputSchema } from "./getByViewer.schema";

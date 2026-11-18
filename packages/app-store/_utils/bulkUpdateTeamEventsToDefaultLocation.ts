@@ -1,5 +1,5 @@
-import type { PrismaClient } from "@calcom/prisma";
-import { teamMetadataSchema } from "@calcom/prisma/zod-utils";
+import type { PrismaClient } from "@rondevu/prisma";
+import { teamMetadataSchema } from "@rondevu/prisma/zod-utils";
 
 import type { LocationObject } from "../locations";
 import { getAppFromSlug } from "../utils";

@@ -12,8 +12,8 @@ import type {
   WithContext,
 } from "schema-dts";
 
-import { APP_NAME, CAL_URL } from "@calcom/lib/constants";
-import { convertFromSmallestToPresentableCurrencyUnit } from "@calcom/lib/currencyConversions";
+import { APP_NAME, CAL_URL } from "@rondevu/lib/constants";
+import { convertFromSmallestToPresentableCurrencyUnit } from "@rondevu/lib/currencyConversions";
 
 type ProfileEntityType = "Person" | "ProfessionalService" | "LocalBusiness";
 

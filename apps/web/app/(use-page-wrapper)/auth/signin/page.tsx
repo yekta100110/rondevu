@@ -4,7 +4,7 @@ import type { PageProps as ServerPageProps } from "app/_types";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
 
 import { buildLegacyCtx } from "@lib/buildLegacyCtx";
 

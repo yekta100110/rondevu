@@ -1,11 +1,11 @@
-import dayjs from "@calcom/dayjs";
-import { getTranslation } from "@calcom/i18n/server";
-import logger from "@calcom/lib/logger";
-import { sendSMS } from "@calcom/lib/smsTransport";
-import { prisma } from "@calcom/prisma";
-import { BookingStatus } from "@calcom/prisma/enums";
-import EventReminderSMS from "@calcom/sms/attendee/event-reminder-sms";
-import type { CalendarEvent, Person } from "@calcom/types/Calendar";
+import dayjs from "@rondevu/dayjs";
+import { getTranslation } from "@rondevu/i18n/server";
+import logger from "@rondevu/lib/logger";
+import { sendSMS } from "@rondevu/lib/smsTransport";
+import { prisma } from "@rondevu/prisma";
+import { BookingStatus } from "@rondevu/prisma/enums";
+import EventReminderSMS from "@rondevu/sms/attendee/event-reminder-sms";
+import type { CalendarEvent, Person } from "@rondevu/types/Calendar";
 
 const log = logger.getSubLogger({ prefix: ["[Tasker:sendSms]"] });
 

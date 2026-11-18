@@ -1,6 +1,6 @@
-import { ScheduleRepository } from "@calcom/features/schedules/repositories/ScheduleRepository";
-import { sanitizeTimezone } from "@calcom/lib/dayjs";
-import { prisma } from "@calcom/prisma";
+import { ScheduleRepository } from "@rondevu/features/schedules/repositories/ScheduleRepository";
+import { sanitizeTimezone } from "@rondevu/lib/dayjs";
+import { prisma } from "@rondevu/prisma";
 import type { TrpcSessionUser } from "../../../types";
 
 type ListOptions = {

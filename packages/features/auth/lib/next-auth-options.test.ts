@@ -1,9 +1,9 @@
-import { IdentityProvider, UserPermissionRole } from "@calcom/prisma/enums";
+import { IdentityProvider, UserPermissionRole } from "@rondevu/prisma/enums";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ErrorCode } from "./ErrorCode";
 
 // Mock dependencies
-vi.mock("@calcom/prisma", () => ({
+vi.mock("@rondevu/prisma", () => ({
   prisma: {
     user: {
       update: vi.fn(),
@@ -18,7 +18,7 @@ vi.mock("@calcom/prisma", () => ({
 
 const mockFindByEmailAndIncludeProfilesAndPassword = vi.fn();
 
-vi.mock("@calcom/features/users/repositories/UserRepository", () => {
+vi.mock("@rondevu/features/users/repositories/UserRepository", () => {
   return {
     UserRepository: vi.fn().mockImplementation(function () {
       return {
@@ -32,33 +32,33 @@ vi.mock("./verifyPassword", () => ({
   verifyPassword: vi.fn(),
 }));
 
-vi.mock("@calcom/lib/checkRateLimitAndThrowError", () => ({
+vi.mock("@rondevu/lib/checkRateLimitAndThrowError", () => ({
   checkRateLimitAndThrowError: vi.fn().mockResolvedValue(undefined),
 }));
 
-vi.mock("@calcom/lib/server/PiiHasher", () => ({
+vi.mock("@rondevu/lib/server/PiiHasher", () => ({
   hashEmail: vi.fn((email: string) => `hashed_${email}`),
 }));
 
-vi.mock("@calcom/lib/totp", () => ({
+vi.mock("@rondevu/lib/totp", () => ({
   totpAuthenticatorCheck: vi.fn(),
 }));
 
-vi.mock("@calcom/lib/crypto", () => ({
+vi.mock("@rondevu/lib/crypto", () => ({
   symmetricDecrypt: vi.fn(),
   symmetricEncrypt: vi.fn(),
 }));
 
-vi.mock("@calcom/lib/auth/isPasswordValid", () => ({
+vi.mock("@rondevu/lib/auth/isPasswordValid", () => ({
   isPasswordValid: vi.fn(),
 }));
 
-vi.mock("@calcom/lib/env", () => ({
+vi.mock("@rondevu/lib/env", () => ({
   isENVDev: false,
 }));
 
-vi.mock("@calcom/lib/constants", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("@calcom/lib/constants")>();
+vi.mock("@rondevu/lib/constants", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@rondevu/lib/constants")>();
   return {
     ...actual,
     IS_TEAM_BILLING_ENABLED: false,
@@ -67,7 +67,7 @@ vi.mock("@calcom/lib/constants", async (importOriginal) => {
   };
 });
 
-vi.mock("@calcom/lib/logger", () => ({
+vi.mock("@rondevu/lib/logger", () => ({
   default: {
     getSubLogger: vi.fn(() => ({
       debug: vi.fn(),
@@ -78,7 +78,7 @@ vi.mock("@calcom/lib/logger", () => ({
   },
 }));
 
-vi.mock("@calcom/lib/safeStringify", () => ({
+vi.mock("@rondevu/lib/safeStringify", () => ({
   safeStringify: vi.fn((obj) => JSON.stringify(obj)),
 }));
 
@@ -88,11 +88,11 @@ vi.mock("./next-auth-custom-adapter", () => ({
   })),
 }));
 
-vi.mock("@calcom/i18n/server", () => ({
+vi.mock("@rondevu/i18n/server", () => ({
   getTranslation: vi.fn().mockResolvedValue((key: string) => key),
 }));
 
-vi.mock("@calcom/features/profile/repositories/ProfileRepository", () => ({
+vi.mock("@rondevu/features/profile/repositories/ProfileRepository", () => ({
   ProfileRepository: {
     findAllProfilesForUserIncludingMovedUser: vi.fn(),
     findByUpIdWithAuth: vi.fn(),
@@ -115,7 +115,7 @@ const mockPrismaTeamFindFirst = vi.fn();
 const mockPrismaSelectedCalendarCreate = vi.fn();
 const mockLinkAccount = vi.fn();
 
-vi.mock("@calcom/features/credentials/repositories/CredentialRepository", () => ({
+vi.mock("@rondevu/features/credentials/repositories/CredentialRepository", () => ({
   CredentialRepository: {
     findFirstByAppIdAndUserId: (...args: unknown[]) => mockCredentialRepoFindFirst(...args),
     findFirstByUserIdAndType: (...args: unknown[]) => mockCredentialRepoFindFirstByUserIdAndType(...args),
@@ -123,23 +123,23 @@ vi.mock("@calcom/features/credentials/repositories/CredentialRepository", () => 
   },
 }));
 
-vi.mock("@calcom/features/credentials/services/CredentialDataService", () => ({
+vi.mock("@rondevu/features/credentials/services/CredentialDataService", () => ({
   buildCredentialCreateData: (...args: unknown[]) => mockBuildCredentialCreateData(...args),
 }));
 
-vi.mock("@calcom/app-store/_utils/oauth/updateProfilePhotoMicrosoft", () => ({
+vi.mock("@rondevu/app-store/_utils/oauth/updateProfilePhotoMicrosoft", () => ({
   updateProfilePhotoMicrosoft: (...args: unknown[]) => mockUpdateProfilePhotoMicrosoft(...args),
 }));
 
-vi.mock("@calcom/app-store/_utils/oauth/updateProfilePhotoGoogle", () => ({
+vi.mock("@rondevu/app-store/_utils/oauth/updateProfilePhotoGoogle", () => ({
   updateProfilePhotoGoogle: (...args: unknown[]) => mockUpdateProfilePhotoGoogle(...args),
 }));
 
-vi.mock("@calcom/features/auth/lib/identityProviders", () => ({
+vi.mock("@rondevu/features/auth/lib/identityProviders", () => ({
   getIdentityProvider: (...args: unknown[]) => mockGetIdentityProvider(...args),
 }));
 
-vi.mock("@calcom/features/auth/lib/outlook", () => ({
+vi.mock("@rondevu/features/auth/lib/outlook", () => ({
   OUTLOOK_CLIENT_ID: "mock-client-id",
   OUTLOOK_CLIENT_SECRET: "mock-client-secret",
   OUTLOOK_LOGIN_ENABLED: true,
@@ -149,19 +149,19 @@ vi.mock("@vercel/functions", () => ({
   waitUntil: (...args: unknown[]) => mockWaitUntil(...args),
 }));
 
-vi.mock("@calcom/lib/default-cookies", () => ({
+vi.mock("@rondevu/lib/default-cookies", () => ({
   defaultCookies: vi.fn(() => ({})),
 }));
 
-vi.mock("@calcom/lib/random", () => ({
+vi.mock("@rondevu/lib/random", () => ({
   randomString: vi.fn(() => "abc123"),
 }));
 
-vi.mock("@calcom/lib/slugify", () => ({
+vi.mock("@rondevu/lib/slugify", () => ({
   default: vi.fn((s: string) => s.toLowerCase().replace(/\s+/g, "-")),
 }));
 
-vi.mock("@calcom/app-store/googlecalendar/lib/CalendarService", () => ({
+vi.mock("@rondevu/app-store/googlecalendar/lib/CalendarService", () => ({
   createGoogleCalendarServiceWithGoogleType: vi.fn(),
 }));
 
@@ -334,7 +334,7 @@ describe("CredentialsProvider authorize", () => {
 
   describe("Inactive admin reason", () => {
     it("sets reason to 'both' when password is invalid and 2FA is disabled", async () => {
-      const { isPasswordValid } = await import("@calcom/lib/auth/isPasswordValid");
+      const { isPasswordValid } = await import("@rondevu/lib/auth/isPasswordValid");
       vi.mocked(isPasswordValid).mockReturnValue(false);
       vi.mocked(verifyPassword).mockResolvedValue(true);
 
@@ -357,7 +357,7 @@ describe("CredentialsProvider authorize", () => {
     });
 
     it("sets reason to '2fa' when password is valid and 2FA is disabled", async () => {
-      const { isPasswordValid } = await import("@calcom/lib/auth/isPasswordValid");
+      const { isPasswordValid } = await import("@rondevu/lib/auth/isPasswordValid");
       vi.mocked(isPasswordValid).mockReturnValue(true);
       vi.mocked(verifyPassword).mockResolvedValue(true);
 
@@ -384,14 +384,14 @@ describe("CredentialsProvider authorize", () => {
       process.env.CALENDSO_ENCRYPTION_KEY = "test";
 
       try {
-        const { isPasswordValid } = await import("@calcom/lib/auth/isPasswordValid");
+        const { isPasswordValid } = await import("@rondevu/lib/auth/isPasswordValid");
         vi.mocked(isPasswordValid).mockReturnValue(false);
         vi.mocked(verifyPassword).mockResolvedValue(true);
 
-        const { symmetricDecrypt } = await import("@calcom/lib/crypto");
+        const { symmetricDecrypt } = await import("@rondevu/lib/crypto");
         vi.mocked(symmetricDecrypt).mockReturnValue("a".repeat(32));
 
-        const { totpAuthenticatorCheck } = await import("@calcom/lib/totp");
+        const { totpAuthenticatorCheck } = await import("@rondevu/lib/totp");
         vi.mocked(totpAuthenticatorCheck).mockReturnValue(true);
 
         const mockUser = createMockUser({
@@ -421,14 +421,14 @@ describe("CredentialsProvider authorize", () => {
       process.env.CALENDSO_ENCRYPTION_KEY = "test";
 
       try {
-        const { isPasswordValid } = await import("@calcom/lib/auth/isPasswordValid");
+        const { isPasswordValid } = await import("@rondevu/lib/auth/isPasswordValid");
         vi.mocked(isPasswordValid).mockReturnValue(true);
         vi.mocked(verifyPassword).mockResolvedValue(true);
 
-        const { symmetricDecrypt } = await import("@calcom/lib/crypto");
+        const { symmetricDecrypt } = await import("@rondevu/lib/crypto");
         vi.mocked(symmetricDecrypt).mockReturnValue("a".repeat(32));
 
-        const { totpAuthenticatorCheck } = await import("@calcom/lib/totp");
+        const { totpAuthenticatorCheck } = await import("@rondevu/lib/totp");
         vi.mocked(totpAuthenticatorCheck).mockReturnValue(true);
 
         const mockUser = createMockUser({
@@ -473,7 +473,7 @@ describe("Azure AD signIn callback", () => {
     });
 
     // Mock prisma methods used in signIn callback
-    const prismaModule = await import("@calcom/prisma");
+    const prismaModule = await import("@rondevu/prisma");
     const prismaDefault = (prismaModule as any).default;
     prismaDefault.user = {
       ...prismaDefault.user,
@@ -886,7 +886,7 @@ describe("Azure AD JWT callback", () => {
     mockUpdateProfilePhotoMicrosoft.mockResolvedValue(undefined);
 
     // Setup prisma mocks
-    const prismaModule = await import("@calcom/prisma");
+    const prismaModule = await import("@rondevu/prisma");
     const prismaDefault = (prismaModule as any).default;
     prismaDefault.user = {
       ...prismaDefault.user,
@@ -901,7 +901,7 @@ describe("Azure AD JWT callback", () => {
 
     mockPrismaSelectedCalendarCreate.mockResolvedValue({});
 
-    const { ProfileRepository } = await import("@calcom/features/profile/repositories/ProfileRepository");
+    const { ProfileRepository } = await import("@rondevu/features/profile/repositories/ProfileRepository");
     (ProfileRepository.findAllProfilesForUserIncludingMovedUser as any).mockResolvedValue([
       { id: 1, upId: "usr_1" },
     ]);

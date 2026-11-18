@@ -1,6 +1,6 @@
 # rOndevu — AI Agent & Engineering Guide
 
-You are a senior **rOndevu** engineer working in a Yarn/Turbo monorepo (retaining the internal `@calcom/*` workspace scope for package compatibility). You prioritize type safety, security, clean vertical-slice boundaries, and small, reviewable diffs.
+You are a senior **rOndevu** engineer working in a Yarn/Turbo monorepo (retaining the internal `@rondevu/*` workspace scope for package compatibility). You prioritize type safety, security, clean vertical-slice boundaries, and small, reviewable diffs.
 
 ## Product Vision & Target Architecture
 
@@ -23,7 +23,7 @@ You are a senior **rOndevu** engineer working in a Yarn/Turbo monorepo (retainin
 - Use conventional commits: `feat:`, `fix:`, `refactor:`
 - Create PRs in draft mode by default
 - Run `yarn type-check:ci --force` before concluding CI failures are unrelated to your changes
-- Import directly from source files, not barrel files (`index.ts`), while strictly respecting `@calcom/ui` `package.json` `exports` paths (e.g., `@calcom/ui/components/button` or `@calcom/ui/components/logo`, never `@calcom/ui` or unexported deep paths like `@calcom/ui/components/logo/Logo`)
+- Import directly from source files, not barrel files (`index.ts`), while strictly respecting `@rondevu/ui` `package.json` `exports` paths (e.g., `@rondevu/ui/components/button` or `@rondevu/ui/components/logo`, never `@rondevu/ui` or unexported deep paths like `@rondevu/ui/components/logo/Logo`)
 - Add translations to **both** `packages/i18n/locales/tr/common.json` (default language `tr`) and `packages/i18n/locales/en/common.json` for all UI strings
 - Use `date-fns` or native `Date` instead of Day.js when timezone awareness isn't needed
 - Avoid $O(n^2)$ nested loops in scheduling and availability calculations
@@ -40,8 +40,8 @@ You are a senior **rOndevu** engineer working in a Yarn/Turbo monorepo (retainin
 - Never modify `*.generated.ts` files directly - they're created by app-store-cli
 - Never put business logic in repositories - that belongs in Services
 - Never use barrel imports from `index.ts` files
-- Never import deep internal paths from `@calcom/ui` that are not declared in `packages/ui/package.json` `exports`
-- Never import `@calcom/trpc` or `apps/web` inside `packages/features`
+- Never import deep internal paths from `@rondevu/ui` that are not declared in `packages/ui/package.json` `exports`
+- Never import `@rondevu/trpc` or `apps/web` inside `packages/features`
 - Never import `*Repository` or upper-layer packages inside `packages/lib`
 - Never skip running type checks before pushing
 - Never create large PRs (>500 lines or >10 files) - split them instead
@@ -59,15 +59,15 @@ packages/lib -> packages/app-store -> packages/features -> packages/trpc -> apps
 ```
 
 - **No Circular Dependencies:** Packages may only import from layers to their left.
-- **`packages/lib` Purity:** `packages/lib` is the lowest-level shared utility layer. Never import repositories (`*Repository.ts`), `@calcom/features`, `@calcom/trpc`, or `apps/web` inside `packages/lib`.
+- **`packages/lib` Purity:** `packages/lib` is the lowest-level shared utility layer. Never import repositories (`*Repository.ts`), `@rondevu/features`, `@rondevu/trpc`, or `apps/web` inside `packages/lib`.
 
 ### 2. `packages/features` vs `apps/web/modules` Separation
-- **`packages/features`:** Framework-agnostic business logic, domain services (`*Service.ts`), data repositories (`*Repository.ts`), and reusable feature logic. **`packages/features` must NEVER import `@calcom/trpc` or `apps/web`.**
+- **`packages/features`:** Framework-agnostic business logic, domain services (`*Service.ts`), data repositories (`*Repository.ts`), and reusable feature logic. **`packages/features` must NEVER import `@rondevu/trpc` or `apps/web`.**
 - **`apps/web/modules`:** Next.js route views (`*-view.tsx`), `trpc.*` React hooks, and web-specific UI wiring.
 
-### 3. Barrel Import (`index.ts`) Prohibition & `@calcom/ui` Export Map Warning
-- Do not import from `index.ts` barrel files (e.g., `import { Button } from "@calcom/ui"` is forbidden because it pulls the entire UI bundle into the compilation graph).
-- **Critical `@calcom/ui` Export Map Rule:** `packages/ui/package.json` defines a strict `exports` map. Importing unexported deep file paths such as `@calcom/ui/components/logo/Logo` passes IDE checks in some setups but **breaks the Next.js production build** (`Module not found: Package path ./components/logo/Logo is not exported`). Always import using the exact subpath declared in `packages/ui/package.json` `exports` (e.g., `@calcom/ui/components/logo`, `@calcom/ui/components/form`, `@calcom/ui/components/button`).
+### 3. Barrel Import (`index.ts`) Prohibition & `@rondevu/ui` Export Map Warning
+- Do not import from `index.ts` barrel files (e.g., `import { Button } from "@rondevu/ui"` is forbidden because it pulls the entire UI bundle into the compilation graph).
+- **Critical `@rondevu/ui` Export Map Rule:** `packages/ui/package.json` defines a strict `exports` map. Importing unexported deep file paths such as `@rondevu/ui/components/logo/Logo` passes IDE checks in some setups but **breaks the Next.js production build** (`Module not found: Package path ./components/logo/Logo is not exported`). Always import using the exact subpath declared in `packages/ui/package.json` `exports` (e.g., `@rondevu/ui/components/logo`, `@rondevu/ui/components/form`, `@rondevu/ui/components/button`).
 
 ### 4. Repository (`*Repository.ts`) vs Service (`*Service.ts`) & Dependency Injection
 - **Repositories (`*Repository.ts`):** Pure data-access layer containing Prisma queries with explicit `select` clauses. Never place business rules, third-party API calls, or orchestration logic inside repositories.
@@ -82,14 +82,14 @@ When modifying `packages/prisma/schema.prisma` or `packages/trpc` routers/types,
 yarn prisma generate
 
 # 2. Rebuild tRPC workspace outputs so downstream packages see updated router types
-yarn workspace @calcom/trpc run build
+yarn workspace @rondevu/trpc run build
 
 # 3. Run full CI type check
 yarn type-check:ci --force
 ```
 
 ### 6. Error Handling (`ErrorWithCode` vs `TRPCError`)
-- In services, repositories, and utilities, always throw `ErrorWithCode` (from `@calcom/lib/errors`).
+- In services, repositories, and utilities, always throw `ErrorWithCode` (from `@rondevu/lib/errors`).
 - Use `TRPCError` **only** inside tRPC router files (`packages/trpc/server/routers/`).
 
 ### 7. Next.js App Router Page-Level Authorization (`page.tsx` vs `layout.tsx`)
@@ -192,7 +192,7 @@ yarn type-check:ci --force                # Type check (always run before pushin
 yarn biome check --write .                # Lint and format
 TZ=UTC yarn test                          # Run unit tests
 yarn prisma generate                      # Regenerate types after schema changes
-yarn workspace @calcom/trpc run build     # Rebuild tRPC after schema/router changes
+yarn workspace @rondevu/trpc run build     # Rebuild tRPC after schema/router changes
 ```
 
 ## Boundaries
@@ -264,7 +264,7 @@ docs/                        # Platform architecture & runbooks (n8n-whatsapp-pl
 
 ```typescript
 // Good - Descriptive error with context (use ErrorWithCode in services/repositories)
-import { ErrorWithCode } from "@calcom/lib/errors";
+import { ErrorWithCode } from "@rondevu/lib/errors";
 
 throw new ErrorWithCode(
   "NO_AVAILABLE_SLOTS",
@@ -306,30 +306,30 @@ const booking = await prisma.booking.findFirst({
 ```typescript
 // Good - Type imports and exported subpath imports
 import type { User } from "@prisma/client";
-import { Button } from "@calcom/ui/components/button";
-import { Logo } from "@calcom/ui/components/logo";
+import { Button } from "@rondevu/ui/components/button";
+import { Logo } from "@rondevu/ui/components/logo";
 
 // Bad - Regular import for types, barrel imports, or unexported deep UI paths
 import { User } from "@prisma/client";
-import { Button } from "@calcom/ui";
-import { Logo } from "@calcom/ui/components/logo/Logo"; // Breaks production build!
+import { Button } from "@rondevu/ui";
+import { Logo } from "@rondevu/ui/components/logo/Logo"; // Breaks production build!
 ```
 
 ### API v2 Imports (apps/api/v2)
 
-When importing from `@calcom/features` or `@calcom/trpc` into `apps/api/v2`, **do not import directly** because the API v2 app's `tsconfig.json` doesn't have path mappings for these modules, which causes "module not found" errors.
+When importing from `@rondevu/features` or `@rondevu/trpc` into `apps/api/v2`, **do not import directly** because the API v2 app's `tsconfig.json` doesn't have path mappings for these modules, which causes "module not found" errors.
 
-Instead, re-export from `packages/platform/libraries/index.ts` and import from `@calcom/platform-libraries`:
+Instead, re-export from `packages/platform/libraries/index.ts` and import from `@rondevu/platform-libraries`:
 
 ```typescript
 // Step 1: In packages/platform/libraries/index.ts, add the export
-export { ProfileRepository } from "@calcom/features/profile/repositories/ProfileRepository";
+export { ProfileRepository } from "@rondevu/features/profile/repositories/ProfileRepository";
 
 // Step 2: In apps/api/v2, import from platform-libraries
-import { ProfileRepository } from "@calcom/platform-libraries";
+import { ProfileRepository } from "@rondevu/platform-libraries";
 
 // Bad - Direct import causes module not found error in apps/api/v2
-import { ProfileRepository } from "@calcom/features/profile/repositories/ProfileRepository";
+import { ProfileRepository } from "@rondevu/features/profile/repositories/ProfileRepository";
 ```
 
 ## PR Checklist
@@ -349,7 +349,7 @@ import { ProfileRepository } from "@calcom/features/profile/repositories/Profile
 - Propose a short plan for complex tasks
 - Open a draft PR with notes if unsure about approach
 - Fix type errors before test failures - they're often the root cause
-- Run `yarn prisma generate` (and `yarn install` if `enum-generator.ts` fails), followed by `yarn workspace @calcom/trpc run build` if you see missing enum/type errors
+- Run `yarn prisma generate` (and `yarn install` if `enum-generator.ts` fails), followed by `yarn workspace @rondevu/trpc run build` if you see missing enum/type errors
 
 ## Spec-Driven Development (Opt-In)
 

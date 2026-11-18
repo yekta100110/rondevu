@@ -1,13 +1,13 @@
 "use client";
 
-import { useBookingSuccessRedirect } from "@calcom/features/bookings/lib/bookingSuccessRedirect";
-import { useCompatSearchParams } from "@calcom/lib/hooks/useCompatSearchParams";
-import { useCopy } from "@calcom/lib/hooks/useCopy";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc } from "@calcom/trpc/react";
-import { Button } from "@calcom/ui/components/button";
-import { Spinner } from "@calcom/ui/components/icon";
-import { showToast } from "@calcom/ui/components/toast";
+import { useBookingSuccessRedirect } from "@rondevu/features/bookings/lib/bookingSuccessRedirect";
+import { useCompatSearchParams } from "@rondevu/lib/hooks/useCompatSearchParams";
+import { useCopy } from "@rondevu/lib/hooks/useCopy";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc } from "@rondevu/trpc/react";
+import { Button } from "@rondevu/ui/components/button";
+import { Spinner } from "@rondevu/ui/components/icon";
+import { showToast } from "@rondevu/ui/components/toast";
 import { useEffect, useState } from "react";
 import z from "zod";
 

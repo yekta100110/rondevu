@@ -1,14 +1,14 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "private": true,
-  "name": "@calcom/paypal",
+  "name": "@rondevu/paypal",
   "version": "0.0.0",
   "main": "./index.ts",
   "dependencies": {
-    "@calcom/lib": "workspace:*"
+    "@rondevu/lib": "workspace:*"
   },
   "devDependencies": {
-    "@calcom/types": "workspace:*"
+    "@rondevu/types": "workspace:*"
   },
   "description": "Paypal payment app by rOndevu"
 }

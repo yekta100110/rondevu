@@ -1,9 +1,9 @@
-import dayjs from "@calcom/dayjs";
-import { FeaturesRepository } from "@calcom/features/flags/features.repository";
-import { MembershipRepository } from "@calcom/features/membership/repositories/MembershipRepository";
-import { ProfileRepository } from "@calcom/features/profile/repositories/ProfileRepository";
-import { UserRepository } from "@calcom/features/users/repositories/UserRepository";
-import { prisma } from "@calcom/prisma";
+import dayjs from "@rondevu/dayjs";
+import { FeaturesRepository } from "@rondevu/features/flags/features.repository";
+import { MembershipRepository } from "@rondevu/features/membership/repositories/MembershipRepository";
+import { ProfileRepository } from "@rondevu/features/profile/repositories/ProfileRepository";
+import { UserRepository } from "@rondevu/features/users/repositories/UserRepository";
+import { prisma } from "@rondevu/prisma";
 
 const ONBOARDING_INTRODUCED_AT = dayjs("September 1 2021").toISOString();
 

@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
-import { LearnMoreLink } from "@calcom/features/eventtypes/components/LearnMoreLink";
-import type { FormValues } from "@calcom/features/eventtypes/lib/types";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import classNames from "@calcom/ui/classNames";
-import { SettingsToggle } from "@calcom/ui/components/form";
-import { TextField, CheckboxField } from "@calcom/ui/components/form";
+import { LearnMoreLink } from "@rondevu/features/eventtypes/components/LearnMoreLink";
+import type { FormValues } from "@rondevu/features/eventtypes/lib/types";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import classNames from "@rondevu/ui/classNames";
+import { SettingsToggle } from "@rondevu/ui/components/form";
+import { TextField, CheckboxField } from "@rondevu/ui/components/form";
 
 type maxActiveBookingsPerBookerLockedProps = {
   disabled: boolean;

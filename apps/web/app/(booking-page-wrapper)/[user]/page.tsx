@@ -1,5 +1,5 @@
-import { WEBAPP_URL } from "@calcom/lib/constants";
-import { prisma } from "@calcom/prisma";
+import { WEBAPP_URL } from "@rondevu/lib/constants";
+import { prisma } from "@rondevu/prisma";
 import { ProfileSchema } from "@components/schemas/ProfileSchema";
 import { buildLegacyCtx, decodeParams } from "@lib/buildLegacyCtx";
 import { getServerSideProps } from "@server/lib/[user]/getServerSideProps";

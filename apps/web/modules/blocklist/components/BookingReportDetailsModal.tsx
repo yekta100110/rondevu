@@ -3,14 +3,14 @@
 import Link from "next/link";
 import { Controller, useForm } from "react-hook-form";
 
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { WatchlistType } from "@calcom/prisma/enums";
-import { Button } from "@calcom/ui/components/button";
-import { Dialog, DialogContent, DialogFooter, DialogHeader } from "@calcom/ui/components/dialog";
-import { ToggleGroup } from "@calcom/ui/components/form";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { WatchlistType } from "@rondevu/prisma/enums";
+import { Button } from "@rondevu/ui/components/button";
+import { Dialog, DialogContent, DialogFooter, DialogHeader } from "@rondevu/ui/components/dialog";
+import { ToggleGroup } from "@rondevu/ui/components/form";
 import { ExternalLinkIcon, GlobeIcon, MailIcon } from "@coss/ui/icons";
 
-import type { GroupedBookingReport, BlocklistScope } from "@calcom/features/blocklist/types";
+import type { GroupedBookingReport, BlocklistScope } from "@rondevu/features/blocklist/types";
 
 interface FormData {
   blockType: WatchlistType;

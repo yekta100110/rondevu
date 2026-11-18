@@ -1,4 +1,4 @@
-import dayjs from "@calcom/dayjs";
+import dayjs from "@rondevu/dayjs";
 
 import type { CalendarEvent } from "../types/events";
 

@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 
-import type { getBookingForReschedule } from "@calcom/features/bookings/lib/get-booking";
-import { V2_ENDPOINTS, SUCCESS_STATUS } from "@calcom/platform-constants";
-import type { ApiResponse, ApiSuccessResponse } from "@calcom/platform-types";
+import type { getBookingForReschedule } from "@rondevu/features/bookings/lib/get-booking";
+import { V2_ENDPOINTS, SUCCESS_STATUS } from "@rondevu/platform-constants";
+import type { ApiResponse, ApiSuccessResponse } from "@rondevu/platform-types";
 
 import http from "../../lib/http";
 import { useAtomsContext } from "../useAtomsContext";

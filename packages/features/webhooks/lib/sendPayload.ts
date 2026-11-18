@@ -1,10 +1,10 @@
 import { createHash, createHmac } from "node:crypto";
 import process from "node:process";
-import type { TGetTranscriptAccessLink } from "@calcom/app-store/dailyvideo/zod";
-import { getHumanReadableLocationValue } from "@calcom/app-store/locations";
-import type { PaymentData, WebhookSubscriber } from "@calcom/features/webhooks/lib/dto/types";
-import { getUTCOffsetByTimezone } from "@calcom/lib/dayjs";
-import type { CalendarEvent, Person } from "@calcom/types/Calendar";
+import type { TGetTranscriptAccessLink } from "@rondevu/app-store/dailyvideo/zod";
+import { getHumanReadableLocationValue } from "@rondevu/app-store/locations";
+import type { PaymentData, WebhookSubscriber } from "@rondevu/features/webhooks/lib/dto/types";
+import { getUTCOffsetByTimezone } from "@rondevu/lib/dayjs";
+import type { CalendarEvent, Person } from "@rondevu/types/Calendar";
 import { compile } from "handlebars";
 import { postWebhookSafely } from "./postWebhookSafely";
 import { validateWebhookDestination } from "./validateWebhookDestination";

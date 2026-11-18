@@ -1,5 +1,5 @@
 {
-  "name": "@calcom/kysely",
+  "name": "@rondevu/kysely",
   "private": true,
   "main": "index.ts",
   "dependencies": {

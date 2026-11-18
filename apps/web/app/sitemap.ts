@@ -1,7 +1,7 @@
 import process from "node:process";
 import type { MetadataRoute } from "next";
 
-import prisma from "@calcom/prisma";
+import prisma from "@rondevu/prisma";
 
 export const revalidate = 3600;
 

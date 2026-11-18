@@ -3,14 +3,14 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { useLocale } from "@calcom/lib/hooks/useLocale";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
 
 import { OAuthClientFormFields } from "../view/OAuthClientFormFields";
 
-import { Dialog } from "@calcom/features/components/controlled-dialog";
-import { Button } from "@calcom/ui/components/button";
-import { DialogClose, DialogContent, DialogFooter } from "@calcom/ui/components/dialog";
-import { Form } from "@calcom/ui/components/form";
+import { Dialog } from "@rondevu/features/components/controlled-dialog";
+import { Button } from "@rondevu/ui/components/button";
+import { DialogClose, DialogContent, DialogFooter } from "@rondevu/ui/components/dialog";
+import { Form } from "@rondevu/ui/components/form";
 
 export type OAuthClientCreateFormValues = {
   name: string;

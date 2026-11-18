@@ -1,6 +1,6 @@
-import { moduleLoader as prismaModuleLoader } from "@calcom/features/di/modules/Prisma";
-import { DI_TOKENS } from "@calcom/features/di/tokens";
-import { PrismaOOORepository } from "@calcom/features/ooo/repositories/PrismaOOORepository";
+import { moduleLoader as prismaModuleLoader } from "@rondevu/features/di/modules/Prisma";
+import { DI_TOKENS } from "@rondevu/features/di/tokens";
+import { PrismaOOORepository } from "@rondevu/features/ooo/repositories/PrismaOOORepository";
 
 import { createModule, bindModuleToClassOnToken, type ModuleLoader } from "../di";
 

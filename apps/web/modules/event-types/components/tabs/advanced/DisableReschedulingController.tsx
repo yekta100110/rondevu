@@ -1,14 +1,14 @@
-import { LearnMoreLink } from "@calcom/features/eventtypes/components/LearnMoreLink";
+import { LearnMoreLink } from "@rondevu/features/eventtypes/components/LearnMoreLink";
 import type {
   EventTypeSetup,
   FormValues,
   SettingsToggleClassNames,
-} from "@calcom/features/eventtypes/lib/types";
-import ServerTrans from "@calcom/lib/components/ServerTrans";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import classNames from "@calcom/ui/classNames";
-import { Input, SettingsToggle } from "@calcom/ui/components/form";
-import { RadioField } from "@calcom/ui/components/radio";
+} from "@rondevu/features/eventtypes/lib/types";
+import ServerTrans from "@rondevu/lib/components/ServerTrans";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import classNames from "@rondevu/ui/classNames";
+import { Input, SettingsToggle } from "@rondevu/ui/components/form";
+import { RadioField } from "@rondevu/ui/components/radio";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import { useEffect, useRef, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";

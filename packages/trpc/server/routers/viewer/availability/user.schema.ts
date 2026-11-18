@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-import { stringOrNumber } from "@calcom/prisma/zod-utils";
-import { stringToDayjsZod } from "@calcom/lib/dayjs";
+import { stringOrNumber } from "@rondevu/prisma/zod-utils";
+import { stringToDayjsZod } from "@rondevu/lib/dayjs";
 
 export const ZUserInputSchema = z.object({
   username: z.string(),

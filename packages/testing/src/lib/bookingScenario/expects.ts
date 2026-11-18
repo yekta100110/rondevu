@@ -6,19 +6,19 @@ import ical from "node-ical";
 import { expect, vi } from "vitest";
 import "vitest-fetch-mock";
 
-import dayjs from "@calcom/dayjs";
-import { WEBAPP_URL, WEBSITE_URL } from "@calcom/lib/constants";
-import logger from "@calcom/lib/logger";
-import { safeStringify } from "@calcom/lib/safeStringify";
+import dayjs from "@rondevu/dayjs";
+import { WEBAPP_URL, WEBSITE_URL } from "@rondevu/lib/constants";
+import logger from "@rondevu/lib/logger";
+import { safeStringify } from "@rondevu/lib/safeStringify";
 import type {
   Booking,
   BookingReference,
   DestinationCalendar,
   WebhookTriggerEvents,
-} from "@calcom/prisma/client";
-import { BookingStatus } from "@calcom/prisma/enums";
-import type { AppsStatus, CalendarEvent } from "@calcom/types/Calendar";
-import type { CredentialForCalendarService } from "@calcom/types/Credential";
+} from "@rondevu/prisma/client";
+import { BookingStatus } from "@rondevu/prisma/enums";
+import type { AppsStatus, CalendarEvent } from "@rondevu/types/Calendar";
+import type { CredentialForCalendarService } from "@rondevu/types/Credential";
 import type { Fixtures } from "../fixtures/fixtures";
 import type { Tracking } from "../types";
 import { DEFAULT_TIMEZONE_BOOKER } from "./getMockRequestDataForBooking";

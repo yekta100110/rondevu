@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 
-import dayjs from "@calcom/dayjs";
+import dayjs from "@rondevu/dayjs";
 
 import { preserveLocalTime } from "../preserveLocalTime";
 

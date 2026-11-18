@@ -1,7 +1,7 @@
-import { getLocale } from "@calcom/features/auth/lib/getLocale";
-import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
-import { loadTranslations } from "@calcom/i18n/server";
-import { IconSprites } from "@calcom/ui/components/icon";
+import { getLocale } from "@rondevu/features/auth/lib/getLocale";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
+import { loadTranslations } from "@rondevu/i18n/server";
+import { IconSprites } from "@rondevu/ui/components/icon";
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 import { dir } from "i18next";
 import { Inter } from "next/font/google";
@@ -12,7 +12,7 @@ import type React from "react";
 
 import "../styles/globals.css";
 import process from "node:process";
-import classNames from "@calcom/ui/classNames";
+import classNames from "@rondevu/ui/classNames";
 import { AppRouterI18nProvider } from "./AppRouterI18nProvider";
 import { Providers } from "./providers";
 import { SpeculationRules } from "./SpeculationRules";

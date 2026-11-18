@@ -1,8 +1,8 @@
 "use client";
 
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc } from "@calcom/trpc/react";
-import { ZTestTriggerInputSchema } from "@calcom/trpc/server/routers/viewer/webhook/testTrigger.schema";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc } from "@rondevu/trpc/react";
+import { ZTestTriggerInputSchema } from "@rondevu/trpc/server/routers/viewer/webhook/testTrigger.schema";
 import { toastManager } from "@coss/ui/components/toast";
 import { Badge } from "@coss/ui/components/badge";
 import { Button } from "@coss/ui/components/button";

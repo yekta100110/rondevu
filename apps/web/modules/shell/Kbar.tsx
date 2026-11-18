@@ -1,11 +1,11 @@
 import { useSession } from "next-auth/react";
 
-import { appStoreMetadata } from "@calcom/app-store/appStoreMetaData";
-import dayjs from "@calcom/dayjs";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { isMac } from "@calcom/lib/isMac";
-import { trpc } from "@calcom/trpc/react";
-import { Tooltip } from "@calcom/ui/components/tooltip";
+import { appStoreMetadata } from "@rondevu/app-store/appStoreMetaData";
+import dayjs from "@rondevu/dayjs";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { isMac } from "@rondevu/lib/isMac";
+import { trpc } from "@rondevu/trpc/react";
+import { Tooltip } from "@rondevu/ui/components/tooltip";
 import {
   ArrowDownIcon,
   ArrowUpIcon,

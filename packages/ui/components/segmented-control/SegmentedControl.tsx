@@ -1,4 +1,4 @@
-import classNames from "@calcom/ui/classNames";
+import classNames from "@rondevu/ui/classNames";
 
 export type SegmentedControlData<T extends string> = T | { value: T; label: string };
 

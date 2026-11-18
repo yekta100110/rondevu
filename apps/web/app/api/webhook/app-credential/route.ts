@@ -3,11 +3,11 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import z from "zod";
 
-import { appStoreMetadata } from "@calcom/app-store/appStoreMetaData";
-import { CREDENTIAL_SYNC_SECRET, CREDENTIAL_SYNC_SECRET_HEADER_NAME } from "@calcom/lib/constants";
-import { APP_CREDENTIAL_SHARING_ENABLED } from "@calcom/lib/constants";
-import { symmetricDecrypt } from "@calcom/lib/crypto";
-import prisma from "@calcom/prisma";
+import { appStoreMetadata } from "@rondevu/app-store/appStoreMetaData";
+import { CREDENTIAL_SYNC_SECRET, CREDENTIAL_SYNC_SECRET_HEADER_NAME } from "@rondevu/lib/constants";
+import { APP_CREDENTIAL_SHARING_ENABLED } from "@rondevu/lib/constants";
+import { symmetricDecrypt } from "@rondevu/lib/crypto";
+import prisma from "@rondevu/prisma";
 
 const appCredentialWebhookRequestBodySchema = z.object({
   // UserId of the cal.com user

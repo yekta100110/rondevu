@@ -1,12 +1,12 @@
 "use client";
 
-import { getUserAvatarUrl } from "@calcom/lib/getAvatarUrl";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { trpc } from "@calcom/trpc/react";
-import { Avatar } from "@calcom/ui/components/avatar";
-import { Badge } from "@calcom/ui/components/badge";
-import { Checkbox } from "@calcom/ui/components/form";
-import { SkeletonText } from "@calcom/ui/components/skeleton";
+import { getUserAvatarUrl } from "@rondevu/lib/getAvatarUrl";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { trpc } from "@rondevu/trpc/react";
+import { Avatar } from "@rondevu/ui/components/avatar";
+import { Badge } from "@rondevu/ui/components/badge";
+import { Checkbox } from "@rondevu/ui/components/form";
+import { SkeletonText } from "@rondevu/ui/components/skeleton";
 import { keepPreviousData } from "@tanstack/react-query";
 import { type ColumnDef, getCoreRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import { useMemo, useReducer, useState } from "react";

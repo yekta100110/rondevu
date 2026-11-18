@@ -1,6 +1,6 @@
-import { bindModuleToClassOnToken, createModule, type ModuleLoader } from "@calcom/features/di/di";
-import { moduleLoader as loggerServiceModule } from "@calcom/features/di/shared/services/logger.service";
-import { WebhookTasker } from "@calcom/features/webhooks/lib/tasker/WebhookTasker";
+import { bindModuleToClassOnToken, createModule, type ModuleLoader } from "@rondevu/features/di/di";
+import { moduleLoader as loggerServiceModule } from "@rondevu/features/di/shared/services/logger.service";
+import { WebhookTasker } from "@rondevu/features/webhooks/lib/tasker/WebhookTasker";
 
 import { moduleLoader as webhookSyncTaskerModule } from "./WebhookSyncTasker.module";
 import { moduleLoader as webhookTriggerTaskerModule } from "./WebhookTriggerTasker.module";

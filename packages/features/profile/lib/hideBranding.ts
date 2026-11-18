@@ -1,7 +1,7 @@
-import { ProfileRepository } from "@calcom/features/profile/repositories/ProfileRepository";
-import { UserRepository } from "@calcom/features/users/repositories/UserRepository";
-import logger from "@calcom/lib/logger";
-import { prisma } from "@calcom/prisma";
+import { ProfileRepository } from "@rondevu/features/profile/repositories/ProfileRepository";
+import { UserRepository } from "@rondevu/features/users/repositories/UserRepository";
+import logger from "@rondevu/lib/logger";
+import { prisma } from "@rondevu/prisma";
 
 const log = logger.getSubLogger({ name: "hideBranding" });
 const userRepository = new UserRepository(prisma);

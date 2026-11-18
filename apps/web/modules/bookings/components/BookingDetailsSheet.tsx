@@ -1,26 +1,26 @@
 "use client";
 
-import dayjs from "@calcom/dayjs";
-import { useBookingLocation } from "@calcom/features/bookings/hooks";
-import { shouldShowFieldInCustomResponses } from "@calcom/lib/bookings/SystemField";
-import { formatPrice } from "@calcom/lib/currencyConversions";
-import { formatToLocalizedTimezone } from "@calcom/lib/dayjs";
-import { getPlaceholderAvatar } from "@calcom/lib/defaultAvatarImage";
-import { getUserAvatarUrl } from "@calcom/lib/getAvatarUrl";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { getEveryFreqFor } from "@calcom/lib/recurringStrings";
-import { BookingStatus } from "@calcom/prisma/enums";
+import dayjs from "@rondevu/dayjs";
+import { useBookingLocation } from "@rondevu/features/bookings/hooks";
+import { shouldShowFieldInCustomResponses } from "@rondevu/lib/bookings/SystemField";
+import { formatPrice } from "@rondevu/lib/currencyConversions";
+import { formatToLocalizedTimezone } from "@rondevu/lib/dayjs";
+import { getPlaceholderAvatar } from "@rondevu/lib/defaultAvatarImage";
+import { getUserAvatarUrl } from "@rondevu/lib/getAvatarUrl";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { getEveryFreqFor } from "@rondevu/lib/recurringStrings";
+import { BookingStatus } from "@rondevu/prisma/enums";
 import {
   bookingMetadataSchema,
   EventTypeMetaDataSchema,
   eventTypeBookingFields,
-} from "@calcom/prisma/zod-utils";
-import { trpc } from "@calcom/trpc/react";
-import type { RecurringEvent } from "@calcom/types/Calendar";
-import classNames from "@calcom/ui/classNames";
-import { Avatar } from "@calcom/ui/components/avatar";
-import { Badge } from "@calcom/ui/components/badge";
-import { Button } from "@calcom/ui/components/button";
+} from "@rondevu/prisma/zod-utils";
+import { trpc } from "@rondevu/trpc/react";
+import type { RecurringEvent } from "@rondevu/types/Calendar";
+import classNames from "@rondevu/ui/classNames";
+import { Avatar } from "@rondevu/ui/components/avatar";
+import { Badge } from "@rondevu/ui/components/badge";
+import { Button } from "@rondevu/ui/components/button";
 import {
   Sheet,
   SheetBody,
@@ -28,8 +28,8 @@ import {
   SheetFooter,
   SheetHeader,
   SheetTitle,
-} from "@calcom/ui/components/sheet";
-import { Tooltip } from "@calcom/ui/components/tooltip";
+} from "@rondevu/ui/components/sheet";
+import { Tooltip } from "@rondevu/ui/components/tooltip";
 import { ExternalLinkIcon, RepeatIcon } from "@coss/ui/icons";
 import assignmentReasonBadgeTitleMap from "@lib/booking/assignmentReasonBadgeTitleMap";
 import Link from "next/link";

@@ -1,4 +1,4 @@
-import { sanitizeTimezone } from "@calcom/lib/dayjs";
+import { sanitizeTimezone } from "@rondevu/lib/dayjs";
 import type { GetUserAvailabilityInitialData } from "./getUserAvailability";
 
 export type ScheduleWithoutTimeZone = {
