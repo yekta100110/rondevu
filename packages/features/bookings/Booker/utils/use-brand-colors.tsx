@@ -1,6 +1,6 @@
 import useGetBrandingColours from "@rondevu/lib/getBrandColours";
 import useTheme from "@rondevu/lib/hooks/useTheme";
-import { useCalcomTheme } from "@rondevu/ui/styles";
+import { useRondevuTheme } from "@rondevu/ui/styles";
 
 export const useBrandColors = ({
   brandColor,
@@ -16,6 +16,6 @@ export const useBrandColors = ({
     darkVal: darkBrandColor,
   });
 
-  useCalcomTheme(brandTheme);
+  useRondevuTheme(brandTheme);
   useTheme(theme);
 };

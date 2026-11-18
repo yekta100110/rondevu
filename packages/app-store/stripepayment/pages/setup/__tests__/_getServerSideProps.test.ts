@@ -19,7 +19,7 @@ vi.mock("../../../lib/getStripeAppKeys", () => ({
 }));
 
 vi.mock("@rondevu/lib/constants", () => ({
-  WEBAPP_URL: "https://app.cal.com",
+  WEBAPP_URL: "https://app.rondevu.org",
 }));
 
 import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
@@ -187,7 +187,7 @@ describe("Stripe Setup Page getServerSideProps", () => {
 
       const redirect = (result as { redirect: { destination: string; permanent: boolean } }).redirect;
       expect(redirect.destination).toContain(
-        encodeURIComponent("https://app.cal.com/api/integrations/stripepayment/callback")
+        encodeURIComponent("https://app.rondevu.org/api/integrations/stripepayment/callback")
       );
     });
 
@@ -203,7 +203,7 @@ describe("Stripe Setup Page getServerSideProps", () => {
       const stateStr = decodeURIComponent(stateMatch![1]);
       const state = JSON.parse(stateStr);
       expect(state.fromApp).toBe(true);
-      expect(state.onErrorReturnTo).toBe("https://app.cal.com/apps/installed/payment");
+      expect(state.onErrorReturnTo).toBe("https://app.rondevu.org/apps/installed/payment");
       expect(state.returnTo).toBeUndefined();
     });
 
@@ -272,7 +272,7 @@ describe("Stripe Setup Page getServerSideProps", () => {
 
       expect(result).toEqual({
         redirect: {
-          destination: "https://app.cal.com/apps/installed/payment?error=stripe_oauth_failed",
+          destination: "https://app.rondevu.org/apps/installed/payment?error=stripe_oauth_failed",
           permanent: false,
         },
       });

@@ -18,7 +18,7 @@ export const LearnMoreLink = ({ t, i18nKey, href }: LearnMoreLinkProps) => {
     return <>{text}</>;
   }
 
-  const sanitizedHref = href.startsWith("https://cal.com") ? "https://rondevu.org/docs" : href;
+  const sanitizedHref = href.startsWith("https://rondevu.org") ? "https://rondevu.org/docs" : href;
 
   return (
     <span>

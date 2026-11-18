@@ -157,7 +157,7 @@ const PaymentPage: FC<PaymentPageProps> = (props) => {
                 {!props.profile.hideBranding && (
                   <div className="mt-4 border-t pt-4 text-center text-muted text-xs dark:border-gray-900 dark:text-inverted">
                     <a href={`${WEBSITE_URL}/signup`}>
-                      {t("create_booking_link_with_calcom", { appName: APP_NAME })}
+                      {t("create_booking_link_with_rondevu", { appName: APP_NAME })}
                     </a>
                   </div>
                 )}

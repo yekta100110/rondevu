@@ -35,7 +35,7 @@
 
 - **Bento Takvim Rozeti ve Fiyatlandırma Kartları Düzeltmeleri Tamamlandı (2026-10-04):**
   - **Bento "CONNECT YOUR CALENDAR" Merkez Rozeti:** Koyu modda beyaz hap zemin üzerinde beyaz yazıldığı için kaybolan "rOndevu" metni, `cal-framer.css` içerisinde `.framer-894vxg` kuralı koyu temaya (`background: #18181b !important; border: 1px solid rgba(255,255,255,0.15) !important; color: #ffffff !important;`) uyarlanarak yüksek kontrastlı hale getirildi. Ayrıca `cal-dom-tr.html` ve `cal-dom-en.html` dosyalarında `<h2>` içerisine marka logosu (`/logos/rondevu-icon.png`) entegre edildi.
-  - **Fiyatlandırma Kartları ve CTA Butonları:** Cal.com kalıntısı "Try for free >" ve "Get Started" / "Get Started Yearly" metinleri `pricing-dom-en.html` ve `pricing-dom-tr.html` dosyalarından tamamen kaldırıldı. Tüm butonlar `[data-plan-btn="true"]` özniteliğiyle şık ve tutarlı bir CTA ("Planı Seç" / "Choose Plan") olarak düzenlendi. `pricing-view.tsx` içerisine eklenen reaktif `useEffect` ile dil değişimlerinde dinamik senkronizasyon sağlandı; tıklamalar doğrudan `PlanContactModal` modalını tetikleyecek şekilde korundu.
+  - **Fiyatlandırma Kartları ve CTA Butonları:** rOndevu kalıntısı "Try for free >" ve "Get Started" / "Get Started Yearly" metinleri `pricing-dom-en.html` ve `pricing-dom-tr.html` dosyalarından tamamen kaldırıldı. Tüm butonlar `[data-plan-btn="true"]` özniteliğiyle şık ve tutarlı bir CTA ("Planı Seç" / "Choose Plan") olarak düzenlendi. `pricing-view.tsx` içerisine eklenen reaktif `useEffect` ile dil değişimlerinde dinamik senkronizasyon sağlandı; tıklamalar doğrudan `PlanContactModal` modalını tetikleyecek şekilde korundu.
   - **Yıllık Plan Kartı Sağ Kenar Dikey Çizgisi:** "Yearly Plan" kartının sağ kenarında beliren dikey beyaz taşma çizgisi, `cal-pricing-framer.css` içerisindeki `.framer-6fxrby`, `.framer-o086nb` ve çevre taşıyıcılarına `overflow: hidden !important;`, `--border-color: rgba(255, 255, 255, 0.08) !important;` ve `border-right: none !important;` uygulanarak tamamen ortadan kaldırıldı.
   - **Yerel Sunucu Doğrulaması:** `http://localhost:3000` ve `http://localhost:3000/pricing` HTTP 200 OK ile doğrulanarak çalışır durumda teslim edildi. Sıfır yasaklı kelime kuralı korundu, kesinlikle `git push` yapılmadı.
 
@@ -94,7 +94,7 @@
   - **Ekip Yönetimi Kategorisi Kaldırıldı:** Karşılaştırma tablosundaki "Ekip Yönetimi" / "Teams" başlığı (`.framer-gxw577`) ve altındaki tüm 8 satır tablodan tamamen silindi.
   - **Kritik Kurallara Uyum:** Sıfır "altyapı" kelimesi, kesinlikle `git push` yapılmadı, yerel sunucu görsel doğrulaması için kullanıcıya devredildi.
 
-- **Ortak Navbar Bileşeni, Fiyatlandırma Yönlendirmeleri ve 1:1 Cal.com Pricing Sayfası Entegrasyonu:**
+- **Ortak Navbar Bileşeni, Fiyatlandırma Yönlendirmeleri ve 1:1 rOndevu Pricing Sayfası Entegrasyonu:**
   - **Tek ve Ortak Navbar (`Navbar.tsx`):** Hem ana sayfanın (`/`) hem de `/pricing` sayfasının çağırdığı tekil, ortak React Navbar bileşeni `apps/web/modules/home/components/Navbar.tsx` entegre edildi. Farklı barlar ve portal slot yamaları tamamen ortadan kaldırıldı.
   - **Sade Menü (3 Link):** Sadece "Özellikler", "Fiyatlandırma", "SSS" bağlantıları bırakıldı; "Enterprise", "Developer", "Solutions" gibi menüler tamamen silindi. `/pricing` sayfasındayken "Fiyatlandırma" bağlantısı aktif (active state) olarak vurgulandı.
   - **Dahili Kontroller:**
@@ -103,9 +103,9 @@
     - Oturuma duyarlı "Giriş Yap" (`/auth/login`) / "Panele Git" (`/event-types`) butonu barda yer alıyor.
   - **Fiyatlandırma Buton ve Yönlendirme Onarımı:**
     - Ana sayfadaki tüm "Fiyatlandırma", "Paketleri İncele" veya fiyat butonları `/pricing` route'una (veya `#pricing` bölümüne) pürüzsüzce yönlendirildi. İçi boş `onClick` veya ölü buton bırakılmadı.
-  - **1:1 Cal.com Pricing Sayfası Zemin Kurulumu:**
+  - **1:1 rOndevu Pricing Sayfası Zemin Kurulumu:**
     - Eski uydurma/özel fiyatlandırma tasarımı tamamen silindi.
-    - `/example/Pricing _ Cal.com.htm` dosyasından Cal.com'un orijinal minified Framer CSS'i `apps/web/public/cal_files/cal-pricing-framer.css` olarak çıkarıldı, karanlık mod tokenları (`#09090b` zemin, `#121214` kart yüzeyi, `#27272a` border) ve 2 kartlı grid düzeni eklendi.
+    - `/example/Pricing _ rOndevu.htm` dosyasından rOndevu'un orijinal minified Framer CSS'i `apps/web/public/cal_files/cal-pricing-framer.css` olarak çıkarıldı, karanlık mod tokenları (`#09090b` zemin, `#121214` kart yüzeyi, `#27272a` border) ve 2 kartlı grid düzeni eklendi.
     - `pricing-dom-tr.html` ve `pricing-dom-en.html` dosyaları cerrahi ayıklamalarla 1:1 oluşturuldu:
       1. Paketi sadece 2 plana indirme: "Aylık" (990 ₺/ay) ve "Yıllık" (9.900 ₺/yıl, "2 Ay Hediye" rozeti). "Organizations" ve "Enterprise" paketleri tamamen silindi.
       2. Karşılaştırma tablosu (Feature Matrix): "Organizations" ve "Enterprise" sütunları silindi; tablodan "Accept Payments" (Ödeme Alma) ve "Built-in Video" (Dahili Video) satırları tamamen çıkarıldı. Gerçek rOndevu yetenekleri korundu.
@@ -125,7 +125,7 @@
   - Sponsor ve yatırımcı logo şeritleri (Ticker Dark Logos & "Trusted by fast-growing companies") 3 kırılımda silindi.
   - Navbar Düzenlemesi: Enterprise, Developer, Kaynaklar açılır menüleri kaldırıldı; menüde sadece 3 bağlantı bırakıldı: "Özellikler", "Fiyatlandırma", "SSS".
   - Sağ tarafa "Giriş Yap" butonu ile yanına `#rondevu-theme-lang-slot` yer tutucusu eklendi; harici yüzen `.rondevu-top-controls` kutusu kaldırılarak Dil (TR/EN) ve Tema (Oto/Koyu/Açık) seçicileri React Portal ile navbar içine entegre edildi.
-  - Logo ve Markalama: Header ve Footer'da rOndevu SVG logosu ve `rondevu-icon.png` entegre edildi; kod ve metinlerde kalan tüm "Cal" / "Cal.com" ibareleri "rOndevu" yapıldı.
+  - Logo ve Markalama: Header ve Footer'da rOndevu SVG logosu ve `rondevu-icon.png` entegre edildi; kod ve metinlerde kalan tüm "Cal" / "rOndevu" ibareleri "rOndevu" yapıldı.
   - Doğrulama: `scripts/verify_dom_purge.js` ile tüm maddeler 100% PASS doğrulandı. Biome kontrolleri hatasız geçti. Yerel sunucu başlatılmadı, git push yapılmadı.
 
 -9. **Authentic Booker Interface, Real Phone Interface Showcase & Razor-Sharp Typography** —
@@ -253,7 +253,7 @@
    - **Terminology Standardization:** Updated 64 attendee-facing translation keys in `packages/i18n/locales/tr/common.json` replacing corporate "Toplantı" with "Randevu" and "Rezervasyon" (e.g. `your_meeting_has_been_booked`, `booking_fail`, `reschedule_fail`, `meeting_is_scheduled`, etc.).
 1. **Logo Dark Mode Inversion Fix** — Assigned `LOGO = "/rondevu-logo-dark.svg"` (`#292929`) so Tailwind's `dark:invert` properly produces white text in dark mode on mobile and desktop.
 2. **Logo Size & Clarity Enhancement** — Vectorized the "rOndevu" wordmark into exact SVG paths with tight bounding viewBox (`0.5 7.3 91.7 18.6`), eliminating 50%+ wasted vertical space. Increased default `Logo.tsx` sizing from `h-4/h-5` to `h-5/h-6 sm:h-7` so rendered text is ~3x larger and razor sharp.
-3. **Login View Title Fix** — Replaced hardcoded `Cal.diy` in `apps/web/modules/auth/login-view.tsx` with `{APP_NAME}` (`rOndevu`).
+3. **Login View Title Fix** — Replaced hardcoded `rOndevu` in `apps/web/modules/auth/login-view.tsx` with `{APP_NAME}` (`rOndevu`).
 4. **Additional Branding Cleanup** — Updated `refer/page.tsx`, `service-worker.js`, `verify-email-view.tsx`, `Embed.tsx`, and `oauth-provider.e2e.ts`.
 5. **Favicon & Icon Exact Geometric Centering** — Recalculated bounding boxes for the "rOn" glyphs across all favicons, app icons (`android-chrome`, `apple-touch-icon`, `mstile`, `favicon-16/32/ico`, and SVG icons). Fixed the ~63.6px vertical baseline gap offset by translating the text path so that top margin equals bottom margin and left margin equals right margin with dead-center alignment.
 6. **Default Language Set to Turkish (`tr`) & Translation Enhancement** —
@@ -262,7 +262,7 @@
    - Updated `UserRepository.ts` so newly created users have `locale: "tr"` in Postgres and their default schedule is created in Turkish ("Çalışma saatleri").
    - Updated `schema.prisma` default attendee locale to `"tr"`.
    - Added all 41 missing keys to `packages/i18n/locales/tr/common.json` (0 missing keys remaining out of 4,731).
-   - Cleaned up 50+ legacy `Cal.diy` / `Cal.com` references in Turkish translations to `rOndevu`.
+   - Cleaned up 50+ legacy `rOndevu` / `rOndevu` references in Turkish translations to `rOndevu`.
    - Refined home page, event-types dashboard, login, and navigation translations.
 7. **Git Pushed** — Pushed clean commits to `origin/main`.
 8. **Onboarding Plan Update** —
@@ -283,7 +283,7 @@
 11. **System Theme Persistence & Initial Dark Mode Support** —
     - Added synchronous blocking script in `apps/web/app/layout.tsx` to detect system prefers-color-scheme immediately before paint and apply `.dark`.
     - Configured `defaultTheme: "system"` in `getThemeProviderProps.ts`.
-    - Moved homepage to `apps/web/app/(use-page-wrapper)/page.tsx` so `CalcomThemeProvider` wraps it.
+    - Moved homepage to `apps/web/app/(use-page-wrapper)/page.tsx` so `RondevuThemeProvider` wraps it.
 12. **Homepage Simplification & Pricing Update** —
     - Updated pricing cards to 990 ₺/month and 9.900 ₺/year (11.880 ₺ struck through, 1.980 ₺ savings).
     - Reduced verbose lists to 3-4 clean, impactful bullets per plan.
@@ -308,9 +308,9 @@
     - Built interactive `HeroBookingMockup` component directly simulating the booking flow (Tarih & Saat Seçimi ➔ Telefon/E-posta Doğrulama [OTP] ➔ Başarı Kartı & Google Meet) using 100% dummy data (`Dr. Zeynep Kaya`, `ahmet.yilmaz@ornek.com`), completely hiding real screenshot info.
     - Built `AdminFeatureCards` structuring the 12 core features into 4 operational blocks (Zaman & Müsaitlik Hakimiyeti, Güvenlik & No-Show Koruması, İletişim & Otomasyon, Özel Alan Adı & Birebir Destek) with dark-mode admin UI mockups.
     - Built `FaqSection` accordion directly answering 8 critical practical questions.
-19. **Cal.diy Rebranding & Domain Normalization (`rondevu.org`)** —
+19. **rOndevu Rebranding & Domain Normalization (`rondevu.org`)** —
     - System-wide replacement of all `rondevu.com.tr` references with official domain `rondevu.org`.
-    - Cal.diy publisher replaced with rOndevu across all 98 app-store apps and license headers.
+    - rOndevu publisher replaced with rOndevu across all 98 app-store apps and license headers.
 20. **Calendar Sync Clarification & Ofis Dışında Real UI Reproduction** —
     - Fixed SSS & Homepage calendar sync explanations: Appointments booked on rOndevu are automatically exported to Google/Apple calendar; external personal calendar events do NOT block rOndevu availability slots.
     - Revamped "Ofis Dışında" module in `AdminFeatureCards` to authentically reproduce user screenshots (`interface/`): includes list view, search & filters, dummy values (`Kongre Katılımı & Yıllık İzin`) replacing test text, interactive Danışan Rezervasyon Görünümü (date 25 with 🤕), and "Ofis Dışında Ol" modal overlay.
@@ -476,9 +476,9 @@
     - **Radical Template Shortening (<= 160 Chars / 1 Segment)**: Overhauled all 10 attendee SMS templates in `packages/sms/attendee/` (confirmation, reminder, cancellation, reschedule, booking requested, declined, location changed, awaiting payment, seat cancelled, reschedule requested) into concise, 1-segment structures. Stripped conversational greetings, attendee notes, and protocols (`https://`). Format: `"rOndevu: [Baslik] randevunuz onaylandi. Tarih: [DD.MM HH:mm]. Detay/Iptal: rondevu.org/b/[uid]"`. Added title length capping and compact date formatting (`DD.MM HH:mm`) on `SMSManager`.
     - **Short URL Redirection**: Added `/b/:uid` redirect to `/booking/:uid` in `apps/web/next.config.ts`.
     - **Validation & Tests**: Added unit tests in `packages/sms/test/sanitize-sms.test.ts` (10/10 passed, 18/18 total passed across `packages/sms/test/`). Verified server TypeScript compilation (`tsc --project packages/trpc/tsconfig.server.json --noEmit` exit 0).
-36. **Cal.com-Referenced Pricing Section & Modular Feature Comparison Matrix** —
+36. **rOndevu-Referenced Pricing Section & Modular Feature Comparison Matrix** —
     - **2 Plans Only & Toggle Switcher**: Configured exactly 2 plans ("Aylık Plan" 990 ₺/mo and "Yıllık Plan" 9.900 ₺/yr with 2 months free badge) with an interactive pill toggle switch in `apps/web/modules/home/components/CalPricingSection.tsx`.
-    - **Feature Comparison Matrix (`PricingMatrix.tsx`)**: Created modular, Cal.com-styled comparison matrix in `apps/web/modules/home/components/PricingMatrix.tsx` listing 18 real rOndevu scheduling capabilities across 5 structured categories (*Çekirdek Randevu Yetenekleri*, *Mola ve Limit Yönetimi*, *Danışan Deneyimi ve Güvenlik*, *Marka ve Kişiselleştirme*, *Avantaj, Garanti ve Destek*). Tablodan "Ödeme Alma" (Payments) ve "Dahili Video" satırları tamamen çıkarıldı.
+    - **Feature Comparison Matrix (`PricingMatrix.tsx`)**: Created modular, rOndevu-styled comparison matrix in `apps/web/modules/home/components/PricingMatrix.tsx` listing 18 real rOndevu scheduling capabilities across 5 structured categories (*Çekirdek Randevu Yetenekleri*, *Mola ve Limit Yönetimi*, *Danışan Deneyimi ve Güvenlik*, *Marka ve Kişiselleştirme*, *Avantaj, Garanti ve Destek*). Tablodan "Ödeme Alma" (Payments) ve "Dahili Video" satırları tamamen çıkarıldı.
     - **Dynamic Admin Contact Modal (`PlanContactModal.tsx`)**: Zero payment gateways or registration forms; clicking plan CTA opens modal with dynamic admin contact channels (WhatsApp with `replace(/\D/g, '')` cleaned phone & `encodeURIComponent` prefill message, Phone with `replace(/[^\d+]/g, '')`, and Email) fetched via `trpc.viewer.public.getPlanContact`.
     - **Bilingual & Clean Copy**: Matrix categories, feature rows, and modal copy fully localized in `apps/web/modules/home/i18n/home-translations.ts` (TR/EN) with 0 occurrences of the forbidden word "altyapı".
     - **Validation & Browser Verification**: Biome formatting checks passed, 0 console hydration errors, verified live in browser subagent on `http://localhost:3000/`. Zero git commits pushed per instruction.
@@ -572,7 +572,7 @@
 ## What Was NOT Changed (by design)
 - `@rondevu/*` package namespace — internal implementation detail, changing would break 1000s of imports
 - App store config.json files — 3rd party integration descriptions, non-critical
-- Test mock data with cal.com URLs — non-functional
+- Test mock data with rondevu.org URLs — non-functional
 - README.md — needs full rewrite for rOndevu
 
 ## Next Steps
@@ -586,7 +586,7 @@
 - The previously injected recurring appointment feature card was removed. Retired calls to action and operational-status badges are removed from marketing views.
 
 ## 2026-10-26 — Original Framer animation reference
-- `example/Cal.com _ Scheduling Software for Online Bookings.htm` and its dark variant contain the original Framer markup and component geometry. Its saved main bundle imports three absent local modules, so the full runtime is not embedded into the React marketing page.
+- `example/rOndevu _ Scheduling Software for Online Bookings.htm` and its dark variant contain the original Framer markup and component geometry. Its saved main bundle imports three absent local modules, so the full runtime is not embedded into the React marketing page.
 - The availability control uses a 28px track with a 12px knob initially aligned right; its loop moves the knob 12px left inside the track. The orbit's `framer-160tdzx` edge overlay is suppressed while the existing orbit motion remains.
 - The integration section's “Explore apps” anchor was removed from both localized static fragments. Its “Get started” control uses the neutral dark control surface.
 

@@ -17,14 +17,14 @@ type UpdateProfileOptions = {
 const unlinkConnectedAccount = async ({ ctx }: UpdateProfileOptions) => {
   const { user } = ctx;
   // Unlink the account
-  const CalComAdapter = (await import("@rondevu/features/auth/lib/next-auth-custom-adapter")).default;
-  const calcomAdapter = CalComAdapter(prisma);
+  const RondevuAdapter = (await import("@rondevu/features/auth/lib/next-auth-custom-adapter")).default;
+  const rondevuAdapter = RondevuAdapter(prisma);
   const provider = user.identityProvider.toLocaleLowerCase();
   // If it fails to delete, don't stop because the users login data might not be present
   try {
     // if fn doesn't exist, do nothing.
-    if (calcomAdapter.unlinkAccount) {
-      await calcomAdapter.unlinkAccount({
+    if (rondevuAdapter.unlinkAccount) {
+      await rondevuAdapter.unlinkAccount({
         provider,
         providerAccountId: user.identityProviderId || "",
       });

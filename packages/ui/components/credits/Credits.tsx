@@ -8,7 +8,7 @@ import { CALCOM_VERSION, COMPANY_NAME, IS_CALCOM, IS_SELF_HOSTED } from "@rondev
 // eslint-disable-next-line turbo/no-undeclared-env-vars
 const vercelCommitHash = process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA;
 const commitHash = vercelCommitHash ? `-${vercelCommitHash.slice(0, 7)}` : "";
-const CalComVersion = `v.${CALCOM_VERSION}-${!IS_SELF_HOSTED ? "h" : "sh"}`;
+const RondevuVersion = `v.${CALCOM_VERSION}-${!IS_SELF_HOSTED ? "h" : "sh"}`;
 
 export default function Credits() {
   const [hasMounted, setHasMounted] = useState(false);
@@ -26,7 +26,7 @@ export default function Credits() {
       {hasMounted && (
         <>
           <Link href="https://rondevu.org/releases" target="_blank" className="hover:underline">
-            {CalComVersion}
+            {RondevuVersion}
           </Link>
           {vercelCommitHash && IS_CALCOM ? (
             <Link

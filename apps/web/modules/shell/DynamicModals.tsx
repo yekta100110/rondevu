@@ -1,6 +1,6 @@
 "use client";
 
-import { WelcomeToCalcomModal } from "./components/WelcomeToCalcomModal";
+import { WelcomeToRondevuModal } from "./components/WelcomeToRondevuModal";
 
 /**
  * Container for all query-param driven modals that should appear globally across the app.
@@ -15,7 +15,7 @@ import { WelcomeToCalcomModal } from "./components/WelcomeToCalcomModal";
 export function DynamicModals() {
   return (
     <>
-      <WelcomeToCalcomModal />
+      <WelcomeToRondevuModal />
       {/* Add more query-param driven modals here */}
     </>
   );

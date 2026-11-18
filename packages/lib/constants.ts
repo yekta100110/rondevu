@@ -19,7 +19,7 @@ export const IS_PRODUCTION_BUILD = process.env.NODE_ENV === "production";
 export const ORGANIZER_EMAIL_EXEMPT_DOMAINS = process.env.ORGANIZER_EMAIL_EXEMPT_DOMAINS || "";
 const IS_DEV = CALCOM_ENV === "development";
 export const SINGLE_ORG_SLUG = process.env.NEXT_PUBLIC_SINGLE_ORG_SLUG;
-/** https://app.cal.com */
+/** https://app.rondevu.org */
 export const WEBAPP_URL =
   ensureProtocol(process.env.NEXT_PUBLIC_WEBAPP_URL) ||
   VERCEL_URL ||
@@ -43,7 +43,7 @@ export const SENDER_NAME = process.env.NEXT_PUBLIC_SENDGRID_SENDER_NAME || "rOnd
 export const EMAIL_FROM_NAME = process.env.EMAIL_FROM_NAME || APP_NAME;
 
 // This is the URL from which all Cal Links and their assets are served.
-// Use website URL to make links shorter(cal.com and not app.cal.com)
+// Use website URL to make links shorter(rondevu.org and not app.rondevu.org)
 // As website isn't setup for preview environments, use the webapp url instead
 // If it's a .vercel.app domain, keep it.
 // Else use the website url if defined and finally fallback to the webapp url
@@ -65,8 +65,8 @@ export const CONSOLE_URL =
   new URL(WEBAPP_URL).hostname.endsWith(".cal-staging.com") ||
   process.env.NODE_ENV !== "production"
     ? `https://console.cal.dev`
-    : `https://console.cal.com`;
-const CAL_DOMAINS = [".cal.com", ".cal.dev", ".cal.eu", ".cal.qa"];
+    : `https://console.rondevu.org`;
+const CAL_DOMAINS = [".rondevu.org", ".cal.dev", ".cal.eu", ".cal.qa"];
 const WEBAPP_HOSTNAME = new URL(WEBAPP_URL).hostname;
 export const IS_SELF_HOSTED = !CAL_DOMAINS.some((domain) => WEBAPP_HOSTNAME.endsWith(domain));
 export const EMBED_LIB_URL = process.env.NEXT_PUBLIC_EMBED_LIB_URL || `${WEBAPP_URL}/embed/embed.js`;
@@ -149,7 +149,7 @@ export const APP_CREDENTIAL_SHARING_ENABLED =
   !!process.env.CALCOM_CREDENTIAL_SYNC_SECRET && !!process.env.CALCOM_APP_CREDENTIAL_ENCRYPTION_KEY;
 export const CREDENTIAL_SYNC_SECRET = process.env.CALCOM_CREDENTIAL_SYNC_SECRET;
 export const CREDENTIAL_SYNC_SECRET_HEADER_NAME =
-  process.env.CALCOM_CREDENTIAL_SYNC_HEADER_NAME || "calcom-credential-sync-secret";
+  process.env.CALCOM_CREDENTIAL_SYNC_HEADER_NAME || "rondevu-credential-sync-secret";
 
 export const CREDENTIAL_SYNC_ENDPOINT = process.env.CALCOM_CREDENTIAL_SYNC_ENDPOINT;
 

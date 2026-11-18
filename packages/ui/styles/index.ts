@@ -1,1 +1,1 @@
-export { useCalcomTheme } from "./useCalcomTheme";
+export { useRondevuTheme } from "./useRondevuTheme";

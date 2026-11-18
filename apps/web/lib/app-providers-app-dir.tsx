@@ -42,14 +42,14 @@ const getEmbedNamespace = (searchParams: ReadonlyURLSearchParams) => {
   return typeof window !== "undefined" ? window.getEmbedNamespace() : (searchParams.get("embed") ?? null);
 };
 
-type CalcomThemeProps = Readonly<{
+type RondevuThemeProps = Readonly<{
   isBookingPage: boolean;
   nonce: string | undefined;
   children: React.ReactNode;
   isThemeSupported: boolean;
 }>;
 
-const CalcomThemeProvider = (props: CalcomThemeProps) => {
+const RondevuThemeProvider = (props: RondevuThemeProps) => {
   // Use namespace of embed to ensure same namespaced embed are displayed with same theme. This allows different embeds on the same website to be themed differently
   // One such example is our Embeds Demo and Testing page at http://localhost:3100
   // Having `getEmbedNamespace` defined on window before react initializes the app, ensures that embedNamespace is available on the first mount and can be used as part of storageKey
@@ -103,7 +103,7 @@ const AppProviders = (props: PageWrapperProps) => {
     <>
       <TooltipProvider>
         {/* color-scheme makes background:transparent not work which is required by embed. We need to ensure next-theme adds color-scheme to `body` instead of `html`(https://github.com/pacocoursey/next-themes/blob/main/src/index.tsx#L74). Once that's done we can enable color-scheme support */}
-        <CalcomThemeProvider
+        <RondevuThemeProvider
           nonce={props.nonce}
           isThemeSupported={isThemeSupported}
           isBookingPage={props.isBookingPage || isBookingPage}>
@@ -112,7 +112,7 @@ const AppProviders = (props: PageWrapperProps) => {
               <OrgBrandProvider>{props.children}</OrgBrandProvider>
             </FeatureFlagsProvider>
           </NuqsAdapter>
-        </CalcomThemeProvider>
+        </RondevuThemeProvider>
       </TooltipProvider>
     </>
   );

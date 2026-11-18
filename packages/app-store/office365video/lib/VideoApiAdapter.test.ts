@@ -52,7 +52,7 @@ const testCredential = {
   },
   type: config.type,
   userId: 1,
-  user: { email: "example@cal.com" },
+  user: { email: "example@rondevu.org" },
   teamId: 1,
   delegatedTo: null,
   delegationCredentialId: null,

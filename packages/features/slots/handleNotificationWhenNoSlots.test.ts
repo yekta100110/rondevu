@@ -1,5 +1,5 @@
 import dayjs from "@rondevu/dayjs";
-import * as CalcomEmails from "@rondevu/emails/organization-email-service";
+import * as RondevuEmails from "@rondevu/emails/organization-email-service";
 import { getNoSlotsNotificationService } from "@rondevu/features/di/containers/NoSlotsNotification";
 import { describe, expect, it, vi } from "vitest";
 
@@ -27,7 +27,7 @@ vi.mock("@rondevu/emails/organization-email-service", () => ({
   })),
   sendOrganizationAdminNoSlotsNotification: vi.fn(),
 }));
-vi.spyOn(CalcomEmails, "sendOrganizationAdminNoSlotsNotification");
+vi.spyOn(RondevuEmails, "sendOrganizationAdminNoSlotsNotification");
 
 describe("(Orgs) Send admin notifications when a user has no availability", () => {
   it("should be a no-op and not send any notifications", async () => {
@@ -44,7 +44,7 @@ describe("(Orgs) Send admin notifications when a user has no availability", () =
     const service = getNoSlotsNotificationService();
     await service.handleNotificationWhenNoSlots({ eventDetails, orgDetails, teamId: 123 });
 
-    expect(CalcomEmails.sendOrganizationAdminNoSlotsNotification).not.toHaveBeenCalled();
+    expect(RondevuEmails.sendOrganizationAdminNoSlotsNotification).not.toHaveBeenCalled();
   });
 
   it("should not send notifications even with valid org and team", async () => {
@@ -61,7 +61,7 @@ describe("(Orgs) Send admin notifications when a user has no availability", () =
     const service = getNoSlotsNotificationService();
     await service.handleNotificationWhenNoSlots({ eventDetails, orgDetails, teamId: 123 });
 
-    expect(CalcomEmails.sendOrganizationAdminNoSlotsNotification).not.toHaveBeenCalled();
+    expect(RondevuEmails.sendOrganizationAdminNoSlotsNotification).not.toHaveBeenCalled();
   });
 
   it("should not send notifications when no teamId is provided", async () => {
@@ -81,7 +81,7 @@ describe("(Orgs) Send admin notifications when a user has no availability", () =
       orgDetails,
     });
 
-    expect(CalcomEmails.sendOrganizationAdminNoSlotsNotification).not.toHaveBeenCalled();
+    expect(RondevuEmails.sendOrganizationAdminNoSlotsNotification).not.toHaveBeenCalled();
   });
 
   it("should not send notifications when no orgDomain is provided", async () => {
@@ -102,7 +102,7 @@ describe("(Orgs) Send admin notifications when a user has no availability", () =
       teamId: 123,
     });
 
-    expect(CalcomEmails.sendOrganizationAdminNoSlotsNotification).not.toHaveBeenCalled();
+    expect(RondevuEmails.sendOrganizationAdminNoSlotsNotification).not.toHaveBeenCalled();
   });
 
   it("should not send notifications for multiple event types", async () => {
@@ -128,6 +128,6 @@ describe("(Orgs) Send admin notifications when a user has no availability", () =
       teamId: 123,
     });
 
-    expect(CalcomEmails.sendOrganizationAdminNoSlotsNotification).not.toHaveBeenCalled();
+    expect(RondevuEmails.sendOrganizationAdminNoSlotsNotification).not.toHaveBeenCalled();
   });
 });

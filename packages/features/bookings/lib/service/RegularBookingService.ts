@@ -2585,8 +2585,8 @@ async function handler(
     });
 
     // Unused until we deploy to trigger.dev production
-    // for now we only enable for cal.com org and we keep our current email system
-    // cal.com org members will see emails in double while we test
+    // for now we only enable for rondevu.org org and we keep our current email system
+    // rondevu.org org members will see emails in double while we test
     if (ENABLE_ASYNC_TASKER && !noEmail && isBookingEmailSmsTaskerEnabled) {
       try {
         await deps.bookingEmailAndSmsTasker.send({

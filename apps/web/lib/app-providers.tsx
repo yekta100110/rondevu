@@ -126,12 +126,12 @@ enum ThemeSupport {
   Booking = "bookingConfigured",
 }
 
-type CalcomThemeProps = PropsWithChildren<
+type RondevuThemeProps = PropsWithChildren<
   Pick<AppProps, "router"> &
     Pick<AppProps["pageProps"], "themeBasis"> &
     Pick<AppProps["Component"], "isBookingPage" | "isThemeSupported">
 >;
-const CalcomThemeProvider = (props: CalcomThemeProps) => {
+const RondevuThemeProvider = (props: RondevuThemeProps) => {
   // Use namespace of embed to ensure same namespaced embed are displayed with same theme. This allows different embeds on the same website to be themed differently
   // One such example is our Embeds Demo and Testing page at http://localhost:3100
   // Having `getEmbedNamespace` defined on window before react initializes the app, ensures that embedNamespace is available on the first mount and can be used as part of storageKey
@@ -165,8 +165,8 @@ const CalcomThemeProvider = (props: CalcomThemeProps) => {
  * So, we handle all the cases here namely,
  * - Both Booking Pages, /free/30min and /pro/30min but configured with different themes but being operated together.
  * - Embeds using different namespace. They can be completely themed different on the same page.
- * - Embeds using the same namespace but showing different cal.com links with different themes
- * - Embeds using the same namespace and showing same cal.com links with different themes(Different theme is possible for same cal.com link in case of embed because of theme config available in embed)
+ * - Embeds using the same namespace but showing different rondevu.org links with different themes
+ * - Embeds using the same namespace and showing same rondevu.org links with different themes(Different theme is possible for same rondevu.org link in case of embed because of theme config available in embed)
  * - App has different theme then Booking Pages.
  *
  * All the above cases have one thing in common, which is the origin and thus localStorage is shared and thus `storageKey` is critical to avoid theme flickering.
@@ -188,7 +188,7 @@ function getThemeProviderProps({
   isEmbedMode,
   embedNamespace,
 }: {
-  props: Omit<CalcomThemeProps, "children">;
+  props: Omit<RondevuThemeProps, "children">;
   isEmbedMode: boolean;
   embedNamespace: string | null;
 }) {
@@ -270,7 +270,7 @@ const AppProviders = (props: AppPropsWithChildren) => {
   const RemainingProviders = (
     <CustomI18nextProvider {...props}>
       <TooltipProvider>
-        <CalcomThemeProvider
+        <RondevuThemeProvider
           themeBasis={props.pageProps.themeBasis}
           isThemeSupported={props.Component.isThemeSupported}
           isBookingPage={props.Component.isBookingPage || isBookingPage}
@@ -280,7 +280,7 @@ const AppProviders = (props: AppPropsWithChildren) => {
               <OrgBrandProvider>{props.children}</OrgBrandProvider>
             </FeatureFlagsProvider>
           </NuqsAdapter>
-        </CalcomThemeProvider>
+        </RondevuThemeProvider>
       </TooltipProvider>
     </CustomI18nextProvider>
   );

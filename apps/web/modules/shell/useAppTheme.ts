@@ -3,7 +3,7 @@
 import getBrandColours from "@rondevu/lib/getBrandColours";
 import useTheme from "@rondevu/lib/hooks/useTheme";
 import useMeQuery from "@rondevu/trpc/react/hooks/useMeQuery";
-import { useCalcomTheme } from "@rondevu/ui/styles";
+import { useRondevuTheme } from "@rondevu/ui/styles";
 
 export const useAppTheme = () => {
   const { data: user } = useMeQuery();
@@ -11,6 +11,6 @@ export const useAppTheme = () => {
     lightVal: user?.brandColor,
     darkVal: user?.darkBrandColor,
   });
-  useCalcomTheme(brandTheme);
+  useRondevuTheme(brandTheme);
   useTheme(user?.appTheme);
 };

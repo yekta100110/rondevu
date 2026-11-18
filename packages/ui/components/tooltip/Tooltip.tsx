@@ -26,7 +26,7 @@ export function Tooltip({
     <TooltipPrimitive.Content
       {...props}
       className={classNames(
-        "calcom-tooltip",
+        "rondevu-tooltip",
         side === "top" && "-mt-7",
         side === "left" && "mr-2",
         side === "right" && "ml-2",

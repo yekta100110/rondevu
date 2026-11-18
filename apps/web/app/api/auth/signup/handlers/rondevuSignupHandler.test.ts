@@ -104,7 +104,7 @@ vi.mock("@rondevu/lib/server/username", () => ({
 }));
 
 // Import after mocks
-import "./calcomSignupHandler";
+import "./rondevuSignupHandler";
 import { runP2002TestSuite } from "@rondevu/features/auth/signup/handlers/__tests__/p2002.test-suite";
 
 function callHandler(body: SignupBody): Promise<MockResponse> {
@@ -116,7 +116,7 @@ function callHandler(body: SignupBody): Promise<MockResponse> {
   });
 }
 
-runP2002TestSuite("calcomHandler", callHandler, () => {
+runP2002TestSuite("rondevuHandler", callHandler, () => {
   vi.clearAllMocks();
   resetPrismaMock();
   mockFindTokenByToken.mockResolvedValue(createMockFoundToken());

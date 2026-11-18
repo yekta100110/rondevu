@@ -13,7 +13,7 @@ import { DialogContent, DialogFooter, DialogHeader, DialogClose } from "@rondevu
 import { showToast } from "@rondevu/ui/components/toast";
 
 function hideDialogFor(hideFor: [number, DayjsManipulateType], toastContent: string) {
-  document.cookie = `calcom-timezone-dialog=1;max-age=${
+  document.cookie = `rondevu-timezone-dialog=1;max-age=${
     dayjs().add(hideFor[0], hideFor[1]).unix() - dayjs().unix()
   }`;
   if (toastContent) showToast(toastContent, "success");
@@ -120,7 +120,7 @@ export default function TimezoneChangeDialog() {
     if (typeof window !== "undefined" && document) {
       const cookie = document.cookie
         .split(";")
-        .find((cookie) => cookie.trim().startsWith("calcom-timezone-dialog"));
+        .find((cookie) => cookie.trim().startsWith("rondevu-timezone-dialog"));
       if (!cookie) {
         setRenderDialog(true);
       }

@@ -92,9 +92,9 @@ const mockBooking = {
   },
 };
 
-const mockCalComEvent: CalendarSubscriptionEventItem = {
+const mockRondevuEvent: CalendarSubscriptionEventItem = {
   id: "event-1",
-  iCalUID: "test-booking-uid@cal.com",
+  iCalUID: "test-booking-uid@rondevu.org",
   start: new Date("2023-12-01T10:00:00Z"),
   end: new Date("2023-12-01T11:00:00Z"),
   busy: true,
@@ -112,7 +112,7 @@ const mockCalComEvent: CalendarSubscriptionEventItem = {
   kind: "calendar#event",
 };
 
-const mockNonCalComEvent: CalendarSubscriptionEventItem = {
+const mockNonRondevuEvent: CalendarSubscriptionEventItem = {
   id: "event-2",
   iCalUID: "external-event@external.com",
   start: new Date("2023-12-01T12:00:00Z"),
@@ -133,9 +133,9 @@ const mockNonCalComEvent: CalendarSubscriptionEventItem = {
 };
 
 const mockCancelledEvent: CalendarSubscriptionEventItem = {
-  ...mockCalComEvent,
+  ...mockRondevuEvent,
   id: "event-3",
-  iCalUID: "cancelled-booking-uid@cal.com",
+  iCalUID: "cancelled-booking-uid@rondevu.org",
   status: "cancelled",
 };
 
@@ -156,8 +156,8 @@ describe("CalendarSyncService", () => {
   });
 
   describe("handleEvents", () => {
-    test("should process only Cal.diy events", async () => {
-      const events = [mockCalComEvent, mockNonCalComEvent, mockCancelledEvent];
+    test("should process only rOndevu events", async () => {
+      const events = [mockRondevuEvent, mockNonRondevuEvent, mockCancelledEvent];
 
       mockBookingRepository.findBookingByUidWithEventType = vi
         .fn()
@@ -175,8 +175,8 @@ describe("CalendarSyncService", () => {
       });
     });
 
-    test("should return early when no Cal.diy events", async () => {
-      const events = [mockNonCalComEvent];
+    test("should return early when no rOndevu events", async () => {
+      const events = [mockNonRondevuEvent];
 
       await service.handleEvents(mockSelectedCalendar, events);
 
@@ -191,7 +191,7 @@ describe("CalendarSyncService", () => {
 
     test("should handle mixed case iCalUID", async () => {
       const eventWithMixedCase: CalendarSubscriptionEventItem = {
-        ...mockCalComEvent,
+        ...mockRondevuEvent,
         iCalUID: "test-booking-uid@CAL.COM",
       };
 
@@ -204,10 +204,10 @@ describe("CalendarSyncService", () => {
       });
     });
 
-    test("should handle default Cal.diy iCalUID", async () => {
+    test("should handle default rOndevu iCalUID", async () => {
       const eventWithCalDiyUID: CalendarSubscriptionEventItem = {
-        ...mockCalComEvent,
-        iCalUID: "test-booking-uid@Cal.diy",
+        ...mockRondevuEvent,
+        iCalUID: "test-booking-uid@rOndevu",
       };
 
       mockBookingRepository.findBookingByUidWithEventType = vi.fn().mockResolvedValue(mockBooking);
@@ -221,7 +221,7 @@ describe("CalendarSyncService", () => {
 
     test("should handle events with null iCalUID", async () => {
       const eventWithNullUID: CalendarSubscriptionEventItem = {
-        ...mockCalComEvent,
+        ...mockRondevuEvent,
         iCalUID: null,
       };
 
@@ -267,7 +267,7 @@ describe("CalendarSyncService", () => {
     test("should return early when booking UID is malformed", async () => {
       const eventWithMalformedUID: CalendarSubscriptionEventItem = {
         ...mockCancelledEvent,
-        iCalUID: "@cal.com",
+        iCalUID: "@rondevu.org",
       };
 
       await service.cancelBooking(eventWithMalformedUID, mockSelectedCalendar.userId);
@@ -317,7 +317,7 @@ describe("CalendarSyncService", () => {
   describe("rescheduleBooking", () => {
     test("should successfully reschedule a booking preserving original duration", async () => {
       const updatedEvent: CalendarSubscriptionEventItem = {
-        ...mockCalComEvent,
+        ...mockRondevuEvent,
         start: new Date("2023-12-01T14:00:00Z"),
         end: new Date("2023-12-01T15:00:00Z"),
         summary: "Updated summary",
@@ -377,7 +377,7 @@ describe("CalendarSyncService", () => {
 
     test("should preserve original duration when external event has different duration", async () => {
       const stretchedEvent: CalendarSubscriptionEventItem = {
-        ...mockCalComEvent,
+        ...mockRondevuEvent,
         start: new Date("2023-12-01T14:00:00Z"),
         end: new Date("2023-12-01T15:30:00Z"), // 90min, but original booking is 60min
       };
@@ -399,7 +399,7 @@ describe("CalendarSyncService", () => {
 
     test("should skip reschedule when event times are null (no change detected)", async () => {
       const eventWithNullTimes: CalendarSubscriptionEventItem = {
-        ...mockCalComEvent,
+        ...mockRondevuEvent,
         start: null,
         end: null,
       };
@@ -418,7 +418,7 @@ describe("CalendarSyncService", () => {
         responses: null,
       };
       const eventWithDifferentStart: CalendarSubscriptionEventItem = {
-        ...mockCalComEvent,
+        ...mockRondevuEvent,
         start: new Date("2023-12-01T14:00:00Z"),
         end: new Date("2023-12-01T15:00:00Z"),
       };
@@ -434,14 +434,14 @@ describe("CalendarSyncService", () => {
             name: bookingWithoutResponses.title,
             email: bookingWithoutResponses.userPrimaryEmail,
             guests: [],
-            notes: mockCalComEvent.description,
+            notes: mockRondevuEvent.description,
             smsReminderNumber: bookingWithoutResponses.smsReminderNumber,
             location: {
-              label: mockCalComEvent.location,
-              value: mockCalComEvent.location,
-              optionValue: mockCalComEvent.location,
+              label: mockRondevuEvent.location,
+              value: mockRondevuEvent.location,
+              optionValue: mockRondevuEvent.location,
             },
-            title: mockCalComEvent.summary,
+            title: mockRondevuEvent.summary,
           }),
           metadata: expect.objectContaining({
             calendarSubscriptionEvent: expect.any(String),
@@ -458,12 +458,12 @@ describe("CalendarSyncService", () => {
       const parsedMetadataBase = JSON.parse(
         baseCall[0].bookingData.metadata.calendarSubscriptionEvent as string
       );
-      expect(parsedMetadataBase.summary).toEqual(mockCalComEvent.summary);
+      expect(parsedMetadataBase.summary).toEqual(mockRondevuEvent.summary);
     });
 
     test("should return early when booking UID is missing", async () => {
       const eventWithoutUID: CalendarSubscriptionEventItem = {
-        ...mockCalComEvent,
+        ...mockRondevuEvent,
         iCalUID: null,
       };
 
@@ -475,8 +475,8 @@ describe("CalendarSyncService", () => {
 
     test("should return early when booking UID is malformed", async () => {
       const eventWithMalformedUID: CalendarSubscriptionEventItem = {
-        ...mockCalComEvent,
-        iCalUID: "@cal.com",
+        ...mockRondevuEvent,
+        iCalUID: "@rondevu.org",
       };
 
       await service.rescheduleBooking(eventWithMalformedUID, mockSelectedCalendar.userId);
@@ -488,7 +488,7 @@ describe("CalendarSyncService", () => {
     test("should return early when booking is not found", async () => {
       mockBookingRepository.findBookingByUidWithEventType = vi.fn().mockResolvedValue(null);
 
-      await service.rescheduleBooking(mockCalComEvent, mockSelectedCalendar.userId);
+      await service.rescheduleBooking(mockRondevuEvent, mockSelectedCalendar.userId);
 
       expect(mockBookingRepository.findBookingByUidWithEventType).toHaveBeenCalledWith({
         bookingUid: "test-booking-uid",
@@ -498,7 +498,7 @@ describe("CalendarSyncService", () => {
 
     test("should handle rescheduling errors gracefully without throwing", async () => {
       const eventWithDifferentStart: CalendarSubscriptionEventItem = {
-        ...mockCalComEvent,
+        ...mockRondevuEvent,
         start: new Date("2023-12-01T14:00:00Z"),
         end: new Date("2023-12-01T15:00:00Z"),
       };
@@ -520,7 +520,7 @@ describe("CalendarSyncService", () => {
         .mockRejectedValue(new Error("DB connection failed"));
 
       await expect(
-        service.rescheduleBooking(mockCalComEvent, mockSelectedCalendar.userId)
+        service.rescheduleBooking(mockRondevuEvent, mockSelectedCalendar.userId)
       ).resolves.not.toThrow();
 
       expect(mockBookingRepository.findBookingByUidWithEventType).toHaveBeenCalled();

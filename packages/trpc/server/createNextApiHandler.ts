@@ -56,7 +56,7 @@ export function createNextApiHandler(router: AnyRouter, isPublic = false, namesp
         const cacheRules = {
           session: "no-cache",
 
-          // i18n and cityTimezones are now being accessed using the CalComVersion, which updates on every release,
+          // i18n and cityTimezones are now being accessed using the RondevuVersion, which updates on every release,
           // letting the clients get the new versions when the version number changes.
           "i18n.get": SETTING_FOR_CACHED_BY_VERSION,
           cityTimezones: SETTING_FOR_CACHED_BY_VERSION,

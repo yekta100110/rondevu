@@ -52,7 +52,7 @@ import type { Provider } from "next-auth/providers/index";
 import { getOrgUsernameFromEmail } from "../signup/utils/getOrgUsernameFromEmail";
 import { dub } from "./dub";
 import { ErrorCode } from "./ErrorCode";
-import CalComAdapter from "./next-auth-custom-adapter";
+import RondevuAdapter from "./next-auth-custom-adapter";
 import { verifyPassword } from "./verifyPassword";
 
 type UserWithProfiles = NonNullable<
@@ -287,7 +287,7 @@ export async function authorizeCredentials(
   return baseUser;
 }
 
-export const CalComCredentialsProvider = CredentialsProvider({
+export const RondevuCredentialsProvider = CredentialsProvider({
   id: "credentials",
   name: "rOndevu",
   type: "credentials",
@@ -300,7 +300,7 @@ export const CalComCredentialsProvider = CredentialsProvider({
   authorize: authorizeCredentials,
 });
 
-const providers: Provider[] = [CalComCredentialsProvider];
+const providers: Provider[] = [RondevuCredentialsProvider];
 type SamlIdpUser = {
   id: number;
   userId: number;
@@ -369,7 +369,7 @@ function isNumber(n: string) {
   return !Number.isNaN(parseFloat(n)) && !Number.isNaN(+n);
 }
 
-const calcomAdapter = CalComAdapter(prisma);
+const rondevuAdapter = RondevuAdapter(prisma);
 
 export const getOptions = ({
   getDubId,
@@ -380,7 +380,7 @@ export const getOptions = ({
   /** Ad tracking data for Stripe customer metadata */
   getTrackingData: () => TrackingData;
 }): AuthOptions => ({
-  adapter: calcomAdapter,
+  adapter: rondevuAdapter,
   session: {
     strategy: "jwt",
   },
@@ -945,7 +945,7 @@ export const getOptions = ({
                   existingUser.id,
                   user.email
                 );
-                await calcomAdapter.linkAccount(linkAccountWithUserData);
+                await rondevuAdapter.linkAccount(linkAccountWithUserData);
               }
             } catch (error) {
               if (error instanceof Error) {
@@ -1146,7 +1146,7 @@ export const getOptions = ({
             newUser.id,
             user.email
           );
-          await calcomAdapter.linkAccount(linkAccountNewUserData);
+          await rondevuAdapter.linkAccount(linkAccountNewUserData);
 
           // Update profile photo for new Microsoft/Azure AD users
           if (account.provider === "azure-ad" && account.access_token) {

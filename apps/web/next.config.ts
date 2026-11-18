@@ -654,7 +654,7 @@ const nextConfig = (phase: string): NextConfig => {
           : []),
       ];
 
-      if (process.env.NEXT_PUBLIC_WEBAPP_URL === "https://app.cal.com") {
+      if (process.env.NEXT_PUBLIC_WEBAPP_URL === "https://app.rondevu.org") {
         redirects.push(
           {
             source: "/apps/dailyvideo",

@@ -561,7 +561,7 @@ export const locationsResolver = (t: TFunction) => {
                   path: [eventLocationType?.defaultValueVariable ?? "link"],
                   message: t("invalid_url_error_message", {
                     label: eventLocationType.label,
-                    sampleUrl: sampleUrl ?? "https://cal.com",
+                    sampleUrl: sampleUrl ?? "https://rondevu.org",
                   }),
                 });
               }

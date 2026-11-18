@@ -531,7 +531,7 @@ export class TeamEventTypeResponseHost extends TeamEventTypeHostInput {
   @IsString()
   @IsOptional()
   @ApiPropertyOptional({
-    example: "https://cal.com/api/avatar/d95949bc-ccb1-400f-acf6-045c51a16856.png",
+    example: "https://rondevu.org/api/avatar/d95949bc-ccb1-400f-acf6-045c51a16856.png",
     nullable: true,
   })
   avatarUrl?: string | null;
@@ -550,7 +550,7 @@ export class EventTypeOutput_2024_06_14 extends BaseEventTypeOutput_2024_06_14 {
   @IsString()
   @DocsProperty({
     description: "Full URL to the booking page for this event type",
-    example: "https://cal.com/john-doe/30min",
+    example: "https://rondevu.org/john-doe/30min",
     format: "uri",
   })
   bookingUrl!: string;

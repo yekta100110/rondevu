@@ -21,7 +21,7 @@ const refreshOAuthTokens = async (refreshFunction: () => any, appSlug: string, u
         [CREDENTIAL_SYNC_SECRET_HEADER_NAME]: CREDENTIAL_SYNC_SECRET,
       },
       body: new URLSearchParams({
-        calcomUserId: userId.toString(),
+        rondevuUserId: userId.toString(),
         appSlug,
       }),
     });

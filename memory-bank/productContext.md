@@ -3,7 +3,7 @@
 ## Why This Project Exists
 **rOndevu**, Çatı Marka (Umbrella Brand / Venture Studio) çatısı altında geliştirilen ilk dikey SaaS ürünüdür. Türkiye ve yerel pazardaki hizmet odaklı işletmelerin (klinikler, diş hekimleri, güzellik merkezleri, psikolog/danışmanlık ofisleri, kuaför/berber salonları ve yerel işletmeler) telefon trafiği veya manuel mesajlaşma yüzünden yaşadığı zaman kaybını ve randevuya gelmeme (no-show) sorununu çözmek için tasarlanmıştır.
 
-Yabancı kurumsal takvim yazılımlarının (Calendly, Cal.com Enterprise vb.) e-posta merkezli, karmaşık ve yerel alışkanlıklara uzak yapısının aksine; rOndevu **telefon numarası, SMS doğrulaması ve WhatsApp bildirimlerini** merkeze alır.
+Yabancı kurumsal takvim yazılımlarının (Calendly, rOndevu Enterprise vb.) e-posta merkezli, karmaşık ve yerel alışkanlıklara uzak yapısının aksine; rOndevu **telefon numarası, SMS doğrulaması ve WhatsApp bildirimlerini** merkeze alır.
 
 ## Problems It Solves
 - **Telefon ve Mesaj Trafiği Yükü:** İşletmelerin gün içinde "Hangi saat boş?" sorusuna harcadığı mesaiyi, müşterinin saniyeler içinde kendi randevusunu oluşturabileceği canlı bir takvim ekranıyla ortadan kaldırır.
@@ -28,5 +28,5 @@ Yabancı kurumsal takvim yazılımlarının (Calendly, Cal.com Enterprise vb.) e
 
 ## User Experience & De-Cal'ification Goals
 - **Yalın ve Yerel Deneyim:** Kurumsal/yabancı jargonlardan ("Toplantı", "OOO", "Organizations", "Teams") arındırılmış; "Randevu", "İzinlerim", "Katılmadı" gibi doğal Türkçe terminolojiye sahip arayüz.
-- **De-Cal'ification:** Cal.com'dan miras kalan gereksiz `app-store` eklentilerinin ve kurumsal karmaşanın temizlenerek yalnızca çekirdek randevu, takvim, SMS ve WhatsApp akışlarının öne çıkarılması.
+- **De-Cal'ification:** rOndevu'dan miras kalan gereksiz `app-store` eklentilerinin ve kurumsal karmaşanın temizlenerek yalnızca çekirdek randevu, takvim, SMS ve WhatsApp akışlarının öne çıkarılması.
 - **Şeffaf İki Planlı Model:** Özellik kısıtlaması veya komisyon olmadan tüm yetenekleri sunan Aylık ve Yıllık plan yapısı (`PlanContactModal` üzerinden doğrudan iletişim ve aktivasyon).

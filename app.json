@@ -1,7 +1,7 @@
 {
   "name": "rOndevu",
   "description": "Açık Kaynak Randevu Altyapısı",
-  "repository": "https://github.com/calcom/cal.diy",
+  "repository": "https://github.com/yekta100110/rOndevu",
   "logo": "/android-chrome-512x512.png",
   "keywords": ["react", "typescript", "node", "nextjs", "prisma", "postgres", "trpc"],
   "addons": [

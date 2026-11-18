@@ -62,7 +62,7 @@ import {
   XIcon,
 } from "@coss/ui/icons";
 import { showToast } from "@rondevu/ui/components/toast";
-import { useCalcomTheme } from "@rondevu/ui/styles";
+import { useRondevuTheme } from "@rondevu/ui/styles";
 import CancelBooking from "@rondevu/web/components/booking/CancelBooking";
 import EventReservationSchema from "@rondevu/web/components/schemas/EventReservationSchema";
 import { timeZone } from "@rondevu/web/lib/clock";
@@ -102,7 +102,7 @@ const useBrandColors = ({
     lightVal: brandColor,
     darkVal: darkBrandColor,
   });
-  useCalcomTheme(brandTheme);
+  useRondevuTheme(brandTheme);
 };
 
 export default function Success(props: PageProps) {
@@ -1032,7 +1032,7 @@ export default function Success(props: PageProps) {
                         <hr className="border-subtle mt-8" />
                         <div className="text-default pt-8 text-center text-xs">
                           <a href="/auth/signup">
-                            {t("create_booking_link_with_calcom", { appName: APP_NAME })}
+                            {t("create_booking_link_with_rondevu", { appName: APP_NAME })}
                           </a>
 
                           <form

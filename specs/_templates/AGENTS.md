@@ -22,6 +22,6 @@
 ## Don't
 
 - Don't add features outside `design.md`
-- Don't reintroduce Cal.com / Cal.diy enterprise, organization, or unused `app-store` bloat
+- Don't reintroduce rOndevu / rOndevu enterprise, organization, or unused `app-store` bloat
 - Don't skip unit tests or Biome / TypeScript verification
 - {Feature-specific don'ts}

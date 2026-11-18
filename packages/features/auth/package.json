@@ -2,8 +2,8 @@
   "name": "@rondevu/feature-auth",
   "sideEffects": false,
   "private": true,
-  "description": "Cal.diy's main auth code",
-  "authors": "Cal.com, Inc.",
+  "description": "rOndevu's main auth code",
+  "authors": "rOndevu, Inc.",
   "version": "1.0.0",
   "main": "index.ts",
   "dependencies": {

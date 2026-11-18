@@ -271,38 +271,38 @@ describe("CalendarManager tests", () => {
 
   describe("fn: deduplicateCredentialsBasedOnSelectedCalendars", () => {
     it("should remove a regular credential for which a delegation credential exists i.e. both are fetching events for same externalId", () => {
-      const calcomUser = {
+      const rondevuUser = {
         email: "owner@hariombalhara.net",
       };
 
-      const externalIdSameAsCalcomUserEmail = calcomUser.email;
-      const externalIdDifferentFromCalcomUserEmail = "hariombalhara@gmail.com";
+      const externalIdSameAsRondevuUserEmail = rondevuUser.email;
+      const externalIdDifferentFromRondevuUserEmail = "hariombalhara@gmail.com";
 
       // Delegation Credential(Calendar)
-      const delegationCredentialCalendarForCalcomEmail = buildCredential({
+      const delegationCredentialCalendarForRondevuEmail = buildCredential({
         type: "google_calendar",
         appId: "google-calendar",
         id: -1,
         delegatedToId: "45fa8f04-e891-417b-98e1-abf48e8ae18a",
-        user: calcomUser,
+        user: rondevuUser,
       });
 
       // Delegation Credential(Conferencing)
-      const delegationCredentialConferencingForCalcomEmail = buildCredential({
+      const delegationCredentialConferencingForRondevuEmail = buildCredential({
         type: "google_video",
         appId: "google-meet",
         id: -1,
         delegatedToId: "45fa8f04-e891-417b-98e1-abf48e8ae18a",
-        user: calcomUser,
+        user: rondevuUser,
       });
 
       // Regular Credential for owner@hariombalhara.net
-      const regularCredentialForCalcomEmail = buildCredential({
+      const regularCredentialForRondevuEmail = buildCredential({
         id: 2,
         appId: "google-calendar",
         type: "google_calendar",
         delegatedToId: null,
-        user: calcomUser,
+        user: rondevuUser,
       });
 
       // Regular Credential for hariombalhara@gmail.com
@@ -311,14 +311,14 @@ describe("CalendarManager tests", () => {
         appId: "google-calendar",
         type: "google_calendar",
         delegatedToId: null,
-        user: calcomUser,
+        user: rondevuUser,
       });
 
       const credentials = [
-        delegationCredentialCalendarForCalcomEmail,
-        delegationCredentialConferencingForCalcomEmail,
+        delegationCredentialCalendarForRondevuEmail,
+        delegationCredentialConferencingForRondevuEmail,
         // This one is duplicate
-        regularCredentialForCalcomEmail,
+        regularCredentialForRondevuEmail,
         // Regular Credential for hariombalhara@gmail.com
         regularCredentialForSomeOtherEmail,
       ];
@@ -328,7 +328,7 @@ describe("CalendarManager tests", () => {
           id: "62f4f3b7-c65b-4199-8052-25b91ee25ff2",
           userId: 23,
           integration: "google_calendar",
-          externalId: externalIdDifferentFromCalcomUserEmail,
+          externalId: externalIdDifferentFromRondevuUserEmail,
           credentialId: regularCredentialForSomeOtherEmail.id,
           delegationCredentialId: null,
           eventTypeId: null,
@@ -337,8 +337,8 @@ describe("CalendarManager tests", () => {
           id: "418e1bd0-7bde-4ea6-b03a-b2b6de6af497",
           userId: 23,
           integration: "google_calendar",
-          externalId: externalIdSameAsCalcomUserEmail,
-          credentialId: regularCredentialForCalcomEmail.id,
+          externalId: externalIdSameAsRondevuUserEmail,
+          credentialId: regularCredentialForRondevuEmail.id,
           delegationCredentialId: null,
           eventTypeId: null,
         },
@@ -350,45 +350,45 @@ describe("CalendarManager tests", () => {
       });
       expect(uniqueCredentials).toHaveLength(3);
       expect(uniqueCredentials).toEqual([
-        delegationCredentialCalendarForCalcomEmail,
-        delegationCredentialConferencingForCalcomEmail,
+        delegationCredentialCalendarForRondevuEmail,
+        delegationCredentialConferencingForRondevuEmail,
         regularCredentialForSomeOtherEmail,
       ]);
     });
 
     it("should not remove a regular credential for which a delegation credential exists i.e. both are fetching events for same externalId if integration is different", () => {
-      const calcomUser = {
+      const rondevuUser = {
         email: "owner@hariombalhara.net",
       };
 
-      const externalIdSameAsCalcomUserEmail = calcomUser.email;
-      const externalIdDifferentFromCalcomUserEmail = "hariombalhara@gmail.com";
+      const externalIdSameAsRondevuUserEmail = rondevuUser.email;
+      const externalIdDifferentFromRondevuUserEmail = "hariombalhara@gmail.com";
 
       // Delegation Credential(Calendar) - wrong integration type
-      const delegationCredentialCalendarForCalcomEmail = buildCredential({
+      const delegationCredentialCalendarForRondevuEmail = buildCredential({
         type: "google_calendar_wrong_type",
         appId: "google-calendar",
         id: -1,
         delegatedToId: "45fa8f04-e891-417b-98e1-abf48e8ae18a",
-        user: calcomUser,
+        user: rondevuUser,
       });
 
       // Delegation Credential(Conferencing)
-      const delegationCredentialConferencingForCalcomEmail = buildCredential({
+      const delegationCredentialConferencingForRondevuEmail = buildCredential({
         type: "google_video",
         appId: "google-meet",
         id: -1,
         delegatedToId: "45fa8f04-e891-417b-98e1-abf48e8ae18a",
-        user: calcomUser,
+        user: rondevuUser,
       });
 
       // Regular Credential for owner@hariombalhara.net
-      const regularCredentialForCalcomEmail = buildCredential({
+      const regularCredentialForRondevuEmail = buildCredential({
         id: 2,
         appId: "google-calendar",
         type: "google_calendar",
         delegatedToId: null,
-        user: calcomUser,
+        user: rondevuUser,
       });
 
       // Regular Credential for hariombalhara@gmail.com
@@ -397,14 +397,14 @@ describe("CalendarManager tests", () => {
         appId: "google-calendar",
         type: "google_calendar",
         delegatedToId: null,
-        user: calcomUser,
+        user: rondevuUser,
       });
 
       const credentials = [
-        delegationCredentialCalendarForCalcomEmail,
-        delegationCredentialConferencingForCalcomEmail,
+        delegationCredentialCalendarForRondevuEmail,
+        delegationCredentialConferencingForRondevuEmail,
         // This one won't be removed as integration is different
-        regularCredentialForCalcomEmail,
+        regularCredentialForRondevuEmail,
         // Regular Credential for hariombalhara@gmail.com
         regularCredentialForSomeOtherEmail,
       ];
@@ -414,7 +414,7 @@ describe("CalendarManager tests", () => {
           id: "62f4f3b7-c65b-4199-8052-25b91ee25ff2",
           userId: 23,
           integration: "google_calendar",
-          externalId: externalIdDifferentFromCalcomUserEmail,
+          externalId: externalIdDifferentFromRondevuUserEmail,
           credentialId: regularCredentialForSomeOtherEmail.id,
           delegationCredentialId: null,
           eventTypeId: null,
@@ -423,8 +423,8 @@ describe("CalendarManager tests", () => {
           id: "418e1bd0-7bde-4ea6-b03a-b2b6de6af497",
           userId: 23,
           integration: "google_calendar",
-          externalId: externalIdSameAsCalcomUserEmail,
-          credentialId: regularCredentialForCalcomEmail.id,
+          externalId: externalIdSameAsRondevuUserEmail,
+          credentialId: regularCredentialForRondevuEmail.id,
           delegationCredentialId: null,
           eventTypeId: null,
         },
@@ -436,9 +436,9 @@ describe("CalendarManager tests", () => {
       });
       expect(uniqueCredentials).toHaveLength(4);
       expect(uniqueCredentials).toEqual([
-        delegationCredentialCalendarForCalcomEmail,
-        delegationCredentialConferencingForCalcomEmail,
-        regularCredentialForCalcomEmail,
+        delegationCredentialCalendarForRondevuEmail,
+        delegationCredentialConferencingForRondevuEmail,
+        regularCredentialForRondevuEmail,
         regularCredentialForSomeOtherEmail,
       ]);
     });

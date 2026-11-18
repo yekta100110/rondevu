@@ -5,7 +5,7 @@ import { useEffect } from "react";
 type CssVariables = Record<string, string>;
 
 // Sets up CSS Variables based on brand colours
-const useCalcomTheme = (theme: Record<string, CssVariables>) => {
+const useRondevuTheme = (theme: Record<string, CssVariables>) => {
   useEffect(() => {
     Object.entries(theme).forEach(([key, value]) => {
       if (!value) {
@@ -31,4 +31,4 @@ const useCalcomTheme = (theme: Record<string, CssVariables>) => {
   }, [theme]);
 };
 
-export { useCalcomTheme };
+export { useRondevuTheme };

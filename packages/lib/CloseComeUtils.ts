@@ -14,7 +14,7 @@ import { APP_NAME } from "./constants";
 export async function getCloseComContactIds(
   persons: { email: string; name: string | null }[],
   closeCom: CloseCom,
-  leadFromCalComId?: string
+  leadFromRondevuId?: string
 ): Promise<string[]> {
   // Check if persons exist or to see if any should be created
   const closeComContacts = await closeCom.contact.search({
@@ -22,7 +22,7 @@ export async function getCloseComContactIds(
   });
   // NOTE: If contact is duplicated in Close.com we will get more results
   //       messing around with the expected number of contacts retrieved
-  if (closeComContacts.data.length < persons.length && leadFromCalComId) {
+  if (closeComContacts.data.length < persons.length && leadFromRondevuId) {
     // Create missing contacts
     const personsEmails = persons.map((att) => att.email);
     // Existing contacts based on persons emails: contacts may have more
@@ -36,7 +36,7 @@ export async function getCloseComContactIds(
         async (per) =>
           await closeCom.contact.create({
             person: per,
-            leadId: leadFromCalComId,
+            leadId: leadFromRondevuId,
           })
       )
     );
@@ -58,10 +58,10 @@ export async function getCustomActivityTypeInstanceData(
   customFields: CloseComFieldOptions,
   closeCom: CloseCom
 ): Promise<CloseComCustomActivityCreate> {
-  // Get Cal.diy generic Lead
-  const leadFromCalComId = await getCloseComLeadId(closeCom);
+  // Get rOndevu generic Lead
+  const leadFromRondevuId = await getCloseComLeadId(closeCom);
   // Get Contacts ids
-  const contactsIds = await getCloseComContactIds(event.attendees, closeCom, leadFromCalComId);
+  const contactsIds = await getCloseComContactIds(event.attendees, closeCom, leadFromRondevuId);
   // Get Custom Activity Type id
   const customActivityTypeAndFieldsIds = await getCloseComCustomActivityTypeFieldsIds(customFields, closeCom);
   // Prepare values for each Custom Activity Fields
@@ -77,7 +77,7 @@ export async function getCustomActivityTypeInstanceData(
     {},
     {
       custom_activity_type_id: customActivityTypeAndFieldsIds.activityType,
-      lead_id: leadFromCalComId,
+      lead_id: leadFromRondevuId,
     }, // This is to add each field as `"custom.FIELD_ID": "value"` in the object
     ...customActivityTypeAndFieldsIds.fields.map((fieldId: string, index: number) => {
       return {
@@ -157,7 +157,7 @@ export async function getCloseComCustomActivityTypeFieldsIds(
   const customActivities = await closeCom.customActivity.type.get();
   const calComCustomActivity = customActivities.data.filter((act) => act.name === `${APP_NAME} Activity`);
   if (calComCustomActivity.length > 0) {
-    // Cal.diy Custom Activity type exist
+    // rOndevu Custom Activity type exist
     // Get Custom Activity Type fields ids
     const fields = await getCustomFieldsIds("activity", customFields, closeCom, calComCustomActivity[0].id);
     return {
@@ -165,7 +165,7 @@ export async function getCloseComCustomActivityTypeFieldsIds(
       fields,
     };
   } else {
-    // Cal.diy Custom Activity type doesn't exist
+    // rOndevu Custom Activity type doesn't exist
     // Create Custom Activity Type
     const { id: activityType } = await closeCom.customActivity.type.create({
       name: `${APP_NAME} Activity`,
@@ -201,14 +201,14 @@ export async function getCloseComLeadId(
 ): Promise<string> {
   // TODO: Check for leads against email rather than name
   const closeComLeadNames = await closeCom.lead.list({ query: { _fields: ["name", "id"] } });
-  const searchLeadFromCalCom: CloseComLead[] = closeComLeadNames.data.filter(
+  const searchLeadFromRondevu: CloseComLead[] = closeComLeadNames.data.filter(
     (lead) => lead.name === leadInfo.companyName
   );
-  if (searchLeadFromCalCom.length === 0) {
+  if (searchLeadFromRondevu.length === 0) {
     // No Lead exists, create it
-    const createdLeadFromCalCom = await closeCom.lead.create(leadInfo);
-    return createdLeadFromCalCom.id ?? "";
+    const createdLeadFromRondevu = await closeCom.lead.create(leadInfo);
+    return createdLeadFromRondevu.id ?? "";
   } else {
-    return searchLeadFromCalCom[0].id ?? "";
+    return searchLeadFromRondevu[0].id ?? "";
   }
 }

@@ -1,6 +1,6 @@
-# Cal.diy Embed Lifecycle Events
+# rOndevu Embed Lifecycle Events
 
-This document details the lifecycle events and states of Cal.diy embeds, showing the interaction flow between the parent page and the iframe.
+This document details the lifecycle events and states of rOndevu embeds, showing the interaction flow between the parent page and the iframe.
 
 ## Embed Handshake (Core Communication)
 
@@ -19,7 +19,7 @@ See [embed-message-protocol.mermaid](./embed-message-protocol.mermaid) for the m
 
 ### Message Format
 
-All messages use the `originator: "CAL"` identifier to distinguish Cal.diy embed messages:
+All messages use the `originator: "CAL"` identifier to distinguish rOndevu embed messages:
 
 ```javascript
 // Parent → Iframe (Commands)
@@ -223,6 +223,6 @@ The embed system tracks user interactions and page views:
 ## Error Handling
 
 Page Load Errors:
-   - System monitors CalComPageStatus
+   - System monitors RondevuPageStatus
    - On non-200 status: fires linkFailed event
    - Includes error code and URL information

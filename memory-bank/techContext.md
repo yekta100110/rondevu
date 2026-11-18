@@ -26,7 +26,7 @@
 - `packages/features` — Self-contained domain modules (`auth`, `bookings`, `availability`, `webhooks`, `tasker`, etc.)
 - `packages/lib` — Shared utilities (`smsTransport.ts`, `sanitizeSmsText.ts`, `normalizePhoneNumber.ts`, `planContactConfig.ts`, `rateLimit.ts`, `validateCronAuth.ts`)
 - `packages/sms` — `@rondevu/sms` workspace package (`SMSManager`, 1-segment GSM 7-bit attendee/organizer SMS templates, unit tests)
-- `packages/app-store` — External calendar integrations (Google Calendar, Apple Calendar; unused Cal.com bloat targeted for De-Cal'ification)
+- `packages/app-store` — External calendar integrations (Google Calendar, Apple Calendar; unused rOndevu bloat targeted for De-Cal'ification)
 - `packages/i18n` — Turkish (`tr`) and English (`en`) translation catalogs (`common.json` with 0 missing Turkish keys)
 - `packages/emails` — Transactional email templates
 - `deploy/` — n8n workflow templates (`n8n-platform-webhook.workflow.json`, `n8n-evolution-optout.workflow.json`)
@@ -63,4 +63,4 @@
 ## Development & Operational Notes
 - `turbo.json` passes `RONDEVU_*` and `PLATFORM_N8N_*` environment variables through to the Next.js runtime.
 - Turkish (`tr`) is the default locale across UI, database defaults (`User.locale`, `Attendee.locale`), default schedule names (`"Çalışma saatleri"`), and transactional notifications.
-- All Turkish customer-facing copy avoids corporate Cal.com jargon (using `"Randevu"` instead of `"Toplantı"`, `"İzinlerim / Ofis Dışında"` instead of `"OOO"`, and zero instances of `"altyapı"` on marketing pages).
+- All Turkish customer-facing copy avoids corporate rOndevu jargon (using `"Randevu"` instead of `"Toplantı"`, `"İzinlerim / Ofis Dışında"` instead of `"OOO"`, and zero instances of `"altyapı"` on marketing pages).

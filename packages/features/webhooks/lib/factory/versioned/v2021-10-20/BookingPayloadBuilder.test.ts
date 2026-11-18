@@ -47,7 +47,7 @@ describe("v2021-10-20/BookingPayloadBuilder", () => {
         language: { locale: "en" },
       },
     ],
-    location: "https://cal.com/video/123",
+    location: "https://rondevu.org/video/123",
     uid: "booking-uid-123",
     customInputs: {},
     responses: {},
@@ -263,12 +263,12 @@ describe("v2021-10-20/BookingPayloadBuilder", () => {
 
     it("BOOKING_REQUESTED payload includes metadata from extra", () => {
       const dto = createMockDTO(WebhookTriggerEvents.BOOKING_REQUESTED, {
-        metadata: { videoCallUrl: "https://cal.com/video/abc" },
+        metadata: { videoCallUrl: "https://rondevu.org/video/abc" },
       });
       const result = builder.build(dto);
       const p = result.payload as EventPayloadType;
 
-      expect(p.metadata).toEqual({ videoCallUrl: "https://cal.com/video/abc" });
+      expect(p.metadata).toEqual({ videoCallUrl: "https://rondevu.org/video/abc" });
     });
 
     it("preserves empty string description (does not replace with additionalNotes)", () => {

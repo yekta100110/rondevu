@@ -277,10 +277,10 @@ function PricingView({ html, svgTemplates, initialContact, initialLocale }: Pric
 
   return (
     <div className="relative min-h-screen bg-white dark:bg-[#141414] text-emphasis selection:bg-brand-default selection:text-brand transition-colors duration-200">
-      {/* Cal.com SVG Şablonları */}
+      {/* rOndevu SVG Şablonları */}
       <StaticSvgTemplates svgTemplates={svgTemplates} />
 
-      {/* 1:1 Cal.com Pricing Sayfa Gövdesi */}
+      {/* 1:1 rOndevu Pricing Sayfa Gövdesi */}
       <StaticPricingBody html={html} locale={locale} onClick={handleContainerClick} />
 
       {/* Güven Bandı */}

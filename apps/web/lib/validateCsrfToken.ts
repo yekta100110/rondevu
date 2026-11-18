@@ -3,11 +3,11 @@ import { NextResponse } from "next/server";
 
 export async function validateCsrfToken(csrfToken: string): Promise<NextResponse | null> {
   const cookieStore = await cookies();
-  const cookieToken = cookieStore.get("calcom.csrf_token")?.value;
+  const cookieToken = cookieStore.get("rondevu.csrf_token")?.value;
 
   if (!cookieToken || cookieToken !== csrfToken) {
     return NextResponse.json({ success: false, message: "Invalid CSRF token" }, { status: 403 });
   }
-  cookieStore.delete("calcom.csrf_token");
+  cookieStore.delete("rondevu.csrf_token");
   return null;
 }

@@ -17,7 +17,7 @@ afterEach(() => {
 const credentialSyncVariables = {
   APP_CREDENTIAL_SHARING_ENABLED: false,
   CREDENTIAL_SYNC_SECRET: "SECRET",
-  CREDENTIAL_SYNC_SECRET_HEADER_NAME: "calcom-credential-sync-secret",
+  CREDENTIAL_SYNC_SECRET_HEADER_NAME: "rondevu-credential-sync-secret",
   CREDENTIAL_SYNC_ENDPOINT: "https://example.com/getToken",
 };
 
@@ -1546,6 +1546,6 @@ function expectToBeTokenGetCall({
   );
 
   const fetchBody = fetchCall[1]?.body as unknown as URLSearchParams;
-  expect(fetchBody.get("calcomUserId")).toBe(userId.toString());
+  expect(fetchBody.get("rondevuUserId")).toBe(userId.toString());
   expect(fetchBody.get("appSlug")).toBe(appSlug);
 }

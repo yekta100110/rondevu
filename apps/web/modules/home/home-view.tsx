@@ -923,10 +923,10 @@ function HomeView({ html, svgTemplates, isLoggedIn = false, initialContact, init
 
   return (
     <div className="relative min-h-screen bg-white dark:bg-[#141414] text-emphasis selection:bg-brand-default selection:text-brand transition-colors duration-200">
-      {/* Cal.com SVG Şablonları */}
+      {/* rOndevu SVG Şablonları */}
       <SvgTemplatesBody svgTemplates={svgTemplates} />
 
-      {/* 1:1 Cal.com Sayfa Gövdesi */}
+      {/* 1:1 rOndevu Sayfa Gövdesi */}
       <FramerDomBody html={html} onClick={onRootClick} />
       <MarketingFooter locale={locale} initialContact={resolvedContact} />
 

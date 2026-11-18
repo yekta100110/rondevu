@@ -39,7 +39,7 @@ export type TimezoneSelectProps = SelectProps & {
 export function TimezoneSelect(props: TimezoneSelectProps) {
   const { data = [], isPending } = trpc.viewer.timezones.cityTimezones.useQuery(
     {
-      CalComVersion: CALCOM_VERSION,
+      RondevuVersion: CALCOM_VERSION,
     },
     {
       trpc: { context: { skipBatch: true } },

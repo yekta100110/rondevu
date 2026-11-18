@@ -21,7 +21,7 @@ type CalOAuthProviderProps = Omit<BaseCalProviderProps, "isOAuth2">;
  * @param {string} props.clientId - The platform oauth client ID.
  * @param {string} props.accessToken - The access token of your managed user. - Optional
  * @param {object} props.options - The options object.
- * @param {string} [options.apiUrl] - The API URL. https://api.cal.com/v2
+ * @param {string} [options.apiUrl] - The API URL. https://api.rondevu.org/v2
  * @param {string} [options.refreshUrl] - The url point to your refresh endpoint. - Optional, required if accessToken is provided.
  * @param {boolean} [autoUpdateTimezone=true] - Whether to automatically update the timezone. - Optional
  * @param {function} props.onTimezoneChange - The callback function for timezone change. - Optional

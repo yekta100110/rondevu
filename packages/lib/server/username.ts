@@ -52,7 +52,7 @@ export const isPremiumUserName = IS_PREMIUM_USERNAME_ENABLED
   ? async (username: string) => {
       return username.length <= 4 || isBlacklisted(username);
     }
-  : // outside of cal.com the concept of premium username needs not exist.
+  : // outside of rondevu.org the concept of premium username needs not exist.
     () => Promise.resolve(false);
 
 export const generateUsernameSuggestion = async (users: string[], username: string) => {

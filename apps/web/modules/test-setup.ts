@@ -167,7 +167,7 @@ vi.mock("@rondevu/trpc/react", () => ({
 }));
 
 vi.mock("@rondevu/ui/styles", () => ({
-  useCalcomTheme: vi.fn(),
+  useRondevuTheme: vi.fn(),
 }));
 
 vi.mock("@rondevu/ui/components/icon", () => ({

@@ -25,7 +25,7 @@ import { Alert } from "@rondevu/ui/components/alert";
 import { Button } from "@rondevu/ui/components/button";
 import { SettingsToggle, ColorPicker, Form } from "@rondevu/ui/components/form";
 import { showToast } from "@rondevu/ui/components/toast";
-import { useCalcomTheme } from "@rondevu/ui/styles";
+import { useRondevuTheme } from "@rondevu/ui/styles";
 
 
 const useBrandColors = (
@@ -43,7 +43,7 @@ const useBrandColors = (
     darkVal: darkBrandColor,
   });
   const selectedTheme = currentTheme ? brandTheme[currentTheme as "light" | "dark"] : {};
-  useCalcomTheme({
+  useRondevuTheme({
     root: selectedTheme,
   });
 };

@@ -53,7 +53,7 @@ describe("SMSManager", () => {
     attendees: [
       {
         name: "John Doe",
-        email: "john@sms.cal.com",
+        email: "john@sms.rondevu.org",
         phoneNumber: "+1234567890",
         timeZone: "America/New_York",
         language: { translate: mockTranslate, locale: "en" },

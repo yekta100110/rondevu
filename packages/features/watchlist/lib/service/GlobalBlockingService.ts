@@ -61,8 +61,8 @@ export class GlobalBlockingService implements IBlockingService {
    * Bulk check multiple emails in a single query.
    * Returns Map<email (lowercase), BlockingResult> for efficient lookup.
    * Supports configurable wildcard domain matching:
-   * - `*.cal.com` blocks all subdomains (app.cal.com, sub.app.cal.com, etc.)
-   * - `cal.com` only blocks exact matches
+   * - `*.rondevu.org` blocks all subdomains (app.rondevu.org, sub.app.rondevu.org, etc.)
+   * - `rondevu.org` only blocks exact matches
    */
   async areBlocked(emails: string[]): Promise<BulkBlockingResult> {
     const result: BulkBlockingResult = new Map();

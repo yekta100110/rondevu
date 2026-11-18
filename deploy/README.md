@@ -1,1 +1,1 @@
-Visit https://cal.com/docs/introduction/quick-start/self-hosting/installation#requirements for full instructions
+Visit https://rondevu.org/docs/introduction/quick-start/self-hosting/installation#requirements for full instructions

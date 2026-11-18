@@ -30,7 +30,7 @@ export function NotFound({ host }: { host: string }) {
 
   useLayoutEffect(() => {
     if (typeof window !== "undefined") {
-      window.CalComPageStatus = "404";
+      window.RondevuPageStatus = "404";
     }
   }, []);
 

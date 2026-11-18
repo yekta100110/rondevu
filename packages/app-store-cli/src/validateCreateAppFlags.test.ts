@@ -124,7 +124,7 @@ describe("validateCreateAppFlags", () => {
       const result = validateCreateAppFlags({
         template: "link-as-an-app",
         category: "conferencing",
-        externalLinkUrl: "https://x.com/calcom",
+        externalLinkUrl: "https://x.com/rondevu",
         validTemplateValues: VALID_TEMPLATES,
       });
       expect(result).toBeNull();

@@ -8,7 +8,7 @@ import { getLocale } from "@rondevu/features/auth/lib/getLocale";
 import type { AppImageProps, MeetingImageProps } from "@rondevu/lib/OgImages";
 import { constructAppImage, constructGenericImage, constructMeetingImage } from "@rondevu/lib/OgImages";
 import { IS_CALCOM, WEBAPP_URL, APP_NAME, SEO_IMG_OGIMG, CAL_URL } from "@rondevu/lib/constants";
-import { getCalcomUrl } from "@rondevu/lib/getCalcomUrl";
+import { getRondevuUrl } from "@rondevu/lib/getRondevuUrl";
 import { buildCanonical } from "@rondevu/lib/next-seo.config";
 import { getTranslation } from "@rondevu/i18n/server";
 import { truncateOnWord } from "@rondevu/lib/text";
@@ -40,7 +40,7 @@ const _generateMetadataWithoutImage = async (
   const description = getDescription(t);
   const titleSuffix = `| ${APP_NAME}`;
   const displayedTitle = title.includes(titleSuffix) || hideBranding ? title : `${title} ${titleSuffix}`;
-  const metadataBase = new URL(IS_CALCOM ? getCalcomUrl() : WEBAPP_URL);
+  const metadataBase = new URL(IS_CALCOM ? getRondevuUrl() : WEBAPP_URL);
 
   return {
     title: title.length === 0 ? APP_NAME : displayedTitle,
@@ -114,7 +114,7 @@ export const _generateMetadataForStaticPage = async (
   const canonical = buildCanonical({ path: _pathname, origin: origin ?? CAL_URL });
   const titleSuffix = `| ${APP_NAME}`;
   const displayedTitle = title.includes(titleSuffix) || hideBranding ? title : `${title} ${titleSuffix}`;
-  const metadataBase = new URL(IS_CALCOM ? getCalcomUrl() : WEBAPP_URL);
+  const metadataBase = new URL(IS_CALCOM ? getRondevuUrl() : WEBAPP_URL);
 
   const metadata = {
     title: title.length === 0 ? APP_NAME : displayedTitle,

@@ -1,5 +1,5 @@
 undecided:
-  - calcom-monorepo
+  - rondevu-monorepo
   - "@rondevu/api-v2"
   - "@rondevu/app-store-cli"
   - "@rondevu/platform-constants"

@@ -416,7 +416,7 @@ export default function Signup({
                 )}
                 <div className="flex flex-col gap-2">
                   <h1 className="font-cal text-[28px] leading-none">
-                    {IS_CALCOM ? t("create_your_calcom_account") : t("create_your_account")}
+                    {IS_CALCOM ? t("create_your_rondevu_account") : t("create_your_account")}
                   </h1>
                   {IS_CALCOM ? (
                     <p className="font-medium text-base text-subtle leading-5">
@@ -424,7 +424,7 @@ export default function Signup({
                     </p>
                   ) : (
                     <p className="font-medium text-base text-subtle leading-5">
-                      {t("calcom_explained", {
+                      {t("rondevu_explained", {
                         appName: APP_NAME,
                       })}
                     </p>
@@ -469,9 +469,9 @@ export default function Signup({
 
                             // Handle production domains - modify hostname only to preserve query params
                             if (option.value === "eu") {
-                              currentUrl.hostname = currentUrl.hostname.replace("cal.com", "cal.eu");
+                              currentUrl.hostname = currentUrl.hostname.replace("rondevu.org", "cal.eu");
                             } else {
-                              currentUrl.hostname = currentUrl.hostname.replace("cal.eu", "cal.com");
+                              currentUrl.hostname = currentUrl.hostname.replace("cal.eu", "rondevu.org");
                             }
                             window.location.href = currentUrl.toString();
                           }

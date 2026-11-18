@@ -2,7 +2,7 @@
   "name": "@rondevu/trpc",
   "sideEffects": false,
   "private": true,
-  "description": "Shared tRPC library for Cal.diy",
+  "description": "Shared tRPC library for rOndevu",
   "authors": "zomars",
   "version": "1.0.0",
   "main": "index.ts",

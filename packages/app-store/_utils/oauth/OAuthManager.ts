@@ -18,7 +18,7 @@ import { safeStringify } from "@rondevu/lib/safeStringify";
 
 import type { AxiosLikeResponseToFetchResponse } from "./AxiosLikeResponseToFetchResponse";
 import type { OAuth2TokenResponseInDbWhenExistsSchema, OAuth2UniversalSchema } from "./universalSchema";
-import { OAuth2UniversalSchemaWithCalcomBackwardCompatibility } from "./universalSchema";
+import { OAuth2UniversalSchemaWithRondevuBackwardCompatibility } from "./universalSchema";
 
 const log = logger.getSubLogger({ prefix: ["app-store/_utils/oauth/OAuthManager"] });
 export const enum TokenStatus {
@@ -40,7 +40,7 @@ type ResourceOwner =
 
 type FetchNewTokenObject = ({ refreshToken }: { refreshToken: string | null }) => Promise<Response | null>;
 type UpdateTokenObject = (
-  token: z.infer<typeof OAuth2UniversalSchemaWithCalcomBackwardCompatibility>
+  token: z.infer<typeof OAuth2UniversalSchemaWithRondevuBackwardCompatibility>
 ) => Promise<void>;
 type isTokenObjectUnusable = (response: Response) => Promise<{ reason: string } | null>;
 type isAccessTokenUnusable = (response: Response) => Promise<{ reason: string } | null>;
@@ -452,7 +452,7 @@ export class OAuthManager {
   }
 
   private normalizeNewlyReceivedToken(
-    token: z.infer<typeof OAuth2UniversalSchemaWithCalcomBackwardCompatibility>
+    token: z.infer<typeof OAuth2UniversalSchemaWithRondevuBackwardCompatibility>
   ) {
     if (!token.expiry_date && !token.expires_in) {
       // Use a practically infinite expiry(a year) for when Credential Sync is enabled. Token is expected to be refreshed by the API request from the credential source.
@@ -497,7 +497,7 @@ export class OAuthManager {
               this.credentialSyncVariables.CREDENTIAL_SYNC_SECRET,
           },
           body: new URLSearchParams({
-            calcomUserId: this.resourceOwner.id.toString(),
+            rondevuUserId: this.resourceOwner.id.toString(),
             appSlug: this.appSlug,
           }),
         });
@@ -548,7 +548,7 @@ export class OAuthManager {
       // Throw error back as it isn't a valid token response and we can't process it further
       throw new Error(json.myFetchError);
     }
-    const parsedToken = OAuth2UniversalSchemaWithCalcomBackwardCompatibility.safeParse(json);
+    const parsedToken = OAuth2UniversalSchemaWithRondevuBackwardCompatibility.safeParse(json);
     if (!parsedToken.success) {
       myLog.error(
         "Token parsing error:",

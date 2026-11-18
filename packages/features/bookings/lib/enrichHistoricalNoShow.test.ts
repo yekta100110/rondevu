@@ -42,7 +42,7 @@ describe("areContactsMatching", () => {
     expect(
       areContactsMatching(
         { email: "unrelated@example.com", phoneNumber: "05521191987" },
-        { email: "905521191987@sms.cal.com" }
+        { email: "905521191987@sms.rondevu.org" }
       )
     ).toBe(true);
   });

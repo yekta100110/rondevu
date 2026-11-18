@@ -33,7 +33,7 @@ export const OAuth2UniversalSchema = OAuth2BareMinimumUniversalSchema.extend({
   expiry_date: z.number().optional(),
 });
 
-export const OAuth2UniversalSchemaWithCalcomBackwardCompatibility = OAuth2UniversalSchema.extend({
+export const OAuth2UniversalSchemaWithRondevuBackwardCompatibility = OAuth2UniversalSchema.extend({
   /**
    * Time in seconds until the token expires
    * Either this or expiry_date should be provided
@@ -41,5 +41,5 @@ export const OAuth2UniversalSchemaWithCalcomBackwardCompatibility = OAuth2Univer
   expires_in: z.number().optional(),
 });
 
-export const OAuth2TokenResponseInDbWhenExistsSchema = OAuth2UniversalSchemaWithCalcomBackwardCompatibility;
-export const OAuth2TokenResponseInDbSchema = OAuth2UniversalSchemaWithCalcomBackwardCompatibility.nullable();
+export const OAuth2TokenResponseInDbWhenExistsSchema = OAuth2UniversalSchemaWithRondevuBackwardCompatibility;
+export const OAuth2TokenResponseInDbSchema = OAuth2UniversalSchemaWithRondevuBackwardCompatibility.nullable();

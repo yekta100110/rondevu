@@ -78,7 +78,7 @@ const generateIcsString = ({
     start: toICalDateArray(event.startTime),
     end: toICalDateArray(event.endTime),
     startInputType: "utc",
-    productId: "calcom/ics",
+    productId: "rondevu/ics",
     title: event.title,
     description: getRichDescription(event, t),
     organizer: {

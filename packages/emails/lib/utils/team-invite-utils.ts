@@ -8,7 +8,7 @@ export type TeamInvite = {
   to: string;
   teamName: string;
   joinLink: string;
-  isCalcomMember: boolean;
+  isRondevuMember: boolean;
   /**
    * We ideally should have a separate email for auto-join(when a user is automatically accepted into a team/org), but we don't have one yet.
    */

@@ -4,7 +4,7 @@ import { useLocale } from "@rondevu/lib/hooks/useLocale";
 import { sessionStorage } from "@rondevu/lib/webstorage";
 import { trpc } from "@rondevu/trpc/react";
 import { showToast } from "@rondevu/ui/components/toast";
-import { setShowWelcomeToCalcomModalFlag } from "@rondevu/web/modules/shell/hooks/useWelcomeToCalcomModal";
+import { setShowWelcomeToRondevuModalFlag } from "@rondevu/web/modules/shell/hooks/useWelcomeToRondevuModal";
 
 const ONBOARDING_REDIRECT_KEY = "onBoardingRedirect";
 const ORG_MODAL_STORAGE_KEY = "showNewOrgModal";
@@ -71,8 +71,8 @@ export const useSubmitPersonalOnboarding = () => {
 
       if (!hasOrgModalFlag) {
         // Only set personal modal flag if org modal flag is not set
-        setShowWelcomeToCalcomModalFlag();
-        router.push("/event-types?welcomeToCalcomModal=true");
+        setShowWelcomeToRondevuModalFlag();
+        router.push("/event-types?welcomeToRondevuModal=true");
       } else {
         // Org modal flag exists - redirect to event-types without personal modal query param
         // The org modal will show via sessionStorage check

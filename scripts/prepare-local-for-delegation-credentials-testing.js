@@ -11,7 +11,7 @@ async function main() {
   const { FeaturesRepository } = await import("@rondevu/features/flags/features.repository");
   const featuresRepository = new FeaturesRepository(prisma);
   // Parse newEmail from args
-  const newEmail = process.argv[2] || "hariom@cal.com";
+  const newEmail = process.argv[2] || "hariom@rondevu.org";
   console.log(`Using newEmail: ${newEmail}`);
 
   // 1. Update user email

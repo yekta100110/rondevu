@@ -279,7 +279,7 @@ export const useIsEmbed = (embedSsr?: boolean) => {
     const _isValidNamespace = isValidNamespace(namespace);
     if (parent !== window && !_isValidNamespace) {
       log(
-        "Looks like you have iframed cal.com but not using Embed Snippet. Directly using an iframe isn't recommended."
+        "Looks like you have iframed rondevu.org but not using Embed Snippet. Directly using an iframe isn't recommended."
       );
     }
     setIsEmbed(window?.isEmbed?.() || false);
@@ -350,7 +350,7 @@ export const methods = {
 
     if (stylesConfig) {
       console.warn(
-        "Cal.diy Embed: `styles` prop is deprecated. Use `cssVarsPerTheme` instead to achieve the same effect. Here is a list of CSS variables that are supported. https://github.com/calcom/cal.diy/blob/main/packages/config/tailwind-preset.js#L19"
+        "rOndevu Embed: `styles` prop is deprecated. Use `cssVarsPerTheme` instead to achieve the same effect. Here is a list of CSS variables that are supported. https://github.com/yekta100110/rOndevu/blob/main/packages/config/tailwind-preset.js#L19"
       );
     }
 
@@ -429,7 +429,7 @@ export const methods = {
 
       // Check page status again before firing linkReady, in case it was set after initialization
       if (hasPageError()) {
-        handlePageError(window.CalComPageStatus);
+        handlePageError(window.RondevuPageStatus);
         return;
       }
 
@@ -547,7 +547,7 @@ function main() {
   // If embed link is opened in top, and not in iframe. Let the page be visible.
   if (top === window) {
     showPageAsNonEmbed();
-    // We would want to avoid a situation where Cal.diy embeds cal.com and then embed-iframe is in the top as well. In such case, we would want to avoid infinite loop of events being passed.
+    // We would want to avoid a situation where rOndevu embeds rondevu.org and then embed-iframe is in the top as well. In such case, we would want to avoid infinite loop of events being passed.
     log("Embed SDK Skipped as we are in top");
     return;
   }
@@ -616,7 +616,7 @@ function main() {
  * @returns true if an error exists, false otherwise
  */
 function hasPageError() {
-  const pageStatus = window.CalComPageStatus;
+  const pageStatus = window.RondevuPageStatus;
   return !!(pageStatus && pageStatus != "200");
 }
 
@@ -649,7 +649,7 @@ function initializeAndSetupEmbed() {
   embedStore.state = EMBED_IFRAME_STATE.INITIALIZED;
   log("Initializing embed-iframe");
   // HACK
-  const pageStatus = window.CalComPageStatus;
+  const pageStatus = window.RondevuPageStatus;
 
   if (hasPageError()) {
     handlePageError(pageStatus);
@@ -711,7 +711,7 @@ async function connectPreloadedEmbed({
       }
       // Check page status again before firing linkReady, in case it was set after initialization
       if (hasPageError()) {
-        handlePageError(window.CalComPageStatus);
+        handlePageError(window.RondevuPageStatus);
         resolve();
         return;
       }

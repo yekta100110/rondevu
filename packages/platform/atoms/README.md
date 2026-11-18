@@ -6,8 +6,8 @@ Customizable UI components to integrate scheduling into your services.
 Currently supports React 18, React 19, Next 14 and Next 15.
 
 ### Changelog 
-1. Changelog can be viewed [here](https://github.com/calcom/cal.diy/blob/main/packages/platform/atoms/CHANGELOG.md).
-2. For upcoming changes in the next release click [here](https://github.com/calcom/cal.diy/pulls?q=is%3Apr+is%3Aopen+%22chore%3A+version+packages%22+in%3Atitle) to see a pull request titled `chore: version packages` containing next release changes.
+1. Changelog can be viewed [here](https://github.com/yekta100110/rOndevu/blob/main/packages/platform/atoms/CHANGELOG.md).
+2. For upcoming changes in the next release click [here](https://github.com/yekta100110/rOndevu/pulls?q=is%3Apr+is%3Aopen+%22chore%3A+version+packages%22+in%3Atitle) to see a pull request titled `chore: version packages` containing next release changes.
 
 ### Versioning
 1. We use semantic versioning meaning that all updates except major should be safe to update.
@@ -16,8 +16,8 @@ Currently supports React 18, React 19, Next 14 and Next 15.
 want to use version without any suffix e.g. `1.0.103`.
 
 ### Documentation 
-Documentation on how to get started with platform solution is [here](https://cal.com/docs/platform/quickstart) and list of atoms can be viewed
-[here](https://cal.com/docs/platform/atoms/cal-provider)
+Documentation on how to get started with platform solution is [here](https://rondevu.org/docs/platform/quickstart) and list of atoms can be viewed
+[here](https://rondevu.org/docs/platform/atoms/cal-provider)
 
 ## Contributors guide
 
@@ -25,7 +25,7 @@ Documentation on how to get started with platform solution is [here](https://cal
 We use a tool called changesets that helps documenting changes related to your development branch and then manages
 atoms versioning and publishing to [npm](https://www.npmjs.com/package/@rondevu/atoms). We need to add a log documenting changes and then letting changesets to gather the changes, update Changelog and update version in `package.json`.
 
-1. Let's say you are on a development branch and just finished adding a new feature to atoms. While on the development branch, you have to add a log documenting this feature so that it later ends up in the atoms [CHANGELOG.md](https://github.com/calcom/cal.diy/blob/main/packages/platform/atoms/CHANGELOG.md).
+1. Let's say you are on a development branch and just finished adding a new feature to atoms. While on the development branch, you have to add a log documenting this feature so that it later ends up in the atoms [CHANGELOG.md](https://github.com/yekta100110/rOndevu/blob/main/packages/platform/atoms/CHANGELOG.md).
 - Run `yarn changesets-add` from monorepo root and then select `@rondevu/atoms` using space bar and press enter to go to the next step.
 - Then, you have to select whether this is a major, minor or patch update following semantic versioning. Since it is a feature skip major by pressing enter and then select minor by pressing space bar and press enter to go to the next step.
 - Then, you have to write a description of the change and press enter. This will generate a log file in the `.changeset` directory e.g. `.changeset/hungry-donuts-cross.md`. 
@@ -45,9 +45,9 @@ Atoms are tested in CI using e2e tests within the example platform app. To run t
 ```
 NEXT_PUBLIC_X_CAL_ID=""
 X_CAL_SECRET_KEY=""
-NEXT_PUBLIC_CALCOM_API_URL="https://api.cal.com/v2"
+NEXT_PUBLIC_CALCOM_API_URL="https://api.rondevu.org/v2"
 VITE_BOOKER_EMBED_OAUTH_CLIENT_ID=""
-VITE_BOOKER_EMBED_API_URL="https://api.cal.com/v2"
+VITE_BOOKER_EMBED_API_URL="https://api.rondevu.org/v2"
 ORGANIZATION_ID=""
 ```
 3. Go to "packages/platform/examples/base" and run `yarn dev:e2e` - this will start the example platform app and run e2e tests by using locally built atoms. Because it is not running within CI it will open a browser and run tests.

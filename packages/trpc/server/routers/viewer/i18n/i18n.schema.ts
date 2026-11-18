@@ -9,7 +9,7 @@ export const i18nInputSchema = z.object({
     .string()
     .min(2)
     .transform((locale) => lookup(i18n.locales, locale) || locale),
-  CalComVersion: z.string(),
+  RondevuVersion: z.string(),
 });
 
 export type I18nInputSchema = z.infer<typeof i18nInputSchema>;

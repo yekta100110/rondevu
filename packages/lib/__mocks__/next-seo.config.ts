@@ -1,16 +1,16 @@
 vi.mock("@rondevu/lib/next-seo.config", () => ({
   default: {
     headSeo: {
-      siteName: "Cal.diy",
+      siteName: "rOndevu",
     },
     defaultNextSeo: {
-      title: "Cal.diy",
+      title: "rOndevu",
       description: "Scheduling infrastructure for everyone.",
     },
   },
   seoConfig: {
     headSeo: {
-      siteName: "Cal.diy",
+      siteName: "rOndevu",
     },
   },
   buildSeoMeta: vi.fn().mockReturnValue({}),

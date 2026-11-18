@@ -108,11 +108,11 @@
 - Branding rename completed (user-facing logos, constants, metadata, titles)
 - All logo SVGs, favicons, app icons, metro tiles, and email logos regenerated with Cal Sans font and exact dimensions
 - Historical No-Show Counter Badge in Bookings View with batch credential cross-matching (email, phone, synthetic SMS email)
-- 1:1 Cal.com Ground Adaptation for rOndevu (`/example` -> rOndevu):
-  - Cal.com homepage file (`/example/Cal.com _ Scheduling Software for Online Bookings.htm`) taken 1:1 as the sole architectural ground.
+- 1:1 rOndevu Ground Adaptation for rOndevu (`/example` -> rOndevu):
+  - rOndevu homepage file (`/example/rOndevu _ Scheduling Software for Online Bookings.htm`) taken 1:1 as the sole architectural ground.
   - Base layout hierarchy, DOM structure, CSS (`data-framer-css`), Cal Sans/Matter typography, SVG templates, and Framer Motion animation flow preserved intact.
   - Old hybrid components (`HeroPrecisionConsole`, `RealInterfaceShowcase`, etc.) completely eliminated from root page.
-  - All brand names replaced: 132 occurrences of "Cal" / "Cal.com" converted to "rOndevu" (0 remaining).
+  - All brand names replaced: 132 occurrences of "Cal" / "rOndevu" converted to "rOndevu" (0 remaining).
   - Logo assets integrated: `rondevu-icon.png` from `/example/logos` and official SVG wordmarks in header & nav.
   - Accept payments (Stripe/billing), Built-in video conferencing (dahili video), and external sponsor/investor tickers cleanly stripped.
   - Public instant signup removed; all buttons connect to `#pricing` and the 2-tier pricing model: Aylık (990 ₺/ay) & Yıllık (9.900 ₺/yıl - 2 Ay Hediye).
@@ -156,19 +156,19 @@
 - ESLint errors ignored (`ignoreDuringBuilds: true` in next.config)
 
 ## Evolution
-1. Forked from Cal.diy (upstream of Cal.com open source)
+1. Forked from rOndevu (upstream of rOndevu open source)
 2. Renamed to rOndevu (3 days ago)
 3. Build config adjusted to suppress errors
 4. Initial analysis completed (today)
 5. Full user-facing rebranding and asset regeneration (SVGs, favicons, app icons, emails) completed
-6. Fixed dark mode logo inversion on mobile/desktop, scaled up logo vector rendering, and replaced Cal.diy on login page with rOndevu (pushed to main)
+6. Fixed dark mode logo inversion on mobile/desktop, scaled up logo vector rendering, and replaced rOndevu on login page with rOndevu (pushed to main)
 7. Centered "rOn" lettering precisely in the middle of all favicons, app icons, and metro tiles (top/bottom margins now mathematically equal)
 8. Set system default language to Turkish (`tr`), automated Turkish start for all users, added all 41 missing keys to `tr/common.json` (0 missing keys remaining), cleaned up legacy brand strings, and refined home page localization
 9. Disabled "Ekibimle birlikte" onboarding plan with "Geliştirme aşamasında" badge; created dedicated minimal homepage at root route with top-right "Giriş Yap" button; added minimal pricing section with 1.000 ₺ monthly and 10.000 ₺ yearly (instead of 12.000 ₺) tiers.
 10. Fixed Docker / Next.js production build `module-not-found` failure by correcting deep import of `@rondevu/ui/components/logo/Logo` to `@rondevu/ui/components/logo` in `apps/web/modules/home/home-view.tsx`.
 11. Initial visit system theme persistence, simplified homepage pricing (990 ₺ / 9.900 ₺), framer-motion login entrance animation, minimal `/plan-bilgi` contact page, "Randevu" terminology alignment, email dark mode redesign with Turkish default fallback, and complete SMS transport engine + Admin SMS control menu (`/settings/admin/sms`).
 12. Homepage revamp: Set Hero title to "Herkes için randevu altyapısı"; added interactive 3-step booking flow widget (HeroBookingMockup) inspired by interface screenshots with 100% dummy data; positioned 12 core features across 4 operational blocks with UI mockups (Müsaitlik, Out of Office toggle, No-Show listesi, Yinelenen abonelikler); added FaqSection accordion.
-13. Cal.diy rebranding sweep across app-store, copyright and footers; domain normalization to `rondevu.org`; aligned calendar sync truth (one-way export of booked appointments to Google/Apple calendar without closing rOndevu availability from personal calendar events).
+13. rOndevu rebranding sweep across app-store, copyright and footers; domain normalization to `rondevu.org`; aligned calendar sync truth (one-way export of booked appointments to Google/Apple calendar without closing rOndevu availability from personal calendar events).
 14. "Ofis Dışında" module overhauled with real screenshots from `interface/`: authentic list view, search & filters, dummy text replacing test entries, interactive public booking preview (day 25 with 🤕), modal overlay; removed "OOO" acronym everywhere (`İzinlerim`, `Ofis Dışı`); fixed Google Calendar API key crash in "Tatil günleri" tab with offline Turkish public holidays fallback; and implemented admin-configurable plan contact channels with role check and sanitization.
 15. Server deployment readiness & security audit completed: 0 leaked secrets, strict admin authorization via authedAdminProcedure, sanitized dynamic URLs (tel, mailto, whatsapp), verified tRPC server and client compilation (code 0), updated .gitignore for local UI assets. All changes pushed to GitHub.
 16. User feedback implementation:
@@ -289,9 +289,9 @@
     - **Kinetic Bento Instruments (`BentoInstruments.tsx`)**: Replaced text-heavy feature blocks with 4 living, interactive instruments: Dual Calendar Collision Shield (0ms conflict prevention), Autonomous GSM-compliant SMS Lifecycle (instant, 24h, 2h triggers), Personal Identity & Custom Domain Omnibar (`rondevu.org` -> `doktorayse.com`), and Instant Time-Off / Vacation Mode switch.
     - **Horological Monetary Cards**: Precision pricing cards (990 ₺ monthly and 9.900 ₺ yearly with 2 months free and 12-month price guarantee), decoupled accordion expansion, and live synced consultation support bar.
     - **Validation & Test Suite**: 19/19 Vitest unit tests passed, Biome code check clean (0 errors), dev server live at `http://localhost:3000` with HTTP 200 OK, full browser subagent visual inspection completed with screenshots and video, 0 commits pushed per user instruction.
-35. Cal.com-Referenced Pricing Section & Modular Feature Comparison Matrix:
+35. rOndevu-Referenced Pricing Section & Modular Feature Comparison Matrix:
     - **Aylık & Yıllık 2-Plan Layout with Billing Switcher**: Added interactive toggle switch with "2 Ay Hediye" pill in `CalPricingSection.tsx`.
-    - **Modular Comparison Matrix (`PricingMatrix.tsx`)**: Created Cal.com-styled matrix component rendering 18 real rOndevu scheduling capabilities across 5 distinct categories with responsive horizontal scroll and dark mode styling. Omitted "Payments" and "Built-in Video" entirely.
+    - **Modular Comparison Matrix (`PricingMatrix.tsx`)**: Created rOndevu-styled matrix component rendering 18 real rOndevu scheduling capabilities across 5 distinct categories with responsive horizontal scroll and dark mode styling. Omitted "Payments" and "Built-in Video" entirely.
     - **Dynamic Admin Contact Modal (`PlanContactModal.tsx`)**: No credit cards or checkout forms; dynamic modal with sanitized WhatsApp link (`replace(/\D/g, '')`, `encodeURIComponent` prefill message), phone link, and email link pulling from `trpc.viewer.public.getPlanContact`.
     - **Bilingual i18n & Zero Forbidden Words**: Full TR and EN translation coverage in `home-translations.ts` with 0 occurrences of "altyapı".
     - **Validation**: Biome code check clean (0 errors), dev server verified live at `http://localhost:3000/` with 0 console hydration errors and full browser subagent verification, 0 commits pushed per user instruction.

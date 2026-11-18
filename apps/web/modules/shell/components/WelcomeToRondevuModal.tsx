@@ -6,7 +6,7 @@ import { Button } from "@rondevu/ui/components/button";
 import { Dialog, DialogContent } from "@rondevu/ui/components/dialog";
 import { Logo } from "@rondevu/ui/components/logo";
 import { CheckIcon, UserIcon } from "@coss/ui/icons";
-import { useWelcomeToCalcomModal } from "../hooks/useWelcomeToCalcomModal";
+import { useWelcomeToRondevuModal } from "../hooks/useWelcomeToRondevuModal";
 
 const features = [
   "unlimited_calendars",
@@ -18,9 +18,9 @@ const features = [
   "cal_video",
 ];
 
-export function WelcomeToCalcomModal() {
+export function WelcomeToRondevuModal() {
   const { t } = useLocale();
-  const { isOpen, closeModal } = useWelcomeToCalcomModal();
+  const { isOpen, closeModal } = useWelcomeToRondevuModal();
 
   const LARGE = { outer: 48, icon: 24 };
   const RINGS = [60, 95, 130]; // Ring radii in px
@@ -78,7 +78,7 @@ export function WelcomeToCalcomModal() {
 
           <div className="mb-2 flex flex-col gap-2 text-center">
             <h2 className="font-cal text-emphasis text-2xl leading-none">
-              {t("welcome_to_calcom", { appName: APP_NAME })}
+              {t("welcome_to_rondevu", { appName: APP_NAME })}
             </h2>
             <p className="text-default text-sm leading-normal">{t("personal_welcome_description")}</p>
           </div>

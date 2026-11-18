@@ -41,7 +41,7 @@ export default class AttendeeVerifyEmail extends BaseEmail {
     const footer = this.verifyAccountInput.hideLogo
       ? ""
       : `${this.verifyAccountInput.language("happy_scheduling")} ${this.verifyAccountInput.language(
-          "the_calcom_team",
+          "the_rondevu_team",
           { companyName: COMPANY_NAME }
         )}`;
 

@@ -2,8 +2,8 @@
  * These integration tests aim to cover difficult-to-test edge cases
  * Standard cases are currently handled in e2e tests only
  *
- * see: https://github.com/calcom/cal.diy/pull/10480
- *      https://github.com/calcom/cal.diy/pull/10968
+ * see: https://github.com/yekta100110/rOndevu/pull/10480
+ *      https://github.com/yekta100110/rOndevu/pull/10968
  */
 import prismock from "@rondevu/testing/lib/__mocks__/prisma";
 

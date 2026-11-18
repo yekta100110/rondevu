@@ -54,7 +54,7 @@ export const VerifyEmailByCode = (
                 rel="noreferrer"
               >
                 <>
-                  {props.language("the_calcom_team", {
+                  {props.language("the_rondevu_team", {
                     companyName: SENDER_NAME,
                   })}
                 </>

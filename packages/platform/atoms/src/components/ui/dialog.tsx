@@ -20,8 +20,8 @@ const DialogClose = DialogPrimitives.Close;
 
 const Portal = ({ children }: { children: React.ReactElement | React.ReactElement[] }) => {
   return (
-    <DialogPrimitives.Portal className="calcom-atoms">
-      <div className="calcom-atoms">{children}</div>
+    <DialogPrimitives.Portal className="rondevu-atoms">
+      <div className="rondevu-atoms">{children}</div>
     </DialogPrimitives.Portal>
   );
 };
@@ -55,7 +55,7 @@ const DialogContent = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <>
     <DialogPortal>
-      <div className="calcom-atoms">
+      <div className="rondevu-atoms">
         <DialogOverlay />
         <DialogPrimitives.Content
           ref={ref}

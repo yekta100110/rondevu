@@ -313,9 +313,9 @@ describe("verify-booking-token route", () => {
   describe("redirect URL construction", () => {
     it("should construct redirect URLs using WEBAPP_URL regardless of request origin", async () => {
       const testOrigins = [
-        "https://app.cal.com",
-        "https://acme.cal.com",
-        "https://calcom.company.internal",
+        "https://app.rondevu.org",
+        "https://acme.rondevu.org",
+        "https://rondevu.company.internal",
         "http://192.168.1.100:3000",
       ];
 

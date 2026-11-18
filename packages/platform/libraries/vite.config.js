@@ -44,8 +44,8 @@ export default defineConfig({
         calendars: resolve(__dirname, "./calendars.ts"),
         tasker: resolve(__dirname, "./tasker.ts"),
       },
-      name: "calcom-lib",
-      fileName: "calcom-lib",
+      name: "rondevu-lib",
+      fileName: "rondevu-lib",
     },
     commonjsOptions: {
       dynamicRequireRoot: "../../../apps/web",

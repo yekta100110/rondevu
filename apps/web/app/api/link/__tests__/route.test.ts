@@ -131,7 +131,7 @@ describe("link route", () => {
     });
 
     it("should use WEBAPP_URL for self-hosted deployments", async () => {
-      const baseUrl = "https://calcom.internal.company.net/api/link?action=reject&token=encrypted-token";
+      const baseUrl = "https://rondevu.internal.company.net/api/link?action=reject&token=encrypted-token";
       const req = createMockRequest(baseUrl);
 
       const res = await GET(req, { params: Promise.resolve({}) });
@@ -146,9 +146,9 @@ describe("link route", () => {
 
     it("should construct redirect URLs using WEBAPP_URL regardless of request origin", async () => {
       const testOrigins = [
-        "https://app.cal.com",
-        "https://acme.cal.com",
-        "https://calcom.company.internal",
+        "https://app.rondevu.org",
+        "https://acme.rondevu.org",
+        "https://rondevu.company.internal",
         "http://192.168.1.100:3000",
       ];
 

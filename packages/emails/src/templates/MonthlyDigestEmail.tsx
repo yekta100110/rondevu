@@ -187,7 +187,7 @@ export const MonthlyDigestEmail = (
               style={{ color: "#3E3E3E" }}
               target="_blank"
               rel="noreferrer">
-              <>{props.language("the_calcom_team", { companyName: SENDER_NAME })}</>
+              <>{props.language("the_rondevu_team", { companyName: SENDER_NAME })}</>
             </a>
           </>
         </p>

@@ -92,12 +92,12 @@ export const AppPage = ({
   const searchParams = useCompatSearchParams();
 
   const sanitizedAuthor =
-    !author || author.toLowerCase().includes("cal.com") || author.toLowerCase().includes("cal.diy")
+    !author || author.toLowerCase().includes("rondevu.org") || author.toLowerCase().includes("rondevu")
       ? "rOndevu"
       : author;
-  const sanitizedEmail = email && email.endsWith("@cal.com") ? "info@rondevu.org" : email;
-  const sanitizedWebsite = website && website.includes("cal.com") ? "https://rondevu.org" : website;
-  const sanitizedDocs = docs && docs.includes("cal.com") ? "https://rondevu.org/docs" : docs;
+  const sanitizedEmail = email && email.endsWith("@rondevu.org") ? "info@rondevu.org" : email;
+  const sanitizedWebsite = website && website.includes("rondevu.org") ? "https://rondevu.org" : website;
+  const sanitizedDocs = docs && docs.includes("rondevu.org") ? "https://rondevu.org/docs" : docs;
 
   const hasDescriptionItems = descriptionItems && descriptionItems.length > 0;
   const utils = trpc.useUtils();

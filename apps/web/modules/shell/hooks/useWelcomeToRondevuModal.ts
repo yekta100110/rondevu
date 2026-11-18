@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 
 import { sessionStorage } from "@rondevu/lib/webstorage";
 
-const STORAGE_KEY = "showWelcomeToCalcomModal";
+const STORAGE_KEY = "showWelcomeToRondevuModal";
 const ORG_MODAL_STORAGE_KEY = "showNewOrgModal";
 
-export function useWelcomeToCalcomModal() {
-  const [welcomeToCalcomModal, setWelcomeToCalcomModal] = useQueryState(
-    "welcomeToCalcomModal",
+export function useWelcomeToRondevuModal() {
+  const [welcomeToRondevuModal, setWelcomeToRondevuModal] = useQueryState(
+    "welcomeToRondevuModal",
     parseAsBoolean.withDefault(false)
   );
 
@@ -22,7 +22,7 @@ export function useWelcomeToCalcomModal() {
       return;
     }
 
-    if (welcomeToCalcomModal) {
+    if (welcomeToRondevuModal) {
       setIsOpen(true);
       return;
     }
@@ -30,12 +30,12 @@ export function useWelcomeToCalcomModal() {
     if (sessionStorage.getItem(STORAGE_KEY) === "true") {
       setIsOpen(true);
     }
-  }, [welcomeToCalcomModal]);
+  }, [welcomeToRondevuModal]);
 
   const closeModal = () => {
     setIsOpen(false);
     // Remove the query param from URL
-    setWelcomeToCalcomModal(null);
+    setWelcomeToRondevuModal(null);
     // Also clear sessionStorage
     sessionStorage.removeItem(STORAGE_KEY);
   };
@@ -46,6 +46,6 @@ export function useWelcomeToCalcomModal() {
   };
 }
 
-export function setShowWelcomeToCalcomModalFlag() {
+export function setShowWelcomeToRondevuModalFlag() {
   sessionStorage.setItem(STORAGE_KEY, "true");
 }

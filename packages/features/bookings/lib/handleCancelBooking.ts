@@ -522,7 +522,7 @@ async function handler(input: CancelBookingInput, dependencies?: Dependencies) {
   );
 
   // Skip calendar event deletion when cancellation comes from a calendar subscription webhook
-  // to avoid infinite loops (Google/Office365 → Cal.diy → Google/Office365 → ...)
+  // to avoid infinite loops (Google/Office365 → rOndevu → Google/Office365 → ...)
   if (!skipCalendarSyncTaskCancellation) {
     try {
       const bookingToDeleteEventTypeMetadataParsed = eventTypeMetaDataSchemaWithTypedApps.safeParse(

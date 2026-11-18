@@ -2467,7 +2467,7 @@
       "get": {
         "operationId": "CalendarsController_getBusyTimes",
         "summary": "Get busy times",
-        "description": "Get busy times from a calendar. Example request URL is `https://api.cal.com/v2/calendars/busy-times?timeZone=Europe%2FMadrid&dateFrom=2024-12-18&dateTo=2024-12-18&calendarsToLoad[0][credentialId]=135&calendarsToLoad[0][externalId]=skrauciz%40gmail.com`. Note: loggedInUsersTz is deprecated, use timeZone instead.",
+        "description": "Get busy times from a calendar. Example request URL is `https://api.rondevu.org/v2/calendars/busy-times?timeZone=Europe%2FMadrid&dateFrom=2024-12-18&dateTo=2024-12-18&calendarsToLoad[0][credentialId]=135&calendarsToLoad[0][externalId]=skrauciz%40gmail.com`. Note: loggedInUsersTz is deprecated, use timeZone instead.",
         "parameters": [
           {
             "name": "loggedInUsersTz",
@@ -6368,7 +6368,7 @@
     }
   },
   "info": {
-    "title": "Cal.diy API v2",
+    "title": "rOndevu API v2",
     "description": "",
     "version": "1.0.0",
     "contact": {}
@@ -6667,7 +6667,7 @@
           "avatarUrl": {
             "type": "string",
             "nullable": true,
-            "example": "https://cal.com/api/avatar/2b735186-b01b-46d3-87da-019b8f61776b.png",
+            "example": "https://rondevu.org/api/avatar/2b735186-b01b-46d3-87da-019b8f61776b.png",
             "description": "URL of the user's avatar image"
           },
           "metadata": {
@@ -6786,7 +6786,7 @@
           },
           "avatarUrl": {
             "type": "string",
-            "example": "https://cal.com/api/avatar/2b735186-b01b-46d3-87da-019b8f61776b.png",
+            "example": "https://rondevu.org/api/avatar/2b735186-b01b-46d3-87da-019b8f61776b.png",
             "description": "URL of the user's avatar image"
           },
           "bio": {
@@ -6935,7 +6935,7 @@
           },
           "avatarUrl": {
             "type": "string",
-            "example": "https://cal.com/api/avatar/2b735186-b01b-46d3-87da-019b8f61776b.png",
+            "example": "https://rondevu.org/api/avatar/2b735186-b01b-46d3-87da-019b8f61776b.png",
             "description": "URL of the user's avatar image"
           },
           "bio": {
@@ -7467,7 +7467,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `phone` and the URL contains query parameter `&phone=1234567890`,      the phone field will be prefilled with this value and disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value e.g. `defaultFormValues={{phone: '+37122222222'}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `phone` and the URL contains query parameter `&phone=1234567890`,      the phone field will be prefilled with this value and disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value e.g. `defaultFormValues={{phone: '+37122222222'}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "hidden": {
             "type": "boolean",
@@ -7502,7 +7502,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `address` and the URL contains query parameter `&address=1234 Main St, London`,      the address field will be prefilled with this value and disabled.  In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value e.g. `defaultFormValues={{address: 'mainstreat 10, new york'}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `address` and the URL contains query parameter `&address=1234 Main St, London`,      the address field will be prefilled with this value and disabled.  In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value e.g. `defaultFormValues={{address: 'mainstreat 10, new york'}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "hidden": {
             "type": "boolean",
@@ -7537,7 +7537,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `friend` and the URL contains query parameter `&friend=bob`,      the text field will be prefilled with this value and disabled.  In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value e.g. `defaultFormValues={{friend: 'bob'}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `friend` and the URL contains query parameter `&friend=bob`,      the text field will be prefilled with this value and disabled.  In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value e.g. `defaultFormValues={{friend: 'bob'}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "hidden": {
             "type": "boolean",
@@ -7572,7 +7572,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `calories` and the URL contains query parameter `&calories=3000`,      the number field will be prefilled with this value and disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{calories: 3000}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `calories` and the URL contains query parameter `&calories=3000`,      the number field will be prefilled with this value and disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{calories: 3000}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "hidden": {
             "type": "boolean",
@@ -7607,7 +7607,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `reflection` and the URL contains query parameter `&reflection=Today I shipped a feature`,      the text area will be prefilled with this value and disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{reflection: 'Today i shipped a feature'}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `reflection` and the URL contains query parameter `&reflection=Today I shipped a feature`,      the text area will be prefilled with this value and disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{reflection: 'Today i shipped a feature'}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "hidden": {
             "type": "boolean",
@@ -7649,7 +7649,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `language` and options of this select field are ['english', 'italian'] and the URL contains query parameter `&language=italian`,      the 'italian' will be selected and the select field will be disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{language: 'italian'}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `language` and options of this select field are ['english', 'italian'] and the URL contains query parameter `&language=italian`,      the 'italian' will be selected and the select field will be disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{language: 'italian'}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "hidden": {
             "type": "boolean",
@@ -7687,7 +7687,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `language` and the URL contains query parameter `&language=en&language=it`,      the 'en' and 'it' will be selected and the select field will be disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{language: ['en', 'it']}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `language` and the URL contains query parameter `&language=en&language=it`,      the 'en' and 'it' will be selected and the select field will be disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{language: ['en', 'it']}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "hidden": {
             "type": "boolean",
@@ -7722,7 +7722,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `consultants` and the URL contains query parameter `&consultants=alice@gmail.com&consultants=bob@gmail.com`,      the these emails will be added and none more can be added. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{consultants: ['alice@gmail.com', 'bob@gmail.com']}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `consultants` and the URL contains query parameter `&consultants=alice@gmail.com&consultants=bob@gmail.com`,      the these emails will be added and none more can be added. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{consultants: ['alice@gmail.com', 'bob@gmail.com']}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "hidden": {
             "type": "boolean",
@@ -7760,7 +7760,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `notify` and the URL contains query parameter `&notify=true`,      the checkbox will be selected and the checkbox field will be disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{notify: true}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `notify` and the URL contains query parameter `&notify=true`,      the checkbox will be selected and the checkbox field will be disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{notify: true}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "hidden": {
             "type": "boolean",
@@ -7798,7 +7798,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `language` and options of this select field are ['english', 'italian'] and the URL contains query parameter `&language=italian`,      the 'italian' radio button will be selected and the select field will be disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{language: 'italian'}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `language` and options of this select field are ['english', 'italian'] and the URL contains query parameter `&language=italian`,      the 'italian' radio button will be selected and the select field will be disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{language: 'italian'}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "hidden": {
             "type": "boolean",
@@ -7829,7 +7829,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `notify` and the URL contains query parameter `&notify=true`,      the checkbox will be selected and the checkbox field will be disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{notify: true}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `notify` and the URL contains query parameter `&notify=true`,      the checkbox will be selected and the checkbox field will be disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{notify: true}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "hidden": {
             "type": "boolean",
@@ -7864,7 +7864,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `videourl` and the URL contains query parameter `&videourl=https://youtube.com/abc`the url field will be prefilled with this value and disabled.       In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{videourl: 'https://caltube.com/123'}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `videourl` and the URL contains query parameter `&videourl=https://youtube.com/abc`the url field will be prefilled with this value and disabled.       In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{videourl: 'https://caltube.com/123'}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "hidden": {
             "type": "boolean",
@@ -8143,7 +8143,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if URL contains query parameter `&name=bob`,      the name field will be prefilled with this value and disabled. In case of Booker atom need to pass 'name' to defaultFormValues prop with the desired value e.g. `defaultFormValues={{name: 'bob'}}`. See guide https://cal.com/docs/platform/guides/booking-fields"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if URL contains query parameter `&name=bob`,      the name field will be prefilled with this value and disabled. In case of Booker atom need to pass 'name' to defaultFormValues prop with the desired value e.g. `defaultFormValues={{name: 'bob'}}`. See guide https://rondevu.org/docs/platform/guides/booking-fields"
           }
         },
         "required": ["type", "label", "placeholder"]
@@ -8172,7 +8172,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if URL contains query parameter `&email=bob@gmail.com`,      the email field will be prefilled with this value and disabled. In case of Booker atom need to pass 'email' to defaultFormValues prop with the desired value e.g. `defaultFormValues={{email: 'bob@gmail.com'}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if URL contains query parameter `&email=bob@gmail.com`,      the email field will be prefilled with this value and disabled. In case of Booker atom need to pass 'email' to defaultFormValues prop with the desired value e.g. `defaultFormValues={{email: 'bob@gmail.com'}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           }
         },
         "required": ["type", "label", "placeholder"]
@@ -8200,7 +8200,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if URL contains query parameter `&title=journey`,      the title field will be prefilled with this value and disabled. In case of Booker atom need to pass 'title' to defaultFormValues prop with the desired value e.g. `defaultFormValues={{title: 'very important meeting'}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if URL contains query parameter `&title=journey`,      the title field will be prefilled with this value and disabled. In case of Booker atom need to pass 'title' to defaultFormValues prop with the desired value e.g. `defaultFormValues={{title: 'very important meeting'}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           }
         },
         "required": ["slug"]
@@ -8242,7 +8242,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if URL contains query parameter `&notes=journey`,      the notes field will be prefilled with this value and disabled. In case of Booker atom need to pass 'notes' to defaultFormValues prop with the desired value e.g. `defaultFormValues={{notes: 'bring notebook and paper'}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if URL contains query parameter `&notes=journey`,      the notes field will be prefilled with this value and disabled. In case of Booker atom need to pass 'notes' to defaultFormValues prop with the desired value e.g. `defaultFormValues={{notes: 'bring notebook and paper'}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           }
         },
         "required": ["slug"]
@@ -8270,7 +8270,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if URL contains query parameter `&guests=bob@cal.com`,      the guests field will be prefilled with this value and disabled. In case of Booker atom need to pass 'guests' to defaultFormValues prop with the desired value e.g. `defaultFormValues={{guests: ['bob@gmail.com', 'alice@gmail.com']}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if URL contains query parameter `&guests=bob@rondevu.org`,      the guests field will be prefilled with this value and disabled. In case of Booker atom need to pass 'guests' to defaultFormValues prop with the desired value e.g. `defaultFormValues={{guests: ['bob@gmail.com', 'alice@gmail.com']}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           }
         },
         "required": ["slug"]
@@ -8298,7 +8298,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if URL contains query parameter `&rescheduleReason=travel`,      the rescheduleReason field will be prefilled with this value and disabled. In case of Booker atom need to pass 'rescheduleReason' to defaultFormValues prop with the desired value e.g. `defaultFormValues={{rescheduleReason: 'bob'}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if URL contains query parameter `&rescheduleReason=travel`,      the rescheduleReason field will be prefilled with this value and disabled. In case of Booker atom need to pass 'rescheduleReason' to defaultFormValues prop with the desired value e.g. `defaultFormValues={{rescheduleReason: 'bob'}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           }
         },
         "required": ["slug"]
@@ -8746,7 +8746,7 @@
           },
           "locations": {
             "type": "array",
-            "description": "Locations where the event will take place. If not provided, cal video link will be used as the location. Note: Setting a location to a conferencing app does not install the app - the app must already be installed. Via API, only Google Meet (google-meet), Microsoft Teams (office365-video), and Zoom (zoom) can be installed. Cal Video (cal-video) is installed by default. All other conferencing apps must be connected via the Cal.diy web app and are not available for Platform plan customers. You can only set an event type location to an app that has already been installed or connected.",
+            "description": "Locations where the event will take place. If not provided, cal video link will be used as the location. Note: Setting a location to a conferencing app does not install the app - the app must already be installed. Via API, only Google Meet (google-meet), Microsoft Teams (office365-video), and Zoom (zoom) can be installed. Cal Video (cal-video) is installed by default. All other conferencing apps must be connected via the rOndevu web app and are not available for Platform plan customers. You can only set an event type location to an app that has already been installed or connected.",
             "items": {
               "oneOf": [
                 {
@@ -8934,7 +8934,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if URL contains query parameter `&email=bob@gmail.com`,      the email field will be prefilled with this value and disabled. In case of Booker atom need to pass 'email' to defaultFormValues prop with the desired value e.g. `defaultFormValues={{email: 'bob@gmail.com'}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if URL contains query parameter `&email=bob@gmail.com`,      the email field will be prefilled with this value and disabled. In case of Booker atom need to pass 'email' to defaultFormValues prop with the desired value e.g. `defaultFormValues={{email: 'bob@gmail.com'}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "isDefault": {
             "type": "object",
@@ -8966,7 +8966,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if URL contains query parameter `&name=bob`,      the name field will be prefilled with this value and disabled. In case of Booker atom need to pass 'name' to defaultFormValues prop with the desired value e.g. `defaultFormValues={{name: 'bob'}}`. See guide https://cal.com/docs/platform/guides/booking-fields"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if URL contains query parameter `&name=bob`,      the name field will be prefilled with this value and disabled. In case of Booker atom need to pass 'name' to defaultFormValues prop with the desired value e.g. `defaultFormValues={{name: 'bob'}}`. See guide https://rondevu.org/docs/platform/guides/booking-fields"
           },
           "isDefault": {
             "type": "object",
@@ -9156,7 +9156,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if URL contains query parameter `&guests=lauris@cal.com`,      the guests field will be prefilled with this value and disabled."
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if URL contains query parameter `&guests=lauris@rondevu.org`,      the guests field will be prefilled with this value and disabled."
           },
           "isDefault": {
             "type": "object",
@@ -9197,7 +9197,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `address` and the URL contains query parameter `&address=1234 Main St, London`,      the address field will be prefilled with this value and disabled.  In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value e.g. `defaultFormValues={{address: 'mainstreat 10, new york'}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `address` and the URL contains query parameter `&address=1234 Main St, London`,      the address field will be prefilled with this value and disabled.  In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value e.g. `defaultFormValues={{address: 'mainstreat 10, new york'}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "hidden": {
             "type": "boolean",
@@ -9234,7 +9234,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `notify` and the URL contains query parameter `&notify=true`,      the checkbox will be selected and the checkbox field will be disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{notify: true}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `notify` and the URL contains query parameter `&notify=true`,      the checkbox will be selected and the checkbox field will be disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{notify: true}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "hidden": {
             "type": "boolean",
@@ -9278,7 +9278,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `notify` and the URL contains query parameter `&notify=true`,      the checkbox will be selected and the checkbox field will be disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{notify: true}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `notify` and the URL contains query parameter `&notify=true`,      the checkbox will be selected and the checkbox field will be disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{notify: true}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "hidden": {
             "type": "boolean",
@@ -9319,7 +9319,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `consultants` and the URL contains query parameter `&consultants=alice@gmail.com&consultants=bob@gmail.com`,      the these emails will be added and none more can be added. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{consultants: ['alice@gmail.com', 'bob@gmail.com']}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `consultants` and the URL contains query parameter `&consultants=alice@gmail.com&consultants=bob@gmail.com`,      the these emails will be added and none more can be added. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{consultants: ['alice@gmail.com', 'bob@gmail.com']}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "hidden": {
             "type": "boolean",
@@ -9363,7 +9363,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `language` and the URL contains query parameter `&language=en&language=it`,      the 'en' and 'it' will be selected and the select field will be disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{language: ['en', 'it']}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `language` and the URL contains query parameter `&language=en&language=it`,      the 'en' and 'it' will be selected and the select field will be disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{language: ['en', 'it']}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "hidden": {
             "type": "boolean",
@@ -9404,7 +9404,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `videourl` and the URL contains query parameter `&videourl=https://youtube.com/abc`the url field will be prefilled with this value and disabled.       In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{videourl: 'https://caltube.com/123'}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `videourl` and the URL contains query parameter `&videourl=https://youtube.com/abc`the url field will be prefilled with this value and disabled.       In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{videourl: 'https://caltube.com/123'}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "hidden": {
             "type": "boolean",
@@ -9445,7 +9445,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `calories` and the URL contains query parameter `&calories=3000`,      the number field will be prefilled with this value and disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{calories: 3000}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `calories` and the URL contains query parameter `&calories=3000`,      the number field will be prefilled with this value and disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{calories: 3000}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "hidden": {
             "type": "boolean",
@@ -9484,7 +9484,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `phone` and the URL contains query parameter `&phone=1234567890`,      the phone field will be prefilled with this value and disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value e.g. `defaultFormValues={{phone: '+37122222222'}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `phone` and the URL contains query parameter `&phone=1234567890`,      the phone field will be prefilled with this value and disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value e.g. `defaultFormValues={{phone: '+37122222222'}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "hidden": {
             "type": "boolean",
@@ -9528,7 +9528,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `language` and options of this select field are ['english', 'italian'] and the URL contains query parameter `&language=italian`,      the 'italian' radio button will be selected and the select field will be disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{language: 'italian'}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `language` and options of this select field are ['english', 'italian'] and the URL contains query parameter `&language=italian`,      the 'italian' radio button will be selected and the select field will be disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{language: 'italian'}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "hidden": {
             "type": "boolean",
@@ -9576,7 +9576,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `language` and options of this select field are ['english', 'italian'] and the URL contains query parameter `&language=italian`,      the 'italian' will be selected and the select field will be disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{language: 'italian'}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `language` and options of this select field are ['english', 'italian'] and the URL contains query parameter `&language=italian`,      the 'italian' will be selected and the select field will be disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{language: 'italian'}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "hidden": {
             "type": "boolean",
@@ -9617,7 +9617,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `reflection` and the URL contains query parameter `&reflection=Today I shipped a feature`,      the text area will be prefilled with this value and disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{reflection: 'Today i shipped a feature'}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `reflection` and the URL contains query parameter `&reflection=Today I shipped a feature`,      the text area will be prefilled with this value and disabled. In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value  e.g. `defaultFormValues={{reflection: 'Today i shipped a feature'}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "hidden": {
             "type": "boolean",
@@ -9658,7 +9658,7 @@
           },
           "disableOnPrefill": {
             "type": "boolean",
-            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `friend` and the URL contains query parameter `&friend=bob`,      the text field will be prefilled with this value and disabled.  In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value e.g. `defaultFormValues={{friend: 'bob'}}`. See guide https://cal.com/docs/platform/guides/booking-field"
+            "description": "Disable this booking field if the URL contains query parameter with key equal to the slug and prefill it with the provided value.      For example, if the slug is `friend` and the URL contains query parameter `&friend=bob`,      the text field will be prefilled with this value and disabled.  In case of Booker atom need to pass slug you used for this booking field to defaultFormValues prop with the desired value e.g. `defaultFormValues={{friend: 'bob'}}`. See guide https://rondevu.org/docs/platform/guides/booking-field"
           },
           "hidden": {
             "type": "boolean",
@@ -10024,7 +10024,7 @@
           "bookingUrl": {
             "type": "string",
             "description": "Full URL to the booking page for this event type",
-            "example": "https://cal.com/john-doe/30min",
+            "example": "https://rondevu.org/john-doe/30min",
             "format": "uri"
           }
         },
@@ -10861,7 +10861,7 @@
           },
           "locations": {
             "type": "array",
-            "description": "Locations where the event will take place. If not provided, cal video link will be used as the location. Note: Setting a location to a conferencing app does not install the app - the app must already be installed. Via API, only Google Meet (google-meet), Microsoft Teams (office365-video), and Zoom (zoom) can be installed. Cal Video (cal-video) is installed by default. All other conferencing apps must be connected via the Cal.diy web app and are not available for Platform plan customers. You can only set an event type location to an app that has already been installed or connected.",
+            "description": "Locations where the event will take place. If not provided, cal video link will be used as the location. Note: Setting a location to a conferencing app does not install the app - the app must already be installed. Via API, only Google Meet (google-meet), Microsoft Teams (office365-video), and Zoom (zoom) can be installed. Cal Video (cal-video) is installed by default. All other conferencing apps must be connected via the rOndevu web app and are not available for Platform plan customers. You can only set an event type location to an app that has already been installed or connected.",
             "items": {
               "oneOf": [
                 {
@@ -11368,7 +11368,7 @@
             "type": "string",
             "description": "Full booking URL for this private link",
             "format": "uri",
-            "example": "https://cal.com/d/abc123def456/30min"
+            "example": "https://rondevu.org/d/abc123def456/30min"
           },
           "expiresAt": {
             "type": "string",
@@ -11401,7 +11401,7 @@
             "type": "string",
             "description": "Full booking URL for this private link",
             "format": "uri",
-            "example": "https://cal.com/d/abc123def456/30min"
+            "example": "https://rondevu.org/d/abc123def456/30min"
           },
           "maxUsageCount": {
             "type": "number",
@@ -11631,11 +11631,11 @@
         "properties": {
           "urls": {
             "type": "array",
-            "example": ["https://cal.com/ics/feed.ics", "http://cal.com/ics/feed.ics"],
+            "example": ["https://rondevu.org/ics/feed.ics", "http://rondevu.org/ics/feed.ics"],
             "description": "An array of ICS URLs",
             "items": {
               "type": "string",
-              "example": "https://cal.com/ics/feed.ics"
+              "example": "https://rondevu.org/ics/feed.ics"
             }
           },
           "readOnly": {
@@ -15164,7 +15164,7 @@
         "properties": {
           "payloadTemplate": {
             "type": "string",
-            "description": "The template of the payload that will be sent to the subscriberUrl, check cal.com/docs/core-features/webhooks for more information",
+            "description": "The template of the payload that will be sent to the subscriberUrl, check rondevu.org/docs/core-features/webhooks for more information",
             "example": "{\"content\":\"A new event has been scheduled\",\"type\":\"{{type}}\",\"name\":\"{{title}}\",\"organizer\":\"{{organizer.name}}\",\"booker\":\"{{attendees.0.name}}\"}"
           },
           "active": {
@@ -15228,7 +15228,7 @@
         "properties": {
           "payloadTemplate": {
             "type": "string",
-            "description": "The template of the payload that will be sent to the subscriberUrl, check cal.com/docs/core-features/webhooks for more information",
+            "description": "The template of the payload that will be sent to the subscriberUrl, check rondevu.org/docs/core-features/webhooks for more information",
             "example": "{\"content\":\"A new event has been scheduled\",\"type\":\"{{type}}\",\"name\":\"{{title}}\",\"organizer\":\"{{organizer.name}}\",\"booker\":\"{{attendees.0.name}}\"}"
           },
           "triggers": {
@@ -15296,7 +15296,7 @@
         "properties": {
           "payloadTemplate": {
             "type": "string",
-            "description": "The template of the payload that will be sent to the subscriberUrl, check cal.com/docs/core-features/webhooks for more information",
+            "description": "The template of the payload that will be sent to the subscriberUrl, check rondevu.org/docs/core-features/webhooks for more information",
             "example": "{\"content\":\"A new event has been scheduled\",\"type\":\"{{type}}\",\"name\":\"{{title}}\",\"organizer\":\"{{organizer.name}}\",\"booker\":\"{{attendees.0.name}}\"}"
           },
           "active": {
@@ -15376,7 +15376,7 @@
         "properties": {
           "payloadTemplate": {
             "type": "string",
-            "description": "The template of the payload that will be sent to the subscriberUrl, check cal.com/docs/core-features/webhooks for more information",
+            "description": "The template of the payload that will be sent to the subscriberUrl, check rondevu.org/docs/core-features/webhooks for more information",
             "example": "{\"content\":\"A new event has been scheduled\",\"type\":\"{{type}}\",\"name\":\"{{title}}\",\"organizer\":\"{{organizer.name}}\",\"booker\":\"{{attendees.0.name}}\"}"
           },
           "triggers": {
@@ -15475,7 +15475,7 @@
         "properties": {
           "payloadTemplate": {
             "type": "string",
-            "description": "The template of the payload that will be sent to the subscriberUrl, check cal.com/docs/core-features/webhooks for more information",
+            "description": "The template of the payload that will be sent to the subscriberUrl, check rondevu.org/docs/core-features/webhooks for more information",
             "example": "{\"content\":\"A new event has been scheduled\",\"type\":\"{{type}}\",\"name\":\"{{title}}\",\"organizer\":\"{{organizer.name}}\",\"booker\":\"{{attendees.0.name}}\"}"
           },
           "triggers": {

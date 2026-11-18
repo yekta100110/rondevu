@@ -17,7 +17,7 @@ import Script from "next/script";
 
 import "@rondevu/embed-core/src/embed-iframe";
 import { IS_CALCOM, WEBAPP_URL } from "@rondevu/lib/constants";
-import { getCalcomUrl } from "@rondevu/lib/getCalcomUrl";
+import { getRondevuUrl } from "@rondevu/lib/getRondevuUrl";
 import { buildCanonical } from "@rondevu/lib/next-seo.config";
 import { IconSprites } from "@rondevu/ui/components/icon";
 
@@ -70,10 +70,10 @@ function PageWrapper(props: AppProps) {
         />
       </Head>
       <DefaultSeo
-        // Set canonical to https://cal.com or self-hosted URL
+        // Set canonical to https://rondevu.org or self-hosted URL
         canonical={
           IS_CALCOM
-            ? buildCanonical({ path, origin: getCalcomUrl() }) // cal.com & .dev
+            ? buildCanonical({ path, origin: getRondevuUrl() }) // rondevu.org & .dev
             : buildCanonical({ path, origin: WEBAPP_URL }) // self-hosted
         }
         {...seoConfig.defaultNextSeo}
@@ -84,7 +84,7 @@ function PageWrapper(props: AppProps) {
         // And we don't want it to error here anyways
         // eslint-disable-next-line react/no-danger
         // biome-ignore lint/security/noDangerouslySetInnerHtml: Setting page status requires inline script
-        dangerouslySetInnerHTML={{ __html: `window.CalComPageStatus = '${pageStatus}'` }}
+        dangerouslySetInnerHTML={{ __html: `window.RondevuPageStatus = '${pageStatus}'` }}
       />
 
       <style jsx global>{`

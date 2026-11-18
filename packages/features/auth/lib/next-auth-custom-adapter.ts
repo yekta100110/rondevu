@@ -60,7 +60,7 @@ const getAccountWhere = (provider: string, providerAccountId: string) => ({
   provider_providerAccountId: { provider, providerAccountId },
 });
 
-export default function CalComAdapter(prismaClient: PrismaClient): Adapter {
+export default function RondevuAdapter(prismaClient: PrismaClient): Adapter {
   return {
     createUser: async (data: Omit<AdapterUser, "id">) => {
       const user = await prismaClient.user.create({ data: createUserData(data) });

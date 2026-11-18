@@ -52,7 +52,7 @@ describe("CalendarEventBuilder", () => {
   ];
   const createBuilder = (overrides: Partial<CalendarEvent> = {}) =>
     new CalendarEventBuilder({
-      bookerUrl: "https://cal.com/user/test-slug",
+      bookerUrl: "https://rondevu.org/user/test-slug",
       title: "Test Event",
       startTime: mockStartTime,
       endTime: mockEndTime,
@@ -72,7 +72,7 @@ describe("CalendarEventBuilder", () => {
 
     expect(event).not.toBeNull();
     if (event) {
-      expect(event.bookerUrl).toBe("https://cal.com/user/test-slug");
+      expect(event.bookerUrl).toBe("https://rondevu.org/user/test-slug");
       expect(event.title).toBe("Test Event");
       expect(event.startTime).toBe(mockStartTime);
       expect(event.endTime).toBe(mockEndTime);
@@ -147,7 +147,7 @@ describe("CalendarEventBuilder", () => {
       },
     ];
 
-    const event = createBuilder({ attendees, bookerUrl: "https://cal.com/user" })
+    const event = createBuilder({ attendees, bookerUrl: "https://rondevu.org/user" })
       .withEventType({
         id: 123,
       })
@@ -664,7 +664,7 @@ describe("CalendarEventBuilder", () => {
       startTime: mockStartTime,
       endTime: mockEndTime,
       type: "existing-type",
-      bookerUrl: "https://cal.com/user/test-slug",
+      bookerUrl: "https://rondevu.org/user/test-slug",
       organizer: defaultOrganizer,
       attendees: defaultAttendees,
     };
@@ -1370,7 +1370,7 @@ describe("CalendarEventBuilder", () => {
         type: "match-event",
         organizer: organizerPerson,
         attendees: [attendeePerson],
-        bookerUrl: "https://cal.com",
+        bookerUrl: "https://rondevu.org",
         title: "Match Test",
         startTime: new Date(mockStartTime).toISOString(),
         endTime: new Date(mockEndTime).toISOString(),

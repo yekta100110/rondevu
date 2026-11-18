@@ -5,7 +5,7 @@ import logger from "@rondevu/lib/logger";
 import { prisma } from "@rondevu/prisma";
 import type { Prisma } from "@rondevu/prisma/client";
 
-import type { OAuth2UniversalSchemaWithCalcomBackwardCompatibility } from "./universalSchema";
+import type { OAuth2UniversalSchemaWithRondevuBackwardCompatibility } from "./universalSchema";
 
 const log = logger.getSubLogger({ prefix: ["_utils", "oauth", "updateTokenObject"] });
 /**
@@ -15,7 +15,7 @@ export const updateTokenObject = async ({
   tokenObject,
   credentialId,
 }: {
-  tokenObject: z.infer<typeof OAuth2UniversalSchemaWithCalcomBackwardCompatibility>;
+  tokenObject: z.infer<typeof OAuth2UniversalSchemaWithRondevuBackwardCompatibility>;
   credentialId: number;
 }) => {
   await prisma.credential.update({
@@ -35,7 +35,7 @@ export const updateTokenObject = async ({
  */
 export const updateTokenObjectInDb = async (
   args: {
-    tokenObject: z.infer<typeof OAuth2UniversalSchemaWithCalcomBackwardCompatibility>;
+    tokenObject: z.infer<typeof OAuth2UniversalSchemaWithRondevuBackwardCompatibility>;
   } & (
     | {
         authStrategy: "jwt";

@@ -22,7 +22,7 @@ describe("i18n handler", () => {
     };
     mockedSST.mockResolvedValueOnce(fakeResult);
 
-    const result = await i18nHandler({ input: { locale: "en", CalComVersion: "1.0" } });
+    const result = await i18nHandler({ input: { locale: "en", RondevuVersion: "1.0" } });
 
     expect(mockedSST).toHaveBeenCalledOnce();
     const [locale, namespaces, config] = mockedSST.mock.calls[0];
@@ -46,7 +46,7 @@ describe("i18n handler", () => {
       },
     });
 
-    const result = await i18nHandler({ input: { locale: "fr", CalComVersion: "1.0" } });
+    const result = await i18nHandler({ input: { locale: "fr", RondevuVersion: "1.0" } });
 
     expect(mockedSST.mock.calls[0][0]).toBe("fr");
     expect(result.locale).toBe("fr");

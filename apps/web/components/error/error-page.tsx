@@ -63,7 +63,7 @@ export const ErrorPage: React.FC<Props> = (props) => {
   // useLayoutEffect runs synchronously before browser paint, ensuring it's set early
   useLayoutEffect(() => {
     if (statusCode && typeof window !== "undefined") {
-      window.CalComPageStatus = statusCode.toString();
+      window.RondevuPageStatus = statusCode.toString();
     }
   }, [statusCode]);
 

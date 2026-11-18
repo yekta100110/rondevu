@@ -2,7 +2,7 @@ import { defaultResponderForAppDir } from "app/api/defaultResponderForAppDir";
 import { parseRequestData } from "app/api/parseRequestData";
 import { NextResponse, type NextRequest } from "next/server";
 
-import calcomSignupHandler from "./handlers/calcomSignupHandler";
+import rondevuSignupHandler from "./handlers/rondevuSignupHandler";
 import selfHostedSignupHandler from "./handlers/selfHostedHandler";
 import { FeaturesRepository } from "@rondevu/features/flags/features.repository";
 import { checkRateLimitAndThrowError } from "@rondevu/lib/checkRateLimitAndThrowError";
@@ -57,13 +57,13 @@ async function handler(req: NextRequest) {
 
     /**
      * Im not sure its worth merging these two handlers. They are different enough to be separate.
-     * Calcom handles things like creating a stripe customer - which we don't need to do for self hosted.
+     * Rondevu handles things like creating a stripe customer - which we don't need to do for self hosted.
      * It also handles things like premium username.
-     * TODO: (SEAN) - Extract a lot of the logic from calcomHandler into a separate file and import it into both handlers.
+     * TODO: (SEAN) - Extract a lot of the logic from rondevuHandler into a separate file and import it into both handlers.
      * @zomars: We need to be able to test this with E2E. They way it's done RN it will never run on CI.
      */
     if (IS_PREMIUM_USERNAME_ENABLED) {
-      return await calcomSignupHandler(body, query);
+      return await rondevuSignupHandler(body, query);
     }
 
     return await selfHostedSignupHandler(body);

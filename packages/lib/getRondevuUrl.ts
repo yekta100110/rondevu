@@ -1,6 +1,6 @@
 import { WEBAPP_URL, IS_CALCOM } from "./constants";
 
-export const getCalcomUrl = () => {
+export const getRondevuUrl = () => {
   if (IS_CALCOM) {
     return "https://rondevu.org";
   }
