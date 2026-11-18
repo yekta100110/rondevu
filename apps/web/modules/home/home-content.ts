@@ -1,13 +1,27 @@
 import type { Locale } from "./i18n/home-translations";
 
+export interface StageCopy {
+  host: { name: string; role: string; initials: string; stamp: string; city: string };
+  meetingTitle: string;
+  agenda: string;
+  location: string;
+  responseNote: string;
+  bookingUrl: string;
+  labels: Record<string, string | null>;
+}
+
 export interface HomeContent {
   nav: { features: string; how: string; pricing: string; faq: string };
   hero: {
     title: string;
+    titleAccent: string;
     subtitle: string;
     primary: string;
     secondary: string;
     note: string;
+    altContact: string;
+    demoNote: string;
+    stage: StageCopy;
   };
   preview: {
     caption: string;
@@ -48,12 +62,56 @@ export const homeContent: Record<Locale, HomeContent> = {
   tr: {
     nav: { features: "Özellikler", how: "Nasıl çalışır", pricing: "Fiyat", faq: "Sık sorulanlar" },
     hero: {
-      title: "Müşteriniz saatini seçsin, onay WhatsApp'tan gitsin",
+      title: "Müşteriniz saatini seçsin,",
+      titleAccent: "onay WhatsApp'tan gitsin.",
       subtitle:
         "Klinik, güzellik merkezi, kuaför ve danışmanlık ofisleri için randevu sayfası. Müsait saatlerinizi siz belirlersiniz. Onay, hatırlatma ve iptal mesajları müşterinize WhatsApp ve SMS ile ulaşır.",
       primary: "Bize yazın",
       secondary: "Nasıl çalışır",
       note: "Sorularınızı WhatsApp'tan yanıtlıyoruz.",
+      altContact: "Önce bir soru mu var? WhatsApp'tan yazın",
+      demoNote: "Bu bir örnek ekran. Girdiğiniz bilgiler kaydedilmez.",
+      stage: {
+        host: { name: "Ayşe Demir", role: "Güzellik merkezi, örnek", initials: "AD", stamp: "Açık saatler · randevu · ", city: "İstanbul" },
+        meetingTitle: "Cilt bakımı",
+        agenda: "İlk görüşmede cildinizi birlikte değerlendirir, size uygun bakımı seçeriz.",
+        location: "Salonumuzda yüz yüze",
+        responseNote: "Onay mesajı WhatsApp'tan gelir",
+        bookingUrl: "rondevu.org/ornek-salon",
+        labels: {
+          pick: "Saat seçin",
+          howLong: "Süre",
+          minutes: "dk",
+          showTimesIn: "Saat dilimi",
+          today: "Bugün",
+          copyLink: "Bağlantıyı kopyala",
+          copied: "Kopyalandı",
+          name: "Adınız",
+          email: "E-posta",
+          note: "Eklemek istediğiniz bir not var mı?",
+          optional: "(isteğe bağlı)",
+          nameError: "Size nasıl hitap edeceğimizi bilmek için adınızı yazın.",
+          emailError: "E-posta adresi eksik görünüyor.",
+          bookError: "Bu saat alınamadı. Tekrar deneyin veya başka bir saat seçin.",
+          back: "Geri",
+          confirm: "Randevuyu onayla",
+          sending: "Onaylanıyor…",
+          booked: "Randevunuz alındı.",
+          invite: null,
+          addToCalendar: "Takvime ekle",
+          another: "Başka saat seç",
+          open: "Boş",
+          busy: "Dolu",
+          yours: "Alındı",
+          timesIn: "Saatler",
+          checking: "Müsaitlik kontrol ediliyor…",
+          empty: "Bu hafta boş saat yok.",
+          nextWeek: "Gelecek haftayı gör",
+          now: "şimdi",
+          weekOf: "Haftanın başlangıcı:",
+          until: "ile",
+        },
+      },
     },
     preview: {
       caption: "Örnek ekran, kurgusal veriler",
@@ -168,12 +226,56 @@ export const homeContent: Record<Locale, HomeContent> = {
   en: {
     nav: { features: "Features", how: "How it works", pricing: "Pricing", faq: "FAQ" },
     hero: {
-      title: "Clients pick their time, the confirmation goes out on WhatsApp",
+      title: "Clients pick their time,",
+      titleAccent: "the confirmation goes out on WhatsApp.",
       subtitle:
         "A booking page for clinics, beauty centers, barbers and consulting offices. You set your available hours. Confirmations, reminders and cancellations reach your clients by WhatsApp and SMS.",
       primary: "Contact us",
       secondary: "How it works",
       note: "We answer questions on WhatsApp.",
+      altContact: "A question first? Write to us on WhatsApp",
+      demoNote: "This is a sample screen. Nothing you enter is saved.",
+      stage: {
+        host: { name: "Ayşe Demir", role: "Beauty center, sample", initials: "AD", stamp: "Open slots · appointment · ", city: "Istanbul" },
+        meetingTitle: "Facial care",
+        agenda: "At the first visit we assess your skin together and pick the right treatment.",
+        location: "In person at our salon",
+        responseNote: "The confirmation arrives on WhatsApp",
+        bookingUrl: "rondevu.org/sample-salon",
+        labels: {
+          pick: "Choose a time",
+          howLong: "Length",
+          minutes: "min",
+          showTimesIn: "Time zone",
+          today: "Today",
+          copyLink: "Copy link",
+          copied: "Copied",
+          name: "Your name",
+          email: "Email",
+          note: "Anything you want to add?",
+          optional: "(optional)",
+          nameError: "Add your name so we know who to expect.",
+          emailError: "That email looks incomplete.",
+          bookError: "That slot could not be booked. Try again or pick another time.",
+          back: "Back",
+          confirm: "Confirm appointment",
+          sending: "Confirming…",
+          booked: "Your appointment is booked.",
+          invite: null,
+          addToCalendar: "Add to calendar",
+          another: "Pick another time",
+          open: "Open",
+          busy: "Busy",
+          yours: "Booked",
+          timesIn: "Times in",
+          checking: "Checking availability…",
+          empty: "No open slots this week.",
+          nextWeek: "See next week",
+          now: "now",
+          weekOf: "Week of",
+          until: "to",
+        },
+      },
     },
     preview: {
       caption: "Sample screen, fictional data",

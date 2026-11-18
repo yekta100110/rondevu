@@ -4,6 +4,7 @@ import type { PlanContactConfig } from "@rondevu/lib/planContactConfig";
 import { CalendarCheck, Globe, MessageCircle, ShieldCheck, Video } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useState } from "react";
+import { HomeHero } from "./components/hero/HomeHero";
 import { HomePreview } from "./components/HomePreview";
 import { MarketingFooter } from "./components/MarketingFooter";
 import { MarketingHeader } from "./components/MarketingHeader";
@@ -43,26 +44,11 @@ export function HomeView({ isLoggedIn = false, initialContact, initialLocale }: 
       <MarketingHeader locale={locale} isLoggedIn={isLoggedIn} onContact={() => openModal(null)} />
 
       <main>
-        <section className="px-4 pt-16 pb-20 sm:px-6 sm:pt-24 sm:pb-28 lg:px-8">
+        <HomeHero locale={locale} whatsapp={initialContact?.whatsapp} />
+
+        <section className="px-4 pb-20 sm:px-6 sm:pb-28 lg:px-8">
           <div className="mx-auto max-w-[1120px]">
-            <div className="animate-fade-in-up max-w-[760px] motion-reduce:animate-none">
-              <h1 className="text-[40px] font-semibold leading-[1.08] tracking-[-0.03em] text-emphasis sm:text-[56px] lg:text-[64px]">
-                {c.hero.title}
-              </h1>
-              <p className="mt-6 max-w-[620px] text-lg leading-7 text-subtle">{c.hero.subtitle}</p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <button type="button" onClick={() => openModal(null)} className={primaryButton}>
-                  {c.hero.primary}
-                </button>
-                <a href="#nasil" className={secondaryButton}>
-                  {c.hero.secondary}
-                </a>
-              </div>
-              <p className="mt-4 text-sm text-muted">{c.hero.note}</p>
-            </div>
-            <div className="mt-16 sm:mt-20">
-              <HomePreview content={c.preview} />
-            </div>
+            <HomePreview content={c.preview} />
           </div>
         </section>
 
