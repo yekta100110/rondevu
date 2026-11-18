@@ -6,23 +6,23 @@ describe("getApiNameWithNamespace", () => {
   describe("when namespace is a valid variable", () => {
     it("should return the correct API name with namespace for a non-hyphenated namespace", () => {
       const result = getApiNameWithNamespace({ namespace: "first", mainApiName: "rondevu" });
-      expect(result).toBe("cal.ns.first");
+      expect(result).toBe("rondevu.ns.first");
     });
     it("should return the correct API name with namespace for a$b", () => {
       const result = getApiNameWithNamespace({ namespace: "a$b", mainApiName: "rondevu" });
-      expect(result).toBe("cal.ns.a$b");
+      expect(result).toBe("rondevu.ns.a$b");
     });
   });
 
   describe("when namespace is not a valid variable", () => {
     it("should return the correct API name with namespace for a hyphenated namespace", () => {
       const result = getApiNameWithNamespace({ namespace: "first-one", mainApiName: "rondevu" });
-      expect(result).toBe('cal.ns["first-one"]');
+      expect(result).toBe('rondevu.ns["first-one"]');
     });
 
     it("should return the correct API name with namespace for a&n", () => {
       const result = getApiNameWithNamespace({ namespace: "a&n", mainApiName: "rondevu" });
-      expect(result).toBe('cal.ns["a&n"]');
+      expect(result).toBe('rondevu.ns["a&n"]');
     });
   });
 });
