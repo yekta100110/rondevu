@@ -5,7 +5,6 @@ import { IconSprites } from "@rondevu/ui/components/icon";
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 import { dir } from "i18next";
 import { Inter } from "next/font/google";
-import localFont from "next/font/local";
 import { cookies, headers } from "next/headers";
 import Script from "next/script";
 import type React from "react";
@@ -22,13 +21,6 @@ const interFont = Inter({
   variable: "--font-sans",
   preload: true,
   display: "swap",
-});
-const calFont = localFont({
-  src: "../fonts/RondevuSans-SemiBold.woff2",
-  variable: "--font-display",
-  preload: true,
-  display: "swap",
-  weight: "600",
 });
 
 export const viewport = {
@@ -133,7 +125,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html
-      className={classNames(interFont.variable, calFont.variable, "bg-white dark:bg-[#141414]")}
+      className={classNames(interFont.variable, "bg-default")}
       lang={locale}
       dir={direction}
       style={embedColorScheme ? { colorScheme: embedColorScheme as string } : undefined}
@@ -143,7 +135,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <style>{`
           :root {
             --font-sans: ${interFont.style.fontFamily}, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            --font-display: ${calFont.style.fontFamily}, var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-display: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
           }
         `}</style>
         <script
@@ -168,19 +160,19 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 } else if (stored === "light") {
                   isDark = false;
                 } else {
-                  isDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+                  isDark = isMarketingPage && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
                 }
                 if (isDark) {
                   document.documentElement.classList.add("dark");
                   document.documentElement.classList.remove("light");
                   if (!isMarketingPage) {
-                    document.documentElement.style.backgroundColor = "#141414";
+                    document.documentElement.style.backgroundColor = "#191918";
                   }
                 } else {
                   document.documentElement.classList.remove("dark");
                   document.documentElement.classList.add("light");
                   if (!isMarketingPage) {
-                    document.documentElement.style.backgroundColor = "#ffffff";
+                    document.documentElement.style.backgroundColor = "#fbfaf9";
                   }
                 }
               } catch (e) {}
@@ -197,7 +189,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         )}
       </head>
       <body
-        className="bg-white dark:bg-[#141414] text-emphasis antialiased"
+        className="bg-default text-emphasis antialiased"
         style={
           isEmbed
             ? {

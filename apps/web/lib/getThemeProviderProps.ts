@@ -171,7 +171,7 @@ export function getThemeProviderProps({
     storageKey,
     nonce: props.nonce,
     enableColorScheme: false,
-    defaultTheme: "dark",
+    defaultTheme: "light",
     enableSystem: false,
     // next-themes doesn't listen to changes on storageKey. So we need to force a re-render when storageKey changes
     // This is how login to dashboard soft navigation changes theme from light to dark

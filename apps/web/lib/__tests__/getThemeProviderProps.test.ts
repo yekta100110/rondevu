@@ -23,7 +23,7 @@ describe("getThemeProviderProps", () => {
       key: expectedStorageKey,
       nonce: "test-nonce",
       enableColorScheme: false,
-      defaultTheme: "dark",
+      defaultTheme: "light",
       enableSystem: false,
     };
 
@@ -79,7 +79,7 @@ describe("getThemeProviderProps", () => {
       attribute: "class",
       nonce: "test-nonce",
       enableColorScheme: false,
-      defaultTheme: "dark",
+      defaultTheme: "light",
       enableSystem: false,
     };
 
@@ -126,7 +126,7 @@ describe("getThemeProviderProps", () => {
       attribute: "class",
       nonce: "test-nonce",
       enableColorScheme: false,
-      defaultTheme: "dark",
+      defaultTheme: "light",
       enableSystem: false,
     };
 
@@ -248,7 +248,7 @@ describe("getThemeProviderProps", () => {
           pathname,
         });
         expect(result.storageKey).toBe("app-theme");
-        expect(result.defaultTheme).toBe("dark");
+        expect(result.defaultTheme).toBe("light");
         expect(result.enableSystem).toBe(false);
       }
     );
