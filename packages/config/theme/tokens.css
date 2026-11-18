@@ -469,3 +469,71 @@
   --fill-error: var(--rondevu-text-error);
   --fill-brand: var(--rondevu-brand-text);
 }
+
+/* ---------------------------------------------------------------------------
+   Shared design tokens: accent cast, motion, rhythm.
+   Every marketing and app component reads from here, so radius, easing and
+   spacing stay identical across sections.
+   --------------------------------------------------------------------------- */
+:root,
+:host {
+  /* Accent cast (used for stage backgrounds and card washes, never for chrome) */
+  --accent-sky: #62aef0;
+  --accent-sky-wash: #e6f3fe;
+  --accent-marigold: #ffb110;
+  --accent-marigold-wash: #fff3d6;
+  --accent-coral: #f64932;
+  --accent-coral-wash: #fde9e5;
+  --accent-mocha: #b18164;
+  --accent-mocha-wash: #f4ebe4;
+  --accent-midnight: #02093a;
+  --accent-midnight-wash: #e8e9f4;
+
+  /* Motion: one easing family, three durations */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-fast: 120ms;
+  --motion-base: 200ms;
+  --motion-slow: 400ms;
+
+  /* Shape and rhythm (4px base) */
+  --radius-control: 0.5rem;
+  --radius-card: 0.75rem;
+  --radius-stage: 1.5rem;
+  --space-card: 2rem;
+  --space-section: 6rem;
+  --space-section-lg: 8rem;
+  --container-marketing: 70rem;
+}
+
+.dark {
+  --accent-sky: #62aef0;
+  --accent-sky-wash: #12263a;
+  --accent-marigold: #ffb110;
+  --accent-marigold-wash: #3a2a08;
+  --accent-coral: #ff6a55;
+  --accent-coral-wash: #3a1712;
+  --accent-mocha: #c9a085;
+  --accent-mocha-wash: #2e231c;
+  --accent-midnight: #8d95ff;
+  --accent-midnight-wash: #151a3d;
+}
+
+@theme inline {
+  --color-accent-sky: var(--accent-sky);
+  --color-accent-sky-wash: var(--accent-sky-wash);
+  --color-accent-marigold: var(--accent-marigold);
+  --color-accent-marigold-wash: var(--accent-marigold-wash);
+  --color-accent-coral: var(--accent-coral);
+  --color-accent-coral-wash: var(--accent-coral-wash);
+  --color-accent-mocha: var(--accent-mocha);
+  --color-accent-mocha-wash: var(--accent-mocha-wash);
+  --color-accent-midnight: var(--accent-midnight);
+  --color-accent-midnight-wash: var(--accent-midnight-wash);
+
+  --ease-standard: var(--ease-standard);
+  --ease-emphasized: var(--ease-emphasized);
+  --radius-control: var(--radius-control);
+  --radius-card: var(--radius-card);
+  --radius-stage: var(--radius-stage);
+}
