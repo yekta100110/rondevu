@@ -3,14 +3,12 @@ import { APP_NAME, WEBSITE_URL } from "@rondevu/lib/constants";
 import { getPlanContactConfig } from "@rondevu/lib/planContactConfig";
 import { PricingSchema } from "@components/schemas/MarketingSchemas";
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
-import { _generateMetadata, loadCalMarketingAssets } from "app/_utils";
+import { _generateMetadata } from "app/_utils";
 import type { Metadata } from "next";
 import { cookies, headers } from "next/headers";
 import { PricingView } from "~/pricing/pricing-view";
 import type { Locale } from "~/home/i18n/home-translations";
 
-import "../../../public/rondevu_files/rondevu-framer.css";
-import "../../../public/rondevu_files/rondevu-pricing-framer.css";
 
 const SITE_URL = WEBSITE_URL.replace(/\/+$/, "");
 const PRICING_LANGUAGES = {
@@ -23,7 +21,7 @@ const generateMetadata = async (): Promise<Metadata> => {
   const baseMetadata = await _generateMetadata(
     () => `Fiyatlandırma - ${APP_NAME}`,
     () =>
-      "rOndevu şeffaf ve net fiyatlandırma: Aylık ve yıllık esnek paketler, sınırsız randevu, SMS doğrulaması ve takvim senkronizasyonu.",
+      "rOndevu şeffaf ve net fiyatlandırma: Aylık ve yıllık plan, iki planda da aynı özellikler: WhatsApp ve SMS bildirimleri, SMS ile numara doğrulama ve takvim eşitleme.",
     true,
     SITE_URL,
     "/pricing",
@@ -41,7 +39,7 @@ const generateMetadata = async (): Promise<Metadata> => {
       ...baseMetadata.openGraph,
       title: `Fiyatlandırma - ${APP_NAME}`,
       description:
-        "rOndevu şeffaf ve net fiyatlandırma: Aylık ve yıllık esnek paketler, sınırsız randevu, SMS doğrulaması ve takvim senkronizasyonu.",
+        "rOndevu şeffaf ve net fiyatlandırma: Aylık ve yıllık plan, iki planda da aynı özellikler: WhatsApp ve SMS bildirimleri, SMS ile numara doğrulama ve takvim eşitleme.",
       locale: "tr_TR",
       type: "website",
     },
@@ -55,14 +53,10 @@ const PricingPage = async () => {
   const initialContact = await getPlanContactConfig();
   const initialLocale: Locale = "tr";
 
-  const { html, svgTemplates } = loadCalMarketingAssets("pricing-dom-tr.html");
-
   return (
     <>
       <PricingSchema contact={initialContact} locale={initialLocale} />
       <PricingView
-        html={html}
-        svgTemplates={svgTemplates}
         isLoggedIn={isLoggedIn}
         initialContact={initialContact}
         initialLocale={initialLocale}

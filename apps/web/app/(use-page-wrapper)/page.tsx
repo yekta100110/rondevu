@@ -3,13 +3,12 @@ import { APP_NAME, WEBSITE_URL } from "@rondevu/lib/constants";
 import { getPlanContactConfig } from "@rondevu/lib/planContactConfig";
 import { HomeSchema } from "@components/schemas/MarketingSchemas";
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
-import { _generateMetadata, loadCalMarketingAssets } from "app/_utils";
+import { _generateMetadata } from "app/_utils";
 import type { Metadata } from "next";
 import { cookies, headers } from "next/headers";
 import { HomeView } from "~/home/home-view";
 import type { Locale } from "~/home/i18n/home-translations";
 
-import "../../public/rondevu_files/rondevu-framer.css";
 
 const SITE_URL = WEBSITE_URL.replace(/\/+$/, "");
 const HOME_LANGUAGES = {
@@ -56,14 +55,10 @@ const HomePage = async () => {
   const isLoggedIn = !!session?.user?.id;
   const initialLocale: Locale = "tr";
 
-  const { html, svgTemplates } = loadCalMarketingAssets("rondevu-dom-tr.html", { extractBody: true });
-
   return (
     <>
       <HomeSchema contact={contact} locale={initialLocale} />
       <HomeView
-        html={html}
-        svgTemplates={svgTemplates}
         isLoggedIn={isLoggedIn}
         initialContact={contact}
         initialLocale={initialLocale}

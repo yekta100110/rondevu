@@ -1,6 +1,3 @@
-import fs from "node:fs";
-import path from "node:path";
-import process from "node:process";
 import { type TFunction } from "i18next";
 import { cookies, headers } from "next/headers";
 
@@ -200,39 +197,4 @@ export const generateAppMetadata = async (
       images: [image],
     },
   };
-};
-
-const getFramerBody = (markup: string): string => {
-  const openingBody = /<body[^>]*>/i.exec(markup);
-  const closingBody = markup.lastIndexOf("</body>");
-  if (!openingBody || closingBody < 0) return markup;
-  return markup.slice(openingBody.index + openingBody[0].length, closingBody);
-};
-
-export const filterUsedSvgTemplates = (svgContent: string, domHtml: string): string => {
-  const usedIds = new Set<string>();
-  for (const match of domHtml.matchAll(/href="#([^"]+)"/g)) {
-    if (match[1]) usedIds.add(match[1]);
-  }
-  if (usedIds.size === 0) return "";
-  const matchedSvgs: string[] = [];
-  for (const match of svgContent.matchAll(/<svg\b[^>]*\bid="([^"]+)"[^>]*>[\s\S]*?<\/svg>/g)) {
-    if (match[1] && usedIds.has(match[1])) {
-      matchedSvgs.push(match[0]);
-    }
-  }
-  if (matchedSvgs.length === 0) return "";
-  return `<div id="svg-templates" style="position: absolute; overflow: hidden; bottom: 0; left: 0; width: 0; height: 0; z-index: 0; contain: strict" aria-hidden="true">${matchedSvgs.join("")}</div>`;
-};
-
-export const loadCalMarketingAssets = (
-  domFilename: string,
-  options?: { extractBody?: boolean }
-): { html: string; svgTemplates: string } => {
-  const publicDir = path.join(process.cwd(), "public", "rondevu_files");
-  const rawHtml = fs.readFileSync(path.join(publicDir, domFilename), "utf8");
-  const html = options?.extractBody ? getFramerBody(rawHtml) : rawHtml;
-  const rawSvgTemplates = fs.readFileSync(path.join(publicDir, "svg-templates.html"), "utf8");
-  const svgTemplates = filterUsedSvgTemplates(rawSvgTemplates, html);
-  return { html, svgTemplates };
 };

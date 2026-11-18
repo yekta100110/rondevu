@@ -28,10 +28,10 @@ function getCspPolicy(nonce: string, isEmbed = false): string {
 	  child-src 'self';
 	  style-src 'self' ${
       IS_PRODUCTION ? (useNonStrictPolicy ? "'unsafe-inline'" : "") : "'unsafe-inline'"
-    } https://framerusercontent.com;
-  font-src 'self' https://fonts.gstatic.com https://framerusercontent.com data:;
-  img-src 'self' ${WEBAPP_URL} https://img.youtube.com https://eu.ui-avatars.com/api/ https://framerusercontent.com data:;
-    connect-src 'self' https://framerusercontent.com;
+    };
+  font-src 'self' https://fonts.gstatic.com data:;
+  img-src 'self' ${WEBAPP_URL} https://img.youtube.com https://eu.ui-avatars.com/api/ data:;
+    connect-src 'self';
     form-action 'self';
 	`;
 }

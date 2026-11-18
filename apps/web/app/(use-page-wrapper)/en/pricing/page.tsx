@@ -3,14 +3,12 @@ import { APP_NAME, WEBSITE_URL } from "@rondevu/lib/constants";
 import { getPlanContactConfig } from "@rondevu/lib/planContactConfig";
 import { PricingSchema } from "@components/schemas/MarketingSchemas";
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
-import { _generateMetadata, loadCalMarketingAssets } from "app/_utils";
+import { _generateMetadata } from "app/_utils";
 import type { Metadata } from "next";
 import { cookies, headers } from "next/headers";
 import { PricingView } from "~/pricing/pricing-view";
 import type { Locale } from "~/home/i18n/home-translations";
 
-import "../../../../public/rondevu_files/rondevu-framer.css";
-import "../../../../public/rondevu_files/rondevu-pricing-framer.css";
 
 const SITE_URL = WEBSITE_URL.replace(/\/+$/, "");
 const PRICING_LANGUAGES = {
@@ -22,7 +20,7 @@ const PRICING_LANGUAGES = {
 const generateMetadata = async (): Promise<Metadata> => {
   const title = `Pricing - ${APP_NAME}`;
   const description =
-    "Transparent and simple pricing for rOndevu: flexible monthly and yearly plans with unlimited appointments, SMS verification, and calendar sync.";
+    "Transparent and simple pricing for rOndevu: monthly and yearly plans with identical features: WhatsApp and SMS notifications, SMS number verification and calendar sync.";
 
   const baseMetadata = await _generateMetadata(
     () => title,
@@ -57,14 +55,10 @@ const EnglishPricingPage = async () => {
   const initialContact = await getPlanContactConfig();
   const initialLocale: Locale = "en";
 
-  const { html, svgTemplates } = loadCalMarketingAssets("pricing-dom-en.html");
-
   return (
     <>
       <PricingSchema contact={initialContact} locale={initialLocale} />
       <PricingView
-        html={html}
-        svgTemplates={svgTemplates}
         isLoggedIn={isLoggedIn}
         initialContact={initialContact}
         initialLocale={initialLocale}
