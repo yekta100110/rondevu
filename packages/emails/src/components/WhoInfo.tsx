@@ -14,7 +14,7 @@ export const PersonInfo = ({ name = "", email = "", role = "", phoneNumber = "" 
       {name} - {role} {formattedPhoneNumber}
       {displayEmail && (
         <span style={{ color: "#a1a1aa" }}>
-          <a href={`mailto:${email}`} style={{ color: "#60a5fa" }}>
+          <a href={`mailto:${email}`} style={{ color: "#171717", textDecoration: "underline" }}>
             {email}
           </a>
         </span>

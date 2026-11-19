@@ -34,7 +34,7 @@ export const CallToAction = (props: {
         background: secondary ? "#27272a" : "#ffffff",
         border: secondary ? "1px solid #3f3f46" : "none",
         color: secondary ? "#f4f4f5" : "#111111",
-        fontFamily: "Roboto, Helvetica, sans-serif",
+        fontFamily: "Geist, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif",
         fontSize: "0.875rem",
         fontWeight: 600,
         lineHeight: "1rem",

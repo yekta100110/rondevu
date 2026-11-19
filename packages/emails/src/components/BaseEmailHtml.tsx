@@ -110,7 +110,7 @@ export const BaseEmailHtml = (props: {
                       <td align="left" style={{ fontSize: 0, padding: "10px 25px", wordBreak: "break-word" }}>
                         <div
                           style={{
-                            fontFamily: "Roboto, Helvetica, sans-serif",
+                            fontFamily: "Geist, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif",
                             fontSize: 16,
                             fontWeight: 500,
                             lineHeight: 1,
@@ -179,7 +179,7 @@ export const BaseEmailHtml = (props: {
                               style={{ fontSize: 0, padding: "10px 25px", wordBreak: "break-word" }}>
                               <div
                                 style={{
-                                  fontFamily: "Roboto, Helvetica, sans-serif",
+                                  fontFamily: "Geist, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif",
                                   fontSize: 13,
                                   lineHeight: 1,
                                   textAlign: "left",

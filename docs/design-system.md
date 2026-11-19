@@ -62,7 +62,7 @@ Tek gerçek kaynak `packages/config/theme/tokens.css` (eski `--rondevu-*` adlar�
   - `WordsIn`: hero başlığı kelime kelime, 60 ms aralıkla, `y: .35em → 0`, `blur 8px → 0`.
   - `Reveal`: bölüm girişi, `y: 12px`, `blur 6px → 0`, bir kez. İçerik DOM'da baştan vardır.
   - `CountUp`: istatistik sayıları görünür olunca 1,1 sn'de sayar.
-  - `layoutId` hapı: seçili gün, seçili saat, seçili adım, aktif sekme arka planı yay animasyonuyla kayar (`stiffness 500, damping 38`).
+  - `layoutId` hapı: seçili gün, seçili saat, seçili adım, yatay sekmelerde (`HorizontalTabs`) aktif sekme arka planı yay animasyonuyla kayar (`stiffness 500, damping 38`).
   - Açılır içerik: `height: 0 → auto`, 300 ms.
   - Onay: SVG halka `pathLength 0 → 1` (800 ms), ardından tik (400 ms, 600 ms gecikme).
   - Kaydet çubuğu: ayarlar değişince alttan yayla çıkar.
@@ -85,7 +85,7 @@ Günün 1440 dakikası, eğik bir halkada parçacık olarak çizilir (`DayRing`,
 - **Kartlar:** 1px çizgi, gölge yok ya da çok hafif. Özellik ızgarası: `gap-px` + `bg-border` ile ortak çizgili hücreler.
 - **Zaman çizelgesi:** Saat etiketleri solda mono 11px. Randevu bloğu tek satır: solda 3px dikey çizgi, `isim · hizmet`, sağda `09:00 – 09:30`. Seçili blok: mürekkep kenar + `bg-accent` (opak). Mola: kesik çizgili, taralı zemin. "Şu an" çizgisi mürekkep, yalnız mesai saatleri içindeyken görünür. Saat başına 72px.
 - **Formlar:** shadcn `Field` yapısı (etiket, açıklama, hata). Hata metni örnek verir: "Geçerli bir e-posta yazın. Örnek: ad@alanadi.com".
-- **Ayarlar:** Sekmeler URL'de (`?tab=`). Değişiklik olunca alttan "Kaydedilmemiş değişiklikler var · Geri al · Kaydet" çubuğu çıkar.
+- **Ayarlar:** Sekmeler URL'de (`?tab=`). Kaydet alanı (`SectionBottomActions`) sayfanın altında yapışkan, bulanık zeminli çubuktur; kaydedilecek değişiklik yokken (gönder düğmesi devre dışı) hafifçe geri çekilir ve soluklaşır, değişiklik olunca öne gelir.
 - **Bildirimler:** `sonner`, alt orta. İptal gibi işlemlerde "Geri al" eylemi.
 
 ## 8. Sayfa düzenleri
@@ -97,3 +97,7 @@ Günün 1440 dakikası, eğik bir halkada parçacık olarak çizilir (`DayRing`,
 ## 9. Fiyat ve iletişim gerçekleri
 
 Pazarlama yüzeylerinde fiyat, paket ve iletişim bilgisi `brain/projects/rondevu.md` §4'teki kesin kararlardan alınır: aylık ve yıllık paket özellikleri aynı, yıllıkta 2 ay ücretsiz; API/Webhook erişimi ve marka gizleme satılmaz; adres yazılmaz. Prototipteki örnek fiyatlar kullanılmaz.
+
+## 10. E-postalar
+
+E-posta istemcileri web fontu ve CSS değişkeni yüklemediği için şablonlar satır içi stil kullanır: yazı yığını `Geist, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif`, bağlantılar `#171717` ve altı çizili, zeminler nötr gri. Renkli bağlantı ya da buton kullanılmaz.
