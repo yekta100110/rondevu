@@ -7,15 +7,15 @@ import { Avatar } from "@rondevu/ui/components/avatar";
 import { Credits } from "@rondevu/ui/components/credits";
 import { ButtonOrLink } from "@rondevu/ui/components/dropdown";
 import { Icon } from "@rondevu/ui/components/icon";
-import { Logo } from "@rondevu/ui/components/logo";
 import { SkeletonText } from "@rondevu/ui/components/skeleton";
 import { Tooltip } from "@rondevu/ui/components/tooltip";
 import { ArrowLeftIcon, ArrowRightIcon } from "@coss/ui/icons";
 import Link from "next/link";
 import type { User as UserAuth } from "next-auth";
 import { useSession } from "next-auth/react";
-import { KBarTrigger } from "./Kbar";
+import { Wordmark } from "./components/Wordmark";
 import { Navigation } from "./navigation/Navigation";
+import { NAV_ITEM_ACTIVE, NAV_ITEM_BASE, NAV_ITEM_HOVER } from "./navigation/NavigationItem";
 import { useBottomNavItems } from "./useBottomNavItems";
 import { ProfileDropdown } from "./user-dropdown/ProfileDropdown";
 import { UserDropdown } from "./user-dropdown/UserDropdown";
@@ -60,104 +60,100 @@ export function SideBar({ bannersHeight, user }: SideBarProps) {
       <aside
         style={sidebarStylingAttributes}
         className={classNames(
-          "fixed left-0 hidden h-full w-14 flex-col overflow-y-auto overflow-x-hidden border-muted border-r bg-muted md:sticky md:flex lg:w-56 lg:px-3",
+          "fixed left-0 hidden h-full w-14 flex-col overflow-y-auto overflow-x-hidden bg-sidebar text-sidebar-foreground md:sticky md:flex lg:w-60",
           "max-h-screen"
         )}>
-        <div className="flex h-full flex-col justify-between py-3 lg:pt-4">
-          <header className="todesktop:-mt-3 todesktop:flex-col-reverse items-center justify-between todesktop:[-webkit-app-region:drag] md:hidden lg:flex">
-            {user?.org ? (
-              !ENABLE_PROFILE_SWITCHER ? (
-                <Link href="/settings/organizations/profile" className="w-full px-1.5">
-                  <div className="flex items-center gap-2 font-medium">
-                    <Avatar
-                      alt={`${user.org.name} logo`}
-                      imageSrc={getPlaceholderAvatar(user.org.logoUrl, user.org.name)}
-                      size="xsm"
-                    />
-                    <p className="text line-clamp-1 text-sm">
-                      <span>{user.org.name}</span>
-                    </p>
-                  </div>
-                </Link>
-              ) : (
-                <ProfileDropdown />
-              )
-            ) : (
-              <div data-testid="user-dropdown-trigger" className="todesktop:mt-4 w-full">
-                <span className="hidden lg:inline">
-                  <UserDropdown />
-                </span>
-                <span className="hidden md:inline lg:hidden">
-                  <UserDropdown small />
-                </span>
-              </div>
-            )}
-            <div className="flex w-full justify-end rtl:space-x-reverse">
-              <button
-                color="minimal"
-                onClick={() => window.history.back()}
-                className="group todesktop:block hidden font-medium text-sm text-subtle hover:text-emphasis">
-                <ArrowLeftIcon className="h-4 w-4 shrink-0 text-subtle group-hover:text-emphasis" />
-              </button>
-              <button
-                color="minimal"
-                onClick={() => window.history.forward()}
-                className="group todesktop:block hidden font-medium text-sm text-subtle hover:text-emphasis">
-                <ArrowRightIcon className="h-4 w-4 shrink-0 text-subtle group-hover:text-emphasis" />
-              </button>
-              {!!user?.org && (
-                <div data-testid="user-dropdown-trigger" className="flex items-center">
-                  <UserDropdown small />
-                </div>
-              )}
-              <KBarTrigger />
-            </div>
-          </header>
-          {/* logo icon for tablet */}
-          <Link href="/event-types" className="text-center md:inline lg:hidden">
-            <Logo small icon />
+        <div className="flex h-14 shrink-0 items-center px-2 todesktop:[-webkit-app-region:drag] lg:px-4">
+          <Link href="/event-types" aria-label="rOndevu" className="mx-auto lg:mx-0">
+            <Wordmark className="text-xs lg:text-[22px]" />
           </Link>
-          <Navigation />
+          <div className="ml-auto hidden todesktop:flex">
+            <button
+              type="button"
+              onClick={() => window.history.back()}
+              className="rounded-md p-1 text-muted-foreground hover:text-foreground">
+              <ArrowLeftIcon className="size-4 shrink-0" />
+            </button>
+            <button
+              type="button"
+              onClick={() => window.history.forward()}
+              className="rounded-md p-1 text-muted-foreground hover:text-foreground">
+              <ArrowRightIcon className="size-4 shrink-0" />
+            </button>
+          </div>
         </div>
 
-        <div className="md:px-2 md:pb-4 lg:p-0">
-          {bottomNavItems.map((item, index) => (
-            <Tooltip side="right" content={t(item.name)} className="lg:hidden" key={item.name}>
-              <ButtonOrLink
-                id={item.name}
-                href={item.href || undefined}
-                aria-label={t(item.name)}
-                target={item.target}
-                className={classNames(
-                  "text-left",
-                  "justify-right group flex items-center rounded-md px-2 py-1.5 font-medium text-default text-sm transition [&[aria-current='page']]:bg-emphasis",
-                  "mt-0.5 w-full text-sm [&[aria-current='page']]:text-emphasis",
-                  isLocaleReady ? "hover:bg-subtle hover:text-emphasis" : "",
-                  index === 0 && "mt-3"
-                )}
-                onClick={item.onClick}>
-                {!!item.icon && (
-                  <Icon
-                    name={item.isLoading ? "rotate-cw" : item.icon}
-                    className={classNames(
-                      "h-4 w-4 shrink-0 aria-[aria-current='page']:text-inherit",
-                      "ml-3 md:mx-auto lg:ltr:mr-2 lg:rtl:ml-2",
-                      item.isLoading && "animate-spin"
-                    )}
-                    aria-hidden="true"
-                  />
-                )}
-                {isLocaleReady ? (
-                  <span className="hidden w-full justify-between lg:flex">
-                    <div className="flex">{t(item.name)}</div>
-                  </span>
-                ) : (
-                  <SkeletonText className="h-[20px] w-full" />
-                )}
-              </ButtonOrLink>
-            </Tooltip>
-          ))}
+        <div className="flex flex-1 flex-col gap-4 px-2 pt-2">
+          <Navigation />
+
+          <div className="flex flex-col gap-0.5">
+            <p className="hidden h-8 items-center px-2 font-medium text-muted-foreground text-xs lg:flex">
+              {t("shell_group_your_page")}
+            </p>
+            {bottomNavItems.map((item) => (
+              <Tooltip side="right" content={t(item.name)} className="lg:hidden" key={item.name}>
+                <ButtonOrLink
+                  id={item.name}
+                  href={item.href || undefined}
+                  aria-label={t(item.name)}
+                  target={item.target}
+                  className={classNames(
+                    NAV_ITEM_BASE,
+                    NAV_ITEM_ACTIVE,
+                    "w-full text-left",
+                    isLocaleReady ? NAV_ITEM_HOVER : ""
+                  )}
+                  onClick={item.onClick}>
+                  {!!item.icon && (
+                    <Icon
+                      name={item.isLoading ? "rotate-cw" : item.icon}
+                      className={classNames("size-4 shrink-0", item.isLoading && "animate-spin")}
+                      aria-hidden="true"
+                    />
+                  )}
+                  {isLocaleReady ? (
+                    <span className="hidden w-full truncate lg:block">{t(item.name)}</span>
+                  ) : (
+                    <SkeletonText className="h-[20px] w-full" />
+                  )}
+                </ButtonOrLink>
+              </Tooltip>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-2 p-2">
           {!IS_VISUAL_REGRESSION_TESTING && <Credits />}
+          {user?.org ? (
+            !ENABLE_PROFILE_SWITCHER ? (
+              <div className="flex items-center gap-1">
+                <Link
+                  href="/settings/organizations/profile"
+                  className="flex min-w-0 flex-1 items-center gap-2 rounded-md p-2 text-sm hover:bg-accent">
+                  <Avatar
+                    alt={`${user.org.name} logo`}
+                    imageSrc={getPlaceholderAvatar(user.org.logoUrl, user.org.name)}
+                    size="xsm"
+                  />
+                  <span className="hidden truncate font-medium lg:inline">{user.org.name}</span>
+                </Link>
+                <div data-testid="user-dropdown-trigger" className="hidden lg:flex">
+                  <UserDropdown small />
+                </div>
+              </div>
+            ) : (
+              <ProfileDropdown />
+            )
+          ) : (
+            <div data-testid="user-dropdown-trigger" className="todesktop:mt-4 w-full">
+              <span className="hidden lg:inline">
+                <UserDropdown />
+              </span>
+              <span className="hidden md:inline lg:hidden">
+                <UserDropdown small />
+              </span>
+            </div>
+          )}
         </div>
       </aside>
     </div>

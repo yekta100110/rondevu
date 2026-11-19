@@ -5,7 +5,9 @@ import dayjs from "@rondevu/dayjs";
 import { useLocale } from "@rondevu/lib/hooks/useLocale";
 import { isMac } from "@rondevu/lib/isMac";
 import { trpc } from "@rondevu/trpc/react";
+import classNames from "@rondevu/ui/classNames";
 import { Tooltip } from "@rondevu/ui/components/tooltip";
+import { Kbd } from "@coss/ui/components/kbd";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -346,7 +348,7 @@ const KBarContent = (): JSX.Element => {
             <span className="pr-2">{t("close")}</span>
           </div>
         </KBarAnimator>
-        <div className="fixed inset-0 z-1 bg-neutral-800/70" />
+        <div className="fixed inset-0 z-1 bg-inverted/70" />
       </KBarPositioner>
     </KBarPortal>
   );
@@ -361,20 +363,48 @@ function getTooltipContent(): string {
 
 const KBarTrigger = (): JSX.Element | null => {
   const { query } = useKBar();
+  const { t } = useLocale();
 
   if (!query) {
     return null;
   }
 
   return (
-    <Tooltip side="right" content={getTooltipContent()}>
+    <Tooltip side="bottom" content={getTooltipContent()}>
       <button
-        color="minimal"
+        type="button"
+        aria-label={t("search")}
         onClick={query.toggle}
-        className="todesktop:hover:!bg-transparent group flex rounded-md px-3 py-2 font-medium text-default text-sm transition hover:bg-subtle lg:px-2 lg:hover:bg-emphasis lg:hover:text-emphasis">
-        <SearchIcon className="h-4 w-4 shrink-0 text-inherit" />
+        className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors duration-150 hover:bg-accent hover:text-foreground">
+        <SearchIcon className="size-4 shrink-0" />
       </button>
     </Tooltip>
+  );
+};
+
+const KBarSearchField = ({ className }: { className?: string }): JSX.Element | null => {
+  const { query } = useKBar();
+  const { t } = useLocale();
+
+  if (!query) {
+    return null;
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={query.toggle}
+      className={classNames(
+        "flex h-9 w-full max-w-sm items-center gap-2 rounded-md border border-subtle bg-background px-3 text-muted-foreground text-sm transition-colors duration-150 hover:border-foreground/30",
+        className
+      )}>
+      <SearchIcon className="size-4 shrink-0" />
+      <span className="truncate">{t("shell_search_placeholder")}</span>
+      <span className="ml-auto hidden items-center gap-1 sm:inline-flex">
+        <Kbd>{isMac ? "⌘" : "Ctrl"}</Kbd>
+        <Kbd>K</Kbd>
+      </span>
+    </button>
   );
 };
 
@@ -476,4 +506,4 @@ function RenderResults(): JSX.Element {
   );
 }
 
-export { KBarRoot, KBarContent, KBarTrigger };
+export { KBarRoot, KBarContent, KBarTrigger, KBarSearchField };

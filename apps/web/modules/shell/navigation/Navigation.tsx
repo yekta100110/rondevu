@@ -3,8 +3,8 @@ import { useIsStandalone } from "@rondevu/lib/hooks/useIsStandalone";
 import classNames from "@rondevu/ui/classNames";
 import { useSession } from "next-auth/react";
 import { useMemo } from "react";
-import UnconfirmedBookingBadge from "../../bookings/components/UnconfirmedBookingBadge";
-import { KBarTrigger } from "../Kbar";
+import { useLocale } from "@rondevu/lib/hooks/useLocale";
+import { UnconfirmedCountBadge } from "./NavCountBadge";
 import type { NavigationItemType } from "./NavigationItem";
 import { MobileNavigationItem, MobileNavigationMoreItem, NavigationItem } from "./NavigationItem";
 import { useMobileMoreItems } from "./useMobileMoreItems";
@@ -21,7 +21,7 @@ const getNavigationItems = (): NavigationItemType[] => [
     name: "bookings",
     href: "/bookings/upcoming",
     icon: "calendar",
-    badge: <UnconfirmedBookingBadge />,
+    badge: <UnconfirmedCountBadge />,
     isCurrent: ({ pathname }) => pathname?.startsWith("/bookings") ?? false,
   },
   {
@@ -85,15 +85,16 @@ const useNavigationItems = () => {
 
 export const Navigation = () => {
   const { desktopNavigationItems } = useNavigationItems();
+  const { t } = useLocale();
 
   return (
-    <nav className="mt-2 flex-1 md:px-2 lg:mt-4 lg:px-0">
+    <nav className="flex flex-col gap-0.5" aria-label={t("shell_group_workspace")}>
+      <p className="hidden h-8 items-center px-2 font-medium text-muted-foreground text-xs lg:flex">
+        {t("shell_group_workspace")}
+      </p>
       {desktopNavigationItems.map((item) => (
         <NavigationItem key={item.name} item={item} />
       ))}
-      <div className="mt-0.5 text-subtle lg:hidden">
-        <KBarTrigger />
-      </div>
     </nav>
   );
 };
@@ -113,7 +114,7 @@ const MobileNavigation = () => {
     <>
       <nav
         className={classNames(
-          "fixed bottom-0 left-0 z-30 pwa:-mx-2 flex w-full border-subtle border-t bg-muted/40 px-1 pwa:pb-[max(0.25rem,env(safe-area-inset-bottom))] shadow backdrop-blur-md md:hidden",
+          "fixed bottom-0 left-0 z-30 pwa:-mx-2 flex w-full gap-1 border-subtle border-t bg-background/80 px-2 pwa:pb-[max(0.25rem,env(safe-area-inset-bottom))] backdrop-blur-xl md:hidden",
           isEmbed && "hidden"
         )}>
         {mobileNavigationBottomItems.map((item) => (
@@ -121,7 +122,7 @@ const MobileNavigation = () => {
         ))}
       </nav>
       {/* add padding to content for mobile navigation*/}
-      <div className="block pt-12 md:hidden" />
+      <div className="block pt-16 md:hidden" />
     </>
   );
 };
@@ -133,7 +134,7 @@ export const MobileNavigationMoreItems = () => {
   const allItems = [...mobileNavigationMoreItems, ...bottomItems];
 
   return (
-    <ul className="mt-2 rounded-md border border-subtle">
+    <ul className="mt-2 overflow-hidden rounded-xl border border-subtle bg-background">
       {allItems.map((item) => (
         <MobileNavigationMoreItem key={item.name} item={item} />
       ))}

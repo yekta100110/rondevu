@@ -4,7 +4,7 @@ import { SkeletonText } from "@rondevu/ui/components/skeleton";
 
 function SkeletonLoader() {
   return (
-    <ul className="divide-subtle border-subtle bg-default animate-pulse divide-y rounded-md border sm:overflow-hidden">
+    <ul className="divide-y divide-subtle overflow-hidden rounded-xl border border-subtle bg-background motion-safe:animate-pulse">
       <SkeletonHeader />
       <SkeletonItem />
       <SkeletonItem />
@@ -21,8 +21,8 @@ export default SkeletonLoader;
 
 function SkeletonHeader() {
   return (
-    <li className="bg-muted flex items-center px-6 py-4">
-      <SkeletonText className="h-4 w-16" />
+    <li className="flex items-center bg-muted/50 px-4 py-2.5 sm:px-6">
+      <SkeletonText className="h-3 w-16" />
     </li>
   );
 }
@@ -56,9 +56,8 @@ function SkeletonItem() {
 
       {/* Action buttons - only visible on larger screens */}
       <div className="ml-4 hidden shrink-0 gap-2 sm:flex">
-        <SkeletonText className="h-9 w-20 rounded-md" />
-        <SkeletonText className="h-9 w-20 rounded-md" />
-        <SkeletonText className="h-9 w-9 rounded-md" />
+        <SkeletonText className="h-5 w-16 rounded-md" />
+        <SkeletonText className="h-8 w-8 rounded-md" />
       </div>
     </li>
   );

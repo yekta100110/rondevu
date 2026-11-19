@@ -631,7 +631,7 @@ const EventTypeSchedule = ({
       ) : (
         isManagedEventType &&
         fieldName === "schedule" && (
-          <p className="mt-2! ml-1 text-gray-600 text-sm">{t("members_default_schedule_description")}</p>
+          <p className="mt-2! ml-1 text-default text-sm">{t("members_default_schedule_description")}</p>
         )
       )}
     </div>

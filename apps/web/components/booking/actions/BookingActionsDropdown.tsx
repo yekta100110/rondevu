@@ -544,7 +544,7 @@ export function BookingActionsDropdown({
         <DropdownMenuTrigger asChild data-testid="booking-actions-dropdown">
           <Button
             type="button"
-            color="secondary"
+            color="minimal"
             size={size}
             StartIcon="ellipsis"
             className={classNames("px-2", className)}

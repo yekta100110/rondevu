@@ -36,6 +36,7 @@ import { Icon } from "@rondevu/ui/components/icon";
 import { MeetingTimeInTimezones } from "@rondevu/ui/components/popover";
 import { showToast } from "@rondevu/ui/components/toast";
 import { Tooltip } from "@rondevu/ui/components/tooltip";
+import { BookingStatusBadge, getBookingDisplayStatus } from "./BookingStatusBadge";
 import assignmentReasonBadgeTitleMap from "@lib/booking/assignmentReasonBadgeTitleMap";
 import { buildBookingLink } from "../../modules/bookings/lib/buildBookingLink";
 import { useBookingDetailsSheetStore } from "../../modules/bookings/store/bookingDetailsSheetStore";
@@ -162,6 +163,7 @@ function BookingListItem(booking: BookingItemProps) {
   const isConfirmed = booking.status === BookingStatus.ACCEPTED;
   const isRejected = booking.status === BookingStatus.REJECTED;
   const isPending = booking.status === BookingStatus.PENDING;
+  const displayStatus = getBookingDisplayStatus({ isPending, isCancelled, isRejected, isBookingInPast });
   const isRescheduled = booking.fromReschedule !== null;
   const isRecurring = booking.recurringEventId !== null;
 
@@ -280,10 +282,10 @@ function BookingListItem(booking: BookingItemProps) {
       data-booking-list-item="true"
       data-booking-uid={booking.uid}
       className={classNames(
-        "group relative w-full transition-all duration-100 ease-out",
-        "hover:bg-muted",
+        "group relative w-full transition-colors duration-150 ease-out",
+        "hover:bg-accent",
         isSelected &&
-          "bg-muted before:bg-brand-default rounded-r-md before:absolute before:left-0 before:top-0 before:h-full before:w-1"
+          "bg-accent before:absolute before:top-0 before:left-0 before:h-full before:w-[3px] before:bg-foreground"
       )}>
       <div className="flex flex-col sm:flex-row">
         <div className="sm:min-w-48 hidden align-top ltr:pl-3 rtl:pr-6 sm:table-cell">
@@ -291,8 +293,8 @@ function BookingListItem(booking: BookingItemProps) {
             {eventTypeColor && <div className="h-[70%] w-0.5" style={{ backgroundColor: eventTypeColor }} />}
             <ConditionalLink onClick={onClick} bookingLink={bookingLink} className="ml-3">
               <div className="cursor-pointer py-4">
-                <div className="text-emphasis text-sm leading-6">{startTime}</div>
-                <div className="text-subtle text-sm">
+                <div className="font-medium text-foreground text-sm leading-6">{startTime}</div>
+                <div className="font-mono text-muted-foreground text-xs tabular-nums">
                   {formatTime(booking.startTime, userTimeFormat, userTimeZone)} -{" "}
                   {formatTime(booking.endTime, userTimeFormat, userTimeZone)}
                   <MeetingTimeInTimezones
@@ -314,7 +316,7 @@ function BookingListItem(booking: BookingItemProps) {
                           target="_blank"
                           title={locationToDisplay}
                           rel="noreferrer"
-                          className="text-sm leading-6 text-blue-600 hover:underline dark:text-blue-400">
+                          className="text-foreground text-sm leading-6 underline-offset-4 hover:underline">
                           <div className="flex items-center gap-2">
                             {provider?.iconUrl && (
                               // eslint-disable-next-line @next/next/no-img-element
@@ -345,8 +347,8 @@ function BookingListItem(booking: BookingItemProps) {
             {/* Time and Badges for mobile */}
             <div className="w-full pb-2 pt-4 sm:hidden">
               <div className="flex w-full items-center justify-between sm:hidden">
-                <div className="text-emphasis text-sm leading-6">{startTime}</div>
-                <div className="text-subtle pr-2 text-sm">
+                <div className="font-medium text-foreground text-sm leading-6">{startTime}</div>
+                <div className="pr-2 font-mono text-muted-foreground text-xs tabular-nums">
                   {formatTime(booking.startTime, userTimeFormat, userTimeZone)} -{" "}
                   {formatTime(booking.endTime, userTimeFormat, userTimeZone)}
                   <MeetingTimeInTimezones
@@ -359,11 +361,7 @@ function BookingListItem(booking: BookingItemProps) {
                 </div>
               </div>
 
-              {isPending && (
-                <Badge className="ltr:mr-2 rtl:ml-2 sm:hidden" variant="orange">
-                  {t("unconfirmed")}
-                </Badge>
-              )}
+              <BookingStatusBadge status={displayStatus} className="ltr:mr-2 rtl:ml-2 sm:hidden" />
               {booking.eventType?.team && (
                 <Badge className="ltr:mr-2 rtl:ml-2 sm:hidden" variant="gray">
                   {booking.eventType.team.name}
@@ -397,7 +395,7 @@ function BookingListItem(booking: BookingItemProps) {
               <div
                 title={title}
                 className={classNames(
-                  "max-w-10/12 text-emphasis sm:max-w-56 break-words text-sm font-medium leading-6 md:max-w-full",
+                  "max-w-10/12 break-words font-medium text-foreground text-sm leading-6 sm:max-w-56 md:max-w-full",
                   isCancelled ? "line-through" : ""
                 )}>
                 {title}
@@ -411,7 +409,7 @@ function BookingListItem(booking: BookingItemProps) {
               </div>
               {booking.description && (
                 <div
-                  className="max-w-10/12 text-default sm:max-w-32 md:max-w-52 xl:max-w-80 truncate text-sm"
+                  className="max-w-10/12 truncate text-muted-foreground text-sm sm:max-w-32 md:max-w-52 xl:max-w-80"
                   title={booking.description}>
                   &quot;{booking.description}&quot;
                 </div>
@@ -439,7 +437,7 @@ function BookingListItem(booking: BookingItemProps) {
                         target="_blank"
                         title={locationToDisplay}
                         rel="noreferrer"
-                        className="text-sm leading-6 text-blue-600 hover:underline dark:text-blue-400">
+                        className="text-foreground text-sm leading-6 underline-offset-4 hover:underline">
                         <div className="flex items-center gap-2">
                           {provider?.iconUrl && (
                             <img
@@ -466,7 +464,8 @@ function BookingListItem(booking: BookingItemProps) {
             </div>
           </ConditionalLink>
         </div>
-        <div className="flex flex-col flex-wrap items-end justify-end gap-2 py-4 pl-4 text-right text-sm font-medium ltr:pr-4 rtl:pl-4 sm:flex-shrink-0 sm:flex-row sm:flex-nowrap sm:items-start sm:pl-0">
+        <div className="flex flex-col flex-wrap items-end justify-end gap-2 py-4 pl-4 text-right text-sm font-medium ltr:pr-4 rtl:pl-4 sm:flex-shrink-0 sm:flex-row sm:flex-nowrap sm:items-center sm:pl-0">
+          <BookingStatusBadge status={displayStatus} className="hidden sm:inline-flex" />
           {shouldShowPendingActions(actionContext) && (
             <div className="flex space-x-2 rtl:space-x-reverse">
               <RejectBookingButton
@@ -542,8 +541,6 @@ function BookingListItem(booking: BookingItemProps) {
 
 const BookingItemBadges = ({
   booking,
-  isPending,
-  isRejected,
   recurringDates,
   userTimeFormat,
   userTimeZone,
@@ -563,22 +560,12 @@ const BookingItemBadges = ({
 
   return (
     <div className="hidden h-9 flex-row items-center pb-4 pl-6 sm:flex">
-      {isPending && (
-        <Badge className="ltr:mr-2 rtl:ml-2" variant="orange">
-          {t("unconfirmed")}
-        </Badge>
-      )}
       {isRescheduled && (
         <Tooltip content={`${t("rescheduled_by")} ${booking.rescheduler}`}>
           <Badge variant="orange" className="ltr:mr-2 rtl:ml-2">
             {t("rescheduled")}
           </Badge>
         </Tooltip>
-      )}
-      {isRejected && !isRescheduled && booking.assignmentReasonSortedByCreatedAt.length === 0 && (
-        <Badge variant="gray" className="ltr:mr-2 rtl:ml-2">
-          {t("rejected")}
-        </Badge>
       )}
       {booking.eventType?.team && (
         <Badge className="ltr:mr-2 rtl:ml-2" variant="gray">
@@ -667,7 +654,7 @@ const RecurringBookingsTooltip = ({
       (booking.listingStatus === "recurring" ||
         booking.listingStatus === "unconfirmed" ||
         booking.listingStatus === "cancelled") && (
-        <div className="underline decoration-gray-400 decoration-dashed underline-offset-2">
+        <div className="underline decoration-current decoration-dashed underline-offset-2">
           <div className="flex">
             <Tooltip
               content={recurringDates.map((aDate, key) => {
@@ -735,7 +722,7 @@ const FirstAttendee = ({
   return (
     <a
       key={user.email}
-      className="hover:text-blue-500"
+      className="hover:text-subtle"
       href={`mailto:${user.email}`}
       onClick={(e) => e.stopPropagation()}>
       {user.name || user.email}
@@ -798,7 +785,7 @@ const Attendee = (
         <button
           data-testid="guest"
           onClick={(e) => e.stopPropagation()}
-          className="radix-state-open:text-blue-500 inline-flex items-center gap-1.5 transition hover:text-blue-500">
+          className="radix-state-open:text-subtle inline-flex items-center gap-1.5 transition hover:text-subtle">
           <span>{displayName}</span>
           {count >= 1 ? (
             <Badge variant="red" size="sm" startIcon="eye-off" data-testid="historical-no-show-badge">
@@ -916,7 +903,7 @@ const GroupedAttendees = (groupedAttendeeProps: GroupedAttendeeProps) => {
         <button
           data-testid="more-guests"
           onClick={(e) => e.stopPropagation()}
-          className="radix-state-open:text-blue-500 transition hover:text-blue-500 focus:outline-none">
+          className="radix-state-open:text-subtle transition hover:text-subtle focus:outline-none">
           {t("plus_more", { count: attendees.length - 1 })}
         </button>
       </DropdownMenuTrigger>
@@ -994,7 +981,7 @@ const GroupedGuests = ({ guests }: { guests: BookingAttendee[] }) => {
       <DropdownMenuTrigger asChild>
         <button
           onClick={(e) => e.stopPropagation()}
-          className="radix-state-open:text-blue-500 transition hover:text-blue-500 focus:outline-none">
+          className="radix-state-open:text-subtle transition hover:text-subtle focus:outline-none">
           {t("plus_more", { count: guests.length - 1 })}
         </button>
       </DropdownMenuTrigger>

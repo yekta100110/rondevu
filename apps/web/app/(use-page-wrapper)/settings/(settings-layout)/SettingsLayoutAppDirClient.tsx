@@ -387,9 +387,9 @@ const BackButtonInSidebar = ({ name }: { name: string }) => {
   return (
     <Link
       href="/event-types"
-      className="group my-6 todesktop:mt-10 flex h-6 max-h-6 w-full flex-row items-center rounded-md px-3 py-2 font-medium text-emphasis text-sm leading-4 transition hover:bg-subtle group-hover:text-default [&[aria-current='page']]:bg-emphasis [&[aria-current='page']]:text-emphasis"
+      className="group mt-3 mb-4 todesktop:mt-10 flex h-8 w-full flex-row items-center gap-2 rounded-md px-2 text-muted-foreground text-sm transition-colors duration-150 hover:bg-accent hover:text-foreground"
       data-testid={`vertical-tab-${name}`}>
-      <ArrowLeftIcon className="h-4 w-4 stroke-[2px] md:mt-0 ltr:mr-[10px] rtl:ml-[10px] rtl:rotate-180" />
+      <ArrowLeftIcon className="size-4 shrink-0 rtl:rotate-180" />
       <Skeleton title={name} as="p" className="min-h-4 max-w-36 truncate" loadingClassName="ms-3">
         {name}
       </Skeleton>
@@ -424,11 +424,11 @@ const SettingsSidebarContainer = ({
     <nav
       style={{ maxHeight: `calc(100vh - ${bannersHeight}px)`, top: `${bannersHeight}px` }}
       className={classNames(
-        "no-scrollbar stack-y-1 fixed top-0 bottom-0 left-0 z-20 flex max-h-screen w-56 flex-col overflow-x-hidden overflow-y-scroll bg-muted px-2 pb-3 transition-transform max-lg:z-10 lg:sticky lg:flex",
+        "no-scrollbar fixed top-0 bottom-0 left-0 z-20 flex max-h-screen w-60 flex-col gap-0.5 overflow-x-hidden overflow-y-scroll bg-sidebar px-2 pb-3 text-sidebar-foreground transition-transform duration-300 max-md:z-10 md:sticky md:flex",
         className,
         navigationIsOpenedOnMobile
           ? "translate-x-0 opacity-100"
-          : "-translate-x-full opacity-0 lg:translate-x-0 lg:opacity-100"
+          : "-translate-x-full opacity-0 md:translate-x-0 md:opacity-100"
       )}
       aria-label={t("settings_navigation")}>
       <BackButtonInSidebar name={t("back")} />
@@ -436,11 +436,11 @@ const SettingsSidebarContainer = ({
         return (
           <React.Fragment key={tab.href}>
             <div className={`${!tab.children?.length ? "mb-3!" : ""}`}>
-              <div className="group flex h-7 w-full flex-row items-center rounded-md px-2 font-medium text-default text-sm leading-none [&[aria-current='page']]:bg-emphasis [&[aria-current='page']]:text-emphasis">
+              <div className="group flex h-8 w-full flex-row items-center px-2 text-muted-foreground text-xs">
                 {tab?.icon && (
                   <Icon
                     name={tab.icon}
-                    className="h-[16px] w-[16px] stroke-[2px] text-subtle md:mt-0 ltr:mr-3 rtl:ml-3"
+                    className="size-3.5 shrink-0 ltr:mr-2 rtl:ml-2"
                   />
                 )}
                 {}
@@ -448,7 +448,7 @@ const SettingsSidebarContainer = ({
                   <Image
                     width={16}
                     height={16}
-                    className="rounded-full ltr:mr-3 rtl:ml-3"
+                    className="rounded-full ltr:mr-2 rtl:ml-2"
                     src={tab?.avatar}
                     alt="Organization Logo"
                   />
@@ -456,29 +456,30 @@ const SettingsSidebarContainer = ({
                 <Skeleton
                   title={tab.name}
                   as="p"
-                  className="truncate font-medium text-sm text-subtle leading-5"
+                  className="truncate font-medium text-muted-foreground text-xs leading-5"
                   loadingClassName="ms-3">
                   {t(tab.name)}
                 </Skeleton>
               </div>
             </div>
-            <div className="flex flex-col space-y-1">
+            <div className="flex flex-col gap-0.5">
               {tab.children?.map((child, index) => (
-                <div key={child.href} className="flex items-start gap-2">
+                <div key={child.href} className="flex items-center gap-2">
                   <VerticalTabItem
                     name={t(child.name)}
                     isExternalLink={child.isExternalLink}
                     href={child.href || "/"}
                     trackingMetadata={child.trackingMetadata}
-                    textClassNames="text-emphasis font-medium text-sm"
-                    className={`h-auto min-h-7 w-fit px-2! py-1! ${
-                      tab.children && index === tab.children?.length - 1 && "mb-3!"
-                    }`}
+                    textClassNames="text-sidebar-foreground text-sm leading-none"
+                    className={classNames(
+                      "ml-0 h-8 min-h-8 w-full px-2 py-0 hover:bg-accent hover:text-foreground [&[aria-current='page']]:bg-accent [&[aria-current='page']]:font-medium [&[aria-current='page']]:text-foreground",
+                      tab.children && index === tab.children.length - 1 && "mb-3!"
+                    )}
                     disableChevron
                   />
                   {child.isBadged && (
-                    <Badge variant="blue" className="mt-0.5 text-xs">
-                      New
+                    <Badge variant="gray" className="font-mono text-[11px]">
+                      {t("new")}
                     </Badge>
                   )}
                 </div>
@@ -499,17 +500,17 @@ const MobileSettingsContainer = (props: { onSideContainerOpen?: () => void }) =>
   if (isStandalone) return null;
 
   return (
-    <nav className="sticky top-0 z-20 flex w-full items-center justify-between border-muted border-b bg-muted px-2 py-2 sm:relative lg:hidden">
+    <nav className="sticky top-0 z-20 flex h-14 w-full items-center justify-between border-subtle border-b bg-background/80 px-2 backdrop-blur-xl md:hidden">
       <div className="flex items-center space-x-3">
         <Button StartIcon="menu" color="minimal" variant="icon" onClick={props.onSideContainerOpen}>
           <span className="sr-only">{t("show_navigation")}</span>
         </Button>
 
         <button
-          className="flex items-center space-x-2 rounded-md px-3 py-1 hover:bg-emphasis rtl:space-x-reverse"
+          className="flex items-center gap-2 rounded-md px-3 py-1.5 transition-colors hover:bg-accent"
           onClick={() => router.back()}>
-          <ArrowLeftIcon className="h-4 w-4 text-default" />
-          <p className="font-semibold text-emphasis">{t("settings")}</p>
+          <ArrowLeftIcon className="size-4 text-muted-foreground" />
+          <p className="font-semibold text-foreground tracking-tight">{t("settings")}</p>
         </button>
       </div>
     </nav>
@@ -530,7 +531,7 @@ function SettingsLayoutAppDirClient({ children, teamFeatures, permissions, ...re
 
   useEffect(() => {
     const closeSideContainer = () => {
-      if (window.innerWidth >= 1024) {
+      if (window.innerWidth >= 768) {
         setSideContainerOpen(false);
       }
     };
@@ -564,7 +565,7 @@ function SettingsLayoutAppDirClient({ children, teamFeatures, permissions, ...re
       }>
       <div className="flex flex-1 *:flex-1">
         <div
-          className={classNames("mx-auto max-w-full justify-center lg:max-w-3xl", rest.containerClassName)}>
+          className={classNames("mx-auto w-full max-w-3xl justify-center", rest.containerClassName)}>
           <ErrorBoundary>{children}</ErrorBoundary>
         </div>
       </div>
@@ -594,7 +595,7 @@ const SidebarContainerElement = ({
       {sideContainerOpen && (
         <button
           onClick={() => setSideContainerOpen(false)}
-          className="fixed top-0 left-0 z-10 h-full w-full bg-black/50">
+          className="fixed top-0 left-0 z-10 h-full w-full bg-foreground/20 backdrop-blur-sm md:hidden">
           <span className="sr-only">{t("hide_navigation")}</span>
         </button>
       )}

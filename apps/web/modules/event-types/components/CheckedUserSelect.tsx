@@ -41,7 +41,7 @@ export const CheckedUserSelect = ({
       {value.length > 0 ? (
         <div className="mt-6">
           <Label>{t("assigned_to")}</Label>
-          <div className="flex overflow-hidden rounded-md border border-gray-200 bg-white">
+          <div className="flex overflow-hidden rounded-md border border-subtle bg-white">
             <ul className="w-full" data-testid="managed-event-types" ref={animationRef}>
               {value.map((option, index) => {
                 return (
@@ -49,7 +49,7 @@ export const CheckedUserSelect = ({
                     key={option.value}
                     className={`flex px-3 py-2 ${index === value.length - 1 ? "" : "border-b"}`}>
                     <Avatar size="sm" imageSrc={option.avatar} alt={option.label} />
-                    <p className="my-auto ml-3 text-sm text-gray-900">{option.label}</p>
+                    <p className="my-auto ml-3 text-sm text-emphasis">{option.label}</p>
                     <Icon
                       name="x"
                       onClick={() => props.onChange(value.filter((item) => item.value !== option.value))}

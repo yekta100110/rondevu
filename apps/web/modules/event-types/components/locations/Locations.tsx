@@ -382,7 +382,7 @@ const Locations: React.FC<LocationsProps> = ({
                 components={[
                   <Link
                     key="event_type_requires_google_calendar"
-                    className="cursor-pointer text-blue-500 underline"
+                    className="cursor-pointer text-subtle underline"
                     href="/apps/google-calendar">
                     here
                   </Link>,
@@ -392,7 +392,7 @@ const Locations: React.FC<LocationsProps> = ({
           </div>
         )}
         {isChildrenManagedEventType && !locationAvailable && locationDetails && (
-          <p className="pl-1 text-sm leading-none text-red-600">
+          <p className="pl-1 text-sm leading-none text-error">
             {t("app_not_connected", { appName: locationDetails.name })}{" "}
             <a className="underline" href={`${WEBAPP_URL}/apps/${locationDetails.slug}`}>
               {t("connect_now")}
@@ -423,7 +423,7 @@ const Locations: React.FC<LocationsProps> = ({
             components={[
               <Link
                 key="cant_find_the_right_conferencing_app_visit_our_app_store"
-                className="cursor-pointer text-blue-500 underline"
+                className="cursor-pointer text-subtle underline"
                 href="/apps/categories/conferencing">
                 App Store
               </Link>,

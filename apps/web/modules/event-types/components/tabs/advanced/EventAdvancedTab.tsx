@@ -987,7 +987,7 @@ export const EventAdvancedTab = ({
                 </div>
                 <div
                   className={classNames(
-                    "p-1 text-orange-600 text-sm",
+                    "p-1 text-default text-sm",
                     formMethods.getValues("successRedirectUrl") ? "block" : "hidden",
                     customClassNames?.bookingRedirect?.error
                   )}

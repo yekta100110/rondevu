@@ -24,7 +24,7 @@ export const OnboardingLayout = ({ userEmail, currentStep, children }: Onboardin
     <div className="bg-default flex min-h-screen w-full flex-col items-start overflow-clip rounded-xl">
       {/* Header */}
       <div className="flex w-full items-center justify-between px-6 py-4">
-        <Logo className="h-5 w-auto" />
+        <Logo />
 
         {/* Progress dots - centered */}
         <div className="absolute left-1/2 flex -translate-x-1/2 items-center justify-center gap-1">

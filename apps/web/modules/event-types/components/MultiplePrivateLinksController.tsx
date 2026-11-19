@@ -269,7 +269,7 @@ export const MultiplePrivateLinksController = ({
                         disabled={isExpired}
                         value={singleUseURL}
                         readOnly
-                        className={classNames(isExpired ? "bg-red-50 text-gray-400" : "bg-gray-50")}
+                        className={classNames(isExpired ? "bg-error text-subtle" : "bg-muted")}
                         data-testid="private-link-url"
                         addOnSuffix={
                           !isExpired ? (
@@ -328,7 +328,7 @@ export const MultiplePrivateLinksController = ({
                         />
                       </div>
                     </div>
-                    <div data-testid="private-link-description" className="mt-1 text-sm text-gray-500">
+                    <div data-testid="private-link-description" className="mt-1 text-sm text-subtle">
                       {linkDescription}
                     </div>
                   </li>

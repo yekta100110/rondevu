@@ -134,7 +134,7 @@ export function AvailabilityList({ availabilities }: AvailabilityListProps) {
         </div>
       ) : (
         <>
-          <div className="border-subtle bg-default overflow-hidden rounded-md border">
+          <div className="overflow-hidden rounded-xl border border-subtle bg-background">
             <ul className="divide-subtle divide-y" data-testid="schedules" ref={animationParentRef}>
               {availabilities.schedules.map((schedule) => (
                 <ScheduleListItem
@@ -154,9 +154,11 @@ export function AvailabilityList({ availabilities }: AvailabilityListProps) {
               ))}
             </ul>
           </div>
-          <div className="text-default mb-16 mt-4 block text-center text-sm">
+          <div className="mt-4 mb-16 block text-center text-muted-foreground text-sm">
             {t("temporarily_out_of_office")}{" "}
-            <Link href="settings/my-account/out-of-office" className="underline">
+            <Link
+              href="settings/my-account/out-of-office"
+              className="text-foreground underline underline-offset-4">
               {t("add_a_redirect")}
             </Link>
           </div>

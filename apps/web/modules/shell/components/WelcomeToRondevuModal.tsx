@@ -31,7 +31,7 @@ export function WelcomeToRondevuModal() {
       <DialogContent size="default" className="p-0!">
         <div className="flex max-h-[80vh] flex-col gap-4 overflow-y-auto p-6">
           <div className="flex flex-col items-center gap-1">
-            <Logo className="h-10 w-auto" />
+            <Logo className="text-3xl" />
           </div>
 
           {/* User illustration with rings */}

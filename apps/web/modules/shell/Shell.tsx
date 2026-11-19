@@ -21,7 +21,7 @@ import { SkeletonText } from "@rondevu/ui/components/skeleton";
 import { DynamicModals } from "./DynamicModals";
 import { KBarContent, KBarRoot } from "./Kbar";
 import { SideBarContainer } from "./SideBar";
-import { TopNavContainer } from "./TopNav";
+import { DesktopTopBarContainer, TopNavContainer } from "./TopNav";
 import { BannerContainer } from "./banners/LayoutBanner";
 import { useBanners } from "./banners/useBanners";
 import { MobileNavigationContainer } from "./navigation/Navigation";
@@ -41,7 +41,7 @@ const Layout = (props: LayoutProps) => {
       <TimezoneChangeDialog />
       <DynamicModals />
 
-      <div className="flex min-h-screen flex-col">
+      <div className="flex min-h-screen flex-col bg-sidebar">
         {banners && <BannerContainer banners={banners} />}
 
         <div className="flex flex-1" data-testid="dashboard-shell">
@@ -132,9 +132,8 @@ export function ShellMain(props: LayoutProps) {
       {(props.heading || !!props.backPath) && (
         <div
           className={classNames(
-            "bg-default mb-0 flex items-center md:mb-6 md:mt-0",
-            props.smallHeading ? "lg:mb-7" : "lg:mb-8",
-            !props.disableSticky && "sticky top-0 z-10"
+            "mb-4 flex items-center bg-background md:mb-6",
+            !props.disableSticky && "sticky top-0 z-10 md:top-14"
           )}>
           {!!props.backPath && (
             <Button
@@ -146,27 +145,30 @@ export function ShellMain(props: LayoutProps) {
               }
               StartIcon="arrow-left"
               aria-label="Go Back"
-              className="rounded-md ltr:mr-2 rtl:ml-2"
+              className="rounded-md text-muted-foreground hover:bg-accent hover:text-foreground ltr:mr-2 rtl:ml-2"
               data-testid="go-back-button"
             />
           )}
           {props.heading && (
             <header
-              className={classNames(props.large && "py-8", "flex w-full max-w-full items-center truncate")}>
+              className={classNames(
+                props.large ? "py-8" : "py-1",
+                "flex w-full max-w-full items-center gap-3 truncate"
+              )}>
               {props.HeadingLeftIcon && <div className="ltr:mr-4">{props.HeadingLeftIcon}</div>}
               <div
-                className={classNames("w-full truncate ltr:mr-4 rtl:ml-4 md:block", props.headerClassName)}>
+                className={classNames("min-w-0 flex-1 truncate", props.headerClassName)}>
                 {props.heading && (
-                  <h3
+                  <h1
                     className={classNames(
-                      "font-display text-emphasis max-w-28 sm:max-w-72 md:max-w-80 hidden truncate text-lg font-semibold tracking-wide sm:text-xl md:block xl:max-w-full",
-                      props.smallHeading ? "text-base" : "text-xl"
+                      "truncate font-semibold text-foreground tracking-tight",
+                      props.smallHeading ? "text-lg" : "text-xl sm:text-2xl"
                     )}>
                     {!isLocaleReady ? <SkeletonText invisible /> : props.heading}
-                  </h3>
+                  </h1>
                 )}
                 {props.subtitle && (
-                  <p className="text-default hidden text-sm md:block" data-testid="subtitle">
+                  <p className="truncate text-muted-foreground text-sm" data-testid="subtitle">
                     {!isLocaleReady ? <SkeletonText invisible /> : props.subtitle}
                   </p>
                 )}
@@ -202,10 +204,15 @@ function MainContainer({
   ...props
 }: LayoutProps) {
   return (
-    <main className="bg-default relative z-0 flex-1 focus:outline-none">
+    <main className="relative z-0 flex min-w-0 flex-1 flex-col bg-background focus:outline-none md:my-2 md:mr-2 md:rounded-xl md:border md:border-subtle md:shadow-sm">
       {/* show top navigation for md and smaller (tablet and phones) */}
       {TopNavContainerProp}
-      <div className="max-w-full p-2 sm:p-4 lg:p-6">
+      <DesktopTopBarContainer />
+      <div
+        className={classNames(
+          "flex w-full flex-1 flex-col p-4 md:p-6",
+          !props.withoutMain && "mx-auto max-w-6xl"
+        )}>
         <ErrorBoundary>
           {!props.withoutMain ? <ShellMain {...props}>{props.children}</ShellMain> : props.children}
         </ErrorBoundary>

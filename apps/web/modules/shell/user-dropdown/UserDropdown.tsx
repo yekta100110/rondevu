@@ -114,8 +114,8 @@ export function UserDropdown({ small }: UserDropdownProps) {
           <button
             data-testid="user-dropdown-trigger-button"
             className={classNames(
-              "hover:bg-emphasis todesktop:!bg-transparent group mx-0 flex w-full cursor-pointer appearance-none items-center rounded-full text-left outline-none transition focus:outline-none focus:ring-0 md:rounded-none lg:rounded",
-              small ? "p-2" : "px-2 py-1.5"
+              "todesktop:!bg-transparent group mx-0 flex w-full cursor-pointer appearance-none items-center rounded-md text-left outline-none transition-colors duration-150 hover:bg-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+              small ? "justify-center p-2" : "px-2 py-1.5"
             )}
           />
         }>
@@ -132,26 +132,26 @@ export function UserDropdown({ small }: UserDropdownProps) {
           />
           <span
             className={classNames(
-              "border-muted absolute -bottom-1 -right-1 rounded-full border bg-green-500",
+              "absolute -right-1 -bottom-1 rounded-full border border-sidebar bg-foreground",
               small ? "-bottom-0.5 -right-0.5 h-2.5 w-2.5" : "-bottom-0.5 right-0 h-2 w-2"
             )}
           />
         </span>
         {!small && (
           <span className="flex grow items-center gap-2">
-            <span className="w-24 shrink-0 text-sm leading-none">
+            <span className="min-w-0 flex-1 text-sm leading-none">
               <span className="text-emphasis block truncate py-0.5 font-medium leading-normal">
                 {isPending ? "Loading..." : (user?.name ?? "Nameless User")}
               </span>
             </span>
             {menuOpen ? (
               <ChevronUpIcon
-                className="group-hover:text-subtle text-muted h-4 w-4 shrink-0 transition rtl:mr-4"
+                className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground rtl:mr-4"
                 aria-hidden="true"
               />
             ) : (
               <ChevronDownIcon
-                className="group-hover:text-subtle text-muted h-4 w-4 shrink-0 transition rtl:mr-4"
+                className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground rtl:mr-4"
                 aria-hidden="true"
               />
             )}

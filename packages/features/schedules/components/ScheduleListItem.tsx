@@ -65,7 +65,7 @@ export function ScheduleListItem({
 
   return (
     <li key={schedule.id}>
-      <div className="hover:bg-muted flex items-center justify-between px-3 py-5 transition sm:px-4">
+      <div className="hover:bg-subtle flex items-center justify-between px-4 py-4 transition-colors duration-150">
         <Link href={redirectUrl} className="grow truncate text-sm" title={schedule.name}>
           <div className="space-x-2 rtl:space-x-reverse">
             <span className="text-emphasis truncate font-medium">{schedule.name}</span>

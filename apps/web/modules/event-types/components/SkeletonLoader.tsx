@@ -11,7 +11,7 @@ function SkeletonLoader() {
           <SkeletonText className="h-4 w-24" />
         </div>
       </div>
-      <ul className="border-subtle bg-default divide-subtle divide-y rounded-md border sm:mx-0 sm:overflow-hidden">
+      <ul className="divide-y divide-subtle overflow-hidden rounded-xl border border-subtle bg-background">
         <SkeletonItem />
         <SkeletonItem />
         <SkeletonItem />
@@ -25,7 +25,7 @@ export default SkeletonLoader;
 export function InfiniteSkeletonLoader() {
   return (
     <SkeletonContainer>
-      <ul className="border-subtle bg-default divide-subtle divide-y rounded-md border sm:mx-0 sm:overflow-hidden">
+      <ul className="divide-y divide-subtle overflow-hidden rounded-xl border border-subtle bg-background">
         <SkeletonItem />
         <SkeletonItem />
         <SkeletonItem />
@@ -54,9 +54,9 @@ function TabsSkeletonLoader() {
 export function SearchSkeletonLoader() {
   return (
     <div className="max-w-64 mb-4">
-      <div className="bg-default border-default flex h-8 items-center gap-1 rounded-[10px] border px-3 py-2">
+      <div className="flex h-9 items-center gap-2 rounded-md border border-subtle bg-background px-3">
         <div className="flex items-center justify-center">
-          <SearchIcon className="text-subtle h-4 w-4" />
+          <SearchIcon className="size-4 text-muted-foreground" />
         </div>
         <SkeletonText className="max-w-56 h-4 w-full" />
       </div>
@@ -69,7 +69,7 @@ export function EventTypesSkeletonLoader() {
     <SkeletonContainer>
       <TabsSkeletonLoader />
       <SearchSkeletonLoader />
-      <ul className="border-subtle bg-default divide-subtle divide-y rounded-md border sm:mx-0 sm:overflow-hidden">
+      <ul className="divide-y divide-subtle overflow-hidden rounded-xl border border-subtle bg-background">
         <SkeletonItem />
         <SkeletonItem />
         <SkeletonItem />

@@ -152,7 +152,7 @@ const InfiniteTeamsTab: FC<InfiniteTeamsTabProps> = (props: InfiniteTeamsTabProp
         />
       )}
       {(query.data?.pages?.[0]?.eventTypes?.length ?? 0) > 0 && query.hasNextPage && (
-        <div className="p-4 text-center text-default" ref={buttonInView.ref}>
+        <div className="p-4 text-center text-muted-foreground text-sm" ref={buttonInView.ref}>
           <Button
             color="minimal"
             loading={query.isFetchingNextPage}
@@ -190,19 +190,19 @@ const Item = ({
   const content = (): JSX.Element => (
     <div>
       <span
-        className="break-words font-semibold text-default ltr:mr-1 rtl:ml-1"
+        className="break-words font-medium text-foreground ltr:mr-1 rtl:ml-1"
         data-testid={`event-type-title-${type.id}`}>
         {type.title}
       </span>
       {group.profile.slug && type.schedulingType !== SchedulingType.MANAGED ? (
         <small
-          className="hidden font-normal text-subtle leading-4 sm:inline"
+          className="hidden font-mono font-normal text-muted-foreground text-xs leading-4 sm:inline"
           data-testid={`event-type-slug-${type.id}`}>
           {`/${group.profile.slug}/${type.slug}`}
         </small>
       ) : null}
       {!isManagedEventType && type.hidden && (
-        <span className="ml-2 text-gray-400 text-sm sm:hidden">{t("hidden")}</span>
+        <span className="ml-2 text-muted-foreground text-sm sm:hidden">{t("hidden")}</span>
       )}
       {readOnly && (
         <Badge variant="gray" className="ml-2" data-testid="readonly-badge">
@@ -234,19 +234,19 @@ const Item = ({
           <Link href={`/event-types/${type.id}?tabName=setup`} title={type.title}>
             <div>
               <span
-                className="break-words font-semibold text-default ltr:mr-1 rtl:ml-1"
+                className="break-words font-medium text-foreground ltr:mr-1 rtl:ml-1"
                 data-testid={`event-type-title-${type.id}`}>
                 {type.title}
               </span>
               {group.profile.slug && type.schedulingType !== SchedulingType.MANAGED ? (
                 <small
-                  className="hidden font-normal text-subtle leading-4 sm:inline"
+                  className="hidden font-mono font-normal text-muted-foreground text-xs leading-4 sm:inline"
                   data-testid={`event-type-slug-${type.id}`}>
                   {`/${group.profile.slug}/${type.slug}`}
                 </small>
               ) : null}
               {!isManagedEventType && type.hidden && (
-                <span className="ml-2 text-gray-400 text-sm sm:hidden">{t("hidden")}</span>
+                <span className="ml-2 text-muted-foreground text-sm sm:hidden">{t("hidden")}</span>
               )}
               {readOnly && (
                 <Badge variant="gray" className="ml-2" data-testid="readonly-badge">
@@ -534,7 +534,7 @@ export const InfiniteEventTypeList = ({
   });
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-md border border-subtle bg-default">
+    <div className="flex flex-col overflow-hidden rounded-xl border border-subtle bg-background">
       <ul ref={parent} className="static! w-full divide-y divide-subtle" data-testid="event-types">
         {pages.map((page, pageIdx) => {
           return page?.eventTypes?.map((type, index) => {
@@ -557,7 +557,7 @@ export const InfiniteEventTypeList = ({
               type.schedulingType !== SchedulingType.MANAGED;
             return (
               <li key={type.id}>
-                <div className="flex w-full items-center justify-between transition hover:bg-muted">
+                <div className="flex w-full items-center justify-between transition-colors duration-150 hover:bg-accent">
                   <div className="group flex w-full max-w-full items-center justify-between overflow-hidden px-4 py-4 sm:px-6">
                     {!(firstItem && firstItem.id === type.id) && (
                       <ArrowButton
@@ -596,7 +596,7 @@ export const InfiniteEventTypeList = ({
                         <div className="flex items-center justify-between space-x-2 rtl:space-x-reverse">
                           {!isManagedEventType && (
                             <>
-                              {type.hidden && <span className="text-gray-400 text-sm">{t("hidden")}</span>}
+                              {type.hidden && <span className="text-muted-foreground text-sm">{t("hidden")}</span>}
                               <Tooltip
                                 content={
                                   type.hidden ? t("show_eventtype_on_profile") : t("hide_from_profile")
@@ -672,7 +672,7 @@ export const InfiniteEventTypeList = ({
                                 <Button
                                   type="button"
                                   variant="icon"
-                                  color="secondary"
+                                  color="minimal"
                                   StartIcon="ellipsis"
                                   // Unusual practice to use radix state open but for some reason this dropdown and only this dropdown clears the border radius of this button.
                                   className="ltr:radix-state-open:rounded-r-(--btn-group-radius) rtl:radix-state-open:rounded-l-(--btn-group-radius)"
@@ -745,7 +745,7 @@ export const InfiniteEventTypeList = ({
                   <div className="mx-5 flex min-w-9 sm:hidden">
                     <Dropdown>
                       <DropdownMenuTrigger asChild data-testid={`event-type-options-${type.id}`}>
-                        <Button type="button" variant="icon" color="secondary" StartIcon="ellipsis" />
+                        <Button type="button" variant="icon" color="minimal" StartIcon="ellipsis" />
                       </DropdownMenuTrigger>
                       <DropdownMenuPortal>
                         <DropdownMenuContent>
@@ -834,7 +834,7 @@ export const InfiniteEventTypeList = ({
                           )}
                           <DropdownMenuSeparator />
                           {!isManagedEventType && (
-                            <div className="flex h-9 cursor-pointer flex-row items-center justify-between rounded-b-lg px-4 py-2 transition hover:bg-subtle">
+                            <div className="flex h-9 cursor-pointer flex-row items-center justify-between rounded-b-lg px-4 py-2 transition-colors hover:bg-accent">
                               <Skeleton
                                 as={Label}
                                 htmlFor="hiddenSwitch"
@@ -920,7 +920,7 @@ const CTA = ({ profileOptions }: { profileOptions: ProfileOption[] }) => {
     <div className="flex items-center gap-4">
       <TextField
         className="max-w-64"
-        addOnLeading={<SearchIcon className="h-4 w-4 text-subtle" />}
+        addOnLeading={<SearchIcon className="size-4 text-muted-foreground" />}
         containerClassName="max-w-64 focus:ring-offset-0! *:mb-0"
         type="search"
         value={searchTerm}
