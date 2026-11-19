@@ -239,7 +239,7 @@ function BTCPaySetupPage(props: IBTCPaySetupProps) {
   if (session.status === "loading") return <></>;
 
   if (integrations.isPending) {
-    return <div className="absolute z-50 flex h-screen w-full items-center bg-gray-200" />;
+    return <div className="absolute z-50 flex h-screen w-full items-center bg-emphasis" />;
   }
 
   const isNewCredential = !props.serverUrl && !props.storeId && !props.webhookSecret && !props.apiKey;
@@ -268,7 +268,7 @@ function BTCPaySetupPage(props: IBTCPaySetupProps) {
                       defaultValue={keyData?.serverUrl || ""}
                     />
                     {errors.serverUrl && (
-                      <p data-testid="required" className="py-2 text-xs text-red-500">
+                      <p data-testid="required" className="py-2 text-xs text-error">
                         {errors.serverUrl?.message}
                       </p>
                     )}
@@ -286,7 +286,7 @@ function BTCPaySetupPage(props: IBTCPaySetupProps) {
                       defaultValue={keyData?.storeId || ""}
                     />
                     {errors.storeId && (
-                      <p data-testid="required" className="py-2 text-xs text-red-500">
+                      <p data-testid="required" className="py-2 text-xs text-error">
                         {errors.storeId?.message}
                       </p>
                     )}
@@ -304,7 +304,7 @@ function BTCPaySetupPage(props: IBTCPaySetupProps) {
                       defaultValue={keyData?.apiKey || ""}
                     />
                     {errors.apiKey && (
-                      <p data-testid="required" className="py-2 text-xs text-red-500">
+                      <p data-testid="required" className="py-2 text-xs text-error">
                         {errors.apiKey?.message}
                       </p>
                     )}

@@ -126,11 +126,11 @@ export const ConnectedCalendarsTooltip = ({
 
   if (isConnectedCalendarsLoading)
     return (
-      <div className="bg-subtle flex flex-col rounded-md border border-gray-300 px-4 py-2">Loading...</div>
+      <div className="bg-subtle flex flex-col rounded-md border border-default px-4 py-2">Loading...</div>
     );
 
   return (
-    <div className="bg-subtle flex flex-col rounded-md border border-gray-300">
+    <div className="bg-subtle flex flex-col rounded-md border border-default">
       {connectedCalendars?.connectedCalendars
         .filter((calendar) => calendar.integration.slug === `${calendarInstance}-calendar`)
         .map((calendar, index, arr) => {

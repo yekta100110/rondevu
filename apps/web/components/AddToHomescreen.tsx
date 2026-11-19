@@ -18,7 +18,7 @@ export default function AddToHomescreen() {
         <div className="rounded-lg p-2 shadow-lg sm:p-3" style={{ background: "#2F333D" }}>
           <div className="flex flex-wrap items-center justify-between">
             <div className="flex w-0 flex-1 items-center">
-              <span className="text-brandcontrast dark:bg-darkmodebrand/30 dark:text-darkmodebrandcontrast flex rounded-lg p-2">
+              <span className="bg-subtle text-emphasis flex rounded-lg p-2">
                 <svg
                   className="h-7 w-7 fill-current text-[#5B93F9]"
                   xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +38,7 @@ export default function AddToHomescreen() {
               <button
                 onClick={() => setCloseBanner(true)}
                 type="button"
-                className="-mr-1 flex rounded-md p-2 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-white">
+                className="-mr-1 flex rounded-md p-2 hover:bg-inverted focus:outline-none focus:ring-2 focus:ring-white">
                 <span className="sr-only">{t("dismiss")}</span>
                 <XIcon className="text-inverted h-6 w-6 dark:text-white" />
               </button>

@@ -26,7 +26,7 @@ function SingleAppPage(props: AppDataProps) {
       return (
         <div className="p-2">
           This App seems to be disabled. If you are an admin, you can enable this app from{" "}
-          <Link href="/settings/admin/apps" className="cursor-pointer text-blue-500 underline">
+          <Link href="/settings/admin/apps" className="cursor-pointer text-subtle underline">
             here
           </Link>
         </div>

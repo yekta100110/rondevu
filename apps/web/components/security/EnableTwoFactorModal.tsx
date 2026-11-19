@@ -165,7 +165,7 @@ const EnableTwoFactorModal = ({ onEnable, onCancel }: EnableTwoFactorModalProps)
                 />
               </div>
 
-              {errorMessage && <p className="mt-1 text-sm text-red-700">{errorMessage}</p>}
+              {errorMessage && <p className="mt-1 text-sm text-error">{errorMessage}</p>}
             </div>
           </form>
         </WithStep>
@@ -185,7 +185,7 @@ const EnableTwoFactorModal = ({ onEnable, onCancel }: EnableTwoFactorModalProps)
             <div className="mb-4">
               <TwoFactor center />
 
-              {errorMessage && <p className="mt-1 text-sm text-red-700">{errorMessage}</p>}
+              {errorMessage && <p className="mt-1 text-sm text-error">{errorMessage}</p>}
             </div>
           </WithStep>
 

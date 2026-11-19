@@ -516,7 +516,7 @@ export const AppPage = ({
         <span className="text-subtle block text-xs">
           {t("every_app_published", { appName: APP_NAME, companyName: COMPANY_NAME })}
         </span>
-        <a className="mt-2 block text-xs text-red-500" href={`mailto:${SUPPORT_MAIL_ADDRESS}`}>
+        <a className="mt-2 block text-xs text-error" href={`mailto:${SUPPORT_MAIL_ADDRESS}`}>
           <FlagIcon className="inline h-3 w-3" /> {t("report_app")}
         </a>
       </div>

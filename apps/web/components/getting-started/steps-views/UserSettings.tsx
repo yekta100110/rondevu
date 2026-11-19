@@ -89,7 +89,7 @@ const UserSettings = (props: IUserSettingsProps) => {
             autoCorrect="off"
           />
           {errors.name && (
-            <p data-testid="required" className="py-2 text-xs text-red-500">
+            <p data-testid="required" className="py-2 text-xs text-error">
               {errors.name.message}
             </p>
           )}

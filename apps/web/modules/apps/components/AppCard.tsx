@@ -113,7 +113,7 @@ export function AppCard({ app, credentials, searchText, userAdminTeams }: AppCar
           {searchTextIndex != undefined && searchText ? (
             <>
               {app.name.substring(0, searchTextIndex)}
-              <span className="bg-yellow-300" data-testid="highlighted-text">
+              <span className="bg-emphasis" data-testid="highlighted-text">
                 {app.name.substring(searchTextIndex, searchTextIndex + searchText.length)}
               </span>
               {app.name.substring(searchTextIndex + searchText.length)}
@@ -124,7 +124,7 @@ export function AppCard({ app, credentials, searchText, userAdminTeams }: AppCar
         </h3>
       </div>
       {/* TODO: add reviews <div className="flex text-sm text-default">
-            <span>{props.rating} stars</span> <Icon name="star" className="ml-1 mt-0.5 h-4 w-4 text-yellow-600" />
+            <span>{props.rating} stars</span> <Icon name="star" className="ml-1 mt-0.5 h-4 w-4 text-default" />
             <span className="pl-1 text-subtle">{props.reviews} reviews</span>
           </div> */}
       <p className="text-default mt-2 text-sm line-clamp-3">
@@ -223,7 +223,7 @@ export function AppCard({ app, credentials, searchText, userAdminTeams }: AppCar
           <Badge variant="green">{t("installed", { count: appAdded })}</Badge>
         ) : null}
         {app.isTemplate && (
-          <span className="bg-error rounded-md px-2 py-1 text-sm font-normal text-red-800">Template</span>
+          <span className="bg-error rounded-md px-2 py-1 text-sm font-normal text-error">Template</span>
         )}
         {(app.isDefault || (!app.isDefault && app.isGlobal)) && (
           <span className="bg-subtle text-emphasis flex items-center rounded-md px-2 py-1 text-sm font-normal">

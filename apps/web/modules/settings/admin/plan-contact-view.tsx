@@ -155,8 +155,8 @@ export default function PlanContactAdminView() {
       </div>
 
       {/* Güvenlik & Denetim Özeti */}
-      <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 flex items-start gap-3 text-xs text-subtle">
-        <ShieldCheck className="size-5 text-emerald-500 shrink-0 mt-0.5" />
+      <div className="rounded-xl border border-emphasis/20 bg-emphasis/5 p-4 flex items-start gap-3 text-xs text-subtle">
+        <ShieldCheck className="size-5 text-subtle shrink-0 mt-0.5" />
         <div className="space-y-1">
           <div className="font-semibold text-emphasis">Güvenlik Denetimi & İzolasyon</div>
           <p className="leading-relaxed">
@@ -178,7 +178,7 @@ export default function PlanContactAdminView() {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 max-w-xl">
           <div className="rounded-xl border border-subtle bg-muted/20 p-4 space-y-2">
             <div className="flex items-center gap-2 text-xs font-semibold text-emphasis">
-              <Phone className="size-4 text-emerald-500" />
+              <Phone className="size-4 text-subtle" />
               <span>Telefon & WhatsApp</span>
             </div>
             <div className="font-mono text-sm font-medium text-emphasis">{phone || "—"}</div>
@@ -201,7 +201,7 @@ export default function PlanContactAdminView() {
 
           <div className="rounded-xl border border-subtle bg-muted/20 p-4 space-y-2">
             <div className="flex items-center gap-2 text-xs font-semibold text-emphasis">
-              <Mail className="size-4 text-sky-500" />
+              <Mail className="size-4 text-subtle" />
               <span>E-posta</span>
             </div>
             <div className="font-mono text-sm font-medium text-emphasis break-all">{email || "—"}</div>

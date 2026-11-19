@@ -214,17 +214,17 @@ export const CheckedTeamSelect = ({
 const getPriorityTextAndColor = (priority?: number) => {
   switch (priority) {
     case 0:
-      return { text: "lowest", color: "text-gray-300" };
+      return { text: "lowest", color: "text-muted" };
     case 1:
-      return { text: "low", color: "text-gray-400" };
+      return { text: "low", color: "text-subtle" };
     case 2:
-      return { text: "medium", color: "text-gray-500" };
+      return { text: "medium", color: "text-subtle" };
     case 3:
-      return { text: "high", color: "text-gray-600" };
+      return { text: "high", color: "text-default" };
     case 4:
-      return { text: "highest", color: "text-gray-700" };
+      return { text: "highest", color: "text-default" };
     default:
-      return { text: "medium", color: "text-gray-500" };
+      return { text: "medium", color: "text-subtle" };
   }
 };
 

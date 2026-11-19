@@ -10,7 +10,7 @@ function ConnectedAppsItem() {
       subtitle="google@calendar.com"
       prefixSlot={
         <>
-          <div className="h-4 w-4 self-center rounded-[4px] bg-blue-500" />
+          <div className="h-4 w-4 self-center rounded-[4px] bg-emphasis" />
         </>
       }
       suffixSlot={

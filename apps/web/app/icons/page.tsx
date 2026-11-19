@@ -38,7 +38,7 @@ export default function IconsPage() {
             title="Filled Icons"
             icons={icons}
             rootClassName="bg-inverted text-inverted"
-            iconClassName="fill-blue-500"
+            iconClassName="fill-current"
           />
         </div>
       </div>

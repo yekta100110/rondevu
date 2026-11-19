@@ -71,7 +71,7 @@ export const StripeConnect: FC<Partial<StripeConnectProps>> = ({
           "",
           "md:rounded-md",
           className,
-          isLoading && "animate-pulse bg-gray-200",
+          isLoading && "animate-pulse bg-emphasis",
           isDisabled && "cursor-not-allowed",
           !isDisabled && "cursor-pointer"
         )}

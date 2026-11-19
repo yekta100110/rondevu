@@ -318,7 +318,7 @@ const ProfileView = ({ user }: Props) => {
       )}
 
       <div className="mt-6 rounded-lg rounded-b-none border border-subtle border-b-0 p-6">
-        <Label className="mb-0 font-semibold text-base text-red-700">{t("danger_zone")}</Label>
+        <Label className="mb-0 font-semibold text-base text-error">{t("danger_zone")}</Label>
         <p className="text-sm text-subtle">{t("account_deletion_cannot_be_undone")}</p>
       </div>
       {/* Delete account Dialog */}

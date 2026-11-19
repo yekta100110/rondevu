@@ -183,7 +183,7 @@ const EnableTwoFactorModal = ({ onEnable, onCancel, open, onOpenChange }: Enable
                 value={password}
                 onInput={(e) => setPassword(e.currentTarget.value)}
               />
-              {errorMessage && <p className="mt-1 text-sm text-red-700">{errorMessage}</p>}
+              {errorMessage && <p className="mt-1 text-sm text-error">{errorMessage}</p>}
             </div>
           </form>
         </WithStep>
@@ -215,7 +215,7 @@ const EnableTwoFactorModal = ({ onEnable, onCancel, open, onOpenChange }: Enable
               <TwoFactor center />
 
               {errorMessage && (
-                <p data-testid="error-submitting-code" className="mt-1 text-sm text-red-700">
+                <p data-testid="error-submitting-code" className="mt-1 text-sm text-error">
                   {errorMessage}
                 </p>
               )}

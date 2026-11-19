@@ -90,13 +90,13 @@ export function UserPage(props: PageProps) {
                 {!isOrg && user.verified && (
                   <Icon
                     name="badge-check"
-                    className="mx-1 -mt-1 inline h-6 w-6 fill-blue-500 text-white dark:text-black"
+                    className="mx-1 -mt-1 inline h-6 w-6 fill-current text-white dark:text-black"
                   />
                 )}
                 {isOrg && (
                   <Icon
                     name="badge-check"
-                    className="mx-1 -mt-1 inline h-6 w-6 fill-yellow-500 text-white dark:text-black"
+                    className="mx-1 -mt-1 inline h-6 w-6 fill-current text-white dark:text-black"
                   />
                 )}
               </h1>
@@ -104,7 +104,7 @@ export function UserPage(props: PageProps) {
                 <>
                   {/* biome-ignore lint/security/noDangerouslySetInnerHtml: Content is sanitized via safeBio */}
                   <div
-                    className="text-default wrap-break-word text-sm [&_a]:text-blue-500 [&_a]:underline [&_a]:hover:text-blue-600"
+                    className="text-default wrap-break-word text-sm [&_a]:text-subtle [&_a]:underline [&_a]:hover:text-default"
                     dangerouslySetInnerHTML={{ __html: props.safeBio }}
                   />
                 </>

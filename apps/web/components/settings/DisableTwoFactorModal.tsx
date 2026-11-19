@@ -109,7 +109,7 @@ const DisableTwoFactorAuthModal = ({
               <TwoFactor center={false} autoFocus={false} />
             )}
 
-            {errorMessage && <p className="mt-1 text-sm text-red-700">{errorMessage}</p>}
+            {errorMessage && <p className="mt-1 text-sm text-error">{errorMessage}</p>}
           </div>
 
           <DialogFooter showDivider className="relative mt-5">

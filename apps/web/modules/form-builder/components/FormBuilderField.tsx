@@ -124,7 +124,7 @@ export const FormBuilderField = ({
                   return (
                     <div
                       data-testid={`error-message-${field.name}`}
-                      className="mt-2 flex items-center text-sm text-red-700 ">
+                      className="mt-2 flex items-center text-sm text-error ">
                       <InfoIcon className="h-3 w-3 ltr:mr-2 rtl:ml-2" />
                       <p>{t(message || "invalid_input")}</p>
                     </div>
@@ -182,7 +182,7 @@ const WithLabel = ({
           )}
       {children}
       {field.name === "smsReminderNumber" && (
-        <div className="text-sm text-gray-500">{t("sms_workflow_consent")}</div>
+        <div className="text-sm text-subtle">{t("sms_workflow_consent")}</div>
       )}
     </div>
   );

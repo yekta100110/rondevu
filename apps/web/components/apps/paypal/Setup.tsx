@@ -29,7 +29,7 @@ export default function PayPalSetup() {
   });
 
   if (integrations.isPending) {
-    return <div className="absolute z-50 flex h-screen w-full items-center bg-gray-200" />;
+    return <div className="absolute z-50 flex h-screen w-full items-center bg-emphasis" />;
   }
 
   return (
@@ -99,7 +99,7 @@ export default function PayPalSetup() {
 
               <p className="text-default mb-2 mt-5 font-bold">Resources:</p>
               <a
-                className="text-orange-600 underline"
+                className="text-default underline"
                 target="_blank"
                 href="https://developer.paypal.com/api/rest/#link-getclientidandclientsecret"
                 rel="noreferrer">
@@ -121,7 +121,7 @@ export default function PayPalSetup() {
                   <a
                     target="_blank"
                     href="https://developer.paypal.com/dashboard/applications/live"
-                    className="text-orange-600 underline"
+                    className="text-default underline"
                     rel="noreferrer">
                     {t("here")}
                   </a>
@@ -133,7 +133,7 @@ export default function PayPalSetup() {
                 <li>
                   Go back to{" "}
                   <a
-                    className="text-orange-600 underline"
+                    className="text-default underline"
                     href="https://developer.paypal.com/dashboard/applications/live">
                     dashboard
                   </a>

@@ -129,7 +129,7 @@ const UsernameTextfield = (props: ICustomUsernameProps & Partial<React.Component
             className={classNames(
               "mb-0 mt-0 rounded-md rounded-l-none pl-0",
               markAsError
-                ? "focus:shadow-0 focus:ring-shadow-0 border-red-500 focus:border-red-500 focus:outline-none focus:ring-0"
+                ? "focus:shadow-0 focus:ring-shadow-0 border-error focus:border-error focus:outline-none focus:ring-0"
                 : ""
             )}
             onChange={(event) => {
@@ -155,7 +155,7 @@ const UsernameTextfield = (props: ICustomUsernameProps & Partial<React.Component
           <ActionButtons />
         </div>
       </div>
-      {markAsError && <p className="mt-1 text-xs text-red-500">{t("username_already_taken")}</p>}
+      {markAsError && <p className="mt-1 text-xs text-error">{t("username_already_taken")}</p>}
 
       {usernameIsAvailable && currentUsername !== inputUsernameValue && (
         <div className="mt-2 flex justify-end md:hidden">

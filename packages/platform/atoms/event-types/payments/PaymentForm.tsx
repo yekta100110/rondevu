@@ -67,7 +67,7 @@ export const PaymentForm = ({
                     aria-labelledby="modal-headline">
                     <div>
                       <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-rondevu-success">
-                        <PayIcon currency={paymentAppData.currency} className="h-8 w-8 text-green-600" />
+                        <PayIcon currency={paymentAppData.currency} className="h-8 w-8 text-default" />
                       </div>
                       <div className="mt-3 text-center sm:mt-5">
                         <h3 className="font-semibold text-2xl text-emphasis leading-6" id="modal-headline">
@@ -75,7 +75,7 @@ export const PaymentForm = ({
                             ? t("complete_your_booking")
                             : t("payment")}
                         </h3>
-                        <div className="mt-4 grid grid-cols-3 border-t border-b py-4 text-left text-default dark:border-gray-900 dark:text-gray-300">
+                        <div className="mt-4 grid grid-cols-3 border-t border-b py-4 text-left text-default dark:border-emphasis dark:text-muted">
                           <div className="font-medium">{t("what")}</div>
                           <div className="col-span-2 mb-6">{eventName}</div>
                           <div className="font-medium">{t("when")}</div>
@@ -108,7 +108,7 @@ export const PaymentForm = ({
                     </div>
                     <div>
                       {paymentInfo.payment.success && !paymentInfo.payment.refunded && (
-                        <div className="mt-4 text-center text-default dark:text-gray-300">{t("paid")}</div>
+                        <div className="mt-4 text-center text-default dark:text-muted">{t("paid")}</div>
                       )}
                       {paymentInfo.payment.appId === "stripe" && !paymentInfo.payment.success && (
                         <StripePaymentForm
@@ -124,13 +124,13 @@ export const PaymentForm = ({
                         />
                       )}
                       {paymentInfo.payment.refunded && (
-                        <div className="mt-4 text-center text-default dark:text-gray-300">
+                        <div className="mt-4 text-center text-default dark:text-muted">
                           {t("refunded")}
                         </div>
                       )}
                     </div>
                     {!paymentInfo.profile.hideBranding && (
-                      <div className="mt-4 border-t pt-4 text-center text-muted text-xs dark:border-gray-900 dark:text-inverted">
+                      <div className="mt-4 border-t pt-4 text-center text-muted text-xs dark:border-emphasis dark:text-inverted">
                         <a href={`${WEBSITE_URL}/signup`}>
                           {t("create_booking_link_with_rondevu", { appName: APP_NAME })}
                         </a>

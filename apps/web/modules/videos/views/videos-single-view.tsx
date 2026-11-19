@@ -283,8 +283,8 @@ function ProgressBar(props: ProgressBarProps) {
         {duration} {t("minutes")}
       </p>
       <div className="relative h-2 max-w-xl overflow-hidden rounded-full">
-        <div className="absolute h-full w-full bg-gray-500/10" />
-        <div className={classNames("relative h-full bg-green-500")} style={{ width: `${percentage}%` }} />
+        <div className="absolute h-full w-full bg-emphasis/10" />
+        <div className={classNames("relative h-full bg-emphasis")} style={{ width: `${percentage}%` }} />
       </div>
     </div>
   );
@@ -593,7 +593,7 @@ export function VideoMeetingInfo(props: VideoMeetingInfo) {
       <div className="flex items-center justify-center">
         <button
           aria-label={`${open ? "close" : "open"} booking description sidebar`}
-          className="h-20 w-6 rounded-r-md border border-gray-300/20 border-l-0 bg-black/60 text-white shadow-sm backdrop-blur-lg"
+          className="h-20 w-6 rounded-r-md border border-default/20 border-l-0 bg-black/60 text-white shadow-sm backdrop-blur-lg"
           onClick={() => setOpen(!open)}>
           <ChevronRightIcon
             aria-hidden

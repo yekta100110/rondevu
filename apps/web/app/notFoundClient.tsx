@@ -64,9 +64,9 @@ export function NotFound({ host }: { host: string }) {
               {t(`404_the_${pageType.toLowerCase()}`)}{" "}
               {username ? (
                 <>
-                  <strong className="text-blue-500">{username}</strong>
+                  <strong className="text-subtle">{username}</strong>
                   {` ${t("is_still_available")} `}
-                  <span className="text-blue-500">{t("register_now")}</span>.
+                  <span className="text-subtle">{t("register_now")}</span>.
                 </>
               ) : null}
             </a>
@@ -75,7 +75,7 @@ export function NotFound({ host }: { host: string }) {
               {t(`404_the_${pageType.toLowerCase()}`)}{" "}
               {username ? (
                 <>
-                  <strong className="mt-2 inline-block text-green-500 text-lg">{username}</strong>{" "}
+                  <strong className="mt-2 inline-block text-subtle text-lg">{username}</strong>{" "}
                   {t("is_still_available")}
                 </>
               ) : null}
@@ -85,15 +85,15 @@ export function NotFound({ host }: { host: string }) {
         <div className="mt-12">
           {!isSubpage && IS_RONDEVU && (
             <ul role="list" className="my-4">
-              <li className="border-2 border-green-500 px-4 py-2">
+              <li className="border-2 border-emphasis px-4 py-2">
                 <a
                   href={url}
                   target="_blank"
                   className="relative flex items-start space-x-4 py-6 rtl:space-x-reverse"
                   rel="noreferrer">
                   <div className="shrink-0">
-                    <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-green-50">
-                      <Icon name="check" className="h-6 w-6 text-green-500" aria-hidden="true" />
+                    <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-subtle">
+                      <Icon name="check" className="h-6 w-6 text-subtle" aria-hidden="true" />
                     </span>
                   </div>
                   <div className="min-w-0 flex-1">
@@ -101,7 +101,7 @@ export function NotFound({ host }: { host: string }) {
                       <span className="rounded-sm focus-within:ring-2 focus-within:ring-empthasis focus-within:ring-offset-2">
                         <span className="focus:outline-none">
                           <span className="absolute inset-0" aria-hidden="true" />
-                          {t("register")} <strong className="text-green-500">{username}</strong>
+                          {t("register")} <strong className="text-subtle">{username}</strong>
                         </span>
                       </span>
                     </h3>

@@ -254,7 +254,7 @@ export const ReassignDialog = ({
                             <div
                               className={classNames(
                                 "h-3 w-3 shrink-0 rounded-full",
-                                member.status === "unavailable" ? "bg-red-500" : "bg-green-500"
+                                member.status === "unavailable" ? "bg-destructive" : "bg-emphasis"
                               )}
                             />
                             <span className="text-emphasis w-full text-sm">{member.label}</span>

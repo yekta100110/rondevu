@@ -81,7 +81,7 @@ export default function CreateEventTypeForm({
             />
 
             {isManagedEventType && !isPlatform && (
-              <p className="mt-2 text-sm text-gray-600">{t("managed_event_url_clarification")}</p>
+              <p className="mt-2 text-sm text-default">{t("managed_event_url_clarification")}</p>
             )}
           </div>
         ) : (
@@ -107,7 +107,7 @@ export default function CreateEventTypeForm({
               }}
             />
             {isManagedEventType && !isPlatform && (
-              <p className="mt-2 text-sm text-gray-600">{t("managed_event_url_clarification")}</p>
+              <p className="mt-2 text-sm text-default">{t("managed_event_url_clarification")}</p>
             )}
           </div>
         )}

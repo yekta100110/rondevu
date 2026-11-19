@@ -73,7 +73,7 @@ export const AddGuestsDialog = (props: IAddGuestsDialog) => {
             </div>
 
             {isInvalidEmail && (
-              <div className="my-4 flex text-sm text-red-700">
+              <div className="my-4 flex text-sm text-error">
                 <div className="shrink-0">
                   <TriangleAlertIcon className="h-5 w-5" />
                 </div>

@@ -280,7 +280,7 @@ const SmallScreenSideBar = ({ open, children }: { open: boolean; children: JSX.E
   return (
     <div
       className={classNames(
-        open ? "fadeIn fixed inset-0 z-50 bg-neutral-800/70 transition-opacity sm:hidden" : ""
+        open ? "fadeIn fixed inset-0 z-50 bg-inverted/70 transition-opacity sm:hidden" : ""
       )}>
       <div
         className={classNames(
@@ -510,7 +510,7 @@ export const AvailabilitySettings = forwardRef<AvailabilitySettingsFormRef, Avai
                 <div
                   className={classNames(
                     openSidebar
-                      ? "fadeIn fixed inset-0 z-50 bg-neutral-800/70 transition-opacity sm:hidden"
+                      ? "fadeIn fixed inset-0 z-50 bg-inverted/70 transition-opacity sm:hidden"
                       : ""
                   )}>
                   <div

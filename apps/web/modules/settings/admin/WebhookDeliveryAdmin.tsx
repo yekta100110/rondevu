@@ -51,7 +51,7 @@ export function WebhookDeliveryAdmin() {
   return (
     <div className="space-y-3 p-6">
       {error && (
-        <p role="alert" className="text-red-600">
+        <p role="alert" className="text-error">
           {error}
         </p>
       )}

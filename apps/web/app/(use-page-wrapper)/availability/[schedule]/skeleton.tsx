@@ -31,15 +31,15 @@ export function AvailabilityScheduleSkeleton() {
                   {/* Set to Default - desktop only */}
                   <div className="hidden items-center rounded-md sm:flex">
                     <SkeletonText className="h-4 w-28" /> {/* "Set to Default" text */}
-                    <div className="ml-2 h-5 w-11 rounded-full bg-gray-200" /> {/* Toggle */}
-                    <div className="mx-3 h-4 w-px bg-gray-200" /> {/* Divider */}
+                    <div className="ml-2 h-5 w-11 rounded-full bg-emphasis" /> {/* Toggle */}
+                    <div className="mx-3 h-4 w-px bg-emphasis" /> {/* Divider */}
                   </div>
                   {/* Delete button */}
                   <SkeletonButton className="mr-2 hidden h-9 w-9 rounded-md sm:inline-flex" />
                   {/* Second divider */}
-                  <div className="mx-3 hidden h-4 w-px bg-gray-200 sm:inline" /> {/* Divider */}
+                  <div className="mx-3 hidden h-4 w-px bg-emphasis sm:inline" /> {/* Divider */}
                   {/* Save button - updated to match screenshot */}
-                  <SkeletonButton className="h-9 w-20 rounded-md bg-gray-200" /> {/* Save button */}
+                  <SkeletonButton className="h-9 w-20 rounded-md bg-emphasis" /> {/* Save button */}
                 </div>
               </div>
             </header>
@@ -63,7 +63,7 @@ export function AvailabilityScheduleSkeleton() {
                           <div className="flex h-[36px] items-center justify-between sm:w-32">
                             <div>
                               <div className="text-default flex flex-row items-center space-x-2 rtl:space-x-reverse">
-                                <div className="mr-2 h-6 w-11 rounded-full bg-gray-200" /> {/* Toggle */}
+                                <div className="mr-2 h-6 w-11 rounded-full bg-emphasis" /> {/* Toggle */}
                                 <SkeletonText className="h-5 w-16 text-sm" /> {/* Day name */}
                               </div>
                             </div>

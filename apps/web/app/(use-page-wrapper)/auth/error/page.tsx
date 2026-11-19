@@ -68,7 +68,7 @@ const ServerPage = async ({ searchParams }: PageProps) => {
     <AuthContainer>
       <div>
         <div className="bg-error mx-auto flex h-12 w-12 items-center justify-center rounded-full">
-          <XIcon className="h-6 w-6 text-red-600" />
+          <XIcon className="h-6 w-6 text-error" />
         </div>
         <div className="mt-3 text-center sm:mt-5">
           <h3 className="text-emphasis text-lg font-medium leading-6" id="modal-title">

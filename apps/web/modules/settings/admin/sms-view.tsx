@@ -244,7 +244,7 @@ export default function SMSAdminView() {
 
         {/* Kurulum Yardım Kutusu */}
         {!smsConfig?.isConfigured && (
-          <div className="mt-6 rounded-lg border border-amber-500/20 bg-amber-500/5 p-4 text-xs text-amber-600 dark:text-amber-400">
+          <div className="mt-6 rounded-lg border border-emphasis/20 bg-emphasis/5 p-4 text-xs text-default dark:text-subtle">
             <div className="flex items-center gap-2 font-semibold">
               <Icon name="info" className="h-4 w-4" />
               SMS Gönderimini Aktifleştirmek İçin:
@@ -305,8 +305,8 @@ export default function SMSAdminView() {
             <div
               className={`rounded-lg px-3 py-2 text-xs font-medium ${
                 testResult.success
-                  ? "bg-green-500/10 text-green-600 dark:text-green-400"
-                  : "bg-red-500/10 text-red-600 dark:text-red-400"
+                  ? "bg-emphasis/10 text-default dark:text-subtle"
+                  : "bg-destructive/10 text-error dark:text-error"
               }`}>
               {testResult.success
                 ? `Başarılı! Taşıyıcı: ${testResult.provider} (ID: ${testResult.messageId})`

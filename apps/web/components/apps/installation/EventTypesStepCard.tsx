@@ -53,7 +53,7 @@ const EventTypeCard: FC<EventTypeCardProps> = ({
       <input
         id={`${id}`}
         checked={selected}
-        className="bg-default border-default h-4 w-4 shrink-0 cursor-pointer rounded-rondevu checked:border-transparent checked:bg-gray-800 border ring-offset-2 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed"
+        className="bg-default border-default h-4 w-4 shrink-0 cursor-pointer rounded-rondevu checked:border-transparent checked:bg-inverted border ring-offset-2 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed"
         type="checkbox"
       />
       <label htmlFor={`${id}`} className="cursor-pointer text-sm">
@@ -67,7 +67,7 @@ const EventTypeCard: FC<EventTypeCardProps> = ({
           {Boolean(description) && (
             // biome-ignore lint/security/noDangerouslySetInnerHtml: Content is sanitized via markdownToSafeHTML
             <div
-              className="text-subtle line-clamp-4 wrap-break-word text-sm sm:max-w-[650px] [&>*:not(:first-child)]:hidden [&_a]:text-blue-500 [&_a]:underline [&_a]:hover:text-blue-600"
+              className="text-subtle line-clamp-4 wrap-break-word text-sm sm:max-w-[650px] [&>*:not(:first-child)]:hidden [&_a]:text-subtle [&_a]:underline [&_a]:hover:text-default"
               dangerouslySetInnerHTML={{
                 __html: markdownToSafeHTML(description),
               }}
