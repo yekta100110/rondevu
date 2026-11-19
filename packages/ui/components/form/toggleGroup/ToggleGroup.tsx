@@ -67,7 +67,7 @@ export const ToggleGroup = ({
             "0px 2px 3px 0px rgba(0, 0, 0, 0.03), 0px 2px 2px -1px rgba(0, 0, 0, 0.03)",
         }}
         className={classNames(
-          `bg-muted rounded-xl p-1`,
+          `bg-subtle rounded-lg p-[3px]`,
           orientation === "horizontal" && "inline-flex gap-1 rtl:flex-row-reverse",
           orientation === "vertical" && "flex w-fit flex-col gap-1",
           props.className,
@@ -82,10 +82,10 @@ export const ToggleGroup = ({
               value={option.value}
               data-testid={option.dataTestId ?? `toggle-group-item-${option.value}`}
               className={classNames(
-                "aria-checked:bg-default aria-checked:border-subtle rounded-lg border border-transparent px-3 py-1.5 text-sm leading-none transition aria-checked:shadow-[0px_2px_3px_0px_rgba(0,0,0,0.03),0px_2px_2px_-1px_rgba(0,0,0,0.03)]",
+                "aria-checked:bg-default aria-checked:text-emphasis dark:aria-checked:border-default rounded-md border border-transparent px-2.5 py-1.5 text-sm font-medium leading-none outline-none transition-colors duration-160 focus-visible:ring-3 focus-visible:ring-ring/50 aria-checked:shadow-sm",
                 option.disabled
-                  ? "text-gray-400 hover:cursor-not-allowed"
-                  : "text-default [&[aria-checked='false']]:hover:text-emphasis [&[aria-checked='false']]:hover:bg-subtle cursor-pointer",
+                  ? "text-muted opacity-50 hover:cursor-not-allowed"
+                  : "text-subtle [&[aria-checked='false']]:hover:text-emphasis cursor-pointer",
                 isFullWidth && "w-full"
               )}>
               <div

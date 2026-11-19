@@ -41,7 +41,7 @@ const cvaCardTypeByVariant = cva("", {
     {
       variant: "basic",
       structure: "title",
-      className: "text-base mt-4",
+      className: "text-base font-semibold tracking-[-0.02em] mt-4",
     },
     {
       variant: "basic",
@@ -58,7 +58,7 @@ const cvaCardTypeByVariant = cva("", {
     {
       variant: "ProfileCard",
       structure: "card",
-      className: "w-80 p-4 hover:bg-subtle bg-default",
+      className: "w-80 p-4 transition-colors duration-160 hover:bg-muted bg-default",
     },
     {
       variant: "ProfileCard",
@@ -80,7 +80,7 @@ const cvaCardTypeByVariant = cva("", {
     {
       variant: "SidebarCard",
       structure: "card",
-      className: "w-full p-3 border border-subtle bg-default",
+      className: "w-full p-3 border border-default bg-default",
     },
     {
       variant: "SidebarCard",
@@ -102,17 +102,17 @@ const cvaCardTypeByVariant = cva("", {
     {
       variant: "NewLaunchSidebarCard",
       structure: "card",
-      className: "w-full p-3 border border-subtle bg-launch-dark text-white",
+      className: "w-full p-3 border border-default bg-inverted text-inverted",
     },
     {
       variant: "NewLaunchSidebarCard",
       structure: "title",
-      className: "text-sm font-display text-white",
+      className: "text-sm font-display text-inverted",
     },
     {
       variant: "NewLaunchSidebarCard",
       structure: "description",
-      className: "text-xs text-white",
+      className: "text-xs text-inverted opacity-80",
     },
   ],
 });
@@ -166,7 +166,7 @@ export function Card({
     <div
       className={classNames(
         containerProps?.className,
-        "border-subtle text-default bg-default flex flex-col justify-between rounded-md border",
+        "border-default text-default bg-default flex flex-col justify-between rounded-xl border",
         cvaCardTypeByVariant({ variant, structure: "card" })
       )}
       data-testid="card-container"

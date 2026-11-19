@@ -32,7 +32,7 @@ const SegmentedControl = function <T extends string>({
             data-testid={dataTestId}
             {...props}>
             <div
-                className="no-scrollbar flex space-x-0.5 overflow-x-scroll rounded-lg bg-subtle p-0.5"
+                className="no-scrollbar flex gap-0.5 overflow-x-scroll rounded-lg bg-subtle p-[3px]"
                 role="radiogroup">
                 {data.map((item, idx) => {
                     const itemValue = typeof item === "string" ? item : item.value;
@@ -45,11 +45,11 @@ const SegmentedControl = function <T extends string>({
                             key={itemValue}
                             htmlFor={inputId}
                             className={classNames(
-                                "inline-flex h-fit w-full items-center justify-center whitespace-nowrap rounded-lg p-1 text-md font-medium leading-none transition md:mb-0",
-                                "not-disabled:hover:shadow-outline-gray-hover not-disabled:active:shadow-outline-gray-active",
+                                "inline-flex h-7 w-full items-center justify-center whitespace-nowrap rounded-md px-2.5 text-sm font-medium leading-none transition-colors duration-160 md:mb-0",
+                                "has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-ring/50",
                                 isActive
-                                    ? "bg-default text-emphasis shadow-outline-gray-rested ring-inset ring-subtle"
-                                    : "text-subtle",
+                                    ? "bg-default text-emphasis shadow-sm dark:ring-1 dark:ring-inset dark:ring-default"
+                                    : "text-subtle hover:text-emphasis",
                                 disabled ? "pointer-events-none opacity-30" : "cursor-pointer"
                             )}>
                             <input

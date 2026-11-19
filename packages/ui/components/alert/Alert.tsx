@@ -6,13 +6,13 @@ import { forwardRef } from "react";
 import { Icon } from "../icon";
 import type { IconName } from "../icon";
 
-export const alertStyles = cva("rounded-[10px] p-3", {
+export const alertStyles = cva("rounded-lg border p-3", {
   variants: {
     severity: {
-      neutral: "bg-default border-subtle border text-default",
-      info: "bg-semantic-info-subtle text-semantic-info",
-      warning: "bg-semantic-attention-subtle text-semantic-attention",
-      error: "bg-semantic-error-subtle text-semantic-error",
+      neutral: "bg-default border-default text-default",
+      info: "bg-subtle border-default text-default",
+      warning: "bg-subtle border-emphasis text-emphasis",
+      error: "bg-semantic-error-subtle border-semantic-error-subtle text-semantic-error",
     },
   },
   defaultVariants: {

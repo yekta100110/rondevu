@@ -40,154 +40,80 @@ export type ButtonProps = ButtonBaseProps &
   );
 
 export const buttonClasses = cva(
-  "group whitespace-nowrap inline-flex items-center text-sm font-medium relative rounded-[10px] transition cursor-pointer disabled:cursor-not-allowed gap-1",
+  [
+    "group relative inline-flex cursor-pointer select-none items-center gap-1.5 whitespace-nowrap rounded-lg border border-transparent bg-clip-padding text-sm font-medium outline-none",
+    "transition-[background-color,border-color,color,opacity,scale,rotate] duration-160 ease-[cubic-bezier(0.16,1,0.3,1)]",
+    "not-disabled:active:scale-[.97] disabled:cursor-not-allowed disabled:opacity-50",
+    "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
+  ],
   {
     variants: {
       variant: {
         button: "",
         icon: "flex justify-center",
-        fab: "min-w-14 min-h-14 md:min-w-min md:min-h-min rounded-full justify-center md:rounded-[10px] radix-state-open:rotate-45 md:radix-state-open:rotate-0 radix-state-open:shadown-none radix-state-open:ring-0",
+        fab: "min-w-14 min-h-14 md:min-w-min md:min-h-min rounded-full justify-center md:rounded-lg radix-state-open:rotate-45 md:radix-state-open:rotate-0",
       },
       color: {
-        primary: [
-          // Base colors
-          "bg-brand-default",
-          "text-brand",
-          // Hover state
-          "not-disabled:hover:bg-brand-emphasis",
-          // Focus state
-          "focus-visible:outline-none",
-          "focus-visible:ring-0",
-          "focus-visible:shadow-button-solid-brand-focused",
-          // Border
-          "border border-brand-default",
-          // Disabled
-          "disabled:opacity-30",
-          // Shadows and effects
-          "shadow-button-solid-brand-default",
-          "not-disabled:active:shadow-button-solid-brand-active",
-          "not-disabled:hover:shadow-button-solid-brand-hover",
-          "transition-shadow",
-          "transition-transform",
-          "duration-100",
-        ],
-
+        primary: ["bg-brand-default", "text-brand", "not-disabled:hover:bg-brand-default/85"],
         secondary: [
-          // Base colors and border
           "bg-default",
-          "text-default",
-          "border",
+          "text-emphasis",
           "border-default",
-          // Hover state
-          "not-disabled:hover:bg-muted",
-          "not-disabled:hover:text-emphasis",
-          // Disabled
-          "disabled:opacity-30",
-          // Focus state
-          "focus-visible:bg-subtle",
-          "focus-visible:outline-none",
-          "focus-visible:ring-0",
-          "focus-visible:shadow-outline-gray-focused",
-          // Shadows and effects
-          "shadow-outline-gray-rested",
-          "not-disabled:hover:shadow-outline-gray-hover",
-          "not-disabled:active:shadow-outline-gray-active",
-          "transition-shadow",
-          "duration-200",
+          "not-disabled:hover:bg-subtle",
+          "aria-expanded:bg-subtle",
+          "dark:bg-transparent",
         ],
-
         minimal: [
-          // Base color
           "text-subtle",
-          "border border-transparent",
-          // Hover
           "not-disabled:hover:bg-subtle",
           "not-disabled:hover:text-emphasis",
-          "not-disabled:hover:border-subtle hover:border",
-          // Disabled
-          "disabled:opacity-30",
-          // Focus
-          "focus-visible:bg-subtle",
-          "focus-visible:outline-none",
-          "focus-visible:ring-0",
-          "focus-visible:border-subtle",
-          "focus-visible:shadow-button-outline-gray-focused",
-
-          // Shadows and effects
-          "not-disabled:active:shadow-outline-gray-active",
-          "transition-shadow",
-          "duration-200",
+          "aria-expanded:bg-subtle",
+          "aria-expanded:text-emphasis",
         ],
-
         destructive: [
-          // Base colors and border
-          "border",
           "border-default",
           "text-error",
-          // Hover state
-          "dark:hover:text-red-400",
-          "hover:border-semantic-error",
-          "hover:bg-error",
-          // Focus state
-          "focus-visible:text-red-700",
-          "focus-visible:bg-error",
-          "focus-visible:outline-none",
-          "focus-visible:ring-0",
-          "focus-visible:shadow-button-outline-red-focused",
-          // Disabled state
-          "disabled:bg-red-100",
-          "disabled:border-red-200",
-          "disabled:text-red-700",
-          "disabled:hover:border-red-200",
-          "disabled:opacity-30",
-          // Shadows and effects
-          "shadow-outline-red-rested",
-          "not-disabled:hover:shadow-outline-red-hover",
-          "not-disabled:active:shadow-outline-red-active",
-          "transition-shadow",
-          "duration-200",
+          "not-disabled:hover:border-error",
+          "not-disabled:hover:bg-error",
+          "focus-visible:border-error",
+          "focus-visible:ring-destructive/20",
         ],
       },
       size: {
-        xs: "h-6 p-2 leading-none text-xs rounded-md",
-        sm: "h-7 px-2 py-1.5 leading-none text-sm" /** For backwards compatibility */,
+        xs: "h-6 px-2 leading-none text-xs rounded-md",
+        sm: "h-7 px-2.5 py-1.5 leading-none text-[0.8125rem] rounded-md" /** For backwards compatibility */,
         base: "px-2.5 py-2 text-sm leading-none",
-        lg: "px-3 py-2.5 ",
+        lg: "px-3 py-2.5",
       },
       loading: {
         true: "cursor-wait",
       },
     },
     compoundVariants: [
-      // Primary variants
       {
         loading: true,
         color: "primary",
-        className: "opacity-30",
+        className: "opacity-60",
       },
-      // Secondary variants
       {
         loading: true,
         color: "secondary",
-        className: "bg-subtle text-emphasis/80",
+        className: "bg-subtle",
       },
-      // Minimal variants
       {
         loading: true,
         color: "minimal",
-        className: "bg-subtle text-emphasis/30",
+        className: "bg-subtle",
       },
-      // Destructive variants
       {
         loading: true,
         color: "destructive",
-        className:
-          "text-red-700/30 dark:text-red-700/30 hover:text-red-700/30  border border-default text-emphasis",
+        className: "bg-error",
       },
       {
         variant: "icon",
         size: "base",
-        className: "min-h-[36px] min-w-[36px] p-2! hover:border-default",
+        className: "h-8 w-8 p-0!",
       },
       {
         variant: "icon",
@@ -202,7 +128,7 @@ export const buttonClasses = cva(
       {
         variant: "icon",
         size: "lg",
-        className: "h-10 w-10 p-1!",
+        className: "h-9 w-9 p-0!",
       },
       {
         variant: "fab",
@@ -266,7 +192,7 @@ export const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonPr
                 className={classNames(
                   "shrink-0",
                   loading ? "invisible" : "visible",
-                  "button-icon group-[:not(div):active]:translate-y-[0.5px]",
+                  "button-icon",
                   variant === "icon" && "h-4 w-4",
                   variant === "button" && "h-4 w-4 stroke-[1.5px] "
                 )}
@@ -278,17 +204,14 @@ export const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonPr
         className={classNames(
           "contents", // This makes the div behave like it doesn't exist in the layout
           loading ? "invisible" : "visible",
-          variant === "fab" ? "hidden md:contents" : "",
-          "group-[:not(div):active]:translate-y-[0.5px]"
-        )}>
+          variant === "fab" ? "hidden md:contents" : "")}>
         {props.children}
       </div>
       {loading && (
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
           <svg
             className={classNames(
-              "mx-4 h-5 w-5 animate-spin",
-              color === "primary" ? "text-inverted" : "text-emphasis"
+              "mx-4 h-4 w-4 animate-spin text-current"
             )}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -315,7 +238,8 @@ export const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonPr
               className={classNames(
                 "shrink-0",
                 loading ? "invisible" : "visible",
-                "group-[:not(div):active]:translate-y-[0.5px]",
+                (EndIcon === "arrow-right" || EndIcon === "chevron-right") &&
+                  "transition-transform duration-160 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0.5",
                 variant === "icon" && "h-4 w-4",
                 variant === "button" && "h-4 w-4 stroke-[1.5px] "
               )}

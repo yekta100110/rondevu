@@ -14,9 +14,9 @@ export type TopBannerProps = {
 };
 
 const variantClassName = {
-  default: "[background-image:radial-gradient(162.05%_170%_at_109.58%_35%,_#667593_0%,_#E3E3E3_100%)]",
-  warning: "bg-orange-400",
-  error: "bg-red-400",
+  default: "bg-subtle border-default border-b",
+  warning: "bg-subtle border-default border-b",
+  error: "bg-error border-semantic-error-subtle border-b [&_p]:text-error",
 };
 
 const defaultIconProps = {

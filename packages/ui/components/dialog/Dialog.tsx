@@ -14,7 +14,7 @@ import type { IconName } from "../icon";
 import { Icon } from "../icon";
 
 const dialogClasses = cva(
-  "fadeIn bg-default scroll-bar fixed left-1/2 top-1/2 z-50 w-[95vw] m-auto -translate-x-1/2 -translate-y-1/2 rounded-2xl text-left shadow-xl focus-visible:outline-none sm:align-middle",
+  "fadeIn bg-default text-default scroll-bar fixed left-1/2 top-1/2 z-50 w-[95vw] m-auto -translate-x-1/2 -translate-y-1/2 rounded-xl border border-default text-left shadow-lg focus-visible:outline-none sm:align-middle",
   {
     variants: {
       size: {
@@ -70,9 +70,9 @@ export const DialogContent = React.forwardRef<HTMLDivElement, DialogContentProps
     return (
       <DialogPrimitive.Portal>
         {forceOverlayWhenNoModal ? (
-          <div className="fadeIn fixed inset-0 z-50  bg-neutral-800/70 transition-opacity" />
+          <div className="fadeIn fixed inset-0 z-50 bg-black/40 transition-opacity supports-backdrop-filter:backdrop-blur-[2px]" />
         ) : (
-          <DialogPrimitive.Overlay className="fadeIn fixed inset-0 z-50 bg-neutral-800/70 transition-opacity dark:bg-neutral-800/80" />
+          <DialogPrimitive.Overlay className="fadeIn fixed inset-0 z-50 bg-black/40 transition-opacity supports-backdrop-filter:backdrop-blur-[2px] dark:bg-black/60" />
         )}
         <DialogPrimitive.Content
           {...props}
@@ -125,19 +125,19 @@ export function DialogHeader(props: DialogHeaderProps) {
     <div className="mb-4">
       <div className={classNames("flex gap-2", props.subtitle ? "items-start" : "items-center")}>
         {props.icon && (
-          <div className="bg-emphasis flex h-10 w-10 shrink-0 items-center justify-center rounded-full">
+          <div className="bg-subtle flex h-9 w-9 shrink-0 items-center justify-center rounded-full">
             <Icon name={props.icon} className="text-emphasis h-4 w-4" />
           </div>
         )}
         <div>
           <h2
             data-testid="dialog-title"
-            className="text-semibold text-emphasis font-display text-xl"
+            className="text-emphasis font-display text-lg font-semibold leading-snug tracking-[-0.02em]"
             id="modal-title">
             {props.title}
           </h2>
           {props.subtitle && (
-            <p className="text-subtle text-sm" data-testid="dialog-subtitle">
+            <p className="text-subtle mt-1 text-sm" data-testid="dialog-subtitle">
               {props.subtitle}
             </p>
           )}
@@ -157,7 +157,7 @@ export function DialogFooter(props: DialogFooterProps) {
   return (
     <div
       className={classNames(
-        "bg-muted border-muted bottom-0 -mx-8 mt-10 rounded-b-2xl border",
+        "bg-muted border-default bottom-0 -mx-8 mt-8 rounded-b-xl border-t",
         props?.noSticky ? "" : "sticky",
         props.className
       )}>

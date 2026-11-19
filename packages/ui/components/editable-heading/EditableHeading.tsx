@@ -24,7 +24,7 @@ export const EditableHeading = function EditableHeading({
         <label className="min-w-8 relative inline-block">
           <span
             className={classNames(
-              "whitespace-pre text-xl tracking-normal w-full truncate cursor-pointer",
+              "whitespace-pre text-xl font-semibold tracking-[-0.02em] w-full truncate cursor-pointer",
               isEditing && "text-transparent"
             )}>
             {value}
@@ -38,7 +38,7 @@ export const EditableHeading = function EditableHeading({
             required
             className={classNames(
               !disabled && "hover:text-default focus:text-emphasis cursor-text",
-              "text-emphasis absolute left-0 top-0 w-full truncate border-none bg-transparent p-0 align-top text-xl transition-opacity",
+              "text-emphasis absolute left-0 top-0 w-full truncate border-none bg-transparent p-0 align-top text-xl font-semibold tracking-[-0.02em] outline-none transition-opacity",
               isEditing ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
               passThroughProps.className
             )}

@@ -89,7 +89,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(function 
     <textarea
       {...props}
       ref={ref}
-      className={classNames(inputStyles(), "min-h-[80px] w-full", props.className)}
+      className={classNames(inputStyles(), "h-auto min-h-[80px] w-full py-2 leading-normal", props.className)}
     />
   );
 });

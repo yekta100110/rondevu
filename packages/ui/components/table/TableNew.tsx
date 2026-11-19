@@ -6,7 +6,7 @@ const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableE
   ({ className, ...props }, ref) => (
     <table
       ref={ref}
-      className={classNames("border-muted w-full caption-bottom border text-sm", className)}
+      className={classNames("border-default w-full caption-bottom border text-sm", className)}
       {...props}
     />
   )
@@ -39,7 +39,7 @@ const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTML
     <tr
       ref={ref}
       className={classNames(
-        "hover:bg-muted data-[state=selected]:bg-subtle border-muted border-b transition",
+        "hover:bg-muted data-[state=selected]:bg-subtle border-default border-b transition-colors duration-160",
         className
       )}
       {...props}
@@ -53,7 +53,7 @@ const TableHead = React.forwardRef<HTMLTableCellElement, React.ThHTMLAttributes<
     <th
       ref={ref}
       className={classNames(
-        "text-default h-12 px-2 text-left align-middle font-medium [&:has([role=checkbox])]:pr-0",
+        "text-muted h-10 px-2 text-left align-middle text-xs font-medium [&:has([role=checkbox])]:pr-0",
         className
       )}
       {...props}
@@ -66,7 +66,7 @@ const TableCell = React.forwardRef<HTMLTableCellElement, React.TdHTMLAttributes<
   ({ className, ...props }, ref) => (
     <td
       ref={ref}
-      className={classNames("text-default px-2 py-2.5 align-middle [&:has([role=checkbox])]:pr-0", className)}
+      className={classNames("text-emphasis px-2 py-2.5 align-middle [&:has([role=checkbox])]:pr-0", className)}
       {...props}
     />
   )
@@ -75,7 +75,7 @@ TableCell.displayName = "TableCell";
 
 const TableCaption = React.forwardRef<HTMLTableCaptionElement, React.HTMLAttributes<HTMLTableCaptionElement>>(
   ({ className, ...props }, ref) => (
-    <caption ref={ref} className={classNames("text-default mt-4 text-sm", className)} {...props} />
+    <caption ref={ref} className={classNames("text-muted mt-4 text-sm", className)} {...props} />
   )
 );
 TableCaption.displayName = "TableCaption";

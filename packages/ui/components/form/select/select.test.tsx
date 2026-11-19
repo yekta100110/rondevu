@@ -221,7 +221,7 @@ describe("Tests for Select File", () => {
         expect(option1).toBeInTheDocument();
         expect(option1Parent).toHaveClass("bg-subtle");
         expect(option3[1]).toBeInTheDocument();
-        expect(option3Parent).toHaveClass("bg-emphasis text-default");
+        expect(option3Parent).toHaveClass("font-medium text-emphasis");
         expect(menuIsOpenEl).toHaveClass("rotate-180 transition-transform");
       });
     });

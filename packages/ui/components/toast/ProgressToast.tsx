@@ -15,7 +15,7 @@ export const ProgressToast = ({ message, progress, onClose, toastId }: ProgressT
   const defaultMessage = t("downloading");
 
   return (
-    <div className="animate-fade-in-up bg-subtle shadow-elevation-low border-subtle stack-y-2 mb-2 flex h-auto flex-col rounded-lg border px-3 py-2.5 text-sm font-semibold md:max-w-sm">
+    <div className="animate-fade-in-up bg-popover text-popover-foreground border-default stack-y-2 mb-2 flex h-auto flex-col rounded-lg border px-3 py-2.5 text-sm font-medium shadow-md md:max-w-sm">
       <div className="flex items-center gap-2">
         <span className="mt-0.5">
           <FileDownIcon className="h-4 w-4" />
@@ -25,13 +25,13 @@ export const ProgressToast = ({ message, progress, onClose, toastId }: ProgressT
           <XIcon className="h-4 w-4 hover:cursor-pointer" />
         </button>
       </div>
-      <div className="h-2 w-full overflow-hidden rounded-full">
+      <div className="bg-subtle h-1.5 w-full overflow-hidden rounded-full">
         <div
-          className="bg-inverted h-2 rounded-full opacity-50 transition-all duration-300 ease-in-out"
+          className="bg-inverted h-1.5 rounded-full transition-[width] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
           style={{ width: `${progress}%` }}
         />
       </div>
-      <div className="text-right text-xs font-normal">{Math.floor(progress)}%</div>
+      <div className="text-muted text-right font-mono text-xs font-normal tabular-nums">{Math.floor(progress)}%</div>
     </div>
   );
 };

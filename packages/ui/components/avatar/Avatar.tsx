@@ -26,7 +26,7 @@ export type AvatarProps = {
 };
 
 const avatarClasses = cva(
-  "bg-emphasis border-default relative inline-flex aspect-square items-center justify-center border align-top",
+  "bg-subtle text-subtle relative inline-flex aspect-square items-center justify-center align-top ring-1 ring-black/5 dark:ring-white/10",
   {
     variants: {
       size: {
@@ -61,7 +61,7 @@ const avatarClasses = cva(
       {
         size: ["mdLg", "lg", "xl"],
         shape: "square",
-        className: "rounded-[10px]",
+        className: "rounded-lg",
       },
     ],
   }

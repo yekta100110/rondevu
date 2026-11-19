@@ -202,7 +202,7 @@ export default function FileUploader({
         <div className="flex items-center gap-2">
           <Label
             htmlFor={id}
-            className={`mb-0 inline-flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+            className={`mb-0 inline-flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm font-medium shadow-sm focus:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 ${
               disabled ? "cursor-not-allowed opacity-50" : ""
             }`}>
             <UploadIcon className="h-4 w-4" />

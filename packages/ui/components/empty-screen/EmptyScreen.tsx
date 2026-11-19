@@ -42,8 +42,8 @@ export function EmptyScreen({
       <div
         data-testid="empty-screen"
         className={classNames(
-          "flex w-full select-none flex-col items-center justify-center rounded-lg p-7 lg:p-20",
-          border && "border-subtle border",
+          "flex w-full select-none flex-col items-center justify-center rounded-xl p-7 lg:p-16",
+          border && "border-default border",
           dashedBorder && "border-dashed",
           className
         )}>
@@ -54,12 +54,12 @@ export function EmptyScreen({
         {!icon ? null : (
           <div
             className={classNames(
-              "bg-emphasis flex h-[72px] w-[72px] items-center justify-center rounded-full ",
+              "bg-subtle flex h-12 w-12 items-center justify-center rounded-lg",
               iconWrapperClassName
             )}>
             <Icon
               name={icon}
-              className={classNames("text-default inline-block h-10 w-10 stroke-[1.3px]", iconClassName)}
+              className={classNames("text-emphasis inline-block h-5 w-5 stroke-[1.5px]", iconClassName)}
             />
           </div>
         )}
@@ -67,14 +67,14 @@ export function EmptyScreen({
         <div className={`flex ${limitWidth ? "max-w-[420px]" : ""}  flex-col items-center`}>
           <h2
             className={classNames(
-              "text-semibold font-display text-emphasis text-center text-xl normal-nums",
-              icon && "mt-6",
+              "font-display text-emphasis text-center text-lg font-semibold tracking-[-0.02em] normal-nums",
+              icon && "mt-4",
               !description && "mb-8"
             )}>
             {headline}
           </h2>
           {description && (
-            <div className="text-default mb-8 mt-3 text-center text-sm font-normal leading-6">
+            <div className="text-subtle mb-6 mt-1.5 text-center text-sm font-normal leading-6 text-balance">
               {description}
             </div>
           )}

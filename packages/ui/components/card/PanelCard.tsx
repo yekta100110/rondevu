@@ -49,7 +49,7 @@ export function PanelCard({
       data-testid="panel-card"
       ref={animationParent}
       className={classNames(
-        "bg-muted group relative flex w-full flex-col items-center rounded-2xl px-1",
+        "bg-muted border-default group relative flex w-full flex-col items-center rounded-xl border px-1",
         !isCollapsed && "pb-1",
         className
       )}

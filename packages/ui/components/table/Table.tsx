@@ -18,7 +18,7 @@ const ColumnTitle = ({ children, widthClassNames }: TableProps & DynamicWidth) =
   <th
     scope="col"
     className={classNames(
-      "text-default p-3 text-left text-xs font-medium uppercase",
+      "text-muted h-10 px-3 text-left text-xs font-medium",
       !widthClassNames ? "w-auto" : widthClassNames
     )}>
     {children}
@@ -26,7 +26,7 @@ const ColumnTitle = ({ children, widthClassNames }: TableProps & DynamicWidth) =
 );
 
 const Body = ({ children }: TableProps) => (
-  <tbody className="divide-subtle divide-y rounded-md">{children}</tbody>
+  <tbody className="divide-border divide-y rounded-md">{children}</tbody>
 );
 
 const Row = ({ children }: TableProps) => <tr>{children}</tr>;
@@ -34,7 +34,7 @@ const Row = ({ children }: TableProps) => <tr>{children}</tr>;
 const Cell = ({ children, widthClassNames }: TableProps & DynamicWidth) => (
   <td
     className={classNames(
-      "text-default relative px-3 py-2 text-sm font-medium",
+      "text-emphasis relative px-3 py-2 text-sm",
       !widthClassNames ? "w-auto" : widthClassNames
     )}>
     {children}
@@ -42,8 +42,8 @@ const Cell = ({ children, widthClassNames }: TableProps & DynamicWidth) => (
 );
 
 export const Table = ({ children }: TableProps) => (
-  <div className="bg-default border-subtle overflow-x-auto overflow-y-hidden rounded-md border">
-    <table className="divide-subtle w-full divide-y rounded-md">{children}</table>
+  <div className="bg-default border-default overflow-x-auto overflow-y-hidden rounded-xl border">
+    <table className="divide-border w-full divide-y rounded-md">{children}</table>
   </div>
 );
 

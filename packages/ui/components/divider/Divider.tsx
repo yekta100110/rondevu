@@ -1,7 +1,7 @@
 import classNames from "@rondevu/ui/classNames";
 
 export function Divider({ className, ...props }: JSX.IntrinsicElements["hr"]) {
-  className = classNames("border-subtle my-1", className);
+  className = classNames("border-default my-1", className);
   return <hr className={className} {...props} />;
 }
 

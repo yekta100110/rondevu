@@ -17,7 +17,7 @@ const Root = ({
   const [animateRef] = useAutoAnimate<HTMLDivElement>();
 
   return (
-    <div ref={animateRef} className={cn("bg-muted flex flex-col gap-4 rounded-2xl p-4", className)}>
+    <div ref={animateRef} className={cn("bg-muted border-default flex flex-col gap-4 rounded-xl border p-4", className)}>
       {children}
     </div>
   );
@@ -34,7 +34,7 @@ const Title = ({
 }) => {
   const Component = as ? Slot : "h2";
   return (
-    <Component ref={ref} className="text-emphasis text-base font-semibold leading-none">
+    <Component ref={ref} className="text-emphasis text-base font-semibold leading-none tracking-[-0.02em]">
       {children}
     </Component>
   );
@@ -72,9 +72,9 @@ const Icon = ({
     <div
       ref={ref}
       className={cn(
-        "bg-default border-subtle border-subtle flex items-center justify-center border",
+        "bg-default border-default flex items-center justify-center border",
         size === "sm" && "rounded-md p-1",
-        size === "md" && "rounded-[10px] p-1.5"
+        size === "md" && "rounded-lg p-1.5"
       )}>
       {iconSlot ? (
         iconSlot
@@ -130,7 +130,7 @@ const SubSection = ({ children, ref }: { children: React.ReactNode; ref?: React.
   const [animateRef] = useAutoAnimate<HTMLDivElement>();
 
   return (
-    <div ref={animateRef} className="border-muted bg-default flex flex-col gap-4 rounded-xl border p-3">
+    <div ref={animateRef} className="border-default bg-default flex flex-col gap-4 rounded-lg border p-3">
       {children}
     </div>
   );

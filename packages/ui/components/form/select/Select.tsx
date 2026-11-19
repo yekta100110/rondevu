@@ -60,14 +60,14 @@ export const Select = <
         input: () => cx("text-emphasis", innerClassNames?.input),
         option: (state) =>
           cx(
-            "bg-default flex cursor-pointer justify-between py-2 px-3 rounded-md text-default items-center",
+            "flex cursor-pointer items-center justify-between rounded-md px-2 py-1.5 text-sm text-emphasis transition-colors duration-160",
             state.isFocused && "bg-subtle",
-            state.isDisabled && "bg-muted",
-            state.isSelected && "bg-emphasis text-default",
+            state.isDisabled && "cursor-not-allowed opacity-50",
+            state.isSelected && "font-medium",
             innerClassNames?.option
           ),
         placeholder: (state) => cx("text-muted", state.isFocused && variant !== "checkbox" && "hidden"),
-        dropdownIndicator: () => cx("text-default", "w-4 h-4", "flex items-center justify-center "),
+        dropdownIndicator: () => cx("text-muted", "w-4 h-4", "flex items-center justify-center "),
         control: (state) =>
           cx(
             inputStyles({ size }),
@@ -79,29 +79,29 @@ export const Select = <
                 : "px-3 h-fit"
               : size === "sm"
               ? "h-7 px-2 py-0.5"
-              : "h-8 px-3 py-1",
-            state.isDisabled && "bg-subtle !cursor-not-allowed !pointer-events-auto hover:border-subtle",
-            "rounded-[10px]",
-            "[&:focus-within]:border-emphasis [&:focus-within]:shadow-outline-gray-focused focus-within:ring-0 flex! **:[input]:leading-none text-sm",
+              : "h-8 px-2.5 py-1",
+            state.isDisabled && "bg-subtle !cursor-not-allowed !pointer-events-auto",
+            "rounded-lg",
+            "focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50 flex! **:[input]:leading-none text-sm",
             innerClassNames?.control
           ),
-        singleValue: () => cx("text-default placeholder:text-muted", innerClassNames?.singleValue),
+        singleValue: () => cx("text-emphasis placeholder:text-muted", innerClassNames?.singleValue),
         valueContainer: () =>
           cx("text-default placeholder:text-muted flex gap-1", innerClassNames?.valueContainer),
         multiValue: () =>
           cx(
-            "font-medium inline-flex items-center justify-center rounded bg-emphasis text-emphasis leading-none text-xs",
-            size == "sm" ? "px-1.5 py-px rounded-md" : "py-1 px-1.5 leading-none rounded-lg"
+            "font-medium inline-flex items-center justify-center rounded-md bg-subtle text-emphasis leading-none text-xs",
+            size == "sm" ? "px-1.5 py-px" : "py-1 px-1.5 leading-none"
           ),
         menu: () =>
           cx(
-            "rounded-lg bg-default text-sm leading-4 text-default mt-1 border border-subtle shadow-dropdown p-1",
+            "rounded-lg bg-popover text-popover-foreground text-sm leading-4 mt-1 border border-default shadow-md p-1",
             innerClassNames?.menu
           ),
-        groupHeading: () => "leading-none text-xs text-muted p-2 font-medium ml-1",
+        groupHeading: () => "leading-none text-xs text-muted px-2 py-1.5 font-medium",
         menuList: () =>
           cx(
-            "scroll-bar scrollbar-track-w-20 rounded-md flex flex-col space-y-1",
+            "scroll-bar scrollbar-track-w-20 rounded-md flex flex-col gap-px",
             innerClassNames?.menuList
           ),
         indicatorsContainer: (state) =>

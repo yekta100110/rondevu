@@ -16,7 +16,7 @@ export const DropdownMenuTrigger = forwardRef<HTMLButtonElement, DropdownMenuTri
       {...props}
       className={classNames(
         !props.asChild &&
-          `focus:bg-subtle hover:bg-muted text-default group-hover:text-emphasis inline-flex items-center rounded-md bg-transparent px-3 py-2 text-sm font-medium ring-0 transition ${className}`
+          `focus-visible:ring-3 focus-visible:ring-ring/50 hover:bg-subtle text-default group-hover:text-emphasis inline-flex items-center rounded-md bg-transparent px-2.5 py-2 text-sm font-medium outline-none transition-colors duration-160 ${className}`
       )}
       ref={forwardedRef}
     />
@@ -37,7 +37,7 @@ export const DropdownMenuContent = forwardRef<HTMLDivElement, DropdownMenuConten
         {...props}
         sideOffset={sideOffset}
         className={classNames(
-          "shadow-dropdown bg-default border-subtle relative z-50 origin-top-right stack-y-px rounded-xl border p-1 text-sm",
+          "bg-popover text-popover-foreground border-default relative z-50 origin-top-right stack-y-px rounded-lg border p-1 text-sm shadow-md",
           "w-[220px]",
           props.className
         )}
@@ -53,7 +53,7 @@ type DropdownMenuLabelProps = ComponentProps<(typeof DropdownMenuPrimitive)["Lab
 export const DropdownMenuLabel = (props: DropdownMenuLabelProps) => (
   <DropdownMenuPrimitive.Label
     {...props}
-    className={classNames("text-subtle px-2 pb-1 pt-1.5 text-xs font-semibold leading-none", props.className)}
+    className={classNames("text-muted px-2 pb-1 pt-1.5 text-xs font-medium leading-none", props.className)}
   />
 );
 
@@ -117,7 +117,7 @@ export const DropdownMenuSubTrigger = forwardRef<HTMLDivElement, DropdownMenuSub
   ({ className = "", children, ...props }, forwardedRef) => (
     <DropdownMenuPrimitive.SubTrigger
       className={classNames(
-        "hover:bg-subtle hover:text-emphasis text-default flex cursor-pointer select-none items-center justify-between rounded-lg p-2 text-sm font-medium outline-none ring-inset first-of-type:rounded-t-[inherit] last-of-type:rounded-b-[inherit] focus:bg-subtle focus:text-emphasis",
+        "hover:bg-subtle hover:text-emphasis text-default flex cursor-pointer select-none items-center justify-between rounded-md px-2 py-1.5 text-sm outline-none ring-inset first-of-type:rounded-t-[inherit] last-of-type:rounded-b-[inherit] focus:bg-subtle focus:text-emphasis",
         className
       )}
       {...props}
@@ -138,7 +138,7 @@ export const DropdownMenuSubContent = forwardRef<HTMLDivElement, DropdownMenuSub
         alignOffset={alignOffset}
         {...props}
         className={classNames(
-          "shadow-dropdown bg-default border-subtle relative z-50 min-w-[180px] origin-top-left stack-y-px rounded-xl border p-1 text-sm",
+          "bg-popover text-popover-foreground border-default relative z-50 min-w-[180px] origin-top-left stack-y-px rounded-lg border p-1 text-sm shadow-md",
           props.className
         )}
         ref={forwardedRef}>
@@ -197,13 +197,13 @@ export const DropdownItem = (props: DropdownItemProps) => {
     <ButtonOrLink
       {...rest}
       className={classNames(
-        "hover:text-emphasis text-default inline-flex w-full items-center space-x-1 rounded-lg  p-2 disabled:cursor-not-allowed",
+        "hover:text-emphasis text-default inline-flex w-full items-center gap-1.5 rounded-md px-2 py-1.5 outline-none transition-colors duration-160 focus-visible:bg-subtle disabled:cursor-not-allowed disabled:opacity-50",
         color === "destructive" ? "hover:bg-error hover:text-error text-error" : "hover:bg-subtle",
         props.className
       )}>
       <>
-        {CustomStartIcon || (StartIcon && <Icon name={StartIcon} className="mr-1 h-4 w-4 shrink-0" />)}
-        <div className={classNames("w-full text-left text-sm font-medium leading-none", childrenClassName)}>
+        {CustomStartIcon || (StartIcon && <Icon name={StartIcon} className="text-subtle h-4 w-4 shrink-0" />)}
+        <div className={classNames("w-full text-left text-sm leading-none", childrenClassName)}>
           {children}
         </div>
         {EndIcon && <Icon name={EndIcon} className="h-4 w-4" />}
@@ -217,7 +217,7 @@ export const DropdownMenuSeparator = forwardRef<HTMLDivElement, DropdownMenuSepa
   ({ className = "", ...props }, forwardedRef) => {
     return (
       <DropdownMenuPrimitive.Separator
-        className={classNames("bg-emphasis -mx-1 my-1 h-px", className)}
+        className={classNames("bg-border -mx-1 my-1 h-px", className)}
         {...props}
         ref={forwardedRef}
       />

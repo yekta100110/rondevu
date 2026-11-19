@@ -13,38 +13,18 @@ import type { InputFieldProps, InputProps } from "./types";
 
 export const inputStyles = cva(
   [
-    // Base styles
-    "rounded-[10px] border",
-    "leading-none font-normal",
-
-    // Colors
-    "bg-default",
-    "border-default",
-    "text-default",
-    "placeholder:text-muted",
-
-    // States
-    "hover:border-emphasis",
-    "focus:border-emphasis",
-    "focus:ring-0",
-    "focus:shadow-outline-gray-focused",
-
-    // Disabled state
-    "disabled:bg-subtle",
-    "disabled:hover:border-default",
-    "disabled:cursor-not-allowed",
-
-    // Shadow
-    "shadow-outline-gray-rested",
-
-    // Transitions
-    "transition-all",
+    "rounded-lg border leading-none font-normal outline-none",
+    "bg-default border-default text-emphasis placeholder:text-muted dark:bg-transparent",
+    "transition-[color,border-color,box-shadow] duration-160",
+    "focus:border-ring focus:ring-3 focus:ring-ring/50",
+    "aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20",
+    "disabled:bg-subtle disabled:cursor-not-allowed disabled:opacity-60",
   ],
   {
     variants: {
       size: {
         sm: "h-7 px-2 py-1 text-xs",
-        md: "h-8 px-3 py-2 text-sm",
+        md: "h-8 px-2.5 py-1 text-sm",
       },
     },
     defaultVariants: {
@@ -159,8 +139,8 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(function
           className={classNames(
             inputStyles({ size }),
             "group relative mb-1 flex min-w-0 items-center gap-1",
-            "focus-within:shadow-outline-gray-focused focus-within:border-emphasis",
-            "[&:has(:disabled)]:bg-subtle [&:has(:disabled)]:hover:border-default [&:has(:disabled)]:cursor-not-allowed",
+            "focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50",
+            "[&:has(:disabled)]:bg-subtle [&:has(:disabled)]:cursor-not-allowed",
             inputIsFullWidth && "w-full"
           )}>
           {addOnLeading && (
@@ -179,7 +159,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(function
             placeholder={placeholder}
             className={classNames(
               "w-full min-w-0 truncate border-0 bg-transparent focus:outline-none focus:ring-0",
-              "text-default rounded-lg text-sm font-medium leading-none",
+              "text-emphasis rounded-lg text-sm leading-none",
               "placeholder:text-muted disabled:cursor-not-allowed disabled:bg-transparent",
               addOnLeading && "rounded-none pl-0.5 pr-0",
               addOnSuffix && "pl-0",
@@ -226,8 +206,8 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(function
           placeholder={placeholder}
           size={size}
           className={classNames(
-            "w-full min-w-0 truncate focus:outline-none focus:ring-0",
-            "text-default rounded-lg text-sm font-medium leading-none",
+            "w-full min-w-0 truncate",
+            "text-emphasis rounded-lg text-sm leading-none",
             "placeholder:text-muted disabled:cursor-not-allowed",
             addOnLeading && "rounded-none pl-0.5 pr-0",
             addOnSuffix && !addOnLeading && "pl-0.5",
@@ -242,8 +222,8 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(function
       )}
       <HintsOrErrors hintErrors={hintErrors} fieldName={name} t={t} />
       {hint && (
-        <div className="text-muted mt-2 flex items-center text-sm">
-          <InfoIcon className="text-muted h-4 w-4 mr-1" />
+        <div className="text-muted mt-1.5 flex items-center gap-1 text-[13px]">
+          <InfoIcon className="text-muted h-3.5 w-3.5 shrink-0" />
           {hint}
         </div>
       )}

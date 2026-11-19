@@ -121,7 +121,7 @@ export default function FormCard({
   customActions?: React.ReactNode;
 } & JSX.IntrinsicElements["div"]) {
   className = classNames(
-    "flex items-center group relative w-full rounded-2xl p-1 border border-subtle bg-muted mb-2",
+    "flex items-center group relative w-full rounded-xl p-1 border border-default bg-muted mb-2",
     className
   );
 
@@ -155,7 +155,7 @@ export default function FormCard({
         <div className="flex items-center justify-between p-2">
           <div className="flex items-center gap-2">
             {leftIcon && (
-              <div className="text-subtle border-subtle rounded-lg border p-1.5">
+              <div className="text-subtle border-default rounded-lg border p-1.5">
                 <Icon name={leftIcon} className="text-default h-4 w-4" />
               </div>
             )}
@@ -214,7 +214,7 @@ export function FormCardBody({
   className?: string;
 } & React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={`bg-default border-default w-full gap-3 rounded-2xl border p-3 ${className}`} {...props}>
+    <div className={`bg-default border-default w-full gap-3 rounded-lg border p-3 ${className}`} {...props}>
       {children}
     </div>
   );

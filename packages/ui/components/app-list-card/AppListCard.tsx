@@ -60,7 +60,7 @@ export const AppListCard = (props: AppListCardProps & { highlight?: boolean }) =
   return (
     <div
       className={classNames(
-        highlight && "dark:bg-muted bg-yellow-100",
+        highlight && "bg-subtle",
         className || classNameObject?.container
       )}>
       <div className="flex items-start gap-x-3 px-4 py-4 sm:px-6">
@@ -89,8 +89,8 @@ export const AppListCard = (props: AppListCardProps & { highlight?: boolean }) =
           </ListItemText>
           {invalidCredential && (
             <div className="flex gap-x-2 pt-2">
-              <CircleAlertIcon className="h-8 w-8 shrink-0 text-red-500 sm:h-4 sm:w-4" />
-              <ListItemText component="p" className="whitespace-pre-wrap wrap-break-word text-red-500">
+              <CircleAlertIcon className="h-8 w-8 shrink-0 text-error sm:h-4 sm:w-4" />
+              <ListItemText component="p" className="whitespace-pre-wrap wrap-break-word text-error">
                 {t("invalid_credential", { appName: title })}
               </ListItemText>
             </div>

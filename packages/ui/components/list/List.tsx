@@ -20,9 +20,9 @@ export function List(props: ListProps) {
       className={classNames(
         "mx-0 rounded-sm sm:overflow-hidden ",
         // Add rounded top and bottom if roundContainer is true
-        props.roundContainer && "[&>*:first-child]:rounded-t-md [&>*:last-child]:rounded-b-md ",
+        props.roundContainer && "[&>*:first-child]:rounded-t-xl [&>*:last-child]:rounded-b-xl",
         !props.noBorderTreatment &&
-          "border-subtle divide-subtle divide-y rounded-md border border-l border-r ",
+          "border-default divide-border divide-y rounded-xl border",
         props.className
       )}>
       {props.children}
@@ -44,10 +44,10 @@ export function ListItem(props: ListItemProps) {
     {
       ...passThroughProps,
       className: classNames(
-        "items-center bg-default min-w-0 flex-1 flex border-neutral-200 p-4 sm:mx-0 md:border md:p-4 xl:mt-0 border-subtle",
+        "items-center bg-default min-w-0 flex-1 flex p-4 sm:mx-0 md:border md:p-4 xl:mt-0 border-default transition-colors duration-160",
         expanded ? "my-2 border" : "border -mb-px last:mb-0",
         // Pass rounded false to not round the corners -> Useful when used in list we can use roundedContainer to create the right design
-        rounded ? "rounded-md" : "rounded-none",
+        rounded ? "rounded-lg" : "rounded-none",
         props.className,
         (props.onClick || href) && "hover:bg-muted"
       ),
@@ -105,14 +105,14 @@ export function ListLinkItem(props: ListLinkItemProps) {
           disabled ? "pointer-events-none cursor-not-allowed opacity-30" : ""
         )}>
         <div className="flex items-center">
-          <h1 className="text-sm font-semibold leading-none">{heading}</h1>
+          <h1 className="text-emphasis text-sm font-semibold leading-none">{heading}</h1>
           {readOnly && (
             <Badge data-testid="badge" variant="gray" className="ml-2">
               {t("readonly")}
             </Badge>
           )}
         </div>
-        <h2 className="min-h-4 mt-2 text-sm font-normal leading-none text-neutral-600">
+        <h2 className="min-h-4 mt-2 text-sm font-normal leading-none text-subtle">
           {subHeading.substring(0, 100)}
           {subHeading.length > 100 && "..."}
         </h2>

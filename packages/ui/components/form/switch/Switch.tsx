@@ -54,17 +54,18 @@ export const Switch = (
           {...primitiveProps}
           id={id}
           className={cx(
-            size === "sm" ? "h-3 w-[20px]" : "h-4 w-[28px]",
-            "focus:ring-brand-default data-[state=checked]:bg-brand-default dark:data-[state=checked]:bg-brand-emphasis data-[state=unchecked]:bg-emphasis peer inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent shadow-inner transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-            size === "sm" ? "h-4 w-7" : "h-6 w-11",
+            "peer inline-flex shrink-0 cursor-pointer items-center rounded-full border border-transparent outline-none transition-colors duration-160",
+            "data-[state=checked]:bg-brand-default data-[state=unchecked]:bg-emphasis",
+            "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50",
+            size === "sm" ? "h-[14px] w-6" : "h-[18.4px] w-8",
             classNames?.container
           )}>
           <PrimitiveSwitch.Thumb
             className={cx(
-              "bg-default data-[state=checked]:bg-brand-accent shadow-switch-thumb pointer-events-none block rounded-full shadow-lg ring-0 transition-transform",
+              "bg-default data-[state=checked]:bg-(--rondevu-brand-text) pointer-events-none block rounded-full ring-0 transition-transform duration-160 ease-[cubic-bezier(0.16,1,0.3,1)]",
               size === "sm"
-                ? "h-3 w-3 data-[state=checked]:translate-x-3 data-[state=unchecked]:translate-x-0 rtl:data-[state=checked]:-translate-x-3"
-                : "h-5 w-5 data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0 rtl:data-[state=checked]:-translate-x-5",
+                ? "h-3 w-3 data-[state=checked]:translate-x-[calc(100%-2px)] data-[state=unchecked]:translate-x-0 rtl:data-[state=checked]:-translate-x-[calc(100%-2px)]"
+                : "h-4 w-4 data-[state=checked]:translate-x-[calc(100%-2px)] data-[state=unchecked]:translate-x-0 rtl:data-[state=checked]:-translate-x-[calc(100%-2px)]",
               classNames?.thumb
             )}
           />

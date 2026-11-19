@@ -16,7 +16,7 @@ function MultiEmail({ value, readOnly, label, setValue, placeholder }: MultiEmai
   const { t } = useLocale();
   value = value || [];
   const inputClassName =
-    "dark:placeholder:text-muted focus:border-emphasis border-subtle block w-full rounded-md border-default text-sm focus:ring-black disabled:bg-emphasis disabled:hover:cursor-not-allowed dark:selection:bg-green-500 disabled:dark:text-subtle";
+    "dark:placeholder:text-muted focus:border-emphasis border-subtle block w-full rounded-md border-default text-sm focus:ring-ring/50 disabled:bg-emphasis disabled:hover:cursor-not-allowed disabled:dark:text-subtle";
   return (
     <>
       {value.length ? (

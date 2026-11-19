@@ -47,23 +47,23 @@ export const ConfirmationContent = (props: PropsWithChildren<ConfirmationDialogC
           <div className="mt-0.5 ltr:mr-3">
             {variety === "danger" && (
               <div className="bg-error mx-auto rounded-full p-2 text-center">
-                <CircleAlertIcon className="h-5 w-5 text-red-600 dark:text-red-100" />
+                <CircleAlertIcon className="text-error h-5 w-5" />
               </div>
             )}
             {variety === "warning" && (
-              <div className="bg-attention mx-auto rounded-full p-2 text-center">
-                <CircleAlertIcon className="h-5 w-5 text-orange-600" />
+              <div className="bg-subtle mx-auto rounded-full p-2 text-center">
+                <CircleAlertIcon className="text-emphasis h-5 w-5" />
               </div>
             )}
             {variety === "success" && (
-              <div className="bg-rondevu-success mx-auto rounded-full p-2 text-center">
-                <CheckIcon className="h-5 w-5 text-green-600" />
+              <div className="bg-subtle mx-auto rounded-full p-2 text-center">
+                <CheckIcon className="text-emphasis h-5 w-5" />
               </div>
             )}
           </div>
         )}
         <div className="w-full">
-          <DialogPrimitive.Title className="font-display text-emphasis mt-1 text-xl">
+          <DialogPrimitive.Title className="font-display text-emphasis mt-1 text-lg font-semibold tracking-[-0.02em]">
             {title}
           </DialogPrimitive.Title>
           <DialogPrimitive.Description asChild>

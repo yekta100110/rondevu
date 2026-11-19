@@ -12,11 +12,11 @@ type IToast = {
 export const SuccessToast = ({ message, onClose, toastId }: IToast) => (
   <button
     className={classNames(
-      "data-testid-toast-success bg-default dark:bg-inverted text-emphasis dark:text-inverted shadow-elevation-low border-subtle mb-2 flex h-auto items-center justify-between space-x-2 rounded-lg border px-3 py-2.5 text-sm font-semibold rtl:space-x-reverse md:max-w-sm"
+      "data-testid-toast-success animate-fade-in-up bg-popover text-popover-foreground border-default mb-2 flex h-auto items-center justify-between gap-2.5 rounded-lg border px-3 py-2.5 text-sm font-medium shadow-md md:max-w-sm"
     )}
     onClick={() => onClose(toastId)}>
     <span>
-      <CheckIcon className="size-4" />
+      <CheckIcon className="text-emphasis size-4" />
     </span>
     <div className="flex items-center">
       <p data-testid="toast-success" className="m-0 w-full text-left">
@@ -24,7 +24,7 @@ export const SuccessToast = ({ message, onClose, toastId }: IToast) => (
       </p>
     </div>
     <span>
-      <XIcon className="size-4 hover:cursor-pointer" />
+      <XIcon className="text-muted size-4 hover:cursor-pointer" />
     </span>
   </button>
 );
@@ -32,19 +32,19 @@ export const SuccessToast = ({ message, onClose, toastId }: IToast) => (
 export const ErrorToast = ({ message, onClose, toastId }: IToast) => (
   <button
     className={classNames(
-      "animate-fade-in-up bg-semantic-error-subtle text-semantic-error shadow-elevation-low border-semantic-error-subtle mb-2 flex h-auto items-center justify-between space-x-2 rounded-md border px-3 py-2.5 text-sm font-semibold rtl:space-x-reverse md:max-w-sm"
+      "animate-fade-in-up bg-popover text-popover-foreground border-default mb-2 flex h-auto items-center justify-between gap-2.5 rounded-lg border px-3 py-2.5 text-sm font-medium shadow-md md:max-w-sm"
     )}
     onClick={() => onClose(toastId)}>
     <span>
-      <InfoIcon className="text-semantic-error  size-4" />
+      <InfoIcon className="text-error size-4" />
     </span>
     <div className="flex items-center">
-      <p data-testid="toast-error" className="m-0 w-full text-left">
+      <p data-testid="toast-error" className="text-error m-0 w-full text-left">
         {message}
       </p>
     </div>
     <span>
-      <XIcon className="text-semantic-error size-4 hover:cursor-pointer" />
+      <XIcon className="text-muted size-4 hover:cursor-pointer" />
     </span>
   </button>
 );
@@ -52,11 +52,11 @@ export const ErrorToast = ({ message, onClose, toastId }: IToast) => (
 export const WarningToast = ({ message, onClose, toastId }: IToast) => (
   <button
     className={classNames(
-      "animate-fade-in-up bg-semantic-attention-subtle text-semantic-attention shadow-elevation-low border-semantic-attention-subtle mb-2 flex h-auto items-center justify-between space-x-2 rounded-md border px-3 py-2.5 text-sm font-semibold rtl:space-x-reverse md:max-w-sm"
+      "animate-fade-in-up bg-popover text-popover-foreground border-default mb-2 flex h-auto items-center justify-between gap-2.5 rounded-lg border px-3 py-2.5 text-sm font-medium shadow-md md:max-w-sm"
     )}
     onClick={() => onClose(toastId)}>
     <span>
-      <InfoIcon className="text-semantic-attention size-4" />
+      <InfoIcon className="text-emphasis size-4" />
     </span>
     <div className="flex items-center">
       <p data-testid="toast-warning" className="m-0 w-full text-left">
@@ -64,7 +64,7 @@ export const WarningToast = ({ message, onClose, toastId }: IToast) => (
       </p>
     </div>
     <span>
-      <XIcon className="text-semantic-attention size-4 hover:cursor-pointer" />
+      <XIcon className="text-muted size-4 hover:cursor-pointer" />
     </span>
   </button>
 );

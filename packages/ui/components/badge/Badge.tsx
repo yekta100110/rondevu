@@ -7,32 +7,51 @@ import classNames from "@rondevu/ui/classNames";
 import { Icon } from "../icon";
 import type { IconName } from "../icon";
 
-export const badgeStyles = cva("font-medium inline-flex items-center justify-center rounded-[4px] gap-x-1", {
-  variants: {
-    variant: {
-      default: "bg-attention text-attention",
-      warning: "bg-attention text-attention",
-      orange: "bg-attention text-attention",
-      success: "bg-rondevu-success text-success",
-      green: "bg-rondevu-success text-success",
-      gray: "bg-emphasis text-emphasis",
-      blue: "bg-rondevu-info text-info",
-      red: "bg-error text-error",
-      error: "bg-error text-error",
-      grayWithoutHover: "bg-gray-100 text-gray-800 dark:bg-darkgray-200 dark:text-darkgray-800",
-      purple: "bg-purple-50 text-purple-800",
+// Monochrome per docs/design-system.md §7: state is told by fill, outline and weight, not hue.
+// Colored variant names are kept for API compatibility and map onto neutral equivalents; only error stays red.
+export const badgeStyles = cva(
+  "inline-flex items-center justify-center gap-x-1 whitespace-nowrap rounded-full border font-medium transition-colors duration-160",
+  {
+    variants: {
+      variant: {
+        default: "border-transparent bg-subtle text-emphasis",
+        gray: "border-transparent bg-subtle text-emphasis",
+        grayWithoutHover: "border-transparent bg-subtle text-default",
+        success: "border-default bg-default text-emphasis",
+        green: "border-default bg-default text-emphasis",
+        blue: "border-default bg-default text-default",
+        warning: "border-dashed border-emphasis bg-default text-default",
+        orange: "border-dashed border-emphasis bg-default text-default",
+        purple: "border-transparent bg-inverted text-inverted",
+        red: "border-semantic-error-subtle bg-error text-error",
+        error: "border-semantic-error-subtle bg-error text-error",
+      },
+      size: {
+        sm: "h-4 px-1.5 text-[10px] leading-none",
+        md: "h-5 px-2 text-xs leading-none",
+        lg: "h-6 px-2.5 text-sm leading-none",
+      },
     },
-    size: {
-      sm: "px-1 py-1 text-[10px] leading-none",
-      md: "py-1 px-1.5 text-xs leading-none",
-      lg: "py-1 px-1.5 text-sm leading-none rounded-lg",
+    defaultVariants: {
+      variant: "default",
+      size: "md",
     },
-  },
-  defaultVariants: {
-    variant: "default",
-    size: "md",
-  },
-});
+  }
+);
+
+const dotStyles: Record<NonNullable<VariantProps<typeof badgeStyles>["variant"]>, string> = {
+  default: "bg-current",
+  gray: "bg-current",
+  grayWithoutHover: "bg-current",
+  success: "bg-current",
+  green: "bg-current",
+  blue: "bg-current opacity-60",
+  warning: "ring-1 ring-current ring-inset",
+  orange: "ring-1 ring-current ring-inset",
+  purple: "bg-current",
+  red: "bg-current",
+  error: "bg-current",
+};
 
 type InferredBadgeStyles = VariantProps<typeof badgeStyles>;
 
@@ -86,9 +105,11 @@ export const Badge = function Badge(props: BadgeProps) {
   const Children = () => (
     <>
       {withDot ? (
-        <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor" data-testid="go-primitive-dot">
-          <circle cx="4" cy="4" r="4" />
-        </svg>
+        <span
+          aria-hidden="true"
+          data-testid="go-primitive-dot"
+          className={classNames("size-1.5 shrink-0 rounded-full", dotStyles[variant ?? "default"])}
+        />
       ) : null}
       {customStartIcon ||
         (StartIcon ? (

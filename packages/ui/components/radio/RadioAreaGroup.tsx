@@ -16,7 +16,7 @@ const RadioArea = ({ children, className, classNames: innerClassNames, ...props 
   return (
     <div
       className={classNames(
-        "border-subtle [&:has(input:checked)]:border-emphasis relative flex items-start rounded-[10px] border ",
+        "border-default [&:has(input:checked)]:border-brand-default relative flex items-start rounded-lg border transition-colors duration-160",
         className
       )}>
       <RadioGroupPrimitive.Item

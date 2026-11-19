@@ -58,6 +58,6 @@ describe("Tests for DatePicker Component", () => {
 
     const dateButton = getByTestId("pick-date");
     expect(dateButton.classList.toString()).toContain("disabled:cursor-not-allowed");
-    expect(dateButton.classList.toString()).toContain("disabled:opacity-30");
+    expect(dateButton.classList.toString()).toContain("disabled:opacity-50");
   });
 });
