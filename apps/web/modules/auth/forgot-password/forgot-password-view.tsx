@@ -3,14 +3,14 @@
 // eslint-disable-next-line no-restricted-imports
 import { debounce } from "lodash";
 import Link from "next/link";
-import type { CSSProperties, SyntheticEvent } from "react";
+import type { SyntheticEvent } from "react";
 import React from "react";
 
 import { useLocale } from "@rondevu/lib/hooks/useLocale";
 import { Button } from "@rondevu/ui/components/button";
 import { EmailField } from "@rondevu/ui/components/form";
 
-import AuthContainer from "@components/ui/AuthContainer";
+import { AuthShell } from "@rondevu/web/modules/auth/components/AuthShell";
 
 export type PageProps = {
   csrfToken?: string;
@@ -85,10 +85,10 @@ export default function ForgotPassword(props: PageProps) {
 
   const Success = () => {
     return (
-      <div className="stack-y-6 text-sm leading-normal ">
-        <p className="">{t("password_reset_email", { email })}</p>
-        <p className="">{t("password_reset_leading")}</p>
-        {error && <p className="text-center text-red-600">{error.message}</p>}
+      <div className="stack-y-6 text-sm leading-normal">
+        <p>{t("password_reset_email", { email })}</p>
+        <p className="text-muted-foreground">{t("password_reset_leading")}</p>
+        {error && <p className="text-center text-destructive text-sm">{error.message}</p>}
         <Button color="secondary" className="w-full justify-center" href="/auth/login">
           {t("back_to_signin")}
         </Button>
@@ -97,41 +97,31 @@ export default function ForgotPassword(props: PageProps) {
   };
 
   return (
-    <AuthContainer
-      showLogo
-      heading={!success ? t("forgot_password") : t("reset_link_sent")}
-      footerText={
+    <AuthShell
+      title={!success ? t("forgot_password") : t("reset_link_sent")}
+      description={!success ? t("auth_forgot_password_description") : undefined}
+      footer={
         !success && (
-          <>
-            <Link href="/auth/login" className="text-emphasis font-medium">
-              {t("back_to_signin")}
-            </Link>
-          </>
+          <Link href="/auth/login" className="font-medium text-foreground underline-offset-4 hover:underline">
+            {t("back_to_signin")}
+          </Link>
         )
       }>
       {success && <Success />}
       {!success && (
         <>
-          <div className="stack-y-6">{error && <p className="text-red-600">{error.message}</p>}</div>
+          {error && <p className="mb-4 text-destructive text-sm">{error.message}</p>}
           <form
             className="stack-y-6"
             onSubmit={handleSubmit}
-            action="#"
-            style={
-              {
-                "--rondevu-brand": "#111827",
-                "--rondevu-brand-emphasis": "#101010",
-                "--rondevu-brand-text": "Black",
-                "--rondevu-brand-subtle": "#9CA3AF",
-              } as CSSProperties
-            }>
+            action="#">
             <input name="csrfToken" type="hidden" defaultValue={csrfToken} hidden />
             <EmailField
               onChange={handleChange}
               id="email"
               name="email"
               label={t("email_address")}
-              placeholder="john.doe@example.com"
+              placeholder="ad@alanadi.com"
               required
             />
             <div className="stack-y-2">
@@ -148,6 +138,6 @@ export default function ForgotPassword(props: PageProps) {
           </form>
         </>
       )}
-    </AuthContainer>
+    </AuthShell>
   );
 }

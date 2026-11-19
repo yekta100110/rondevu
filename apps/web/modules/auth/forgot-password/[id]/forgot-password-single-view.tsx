@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useReducer, type CSSProperties } from "react";
+import { useEffect, useReducer } from "react";
 import type { UseFormReturn } from "react-hook-form";
 import { useForm } from "react-hook-form";
 
@@ -11,7 +11,7 @@ import { Button } from "@rondevu/ui/components/button";
 import { Form } from "@rondevu/ui/components/form";
 import { PasswordField } from "@rondevu/ui/components/form";
 
-import AuthContainer from "@components/ui/AuthContainer";
+import { AuthShell } from "@rondevu/web/modules/auth/components/AuthShell";
 
 import type { getServerSideProps } from "@server/lib/auth/forgot-password/[id]/getServerSideProps";
 
@@ -23,9 +23,7 @@ function Success() {
     <>
       <div className="stack-y-6">
         <div>
-          <h2 className="font-display text-emphasis mt-6 text-center text-3xl font-extrabold">
-            {t("password_updated")}
-          </h2>
+          <h2 className="text-center font-semibold text-2xl tracking-[-0.04em]">{t("password_updated")}</h2>
         </div>
         <Button href="/auth/login" className="w-full justify-center">
           {t("login")}
@@ -41,13 +39,13 @@ function Expired() {
     <>
       <div className="stack-y-6">
         <div>
-          <h2 className="font-display text-emphasis mt-6 text-center text-3xl font-extrabold">{t("whoops")}</h2>
-          <h2 className="text-emphasis text-center text-3xl font-extrabold">{t("request_is_expired")}</h2>
+          <h2 className="text-center font-semibold text-2xl tracking-[-0.04em]">{t("whoops")}</h2>
+          <p className="mt-1 text-center font-medium">{t("request_is_expired")}</p>
         </div>
-        <p>{t("request_is_expired_instructions")}</p>
+        <p className="text-muted-foreground text-sm">{t("request_is_expired_instructions")}</p>
         <Link
           href="/auth/forgot-password"
-          className="flex w-full justify-center px-4 py-2 text-sm font-medium text-blue-600 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2">
+          className="flex w-full justify-center rounded-lg px-4 py-2 font-medium text-foreground text-sm underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring">
           {t("try_again")}
         </Link>
       </div>
@@ -114,14 +112,6 @@ function PasswordResetForm({
     <Form
       className="stack-y-6"
       form={formMethods}
-      style={
-        {
-          "--rondevu-brand": "#111827",
-          "--rondevu-brand-emphasis": "#101010",
-          "--rondevu-brand-text": "white",
-          "--rondevu-brand-subtle": "#9CA3AF",
-        } as CSSProperties
-      }
       handleSubmit={async (values) => {
         await submitChangePassword({
           password: values.newPassword,
@@ -176,15 +166,15 @@ export default function Page({ requestId, isRequestExpired }: PageProps) {
 
   if (isRequestExpired) {
     return (
-      <AuthContainer showLogo heading={t("reset_password")}>
+      <AuthShell>
         <Expired />
-      </AuthContainer>
+      </AuthShell>
     );
   }
 
   return (
-    <AuthContainer showLogo heading={!success ? t("reset_password") : undefined}>
+    <AuthShell title={!success ? t("reset_password") : undefined}>
       {success ? <Success /> : <PasswordResetForm form={formMethods} requestId={requestId} />}
-    </AuthContainer>
+    </AuthShell>
   );
 }

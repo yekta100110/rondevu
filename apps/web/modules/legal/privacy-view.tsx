@@ -4,7 +4,6 @@ import { APP_NAME } from "@rondevu/lib/constants";
 import type { PlanContactConfig } from "@rondevu/lib/planContactConfig";
 import { trpc } from "@rondevu/trpc/react";
 import {
-  ArrowLeft,
   CheckCircle2,
   Cookie,
   Database,
@@ -17,64 +16,12 @@ import {
   UserCheck,
 } from "lucide-react";
 import Link from "next/link";
+import { MarketingFooter } from "../home/components/MarketingFooter";
+import { MarketingHeader } from "../home/components/MarketingHeader";
 
 const DEFAULT_SUPPORT_EMAIL = "destek@rondevu.org";
 const DEFAULT_SUPPORT_PHONE = "0552 119 19 87";
 const DEFAULT_SUPPORT_WHATSAPP = "905521191987";
-
-function LegalBackgroundGrid() {
-  const rows = 8;
-  const cols = 18;
-  const size = 60;
-  const gap = 8;
-  const radius = 8;
-  const width = cols * size + (cols - 1) * gap;
-  const height = rows * size + (rows - 1) * gap;
-
-  return (
-    <div
-      aria-hidden="true"
-      className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
-      <svg
-        width={width}
-        height={height}
-        viewBox={`0 0 ${width} ${height}`}
-        fill="none"
-        className="[--grid-fill:#f7f7f7] [--grid-stroke:rgba(34,42,53,0.06)] dark:[--grid-fill:#171717] dark:[--grid-stroke:rgba(255,255,255,0.04)]">
-        <defs>
-          <radialGradient id="legalGridFade" cx="50%" cy="30%" rx="60%" ry="50%">
-            <stop offset="0%" stopColor="white" stopOpacity="1" />
-            <stop offset="100%" stopColor="white" stopOpacity="0" />
-          </radialGradient>
-          <mask id="legalGridMask">
-            <rect width={width} height={height} fill="url(#legalGridFade)" />
-          </mask>
-        </defs>
-        <g mask="url(#legalGridMask)">
-          {Array.from({ length: rows * cols }).map((_, i) => {
-            const col = i % cols;
-            const row = Math.floor(i / cols);
-            const x = col * (size + gap);
-            const y = row * (size + gap);
-            return (
-              <rect
-                key={i}
-                x={x}
-                y={y}
-                width={size}
-                height={size}
-                rx={radius}
-                fill="var(--grid-fill)"
-                stroke="var(--grid-stroke)"
-                strokeWidth="1"
-              />
-            );
-          })}
-        </g>
-      </svg>
-    </div>
-  );
-}
 
 interface PrivacyViewProps {
   initialContact?: PlanContactConfig;
@@ -96,34 +43,22 @@ export function PrivacyView({ initialContact }: PrivacyViewProps = {}) {
   const cleanWhatsapp = whatsapp.replace(/[^\d]/g, "");
 
   return (
-    <div className="relative min-h-screen bg-default text-emphasis selection:bg-brand-default selection:text-brand">
-      <LegalBackgroundGrid />
+    <div className="relative min-h-screen bg-background text-foreground">
+      <MarketingHeader locale="tr" withAnchors={false} />
 
       {/* Main Container */}
-      <main className="relative z-10 mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
-        <div className="mb-8">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-sm text-subtle transition-colors hover:text-emphasis">
-            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            <span>Ana Sayfaya Dön</span>
-          </Link>
-        </div>
-
+      <main className="relative z-10 mx-auto max-w-3xl px-4 pt-32 pb-24 sm:px-6 lg:pt-40">
         {/* Header Hero */}
-        <div className="mb-10 text-center">
-          <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-subtle bg-muted/30 px-3 py-1 font-medium text-subtle text-xs">
-            <ShieldCheck className="h-3.5 w-3.5 text-emphasis" />
-            <span>6698 Sayılı KVKK Kapsamında Aydınlatma Metni</span>
-          </div>
-          <h1 className="font-semibold text-3xl text-emphasis tracking-tight sm:text-4xl">
+        <div className="mb-12 grid gap-3">
+          <h1 className="text-balance font-semibold text-4xl tracking-[-0.045em] sm:text-5xl">
             Gizlilik Politikası ve KVKK Aydınlatma Metni
           </h1>
-          <p className="mt-2 text-sm text-subtle">Son güncelleme: 14 Kasım 2026</p>
+          <p className="text-lg text-muted-foreground">6698 Sayılı KVKK Kapsamında Aydınlatma Metni</p>
+          <p className="font-mono text-muted-foreground text-xs">Son güncelleme: 14 Kasım 2026</p>
         </div>
 
         {/* Content Box */}
-        <div className="space-y-8 rounded-2xl border border-subtle bg-default/90 p-6 shadow-sm backdrop-blur-sm sm:p-10">
+        <div className="space-y-8 rounded-xl border border-border bg-card p-6 sm:p-10">
           {/* Section: Giriş ve Veri Sorumlusu */}
           <section className="space-y-4 border-subtle border-b pb-6">
             <p className="text-sm leading-relaxed text-subtle">
@@ -463,30 +398,8 @@ export function PrivacyView({ initialContact }: PrivacyViewProps = {}) {
           </section>
         </div>
 
-        {/* Footer Navigation */}
-        <div className="mt-8 flex flex-wrap items-center justify-between gap-4 text-xs text-subtle">
-          <span>
-            © {new Date().getFullYear()} {APP_NAME}. Tüm hakları saklıdır.
-          </span>
-          <div className="flex flex-wrap gap-4">
-            <Link href="/" className="hover:text-emphasis hover:underline">
-              Ana Sayfa
-            </Link>
-            <Link href="/pricing" className="hover:text-emphasis hover:underline">
-              Fiyatlandırma
-            </Link>
-            <Link href="/tos" className="hover:text-emphasis hover:underline">
-              Kullanım Koşulları
-            </Link>
-            <Link href="/plan-bilgi" className="hover:text-emphasis hover:underline">
-              İletişim &amp; Aktivasyon
-            </Link>
-            <Link href="/auth/login" className="hover:text-emphasis hover:underline">
-              Giriş Yap
-            </Link>
-          </div>
-        </div>
       </main>
+      <MarketingFooter locale="tr" initialContact={resolvedContact} />
     </div>
   );
 }

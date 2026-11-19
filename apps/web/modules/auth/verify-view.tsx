@@ -57,57 +57,42 @@ const querySchema = z.object({
 });
 
 const PaymentFailedIcon = () => (
-  <div className="rounded-full bg-orange-900 p-3">
-    <TriangleAlertIcon className="h-6 w-6 shrink-0 p-0.5 font-extralight text-orange-100" />
+  <div className="rounded-full border border-border p-3">
+    <TriangleAlertIcon className="size-6 shrink-0 text-destructive" />
   </div>
 );
 
 const PaymentSuccess = () => (
-  <div
-    className="rounded-full"
-    style={{
-      padding: "6px",
-      border: "0.6px solid rgba(0, 0, 0, 0.02)",
-      background: "rgba(123, 203, 197, 0.10)",
-    }}>
-    <motion.div
-      className="rounded-full"
-      style={{
-        padding: "6px",
-        border: "0.6px solid rgba(0, 0, 0, 0.04)",
-        background: "rgba(123, 203, 197, 0.16)",
-      }}
-      animate={{ scale: [1, 1.1, 1] }} // Define the pulsing animation for the second ring
-      transition={{
-        duration: 1.5,
-        repeat: Infinity,
-        repeatType: "reverse",
-        delay: 0.2, // Delay the start of animation for the second ring
-      }}>
-      <motion.div
-        className="rounded-full p-3"
-        style={{
-          border: "1px solid rgba(255, 255, 255, 0.40)",
-          background: "linear-gradient(180deg, #66C9CF 0%, #9CCCB2 100%)",
-        }}>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M2.69185 10.6919L2.9297 10.9297L2.69185 10.6919C1.96938 11.4143 1.96938 12.5857 2.69185 13.3081L7.69185 18.3081C8.41432 19.0306 9.58568 19.0306 10.3081 18.3081L21.3081 7.30815C22.0306 6.58568 22.0306 5.41432 21.3081 4.69185C20.5857 3.96938 19.4143 3.96938 18.6919 4.69185L9 14.3837L5.30815 10.6919C4.58568 9.96938 3.41432 9.96938 2.69185 10.6919Z"
-            fill="white"
-            stroke="#48BAAE"
-            strokeWidth="0.7"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </motion.div>
-    </motion.div>
-  </div>
+  <svg viewBox="0 0 48 48" className="size-12 text-foreground" aria-hidden="true">
+    <motion.circle
+      cx="24"
+      cy="24"
+      r="22"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      style={{ rotate: -90, transformOrigin: "center" }}
+    />
+    <motion.path
+      d="M15 24.5l6 6 12-13"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
+    />
+  </svg>
 );
 
 const MailOpenIconWrapper = () => (
-  <div className="bg-default rounded-full p-3">
-    <MailOpenIcon className="text-emphasis h-12 w-12 shrink-0 p-0.5 font-extralight" />
+  <div className="rounded-full border border-border p-3">
+    <MailOpenIcon className="size-6 shrink-0 text-foreground" />
   </div>
 );
 
@@ -161,9 +146,10 @@ export default function Verify({ EMAIL_FROM }: { EMAIL_FROM?: string }) {
   }
 
   return (
-    <div className="text-default bg-muted/90 backdrop-blur-md backdrop-grayscale backdrop-filter">
-      <div className="flex min-h-screen flex-col items-center justify-center px-6">
-        <div className="border-subtle bg-default m-10 flex max-w-2xl flex-col items-center rounded-xl border px-8 py-14 text-left">
+    <div className="bg-background text-foreground">
+      <div className="flex min-h-screen flex-col items-center justify-center px-4">
+        <div className="mb-8 font-semibold text-[22px] tracking-[-0.04em]">rOndevu</div>
+        <div className="mb-6 flex w-full max-w-md flex-col items-center rounded-xl border border-border bg-card px-6 py-10 text-center sm:px-8">
           {hasPaymentFailed ? (
             <PaymentFailedIcon />
           ) : isPremiumUsername ? (
@@ -171,19 +157,19 @@ export default function Verify({ EMAIL_FROM }: { EMAIL_FROM?: string }) {
           ) : (
             <MailOpenIconWrapper />
           )}
-          <h3 className="font-display text-emphasis my-6 text-2xl font-normal leading-none">
+          <h1 className="mt-6 mb-3 font-semibold text-2xl tracking-[-0.04em]">
             {hasPaymentFailed
               ? t("your_payment_failed")
               : isPremiumUsername
                 ? t("payment_successful")
                 : t("check_your_inbox")}
-          </h3>
-          {hasPaymentFailed && <p className="my-6">{t("account_created_premium_not_reserved")}</p>}
-          <p className="text-muted dark:text-subtle text-base font-normal">
+          </h1>
+          {hasPaymentFailed && <p className="mb-3 text-sm">{t("account_created_premium_not_reserved")}</p>}
+          <p className="text-muted-foreground text-sm">
             {t("email_sent_with_activation_link", { email })}{" "}
             {hasPaymentFailed && t("activate_account_to_purchase_username")}
           </p>
-          <div className="mt-7">
+          <div className="mt-6">
             <Button
               color="secondary"
               href={
@@ -198,11 +184,11 @@ export default function Verify({ EMAIL_FROM }: { EMAIL_FROM?: string }) {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <p className="text-subtle text-base font-normal ">{t("dont_see_email")}</p>
+          <p className="text-muted-foreground text-sm">{t("dont_see_email")}</p>
           <button
             className={classNames(
-              "font-light",
-              secondsLeft > 0 ? "text-muted" : "underline underline-offset-2 hover:font-normal"
+              "font-mono text-sm tabular-nums",
+              secondsLeft > 0 ? "text-muted-foreground" : "font-medium text-foreground underline underline-offset-4"
             )}
             disabled={secondsLeft > 0}
             onClick={async (e) => {

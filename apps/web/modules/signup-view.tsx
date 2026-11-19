@@ -34,7 +34,6 @@ import classNames from "@rondevu/ui/classNames";
 import { Alert } from "@rondevu/ui/components/alert";
 import { Button } from "@rondevu/ui/components/button";
 import { CheckboxField, Form, PasswordField, SelectField, TextField } from "@rondevu/ui/components/form";
-import { Icon } from "@rondevu/ui/components/icon";
 import { showToast } from "@rondevu/ui/components/toast";
 import { InfoIcon, ShieldCheckIcon, StarIcon } from "@coss/ui/icons";
 import { Analytics as DubAnalytics } from "@dub/analytics/react";
@@ -64,30 +63,6 @@ const TurnstileCaptcha = dynamic(() => import("@rondevu/web/modules/auth/compone
 type FormValues = z.infer<typeof signupSchema>;
 
 export type SignupProps = inferSSRProps<typeof getServerSideProps>;
-
-const FEATURES = [
-  {
-    title: "connect_all_calendars",
-    description: "connect_all_calendars_description",
-    i18nOptions: {
-      appName: APP_NAME,
-    },
-    icon: "calendar-heart" as const,
-  },
-  {
-    title: "set_availability",
-    description: "set_availbility_description",
-    icon: "users" as const,
-  },
-  {
-    title: "share_a_link_or_embed",
-    description: "share_a_link_or_embed_description",
-    icon: "link-2" as const,
-    i18nOptions: {
-      appName: APP_NAME,
-    },
-  },
-];
 
 function truncateDomain(domain: string) {
   const maxLength = 25;
@@ -373,25 +348,26 @@ export default function Signup({
           />
         </>
       ) : null}
-      <div
-        className={classNames(
-          "light flex min-h-screen w-full flex-col items-center justify-center bg-muted [--rondevu-brand:#111827] 2xl:bg-default dark:[--rondevu-brand:#FFFFFF]",
-          "[--rondevu-brand-subtle:#9CA3AF]",
-          "[--rondevu-brand-text:#FFFFFF] dark:[--rondevu-brand-text:#000000]",
-          "[--rondevu-brand-emphasis:#101010] dark:[--rondevu-brand-emphasis:#e1e1e1]"
-        )}>
-        <div className="grid w-full max-w-[1440px] grid-cols-1 grid-rows-1 overflow-hidden bg-muted lg:grid-cols-2 2xl:rounded-[20px] 2xl:border 2xl:border-subtle 2xl:py-6">
-          {/* Left side */}
-          <div className="mt-0 mr-auto ml-auto flex w-full max-w-xl flex-col px-4 pt-6 sm:px-16 md:px-20 lg:mt-24 2xl:px-28">
+      <div className="flex min-h-screen w-full flex-col bg-background text-foreground">
+        <header className="mx-auto flex h-16 w-full max-w-6xl items-center px-4 sm:px-6">
+          <Link
+            href="/"
+            aria-label="rOndevu"
+            className="rounded-md font-semibold text-[22px] tracking-[-0.04em] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring">
+            rOndevu
+          </Link>
+        </header>
+        <main className="flex flex-1 items-start justify-center px-4 pt-10 pb-16 sm:items-center sm:pt-0">
+          <div className="flex w-full max-w-md flex-col rounded-xl border border-border bg-card p-6 text-card-foreground sm:p-8">
             {accountUnderReview ? (
               <div
                 className="flex flex-col items-center gap-4 py-10 text-center"
                 data-testid="account-under-review">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-subtle">
-                  <ShieldCheckIcon className="h-6 w-6 text-default" />
+                <div className="flex size-12 items-center justify-center rounded-full border border-border">
+                  <ShieldCheckIcon className="size-5 text-foreground" />
                 </div>
-                <h1 className="font-display text-[28px] leading-none">{t("account_under_review_title")}</h1>
-                <p className="font-medium text-base text-subtle leading-5">
+                <h1 className="font-semibold text-2xl tracking-[-0.04em]">{t("account_under_review_title")}</h1>
+                <p className="text-muted-foreground text-sm">
                   {t("account_under_review_description")}
                 </p>
                 <Button href="/auth/login" className="mt-4">
@@ -401,10 +377,10 @@ export default function Signup({
             ) : (
               <>
                 {displayBackButton && (
-                  <div className="flex w-fit lg:-mt-12">
+                  <div className="flex w-fit">
                     <Button
                       color="minimal"
-                      className="todesktop:mt-10 mb-6 flex h-6 max-h-6 w-full items-center rounded-md px-3 py-2 hover:bg-subtle"
+                      className="mb-4 flex h-7 w-full items-center rounded-md px-2 text-muted-foreground hover:bg-accent hover:text-foreground"
                       StartIcon="arrow-left"
                       data-testid="signup-back-button"
                       onClick={() => {
@@ -415,15 +391,15 @@ export default function Signup({
                   </div>
                 )}
                 <div className="flex flex-col gap-2">
-                  <h1 className="font-display text-[28px] leading-none">
+                  <h1 className="text-balance font-semibold text-3xl tracking-[-0.045em]">
                     {IS_RONDEVU ? t("create_your_rondevu_account") : t("create_your_account")}
                   </h1>
                   {IS_RONDEVU ? (
-                    <p className="font-medium text-base text-subtle leading-5">
-                      {t("rondevu_signup_description")}
+                    <p className="text-muted-foreground text-sm">
+                      {t("signup_page_description")}
                     </p>
                   ) : (
-                    <p className="font-medium text-base text-subtle leading-5">
+                    <p className="text-muted-foreground text-sm">
                       {t("rondevu_explained", {
                         appName: APP_NAME,
                       })}
@@ -528,7 +504,7 @@ export default function Signup({
                         id="signup-email"
                         {...register("email")}
                         label={t("email")}
-                        placeholder="john@doe.com"
+                        placeholder="ad@alanadi.com"
                         type="email"
                         autoComplete="email"
                         disabled={prepopulateFormValues?.email}
@@ -703,11 +679,11 @@ export default function Signup({
                     {(isGoogleLoginEnabled || isOutlookLoginEnabled) && (
                       <div>
                         <div className="relative flex items-center">
-                          <div className="grow border-subtle border-t" />
-                          <span className="mx-2 shrink font-normal text-sm text-subtle leading-none">
+                          <div className="grow border-border border-t" />
+                          <span className="mx-3 shrink text-muted-foreground text-xs leading-none">
                             {t("or").toLocaleLowerCase()}
                           </span>
-                          <div className="grow border-subtle border-t" />
+                          <div className="grow border-border border-t" />
                         </div>
                       </div>
                     )}
@@ -734,15 +710,15 @@ export default function Signup({
                 )}
 
                 {/* Already have an account & T&C */}
-                <div className="mt-10 flex h-full flex-col justify-end pb-6 text-xs">
+                <div className="mt-8 flex flex-col border-border border-t pt-6 text-xs">
                   <div className="flex flex-col text-sm">
                     <div className="flex gap-1">
-                      <p className="text-subtle">{t("already_have_account")}</p>
-                      <Link href="/auth/login" className="text-emphasis hover:underline">
+                      <p className="text-muted-foreground">{t("already_have_account")}</p>
+                      <Link href="/auth/login" className="font-medium text-foreground underline-offset-4 hover:underline">
                         {t("sign_in")}
                       </Link>
                     </div>
-                    <div className="text-subtle">
+                    <div className="mt-2 text-muted-foreground text-xs">
                       <ServerTrans
                         t={t}
                         i18nKey="signing_up_terms"
@@ -770,94 +746,7 @@ export default function Signup({
               </>
             )}
           </div>
-          <div className="mx-auto mt-24 w-full max-w-2xl flex-col justify-between rounded-l-2xl border-subtle pl-4 lg:mt-0 lg:flex lg:max-w-full lg:border lg:bg-subtle lg:py-12 lg:pl-12 dark:bg-none">
-            {IS_RONDEVU && (
-              <>
-                <div className="-mt-4 mr-12 mb-6 grid w-full grid-cols-3 gap-5 pr-4 sm:gap-3 lg:grid-cols-4">
-                  <div>
-                    {/* eslint-disable @next/next/no-img-element */}
-                    <img
-                      src="/product-cards/product-of-the-day.svg"
-                      className="h-[34px] w-full dark:invert"
-                      alt="rOndevu was Product of the Day at ProductHunt"
-                    />
-                  </div>
-                  <div>
-                    {/* eslint-disable @next/next/no-img-element */}
-                    <img
-                      src="/product-cards/product-of-the-week.svg"
-                      className="h-[34px] w-full dark:invert"
-                      alt="rOndevu was Product of the Week at ProductHunt"
-                    />
-                  </div>
-                  <div>
-                    {/* eslint-disable @next/next/no-img-element */}
-                    <img
-                      src="/product-cards/product-of-the-month.svg"
-                      className="h-[34px] w-full dark:invert"
-                      alt="rOndevu was Product of the Month at ProductHunt"
-                    />
-                  </div>
-                </div>
-                <div className="mr-12 mb-6 grid w-full grid-cols-3 gap-5 pr-4 sm:gap-3 lg:grid-cols-4">
-                  <div>
-                    {/* eslint-disable @next/next/no-img-element */}
-                    <img
-                      src="/product-cards/producthunt.svg"
-                      className="h-[54px] w-full"
-                      alt="ProductHunt Rating of 5 Stars"
-                    />
-                  </div>
-                  <div>
-                    {/* eslint-disable @next/next/no-img-element */}
-                    <img
-                      src="/product-cards/google-reviews.svg"
-                      className="h-[54px] w-full"
-                      alt="Google Reviews Rating of 4.7 Stars"
-                    />
-                  </div>
-                  <div>
-                    {/* eslint-disable @next/next/no-img-element */}
-                    <img
-                      src="/product-cards/g2.svg"
-                      className="h-[54px] w-full"
-                      alt="G2 Rating of 4.7 Stars"
-                    />
-                  </div>
-                </div>
-              </>
-            )}
-            <div className="hidden rounded-tl-2xl rounded-br-none rounded-bl-2xl border border-default border-r-0 border-dashed bg-black/3 lg:block lg:py-[6px] lg:pl-[6px] dark:bg-white/5">
-              <img className="block dark:hidden" src="/mock-event-type-list.svg" alt="rOndevu Booking Page" />
-              {/* eslint-disable @next/next/no-img-element */}
-              <img
-                className="hidden dark:block"
-                src="/mock-event-type-list-dark.svg"
-                alt="rOndevu Booking Page"
-              />
-            </div>
-            <div className="mt-8 mr-12 hidden h-full w-full grid-cols-3 gap-4 overflow-hidden lg:grid">
-              {FEATURES.map((feature, index) => (
-                <div key={index} className="mb-8 flex max-w-52 flex-col leading-none sm:mb-0">
-                  <div className="items-center text-emphasis">
-                    <Icon name={feature.icon} className="mb-1 h-4 w-4" />
-                    <span className="font-medium text-sm">{t(feature.title)}</span>
-                  </div>
-                  <div className="text-sm text-subtle">
-                    <p>
-                      {t(
-                        feature.description,
-                        feature.i18nOptions && {
-                          ...feature.i18nOptions,
-                        }
-                      )}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        </main>
         <Toaster position="bottom-right" />
       </div>
     </>

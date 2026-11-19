@@ -10,7 +10,7 @@ import { useLocale } from "@rondevu/lib/hooks/useLocale";
 import { Button } from "@rondevu/ui/components/button";
 import { CheckIcon } from "@coss/ui/icons";
 
-import AuthContainer from "@components/ui/AuthContainer";
+import { AuthShell } from "@rondevu/web/modules/auth/components/AuthShell";
 
 export type PageProps = {
   query: ParsedUrlQuery;
@@ -41,17 +41,17 @@ export function Logout(props: PageProps) {
   };
 
   return (
-    <AuthContainer showLogo>
+    <AuthShell>
       <div className="mb-4">
-        <div className="bg-rondevu-success mx-auto flex h-12 w-12 items-center justify-center rounded-full">
-          <CheckIcon className="h-6 w-6 text-green-600" />
+        <div className="mx-auto flex size-12 items-center justify-center rounded-full border border-border">
+          <CheckIcon className="size-5 text-foreground" />
         </div>
-        <div className="mt-3 text-center sm:mt-5">
-          <h3 className="text-emphasis text-lg font-medium leading-6" id="modal-title">
+        <div className="mt-4 text-center">
+          <h1 className="font-semibold text-2xl tracking-[-0.04em]" id="modal-title">
             {t("youve_been_logged_out")}
-          </h3>
+          </h1>
           <div className="mt-2">
-            <p className="text-subtle text-sm">{t(message())}</p>
+            <p className="text-muted-foreground text-sm">{t(message())}</p>
           </div>
         </div>
       </div>
@@ -62,7 +62,7 @@ export function Logout(props: PageProps) {
         loading={btnLoading}>
         {t("go_back_login")}
       </Button>
-    </AuthContainer>
+    </AuthShell>
   );
 }
 

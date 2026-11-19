@@ -135,7 +135,7 @@ export function Authorize() {
     return (
       <div className="flex justify-center pt-32">
         <div className="flex items-center space-x-3">
-          <span className="text-lg font-medium text-gray-700">{t("authorizing")}</span>
+          <span className="text-lg font-medium text-default">{t("authorizing")}</span>
         </div>
       </div>
     );
@@ -167,7 +167,7 @@ export function Authorize() {
           })}
         </h1>
         {!show_account_selector && (
-          <div className="flex flex-col justify-center items-center mb-6 text-sm text-gray-600">
+          <div className="flex flex-col justify-center items-center mb-6 text-sm text-default">
             <div className="flex gap-2 items-center" data-testid="signed-in-user">
               <Avatar
                 size="sm"

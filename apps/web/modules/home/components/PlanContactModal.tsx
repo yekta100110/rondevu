@@ -1,8 +1,10 @@
 "use client";
 
 import { ArrowUpRight, Mail, MessageCircle, Phone, X } from "lucide-react";
+import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { homeTranslations, type Locale, type Translations } from "../i18n/home-translations";
+import { ease } from "./motion";
 
 export interface PlanContactModalProps {
   isOpen: boolean;
@@ -76,31 +78,39 @@ export function PlanContactModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div aria-hidden="true" onClick={onClose} className="absolute inset-0 bg-black/70" />
+      <motion.div
+        aria-hidden="true"
+        onClick={onClose}
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      />
 
-      <section
+      <motion.section
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="rondevu-contact-title"
         aria-describedby="rondevu-contact-description"
         tabIndex={-1}
-        className="relative z-10 max-h-[calc(100dvh-2rem)] w-full max-w-[480px] overflow-y-auto rounded-2xl border border-[#e5e5e5] bg-white p-6 text-[#181818] shadow-2xl outline-none dark:border-white/10 dark:bg-[#181818] dark:text-[#f4f4f5] sm:p-8">
+        initial={{ opacity: 0, y: 12, scale: 0.98, filter: "blur(6px)" }}
+        animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+        transition={{ duration: 0.35, ease }}
+        className="relative z-10 max-h-[calc(100dvh-2rem)] w-full max-w-[460px] overflow-y-auto rounded-xl border border-border bg-popover p-6 text-popover-foreground shadow-2xl outline-none sm:p-7">
         <button
           type="button"
           onClick={onClose}
           aria-label={t.modal.close}
-          className="absolute right-5 top-5 flex size-9 items-center justify-center rounded-lg text-[#737373] transition hover:bg-[#f2f2f2] hover:text-[#181818] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#737373] dark:text-[#a3a3a3] dark:hover:bg-[#202020] dark:hover:text-white">
-          <X className="size-5" />
+          className="absolute top-4 right-4 flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring">
+          <X className="size-4" />
         </button>
 
         <div className="pr-10">
-          <h2 id="rondevu-contact-title" className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
+          <h2 id="rondevu-contact-title" className="font-semibold text-2xl tracking-[-0.04em]">
             {t.modal.title}
           </h2>
-          <p
-            id="rondevu-contact-description"
-            className="mt-2 text-sm leading-relaxed text-[#737373] dark:text-[#a3a3a3]">
+          <p id="rondevu-contact-description" className="mt-1.5 text-muted-foreground text-sm">
             {plan ? t.modal.subtitle : t.modal.generalSubtitle}
           </p>
         </div>
@@ -108,10 +118,10 @@ export function PlanContactModal({
         {plan && (
           <div
             data-plan-summary
-            className="mt-6 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-y border-[#e5e5e5] py-4 dark:border-white/10">
-            <span className="font-display text-lg font-semibold">{plan.name}</span>
-            <span className="text-sm font-medium">
-              {plan.price} <span className="font-normal text-[#737373] dark:text-[#a3a3a3]">{plan.period}</span>
+            className="mt-6 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-border border-y py-4">
+            <span className="font-medium">{plan.name}</span>
+            <span className="font-mono text-sm tabular-nums">
+              {plan.price} <span className="text-muted-foreground">{plan.period}</span>
             </span>
           </div>
         )}
@@ -122,38 +132,38 @@ export function PlanContactModal({
             target="_blank"
             rel="noopener noreferrer"
             data-contact-channel="primary"
-            className="flex min-h-12 items-center justify-between gap-3 rounded-xl bg-[#202020] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#303030] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#737373] dark:bg-[#f4f4f5] dark:text-[#181818] dark:hover:bg-white">
+            className="group flex h-11 items-center justify-between gap-3 rounded-lg bg-primary px-4 font-medium text-primary-foreground text-sm transition-[background-color,transform] duration-150 hover:bg-primary/90 active:scale-[.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring">
             <span className="flex items-center gap-3">
-              <MessageCircle className="size-5" />
+              <MessageCircle className="size-4" />
               {t.modal.whatsapp}
             </span>
-            <ArrowUpRight className="size-4" />
+            <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
 
-          <div className="mt-3 divide-y divide-[#e5e5e5] dark:divide-white/10">
+          <div className="mt-3 divide-y divide-border">
             <a
               href={`tel:${cleanPhone}`}
               data-contact-channel="phone"
-              className="flex min-h-14 items-center justify-between gap-4 py-3 text-sm transition hover:text-[#555] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#737373] dark:hover:text-white">
+              className="flex min-h-12 items-center justify-between gap-4 py-3 text-sm transition-colors hover:text-muted-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring">
               <span className="flex items-center gap-3 font-medium">
-                <Phone className="size-4 text-[#737373] dark:text-[#a3a3a3]" />
+                <Phone className="size-4 text-muted-foreground" />
                 {t.modal.phone}
               </span>
-              <span className="text-right text-[#737373] dark:text-[#a3a3a3]">{phone}</span>
+              <span className="text-right font-mono text-muted-foreground tabular-nums">{phone}</span>
             </a>
             <a
               href={`mailto:${email}?subject=${encodeURIComponent(t.modal.emailSubject(plan?.name ?? null))}`}
               data-contact-channel="email"
-              className="flex min-h-14 items-center justify-between gap-4 py-3 text-sm transition hover:text-[#555] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#737373] dark:hover:text-white">
+              className="flex min-h-12 items-center justify-between gap-4 py-3 text-sm transition-colors hover:text-muted-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring">
               <span className="flex items-center gap-3 font-medium">
-                <Mail className="size-4 text-[#737373] dark:text-[#a3a3a3]" />
+                <Mail className="size-4 text-muted-foreground" />
                 {t.modal.email}
               </span>
-              <span className="break-all text-right text-[#737373] dark:text-[#a3a3a3]">{email}</span>
+              <span className="break-all text-right text-muted-foreground">{email}</span>
             </a>
           </div>
         </div>
-      </section>
+      </motion.section>
     </div>
   );
 }

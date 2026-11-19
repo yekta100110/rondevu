@@ -12,6 +12,7 @@ import { LastUsed, useLastUsed } from "@rondevu/web/modules/auth/hooks/useLastUs
 import AddToHomescreen from "@components/AddToHomescreen";
 import BackupCode from "@components/auth/BackupCode";
 import TwoFactor from "@components/auth/TwoFactor";
+import { AuthShell } from "@rondevu/web/modules/auth/components/AuthShell";
 import { Button } from "@coss/ui/components/button";
 import { Field, FieldLabel } from "@coss/ui/components/field";
 import { Input } from "@coss/ui/components/input";
@@ -45,62 +46,6 @@ const GoogleIcon = () => (
   <img className="size-4" src="/google-icon-colored.svg" alt="" />
 );
 
-function BackgroundGrid() {
-  const rows = 9;
-  const cols = 18;
-  const size = 60;
-  const gap = 8;
-  const radius = 8;
-  const width = cols * size + (cols - 1) * gap;
-  const height = rows * size + (rows - 1) * gap;
-
-  return (
-    <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
-      <svg
-        width={width}
-        height={height}
-        viewBox={`0 0 ${width} ${height}`}
-        fill="none"
-        className="[--grid-fill:#f7f7f7] [--grid-stroke:rgba(34,42,53,0.08)] dark:[--grid-fill:#1f1f1f] dark:[--grid-stroke:rgba(255,255,255,0.08)]">
-        <defs>
-          <radialGradient id="gridFade" cx="50%" cy="50%" rx="70%" ry="70%">
-            <stop offset="20%" stopColor="white" stopOpacity="1" />
-            <stop offset="100%" stopColor="white" stopOpacity="0" />
-          </radialGradient>
-          <mask id="gridMask">
-            <rect width={width} height={height} fill="url(#gridFade)" />
-          </mask>
-          <filter id="gridShadow" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="4" stdDeviation="4" floodColor="rgba(34,42,53,0.05)" />
-            <feDropShadow dx="0" dy="1" stdDeviation="2" floodColor="rgba(19,19,22,0.03)" />
-          </filter>
-        </defs>
-        <g mask="url(#gridMask)">
-          {Array.from({ length: rows * cols }).map((_, i) => {
-            const col = i % cols;
-            const row = Math.floor(i / cols);
-            const x = col * (size + gap);
-            const y = row * (size + gap);
-            return (
-              <rect
-                key={i}
-                x={x}
-                y={y}
-                width={size}
-                height={size}
-                rx={radius}
-                fill="var(--grid-fill)"
-                stroke="var(--grid-stroke)"
-                strokeWidth="1"
-                filter="url(#gridShadow)"
-              />
-            );
-          })}
-        </g>
-      </svg>
-    </div>
-  );
-}
 export type PageProps = inferSSRProps<typeof getServerSideProps>;
 export default function Login({
   csrfToken,
@@ -116,7 +61,7 @@ export default function Login({
       email: z
         .string()
         .min(1, `${t("error_required_field")}`)
-        .regex(emailRegex, `${t("enter_valid_email")}`),
+        .regex(emailRegex, `${t("auth_email_error_example")}`),
       ...(totpEmail ? {} : { password: z.string().min(1, `${t("error_required_field")}`) }),
     })
     // Passthrough other fields like totpCode
@@ -175,233 +120,200 @@ export default function Login({
   const showSignupLink =
     process.env.NEXT_PUBLIC_DISABLE_SIGNUP !== "true" && searchParams?.get("register") !== "false";
 
+  const fieldError = (message?: string) =>
+    message ? (
+      <p data-testid="field-error" className="text-destructive text-sm">
+        {message}
+      </p>
+    ) : null;
+
   return (
-    <div className="relative flex min-h-screen items-center justify-center bg-default/80 px-4 py-10">
-      <BackgroundGrid />
-
-      <motion.div
-        initial={{ opacity: 0, y: 16, scale: 0.98 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-10 flex w-full max-w-md flex-col items-center">
-        {/* Main Card */}
-        <div className="w-full rounded-xl border border-subtle bg-default p-10 shadow-sm">
-          {/* Logo */}
-          <div className="mb-2 text-center">
-            <h1 className="font-display text-2xl font-bold text-emphasis">{APP_NAME}</h1>
-          </div>
-
-          {/* Heading */}
-          <p className="mb-8 text-center text-sm text-subtle" data-testid="login-subtitle">
-            {twoFactorRequired ? t("2fa_code") : t("welcome_back_sign_in")}
-          </p>
-
-          <FormProvider {...methods}>
-            {/* Social Login Buttons */}
-            {!twoFactorRequired && showSocialLogin && (
-              <>
-                <div className="flex flex-col gap-2">
-                  {isGoogleLoginEnabled && (
-                    <Button
-                      className="w-full py-1"
-                      disabled={formState.isSubmitting}
-                      data-testid="google"
-                      onClick={async (e) => {
-                        e.preventDefault();
-                        setLastUsed("google");
-                        await signIn("google", {
-                          callbackUrl,
-                        });
-                      }}>
-                      <GoogleIcon />
-                      <span>{t("signin_with_google")}</span>
-                      {lastUsed === "google" && <LastUsed />}
-                    </Button>
-                  )}
-                  {isOutlookLoginEnabled && (
-                    <Button
-                      variant="outline"
-                      className="w-full py-1"
-                      data-testid="microsoft"
-                      onClick={async (e) => {
-                        e.preventDefault();
-                        setLastUsed("microsoft");
-                        await signIn("azure-ad", {
-                          callbackUrl,
-                        });
-                      }}>
-                      <MicrosoftIcon />
-                      <span>{t("signin_with_microsoft")}</span>
-                      {lastUsed === "microsoft" && <LastUsed />}
-                    </Button>
-                  )}
-                </div>
-
-                {/* Divider */}
-                <div className="my-6 flex items-center gap-4">
-                  <Separator className="flex-1" />
-                  <span className="text-sm text-zinc-400">{t("or").toLowerCase()}</span>
-                  <Separator className="flex-1" />
-                </div>
-              </>
-            )}
-
-            <form onSubmit={methods.handleSubmit(onSubmit)} noValidate data-testid="login-form">
-              <input defaultValue={csrfToken || undefined} type="hidden" hidden {...register("csrfToken")} />
-
-              {!twoFactorRequired && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: 0.08, ease: "easeOut" }}
-                  className="space-y-6">
-                  {/* Email Field */}
-                  <Field>
-                    <FieldLabel>{t("email")}</FieldLabel>
-                    <Input
-                      id="email"
-                      type="email"
-                      defaultValue={totpEmail || (searchParams?.get("email") as string)}
-                      autoComplete="email"
-                      {...register("email")}
-                    />
-                    {formState.errors.email && (
-                      <p data-testid="field-error" className="text-destructive-foreground text-xs">
-                        {formState.errors.email.message}
-                      </p>
-                    )}
-                  </Field>
-
-                  {/* Password Field */}
-                  <Field>
-                    <div className="flex w-full items-center justify-between">
-                      <FieldLabel>{t("password")}</FieldLabel>
-                      <Link href="/auth/forgot-password" className="text-sm text-subtle hover:text-emphasis">
-                        {t("forgot")}
-                      </Link>
-                    </div>
-                    <InputGroup className="overflow-hidden">
-                      <InputGroupInput
-                        id="password"
-                        type={showPassword ? "text" : "password"}
-                        autoComplete="current-password"
-                        {...register("password")}
-                      />
-                      <InputGroupAddon align="inline-end">
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon-xs"
-                          onClick={() => setShowPassword(!showPassword)}
-                          aria-label={showPassword ? t("hide_password") : t("show_password")}>
-                          {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
-                        </Button>
-                      </InputGroupAddon>
-                    </InputGroup>
-                    {formState.errors.password && (
-                      <p data-testid="field-error" className="text-destructive-foreground text-xs">
-                        {formState.errors.password.message}
-                      </p>
-                    )}
-                  </Field>
-                </motion.div>
-              )}
-
-              {/* Two Factor */}
-              {twoFactorRequired && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.96 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.25 }}
-                  className="space-y-4">
-                  {!twoFactorLostAccess ? <TwoFactor center /> : <BackupCode center />}
-                </motion.div>
-              )}
-
-              {/* Error Message */}
-              {errorMessage && <Alert severity="error" title={errorMessage} className="mt-4" />}
-
-              {/* Submit Button */}
-              <motion.div
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.25, delay: 0.12, ease: "easeOut" }}>
-                <Button
-                  type="submit"
-                  variant="outline"
-                  className="mt-8 w-full"
-                  disabled={formState.isSubmitting}>
-                  {twoFactorRequired ? t("submit") : t("continue")}
-                </Button>
-              </motion.div>
-            </form>
-
-            {/* Two Factor Footer */}
-            {twoFactorRequired && (
-              <div className="mt-4 flex justify-center gap-4">
-                {!totpEmail ? (
-                  <>
-                    <Button
-                      variant="ghost"
-                      onClick={() => {
-                        if (twoFactorLostAccess) {
-                          setTwoFactorLostAccess(false);
-                          methods.setValue("backupCode", "");
-                        } else {
-                          setTwoFactorRequired(false);
-                          methods.setValue("totpCode", "");
-                        }
-                        setErrorMessage(null);
-                      }}>
-                      <Icon name="arrow-left" className="mr-2 size-4" />
-                      {t("go_back")}
-                    </Button>
-                    {!twoFactorLostAccess && (
-                      <Button
-                        variant="ghost"
-                        onClick={() => {
-                          setTwoFactorLostAccess(true);
-                          setErrorMessage(null);
-                          methods.setValue("totpCode", "");
-                        }}>
-                        <Icon name="lock" className="mr-2 size-4" />
-                        {t("lost_access")}
-                      </Button>
-                    )}
-                  </>
-                ) : (
-                  <Button
-                    variant="ghost"
-                    onClick={() => {
-                      window.location.replace("/");
-                    }}>
-                    {t("cancel")}
-                  </Button>
-                )}
-              </div>
-            )}
-          </FormProvider>
-        </div>
-
-        {/* Footer Links */}
-        {!twoFactorRequired && (
-          <div className="mt-6 flex items-center justify-center gap-4 text-center">
-            {showSignupLink && (
+    <>
+      <AuthShell
+        title={twoFactorRequired ? t("2fa_code") : t("sign_in")}
+        description={
+          <span data-testid="login-subtitle">{twoFactorRequired ? APP_NAME : t("welcome_back_sign_in")}</span>
+        }
+        footer={
+          !twoFactorRequired && showSignupLink ? (
+            <span>
+              {t("auth_no_account")}{" "}
               <Link
                 href={
                   callbackUrl
                     ? `${WEBSITE_URL}/signup?redirect=${encodeURIComponent(callbackUrl)}`
                     : `${WEBSITE_URL}/signup`
                 }
-                className="text-sm font-medium text-emphasis hover:underline">
+                className="font-medium text-foreground underline-offset-4 hover:underline">
                 {t("create_account")}
               </Link>
+            </span>
+          ) : null
+        }>
+        <FormProvider {...methods}>
+          {!twoFactorRequired && showSocialLogin && (
+            <>
+              <div className="flex flex-col gap-2">
+                {isGoogleLoginEnabled && (
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    disabled={formState.isSubmitting}
+                    data-testid="google"
+                    onClick={async (e) => {
+                      e.preventDefault();
+                      setLastUsed("google");
+                      await signIn("google", {
+                        callbackUrl,
+                      });
+                    }}>
+                    <GoogleIcon />
+                    <span>{t("signin_with_google")}</span>
+                    {lastUsed === "google" && <LastUsed />}
+                  </Button>
+                )}
+                {isOutlookLoginEnabled && (
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    data-testid="microsoft"
+                    onClick={async (e) => {
+                      e.preventDefault();
+                      setLastUsed("microsoft");
+                      await signIn("azure-ad", {
+                        callbackUrl,
+                      });
+                    }}>
+                    <MicrosoftIcon />
+                    <span>{t("signin_with_microsoft")}</span>
+                    {lastUsed === "microsoft" && <LastUsed />}
+                  </Button>
+                )}
+              </div>
+
+              <div className="my-6 flex items-center gap-4">
+                <Separator className="flex-1" />
+                <span className="text-muted-foreground text-xs">{t("or").toLocaleLowerCase()}</span>
+                <Separator className="flex-1" />
+              </div>
+            </>
+          )}
+
+          <form onSubmit={methods.handleSubmit(onSubmit)} noValidate data-testid="login-form">
+            <input defaultValue={csrfToken || undefined} type="hidden" hidden {...register("csrfToken")} />
+
+            {!twoFactorRequired && (
+              <div className="grid gap-5">
+                <Field>
+                  <FieldLabel>{t("email")}</FieldLabel>
+                  <Input
+                    id="email"
+                    type="email"
+                    defaultValue={totpEmail || (searchParams?.get("email") as string)}
+                    autoComplete="email"
+                    aria-invalid={!!formState.errors.email || undefined}
+                    {...register("email")}
+                  />
+                  {fieldError(formState.errors.email?.message)}
+                </Field>
+
+                <Field>
+                  <div className="flex w-full items-center justify-between">
+                    <FieldLabel>{t("password")}</FieldLabel>
+                    <Link
+                      href="/auth/forgot-password"
+                      className="text-muted-foreground text-sm transition-colors hover:text-foreground">
+                      {t("forgot")}
+                    </Link>
+                  </div>
+                  <InputGroup className="overflow-hidden">
+                    <InputGroupInput
+                      id="password"
+                      type={showPassword ? "text" : "password"}
+                      autoComplete="current-password"
+                      aria-invalid={!!formState.errors.password || undefined}
+                      {...register("password")}
+                    />
+                    <InputGroupAddon align="inline-end">
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon-xs"
+                        onClick={() => setShowPassword(!showPassword)}
+                        aria-label={showPassword ? t("hide_password") : t("show_password")}>
+                        {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                      </Button>
+                    </InputGroupAddon>
+                  </InputGroup>
+                  {fieldError(formState.errors.password?.message)}
+                </Field>
+              </div>
             )}
-          </div>
-        )}
-      </motion.div>
+
+            {twoFactorRequired && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                className="space-y-4">
+                {!twoFactorLostAccess ? <TwoFactor center /> : <BackupCode center />}
+              </motion.div>
+            )}
+
+            {errorMessage && <Alert severity="error" title={errorMessage} className="mt-4" />}
+
+            <Button type="submit" className="mt-6 w-full" disabled={formState.isSubmitting}>
+              {twoFactorRequired ? t("submit") : t("continue")}
+            </Button>
+          </form>
+
+          {twoFactorRequired && (
+            <div className="mt-4 flex flex-wrap justify-center gap-2">
+              {!totpEmail ? (
+                <>
+                  <Button
+                    variant="ghost"
+                    onClick={() => {
+                      if (twoFactorLostAccess) {
+                        setTwoFactorLostAccess(false);
+                        methods.setValue("backupCode", "");
+                      } else {
+                        setTwoFactorRequired(false);
+                        methods.setValue("totpCode", "");
+                      }
+                      setErrorMessage(null);
+                    }}>
+                    <Icon name="arrow-left" className="size-4" />
+                    {t("go_back")}
+                  </Button>
+                  {!twoFactorLostAccess && (
+                    <Button
+                      variant="ghost"
+                      onClick={() => {
+                        setTwoFactorLostAccess(true);
+                        setErrorMessage(null);
+                        methods.setValue("totpCode", "");
+                      }}>
+                      <Icon name="lock" className="size-4" />
+                      {t("lost_access")}
+                    </Button>
+                  )}
+                </>
+              ) : (
+                <Button
+                  variant="ghost"
+                  onClick={() => {
+                    window.location.replace("/");
+                  }}>
+                  {t("cancel")}
+                </Button>
+              )}
+            </div>
+          )}
+        </FormProvider>
+      </AuthShell>
 
       <AddToHomescreen />
-    </div>
+    </>
   );
 }

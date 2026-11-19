@@ -1,49 +1,75 @@
 import type { Locale } from "./i18n/home-translations";
 
-export interface StageCopy {
-  host: { name: string; role: string; initials: string; stamp: string; city: string };
-  meetingTitle: string;
-  agenda: string;
-  location: string;
-  responseNote: string;
-  bookingUrl: string;
-  labels: Record<string, string | null>;
-}
+export type DemoAppointment = {
+  id: string;
+  start: number;
+  end: number;
+  client: string;
+  service: string;
+  status: "done" | "confirmed" | "pending";
+  note: string;
+  block?: boolean;
+};
 
 export interface HomeContent {
-  nav: { features: string; how: string; pricing: string; faq: string };
+  nav: { product: string; how: string; pricing: string; faq: string; theme: string };
   hero: {
     title: string;
-    titleAccent: string;
     subtitle: string;
     primary: string;
     secondary: string;
-    note: string;
-    altContact: string;
-    demoNote: string;
-    stage: StageCopy;
+    ringIdle: string;
+    ringTomorrow: string;
+    ringFree: string;
+    ringBooked: string;
   };
   preview: {
+    url: string;
     caption: string;
-    todayLabel: string;
-    dateLabel: string;
-    rows: { time: string; name: string; service: string; status: "confirmed" | "pending" }[];
-    statusConfirmed: string;
-    statusPending: string;
-    chatTitle: string;
-    chatMessage: string;
-    chatTime: string;
-    chatReply: string;
+    sidebar: string[];
+    today: string;
+    newBooking: string;
+    stats: { label: string; sub: string }[];
+    statFormats: { bookings: string; hours: string; minutes: string };
+    timeline: string;
+    status: Record<DemoAppointment["status"], string>;
+    visit: string;
+    time: string;
+    duration: string;
+    minutes: string;
+    confirm: string;
+    reschedule: string;
+    appointments: DemoAppointment[];
+    notifications: { title: string; body: string }[];
+    now: string;
   };
-  audience: { label: string; items: string[] };
-  how: {
+  booking: {
     title: string;
-    steps: { title: string; body: string }[];
+    body: string;
+    demoNote: string;
+    host: { name: string; initials: string; role: string };
+    steps: string[];
+    services: { id: string; name: string; duration: number; where: string; price: string }[];
+    minutes: string;
+    next: string;
+    back: string;
+    pickDay: string;
+    dayFull: string;
+    nameLabel: string;
+    phoneLabel: string;
+    phoneHint: string;
+    phoneError: string;
+    confirm: string;
+    doneTitle: string;
+    doneBody: string;
+    doneService: string;
+    doneTime: string;
+    doneWhere: string;
+    again: string;
+    change: string;
   };
-  features: {
-    title: string;
-    items: { title: string; body: string }[];
-  };
+  features: { title: string; items: { title: string; body: string }[] };
+  how: { title: string; waiting: string; steps: { title: string; body: string; meta: string }[] };
   pricing: {
     title: string;
     subtitle: string;
@@ -53,107 +79,92 @@ export interface HomeContent {
     included: string[];
     cta: string;
     detailLink: string;
+    planNote: string;
   };
   faq: { title: string; items: { q: string; a: string }[] };
-  cta: { title: string; body: string; button: string };
+  cta: { title: string; body: string; button: string; secondary: string };
 }
 
 export const homeContent: Record<Locale, HomeContent> = {
   tr: {
-    nav: { features: "Özellikler", how: "Nasıl çalışır", pricing: "Fiyat", faq: "Sık sorulanlar" },
+    nav: { product: "Ürün", how: "Nasıl çalışır", pricing: "Fiyat", faq: "Sık sorulanlar", theme: "Temayı değiştir" },
     hero: {
-      title: "Müşteriniz saatini seçsin,",
-      titleAccent: "onay WhatsApp'tan gitsin.",
+      title: "Günün her dakikası yerli yerinde.",
       subtitle:
-        "Klinik, güzellik merkezi, kuaför ve danışmanlık ofisleri için randevu sayfası. Müsait saatlerinizi siz belirlersiniz. Onay, hatırlatma ve iptal mesajları müşterinize WhatsApp ve SMS ile ulaşır.",
+        "Müsait saatlerinizi tek bağlantıyla paylaşın. Müşteriniz saatini seçer, onay ve hatırlatma WhatsApp ve SMS ile gider.",
       primary: "Bize yazın",
       secondary: "Nasıl çalışır",
-      note: "Sorularınızı WhatsApp'tan yanıtlıyoruz.",
-      altContact: "Önce bir soru mu var? WhatsApp'tan yazın",
-      demoNote: "Bu bir örnek ekran. Girdiğiniz bilgiler kaydedilmez.",
-      stage: {
-        host: { name: "Ayşe Demir", role: "Güzellik merkezi, örnek", initials: "AD", stamp: "Açık saatler · randevu · ", city: "İstanbul" },
-        meetingTitle: "Cilt bakımı",
-        agenda: "İlk görüşmede cildinizi birlikte değerlendirir, size uygun bakımı seçeriz.",
-        location: "Salonumuzda yüz yüze",
-        responseNote: "Onay mesajı WhatsApp'tan gelir",
-        bookingUrl: "rondevu.org/ornek-salon",
-        labels: {
-          pick: "Saat seçin",
-          howLong: "Süre",
-          minutes: "dk",
-          showTimesIn: "Saat dilimi",
-          today: "Bugün",
-          copyLink: "Bağlantıyı kopyala",
-          copied: "Kopyalandı",
-          name: "Adınız",
-          email: "E-posta",
-          note: "Eklemek istediğiniz bir not var mı?",
-          optional: "(isteğe bağlı)",
-          nameError: "Size nasıl hitap edeceğimizi bilmek için adınızı yazın.",
-          emailError: "E-posta adresi eksik görünüyor.",
-          bookError: "Bu saat alınamadı. Tekrar deneyin veya başka bir saat seçin.",
-          back: "Geri",
-          confirm: "Randevuyu onayla",
-          sending: "Onaylanıyor…",
-          booked: "Randevunuz alındı.",
-          invite: null,
-          addToCalendar: "Takvime ekle",
-          another: "Başka saat seç",
-          open: "Boş",
-          busy: "Dolu",
-          yours: "Alındı",
-          timesIn: "Saatler",
-          checking: "Müsaitlik kontrol ediliyor…",
-          empty: "Bu hafta boş saat yok.",
-          nextWeek: "Gelecek haftayı gör",
-          now: "şimdi",
-          weekOf: "Haftanın başlangıcı:",
-          until: "ile",
-        },
-      },
+      ringIdle: "1440 dakika, tek halkada",
+      ringTomorrow: "yarın",
+      ringFree: "boş",
+      ringBooked: "rezerve edildi",
     },
     preview: {
+      url: "app.rondevu.org/bugun",
       caption: "Örnek ekran, kurgusal veriler",
-      todayLabel: "Bugün",
-      dateLabel: "Salı, 18 Kasım",
-      rows: [
-        { time: "10:00", name: "Elif Karaca", service: "Cilt bakımı", status: "confirmed" },
-        { time: "11:30", name: "Mert Aydın", service: "İlk muayene", status: "confirmed" },
-        { time: "13:00", name: "Zeynep Arslan", service: "Saç boyama", status: "pending" },
-        { time: "14:30", name: "Burak Şahin", service: "Diyet görüşmesi", status: "confirmed" },
+      sidebar: ["Bugün", "Randevular", "Müsaitlik", "Müşteriler", "Ayarlar"],
+      today: "Bugün",
+      newBooking: "Yeni randevu",
+      stats: [
+        { label: "Bugün", sub: "2'si tamamlandı" },
+        { label: "Dolu süre", sub: "Günün yarısına yakın" },
+        { label: "Haftalık doluluk", sub: "Geçen haftadan 9 puan yüksek" },
+        { label: "WhatsApp onayı", sub: "Bu hafta gönderilen" },
       ],
-      statusConfirmed: "WhatsApp onaylı",
-      statusPending: "Yanıt bekleniyor",
-      chatTitle: "Güzellik merkezi",
-      chatMessage:
-        "Merhaba Elif, yarın 10:00'daki cilt bakımı randevunuzu aldık. Değiştirmek veya iptal etmek için bağlantıya dokunabilirsiniz.",
-      chatTime: "09:41",
-      chatReply: "Teşekkürler, görüşürüz",
-    },
-    audience: {
-      label: "Şunlar için hazırlandı",
-      items: ["Klinikler", "Güzellik merkezleri", "Kuaför ve berberler", "Danışmanlık ofisleri", "Yerel işletmeler"],
-    },
-    how: {
-      title: "Üç adımda çalışır",
-      steps: [
-        {
-          title: "Saatlerinizi belirleyin",
-          body: "Çalışma günlerinizi, randevu sürelerini ve araları girersiniz. Dolu saatler müşteriye hiç gösterilmez.",
-        },
-        {
-          title: "Müşteri bağlantıdan seçer",
-          body: "Uygulama indirmesine gerek yok. Müşteri tarayıcıdan boş saati seçer, telefon numarasını SMS koduyla doğrular.",
-        },
-        {
-          title: "Mesajlar kendiliğinden gider",
-          body: "Onay, hatırlatma ve iptal bildirimleri WhatsApp ve SMS ile gönderilir. Randevu takviminize de işlenir.",
-        },
+      statFormats: { bookings: "randevu", hours: "sa", minutes: "dk" },
+      timeline: "Zaman çizelgesi",
+      status: { done: "Geldi", confirmed: "Onaylı", pending: "Onay bekliyor" },
+      visit: "görüşme",
+      time: "Saat",
+      duration: "Süre",
+      minutes: "dk",
+      confirm: "Onayla",
+      reschedule: "Yeniden planla",
+      appointments: [
+        { id: "a1", start: 540, end: 570, client: "Elif Karaca", service: "Cilt bakımı", status: "done", note: "Hassas cilt. Bir sonraki bakım üç hafta sonra." },
+        { id: "a2", start: 630, end: 675, client: "Mert Aydın", service: "İlk muayene", status: "done", note: "Randevuyu WhatsApp onayından sonra aldı." },
+        { id: "b1", start: 720, end: 780, client: "Öğle arası", service: "", status: "confirmed", note: "", block: true },
+        { id: "a3", start: 870, end: 915, client: "Zeynep Arslan", service: "Saç boyama", status: "confirmed", note: "Yeni müşteri. Numarasını SMS koduyla doğruladı." },
+        { id: "a4", start: 960, end: 1020, client: "Burak Şahin", service: "Diyet görüşmesi", status: "pending", note: "Saati onaylamanız bekleniyor." },
       ],
+      notifications: [
+        { title: "Yeni randevu", body: "Zeynep Arslan · yarın 14:30" },
+        { title: "WhatsApp onayı gitti", body: "Elif Karaca · bugün 09:00" },
+        { title: "Hatırlatma gönderildi", body: "Burak Şahin · bugün 16:00" },
+      ],
+      now: "şimdi",
+    },
+    booking: {
+      title: "Müşteriniz üç dokunuşta randevu alır.",
+      body: "Hizmeti seçer, boş saate dokunur, adını ve numarasını yazar. Uygulama indirmez. Onay mesajı WhatsApp'tan gelir.",
+      demoNote: "Bu bir örnek akış. Girdiğiniz bilgiler kaydedilmez.",
+      host: { name: "Ayşe Demir", initials: "AD", role: "Güzellik merkezi · İstanbul" },
+      steps: ["Hizmet", "Zaman", "Bilgiler"],
+      services: [
+        { id: "cilt", name: "Cilt bakımı", duration: 45, where: "Salonda", price: "₺900" },
+        { id: "kas", name: "Kaş ve kirpik", duration: 30, where: "Salonda", price: "₺450" },
+        { id: "danisma", name: "Ön görüşme", duration: 15, where: "Telefonda", price: "Ücretsiz" },
+      ],
+      minutes: "dk",
+      next: "Devam",
+      back: "Geri",
+      pickDay: "Bir gün seçin",
+      dayFull: "Bu gün dolu. Başka bir gün seçin.",
+      nameLabel: "Ad soyad",
+      phoneLabel: "Cep telefonu",
+      phoneHint: "Onay ve hatırlatma bu numaraya gelir.",
+      phoneError: "Geçerli bir numara yazın. Örnek: 0532 123 45 67",
+      confirm: "Randevuyu onayla",
+      doneTitle: "Randevunuz alındı",
+      doneBody: "Onay mesajı WhatsApp'tan gönderildi.",
+      doneService: "Hizmet",
+      doneTime: "Zaman",
+      doneWhere: "Yer",
+      again: "Baştan dene",
+      change: "Değiştir",
     },
     features: {
-      title: "Günlük işi hafifleten parçalar",
+      title: "Randevuyla ilgili her şey, tek yerde.",
       items: [
         {
           title: "WhatsApp bildirimleri",
@@ -175,6 +186,20 @@ export const homeContent: Record<Locale, HomeContent> = {
           title: "Kendi alan adınız",
           body: "Randevu sayfanızı kendi alan adınızda yayınlayabilirsiniz. Bu seçenek tüm planlarda açıktır.",
         },
+        {
+          title: "Hatırlatmalar",
+          body: "Randevudan önce müşteriye hatırlatma gider. Gelmeyen müşteri sayısı düşer.",
+        },
+      ],
+    },
+    how: {
+      title: "Bağlantıdan hatırlatmaya, siz uğraşmadan.",
+      waiting: "bekliyor",
+      steps: [
+        { title: "Saatlerinizi belirleyin", body: "Çalışma günlerinizi, randevu sürelerini ve araları girin.", meta: "Pzt–Cmt · 09:00–19:00" },
+        { title: "Bağlantınızı paylaşın", body: "Instagram profilinize, sitenize ya da WhatsApp'a ekleyin.", meta: "rondevu.org/salonunuz" },
+        { title: "Müşteri saatini seçer", body: "Yalnız gerçekten boş saatler görünür. Numara SMS koduyla doğrulanır.", meta: "14:30 · 45 dk" },
+        { title: "Mesajlar kendiliğinden gider", body: "Onay ve hatırlatma WhatsApp ve SMS ile gönderilir.", meta: "12:30 · gönderildi" },
       ],
     },
     pricing: {
@@ -191,6 +216,7 @@ export const homeContent: Record<Locale, HomeContent> = {
       ],
       cta: "Planı konuşalım",
       detailLink: "Fiyat sayfası",
+      planNote: "Plan kurulumunu sizinle birlikte yapıyoruz.",
     },
     faq: {
       title: "Sık sorulanlar",
@@ -218,106 +244,91 @@ export const homeContent: Record<Locale, HomeContent> = {
       ],
     },
     cta: {
-      title: "Randevu takibini bırakın, işinize dönün",
+      title: "İlk randevunuz bugün gelsin.",
       body: "Sorularınızı WhatsApp'tan yazın, size yardımcı olalım.",
       button: "Bize yazın",
+      secondary: "Fiyatları gör",
     },
   },
   en: {
-    nav: { features: "Features", how: "How it works", pricing: "Pricing", faq: "FAQ" },
+    nav: { product: "Product", how: "How it works", pricing: "Pricing", faq: "FAQ", theme: "Toggle theme" },
     hero: {
-      title: "Clients pick their time,",
-      titleAccent: "the confirmation goes out on WhatsApp.",
+      title: "Every minute of the day in its place.",
       subtitle:
-        "A booking page for clinics, beauty centers, barbers and consulting offices. You set your available hours. Confirmations, reminders and cancellations reach your clients by WhatsApp and SMS.",
+        "Share your open hours with a single link. Clients pick their time, and confirmations and reminders go out by WhatsApp and SMS.",
       primary: "Contact us",
       secondary: "How it works",
-      note: "We answer questions on WhatsApp.",
-      altContact: "A question first? Write to us on WhatsApp",
-      demoNote: "This is a sample screen. Nothing you enter is saved.",
-      stage: {
-        host: { name: "Ayşe Demir", role: "Beauty center, sample", initials: "AD", stamp: "Open slots · appointment · ", city: "Istanbul" },
-        meetingTitle: "Facial care",
-        agenda: "At the first visit we assess your skin together and pick the right treatment.",
-        location: "In person at our salon",
-        responseNote: "The confirmation arrives on WhatsApp",
-        bookingUrl: "rondevu.org/sample-salon",
-        labels: {
-          pick: "Choose a time",
-          howLong: "Length",
-          minutes: "min",
-          showTimesIn: "Time zone",
-          today: "Today",
-          copyLink: "Copy link",
-          copied: "Copied",
-          name: "Your name",
-          email: "Email",
-          note: "Anything you want to add?",
-          optional: "(optional)",
-          nameError: "Add your name so we know who to expect.",
-          emailError: "That email looks incomplete.",
-          bookError: "That slot could not be booked. Try again or pick another time.",
-          back: "Back",
-          confirm: "Confirm appointment",
-          sending: "Confirming…",
-          booked: "Your appointment is booked.",
-          invite: null,
-          addToCalendar: "Add to calendar",
-          another: "Pick another time",
-          open: "Open",
-          busy: "Busy",
-          yours: "Booked",
-          timesIn: "Times in",
-          checking: "Checking availability…",
-          empty: "No open slots this week.",
-          nextWeek: "See next week",
-          now: "now",
-          weekOf: "Week of",
-          until: "to",
-        },
-      },
+      ringIdle: "1440 minutes, one ring",
+      ringTomorrow: "tomorrow",
+      ringFree: "open",
+      ringBooked: "booked",
     },
     preview: {
+      url: "app.rondevu.org/today",
       caption: "Sample screen, fictional data",
-      todayLabel: "Today",
-      dateLabel: "Tuesday, 18 November",
-      rows: [
-        { time: "10:00", name: "Elif Karaca", service: "Facial care", status: "confirmed" },
-        { time: "11:30", name: "Mert Aydın", service: "First consultation", status: "confirmed" },
-        { time: "13:00", name: "Zeynep Arslan", service: "Hair coloring", status: "pending" },
-        { time: "14:30", name: "Burak Şahin", service: "Diet session", status: "confirmed" },
+      sidebar: ["Today", "Bookings", "Availability", "Clients", "Settings"],
+      today: "Today",
+      newBooking: "New booking",
+      stats: [
+        { label: "Today", sub: "2 completed" },
+        { label: "Booked time", sub: "Close to half the day" },
+        { label: "Weekly occupancy", sub: "9 points above last week" },
+        { label: "WhatsApp confirmations", sub: "Sent this week" },
       ],
-      statusConfirmed: "Confirmed on WhatsApp",
-      statusPending: "Awaiting reply",
-      chatTitle: "Beauty center",
-      chatMessage:
-        "Hi Elif, we booked your facial care appointment tomorrow at 10:00. Tap the link to change or cancel it.",
-      chatTime: "09:41",
-      chatReply: "Thanks, see you",
-    },
-    audience: {
-      label: "Built for",
-      items: ["Clinics", "Beauty centers", "Barbers and salons", "Consulting offices", "Local businesses"],
-    },
-    how: {
-      title: "How it works in three steps",
-      steps: [
-        {
-          title: "Set your hours",
-          body: "Enter your working days, appointment lengths and breaks. Busy slots are never shown to clients.",
-        },
-        {
-          title: "Clients choose from a link",
-          body: "No app to install. Clients pick a free slot in the browser and verify their number with an SMS code.",
-        },
-        {
-          title: "Messages go out on their own",
-          body: "Confirmations, reminders and cancellations are sent by WhatsApp and SMS. Appointments also land in your calendar.",
-        },
+      statFormats: { bookings: "bookings", hours: "h", minutes: "min" },
+      timeline: "Timeline",
+      status: { done: "Arrived", confirmed: "Confirmed", pending: "Awaiting approval" },
+      visit: "visit",
+      time: "Time",
+      duration: "Length",
+      minutes: "min",
+      confirm: "Confirm",
+      reschedule: "Reschedule",
+      appointments: [
+        { id: "a1", start: 540, end: 570, client: "Elif Karaca", service: "Facial care", status: "done", note: "Sensitive skin. Next treatment in three weeks." },
+        { id: "a2", start: 630, end: 675, client: "Mert Aydın", service: "First consultation", status: "done", note: "Booked after the WhatsApp confirmation." },
+        { id: "b1", start: 720, end: 780, client: "Lunch break", service: "", status: "confirmed", note: "", block: true },
+        { id: "a3", start: 870, end: 915, client: "Zeynep Arslan", service: "Hair coloring", status: "confirmed", note: "New client. Verified the number with an SMS code." },
+        { id: "a4", start: 960, end: 1020, client: "Burak Şahin", service: "Diet session", status: "pending", note: "Waiting for you to approve the time." },
       ],
+      notifications: [
+        { title: "New booking", body: "Zeynep Arslan · tomorrow 14:30" },
+        { title: "WhatsApp confirmation sent", body: "Elif Karaca · today 09:00" },
+        { title: "Reminder sent", body: "Burak Şahin · today 16:00" },
+      ],
+      now: "now",
+    },
+    booking: {
+      title: "Clients book in three taps.",
+      body: "They pick a service, tap a free slot and enter their name and number. No app to install. The confirmation arrives on WhatsApp.",
+      demoNote: "This is a sample flow. Nothing you enter is saved.",
+      host: { name: "Ayşe Demir", initials: "AD", role: "Beauty center · Istanbul" },
+      steps: ["Service", "Time", "Details"],
+      services: [
+        { id: "cilt", name: "Facial care", duration: 45, where: "At the salon", price: "₺900" },
+        { id: "kas", name: "Brows and lashes", duration: 30, where: "At the salon", price: "₺450" },
+        { id: "danisma", name: "Intro call", duration: 15, where: "By phone", price: "Free" },
+      ],
+      minutes: "min",
+      next: "Continue",
+      back: "Back",
+      pickDay: "Pick a day",
+      dayFull: "This day is full. Pick another one.",
+      nameLabel: "Full name",
+      phoneLabel: "Mobile number",
+      phoneHint: "Confirmations and reminders go to this number.",
+      phoneError: "Enter a valid number. Example: 0532 123 45 67",
+      confirm: "Confirm booking",
+      doneTitle: "You're booked",
+      doneBody: "The confirmation was sent on WhatsApp.",
+      doneService: "Service",
+      doneTime: "Time",
+      doneWhere: "Place",
+      again: "Start over",
+      change: "Change",
     },
     features: {
-      title: "The parts that lighten the daily work",
+      title: "Everything about bookings, in one place.",
       items: [
         {
           title: "WhatsApp notifications",
@@ -339,6 +350,20 @@ export const homeContent: Record<Locale, HomeContent> = {
           title: "Your own domain",
           body: "Publish your booking page on your own domain. This option is included in every plan.",
         },
+        {
+          title: "Reminders",
+          body: "Clients get a reminder before their appointment. Fewer people miss their slot.",
+        },
+      ],
+    },
+    how: {
+      title: "From link to reminder, without lifting a finger.",
+      waiting: "waiting",
+      steps: [
+        { title: "Set your hours", body: "Enter your working days, appointment lengths and breaks.", meta: "Mon–Sat · 09:00–19:00" },
+        { title: "Share your link", body: "Add it to your Instagram profile, your site or WhatsApp.", meta: "rondevu.org/your-salon" },
+        { title: "Clients pick a time", body: "Only truly free slots show. The number is verified with an SMS code.", meta: "14:30 · 45 min" },
+        { title: "Messages go out on their own", body: "Confirmations and reminders are sent by WhatsApp and SMS.", meta: "12:30 · sent" },
       ],
     },
     pricing: {
@@ -355,6 +380,7 @@ export const homeContent: Record<Locale, HomeContent> = {
       ],
       cta: "Talk about a plan",
       detailLink: "Pricing page",
+      planNote: "We set up your plan together with you.",
     },
     faq: {
       title: "FAQ",
@@ -382,9 +408,10 @@ export const homeContent: Record<Locale, HomeContent> = {
       ],
     },
     cta: {
-      title: "Stop chasing appointments, get back to work",
+      title: "Let your first booking come in today.",
       body: "Write to us on WhatsApp and we will help.",
       button: "Contact us",
+      secondary: "See pricing",
     },
   },
 };
