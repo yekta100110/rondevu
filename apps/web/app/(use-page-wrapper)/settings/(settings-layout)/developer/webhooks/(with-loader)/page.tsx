@@ -1,14 +1,12 @@
+import { requirePaidAccess } from "@lib/billing/requirePaidAccess";
+import { buildLegacyRequest } from "@lib/buildLegacyCtx";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
+import { APP_NAME } from "@rondevu/lib/constants";
+import { webhookRouter } from "@rondevu/trpc/server/routers/viewer/webhook/_router";
 import { createRouterCaller } from "app/_trpc/context";
 import { _generateMetadata } from "app/_utils";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
-
-import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
-import { APP_NAME } from "@rondevu/lib/constants";
-import { webhookRouter } from "@rondevu/trpc/server/routers/viewer/webhook/_router";
-
-import { buildLegacyRequest } from "@lib/buildLegacyCtx";
-
 import WebhooksView from "~/webhooks/views/webhooks-view";
 
 export const generateMetadata = async () =>
@@ -21,6 +19,7 @@ export const generateMetadata = async () =>
   );
 
 const WebhooksViewServerWrapper = async () => {
+  await requirePaidAccess();
   const session = await getServerSession({ req: buildLegacyRequest(await headers(), await cookies()) });
   if (!session?.user?.id) {
     redirect("/auth/login");

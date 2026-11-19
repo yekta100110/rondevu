@@ -441,6 +441,7 @@ model User {
   whatsappPreference   WhatsAppPreference?
   billingSubscriptions BillingSubscription[]
   billingOrders        BillingOrder[]
+  billingManualAccess  BillingManualAccess?
   brandColor           String?
   darkBrandColor       String?
   // the location where the events will end up
@@ -1206,6 +1207,7 @@ model BillingSubscription {
   endedAt              DateTime?
   pendingPlan          BillingPlan?
   pendingPlanAppliesAt DateTime?
+  pastDueAt            DateTime?
   polarCreatedAt       DateTime
   polarModifiedAt      DateTime
   createdAt            DateTime     @default(now())
@@ -1232,6 +1234,17 @@ model BillingOrder {
 
   @@index([userId])
   @@index([subscriptionId, polarCreatedAt])
+}
+
+/// Access granted by an admin outside Polar (accounts activated by hand). `until` null = no end date.
+model BillingManualAccess {
+  userId      Int       @id
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  until       DateTime?
+  note        String?
+  grantedById Int?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 /// Processed Polar deliveries, keyed by the `webhook-id` header (stable across retries).

@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowLeftIcon } from "@coss/ui/icons";
 import type { TeamFeatures } from "@rondevu/features/flags/config";
 import { IS_RONDEVU, WEBAPP_URL } from "@rondevu/lib/constants";
 import { getPlaceholderAvatar } from "@rondevu/lib/defaultAvatarImage";
@@ -16,7 +17,6 @@ import { Icon } from "@rondevu/ui/components/icon";
 import type { VerticalTabItemProps } from "@rondevu/ui/components/navigation";
 import { VerticalTabItem } from "@rondevu/ui/components/navigation";
 import { Skeleton } from "@rondevu/ui/components/skeleton";
-import { ArrowLeftIcon } from "@coss/ui/icons";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -221,6 +221,11 @@ const getTabs = (
           name: "plan_contact",
           href: "/settings/admin/plan-contact",
           trackingMetadata: { section: "admin", page: "plan_contact" },
+        },
+        {
+          name: "billing_manual_access",
+          href: "/settings/admin/billing-access",
+          trackingMetadata: { section: "admin", page: "billing_manual_access" },
         },
         {
           name: "lockedSMS",

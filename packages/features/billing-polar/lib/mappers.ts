@@ -14,6 +14,7 @@ type SubscriptionCore = Pick<
   | "current_period_start"
   | "current_period_end"
   | "ended_at"
+  | "past_due_at"
   | "created_at"
   | "modified_at"
 >;
@@ -29,6 +30,7 @@ function mapSubscriptionCore(sub: SubscriptionCore, externalCustomerId: string |
     currentPeriodStart: toDate(sub.current_period_start),
     currentPeriodEnd: toDate(sub.current_period_end),
     endedAt: toDateOrNull(sub.ended_at),
+    pastDueAt: toDateOrNull(sub.past_due_at),
     createdAt: toDate(sub.created_at),
     // Polar leaves modified_at null until the first change; created_at is then the version.
     modifiedAt: toDate(sub.modified_at ?? sub.created_at),

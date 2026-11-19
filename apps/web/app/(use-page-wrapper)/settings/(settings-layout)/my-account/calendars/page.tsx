@@ -1,10 +1,9 @@
-import { createRouterCaller } from "app/_trpc/context";
-import { _generateMetadata } from "app/_utils";
-
+import { CalendarListContainer } from "@components/apps/CalendarListContainer";
+import { requirePaidAccess } from "@lib/billing/requirePaidAccess";
 import { appsRouter } from "@rondevu/trpc/server/routers/viewer/apps/_router";
 import { calendarsRouter } from "@rondevu/trpc/server/routers/viewer/calendars/_router";
-
-import { CalendarListContainer } from "@components/apps/CalendarListContainer";
+import { createRouterCaller } from "app/_trpc/context";
+import { _generateMetadata } from "app/_utils";
 
 export const generateMetadata = async () =>
   await _generateMetadata(
@@ -16,6 +15,7 @@ export const generateMetadata = async () =>
   );
 
 const Page = async () => {
+  await requirePaidAccess();
   const [calendarsCaller, appsCaller] = await Promise.all([
     createRouterCaller(calendarsRouter),
     createRouterCaller(appsRouter),

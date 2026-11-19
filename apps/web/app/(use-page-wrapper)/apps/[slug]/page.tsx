@@ -1,10 +1,9 @@
+import { getStaticProps } from "@lib/apps/[slug]/getStaticProps";
+import { requirePaidAccess } from "@lib/billing/requirePaidAccess";
 import type { PageProps as _PageProps } from "app/_types";
 import { generateAppMetadata } from "app/_utils";
 import { notFound } from "next/navigation";
 import { z } from "zod";
-
-import { getStaticProps } from "@lib/apps/[slug]/getStaticProps";
-
 import AppView from "~/apps/[slug]/slug-view";
 
 const paramsSchema = z.object({
@@ -44,6 +43,7 @@ export const generateMetadata = async ({ params }: _PageProps) => {
 };
 
 async function Page({ params }: _PageProps) {
+  await requirePaidAccess();
   const p = paramsSchema.safeParse(await params);
 
   if (!p.success) {

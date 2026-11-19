@@ -1,7 +1,8 @@
+import { requirePaidAccess } from "@lib/billing/requirePaidAccess";
+import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
 import { FeaturesRepository } from "@rondevu/features/flags/features.repository";
 import { prisma } from "@rondevu/prisma";
-import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 import type { PageProps } from "app/_types";
 import { _generateMetadata, getTranslate } from "app/_utils";
 import { ShellMainAppDir } from "app/(use-page-wrapper)/(main-nav)/ShellMainAppDir";
@@ -25,6 +26,7 @@ export const generateMetadata = async ({ params }: { params: Promise<{ status: s
   );
 
 const Page = async ({ params }: PageProps) => {
+  await requirePaidAccess();
   const parsed = querySchema.safeParse(await params);
   if (!parsed.success) {
     redirect("/bookings/upcoming");

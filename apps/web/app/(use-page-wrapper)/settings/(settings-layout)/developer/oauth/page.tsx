@@ -1,11 +1,9 @@
+import { requirePaidAccess } from "@lib/billing/requirePaidAccess";
+import { buildLegacyRequest } from "@lib/buildLegacyCtx";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
 import { _generateMetadata, getTranslate } from "app/_utils";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
-
-import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
-
-import { buildLegacyRequest } from "@lib/buildLegacyCtx";
-
 import OAuthClientsView from "~/settings/developer/oauth-clients-view";
 
 export const generateMetadata = async () =>
@@ -18,6 +16,7 @@ export const generateMetadata = async () =>
   );
 
 const Page = async () => {
+  await requirePaidAccess();
   const session = await getServerSession({ req: buildLegacyRequest(await headers(), await cookies()) });
   const t = await getTranslate();
 

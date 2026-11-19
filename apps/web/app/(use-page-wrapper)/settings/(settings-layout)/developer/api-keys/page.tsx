@@ -1,14 +1,12 @@
+import { requirePaidAccess } from "@lib/billing/requirePaidAccess";
+import { buildLegacyRequest } from "@lib/buildLegacyCtx";
+import { PrismaApiKeyRepository } from "@rondevu/features/api-keys-legacy/api-keys/repositories/PrismaApiKeyRepository";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
+import { APP_NAME } from "@rondevu/lib/constants";
 import { _generateMetadata } from "app/_utils";
 import { unstable_cache } from "next/cache";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
-
-import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
-import { PrismaApiKeyRepository } from "@rondevu/features/api-keys-legacy/api-keys/repositories/PrismaApiKeyRepository";
-import { APP_NAME } from "@rondevu/lib/constants";
-
-import { buildLegacyRequest } from "@lib/buildLegacyCtx";
-
 import ApiKeysView from "~/settings/developer/api-keys-view";
 
 export const generateMetadata = async () =>
@@ -30,6 +28,7 @@ const getCachedApiKeys = unstable_cache(
 );
 
 const Page = async () => {
+  await requirePaidAccess();
   const session = await getServerSession({ req: buildLegacyRequest(await headers(), await cookies()) });
 
   if (!session) {

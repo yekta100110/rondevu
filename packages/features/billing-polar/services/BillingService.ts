@@ -5,6 +5,7 @@ import isSmsCalEmail from "@rondevu/lib/isSmsCalEmail";
 import { computeAccessEndsAt, isLiveSubscription } from "../lib/access";
 import { planForProduct } from "../lib/config";
 import type {
+  AccessDecision,
   BillingPlanKey,
   BillingStatus,
   OrderSnapshot,
@@ -37,6 +38,16 @@ const notFound = (key: string) => new ErrorWithCode(ErrorCode.NotFound, key);
 // Polar rejects addresses whose domain does not accept mail; for placeholder addresses the customer
 // types a real one on the checkout page instead.
 const isPlaceholderEmail = (email: string) => isSmsCalEmail(email) || email.endsWith("@demo.rondevu.org");
+
+const NO_ACCESS: AccessDecision = { hasAccess: false, reason: null, until: null };
+
+/** Outreach demos are fully usable until their TTL; that is the point of the demo. */
+function activeDemoUntil(metadata: unknown, now: Date): Date | null {
+  if (!isPlainObject(metadata) || metadata.isOutreachDemo !== true) return null;
+  if (typeof metadata.demoExpiresAt !== "string") return null;
+  const expiresAt = new Date(metadata.demoExpiresAt);
+  return Number.isNaN(expiresAt.getTime()) || expiresAt <= now ? null : expiresAt;
+}
 
 const isPlainObject = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null && !Array.isArray(value);
@@ -180,8 +191,9 @@ export class BillingService {
     const userId = await this.resolveUserId(snapshot.externalCustomerId, snapshot.customerId);
     if (userId === null) return { applied: false, reason: "unknown_customer" };
 
+    const existing = await this.deps.billingRepository.findSubscriptionById(snapshot.id);
     const written = await this.deps.billingRepository.upsertSubscriptionIfNotOlder(
-      this.toSubscriptionWrite(snapshot, userId, plan)
+      this.toSubscriptionWrite(snapshot, userId, plan, existing?.pastDueAt ?? null)
     );
     if (!written) return { applied: false, reason: "stale" };
 
@@ -214,7 +226,88 @@ export class BillingService {
     // The embedded subscription may be the first we hear of it (order.paid before subscription.created).
     const subscriptionResult = await this.applySubscriptionSnapshot(order.subscription);
     if (!orderWritten && !subscriptionResult.applied) return { applied: false, reason: "stale" };
+
+    if (order.status === "refunded") await this.revokeAfterFullRefund(order.id, order.subscriptionId, userId);
     return { applied: true, userId };
+  }
+
+  /**
+   * Access for admins, live outreach demos, admin-granted manual access or a paid subscription.
+   * This is the single decision every gate (panel pages, tRPC mutations, new bookings) relies on.
+   */
+  async getAccess(userId: number, now: Date = new Date()): Promise<AccessDecision> {
+    const user = await this.deps.billingRepository.findUserById(userId);
+    if (!user) return NO_ACCESS;
+    if (user.role === "ADMIN") return { hasAccess: true, reason: "admin", until: null };
+
+    const demoUntil = activeDemoUntil(user.metadata, now);
+    if (demoUntil) return { hasAccess: true, reason: "outreach_demo", until: demoUntil };
+
+    const manual = await this.deps.billingRepository.findManualAccess(userId);
+    if (manual && (manual.until === null || manual.until > now)) {
+      return { hasAccess: true, reason: "manual", until: manual.until };
+    }
+
+    const status = await this.getStatus(userId, now);
+    if (status.hasAccess) return { hasAccess: true, reason: "subscription", until: status.accessEndsAt };
+    return NO_ACCESS;
+  }
+
+  async hasAccess(userId: number, now: Date = new Date()): Promise<boolean> {
+    return (await this.getAccess(userId, now)).hasAccess;
+  }
+
+  async findAccessByEmail(email: string): Promise<{
+    userId: number;
+    access: AccessDecision;
+    manual: { until: Date | null; note: string | null } | null;
+  }> {
+    const userId = await this.deps.billingRepository.findUserIdByEmail(email.trim());
+    if (userId === null) throw notFound("billing_user_not_found");
+    const [access, manual] = await Promise.all([
+      this.getAccess(userId),
+      this.deps.billingRepository.findManualAccess(userId),
+    ]);
+    return { userId, access, manual: manual ? { until: manual.until, note: manual.note } : null };
+  }
+
+  async grantManualAccess(input: {
+    adminUserId: number;
+    email: string;
+    until: Date | null;
+    note: string | null;
+  }): Promise<void> {
+    const userId = await this.deps.billingRepository.findUserIdByEmail(input.email.trim());
+    if (userId === null) throw notFound("billing_user_not_found");
+    await this.deps.billingRepository.upsertManualAccess({
+      userId,
+      until: input.until,
+      note: input.note,
+      grantedById: input.adminUserId,
+    });
+  }
+
+  async removeManualAccess(email: string): Promise<void> {
+    const userId = await this.deps.billingRepository.findUserIdByEmail(email.trim());
+    if (userId === null) throw notFound("billing_user_not_found");
+    await this.deps.billingRepository.deleteManualAccess(userId);
+  }
+
+  /**
+   * A full refund of the order that paid for the current coverage ends the subscription on Polar too,
+   * so the customer is not charged again. A failure is thrown so the webhook is retried.
+   */
+  private async revokeAfterFullRefund(orderId: string, subscriptionId: string, userId: number) {
+    const [latest] = await this.deps.billingRepository.findLatestSettledOrderBySubscriptionIds([
+      subscriptionId,
+    ]);
+    if (latest?.id !== orderId) return;
+
+    const subscription = await this.deps.billingRepository.findSubscriptionById(subscriptionId);
+    if (!subscription || !isLiveSubscription(subscription)) return;
+
+    const revoked = await this.deps.polarGateway.revokeSubscription(subscriptionId);
+    await this.applySubscriptionSnapshot({ ...revoked, externalCustomerId: String(userId) });
   }
 
   private async evaluateSubscriptions(userId: number): Promise<EvaluatedSubscription[]> {
@@ -258,7 +351,8 @@ export class BillingService {
   private toSubscriptionWrite(
     snapshot: SubscriptionSnapshot,
     userId: number,
-    plan: BillingPlanKey
+    plan: BillingPlanKey,
+    storedPastDueAt: Date | null
   ): BillingSubscriptionWrite {
     let pending: BillingSubscriptionWrite["pending"];
     if (snapshot.pendingUpdate === null) {
@@ -281,6 +375,11 @@ export class BillingService {
       currentPeriodStart: snapshot.currentPeriodStart,
       currentPeriodEnd: snapshot.currentPeriodEnd,
       endedAt: snapshot.endedAt,
+      // The grace period counts from the first past-due snapshot; later retries must not extend it.
+      pastDueAt:
+        snapshot.status === "past_due"
+          ? (snapshot.pastDueAt ?? storedPastDueAt ?? snapshot.modifiedAt)
+          : null,
       polarCreatedAt: snapshot.createdAt,
       polarModifiedAt: snapshot.modifiedAt,
       pending,

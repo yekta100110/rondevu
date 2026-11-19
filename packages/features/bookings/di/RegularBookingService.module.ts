@@ -1,3 +1,4 @@
+import { moduleLoader as billingServiceModuleLoader } from "@rondevu/features/billing-polar/di/BillingService.module";
 import { moduleLoader as bookingEventHandlerModuleLoader } from "@rondevu/features/bookings/di/BookingEventHandlerService.module";
 import { RegularBookingService } from "@rondevu/features/bookings/lib/service/RegularBookingService";
 import { bindModuleToClassOnToken, createModule, type ModuleLoader } from "@rondevu/features/di/di";
@@ -30,6 +31,7 @@ const loadModule = bindModuleToClassOnToken({
     bookingEmailAndSmsTasker: bookingEmailAndSmsTaskerModuleLoader,
     bookingEventHandler: bookingEventHandlerModuleLoader,
     webhookProducer: webhookProducerModuleLoader,
+    billingAccess: billingServiceModuleLoader,
   },
 });
 

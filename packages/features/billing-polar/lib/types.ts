@@ -13,6 +13,8 @@ export type SubscriptionSnapshot = {
   currentPeriodStart: Date;
   currentPeriodEnd: Date;
   endedAt: Date | null;
+  /** When the subscription went past due; null when Polar did not send it. */
+  pastDueAt: Date | null;
   createdAt: Date;
   modifiedAt: Date;
   /** `undefined` when the source payload does not carry it (order snapshots), so it must not be overwritten. */
@@ -58,6 +60,8 @@ export interface PolarGateway {
   ): Promise<SubscriptionSnapshot>;
   createCustomerPortalUrl(input: { externalCustomerId: string; returnUrl: string }): Promise<string>;
   listSubscriptionsByExternalCustomerId(externalCustomerId: string): Promise<SubscriptionSnapshot[]>;
+  /** Ends the subscription immediately; succeeds if Polar already ended it. */
+  revokeSubscription(subscriptionId: string): Promise<SubscriptionSnapshot>;
 }
 
 export type PolarBillingConfig = {
@@ -82,3 +86,9 @@ export type BillingStatus = {
   isLive: boolean;
   hasBillingHistory: boolean;
 };
+
+export type AccessReason = "admin" | "outreach_demo" | "manual" | "subscription";
+
+export type AccessDecision =
+  | { hasAccess: true; reason: AccessReason; until: Date | null }
+  | { hasAccess: false; reason: null; until: null };

@@ -140,18 +140,39 @@ describe("BillingService", () => {
       expect(status).toMatchObject({ hasAccess: true, plan: "YEARLY" });
     });
 
-    it("closes access while a renewal payment is past due", async () => {
+    it("keeps access for 7 days after a renewal goes past due, then closes it", async () => {
       await service.applySubscriptionSnapshot(subscriptionSnapshot());
+      const pastDue = {
+        status: "past_due",
+        currentPeriodStart: d("2026-12-01T00:00:00Z"),
+        currentPeriodEnd: d("2027-01-01T00:00:00Z"),
+      };
+      await service.applySubscriptionSnapshot(
+        subscriptionSnapshot({ ...pastDue, modifiedAt: d("2026-12-01T00:00:10Z") })
+      );
+      // A later dunning retry must not push the deadline out.
+      await service.applySubscriptionSnapshot(
+        subscriptionSnapshot({ ...pastDue, modifiedAt: d("2026-12-04T00:00:00Z") })
+      );
+
+      const graceEnd = d("2026-12-08T00:00:10Z");
+      expect(await service.getStatus(1, d("2026-12-08T00:00:09Z"))).toMatchObject({
+        hasAccess: true,
+        status: "past_due",
+        accessEndsAt: graceEnd,
+      });
+      expect(await service.getStatus(1, graceEnd)).toMatchObject({ hasAccess: false, isLive: true });
+    });
+
+    it("counts the grace period from Polar's past_due_at when it is sent", async () => {
       await service.applySubscriptionSnapshot(
         subscriptionSnapshot({
           status: "past_due",
-          currentPeriodStart: d("2026-12-01T00:00:00Z"),
-          currentPeriodEnd: d("2027-01-01T00:00:00Z"),
-          modifiedAt: d("2026-12-01T00:00:10Z"),
+          pastDueAt: d("2026-12-01T06:00:00Z"),
+          modifiedAt: d("2026-12-02T00:00:00Z"),
         })
       );
-      const status = await service.getStatus(1, AFTER_PERIOD);
-      expect(status).toMatchObject({ hasAccess: false, status: "past_due", isLive: true });
+      expect((await service.getStatus(1)).accessEndsAt).toEqual(d("2026-12-08T06:00:00Z"));
     });
 
     it("restores access when the past-due payment recovers", async () => {

@@ -1,5 +1,5 @@
+import { requirePaidAccess } from "@lib/billing/requirePaidAccess";
 import { _generateMetadata } from "app/_utils";
-
 import LegacyPage from "~/upgrade/upgrade-view";
 
 export const generateMetadata = async () => {
@@ -20,6 +20,7 @@ export const generateMetadata = async () => {
 };
 
 const ServerPage = async () => {
+  await requirePaidAccess();
   return <LegacyPage />;
 };
 

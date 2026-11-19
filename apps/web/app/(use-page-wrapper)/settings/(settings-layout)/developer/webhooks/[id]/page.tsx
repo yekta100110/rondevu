@@ -1,16 +1,14 @@
+import { requirePaidAccess } from "@lib/billing/requirePaidAccess";
+import { buildLegacyRequest } from "@lib/buildLegacyCtx";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
+import { WebhookRepository } from "@rondevu/features/webhooks/lib/repository/WebhookRepository";
+import { APP_NAME } from "@rondevu/lib/constants";
+import prisma from "@rondevu/prisma";
+import { MembershipRole } from "@rondevu/prisma/enums";
 import type { PageProps } from "app/_types";
 import { _generateMetadata } from "app/_utils";
 import { cookies, headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
-
-import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
-import { WebhookRepository } from "@rondevu/features/webhooks/lib/repository/WebhookRepository";
-import prisma from "@rondevu/prisma";
-import { APP_NAME } from "@rondevu/lib/constants";
-import { MembershipRole } from "@rondevu/prisma/enums";
-
-import { buildLegacyRequest } from "@lib/buildLegacyCtx";
-
 import { EditWebhookView } from "~/webhooks/views/webhook-edit-view";
 
 export const generateMetadata = async ({ params }: { params: Promise<{ id: string }> }) =>
@@ -23,6 +21,7 @@ export const generateMetadata = async ({ params }: { params: Promise<{ id: strin
   );
 
 const Page = async ({ params: _params }: PageProps) => {
+  await requirePaidAccess();
   const session = await getServerSession({ req: buildLegacyRequest(await headers(), await cookies()) });
   if (!session?.user?.id) {
     return redirect("/auth/login");

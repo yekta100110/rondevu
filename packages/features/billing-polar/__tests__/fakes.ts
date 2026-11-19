@@ -6,6 +6,7 @@ import type {
   BillingSubscriptionWrite,
   BillingUserRecord,
   IBillingRepository,
+  ManualAccessRecord,
 } from "../repositories/BillingRepository";
 
 export const MONTHLY_PRODUCT = "prod_monthly";
@@ -25,12 +26,14 @@ export class FakeBillingRepository implements IBillingRepository {
   subscriptions = new Map<string, BillingSubscriptionRecord>();
   orders = new Map<string, BillingOrderWrite>();
   webhookEvents = new Map<string, string>();
+  manualAccess = new Map<number, ManualAccessRecord>();
 
   addUser(user: Partial<BillingUserRecord> & { id: number }) {
     this.users.set(user.id, {
       email: `u${user.id}@example.com`,
       name: null,
       locale: "tr",
+      role: "USER",
       metadata: {},
       ...user,
     });
@@ -46,6 +49,33 @@ export class FakeBillingRepository implements IBillingRepository {
   ) {
     const user = this.users.get(userId);
     if (user) this.users.set(userId, { ...user, metadata });
+  }
+
+  async findUserIdByEmail(email: string) {
+    return (
+      Array.from(this.users.values()).find((u) => u.email.toLowerCase() === email.toLowerCase())?.id ?? null
+    );
+  }
+
+  async findManualAccess(userId: number) {
+    return this.manualAccess.get(userId) ?? null;
+  }
+
+  async upsertManualAccess(data: {
+    userId: number;
+    until: Date | null;
+    note: string | null;
+    grantedById: number;
+  }) {
+    this.manualAccess.set(data.userId, { userId: data.userId, until: data.until, note: data.note });
+  }
+
+  async deleteManualAccess(userId: number) {
+    this.manualAccess.delete(userId);
+  }
+
+  async findSubscriptionById(id: string) {
+    return this.subscriptions.get(id) ?? null;
   }
 
   async findSubscriptionsByUserId(userId: number) {
@@ -89,7 +119,8 @@ export class FakeBillingRepository implements IBillingRepository {
     const latest = new Map<string | null, (typeof settled)[number]>();
     for (const order of settled)
       if (!latest.has(order.subscriptionId)) latest.set(order.subscriptionId, order);
-    return Array.from(latest.values()).map(({ subscriptionId, status, polarModifiedAt }) => ({
+    return Array.from(latest.values()).map(({ id, subscriptionId, status, polarModifiedAt }) => ({
+      id,
       subscriptionId,
       status,
       polarModifiedAt,
@@ -114,6 +145,7 @@ export function createFakeGateway() {
     createCustomerPortalUrl: vi
       .fn<PolarGateway["createCustomerPortalUrl"]>()
       .mockResolvedValue("https://polar.test/portal"),
+    revokeSubscription: vi.fn<PolarGateway["revokeSubscription"]>(),
     listSubscriptionsByExternalCustomerId: vi
       .fn<PolarGateway["listSubscriptionsByExternalCustomerId"]>()
       .mockResolvedValue([]),
@@ -133,6 +165,7 @@ export function subscriptionSnapshot(overrides: Partial<SubscriptionSnapshot> = 
     currentPeriodStart: d("2026-11-01T00:00:00Z"),
     currentPeriodEnd: d("2026-12-01T00:00:00Z"),
     endedAt: null,
+    pastDueAt: null,
     createdAt: d("2026-11-01T00:00:00Z"),
     modifiedAt: d("2026-11-01T00:00:00Z"),
     pendingUpdate: null,

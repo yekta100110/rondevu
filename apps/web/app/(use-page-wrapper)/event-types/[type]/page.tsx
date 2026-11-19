@@ -1,7 +1,8 @@
+import { requirePaidAccess } from "@lib/billing/requirePaidAccess";
+import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
 import { eventTypesRouter } from "@rondevu/trpc/server/routers/viewer/eventTypes/_router";
 import { EventTypeWebWrapper } from "@rondevu/web/modules/event-types/components/EventTypeWebWrapper";
-import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 import { createRouterCaller, getTRPCContext } from "app/_trpc/context";
 import type { PageProps, ReadonlyHeaders, ReadonlyRequestCookies } from "app/_types";
 import { _generateMetadata } from "app/_utils";
@@ -39,6 +40,7 @@ const getCachedEventType = unstable_cache(
 );
 
 const ServerPage = async ({ params }: PageProps) => {
+  await requirePaidAccess();
   const session = await getServerSession({ req: buildLegacyRequest(await headers(), await cookies()) });
   if (!session?.user?.id) {
     return redirect("/auth/login");

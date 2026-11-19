@@ -1,12 +1,10 @@
-import type { Metadata } from "next";
+import { getStaticProps } from "@lib/apps/categories/[category]/getStaticProps";
+import { requirePaidAccess } from "@lib/billing/requirePaidAccess";
+import { AppCategories } from "@rondevu/prisma/enums";
 import type { PageProps } from "app/_types";
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { z } from "zod";
-
-import { AppCategories } from "@rondevu/prisma/enums";
-
-import { getStaticProps } from "@lib/apps/categories/[category]/getStaticProps";
-
 import CategoryPage from "~/apps/categories/[category]/category-view";
 
 export const metadata: Metadata = {
@@ -21,6 +19,7 @@ const querySchema = z.object({
 });
 
 async function Page({ params, searchParams }: PageProps) {
+  await requirePaidAccess();
   const parsed = querySchema.safeParse({ ...(await params), ...(await searchParams) });
   if (!parsed.success) {
     redirect("/apps/categories/calendar");

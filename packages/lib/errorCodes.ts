@@ -38,6 +38,8 @@ export enum ErrorCode {
   RequestBodyInvalid = "request_body_invalid_error",
   PrivateLinkExpired = "private_link_expired",
   BookerEmailBlocked = "booker_email_blocked",
+  // The organizer has no paid access, so the public page does not take new bookings.
+  OrganizerNotAcceptingBookings = "organizer_not_accepting_bookings",
   BookerEmailRequiresLogin = "booker_email_requires_login",
   InvalidVerificationCode = "invalid_verification_code",
   UnableToValidateVerificationCode = "unable_to_validate_verification_code",

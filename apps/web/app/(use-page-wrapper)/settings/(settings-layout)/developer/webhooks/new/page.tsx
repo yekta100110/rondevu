@@ -1,10 +1,9 @@
-import { createRouterCaller } from "app/_trpc/context";
-import { _generateMetadata } from "app/_utils";
-
+import { requirePaidAccess } from "@lib/billing/requirePaidAccess";
 import { APP_NAME } from "@rondevu/lib/constants";
 import { appsRouter } from "@rondevu/trpc/server/routers/viewer/apps/_router";
 import { webhookRouter } from "@rondevu/trpc/server/routers/viewer/webhook/_router";
-
+import { createRouterCaller } from "app/_trpc/context";
+import { _generateMetadata } from "app/_utils";
 import { NewWebhookView } from "~/webhooks/views/webhook-new-view";
 
 export const generateMetadata = async () =>
@@ -17,6 +16,7 @@ export const generateMetadata = async () =>
   );
 
 const Page = async () => {
+  await requirePaidAccess();
   const [appsCaller, webhookCaller] = await Promise.all([
     createRouterCaller(appsRouter),
     createRouterCaller(webhookRouter),

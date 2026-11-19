@@ -1,5 +1,5 @@
+import { requirePaidAccess } from "@lib/billing/requirePaidAccess";
 import { _generateMetadata } from "app/_utils";
-
 import PushNotificationsView from "~/settings/my-account/push-notifications-view";
 
 export const generateMetadata = async () =>
@@ -11,7 +11,8 @@ export const generateMetadata = async () =>
     "/settings/my-account/push-notifications"
   );
 
-const Page = () => {
+const Page = async () => {
+  await requirePaidAccess();
   return <PushNotificationsView />;
 };
 

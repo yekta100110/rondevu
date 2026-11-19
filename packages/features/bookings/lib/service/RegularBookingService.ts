@@ -16,6 +16,7 @@ import dayjs from "@rondevu/dayjs";
 import getICalUID from "@rondevu/emails/lib/getICalUID";
 import { consumePhoneVerification } from "@rondevu/features/auth/lib/phoneVerification";
 import { verifyCodeUnAuthenticated } from "@rondevu/features/auth/lib/verifyCodeUnAuthenticated";
+import type { BillingService } from "@rondevu/features/billing-polar/services/BillingService";
 import type {
   BookingDataSchemaGetter,
   BookingHandlerInput,
@@ -57,7 +58,6 @@ import type { EventPayloadType, EventTypeInfo } from "@rondevu/features/webhooks
 import { getTranslation } from "@rondevu/i18n/server";
 import { groupHostsByGroupId } from "@rondevu/lib/bookings/hostGroupUtils";
 import { shouldIgnoreContactOwner } from "@rondevu/lib/bookings/routing/utils";
-import { getVideoCallUrlFromCalEvent } from "@rondevu/lib/RondevuEventParser";
 import { DEFAULT_GROUP_ID, ENABLE_ASYNC_TASKER } from "@rondevu/lib/constants";
 import { contructEmailFromPhoneNumber } from "@rondevu/lib/contructEmailFromPhoneNumber";
 import { ErrorCode } from "@rondevu/lib/errorCodes";
@@ -69,6 +69,7 @@ import { isPhoneConfirmationEvent } from "@rondevu/lib/isPhoneConfirmationEvent"
 import isSmsCalEmail from "@rondevu/lib/isSmsCalEmail";
 import { criticalLogger } from "@rondevu/lib/logger.server";
 import { getPiiFreeCalendarEvent, getPiiFreeEventType } from "@rondevu/lib/piiFreeData";
+import { getVideoCallUrlFromCalEvent } from "@rondevu/lib/RondevuEventParser";
 import { safeStringify } from "@rondevu/lib/safeStringify";
 import { getServerErrorFromUnknown } from "@rondevu/lib/server/getServerErrorFromUnknown";
 import { getTimeFormatStringFromUserTimeFormat } from "@rondevu/lib/timeFormat";
@@ -437,6 +438,8 @@ export interface IBookingServiceDependencies {
   bookingEmailAndSmsTasker: BookingEmailAndSmsTasker;
   bookingEventHandler: BookingEventHandlerService;
   webhookProducer: IWebhookProducerService;
+  /** Paid-access check for the organizer; optional so existing test setups keep working. */
+  billingAccess?: Pick<BillingService, "hasAccess">;
 }
 
 async function validateRescheduleRestrictions({
@@ -1186,6 +1189,16 @@ async function handler(
   const organizerUser = reqBody.teamMemberEmail
     ? (users.find((user) => user.email === reqBody.teamMemberEmail) ?? users[0])
     : users[0];
+
+  // Without paid access the public page takes no new bookings; reschedules of existing ones still work.
+  if (
+    deps.billingAccess &&
+    !rawBookingData.rescheduleUid &&
+    organizerUser &&
+    !(await deps.billingAccess.hasAccess(organizerUser.id))
+  ) {
+    throw new ErrorWithCode(ErrorCode.OrganizerNotAcceptingBookings, ErrorCode.OrganizerNotAcceptingBookings);
+  }
 
   const tOrganizer = await getTranslation(organizerUser?.locale ?? "en", "common");
   const allCredentials = await getAllCredentialsIncludeServiceAccountKey(organizerUser, eventType);

@@ -1,4 +1,4 @@
-import { createPolar, type models } from "@polar-sh/sdk/2026-10";
+import { createPolar, errors, type models } from "@polar-sh/sdk/2026-10";
 import { ErrorCode } from "@rondevu/lib/errorCodes";
 import { ErrorWithCode } from "@rondevu/lib/errors";
 import logger from "@rondevu/lib/logger";
@@ -103,6 +103,21 @@ export class PolarSdkGateway implements PolarGateway {
         snapshots.push(mapSubscription(subscription));
       }
       return snapshots;
+    });
+  }
+
+  async revokeSubscription(subscriptionId: string): Promise<SubscriptionSnapshot> {
+    return callPolar("subscriptions.revoke", async () => {
+      const client = this.getClient();
+      try {
+        return mapSubscription(await client.subscriptions.revoke(subscriptionId));
+      } catch (error) {
+        // A retried webhook may find the subscription already ended; that is the outcome we wanted.
+        if (error instanceof errors.AlreadyCanceledSubscription) {
+          return mapSubscription(await client.subscriptions.get(subscriptionId));
+        }
+        throw error;
+      }
     });
   }
 }

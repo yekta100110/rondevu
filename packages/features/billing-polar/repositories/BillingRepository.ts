@@ -13,6 +13,7 @@ export type BillingSubscriptionRecord = {
   currentPeriodStart: Date;
   currentPeriodEnd: Date;
   endedAt: Date | null;
+  pastDueAt: Date | null;
   pendingPlan: BillingPlanKey | null;
   pendingPlanAppliesAt: Date | null;
   polarCreatedAt: Date;
@@ -45,8 +46,11 @@ export type BillingUserRecord = {
   email: string;
   name: string | null;
   locale: string | null;
+  role: string;
   metadata: Prisma.JsonValue;
 };
+
+export type ManualAccessRecord = { userId: number; until: Date | null; note: string | null };
 
 const subscriptionSelect = {
   id: true,
@@ -59,6 +63,7 @@ const subscriptionSelect = {
   currentPeriodStart: true,
   currentPeriodEnd: true,
   endedAt: true,
+  pastDueAt: true,
   pendingPlan: true,
   pendingPlanAppliesAt: true,
   polarCreatedAt: true,
@@ -76,8 +81,46 @@ export class BillingRepository {
   findUserById(userId: number): Promise<BillingUserRecord | null> {
     return this.prismaClient.user.findUnique({
       where: { id: userId },
-      select: { id: true, email: true, name: true, locale: true, metadata: true },
+      select: { id: true, email: true, name: true, locale: true, role: true, metadata: true },
     });
+  }
+
+  async findUserIdByEmail(email: string): Promise<number | null> {
+    const user = await this.prismaClient.user.findFirst({
+      where: { email: { equals: email, mode: "insensitive" } },
+      select: { id: true },
+    });
+    return user?.id ?? null;
+  }
+
+  findManualAccess(userId: number): Promise<ManualAccessRecord | null> {
+    return this.prismaClient.billingManualAccess.findUnique({
+      where: { userId },
+      select: { userId: true, until: true, note: true },
+    });
+  }
+
+  async upsertManualAccess(data: {
+    userId: number;
+    until: Date | null;
+    note: string | null;
+    grantedById: number;
+  }): Promise<void> {
+    const { userId, ...fields } = data;
+    await this.prismaClient.billingManualAccess.upsert({
+      where: { userId },
+      create: { userId, ...fields },
+      update: fields,
+      select: { userId: true },
+    });
+  }
+
+  async deleteManualAccess(userId: number): Promise<void> {
+    await this.prismaClient.billingManualAccess.deleteMany({ where: { userId } });
+  }
+
+  findSubscriptionById(id: string): Promise<BillingSubscriptionRecord | null> {
+    return this.prismaClient.billingSubscription.findUnique({ where: { id }, select: subscriptionSelect });
   }
 
   async updateUserMetadata(userId: number, metadata: Record<string, Prisma.JsonValue>): Promise<void> {
@@ -158,11 +201,11 @@ export class BillingRepository {
 
   findLatestSettledOrderBySubscriptionIds(
     subscriptionIds: string[]
-  ): Promise<{ subscriptionId: string | null; status: string; polarModifiedAt: Date }[]> {
+  ): Promise<{ id: string; subscriptionId: string | null; status: string; polarModifiedAt: Date }[]> {
     if (subscriptionIds.length === 0) return Promise.resolve([]);
     return this.prismaClient.billingOrder.findMany({
       where: { subscriptionId: { in: subscriptionIds }, status: { in: SETTLED_ORDER_STATUSES } },
-      select: { subscriptionId: true, status: true, polarModifiedAt: true },
+      select: { id: true, subscriptionId: true, status: true, polarModifiedAt: true },
       orderBy: { polarCreatedAt: "desc" },
       distinct: ["subscriptionId"],
     });

@@ -1,16 +1,14 @@
-import { createRouterCaller } from "app/_trpc/context";
-import { _generateMetadata } from "app/_utils";
-import { cookies, headers } from "next/headers";
-import { redirect } from "next/navigation";
-
+import { requirePaidAccess } from "@lib/billing/requirePaidAccess";
+import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
 import { IS_SELF_HOSTED } from "@rondevu/lib/constants";
 import hasKeyInMetadata from "@rondevu/lib/hasKeyInMetadata";
 import { meRouter } from "@rondevu/trpc/server/routers/viewer/me/_router";
 import { getCachedHasTeamPlan } from "@rondevu/web/app/cache/membership";
-
-import { buildLegacyRequest } from "@lib/buildLegacyCtx";
-
+import { createRouterCaller } from "app/_trpc/context";
+import { _generateMetadata } from "app/_utils";
+import { cookies, headers } from "next/headers";
+import { redirect } from "next/navigation";
 import AppearancePage from "~/settings/my-account/appearance-view";
 
 export const generateMetadata = async () =>
@@ -23,6 +21,7 @@ export const generateMetadata = async () =>
   );
 
 const Page = async () => {
+  await requirePaidAccess();
   const session = await getServerSession({ req: buildLegacyRequest(await headers(), await cookies()) });
   const userId = session?.user?.id;
   const redirectUrl = "/auth/login?callbackUrl=/settings/my-account/appearance";

@@ -1,4 +1,5 @@
 import { errorConversionMiddleware } from "../middlewares/errorConversionMiddleware";
+import { assertPaidAccessForMutation } from "../middlewares/paidAccessMiddleware";
 import perfMiddleware from "../middlewares/perfMiddleware";
 import { isAdminMiddleware, isAuthed, isOrgAdminMiddleware } from "../middlewares/sessionMiddleware";
 import { procedure } from "../trpc";
@@ -24,7 +25,15 @@ const isRateLimitedByUserIdMiddleware = ({ intervalInMs, limit }: IRateLimitOpti
       return next({ ctx: { user: ctx.user, session: ctx.session } });
     });
 */
-const authedProcedure = procedure.use(perfMiddleware).use(errorConversionMiddleware).use(isAuthed);
+/** Signed-in procedures that must keep working without paid access (billing, password, profile). */
+export const authedProcedureWithoutPaywall = procedure
+  .use(perfMiddleware)
+  .use(errorConversionMiddleware)
+  .use(isAuthed);
+const authedProcedure = authedProcedureWithoutPaywall.use(async ({ ctx, type, next }) => {
+  await assertPaidAccessForMutation({ type, userId: ctx.user.id });
+  return next();
+});
 /*export const authedRateLimitedProcedure = ({ intervalInMs, limit }: IRateLimitOptions) =>
 authedProcedure.use(isRateLimitedByUserIdMiddleware({ intervalInMs, limit }));*/
 export const authedAdminProcedure = publicProcedure.use(isAdminMiddleware);

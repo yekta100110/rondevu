@@ -1,17 +1,15 @@
+import { requirePaidAccess } from "@lib/billing/requirePaidAccess";
+import { buildLegacyRequest } from "@lib/buildLegacyCtx";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
+import { AppCategories } from "@rondevu/prisma/enums";
+import { appsRouter } from "@rondevu/trpc/server/routers/viewer/apps/_router";
+import { calendarsRouter } from "@rondevu/trpc/server/routers/viewer/calendars/_router";
 import { createRouterCaller } from "app/_trpc/context";
 import type { PageProps } from "app/_types";
 import { _generateMetadata } from "app/_utils";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { z } from "zod";
-
-import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
-import { AppCategories } from "@rondevu/prisma/enums";
-import { appsRouter } from "@rondevu/trpc/server/routers/viewer/apps/_router";
-import { calendarsRouter } from "@rondevu/trpc/server/routers/viewer/calendars/_router";
-
-import { buildLegacyRequest } from "@lib/buildLegacyCtx";
-
 import InstalledApps from "~/apps/installed/[category]/installed-category-view";
 
 const querySchema = z.object({
@@ -36,6 +34,7 @@ export const generateMetadata = async ({ params }: { params: Promise<{ category:
 };
 
 const InstalledAppsWrapper = async ({ params }: PageProps) => {
+  await requirePaidAccess();
   const parsedParams = querySchema.safeParse(await params);
 
   if (!parsedParams.success) {

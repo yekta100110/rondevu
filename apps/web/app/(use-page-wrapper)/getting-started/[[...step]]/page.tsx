@@ -1,17 +1,15 @@
-import { createRouterCaller } from "app/_trpc/context";
-import type { PageProps as ServerPageProps } from "app/_types";
-import { _generateMetadata } from "app/_utils";
-import { cookies, headers } from "next/headers";
-import { redirect } from "next/navigation";
-
+import { requirePaidAccess } from "@lib/billing/requirePaidAccess";
+import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
 import { UserRepository } from "@rondevu/features/users/repositories/UserRepository";
 import { APP_NAME } from "@rondevu/lib/constants";
 import prisma from "@rondevu/prisma";
 import { meRouter } from "@rondevu/trpc/server/routers/viewer/me/_router";
-
-import { buildLegacyRequest } from "@lib/buildLegacyCtx";
-
+import { createRouterCaller } from "app/_trpc/context";
+import type { PageProps as ServerPageProps } from "app/_types";
+import { _generateMetadata } from "app/_utils";
+import { cookies, headers } from "next/headers";
+import { redirect } from "next/navigation";
 import Page from "~/getting-started/[[...step]]/onboarding-view";
 
 export const generateMetadata = async ({ params }: ServerPageProps) => {
@@ -27,6 +25,7 @@ export const generateMetadata = async ({ params }: ServerPageProps) => {
 };
 
 const ServerPage = async ({ params, searchParams }: ServerPageProps) => {
+  await requirePaidAccess();
   const session = await getServerSession({ req: buildLegacyRequest(await headers(), await cookies()) });
 
   if (!session?.user?.id) {

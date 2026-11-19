@@ -2,7 +2,14 @@ import { createHmac } from "node:crypto";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { BillingService } from "../services/BillingService";
 import { PolarWebhookService } from "../services/PolarWebhookService";
-import { CUSTOMER_ID, createFakeGateway, FakeBillingRepository, MONTHLY_PRODUCT, testConfig } from "./fakes";
+import {
+  CUSTOMER_ID,
+  createFakeGateway,
+  FakeBillingRepository,
+  MONTHLY_PRODUCT,
+  subscriptionSnapshot,
+  testConfig,
+} from "./fakes";
 
 const NOW = new Date("2026-11-15T00:00:00Z");
 
@@ -85,6 +92,7 @@ function orderEvent(type: string, fields: { status: string; refunded_amount?: nu
 describe("PolarWebhookService", () => {
   let repo: FakeBillingRepository;
   let billingService: BillingService;
+  let gateway: ReturnType<typeof createFakeGateway>;
   let webhookService: PolarWebhookService;
 
   const send = (payload: unknown, options?: Parameters<typeof delivery>[1]) => {
@@ -97,9 +105,10 @@ describe("PolarWebhookService", () => {
     vi.setSystemTime(NOW);
     repo = new FakeBillingRepository();
     repo.addUser({ id: 1, metadata: { isOutreachDemo: true, demoExpiresAt: "2026-11-16T00:00:00Z" } });
+    gateway = createFakeGateway();
     billingService = new BillingService({
       billingRepository: repo,
-      polarGateway: createFakeGateway(),
+      polarGateway: gateway,
       config: testConfig,
     });
     webhookService = new PolarWebhookService({ billingService, billingRepository: repo, config: testConfig });
@@ -204,7 +213,7 @@ describe("PolarWebhookService", () => {
     expect((await billingService.getStatus(1)).cancelAtPeriodEnd).toBe(false);
   });
 
-  it("closes access on subscription.past_due and on subscription.revoked", async () => {
+  it("gives 7 days of grace on subscription.past_due and closes access on subscription.revoked", async () => {
     await send(subscriptionEvent("subscription.active"));
     await send(
       subscriptionEvent("subscription.past_due", {
@@ -214,7 +223,9 @@ describe("PolarWebhookService", () => {
         modified_at: "2026-12-01T00:00:05Z",
       })
     );
-    vi.setSystemTime(new Date("2026-12-02T00:00:00Z"));
+    vi.setSystemTime(new Date("2026-12-07T00:00:00Z"));
+    expect(await billingService.getStatus(1)).toMatchObject({ hasAccess: true, status: "past_due" });
+    vi.setSystemTime(new Date("2026-12-08T00:00:06Z"));
     expect(await billingService.getStatus(1)).toMatchObject({ hasAccess: false, status: "past_due" });
 
     await send(
@@ -233,16 +244,52 @@ describe("PolarWebhookService", () => {
     });
   });
 
-  it("takes access back on order.refunded", async () => {
+  it("takes access back and revokes the subscription on order.refunded", async () => {
+    gateway.revokeSubscription.mockResolvedValue({
+      ...subscriptionSnapshot(),
+      status: "canceled",
+      endedAt: new Date("2026-11-12T00:00:01Z"),
+      modifiedAt: new Date("2026-11-12T00:00:01Z"),
+    });
     await send(orderEvent("order.paid", { status: "paid", modified_at: "2026-11-01T00:00:05Z" }));
-    await send(
+    const result = await send(
       orderEvent("order.refunded", {
         status: "refunded",
         refunded_amount: 99000,
         modified_at: "2026-11-12T00:00:00Z",
       })
     );
-    expect(await billingService.getStatus(1)).toMatchObject({ hasAccess: false, refunded: true });
+
+    expect(result).toMatchObject({ status: 202, outcome: "processed" });
+    expect(gateway.revokeSubscription).toHaveBeenCalledWith("sub_1");
+    expect(await billingService.getStatus(1)).toMatchObject({
+      hasAccess: false,
+      refunded: true,
+      isLive: false,
+    });
+  });
+
+  it("leaves a refund unrecorded when the revoke fails so Polar retries it", async () => {
+    gateway.revokeSubscription.mockRejectedValueOnce(new Error("polar down"));
+    await send(orderEvent("order.paid", { status: "paid", modified_at: "2026-11-01T00:00:05Z" }));
+    const refund = orderEvent("order.refunded", {
+      status: "refunded",
+      refunded_amount: 99000,
+      modified_at: "2026-11-12T00:00:00Z",
+    });
+
+    await expect(send(refund, { id: "msg_refund" })).rejects.toThrow("polar down");
+    expect(repo.webhookEvents.has("msg_refund")).toBe(false);
+
+    gateway.revokeSubscription.mockResolvedValueOnce({
+      ...subscriptionSnapshot(),
+      status: "canceled",
+      endedAt: new Date("2026-11-12T00:00:01Z"),
+      modifiedAt: new Date("2026-11-12T00:00:01Z"),
+    });
+    expect(await send(refund, { id: "msg_refund" })).toMatchObject({ status: 202, outcome: "processed" });
+    expect(repo.webhookEvents.has("msg_refund")).toBe(true);
+    expect(gateway.revokeSubscription).toHaveBeenCalledTimes(2);
   });
 
   it("acknowledges events for customers it cannot match without retrying", async () => {

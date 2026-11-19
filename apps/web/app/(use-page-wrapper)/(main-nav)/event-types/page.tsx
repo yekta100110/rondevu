@@ -1,9 +1,10 @@
+import { requirePaidAccess } from "@lib/billing/requirePaidAccess";
+import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
 import { checkOnboardingRedirect } from "@rondevu/features/auth/lib/onboardingUtils";
 import { getTeamsFiltersFromQuery } from "@rondevu/features/filters/lib/getTeamsFiltersFromQuery";
 import type { RouterOutputs } from "@rondevu/trpc/react";
 import { eventTypesRouter } from "@rondevu/trpc/server/routers/viewer/eventTypes/_router";
-import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 import { createRouterCaller, getTRPCContext } from "app/_trpc/context";
 import type { PageProps, ReadonlyHeaders, ReadonlyRequestCookies } from "app/_types";
 import { _generateMetadata } from "app/_utils";
@@ -11,7 +12,6 @@ import { unstable_cache } from "next/cache";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import type { ReactElement } from "react";
-
 import { EventTypesWrapper } from "./EventTypesWrapper";
 
 const getCachedEventGroups: (
@@ -43,6 +43,7 @@ const getCachedEventGroups: (
 );
 
 const Page = async ({ searchParams }: PageProps): Promise<ReactElement> => {
+  await requirePaidAccess();
   const _searchParams = await searchParams;
   const _headers = await headers();
   const _cookies = await cookies();

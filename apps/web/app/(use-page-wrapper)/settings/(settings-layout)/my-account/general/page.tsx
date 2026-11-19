@@ -1,14 +1,12 @@
+import { requirePaidAccess } from "@lib/billing/requirePaidAccess";
+import { buildLegacyRequest } from "@lib/buildLegacyCtx";
+import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
+import { meRouter } from "@rondevu/trpc/server/routers/viewer/me/_router";
+import { getTravelSchedule } from "@rondevu/web/app/cache/travelSchedule";
 import { createRouterCaller } from "app/_trpc/context";
 import { _generateMetadata } from "app/_utils";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
-
-import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
-import { meRouter } from "@rondevu/trpc/server/routers/viewer/me/_router";
-import { getTravelSchedule } from "@rondevu/web/app/cache/travelSchedule";
-
-import { buildLegacyRequest } from "@lib/buildLegacyCtx";
-
 import GeneralView from "~/settings/my-account/general-view";
 
 export const generateMetadata = async () =>
@@ -21,6 +19,7 @@ export const generateMetadata = async () =>
   );
 
 const Page = async () => {
+  await requirePaidAccess();
   const session = await getServerSession({ req: buildLegacyRequest(await headers(), await cookies()) });
   const userId = session?.user?.id;
   const redirectUrl = "/auth/login?callbackUrl=/settings/my-account/general";

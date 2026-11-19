@@ -1,6 +1,5 @@
 import { ZVerifyCodeInputSchema } from "@rondevu/prisma/zod-utils";
-
-import authedProcedure from "../../../procedures/authedProcedure";
+import authedProcedure, { authedProcedureWithoutPaywall } from "../../../procedures/authedProcedure";
 import publicProcedure from "../../../procedures/publicProcedure";
 import { router } from "../../../trpc";
 import { ZChangePasswordInputSchema } from "./changePassword.schema";
@@ -19,23 +18,27 @@ type AuthRouterHandlerCache = {
 };
 
 export const authRouter = router({
-  changePassword: authedProcedure.input(ZChangePasswordInputSchema).mutation(async ({ input, ctx }) => {
-    const { changePasswordHandler } = await import("./changePassword.handler");
+  changePassword: authedProcedureWithoutPaywall
+    .input(ZChangePasswordInputSchema)
+    .mutation(async ({ input, ctx }) => {
+      const { changePasswordHandler } = await import("./changePassword.handler");
 
-    return changePasswordHandler({
-      ctx,
-      input,
-    });
-  }),
+      return changePasswordHandler({
+        ctx,
+        input,
+      });
+    }),
 
-  verifyPassword: authedProcedure.input(ZVerifyPasswordInputSchema).mutation(async ({ input, ctx }) => {
-    const { verifyPasswordHandler } = await import("./verifyPassword.handler");
+  verifyPassword: authedProcedureWithoutPaywall
+    .input(ZVerifyPasswordInputSchema)
+    .mutation(async ({ input, ctx }) => {
+      const { verifyPasswordHandler } = await import("./verifyPassword.handler");
 
-    return verifyPasswordHandler({
-      ctx,
-      input,
-    });
-  }),
+      return verifyPasswordHandler({
+        ctx,
+        input,
+      });
+    }),
 
   verifyCodeUnAuthenticated: publicProcedure.input(ZVerifyCodeInputSchema).mutation(async ({ input }) => {
     const { verifyCodeUnAuthenticatedHandler } = await import("./verifyCodeUnAuthenticated.handler");
@@ -54,16 +57,18 @@ export const authRouter = router({
     });
   }),
 
-  resendVerifyEmail: authedProcedure.input(ZResendVerifyEmailSchema).mutation(async ({ input, ctx }) => {
-    const { resendVerifyEmail } = await import("./resendVerifyEmail.handler");
+  resendVerifyEmail: authedProcedureWithoutPaywall
+    .input(ZResendVerifyEmailSchema)
+    .mutation(async ({ input, ctx }) => {
+      const { resendVerifyEmail } = await import("./resendVerifyEmail.handler");
 
-    return resendVerifyEmail({
-      input,
-      ctx,
-    });
-  }),
+      return resendVerifyEmail({
+        input,
+        ctx,
+      });
+    }),
 
-  createAccountPassword: authedProcedure.mutation(async ({ ctx }) => {
+  createAccountPassword: authedProcedureWithoutPaywall.mutation(async ({ ctx }) => {
     const { createAccountPasswordHandler } = await import("./createAccountPassword.handler");
 
     return createAccountPasswordHandler({

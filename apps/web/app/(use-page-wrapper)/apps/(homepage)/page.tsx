@@ -1,14 +1,12 @@
-import { _generateMetadata } from "app/_utils";
-import { cookies, headers } from "next/headers";
-
+import { requirePaidAccess } from "@lib/billing/requirePaidAccess";
+import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 import { getAppRegistry, getAppRegistryWithCredentials } from "@rondevu/app-store/_appRegistry";
 import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
 import { UserRepository } from "@rondevu/features/users/repositories/UserRepository";
 import prisma from "@rondevu/prisma";
 import type { AppCategories } from "@rondevu/prisma/enums";
-
-import { buildLegacyRequest } from "@lib/buildLegacyCtx";
-
+import { _generateMetadata } from "app/_utils";
+import { cookies, headers } from "next/headers";
 import AppsPage from "~/apps/apps-view";
 
 export const generateMetadata = async () => {
@@ -29,6 +27,7 @@ export const generateMetadata = async () => {
 };
 
 const ServerPage = async () => {
+  await requirePaidAccess();
   const req = buildLegacyRequest(await headers(), await cookies());
   const session = await getServerSession({ req });
   let appStore, userAdminTeamsIds: number[];

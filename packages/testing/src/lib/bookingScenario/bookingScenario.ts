@@ -713,6 +713,11 @@ export async function addUsersToDb(users: InputUser[]) {
     data: users,
   });
 
+  // Booking scenarios model active accounts; new bookings are refused for organizers without access.
+  await prismock.billingManualAccess.createMany({
+    data: users.map((user) => ({ userId: user.id, until: null, note: "test-scenario" })),
+  });
+
   // Create OutOfOfficeEntry for users with outOfOffice data
   for (const user of users) {
     if (user.outOfOffice) {

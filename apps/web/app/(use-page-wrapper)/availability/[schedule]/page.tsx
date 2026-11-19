@@ -1,12 +1,11 @@
+import { requirePaidAccess } from "@lib/billing/requirePaidAccess";
+import { availabilityRouter } from "@rondevu/trpc/server/routers/viewer/availability/_router";
+import { travelSchedulesRouter } from "@rondevu/trpc/server/routers/viewer/travelSchedules/_router";
 import { createRouterCaller } from "app/_trpc/context";
 import type { PageProps } from "app/_types";
 import { _generateMetadata } from "app/_utils";
 import { notFound } from "next/navigation";
 import { z } from "zod";
-
-import { availabilityRouter } from "@rondevu/trpc/server/routers/viewer/availability/_router";
-import { travelSchedulesRouter } from "@rondevu/trpc/server/routers/viewer/travelSchedules/_router";
-
 import { AvailabilitySettingsWebWrapper } from "~/availability/[schedule]/schedule-view";
 
 const querySchema = z.object({
@@ -29,6 +28,7 @@ export const generateMetadata = async () => {
 };
 
 const Page = async ({ params }: PageProps) => {
+  await requirePaidAccess();
   const parsed = querySchema.safeParse(await params);
   if (!parsed.success) {
     notFound();

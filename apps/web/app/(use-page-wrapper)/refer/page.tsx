@@ -1,10 +1,8 @@
+import { requirePaidAccess } from "@lib/billing/requirePaidAccess";
+import { IS_DUB_REFERRALS_ENABLED } from "@rondevu/lib/constants";
 import { getTranslate } from "app/_utils";
 import type { Metadata } from "next";
-
-import { IS_DUB_REFERRALS_ENABLED } from "@rondevu/lib/constants";
-
 import Shell from "~/shell/Shell";
-
 import { DubReferralsPage } from "./DubReferralsPage";
 
 export const metadata: Metadata = {
@@ -19,6 +17,7 @@ export const metadata: Metadata = {
 
 // Export the appropriate component based on the feature flag
 export default async function ReferralsPage() {
+  await requirePaidAccess();
   const t = await getTranslate();
 
   return (

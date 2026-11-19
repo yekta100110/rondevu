@@ -1,7 +1,8 @@
+import { requirePaidAccess } from "@lib/billing/requirePaidAccess";
+import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 import { getServerSession } from "@rondevu/features/auth/lib/getServerSession";
 import { getScheduleListItemData } from "@rondevu/lib/schedules/transformers/getScheduleListItemData";
 import { availabilityRouter } from "@rondevu/trpc/server/routers/viewer/availability/_router";
-import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 import { createRouterCaller, getTRPCContext } from "app/_trpc/context";
 import type { PageProps, ReadonlyHeaders, ReadonlyRequestCookies } from "app/_types";
 import { _generateMetadata, getTranslate } from "app/_utils";
@@ -34,6 +35,7 @@ const getCachedAvailabilities = unstable_cache(
 );
 
 const Page = async ({ searchParams: _searchParams }: PageProps) => {
+  await requirePaidAccess();
   const searchParams = await _searchParams;
   const t = await getTranslate();
   const _headers = await headers();

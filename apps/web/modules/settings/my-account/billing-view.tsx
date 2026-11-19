@@ -9,6 +9,7 @@ import { Badge } from "@rondevu/ui/components/badge";
 import { Button } from "@rondevu/ui/components/button";
 import { SkeletonText } from "@rondevu/ui/components/skeleton";
 import { showToast } from "@rondevu/ui/components/toast";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 type BillingStatus = RouterOutputs["viewer"]["billing"]["getStatus"];
@@ -220,6 +221,31 @@ function SubscriptionDetails({ status }: { status: BillingStatus }) {
   );
 }
 
+function AccessNotice() {
+  const { t, i18n } = useLocale();
+  const searchParams = useSearchParams();
+  const { data: access } = trpc.viewer.billing.getAccess.useQuery();
+  if (!access) return null;
+
+  if (!access.hasAccess) {
+    return searchParams?.get("locked") ? (
+      <Alert severity="warning" title={t("plan_billing_locked_notice")} />
+    ) : null;
+  }
+  if (access.reason === "subscription" || access.reason === "admin") return null;
+
+  const date = access.until
+    ? new Intl.DateTimeFormat(i18n.language, { dateStyle: "long" }).format(new Date(access.until))
+    : null;
+  const key =
+    access.reason === "outreach_demo"
+      ? "plan_billing_demo_access_notice"
+      : date
+        ? "plan_billing_manual_access_until_notice"
+        : "plan_billing_manual_access_notice";
+  return <Alert severity="info" title={t(key, { date })} />;
+}
+
 const BillingView = () => {
   const { t } = useLocale();
   const { data: status, isPending } = trpc.viewer.billing.getStatus.useQuery();
@@ -232,6 +258,7 @@ const BillingView = () => {
       description={t("plan_billing_description")}
       borderInShellHeader={true}>
       <div className="flex flex-col gap-8 rounded-b-xl border-subtle border-x border-b px-4 pt-8 pb-10 sm:px-6">
+        <AccessNotice />
         {isPending || !status ? (
           <SkeletonText className="h-24 w-full" />
         ) : (

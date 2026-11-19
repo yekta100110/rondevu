@@ -1,15 +1,17 @@
-import { WEBAPP_URL } from "@rondevu/lib/constants";
-import { loadTranslations } from "@rondevu/i18n/server";
 import { EventTypeServiceSchema } from "@components/schemas/ProfileSchema";
 import { buildLegacyCtx, decodeParams } from "@lib/buildLegacyCtx";
+import { getBillingService } from "@rondevu/features/billing-polar/di/BillingService.container";
+import { loadTranslations } from "@rondevu/i18n/server";
+import { WEBAPP_URL } from "@rondevu/lib/constants";
 import { getServerSideProps } from "@server/lib/[user]/[type]/getServerSideProps";
 import type { PageProps } from "app/_types";
-import { generateMeetingMetadata } from "app/_utils";
+import { generateMeetingMetadata, getTranslate } from "app/_utils";
 import { CustomI18nProvider } from "app/CustomI18nProvider";
 import { withAppDirSsr } from "app/WithAppDirSsr";
 import type { Metadata } from "next";
 import { cookies, headers } from "next/headers";
 import type React from "react";
+import { BookingsPausedNotice } from "~/billing/bookings-paused-notice";
 import type { PageProps as LegacyPageProps } from "~/users/views/users-type-public-view";
 import LegacyPage from "~/users/views/users-type-public-view";
 
@@ -38,6 +40,22 @@ const ServerPage = async ({ params, searchParams }: PageProps): Promise<JSX.Elem
   const props = await getData(legacyCtx);
   const { isOutreachDemo, isHidden, allowSEOIndexing, canIndex } = resolveEventTypeSeoFlags(props);
   const { eventData, user } = props;
+
+  // The booking API refuses new bookings for organizers without paid access; say so up front.
+  const ownerId = eventData?.owner?.id;
+  if (
+    !props.rescheduleUid &&
+    typeof ownerId === "number" &&
+    !(await getBillingService().hasAccess(ownerId))
+  ) {
+    const t = await getTranslate();
+    return (
+      <BookingsPausedNotice
+        title={t("bookings_paused_title")}
+        description={t("organizer_not_accepting_bookings")}
+      />
+    );
+  }
 
   const serviceSchema =
     canIndex && eventData ? (

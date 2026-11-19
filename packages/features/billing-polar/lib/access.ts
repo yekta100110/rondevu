@@ -3,15 +3,17 @@ export type SubscriptionAccessInput = {
   currentPeriodStart: Date;
   currentPeriodEnd: Date;
   endedAt: Date | null;
+  pastDueAt: Date | null;
 };
+
+export const PAST_DUE_GRACE_MS = 7 * 24 * 60 * 60 * 1000;
 
 export type LatestOrderInput = { status: string; modifiedAt: Date } | null;
 
 const PAID_THROUGH_PERIOD_END = new Set(["active", "trialing", "canceled"]);
 
 /**
- * Access always follows money actually collected: a subscription is usable until the end of the
- * period it paid for, never beyond it.
+ * Access follows the period that was paid for; the only extension is the past-due grace period.
  */
 export function computeAccessEndsAt(
   sub: SubscriptionAccessInput,
@@ -22,9 +24,10 @@ export function computeAccessEndsAt(
   if (PAID_THROUGH_PERIOD_END.has(sub.status)) {
     accessEndsAt = sub.currentPeriodEnd;
   } else if (sub.status === "past_due") {
-    // Polar rolls the period forward before the renewal charge fails, so the paid coverage ended
-    // where the unpaid period starts. There is no grace period while Polar retries the card.
-    accessEndsAt = sub.currentPeriodStart;
+    // A failed renewal keeps the account usable for 7 days from the moment it went past due while
+    // Polar retries the card; a recovered payment flips the status back to active.
+    const pastDueSince = sub.pastDueAt ?? sub.currentPeriodStart;
+    accessEndsAt = new Date(pastDueSince.getTime() + PAST_DUE_GRACE_MS);
   }
 
   if (!accessEndsAt) return null;
