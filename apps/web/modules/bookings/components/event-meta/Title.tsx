@@ -14,7 +14,7 @@ export const EventTitle = ({ children, as, className }: EventTitleProps) => {
   return (
     <El
       data-testid="event-title"
-      className={classNames("text-text break-words text-xl font-semibold", className)}>
+      className={classNames("text-emphasis text-balance break-words text-xl font-semibold tracking-[-0.04em]", className)}>
       {children}
     </El>
   );

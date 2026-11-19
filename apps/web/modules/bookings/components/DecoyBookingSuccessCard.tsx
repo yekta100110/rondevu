@@ -42,7 +42,7 @@ export function DecoyBookingSuccessCard({
                 aria-labelledby="modal-headline">
                 <div>
                   <div className="bg-rondevu-success mx-auto flex h-12 w-12 items-center justify-center rounded-full">
-                    <CheckIcon className="h-5 w-5 text-green-600 dark:text-green-400" />
+                    <CheckIcon className="h-5 w-5 text-default dark:text-subtle" />
                   </div>
                 </div>
                 <div className="mb-8 mt-6 text-center last:mb-0">

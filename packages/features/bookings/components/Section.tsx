@@ -56,7 +56,7 @@ export const BookerSection = forwardRef<HTMLDivElement, BookerSectionProps>(func
   if (!visible && typeof visible !== "undefined") return null;
 
   return (
-    <m.div ref={ref} className={classNames(gridClassName, className)} layout {...props}>
+    <m.div ref={ref} className={classNames(gridClassName, className)} {...props}>
       {children}
     </m.div>
   );

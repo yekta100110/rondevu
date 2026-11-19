@@ -43,7 +43,7 @@ export const AvailableTimesHeader = ({
       <span
         className={classNames(
           isColumnView && "w-full text-center",
-          isColumnView ? "text-subtle text-xs uppercase" : "text-emphasis font-semibold"
+          isColumnView ? "text-subtle text-xs uppercase" : "text-emphasis text-sm font-medium"
         )}>
         <span
           className={classNames(
@@ -55,7 +55,7 @@ export const AvailableTimesHeader = ({
         <span
           className={classNames(
             isColumnView && isToday && "bg-brand-default text-brand ml-2",
-            "inline-flex items-center justify-center rounded-3xl px-1 pt-0.5 font-medium",
+            "inline-flex items-center justify-center rounded-3xl px-1 pt-0.5 font-mono font-medium tabular-nums",
             isMonthView
               ? `text-default text-sm ${customClassNames?.availableTimeSlotsTitle}`
               : `text-xs ${customClassNames?.availableTimeSlotsTitle}`

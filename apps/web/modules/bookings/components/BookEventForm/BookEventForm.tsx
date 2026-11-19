@@ -203,9 +203,13 @@ export const BookEventForm = ({
         )}
 
         {!rescheduleUid && (
-          <div className="my-3 text-sm">
-            <label className="flex items-start gap-2">
-              <input type="checkbox" {...bookingForm.register("whatsappConsent")} />
+          <div className="border-subtle my-3 rounded-lg border p-3 text-sm">
+            <label className="text-default flex cursor-pointer items-start gap-2.5">
+              <input
+                type="checkbox"
+                className="accent-brand-default mt-0.5 size-4 shrink-0"
+                {...bookingForm.register("whatsappConsent")}
+              />
               <span>{t("whatsapp_guest_notice")}</span>
             </label>
             {bookingForm.watch("whatsappConsent") && (
@@ -215,7 +219,7 @@ export const BookEventForm = ({
                 required
                 pattern="\+[1-9][0-9]{7,14}"
                 placeholder={t("whatsapp_phone_hint")}
-                className="mt-2 w-full rounded-md border border-subtle bg-default p-2"
+                className="border-default bg-default text-emphasis placeholder:text-muted focus:border-emphasis mt-3 h-9 w-full rounded-md border px-3 font-mono text-sm tabular-nums outline-none transition-colors"
                 {...bookingForm.register("whatsappPhoneNumber")}
               />
             )}
@@ -243,13 +247,14 @@ export const BookEventForm = ({
             .
           </div>
         )}
-        <div className="flex justify-end mt-auto space-x-2 modalsticky rtl:space-x-reverse">
+        <div className="modalsticky mt-auto flex items-center justify-between gap-2 pt-2">
           {!!onCancel && (
             <Button
               color="minimal"
               type="button"
               onClick={onCancel}
               data-testid="back"
+              StartIcon="arrow-left"
               className={classNames?.backButton}>
               {t("back")}
             </Button>
@@ -266,7 +271,7 @@ export const BookEventForm = ({
               loadingStates.creatingRecurringBooking ||
               isVerificationCodeSending
             }
-            className={classNames?.confirmButton}
+            className={`ml-auto ${classNames?.confirmButton ?? ""}`}
             data-testid={rescheduleUid && bookingData ? "confirm-reschedule-button" : "confirm-book-button"}>
             {rescheduleUid && bookingData
               ? t("reschedule")
@@ -278,7 +283,7 @@ export const BookEventForm = ({
                     (!bookingForm.watch("responses.email") &&
                       (bookingForm.watch("responses.attendeePhoneNumber") ||
                         bookingForm.watch("responses.phone")))
-                  ? "Telefonu Doğrula"
+                  ? t("verify_phone_button")
                   : t("verify_email_button")}
           </Button>
         </div>

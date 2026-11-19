@@ -185,7 +185,7 @@ export const VerifyCodeDialog = ({
             </div>
 
             {error && (
-              <div className="mt-3 flex items-center gap-x-2 text-red-600 text-sm">
+              <div className="mt-3 flex items-center gap-x-2 text-error text-sm">
                 <div>
                   <InfoIcon className="h-4 w-4" />
                 </div>

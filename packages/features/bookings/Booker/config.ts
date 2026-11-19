@@ -5,17 +5,18 @@ import { useEffect } from "react";
 import { BookerLayouts } from "@rondevu/prisma/zod-utils";
 
 import type { BookerLayout, BookerState } from "./types";
+import { bookerEase } from "./utils/motion";
 
-// Framer motion fade in animation configs.
+// Steps slide horizontally and unblur when they settle.
 export const fadeInLeft = {
   variants: {
-    visible: { opacity: 1, x: 0 },
-    hidden: { opacity: 0, x: 20 },
+    visible: { opacity: 1, x: 0, filter: "blur(0px)" },
+    hidden: { opacity: 0, x: 16, filter: "blur(4px)" },
   },
   initial: "hidden",
   exit: "hidden",
   animate: "visible",
-  transition: { ease: "easeInOut", delay: 0.1 },
+  transition: { duration: 0.35, ease: [...bookerEase] },
 };
 export const fadeInUp = {
   variants: {
@@ -71,28 +72,30 @@ export const resizeAnimationConfig: ResizeAnimationConfig = {
       gridTemplateRows: "minmax(min-content,max-content) 1fr",
     },
   },
+  // Single focused column: host + service on top, calendar on the left and the slot grid on the right.
+  // Deliberately not Cal.com's three side-by-side columns (docs/design-system.md §2, §8).
   month_view: {
     default: {
-      width: "calc(var(--booker-meta-width) + var(--booker-main-width))",
-      minHeight: "450px",
+      width: "var(--booker-total-width)",
+      minHeight: "0px",
       height: "auto",
       gridTemplateAreas: `
-      "meta main main"
-      "meta main main"
+      "meta meta"
+      "main timeslots"
       `,
-      gridTemplateColumns: "var(--booker-meta-width) var(--booker-main-width)",
-      gridTemplateRows: "1fr 0fr",
+      gridTemplateColumns: "var(--booker-main-width) minmax(0, 1fr)",
+      gridTemplateRows: "auto 1fr",
     },
-    selecting_time: {
-      width: "calc(var(--booker-meta-width) + var(--booker-main-width) + var(--booker-timeslots-width))",
-      minHeight: "450px",
+    booking: {
+      width: "var(--booker-total-width)",
+      minHeight: "0px",
       height: "auto",
       gridTemplateAreas: `
-      "meta main timeslots"
-      "meta main timeslots"
+      "meta"
+      "main"
       `,
-      gridTemplateColumns: "var(--booker-meta-width) 1fr var(--booker-timeslots-width)",
-      gridTemplateRows: "1fr 0fr",
+      gridTemplateColumns: "minmax(0, 1fr)",
+      gridTemplateRows: "auto 1fr",
     },
   },
   week_view: {
@@ -139,17 +142,8 @@ export const getBookerSizeClassNames = (
     // Size settings are abstracted on their own lines purely for readability.
     // General sizes, used always
     "[--booker-timeslots-width:240px] lg:[--booker-timeslots-width:280px]",
-    // Small calendar defaults
-    layout === BookerLayouts.MONTH_VIEW && getBookerMetaClass("[--booker-meta-width:240px]"),
-    // Meta column gets wider in booking view to fit the full date on a single row in case
-    // of a multi occurrence event. Also makes form less wide, which also looks better.
-    layout === BookerLayouts.MONTH_VIEW &&
-      bookerState === "booking" &&
-      `[--booker-main-width:420px] ${getBookerMetaClass("lg:[--booker-meta-width:340px]")}`,
-    // Smaller meta when not in booking view.
-    layout === BookerLayouts.MONTH_VIEW &&
-      bookerState !== "booking" &&
-      `[--booker-main-width:480px] ${getBookerMetaClass("lg:[--booker-meta-width:280px]")}`,
+    // Month view is one column of at most 3xl; the calendar keeps a fixed width next to the slot grid.
+    layout === BookerLayouts.MONTH_VIEW && "[--booker-total-width:768px] [--booker-main-width:392px]",
     // Fullscreen view settings.
     layout !== BookerLayouts.MONTH_VIEW &&
       `[--booker-main-width:480px] [--booker-meta-width:340px] ${getBookerMetaClass(
@@ -208,7 +202,7 @@ export const useBookerResizeAnimation = (layout: BookerLayout, state: BookerStat
       });
       animate(animationScope.current, animatedProperties, {
         duration: 0.5,
-        ease: cubicBezier(0.4, 0, 0.2, 1),
+        ease: cubicBezier(...bookerEase),
       });
     }
   }, [animate, isEmbed, animationScope, layout, prefersReducedMotion, state]);

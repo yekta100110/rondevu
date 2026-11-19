@@ -1,3 +1,4 @@
+import { m } from "framer-motion";
 import { useEffect } from "react";
 import { shallow } from "zustand/shallow";
 
@@ -5,6 +6,7 @@ import type { Dayjs } from "@rondevu/dayjs";
 import dayjs from "@rondevu/dayjs";
 import { useEmbedStyles } from "@rondevu/embed-core/embed-iframe";
 import { useBookerStoreContext } from "@rondevu/features/bookings/Booker/BookerStoreProvider";
+import { bookerPillSpring } from "@rondevu/features/bookings/Booker/utils/motion";
 import { getAvailableDatesInMonth } from "@rondevu/features/calendars/lib/getAvailableDatesInMonth";
 import type { Slots } from "@rondevu/features/calendars/lib/types";
 import { daysInMonth, yyyymmdd } from "@rondevu/lib/dayjs";
@@ -62,6 +64,7 @@ const Day = ({
   customClassName,
   showMonthTooltip,
   isFirstDayOfNextMonth,
+  slideActive = true,
   ...props
 }: JSX.IntrinsicElements["button"] & {
   active: boolean;
@@ -74,6 +77,8 @@ const Day = ({
   };
   showMonthTooltip?: boolean;
   isFirstDayOfNextMonth?: boolean;
+  /** Slide one shared fill between days; must be off when several days can be active at once. */
+  slideActive?: boolean;
 }) => {
   const { t } = useLocale();
   const enabledDateButtonEmbedStyles = useEmbedStyles("enabledDateButton");
@@ -84,28 +89,39 @@ const Day = ({
       type="button"
       style={disabled ? { ...disabledDateButtonEmbedStyles } : { ...enabledDateButtonEmbedStyles }}
       className={classNames(
-        "disabled:text-bookinglighter absolute bottom-0 left-0 right-0 top-0 mx-auto w-full cursor-pointer rounded-md border-2 border-transparent text-center text-sm font-medium transition disabled:cursor-default disabled:border-transparent disabled:font-light ",
+        "absolute bottom-0 left-0 right-0 top-0 mx-auto w-full cursor-pointer rounded-md border border-transparent text-center text-sm font-medium tabular-nums transition-colors duration-150 disabled:cursor-default disabled:border-transparent disabled:font-normal",
         active
-          ? "bg-brand-default text-brand"
+          ? "text-brand"
           : !disabled
             ? `${
                 !customClassName?.dayActive
-                  ? "hover:border-brand-default text-emphasis bg-emphasis"
-                  : `hover:border-brand-default ${customClassName.dayActive}`
+                  ? "hover:border-emphasis text-emphasis bg-subtle"
+                  : `hover:border-emphasis ${customClassName.dayActive}`
               }`
-            : `${customClassName ? "" : " text-mute"}`
+            : `${customClassName ? "" : " text-muted"}`
       )}
+      aria-pressed={active}
       data-testid="day"
       data-disabled={disabled}
       disabled={disabled}
       {...props}>
-      {away && <span data-testid="away-emoji">{emoji}</span>}
-      {!away && date.date()}
+      {active && (
+        <m.span
+          layoutId={slideActive ? "booker-day-pill" : undefined}
+          aria-hidden
+          className="bg-brand-default absolute inset-0 rounded-[5px]"
+          transition={bookerPillSpring}
+        />
+      )}
+      <span className="relative">
+        {away && <span data-testid="away-emoji">{emoji}</span>}
+        {!away && date.date()}
+      </span>
       {date.isToday() && (
         <span
           className={classNames(
-            "bg-brand-default absolute left-1/2 top-1/2 flex h-[5px] w-[5px] -translate-x-1/2 translate-y-[8px] items-center justify-center rounded-full align-middle sm:translate-y-[12px]",
-            active && "bg-brand-accent"
+            "absolute left-1/2 top-1/2 flex h-1 w-1 -translate-x-1/2 translate-y-[8px] items-center justify-center rounded-full align-middle sm:translate-y-[11px]",
+            active ? "bg-brand-accent" : "bg-brand-default"
           )}>
           <span className="sr-only">{t("today")}</span>
         </span>
@@ -125,7 +141,7 @@ const Day = ({
         <div
           className={classNames(
             "absolute top-0 z-10 mx-auto w-fit rounded-full font-semibold uppercase tracking-wide",
-            active ? "text-white" : "text-default",
+            active ? "text-brand" : "text-default",
             disabled && "bg-emphasis"
           )}
           style={{
@@ -222,6 +238,10 @@ const Days = ({
   }
 
   const [selectedDatesAndTimes] = useBookerStoreContext((state) => [state.selectedDatesAndTimes], shallow);
+
+  const isMultiSelect =
+    Array.isArray(selected) ||
+    !!(eventSlug && selectedDatesAndTimes && Object.keys(selectedDatesAndTimes[eventSlug] ?? {}).length > 0);
 
   const isActive = (day: dayjs.Dayjs) => {
     // for selecting a range of dates
@@ -343,6 +363,7 @@ const Days = ({
               emoji={emoji}
               showMonthTooltip={showNextMonthDays && !disabled && day.month() !== browsingDate.month()}
               isFirstDayOfNextMonth={isFirstDayOfNextMonth}
+              slideActive={!isMultiSelect}
             />
           )}
         </div>
@@ -414,7 +435,7 @@ const DatePicker = ({
 
   return (
     <div className={className}>
-      <div className="mb-1 flex items-center justify-between text-xl">
+      <div className="mb-2 flex items-center justify-between text-xl">
         <span className="text-default w-1/2 text-base">
           {browsingDate ? (
             <time dateTime={browsingDate.format("YYYY-MM")} data-testid="selected-month-label">
@@ -422,7 +443,8 @@ const DatePicker = ({
                 className={classNames(`text-emphasis font-semibold`, customClassNames?.datePickerTitle)}>
                 {month}
               </strong>{" "}
-              <span className={classNames(`text-subtle font-medium`, customClassNames?.datePickerTitle)}>
+              <span
+                className={classNames(`text-subtle font-mono text-sm font-normal tabular-nums`, customClassNames?.datePickerTitle)}>
                 {browsingDate.format("YYYY")}
               </span>
             </time>
@@ -462,12 +484,12 @@ const DatePicker = ({
           </div>
         </div>
       </div>
-      <div className="border-subtle mb-2 grid grid-cols-7 gap-4 border-b border-t text-center md:mb-0 md:border-0">
+      <div className="mb-1 grid grid-cols-7 gap-1 text-center">
         {weekdayNames(locale, weekStart, "short").map((weekDay) => (
           <div
             key={weekDay}
             className={classNames(
-              `text-emphasis my-4 text-xs font-medium uppercase tracking-widest`,
+              `text-subtle my-2 text-xs font-medium`,
               customClassNames?.datePickerDays
             )}>
             {weekDay}

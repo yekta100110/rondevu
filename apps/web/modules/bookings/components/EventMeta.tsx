@@ -11,6 +11,7 @@ import { markdownToSafeHTMLClient } from "@rondevu/lib/markdownToSafeHTMLClient"
 import { CURRENT_TIMEZONE } from "@rondevu/lib/timezoneConstants";
 import type { EventTypeTranslation } from "@rondevu/prisma/client";
 import { EventTypeAutoTranslatedField } from "@rondevu/prisma/enums";
+import { BookerLayouts } from "@rondevu/prisma/zod-utils";
 import { EventMetaBlock } from "@rondevu/web/modules/bookings/components/event-meta/Details";
 import { SeatsAvailabilityText } from "@rondevu/web/modules/bookings/components/SeatsAvailabilityText";
 import { m } from "framer-motion";
@@ -103,6 +104,9 @@ export const EventMeta = ({
   const [setBookerStoreTimezone] = useBookerStoreContext((state) => [state.setTimezone], shallow);
   const selectedDuration = useBookerStoreContext((state) => state.selectedDuration);
   const bookerState = useBookerStoreContext((state) => state.state);
+  const layout = useBookerStoreContext((state) => state.layout);
+  // Month and mobile layouts show the host and service as a header above the calendar instead of a sidebar.
+  const isHeaderLayout = layout === BookerLayouts.MONTH_VIEW || layout === "mobile";
   const bookingData = useBookerStoreContext((state) => state.bookingData);
   const rescheduleUid = useBookerStoreContext((state) => state.rescheduleUid);
   const [seatedEventData, setSeatedEventData] = useBookerStoreContext(
@@ -138,11 +142,7 @@ export const EventMeta = ({
   const isNearlyFull =
     bookingSeatAttendeesQty && eventTotalSeats && bookingSeatAttendeesQty / eventTotalSeats >= 0.83;
 
-  const colorClass = isNearlyFull
-    ? "text-rose-600"
-    : isHalfFull
-      ? "text-yellow-500"
-      : "text-bookinghighlight";
+  const colorClass = isNearlyFull ? "text-emphasis" : isHalfFull ? "text-default" : "text-subtle";
   const userLocale = locale ?? navigator.language;
   const translatedDescription = getTranslatedField(
     event?.fieldTranslations ?? [],
@@ -156,14 +156,16 @@ export const EventMeta = ({
   );
 
   return (
-    <div className={`${classNames?.eventMetaContainer || ""} relative z-10 p-6`} data-testid="event-meta">
+    <div
+      className={`${classNames?.eventMetaContainer || ""} relative z-10 ${isHeaderLayout ? "px-6 pb-5 pt-6" : "p-6"}`}
+      data-testid="event-meta">
       {isPending && (
-        <m.div {...fadeInUp} initial="visible" layout>
+        <m.div {...fadeInUp} initial="visible">
           <EventMetaSkeleton />
         </m.div>
       )}
       {!isPending && !!event && (
-        <m.div {...fadeInUp} layout transition={{ ...fadeInUp.transition, delay: 0.3 }}>
+        <m.div {...fadeInUp} transition={{ ...fadeInUp.transition, delay: 0.3 }}>
           <EventMembers
             schedulingType={event.schedulingType}
             users={event.subsetOfUsers}
@@ -173,11 +175,15 @@ export const EventMeta = ({
             roundRobinHideOrgAndTeam={roundRobinHideOrgAndTeam}
             hideOrgTeamAvatar={hideOrgTeamAvatar}
           />
-          <EventTitle className={`${classNames?.eventMetaTitle} my-2`}>
+          <EventTitle
+            className={`${classNames?.eventMetaTitle} ${isHeaderLayout ? "mb-3 mt-2 text-2xl" : "my-2"}`}>
             {translatedTitle ?? event?.title}
           </EventTitle>
           {(event.description || translatedDescription) && (
-            <EventMetaBlock data-testid="event-meta-description" contentClassName="mb-8">
+            <EventMetaBlock
+              data-testid="event-meta-description"
+              className="text-subtle"
+              contentClassName={isHeaderLayout ? "mb-4" : "mb-8"}>
               <ScrollableWithGradients
                 className="wrap-break-word scroll-bar max-h-[180px] max-w-full overflow-y-auto pr-4"
                 ariaLabel={t("description")}>
@@ -190,7 +196,12 @@ export const EventMeta = ({
               </ScrollableWithGradients>
             </EventMetaBlock>
           )}
-          <div className="stack-y-4 font-medium rtl:-mr-2">
+          <div
+            className={
+              isHeaderLayout
+                ? "text-default flex flex-wrap items-center gap-x-5 gap-y-2"
+                : "stack-y-4 font-medium rtl:-mr-2"
+            }>
             {rescheduleUid && bookingData && (
               <EventMetaBlock icon="calendar">
                 {t("former_time")}

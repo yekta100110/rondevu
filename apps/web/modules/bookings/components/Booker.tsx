@@ -32,7 +32,7 @@ import { UnpublishedEntity } from "@rondevu/ui/components/unpublished-entity";
 import TurnstileCaptcha from "@rondevu/web/modules/auth/components/Turnstile";
 import { useSkipConfirmStep } from "@rondevu/web/modules/bookings/hooks/useSkipConfirmStep";
 import { useNonEmptyScheduleDays } from "@rondevu/web/modules/schedules/hooks/useNonEmptyScheduleDays";
-import { AnimatePresence, LazyMotion, m } from "framer-motion";
+import { AnimatePresence, LazyMotion, MotionConfig, m } from "framer-motion";
 import { useEffect, useMemo, useRef } from "react";
 import StickyBox from "react-sticky-box";
 import { Toaster } from "sonner";
@@ -42,6 +42,7 @@ import type { WrappedBookerProps } from "../types";
 import { AvailableTimeSlots } from "./AvailableTimeSlots";
 import { BookEventForm } from "./BookEventForm";
 import { BookFormAsModal } from "./BookEventForm/BookFormAsModal";
+import { BookerStepper } from "./BookerStepper";
 import { DatePicker } from "./DatePicker";
 import { DryRunMessage } from "./DryRunMessage";
 import { EventMeta } from "./EventMeta";
@@ -152,7 +153,10 @@ const BookerComponent = ({
   const timeslotsRef = useRef<HTMLDivElement>(null);
   const isQuickAvailabilityCheckFeatureEnabled = useIsQuickAvailabilityCheckFeatureEnabled();
 
-  const StickyOnDesktop = isMobile ? "div" : StickyBox;
+  const isMonthView = layout === BookerLayouts.MONTH_VIEW;
+  // Month view stacks host details above the calendar, so the meta row must not stick like a sidebar.
+  const StickyOnDesktop = isMobile || isMonthView ? "div" : StickyBox;
+  const showStepper = isMonthView || layout === "mobile";
 
   const { bookerFormErrorRef, key, formEmail, bookingForm, errors: formErrors } = bookerForm;
 
@@ -344,7 +348,7 @@ const BookerComponent = ({
           // In a popup embed, if someone clicks outside the main(having main class or main tag), it closes the embed
           "main",
           "text-default flex min-h-full w-full flex-col items-center",
-          layout === BookerLayouts.MONTH_VIEW && !isEmbed && "my-20 ",
+          layout === BookerLayouts.MONTH_VIEW && !isEmbed && "my-10 px-4 sm:my-16",
           layout === BookerLayouts.MONTH_VIEW ? "overflow-visible" : "overflow-clip",
           `${customClassNames?.bookerWrapper}`
         )}>
@@ -355,7 +359,7 @@ const BookerComponent = ({
             ...getBookerSizeClassNames(layout, bookerState, hideEventTypeDetails),
             `bg-default dark:bg-muted grid max-w-full items-start dark:scheme-dark sm:transition-[width] sm:duration-300 sm:motion-reduce:transition-none md:flex-row`,
             // We remove border only when the content covers entire viewport. Because in embed, it can almost never be the case that it covers entire viewport, we show the border there
-            (layout === BookerLayouts.MONTH_VIEW || isEmbed) && "border-subtle rounded-md",
+            (layout === BookerLayouts.MONTH_VIEW || isEmbed) && "border-subtle rounded-xl",
             !isEmbed && "sm:transition-[width] sm:duration-300",
             isEmbed && layout === BookerLayouts.MONTH_VIEW && "border-booker sm:border-booker-width",
             !isEmbed && layout === BookerLayouts.MONTH_VIEW && `border-subtle border`,
@@ -403,7 +407,10 @@ const BookerComponent = ({
             <StickyOnDesktop key="meta" className={classNames("relative z-10 flex [grid-area:meta]")}>
               <BookerSection
                 area="meta"
-                className="max-w-screen flex w-full flex-col md:w-(--booker-meta-width)">
+                className={classNames(
+                  "max-w-screen flex w-full flex-col",
+                  isMonthView ? "border-subtle border-b" : "md:w-(--booker-meta-width)"
+                )}>
                 {!hideEventTypeDetails && orgBannerUrl && (
                   <img
                     loading="eager"
@@ -433,6 +440,12 @@ const BookerComponent = ({
                     {eventMetaChildren}
                   </EventMeta>
                 )}
+                {showStepper && (
+                  <BookerStepper
+                    isBooking={bookerState === "booking"}
+                    className={classNames("px-6 pb-5", hideEventTypeDetails && "pt-5")}
+                  />
+                )}
                 {layout !== BookerLayouts.MONTH_VIEW &&
                   !(layout === "mobile" && bookerState === "booking") && (
                     <div className="mt-auto px-5 py-3">
@@ -457,7 +470,10 @@ const BookerComponent = ({
             <BookerSection
               key="book-event-form"
               area="main"
-              className="sticky top-0 -ml-px h-full p-6 md:w-(--booker-main-width) md:border-l"
+              className={classNames(
+                "sticky top-0 h-full p-6",
+                isMonthView ? "w-full" : "-ml-px md:w-(--booker-main-width) md:border-l"
+              )}
               {...fadeInLeft}
               visible={bookerState === "booking" && !shouldShowFormInDialog}>
               {EventBooker}
@@ -470,8 +486,7 @@ const BookerComponent = ({
               {...fadeInLeft}
               initial="visible"
               className={classNames(
-                "md:border-subtle -ml-px h-full shrink px-5 py-3  lg:w-(--booker-main-width)",
-                hideEventTypeDetails ? "" : "md:border-l"
+                "h-full shrink px-5 py-4 md:w-(--booker-main-width)"
               )}>
               <DatePicker
                 classNames={customClassNames?.datePickerCustomClassNames}
@@ -506,9 +521,9 @@ const BookerComponent = ({
                   layout === BookerLayouts.COLUMN_VIEW)
               }
               className={classNames(
-                "border-subtle rtl:border-default flex h-full w-full flex-col overflow-x-auto px-5 py-3 pb-0 rtl:border-r ltr:md:border-l",
+                "border-subtle flex h-full w-full flex-col overflow-x-auto px-5 py-4 pb-0 rtl:border-r ltr:md:border-l",
                 layout === BookerLayouts.MONTH_VIEW &&
-                  "h-full overflow-hidden md:w-(--booker-timeslots-width)",
+                  "h-full w-full overflow-hidden",
                 layout !== BookerLayouts.MONTH_VIEW && "sticky top-0"
               )}
               ref={timeslotsRef}
@@ -642,7 +657,9 @@ const BookerComponent = ({
 export const Booker = (props: BookerProps & WrappedBookerProps) => {
   return (
     <LazyMotion strict features={framerFeatures}>
-      <BookerComponent {...props} />
+      <MotionConfig reducedMotion="user">
+        <BookerComponent {...props} />
+      </MotionConfig>
     </LazyMotion>
   );
 };
