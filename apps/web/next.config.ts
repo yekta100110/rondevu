@@ -232,6 +232,8 @@ const nextConfig = (phase: string): NextConfig => {
       "formidable",
       "@boxyhq/saml-jackson",
       "jose",
+      // Turbopack resolves the SDK's versioned subpath export to its .d.mts types file
+      "@polar-sh/sdk",
     ],
     experimental: {
       optimizePackageImports: ["@rondevu/ui"],
