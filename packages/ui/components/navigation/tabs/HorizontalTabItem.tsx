@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import Link from "next/link";
 
 import { useLocale } from "@rondevu/lib/hooks/useLocale";
@@ -50,14 +51,23 @@ const HorizontalTabItem = function ({
       scroll={linkScroll}
       aria-disabled={props.disabled ? "true" : undefined}
       className={classNames(
-        isCurrent ? "bg-subtle text-emphasis" : "text-subtle hover:text-emphasis",
-        "inline-flex h-8 items-center justify-center whitespace-nowrap rounded-md px-2.5 text-sm font-medium leading-none outline-none transition-colors duration-160 focus-visible:ring-3 focus-visible:ring-ring/50 md:mb-0",
+        isCurrent ? "text-emphasis" : "text-subtle hover:text-emphasis",
+        "relative inline-flex h-8 items-center justify-center whitespace-nowrap rounded-md px-2.5 text-sm font-medium leading-none outline-none transition-colors duration-160 focus-visible:ring-3 focus-visible:ring-ring/50 md:mb-0",
         props.disabled && "pointer-events-none opacity-30!",
         props.className
       )}
       target={props.target ? props.target : undefined}
       data-testid={`horizontal-tab-${props["data-testid"]}`}
       aria-current={isCurrent ? "page" : undefined}>
+      {isCurrent && (
+        <motion.span
+          layoutId="horizontal-tab-pill"
+          aria-hidden="true"
+          className="absolute inset-0 rounded-md bg-subtle"
+          transition={{ type: "spring", stiffness: 500, damping: 38 }}
+        />
+      )}
+      <span className="relative inline-flex items-center">
       {props.icon && (
         <Icon
           name={props.icon}
@@ -66,6 +76,7 @@ const HorizontalTabItem = function ({
         />
       )}
       {avatar && <Avatar size="xs" imageSrc={avatar} alt="avatar" className="-ml-0.5 me-1" />} {t(name)}
+      </span>
     </Link>
   );
 };

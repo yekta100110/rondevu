@@ -16,13 +16,13 @@ describe("Tests for Credits component", () => {
   test("Should render credits section with links", () => {
     render(<Credits />);
 
-    const creditsLinkElement = screen.getByRole("link", { name: /Rondevu\.com, Inc\./i });
+    const creditsLinkElement = screen.getByRole("link", { name: /rOndevu/i });
     expect(creditsLinkElement).toBeInTheDocument();
-    expect(creditsLinkElement).toHaveAttribute("href", "https://go.rondevu.org/credits");
+    expect(creditsLinkElement).toHaveAttribute("href", "https://rondevu.org");
 
     const versionLinkElement = screen.getByRole("link", { name: /mockedVersion/i });
     expect(versionLinkElement).toBeInTheDocument();
-    expect(versionLinkElement).toHaveAttribute("href", "https://go.rondevu.org/releases");
+    expect(versionLinkElement).toHaveAttribute("href", "https://rondevu.org/releases");
   });
 
   test("Should render credits section with correct text", () => {

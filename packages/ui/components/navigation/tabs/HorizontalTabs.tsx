@@ -1,5 +1,6 @@
 import { useIsomorphicLayoutEffect } from "@rondevu/lib/hooks/useIsomorphicLayoutEffect";
-import { useRef } from "react";
+import { LayoutGroup } from "framer-motion";
+import { useId, useRef } from "react";
 import type { HorizontalTabItemProps } from "./HorizontalTabItem";
 import HorizontalTabItem from "./HorizontalTabItem";
 
@@ -20,6 +21,7 @@ const HorizontalTabs = ({
   ...props
 }: NavTabProps): JSX.Element => {
   const navRef = useRef<HTMLElement | null>(null);
+  const groupId = useId();
   const lastScrolledActiveHrefRef = useRef<string | null>(null);
 
   useIsomorphicLayoutEffect(() => {
@@ -51,14 +53,16 @@ const HorizontalTabs = ({
         ref={navRef}
         {...props}
       >
-        {tabs.map((tab) => (
-          <HorizontalTabItem
-            {...tab}
-            key={tab.href}
-            linkShallow={linkShallow}
-            linkScroll={linkScroll}
-          />
-        ))}
+        <LayoutGroup id={groupId}>
+          {tabs.map((tab) => (
+            <HorizontalTabItem
+              {...tab}
+              key={tab.href}
+              linkShallow={linkShallow}
+              linkScroll={linkScroll}
+            />
+          ))}
+        </LayoutGroup>
       </nav>
       {actions && actions}
     </div>

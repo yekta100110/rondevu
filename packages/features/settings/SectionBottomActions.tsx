@@ -14,7 +14,8 @@ const SectionBottomActions = ({
   return (
     <div
       className={classNames(
-        "border-subtle bg-muted flex rounded-b-lg border px-6 py-4",
+        // Floats as a save bar (docs/design-system.md §7); it steps back while the form has nothing to save.
+        "sticky bottom-4 z-10 mt-4 flex items-center gap-2 rounded-xl border border-subtle bg-default/90 px-4 py-3 shadow-lg backdrop-blur-xl transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] [&:has(button[type=submit]:disabled)]:translate-y-1 [&:has(button[type=submit]:disabled)]:opacity-60",
         align === "end" && "justify-end",
         className
       )}>
