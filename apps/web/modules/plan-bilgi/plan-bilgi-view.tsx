@@ -250,6 +250,20 @@ export function PlanBilgiView({ initialContact, initialLocale = "tr" }: PlanBilg
               </ul>
             </div>
 
+            <div className="mb-8 flex flex-col gap-2">
+              <Button
+                href={`/billing/checkout?plan=${isYearly ? "yearly" : "monthly"}`}
+                color="primary"
+                className="w-full justify-center rounded-[8px] py-2.5 font-medium text-sm">
+                {isEn ? "Pay by card and start now" : "Kartla öde, hemen başla"}
+              </Button>
+              <p className="text-center text-xs text-subtle">
+                {isEn
+                  ? "Your plan is active as soon as the payment goes through. Prefer to talk first? Use the channels below."
+                  : "Ödeme tamamlanınca planınız hemen etkinleşir. Önce konuşmak isterseniz aşağıdaki kanallardan ulaşın."}
+              </p>
+            </div>
+
             {/* Direct Contact Channels */}
             <section aria-labelledby="contact-heading" className="space-y-4">
               <h2 id="contact-heading" className="font-semibold text-emphasis text-sm">

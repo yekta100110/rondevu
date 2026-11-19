@@ -11,7 +11,8 @@
       "@prisma/client/*": ["@rondevu/prisma/client/*"],
       "@rondevu/testing/*": ["../../packages/testing/src/*"],
       "@rondevu/repository/*": ["@rondevu/lib/server/repository/*"],
-      "@coss/ui/*": ["../../packages/coss-ui/src/*"]
+      "@coss/ui/*": ["../../packages/coss-ui/src/*"],
+      "@polar-sh/sdk/2026-10": ["../../node_modules/@polar-sh/sdk/dist/2026-10/index.d.mts"]
     },
     "plugins": [
       {

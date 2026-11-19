@@ -214,9 +214,9 @@ export const homeContent: Record<Locale, HomeContent> = {
         "Takvim eşitleme",
         "Özel alan adı",
       ],
-      cta: "Planı konuşalım",
+      cta: "Hemen başla",
       detailLink: "Fiyat sayfası",
-      planNote: "Plan kurulumunu sizinle birlikte yapıyoruz.",
+      planNote: "Kartla güvenli ödeme. Dilediğiniz zaman iptal edebilirsiniz.",
     },
     faq: {
       title: "Sık sorulanlar",
@@ -378,9 +378,9 @@ export const homeContent: Record<Locale, HomeContent> = {
         "Calendar sync",
         "Custom domain",
       ],
-      cta: "Talk about a plan",
+      cta: "Get started",
       detailLink: "Pricing page",
-      planNote: "We set up your plan together with you.",
+      planNote: "Secure card payment. Cancel anytime.",
     },
     faq: {
       title: "FAQ",

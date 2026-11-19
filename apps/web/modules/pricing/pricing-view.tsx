@@ -29,6 +29,10 @@ export function PricingView({ isLoggedIn = false, initialContact, initialLocale 
     setIsModalOpen(true);
   }, []);
   const closeModal = useCallback(() => setIsModalOpen(false), []);
+  // Plan buttons go straight to card checkout; the contact modal stays reachable from the header.
+  const startCheckout = useCallback((plan: "monthly" | "yearly") => {
+    window.location.href = `/billing/checkout?plan=${plan}`;
+  }, []);
 
   const uniqueFeatures = Array.from(
     new Set([...c.pricing.included, ...c.features.items.map((item) => item.title)])
@@ -61,7 +65,7 @@ export function PricingView({ isLoggedIn = false, initialContact, initialLocale 
                 content={c.pricing}
                 prices={t.pricing}
                 features={uniqueFeatures}
-                onChoose={openModal}
+                onChoose={startCheckout}
                 headingId="pricing-plan"
               />
             </Reveal>

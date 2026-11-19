@@ -16,6 +16,7 @@
   "dependencies": {
     "@coss/ui": "workspace:*",
     "@evyweb/ioctopus": "1.2.0",
+    "@polar-sh/sdk": "1.0.2",
     "@rondevu/atoms": "workspace:*",
     "@rondevu/dayjs": "workspace:*",
     "@rondevu/i18n": "workspace:*",

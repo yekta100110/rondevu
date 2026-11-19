@@ -1,3 +1,4 @@
+import { BILLING_POLAR_DI_TOKENS } from "@rondevu/features/billing-polar/di/tokens";
 import { BOOKING_DI_TOKENS } from "@rondevu/features/bookings/di/tokens";
 import { EVENT_TYPE_DI_TOKENS } from "@rondevu/features/eventtypes/di/tokens";
 import { FLAGS_DI_TOKENS } from "@rondevu/features/flags/di/tokens";
@@ -73,4 +74,5 @@ export const DI_TOKENS = {
   ...TRANSLATION_DI_TOKENS,
   ...WEBHOOK_TOKENS,
   ...EVENT_TYPE_DI_TOKENS,
+  ...BILLING_POLAR_DI_TOKENS,
 };

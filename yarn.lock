@@ -6751,6 +6751,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@polar-sh/sdk@npm:1.0.2":
+  version: 1.0.2
+  resolution: "@polar-sh/sdk@npm:1.0.2"
+  checksum: 10/d010d92cdd6f73e6ac98c7842a75d1accea8584ac36e078f36a232995d957d1b5be81b7d22b64840dd3f9724befeb5dbf62f22b548a89e1293272da714b70318
+  languageName: node
+  linkType: hard
+
 "@polka/url@npm:^1.0.0-next.24":
   version: 1.0.0-next.25
   resolution: "@polka/url@npm:1.0.0-next.25"
@@ -9707,6 +9714,7 @@ __metadata:
   dependencies:
     "@coss/ui": "workspace:*"
     "@evyweb/ioctopus": "npm:1.2.0"
+    "@polar-sh/sdk": "npm:1.0.2"
     "@rondevu/atoms": "workspace:*"
     "@rondevu/dayjs": "workspace:*"
     "@rondevu/i18n": "workspace:*"

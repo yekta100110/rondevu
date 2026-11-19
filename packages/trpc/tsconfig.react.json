@@ -21,7 +21,8 @@
     "declarationDir": "types/react",
     "moduleResolution": "node",
     "paths": {
-      "~/*": ["./*"]
+      "~/*": ["./*"],
+      "@polar-sh/sdk/2026-10": ["../../node_modules/@polar-sh/sdk/dist/2026-10/index.d.mts"]
     }
   }
 }

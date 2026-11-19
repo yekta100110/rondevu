@@ -405,7 +405,12 @@
         "RONDEVU_N8N_INGRESS_KEY",
         "RONDEVU_N8N_ELIGIBILITY_TOKEN",
         "RONDEVU_WEBHOOK_REPLAY_KEY",
-        "RONDEVU_PLATFORM_WEBHOOK_ENABLE"
+        "RONDEVU_PLATFORM_WEBHOOK_ENABLE",
+        "POLAR_ACCESS_TOKEN",
+        "POLAR_WEBHOOK_SECRET",
+        "POLAR_SERVER",
+        "POLAR_PRODUCT_MONTHLY",
+        "POLAR_PRODUCT_YEARLY"
       ]
     },
     "@rondevu/atoms#build-npm": {

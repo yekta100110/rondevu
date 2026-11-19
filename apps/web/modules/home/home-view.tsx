@@ -31,6 +31,10 @@ export function HomeView({ isLoggedIn = false, initialContact, initialLocale }: 
     setIsModalOpen(true);
   }, []);
   const closeModal = useCallback(() => setIsModalOpen(false), []);
+  // Plan buttons go straight to card checkout; the contact modal stays reachable from the header.
+  const startCheckout = useCallback((plan: "monthly" | "yearly") => {
+    window.location.href = `/billing/checkout?plan=${plan}`;
+  }, []);
 
   return (
     <MotionProvider>
@@ -57,7 +61,7 @@ export function HomeView({ isLoggedIn = false, initialContact, initialLocale }: 
               content={c.pricing}
               prices={t.pricing}
               features={c.pricing.included}
-              onChoose={openModal}
+              onChoose={startCheckout}
               headingId="home-plan"
               detailHref={pricingHref}
             />

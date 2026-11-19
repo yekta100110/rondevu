@@ -75,6 +75,11 @@ const getTabs = (
           href: "/settings/my-account/push-notifications",
           trackingMetadata: { section: "my_account", page: "push_notifications" },
         },
+        {
+          name: "plan_billing",
+          href: "/settings/my-account/billing",
+          trackingMetadata: { section: "my_account", page: "plan_billing" },
+        },
         // TODO
         // { name: "referrals", href: "/settings/my-account/referrals" },
       ],
